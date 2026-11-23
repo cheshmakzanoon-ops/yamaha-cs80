@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="7"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="6"
+	timestamp="2026-11-23T04:45:04"
+	>
+	<testcase name="cs80_package_binary_identity_tests" classname="cs80_package_binary_identity_tests" time="0.21968" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>...s.........
+----------------------------------------------------------------------
+Ran 13 tests in 0.054s
+
+OK (skipped=1)
+</system-out>
+	</testcase>
+	<testcase name="cs80_packaging_notice_tests" classname="cs80_packaging_notice_tests" time="1.29508" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok
+test_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok
+test_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok
+test_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok
+test_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok
+test_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok
+test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.050s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_factory_audition_artifact_tests" classname="cs80_factory_audition_artifact_tests" time="0.307511" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.180s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ci_juce_provenance_tests" classname="cs80_ci_juce_provenance_tests" time="0.396522" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>test_every_release_job_checks_before_build_and_retains_evidence (__main__.ReleaseWorkflowTests.test_every_release_job_checks_before_build_and_retains_evidence) ... ok
+test_clean_exact_checkout_records_identity (__main__.SourceGateTests.test_clean_exact_checkout_records_identity) ... ok
+test_explicit_override (__main__.SourceGateTests.test_explicit_override) ... ok
+test_failed_recheck_replaces_previous_pass (__main__.SourceGateTests.test_failed_recheck_replaces_previous_pass) ... ok
+test_local_source_path (__main__.SourceGateTests.test_local_source_path) ... ok
+test_missing_configured_source (__main__.SourceGateTests.test_missing_configured_source) ... ok
+test_missing_git_metadata (__main__.SourceGateTests.test_missing_git_metadata) ... ok
+test_tracked_modification (__main__.SourceGateTests.test_tracked_modification) ... ok
+test_untracked_source (__main__.SourceGateTests.test_untracked_source) ... ok
+test_wrong_commit (__main__.SourceGateTests.test_wrong_commit) ... ok
+test_wrong_version (__main__.SourceGateTe...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_ci_bundle_verification_tests" classname="cs80_ci_bundle_verification_tests" time="0.311392" status="run">
+		<properties/>
+		<system-out>............................
+----------------------------------------------------------------------
+Ran 28 tests in 0.120s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_windows_installer_preflight_tests" classname="cs80_windows_installer_preflight_tests" time="0.894562" status="run">
+		<properties/>
+		<system-out>...ss.......
+----------------------------------------------------------------------
+Ran 12 tests in 0.750s
+
+OK (skipped=2)
+</system-out>
+	</testcase>
+	<testcase name="cs80_macos_installer_architecture_tests" classname="cs80_macos_installer_architecture_tests" time="3.42989" status="run">
+		<properties/>
+		<system-out>......
+----------------------------------------------------------------------
+Ran 6 tests in 3.356s
+
+OK
+</system-out>
+	</testcase>
+</testsuite>

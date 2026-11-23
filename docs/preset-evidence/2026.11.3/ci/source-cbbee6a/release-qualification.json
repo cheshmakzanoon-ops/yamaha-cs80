@@ -1,0 +1,3090 @@
+{
+  "schema": 1,
+  "status": "all_required_current_source_ci_and_download_checks_passed",
+  "preset_library_revision": "2026.11.3",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "run_id": 45176799427,
+  "run_attempt": 1,
+  "qualified_at_utc": "2026-11-23T16:09:02.345079+00:00",
+  "native_workflow_conclusion": "success",
+  "run_api": {
+    "path": "run-final-api.json",
+    "bytes": 14086,
+    "sha256": "6459af73a3a498d190dd097735d0defba748b3141ad9f38636e4273b7aa9ca96"
+  },
+  "jobs_api": {
+    "path": "jobs-final-api.json",
+    "bytes": 22221,
+    "sha256": "3868da109546aae93e3aa7e3cd636f982398021aa88ff593a7cf5a306cd0c2c4"
+  },
+  "artifacts_api": {
+    "path": "artifacts-final-api.json",
+    "bytes": 11500,
+    "sha256": "671d2b19bf325544cc79831a6347b3a68adb0882e699935067ae38da222ffb91"
+  },
+  "build_job_results": [
+    {
+      "id": 137700037238,
+      "name": "Linux / VST3 + Standalone",
+      "conclusion": "success"
+    },
+    {
+      "id": 137700037337,
+      "name": "Windows / VST3 + Standalone",
+      "conclusion": "success"
+    },
+    {
+      "id": 137700037479,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "conclusion": "success"
+    },
+    {
+      "id": 137700037485,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "conclusion": "success"
+    },
+    {
+      "id": 137726296450,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "conclusion": "success"
+    },
+    {
+      "id": 137823582986,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "conclusion": "success"
+    }
+  ],
+  "native_totals": {
+    "registered": 1310,
+    "passed": 1303,
+    "failed": 0,
+    "formal_skipped": 7,
+    "disabled": 0
+  },
+  "nested_python_subtest_skips": 24,
+  "counting_scope": "Native totals count CTest executions across four platforms, not unique definitions. Nested Python skips are separate. Supporting workflow and local assertion counts are not added.",
+  "validator_totals": {
+    "required_lanes": 13,
+    "validation_invocations": 13,
+    "validation_retries": 0,
+    "normal_original_exit_zero": 13,
+    "version": "1.0.4",
+    "strictness": 10
+  },
+  "platforms": [
+    {
+      "schema": 1,
+      "status": "native_and_validator_platform_accepted",
+      "target": "windows-x86_64",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+      "native_job_id": 137700037337,
+      "native_job_conclusion": "success",
+      "validator_job_id": 137726296450,
+      "validator_job_conclusion": "success",
+      "required_steps": [
+        {
+          "job_id": 137700037337,
+          "name": "Configure",
+          "number": 3,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037337,
+          "name": "Verify configured JUCE source",
+          "number": 5,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037337,
+          "name": "Build",
+          "number": 6,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037337,
+          "name": "Test",
+          "number": 7,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037337,
+          "name": "Package Windows VST3 and Standalone",
+          "number": 9,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037337,
+          "name": "Upload Windows install bundle",
+          "number": 10,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137726296450,
+          "name": "Validate VST3 headless",
+          "number": 5,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137726296450,
+          "name": "Validate state regression seed 0x5037a0c",
+          "number": 6,
+          "conclusion": "success"
+        }
+      ],
+      "native": {
+        "status": "passed",
+        "counts": {
+          "registered": 227,
+          "passed": 225,
+          "failed": 0,
+          "formal_skipped": 2,
+          "disabled": 0
+        },
+        "ctest_seconds_junit": 1852.0,
+        "formal_skips": [
+          {
+            "name": "cs80_filter_batch_cap_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          },
+          {
+            "name": "cs80_stereo_pra_exact_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          }
+        ],
+        "failures": [],
+        "relevant_test_results": [
+          {
+            "name": "cs80_packaging_notice_tests",
+            "seconds": 11.0093,
+            "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_tests",
+            "seconds": 1.5227,
+            "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_engine_tests",
+            "seconds": 10.3257,
+            "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86112972e-08\nREGISTER Bowed strings relative waveform error 1.01320705e-07\nREGISTER Oboe relative waveform error 1.08556522e-07\nREGISTER Bassoon relative waveform error 1.01848545e-07\nKBC body LOW lever -1 relative waveform change 0.107108775\nKBC body LOW lever +1 relative waveform change 0.107108804\nKBC body HIGH lever -1 relative waveform change 0.0371089858\nKBC body HIGH lever +1 relative waveform change 0.037108994\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23847, sample step 0.00075409 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_library_audit_tests",
+            "seconds": 458.57,
+            "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_voicing_tests",
+            "seconds": 15.8726,
+            "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.7 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_character_tests",
+            "seconds": 6.19987,
+            "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.5 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.3 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -144.0 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_precision_tests",
+            "seconds": 41.5877,
+            "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_circuit_source_host_tests",
+            "seconds": 11.3629,
+            "output_excerpt": "Expression persistence RMS: restored=0.00531658706 expected=0.00531657497 full=0.0177240837 relative_error=2.27501452e-06\nCircuit source/controller host tests: 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_modern_recall_host_tests",
+            "seconds": 9.44828,
+            "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.218643 copy=0.001052 xml=0.009766 session_text=0.001572 fixture_write=0.109460 preset_load=0.021018 session_load=0.014191 audio=0.001424 save=0.024910 round_trip_load=0.028266\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.429357 copy=0.001966 xml=0.019403 session_text=0.003132 fixture_write=0.215121 preset_load=0.041420 session_load=0.028037 audio=0.002771 save=0.049071 round_trip_load=0.056228\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.639609 copy=0.002844 xml=0.028972 session_text=0.004685 fixture_write=0.322107 preset_load=0.061302 session_load=0.041799 audio=0.004097 save=0.072909 round_trip_load=0.083679\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.853123 copy=0.003752 xml=0.039062 session_text=0.006282 fixture_write=0.429357 preset_load=0.081534 session_load=0.055975 audio=0.005501 save=0.097280 round_trip_load=0.111931\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "seconds": 124.497,
+            "output_excerpt": "UI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.002652 total_seconds=0.002654\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=6.102909 total_seconds=6.105562\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=13.791905 total_seconds=19.897467\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.481865 total_seconds=20.379332\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.090768 total_seconds=23.470100\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_typed_value_unit_tests",
+            "seconds": 0.0762901,
+            "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+            "passed": true
+          }
+        ],
+        "nested_python_skips": {
+          "total": 11,
+          "suites": [
+            {
+              "ctest_test": "cs80_packaging_notice_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": [
+                "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+              ]
+            },
+            {
+              "ctest_test": "cs80_windows_installer_preflight_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                12
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_validator_diagnostic_selection_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                9
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_preset_capture_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                10
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_render_cli_tests",
+              "python_skipped": 3,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_truth_render_tests",
+              "python_skipped": 2,
+              "tests_run_summaries": [
+                16
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_vca_reference_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                12
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_float_wav_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                4
+              ],
+              "explicit_skip_lines": []
+            }
+          ]
+        },
+        "juce_provenance": {
+          "checked_at": "2026-11-23T12:45:05Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "workflow_run": "45176799427",
+          "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "schema": 1,
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14822608305,
+        "artifact_name": "cs80-windows-test-evidence",
+        "archive_bytes": 61199,
+        "archive_sha256": "df410b14331e4e1bcbb95dee3d1dcd7f123030b891d1e96dc4649a5e86b3f6f1",
+        "members": {
+          "ctest-results.xml": {
+            "bytes": 101270,
+            "sha256": "d59620deddf952ac9e5ae57cbcf35de89c8b4c7c14e087c3028455324898933f"
+          },
+          "LastTest.log": {
+            "bytes": 305279,
+            "sha256": "cc739df946af74a6ec0e9e104461e134790b7c8d5a8201e3e238e7a69f9ce4a7"
+          },
+          "ci-juce-provenance.txt": {
+            "bytes": 585,
+            "sha256": "2238855e2468c30dfdcef4a16f9ea1ff2487d35c00790902d4d3c078c921399d"
+          }
+        },
+        "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately.",
+        "ctest_exit": {
+          "value": 0,
+          "basis": "Completed successful unmasked Test step, with complete matching JUnit and LastTest case lists."
+        }
+      },
+      "validators": {
+        "schema": 1,
+        "status": "accepted_with_successful_original_workflow_steps",
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14822074107,
+        "artifact_name": "cs80-pluginval-windows",
+        "archive_bytes": 5083,
+        "archive_sha256": "1f4b7bc83e0996964fc5792170553e405265ab9c090d30d8098ca293a5e1270f",
+        "required_lanes": 2,
+        "validation_invocations": 2,
+        "validation_retries": 0,
+        "version_evidence": {
+          "path": "pluginval-download.json",
+          "bytes": 718,
+          "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c",
+          "version": "1.0.4",
+          "verified": true
+        },
+        "lanes": [
+          {
+            "step": "Validate VST3 headless",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x1ed9074",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-windows.log",
+              "bytes": 7382,
+              "sha256": "4682eaa03f1bbd2f5a6ea82647b36b070c86f3ba2c645f358a5647f4699f6909"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-windows",
+              "bytes": 7168,
+              "sha256": "2df796362369fdf911ae757f108a1495c3d6a32758084f706cf7bc15ba836ff9"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original PowerShell validator step explicitly propagates LASTEXITCODE after Tee-Object and requires SUCCESS; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137726296450,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate VST3 headless",
+              "step_number": 5,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:29:55Z",
+              "completed_at": "2026-11-23T13:30:00Z"
+            }
+          },
+          {
+            "step": "Validate state regression seed 0x5037a0c",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x5037a0c",
+            "fixed_seed": "0x5037a0c",
+            "console": {
+              "path": "pluginval-windows-seed-regression.log",
+              "bytes": 7382,
+              "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-windows-seed-regression",
+              "bytes": 7168,
+              "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original PowerShell validator step explicitly propagates LASTEXITCODE after Tee-Object and requires SUCCESS; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137726296450,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate state regression seed 0x5037a0c",
+              "step_number": 6,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:30:00Z",
+              "completed_at": "2026-11-23T13:30:05Z"
+            }
+          }
+        ]
+      },
+      "evidence_artifact_bindings": [
+        {
+          "artifact_id": 14822608305,
+          "artifact_name": "cs80-windows-test-evidence",
+          "size_in_bytes": 61199,
+          "digest": "sha256:df410b14331e4e1bcbb95dee3d1dcd7f123030b891d1e96dc4649a5e86b3f6f1",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037337,
+          "producer_job_name": "Windows / VST3 + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload test and JUCE source evidence",
+          "producer_step_number": 11,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:29:31Z",
+          "producer_step_completed_at": "2026-11-23T13:29:32Z",
+          "created_at": "2026-11-23T13:29:32Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-windows-test-evidence has been successfully uploaded! Final size is 61199 bytes. Artifact ID is 14822608305",
+            "digest_line": "SHA256 digest of uploaded artifact zip is df410b14331e4e1bcbb95dee3d1dcd7f123030b891d1e96dc4649a5e86b3f6f1"
+          },
+          "job_log": {
+            "job_id": 137700037337,
+            "job_name": "Windows / VST3 + Standalone",
+            "path": "job-logs/137700037337-windows-x86_64-native.log",
+            "bytes": 136805,
+            "sha256": "a5efc61db2a2a2c2647d368a565cb97a415962fb320e79d93c72f062c7c09c81"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        },
+        {
+          "artifact_id": 14822074107,
+          "artifact_name": "cs80-pluginval-windows",
+          "size_in_bytes": 5083,
+          "digest": "sha256:1f4b7bc83e0996964fc5792170553e405265ab9c090d30d8098ca293a5e1270f",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137726296450,
+          "producer_job_name": "pluginval / Windows VST3 (strictness 10)",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload pluginval reports",
+          "producer_step_number": 8,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:30:05Z",
+          "producer_step_completed_at": "2026-11-23T13:30:06Z",
+          "created_at": "2026-11-23T13:30:06Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-pluginval-windows has been successfully uploaded! Final size is 5083 bytes. Artifact ID is 14822074107",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 1f4b7bc83e0996964fc5792170553e405265ab9c090d30d8098ca293a5e1270f"
+          },
+          "job_log": {
+            "job_id": 137726296450,
+            "job_name": "pluginval / Windows VST3 (strictness 10)",
+            "path": "job-logs/137726296450-windows-x86_64-validator.log",
+            "bytes": 46044,
+            "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        }
+      ],
+      "job_logs": [
+        {
+          "job_id": 137700037337,
+          "job_name": "Windows / VST3 + Standalone",
+          "path": "job-logs/137700037337-windows-x86_64-native.log",
+          "bytes": 136805,
+          "sha256": "a5efc61db2a2a2c2647d368a565cb97a415962fb320e79d93c72f062c7c09c81"
+        },
+        {
+          "job_id": 137726296450,
+          "job_name": "pluginval / Windows VST3 (strictness 10)",
+          "path": "job-logs/137726296450-windows-x86_64-validator.log",
+          "bytes": 46044,
+          "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec"
+        }
+      ],
+      "raw_report_records": {
+        "native": {
+          "path": "reports/windows-x86_64-native.json",
+          "bytes": 14546,
+          "sha256": "94051c0fbc019353ef30d7fa49af30b36bae42ae9c9aa03b0d166bc6db11958b"
+        },
+        "validators": {
+          "path": "reports/windows-x86_64-validators.json",
+          "bytes": 2536,
+          "sha256": "1ac5b989bbe59d6d7bbcf03962ba3c79eb14a30a8634d8812343fcf12cee97ef"
+        }
+      },
+      "api_evidence": {
+        "jobs": {
+          "path": "snapshots/api/jobs-latest-api-656f535358af9d4e024df94e1c9e8852b31f1dd5646c0de12fe747fcec868808.json",
+          "bytes": 16872,
+          "sha256": "656f535358af9d4e024df94e1c9e8852b31f1dd5646c0de12fe747fcec868808"
+        },
+        "artifacts": {
+          "path": "snapshots/api/artifacts-latest-api-4c0874e4f265c39d3cabd643dd9b2aa76bd810e6ccca45ca84a7604fc9cb35fb.json",
+          "bytes": 5022,
+          "sha256": "4c0874e4f265c39d3cabd643dd9b2aa76bd810e6ccca45ca84a7604fc9cb35fb"
+        }
+      },
+      "scope": "Native build/test/package and original validator lanes accepted. Install payload acceptance is separate; optional external Steinberg VST3 validation is not configured.",
+      "qualified_at_utc": "2026-11-23T13:31:52.112493+00:00"
+    },
+    {
+      "schema": 1,
+      "status": "native_and_validator_platform_accepted",
+      "target": "macos-arm64",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+      "native_job_id": 137700037485,
+      "native_job_conclusion": "success",
+      "validator_job_id": 137700037485,
+      "validator_job_conclusion": "success",
+      "required_steps": [
+        {
+          "job_id": 137700037485,
+          "name": "Configure",
+          "number": 4,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Verify configured JUCE source",
+          "number": 5,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Build",
+          "number": 6,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Test",
+          "number": 7,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Validate VST3 with pluginval",
+          "number": 10,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Validate AU with pluginval",
+          "number": 11,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Validate AU with pluginval GUI",
+          "number": 12,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Validate AU GUI fixed-seed regression",
+          "number": 13,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Package native macOS VST3, AU and Standalone",
+          "number": 14,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037485,
+          "name": "Upload native macOS install bundle",
+          "number": 15,
+          "conclusion": "success"
+        }
+      ],
+      "native": {
+        "status": "passed",
+        "counts": {
+          "registered": 249,
+          "passed": 247,
+          "failed": 0,
+          "formal_skipped": 2,
+          "disabled": 0
+        },
+        "ctest_seconds_junit": 1271.0,
+        "formal_skips": [
+          {
+            "name": "cs80_filter_batch_cap_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          },
+          {
+            "name": "cs80_stereo_pra_exact_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          }
+        ],
+        "failures": [],
+        "relevant_test_results": [
+          {
+            "name": "cs80_packaging_notice_tests",
+            "seconds": 2.52412,
+            "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_tests",
+            "seconds": 0.651916,
+            "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_engine_tests",
+            "seconds": 5.91987,
+            "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86306378e-08\nREGISTER Bowed strings relative waveform error 1.02181611e-07\nREGISTER Oboe relative waveform error 1.08994832e-07\nREGISTER Bassoon relative waveform error 1.01931474e-07\nKBC body LOW lever -1 relative waveform change 0.107108774\nKBC body LOW lever +1 relative waveform change 0.107108803\nKBC body HIGH lever -1 relative waveform change 0.037108985\nKBC body HIGH lever +1 relative waveform change 0.0371089867\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99408, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23849, sample step 0.00075410 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_library_audit_tests",
+            "seconds": 287.648,
+            "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_voicing_tests",
+            "seconds": 9.76097,
+            "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.5 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -143.0 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_character_tests",
+            "seconds": 3.74095,
+            "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.4 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.4 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.4 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.4 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -144.0 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.5 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -144.0 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_precision_tests",
+            "seconds": 26.8792,
+            "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_circuit_source_host_tests",
+            "seconds": 7.00082,
+            "output_excerpt": "Expression persistence RMS: restored=0.00531658632 expected=0.00531657421 full=0.0177240812 relative_error=2.27710132e-06\nCircuit source/controller host tests: 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_modern_recall_host_tests",
+            "seconds": 4.48416,
+            "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.080299 copy=0.000337 xml=0.004367 session_text=0.000766 fixture_write=0.011339 preset_load=0.014150 session_load=0.010231 audio=0.001117 save=0.014928 round_trip_load=0.019406\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.159053 copy=0.000820 xml=0.008719 session_text=0.001514 fixture_write=0.021835 preset_load=0.027695 session_load=0.019774 audio=0.002134 save=0.030538 round_trip_load=0.039161\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.239143 copy=0.001194 xml=0.013014 session_text=0.002270 fixture_write=0.031925 preset_load=0.041744 session_load=0.029881 audio=0.003368 save=0.046288 round_trip_load=0.059460\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.318130 copy=0.001600 xml=0.017414 session_text=0.003018 fixture_write=0.041541 preset_load=0.055181 session_load=0.040561 audio=0.004413 save=0.061734 round_trip_load=0.079669\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "seconds": 106.564,
+            "output_excerpt": "UI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.000386 total_seconds=0.000386\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406743 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.0038979128 active=1\nUI SMOKE TIMING: phase=host metadata seconds=4.413105 total_seconds=4.413491\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=8.194327 total_seconds=12.607818\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.206543 total_seconds=12.814361\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=1.485870 total_seconds=14.300232\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=0....\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_typed_value_unit_tests",
+            "seconds": 0.0709894,
+            "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+            "passed": true
+          }
+        ],
+        "nested_python_skips": {
+          "total": 5,
+          "suites": [
+            {
+              "ctest_test": "cs80_package_binary_identity_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                13
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_packaging_notice_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": [
+                "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+              ]
+            },
+            {
+              "ctest_test": "cs80_windows_installer_preflight_tests",
+              "python_skipped": 2,
+              "tests_run_summaries": [
+                12
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_render_cli_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": []
+            }
+          ]
+        },
+        "juce_provenance": {
+          "checked_at": "2026-11-23T12:43:44Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "workflow_run": "45176799427",
+          "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "schema": 1,
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14821652824,
+        "artifact_name": "cs80-macos-15-test-evidence",
+        "archive_bytes": 64073,
+        "archive_sha256": "53a3b81c03ae3366ed6f3441974ab49c0edd4403347ceec89367b7e87ccc396d",
+        "members": {
+          "ctest-results.xml": {
+            "bytes": 108439,
+            "sha256": "c5e2f1b95e7d26e177cec565277714fa47c14cc25e0c1792494d86cdb90743b8"
+          },
+          "LastTest.log": {
+            "bytes": 318431,
+            "sha256": "af053f44f8f77f0070629d040f19dae6e79c4d549679cae8132ed162147b314e"
+          },
+          "ci-juce-provenance.txt": {
+            "bytes": 612,
+            "sha256": "b4121319102e8bda50cc36d4b5e818751f188233135886c5d3c000fa2adcf390"
+          }
+        },
+        "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately.",
+        "ctest_exit": {
+          "value": 0,
+          "basis": "Completed successful unmasked Test step, with complete matching JUnit and LastTest case lists."
+        }
+      },
+      "validators": {
+        "schema": 1,
+        "status": "accepted_with_successful_original_workflow_steps",
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14821637752,
+        "artifact_name": "cs80-pluginval-macos-15",
+        "archive_bytes": 9630,
+        "archive_sha256": "2ca347e28984d5bf67880cee5dd0ea8f33ae84205d037b047a5863b5ba5592dd",
+        "required_lanes": 4,
+        "validation_invocations": 4,
+        "validation_retries": 0,
+        "version_evidence": {
+          "path": "pluginval-download.json",
+          "bytes": 694,
+          "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+          "version": "1.0.4",
+          "verified": true
+        },
+        "lanes": [
+          {
+            "step": "Validate VST3 with pluginval",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x2a17ea",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-vst3.log",
+              "bytes": 7398,
+              "sha256": "076d0eff69f3686902a32258c223a81318d40ba87cd5afa4b393cffb96f1da6e"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-vst3",
+              "bytes": 7271,
+              "sha256": "00a9c832f352e077371fd0e79000b87c72b1cc00b03e218846e8c57e50d4a4d9"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037485,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate VST3 with pluginval",
+              "step_number": 10,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:11:24Z",
+              "completed_at": "2026-11-23T13:11:27Z"
+            }
+          },
+          {
+            "step": "Validate AU with pluginval",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x471bdc8",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-au.log",
+              "bytes": 7308,
+              "sha256": "154a33b53deacde89a30a35d22520a115b7fbed96f7eaec17008bbe7c811ea8e"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au",
+              "bytes": 7214,
+              "sha256": "af5255add21acfc568f348d4435ba7aa15a4c3e2a2bbcfecefa8c96111aeb4a8"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037485,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU with pluginval",
+              "step_number": 11,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:11:27Z",
+              "completed_at": "2026-11-23T13:11:50Z"
+            }
+          },
+          {
+            "step": "Validate AU with pluginval GUI",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x6d0f0be",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-au-gui.log",
+              "bytes": 7990,
+              "sha256": "bacf768327e4f893db2ada3525358990a6f3b590c5046c4e15a58d1f59fa9393"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au-gui",
+              "bytes": 7896,
+              "sha256": "62887a1434b0ab3fa955b7dac4492b97c1033de97f794cc1c2db395c53c699a0"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037485,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU with pluginval GUI",
+              "step_number": 12,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:11:50Z",
+              "completed_at": "2026-11-23T13:13:11Z"
+            }
+          },
+          {
+            "step": "Validate AU GUI fixed-seed regression",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x2b4eef5",
+            "fixed_seed": "0x2b4eef5",
+            "console": {
+              "path": "pluginval-au-seed-regression.log",
+              "bytes": 7990,
+              "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au-seed-regression",
+              "bytes": 7896,
+              "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037485,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU GUI fixed-seed regression",
+              "step_number": 13,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:13:11Z",
+              "completed_at": "2026-11-23T13:14:32Z"
+            }
+          }
+        ]
+      },
+      "evidence_artifact_bindings": [
+        {
+          "artifact_id": 14821652824,
+          "artifact_name": "cs80-macos-15-test-evidence",
+          "size_in_bytes": 64073,
+          "digest": "sha256:53a3b81c03ae3366ed6f3441974ab49c0edd4403347ceec89367b7e87ccc396d",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037485,
+          "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload test and JUCE source evidence",
+          "producer_step_number": 19,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:14:38Z",
+          "producer_step_completed_at": "2026-11-23T13:14:40Z",
+          "created_at": "2026-11-23T13:14:40Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-macos-15-test-evidence has been successfully uploaded! Final size is 64073 bytes. Artifact ID is 14821652824",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 53a3b81c03ae3366ed6f3441974ab49c0edd4403347ceec89367b7e87ccc396d"
+          },
+          "job_log": {
+            "job_id": 137700037485,
+            "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+            "path": "job-logs/137700037485-macos-arm64.log",
+            "bytes": 229216,
+            "sha256": "3e3c0bf34c877011b663876c226653657798d0d1a3cbb07b38397af0ddb8811c"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        },
+        {
+          "artifact_id": 14821637752,
+          "artifact_name": "cs80-pluginval-macos-15",
+          "size_in_bytes": 9630,
+          "digest": "sha256:2ca347e28984d5bf67880cee5dd0ea8f33ae84205d037b047a5863b5ba5592dd",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037485,
+          "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload pluginval reports",
+          "producer_step_number": 18,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:14:37Z",
+          "producer_step_completed_at": "2026-11-23T13:14:38Z",
+          "created_at": "2026-11-23T13:14:38Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-pluginval-macos-15 has been successfully uploaded! Final size is 9630 bytes. Artifact ID is 14821637752",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 2ca347e28984d5bf67880cee5dd0ea8f33ae84205d037b047a5863b5ba5592dd"
+          },
+          "job_log": {
+            "job_id": 137700037485,
+            "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+            "path": "job-logs/137700037485-macos-arm64.log",
+            "bytes": 229216,
+            "sha256": "3e3c0bf34c877011b663876c226653657798d0d1a3cbb07b38397af0ddb8811c"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        }
+      ],
+      "job_logs": [
+        {
+          "job_id": 137700037485,
+          "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "path": "job-logs/137700037485-macos-arm64.log",
+          "bytes": 229216,
+          "sha256": "3e3c0bf34c877011b663876c226653657798d0d1a3cbb07b38397af0ddb8811c"
+        }
+      ],
+      "raw_report_records": {
+        "native": {
+          "path": "reports/macos-arm64-native.json",
+          "bytes": 13842,
+          "sha256": "eef9a340aeac653961dcb9492a7a015cf13fe1298c28cc4f235f15c9ece88eb0"
+        },
+        "validators": {
+          "path": "reports/macos-arm64-validators.json",
+          "bytes": 4092,
+          "sha256": "8ebb57f543302173b9b666b4fe332c2283f1d55ed83c51f0f83cf8c2d76007c6"
+        }
+      },
+      "api_evidence": {
+        "jobs": {
+          "path": "snapshots/api/jobs-latest-api-593ef9eed1f6aee3a5f3fc28094422a1cdf34a1c5e33ffe20d2639461c6304d6.json",
+          "bytes": 13870,
+          "sha256": "593ef9eed1f6aee3a5f3fc28094422a1cdf34a1c5e33ffe20d2639461c6304d6"
+        },
+        "artifacts": {
+          "path": "snapshots/api/artifacts-latest-api-c7603f8e49b56d9fc37518e379694abd5a76b526c97742a637fea723af3d2890.json",
+          "bytes": 2175,
+          "sha256": "c7603f8e49b56d9fc37518e379694abd5a76b526c97742a637fea723af3d2890"
+        }
+      },
+      "scope": "Native build/test/package and original validator lanes accepted. Install payload acceptance is separate; optional external Steinberg VST3 validation is not configured.",
+      "qualified_at_utc": "2026-11-23T13:16:49.215317+00:00"
+    },
+    {
+      "schema": 1,
+      "status": "native_and_validator_platform_accepted",
+      "target": "macos-x86_64",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+      "native_job_id": 137700037479,
+      "native_job_conclusion": "success",
+      "validator_job_id": 137700037479,
+      "validator_job_conclusion": "success",
+      "required_steps": [
+        {
+          "job_id": 137700037479,
+          "name": "Configure",
+          "number": 4,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Verify configured JUCE source",
+          "number": 5,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Build",
+          "number": 6,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Test",
+          "number": 7,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Validate VST3 with pluginval",
+          "number": 10,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Validate AU with pluginval",
+          "number": 11,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Validate AU with pluginval GUI",
+          "number": 12,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Validate AU GUI fixed-seed regression",
+          "number": 13,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Package native macOS VST3, AU and Standalone",
+          "number": 14,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037479,
+          "name": "Upload native macOS install bundle",
+          "number": 15,
+          "conclusion": "success"
+        }
+      ],
+      "native": {
+        "status": "passed",
+        "counts": {
+          "registered": 249,
+          "passed": 247,
+          "failed": 0,
+          "formal_skipped": 2,
+          "disabled": 0
+        },
+        "ctest_seconds_junit": 2325.0,
+        "formal_skips": [
+          {
+            "name": "cs80_filter_batch_cap_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          },
+          {
+            "name": "cs80_stereo_pra_exact_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          }
+        ],
+        "failures": [],
+        "relevant_test_results": [
+          {
+            "name": "cs80_packaging_notice_tests",
+            "seconds": 4.36669,
+            "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_tests",
+            "seconds": 1.47049,
+            "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_engine_tests",
+            "seconds": 13.5966,
+            "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86112972e-08\nREGISTER Bowed strings relative waveform error 1.01320705e-07\nREGISTER Oboe relative waveform error 1.08556522e-07\nREGISTER Bassoon relative waveform error 1.01848545e-07\nKBC body LOW lever -1 relative waveform change 0.107108774\nKBC body LOW lever +1 relative waveform change 0.107108804\nKBC body HIGH lever -1 relative waveform change 0.0371089862\nKBC body HIGH lever +1 relative waveform change 0.037108994\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23846, sample step 0.00075410 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_library_audit_tests",
+            "seconds": 552.914,
+            "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_voicing_tests",
+            "seconds": 17.8017,
+            "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.6 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_character_tests",
+            "seconds": 6.93152,
+            "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.4 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.4 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -143.9 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_precision_tests",
+            "seconds": 53.9488,
+            "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_circuit_source_host_tests",
+            "seconds": 16.4916,
+            "output_excerpt": "Expression persistence RMS: restored=0.00531658664 expected=0.00531657453 full=0.0177240822 relative_error=2.27844029e-06\nCircuit source/controller host tests: 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_modern_recall_host_tests",
+            "seconds": 9.79762,
+            "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.174497 copy=0.001379 xml=0.009375 session_text=0.002927 fixture_write=0.017967 preset_load=0.030331 session_load=0.021886 audio=0.001973 save=0.035262 round_trip_load=0.043554\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.351394 copy=0.002820 xml=0.019656 session_text=0.006005 fixture_write=0.034845 preset_load=0.061825 session_load=0.044856 audio=0.004200 save=0.071083 round_trip_load=0.087734\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.523573 copy=0.004201 xml=0.029400 session_text=0.009052 fixture_write=0.052922 preset_load=0.092416 session_load=0.066985 audio=0.006253 save=0.105278 round_trip_load=0.130465\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.696594 copy=0.005525 xml=0.039202 session_text=0.011882 fixture_write=0.070765 preset_load=0.123238 session_load=0.088218 audio=0.008160 save=0.139545 round_trip_load=0.175421\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "seconds": 170.321,
+            "output_excerpt": "UI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.000745 total_seconds=0.000745\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406724 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=7.785630 total_seconds=7.786375\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=17.261634 total_seconds=25.048009\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.593506 total_seconds=25.641515\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.919486 total_seconds=29.561000\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_typed_value_unit_tests",
+            "seconds": 0.18265,
+            "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+            "passed": true
+          }
+        ],
+        "nested_python_skips": {
+          "total": 5,
+          "suites": [
+            {
+              "ctest_test": "cs80_package_binary_identity_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                13
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_packaging_notice_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": [
+                "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+              ]
+            },
+            {
+              "ctest_test": "cs80_windows_installer_preflight_tests",
+              "python_skipped": 2,
+              "tests_run_summaries": [
+                12
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_render_cli_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                7
+              ],
+              "explicit_skip_lines": []
+            }
+          ]
+        },
+        "juce_provenance": {
+          "checked_at": "2026-11-23T12:45:22Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "workflow_run": "45176799427",
+          "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "schema": 1,
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14822454312,
+        "artifact_name": "cs80-macos-15-intel-test-evidence",
+        "archive_bytes": 64153,
+        "archive_sha256": "9569964275f303b362d00a80c2f39f28350b2bd46c19dae151551eaa7718a92c",
+        "members": {
+          "ctest-results.xml": {
+            "bytes": 108275,
+            "sha256": "05cf08d97a9245b20047a3ee1346c69762db5327d3f88c0d48a7840d599fb980"
+          },
+          "LastTest.log": {
+            "bytes": 318169,
+            "sha256": "8cbef2924b99d7fc3bd1fc088db40323dd15bbb307c78fa4466f4e977bd6ff34"
+          },
+          "ci-juce-provenance.txt": {
+            "bytes": 612,
+            "sha256": "6f5d2ea6a0084eec8cdcf3683ab3ca2e0f09798334fde9299202d1f7331e3836"
+          }
+        },
+        "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately.",
+        "ctest_exit": {
+          "value": 0,
+          "basis": "Completed successful unmasked Test step, with complete matching JUnit and LastTest case lists."
+        }
+      },
+      "validators": {
+        "schema": 1,
+        "status": "accepted_with_successful_original_workflow_steps",
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14822034504,
+        "artifact_name": "cs80-pluginval-macos-15-intel",
+        "archive_bytes": 9634,
+        "archive_sha256": "992e2c74af97682872d6ca49b5619b68bdd83f30a185ff122cda1b94209bea1c",
+        "required_lanes": 4,
+        "validation_invocations": 4,
+        "validation_retries": 0,
+        "version_evidence": {
+          "path": "pluginval-download.json",
+          "bytes": 694,
+          "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+          "version": "1.0.4",
+          "verified": true
+        },
+        "lanes": [
+          {
+            "step": "Validate VST3 with pluginval",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x8a8e34",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-vst3.log",
+              "bytes": 7398,
+              "sha256": "e7ba55a69947f1a2721017f3c9997a8951cf1959f491649eb4ec630875fb7aee"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-vst3",
+              "bytes": 7271,
+              "sha256": "5634c2d1d53655ddfbd548e76ea1581a524f09cf3155dfd18e29d740b1192275"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037479,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate VST3 with pluginval",
+              "step_number": 10,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:36:38Z",
+              "completed_at": "2026-11-23T13:36:45Z"
+            }
+          },
+          {
+            "step": "Validate AU with pluginval",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x3c49b1e",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-au.log",
+              "bytes": 7308,
+              "sha256": "7f35d60cfa6578342010c41b781fba7ac5303687b578f10c9aefc9243cb015c2"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au",
+              "bytes": 7214,
+              "sha256": "41127e98f84e19a0f81834ec6256163811b33569d61bc28bc56cd8de2b458a82"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037479,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU with pluginval",
+              "step_number": 11,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:36:45Z",
+              "completed_at": "2026-11-23T13:37:30Z"
+            }
+          },
+          {
+            "step": "Validate AU with pluginval GUI",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x4d75059",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-au-gui.log",
+              "bytes": 7990,
+              "sha256": "09b97a443403d3138bcbec290d54a3f8c84f58065906a1b23baa07aaa42a7596"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au-gui",
+              "bytes": 7896,
+              "sha256": "b5c9656779b27cb145bc372783fdf821b26121b85f9ab4c76dcc5000ed4b26ab"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037479,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU with pluginval GUI",
+              "step_number": 12,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:37:30Z",
+              "completed_at": "2026-11-23T13:40:27Z"
+            }
+          },
+          {
+            "step": "Validate AU GUI fixed-seed regression",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x2b4eef5",
+            "fixed_seed": "0x2b4eef5",
+            "console": {
+              "path": "pluginval-au-seed-regression.log",
+              "bytes": 7990,
+              "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-au-seed-regression",
+              "bytes": 7896,
+              "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+            },
+            "explicit_skips": [],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137700037479,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate AU GUI fixed-seed regression",
+              "step_number": 13,
+              "conclusion": "success",
+              "started_at": "2026-11-23T13:40:27Z",
+              "completed_at": "2026-11-23T13:43:04Z"
+            }
+          }
+        ]
+      },
+      "evidence_artifact_bindings": [
+        {
+          "artifact_id": 14822454312,
+          "artifact_name": "cs80-macos-15-intel-test-evidence",
+          "size_in_bytes": 64153,
+          "digest": "sha256:9569964275f303b362d00a80c2f39f28350b2bd46c19dae151551eaa7718a92c",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037479,
+          "producer_job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload test and JUCE source evidence",
+          "producer_step_number": 19,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:43:16Z",
+          "producer_step_completed_at": "2026-11-23T13:43:17Z",
+          "created_at": "2026-11-23T13:43:17Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-macos-15-intel-test-evidence has been successfully uploaded! Final size is 64153 bytes. Artifact ID is 14822454312",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 9569964275f303b362d00a80c2f39f28350b2bd46c19dae151551eaa7718a92c"
+          },
+          "job_log": {
+            "job_id": 137700037479,
+            "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+            "path": "job-logs/137700037479-macos-x86_64.log",
+            "bytes": 232363,
+            "sha256": "b34f1868f69d3997eda9c67fb21756cb273a3a807a5421e5c6e43fe2e76552d6"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        },
+        {
+          "artifact_id": 14822034504,
+          "artifact_name": "cs80-pluginval-macos-15-intel",
+          "size_in_bytes": 9634,
+          "digest": "sha256:992e2c74af97682872d6ca49b5619b68bdd83f30a185ff122cda1b94209bea1c",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037479,
+          "producer_job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload pluginval reports",
+          "producer_step_number": 18,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T13:43:15Z",
+          "producer_step_completed_at": "2026-11-23T13:43:16Z",
+          "created_at": "2026-11-23T13:43:16Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-pluginval-macos-15-intel has been successfully uploaded! Final size is 9634 bytes. Artifact ID is 14822034504",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 992e2c74af97682872d6ca49b5619b68bdd83f30a185ff122cda1b94209bea1c"
+          },
+          "job_log": {
+            "job_id": 137700037479,
+            "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+            "path": "job-logs/137700037479-macos-x86_64.log",
+            "bytes": 232363,
+            "sha256": "b34f1868f69d3997eda9c67fb21756cb273a3a807a5421e5c6e43fe2e76552d6"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        }
+      ],
+      "job_logs": [
+        {
+          "job_id": 137700037479,
+          "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "path": "job-logs/137700037479-macos-x86_64.log",
+          "bytes": 232363,
+          "sha256": "b34f1868f69d3997eda9c67fb21756cb273a3a807a5421e5c6e43fe2e76552d6"
+        }
+      ],
+      "raw_report_records": {
+        "native": {
+          "path": "reports/macos-x86_64-native.json",
+          "bytes": 13845,
+          "sha256": "3606a08156269925e1d8c20fa4fca6536d42527a8be0211b6470b374d82486e8"
+        },
+        "validators": {
+          "path": "reports/macos-x86_64-validators.json",
+          "bytes": 4098,
+          "sha256": "02c9805b18d83519594a5ac71aa57d5ce7f042e6fb0a857f545f386a99132440"
+        }
+      },
+      "api_evidence": {
+        "jobs": {
+          "path": "snapshots/api/jobs-latest-api-398965b225f57d788adadb6c99c90eb869e3fafd92338dee110e666f84d31782.json",
+          "bytes": 17627,
+          "sha256": "398965b225f57d788adadb6c99c90eb869e3fafd92338dee110e666f84d31782"
+        },
+        "artifacts": {
+          "path": "snapshots/api/artifacts-latest-api-41aa9d9609feea169f8cca3bdca5f22676e1aa4f64773922558d204548cab659.json",
+          "bytes": 7185,
+          "sha256": "41aa9d9609feea169f8cca3bdca5f22676e1aa4f64773922558d204548cab659"
+        }
+      },
+      "scope": "Native build/test/package and original validator lanes accepted. Install payload acceptance is separate; optional external Steinberg VST3 validation is not configured.",
+      "qualified_at_utc": "2026-11-23T13:45:26.751865+00:00"
+    },
+    {
+      "schema": 1,
+      "status": "native_and_validator_platform_accepted",
+      "target": "linux-x86_64",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+      "native_job_id": 137700037238,
+      "native_job_conclusion": "success",
+      "validator_job_id": 137823582986,
+      "validator_job_conclusion": "success",
+      "required_steps": [
+        {
+          "job_id": 137700037238,
+          "name": "Configure",
+          "number": 4,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Verify configured JUCE source",
+          "number": 5,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Build",
+          "number": 6,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Test",
+          "number": 7,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Capture curated preset auditions",
+          "number": 8,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Package Linux VST3 and Standalone",
+          "number": 13,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137700037238,
+          "name": "Upload Linux install bundle",
+          "number": 14,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137823582986,
+          "name": "Verify diagnostic exit propagation",
+          "number": 6,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137823582986,
+          "name": "Validate VST3 headless",
+          "number": 7,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137823582986,
+          "name": "Validate VST3 GUI under Xvfb",
+          "number": 8,
+          "conclusion": "success"
+        },
+        {
+          "job_id": 137823582986,
+          "name": "Validate GUI state regression seed 0x2da72db",
+          "number": 9,
+          "conclusion": "success"
+        }
+      ],
+      "native": {
+        "status": "passed",
+        "counts": {
+          "registered": 585,
+          "passed": 584,
+          "failed": 0,
+          "formal_skipped": 1,
+          "disabled": 0
+        },
+        "ctest_seconds_junit": 11036.0,
+        "formal_skips": [
+          {
+            "name": "cs80_stereo_pra_exact_tests",
+            "status": "notrun",
+            "message": "SKIP_RETURN_CODE=77"
+          }
+        ],
+        "failures": [],
+        "relevant_test_results": [
+          {
+            "name": "cs80_packaging_notice_tests",
+            "seconds": 1.57291,
+            "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 1.478s\n\nOK",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_tests",
+            "seconds": 0.892912,
+            "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_instrument_body_engine_tests",
+            "seconds": 8.69332,
+            "output_excerpt": "BATCH comparison backend: runtime-dispatched exact batch\nREGISTER Piano strings relative waveform error 8.86112972e-08\nREGISTER Bowed strings relative waveform error 1.01320705e-07\nREGISTER Oboe relative waveform error 1.08556522e-07\nREGISTER Bassoon relative waveform error 1.01848545e-07\nKBC body LOW lever -1 relative waveform change 0.107108774\nKBC body LOW lever +1 relative waveform change 0.107108804\nKBC body HIGH lever -1 relative waveform change 0.0371089862\nKBC body HIGH lever +1 relative waveform change 0.037108994\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23846, sample step 0.00075410 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_library_audit_tests",
+            "seconds": 323.363,
+            "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_voicing_tests",
+            "seconds": 14.3439,
+            "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.6 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_character_tests",
+            "seconds": 5.35645,
+            "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.5 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.5 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.3 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.8 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -143.9 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_preset_precision_tests",
+            "seconds": 37.7528,
+            "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_circuit_source_host_tests",
+            "seconds": 6.58629,
+            "output_excerpt": "Expression persistence RMS: restored=0.00531658664 expected=0.00531657453 full=0.0177240822 relative_error=2.27792911e-06\nCircuit source/controller host tests: 0 failures",
+            "passed": true
+          },
+          {
+            "name": "cs80_modern_recall_host_tests",
+            "seconds": 4.50199,
+            "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.087830 copy=0.001451 xml=0.005315 session_text=0.001356 fixture_write=0.007892 preset_load=0.015395 session_load=0.010961 audio=0.001040 save=0.018175 round_trip_load=0.022234\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.173312 copy=0.002335 xml=0.010582 session_text=0.002683 fixture_write=0.015312 preset_load=0.030511 session_load=0.022064 audio=0.002083 save=0.035750 round_trip_load=0.044388\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.258128 copy=0.003123 xml=0.015843 session_text=0.004032 fixture_write=0.022535 preset_load=0.045517 session_load=0.033062 audio=0.003141 save=0.053193 round_trip_load=0.066508\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.343407 copy=0.004553 xml=0.021052 session_text=0.005337 fixture_write=0.029852 preset_load=0.060559 session_load=0.043944 audio=0.004119 save=0.071261 round_trip_load=0.088398\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "seconds": 91.568,
+            "output_excerpt": "UI smoke: Openbox ready on :99; WM_PROTOCOLS present; running unchanged test command.\nUI SMOKE START: processor=437712 bytes engine=386968 bytes\nUI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.000014 total_seconds=0.000020\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=4.995981 total_seconds=4.996001\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=9.871107 total_seconds=14.867108\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.284125 total_seconds=15.151233\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 k...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+            "passed": true
+          },
+          {
+            "name": "cs80_typed_value_unit_tests",
+            "seconds": 0.0853972,
+            "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+            "passed": true
+          }
+        ],
+        "nested_python_skips": {
+          "total": 3,
+          "suites": [
+            {
+              "ctest_test": "cs80_package_binary_identity_tests",
+              "python_skipped": 1,
+              "tests_run_summaries": [
+                13
+              ],
+              "explicit_skip_lines": []
+            },
+            {
+              "ctest_test": "cs80_windows_installer_preflight_tests",
+              "python_skipped": 2,
+              "tests_run_summaries": [
+                12
+              ],
+              "explicit_skip_lines": []
+            }
+          ]
+        },
+        "juce_provenance": {
+          "checked_at": "2026-11-23T12:44:30Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "workflow_run": "45176799427",
+          "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "schema": 1,
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14835789372,
+        "artifact_name": "cs80-linux-test-evidence",
+        "archive_bytes": 140205,
+        "archive_sha256": "373229ac15c8232c6b52747ed9bc5c7f5f6e85bff0d46b7323a9109d8d6afbb1",
+        "members": {
+          "ctest-results.xml": {
+            "bytes": 465657,
+            "sha256": "327417b125f661c303f4c2c9cc21490f908bc4cf97b02e5701b4cd3e5684b388"
+          },
+          "LastTest.log": {
+            "bytes": 1108555,
+            "sha256": "62cc1ba9a8c8c9ee92430f9e1819255aae69a80b13392e469e24d9a00f08fbe5"
+          },
+          "ci-juce-provenance.txt": {
+            "bytes": 609,
+            "sha256": "5084a5b9dff0ca9dbeee42d6c18840481afd154070d08a8c7242dbe635f2f4bc"
+          }
+        },
+        "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately.",
+        "ctest_exit": {
+          "value": 0,
+          "basis": "Completed successful unmasked Test step, with complete matching JUnit and LastTest case lists."
+        }
+      },
+      "validators": {
+        "schema": 1,
+        "status": "accepted_with_successful_original_workflow_steps",
+        "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_id": 45176799427,
+        "artifact_id": 14835594564,
+        "artifact_name": "cs80-pluginval-reports",
+        "archive_bytes": 8902,
+        "archive_sha256": "dd199c9c5dd63338b446193f8d35d60b95beb5415ab1873e9d54703fb822b6f2",
+        "required_lanes": 3,
+        "validation_invocations": 3,
+        "validation_retries": 0,
+        "version_evidence": {
+          "path": "pluginval-version.txt",
+          "bytes": 18,
+          "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f",
+          "version": "1.0.4",
+          "text": "pluginval - 1.0.4"
+        },
+        "lanes": [
+          {
+            "step": "Validate VST3 headless",
+            "strictness": 10,
+            "gui": false,
+            "program_count": 523,
+            "seed": "0x673ebde",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-headless.log",
+              "bytes": 7282,
+              "sha256": "7a84d72d80799c3a2f66da4cf7df0891fab561cd53ebdf81cc11983a48a683cd"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-headless",
+              "bytes": 7194,
+              "sha256": "2b87e972e113aef07806283114fde9c71c70414cf452b35748233a80c667efe8"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "original_terminations": [
+              {
+                "pid": 2683,
+                "raw_returncode": 0,
+                "kind": "exit",
+                "details": "exit_code=0"
+              }
+            ],
+            "core_log": {
+              "path": "pluginval-headless-core.log",
+              "bytes": 443,
+              "sha256": "ae0d45f9db5fb1bb48c8ec86aceeab94f892ca33713c5a4066f17d9246ef3280"
+            },
+            "final_raw_exit": 0,
+            "exit_basis": "Retained original-child termination diagnostic is kind exit, raw_returncode 0; original exit-propagating workflow step also completed successfully. Retry attempts remain explicit.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137823582986,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate VST3 headless",
+              "step_number": 7,
+              "conclusion": "success",
+              "started_at": "2026-11-23T16:04:37Z",
+              "completed_at": "2026-11-23T16:04:40Z"
+            }
+          },
+          {
+            "step": "Validate VST3 GUI under Xvfb",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x4ddd989",
+            "fixed_seed": null,
+            "console": {
+              "path": "pluginval-gui.log",
+              "bytes": 7964,
+              "sha256": "c36df7323b4c3e6b987532116e9423d28a74aac0d154543cfd1b4322a8ccfceb"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-gui",
+              "bytes": 7876,
+              "sha256": "d376240ce1a027d28732c4c4fc13ce50ebee8b22288bdd3dd761bf3fa242ab86"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "original_terminations": [
+              {
+                "pid": 2714,
+                "raw_returncode": 0,
+                "kind": "exit",
+                "details": "exit_code=0"
+              }
+            ],
+            "core_log": {
+              "path": "pluginval-gui-core.log",
+              "bytes": 443,
+              "sha256": "ac80b4356bdd079f803207bae521b7afb0a2d3a94404a255b64c0579ff3b58df"
+            },
+            "final_raw_exit": 0,
+            "exit_basis": "Retained original-child termination diagnostic is kind exit, raw_returncode 0; original exit-propagating workflow step also completed successfully. Retry attempts remain explicit.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137823582986,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate VST3 GUI under Xvfb",
+              "step_number": 8,
+              "conclusion": "success",
+              "started_at": "2026-11-23T16:04:40Z",
+              "completed_at": "2026-11-23T16:04:59Z"
+            }
+          },
+          {
+            "step": "Validate GUI state regression seed 0x2da72db",
+            "strictness": 10,
+            "gui": true,
+            "program_count": 523,
+            "seed": "0x2da72db",
+            "fixed_seed": "0x2da72db",
+            "console": {
+              "path": "pluginval-gui-seed-regression.log",
+              "bytes": 7964,
+              "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+            },
+            "report": {
+              "path": "pluginval-reports/cs80-gui-seed-regression",
+              "bytes": 7876,
+              "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+            },
+            "explicit_skips": [
+              "INFO: Skipping vst3 validator as validator path hasn't been set"
+            ],
+            "preserved_failed_attempts": [],
+            "validation_retries": 0,
+            "validation_invocations": 1,
+            "original_terminations": [
+              {
+                "pid": 2758,
+                "raw_returncode": 0,
+                "kind": "exit",
+                "details": "exit_code=0"
+              }
+            ],
+            "core_log": {
+              "path": "pluginval-gui-seed-regression-core.log",
+              "bytes": 443,
+              "sha256": "c8b3f563fbadb7b4654973fb679d900887b63562a7125478478968d7df39d436"
+            },
+            "final_raw_exit": 0,
+            "exit_basis": "Retained original-child termination diagnostic is kind exit, raw_returncode 0; original exit-propagating workflow step also completed successfully. Retry attempts remain explicit.",
+            "exit": 0,
+            "step_binding": {
+              "job_id": 137823582986,
+              "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+              "run_id": 45176799427,
+              "run_attempt": 1,
+              "step_name": "Validate GUI state regression seed 0x2da72db",
+              "step_number": 9,
+              "conclusion": "success",
+              "started_at": "2026-11-23T16:04:59Z",
+              "completed_at": "2026-11-23T16:05:15Z"
+            }
+          }
+        ]
+      },
+      "evidence_artifact_bindings": [
+        {
+          "artifact_id": 14835789372,
+          "artifact_name": "cs80-linux-test-evidence",
+          "size_in_bytes": 140205,
+          "digest": "sha256:373229ac15c8232c6b52747ed9bc5c7f5f6e85bff0d46b7323a9109d8d6afbb1",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137700037238,
+          "producer_job_name": "Linux / VST3 + Standalone",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload test and JUCE source evidence",
+          "producer_step_number": 15,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T16:03:33Z",
+          "producer_step_completed_at": "2026-11-23T16:03:34Z",
+          "created_at": "2026-11-23T16:03:34Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-linux-test-evidence has been successfully uploaded! Final size is 140205 bytes. Artifact ID is 14835789372",
+            "digest_line": "SHA256 digest of uploaded artifact zip is 373229ac15c8232c6b52747ed9bc5c7f5f6e85bff0d46b7323a9109d8d6afbb1"
+          },
+          "job_log": {
+            "job_id": 137700037238,
+            "job_name": "Linux / VST3 + Standalone",
+            "path": "job-logs/137700037238-linux-x86_64-native.log",
+            "bytes": 452948,
+            "sha256": "c7c465eb933c65fba3878f748c5c351a2ba7c954c3b313426518328d5e1d7f8e"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        },
+        {
+          "artifact_id": 14835594564,
+          "artifact_name": "cs80-pluginval-reports",
+          "size_in_bytes": 8902,
+          "digest": "sha256:dd199c9c5dd63338b446193f8d35d60b95beb5415ab1873e9d54703fb822b6f2",
+          "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "run_id": 45176799427,
+          "run_attempt": 1,
+          "payload_role": "independently_inspected_evidence",
+          "producer_job_id": 137823582986,
+          "producer_job_name": "pluginval / Linux VST3 (strictness 10)",
+          "producer_job_conclusion": "success",
+          "producer_step": "Upload pluginval reports",
+          "producer_step_number": 16,
+          "producer_step_conclusion": "success",
+          "producer_step_started_at": "2026-11-23T16:05:27Z",
+          "producer_step_completed_at": "2026-11-23T16:05:29Z",
+          "created_at": "2026-11-23T16:05:28Z",
+          "expires_at": "2027-02-21T12:42:09Z",
+          "console_match": {
+            "name_id_size": true,
+            "digest": true,
+            "name_id_size_line": "Artifact cs80-pluginval-reports has been successfully uploaded! Final size is 8902 bytes. Artifact ID is 14835594564",
+            "digest_line": "SHA256 digest of uploaded artifact zip is dd199c9c5dd63338b446193f8d35d60b95beb5415ab1873e9d54703fb822b6f2"
+          },
+          "job_log": {
+            "job_id": 137823582986,
+            "job_name": "pluginval / Linux VST3 (strictness 10)",
+            "path": "job-logs/137823582986-linux-x86_64-validator.log",
+            "bytes": 81430,
+            "sha256": "b79981a4f20541ff855409bbecbe311606c6613feb8ea85c8e6ad8fc94875b35"
+          },
+          "upload_timestamp_allowance_seconds": 2
+        }
+      ],
+      "job_logs": [
+        {
+          "job_id": 137700037238,
+          "job_name": "Linux / VST3 + Standalone",
+          "path": "job-logs/137700037238-linux-x86_64-native.log",
+          "bytes": 452948,
+          "sha256": "c7c465eb933c65fba3878f748c5c351a2ba7c954c3b313426518328d5e1d7f8e"
+        },
+        {
+          "job_id": 137823582986,
+          "job_name": "pluginval / Linux VST3 (strictness 10)",
+          "path": "job-logs/137823582986-linux-x86_64-validator.log",
+          "bytes": 81430,
+          "sha256": "b79981a4f20541ff855409bbecbe311606c6613feb8ea85c8e6ad8fc94875b35"
+        }
+      ],
+      "raw_report_records": {
+        "native": {
+          "path": "reports/linux-x86_64-native.json",
+          "bytes": 13016,
+          "sha256": "4203e54c145b324a8073ad7261b9748d693738f60c49a4654971818b18111499"
+        },
+        "validators": {
+          "path": "reports/linux-x86_64-validators.json",
+          "bytes": 4564,
+          "sha256": "d30e0d55d71fcaca5cea0745ff61b7e214f461dd960623bb630b8fc418933ce6"
+        }
+      },
+      "api_evidence": {
+        "jobs": {
+          "path": "snapshots/api/jobs-final-api-3868da109546aae93e3aa7e3cd636f982398021aa88ff593a7cf5a306cd0c2c4.json",
+          "bytes": 22221,
+          "sha256": "3868da109546aae93e3aa7e3cd636f982398021aa88ff593a7cf5a306cd0c2c4"
+        },
+        "artifacts": {
+          "path": "snapshots/api/artifacts-final-api-671d2b19bf325544cc79831a6347b3a68adb0882e699935067ae38da222ffb91.json",
+          "bytes": 11500,
+          "sha256": "671d2b19bf325544cc79831a6347b3a68adb0882e699935067ae38da222ffb91"
+        }
+      },
+      "scope": "Native build/test/package and original validator lanes accepted. Install payload acceptance is separate; optional external Steinberg VST3 validation is not configured.",
+      "qualified_at_utc": "2026-11-23T16:06:33.275111+00:00"
+    }
+  ],
+  "native_validator_acceptance": {
+    "path": "native-validator-qualification.json",
+    "bytes": 111562,
+    "sha256": "887a4c5fdd05f333580485e48ce5e090215022e0ef292a32929294d19ef88244"
+  },
+  "artifact_producer_bindings": {
+    "path": "artifact-producer-bindings.json",
+    "bytes": 14532,
+    "sha256": "1b09d2e92e5b29660035bf72e9dffd17b342bad3206d5394aa0e438e3c96356e"
+  },
+  "installation_downloads": [
+    {
+      "target": "windows-x86_64",
+      "artifact": {
+        "id": 14822019089,
+        "name": "cs80-windows-install-bundle",
+        "bytes": 6323870,
+        "sha256": "8fe6ee8249ab5818acc99be4c73d8780ecf0f20729f4659175cce5202bac0346",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip"
+      },
+      "acceptance": {
+        "path": "windows-x86_64/install-acceptance.json",
+        "bytes": 3637,
+        "sha256": "46ef7d1923fd8fb3d60dee0f8590d5535a4b18815ebb99d29d45dab2a23b4bc1"
+      },
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "inner_archive": {
+        "file": "cs80-reference-windows-x86_64-cbbee6a94098.zip",
+        "bytes": 6318554,
+        "sha256": "edf158fe13407b251e9d0ce5f31c56deea5b1fbecb2b35ef511810912c625483"
+      },
+      "inventory_entries": 20,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+          "bytes": 7313408,
+          "sha256": "5fc2c23b6f865331cff887b441e172bf72592eaff497f5c155fd984774d94927",
+          "platform": "windows",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "PE32+",
+            "machine": "0x8664",
+            "characteristics": "0x2022"
+          }
+        },
+        {
+          "path": "Standalone/CS-80 Reference.exe",
+          "bytes": 7514624,
+          "sha256": "f358d1ec3be38242479f5cbdd6ab0ef738e75ea36294eebc057ad43f81b8f809",
+          "platform": "windows",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS",
+          "header": {
+            "format": "PE32+",
+            "machine": "0x8664",
+            "characteristics": "0x22"
+          }
+        }
+      ],
+      "signing_status": "not inspected; no release signing/notarization performed by this helper",
+      "validator_container_sidecars": [
+        {
+          "path": "CS-80 Reference.exp",
+          "type": "file",
+          "bytes": 968,
+          "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+          "format_check": {
+            "format": "AMD64 COFF object",
+            "sections": 2,
+            "symbols": 14
+          },
+          "included_in_vst3_payload_comparison": false
+        },
+        {
+          "path": "CS-80 Reference.lib",
+          "type": "file",
+          "bytes": 2266,
+          "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+          "format_check": {
+            "format": "COFF import archive",
+            "archive_members": 9,
+            "coff_object_members": 3,
+            "short_import_members": 3
+          },
+          "included_in_vst3_payload_comparison": false
+        }
+      ],
+      "validator_container_contract": {
+        "workflow_path": ".github/workflows/build.yml",
+        "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+        "workflow_source_pinned": true,
+        "uploaded_directory": "build/CS80Reference_artefacts/Release/VST3",
+        "download_directory": "vst3",
+        "selected_plugin": "vst3\\CS-80 Reference.vst3",
+        "required_command_logs": [
+          "pluginval-windows-seed-regression.log",
+          "pluginval-windows.log"
+        ],
+        "consumer_log": {
+          "file": "137726296450-windows-x86_64-validator.log",
+          "bytes": 46044,
+          "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec",
+          "artifact_download_identity_matched": true,
+          "started_validation_paths": [
+            "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3",
+            "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3"
+          ]
+        },
+        "excluded_container_paths": [
+          "CS-80 Reference.exp",
+          "CS-80 Reference.lib"
+        ],
+        "exclusion_rationale": "The committed workflow uploads the whole VST3 output directory, including the MSVC export object and import library. Both actual consumer invocations explicitly select its CS-80 Reference.vst3 subdirectory. Only this exact, format-checked top-level compiler sidecar pair is recorded separately; every member inside the selected bundle remains subject to strict equality."
+      },
+      "validator_input_artifact": {
+        "id": 14821979268,
+        "name": "cs80-windows-vst3",
+        "bytes": 3168094,
+        "sha256": "9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14821979268.zip"
+      },
+      "validator_payload_identity": {
+        "path": "windows-x86_64/validator-payload-identity.json",
+        "bytes": 5151,
+        "sha256": "b945e603070c7990c69ef92f01b924cfd86a33b7f0bb796e29680ccc1dae8c7b"
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "artifact": {
+        "id": 14820874764,
+        "name": "cs80-macos-15-install-bundle",
+        "bytes": 14933623,
+        "sha256": "be2447d5f726543612198b19dd1257e840ae538eb90180e67e3dbda73a376d83",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip"
+      },
+      "acceptance": {
+        "path": "macos-arm64/install-acceptance.json",
+        "bytes": 4154,
+        "sha256": "b8d19826a18558d7fbc63b8701495a7a503064228bc5674e32fa1910f8785883"
+      },
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inner_archive": {
+        "file": "cs80-reference-macos-arm64-cbbee6a94098.tar.gz",
+        "bytes": 14925250,
+        "sha256": "ae1448f585762c6f0e8bbc671b7782d1c6e918676a67d55ace653c79231eba6b"
+      },
+      "inventory_entries": 37,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 14570592,
+          "sha256": "46fa7c4deacc33b0356d655f2d03dc82d61bfb2dc3f54f8e67b6a0f40b320b2b",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "arm64",
+            "cpu_type": "0x100000c"
+          }
+        },
+        {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 14274704,
+          "sha256": "2ef9444fce940c9863afdda5173dd9bdb874cfa0735d08e411fd2dff2b668592",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "arm64",
+            "cpu_type": "0x100000c"
+          }
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "bytes": 14125440,
+          "sha256": "db15b9ed7c4b79bfeaeb1310e022da05c7b6754a0004f7f3a9fbf4f68e60d4d7",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "standalone",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "arm64",
+            "cpu_type": "0x100000c"
+          }
+        }
+      ],
+      "signing_status": "not inspected; no release signing/notarization performed by this helper"
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact": {
+        "id": 14822214497,
+        "name": "cs80-macos-15-intel-install-bundle",
+        "bytes": 16090841,
+        "sha256": "37a5e414b689f76de3b3dea40b3764a6c764ee3bb08696d903af2f7695e4493f",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip"
+      },
+      "acceptance": {
+        "path": "macos-x86_64/install-acceptance.json",
+        "bytes": 4177,
+        "sha256": "6724d03ce90c93c6c53037735f20b617e12decba9c077d12488e9de151dca5bc"
+      },
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inner_archive": {
+        "file": "cs80-reference-macos-x86_64-cbbee6a94098.tar.gz",
+        "bytes": 16082459,
+        "sha256": "e40092be7241aa192a088a25e87f739fb8886497d80d0e5d27be8b21d6fad0cd"
+      },
+      "inventory_entries": 37,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 15529056,
+          "sha256": "98e18941b50ed6056b5da36de5006236e01db3ee90118a365d0afbd3603b19ec",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "x86_64",
+            "cpu_type": "0x1000007"
+          }
+        },
+        {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 15092488,
+          "sha256": "d5f1d19ebf78583efafcad66831429cfca80d76e820feffd88053d0c590642f7",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "x86_64",
+            "cpu_type": "0x1000007"
+          }
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "bytes": 14937160,
+          "sha256": "0662e5c4d711c39883360a0ab8ee81cf50efd2e66ccdd253eecbb1bbebd29f0b",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS",
+          "header": {
+            "format": "Mach-O 64-bit",
+            "advertised_slice_verified": "x86_64",
+            "cpu_type": "0x1000007"
+          }
+        }
+      ],
+      "signing_status": "not inspected; no release signing/notarization performed by this helper"
+    },
+    {
+      "target": "linux-x86_64",
+      "artifact": {
+        "id": 14837191097,
+        "name": "cs80-linux-install-bundle",
+        "bytes": 13282726,
+        "sha256": "f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip"
+      },
+      "acceptance": {
+        "path": "linux-x86_64/install-acceptance.json",
+        "bytes": 3620,
+        "sha256": "6c36d8d847779d57371d13cfc988e1631bcadeb15c953345832a13e949ded391"
+      },
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "inner_archive": {
+        "file": "cs80-reference-linux-x86_64-cbbee6a94098.tar.gz",
+        "bytes": 13277405,
+        "sha256": "ce0e663858e0ec8d9c5f15a33953a229bc0c7265476ba4c3d71c7c5da6297e12"
+      },
+      "inventory_entries": 20,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+          "bytes": 17444296,
+          "sha256": "dd5f5da6e239b1d969908fbebc9f36b28257a6cb2dc9903da9b4540a4aa85a83",
+          "platform": "linux",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS",
+          "header": {
+            "format": "ELF64 little-endian",
+            "machine": 62,
+            "image_type": 3
+          }
+        },
+        {
+          "path": "Standalone/CS-80 Reference",
+          "bytes": 16785984,
+          "sha256": "6b7736b19cdf1edfa7e79536946aaba09f7703ef816ad6e75516d9a9658eeef6",
+          "platform": "linux",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS",
+          "header": {
+            "format": "ELF64 little-endian",
+            "machine": 62,
+            "image_type": 3
+          }
+        }
+      ],
+      "signing_status": "not inspected; no release signing/notarization performed by this helper",
+      "validator_input_artifact": {
+        "id": 14836566834,
+        "name": "cs80-linux-vst3",
+        "bytes": 6916689,
+        "sha256": "74b81c73bdb2dd3b88c9eccaddcaeb0f394263975a8fd25aaacbc9e30ed38a89",
+        "expires_at": "2027-02-21T12:42:09Z",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836566834.zip"
+      },
+      "validator_payload_identity": {
+        "path": "linux-x86_64/validator-payload-identity.json",
+        "bytes": 2954,
+        "sha256": "2366beb0b72403417359248a93521efaa62270ec0baf83b069e7829cf1412237"
+      }
+    }
+  ],
+  "audition": {
+    "artifact": {
+      "id": 14836886459,
+      "name": "cs80-curated-preset-audition-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "bytes": 204465925,
+      "sha256": "3a4b57fc49e05aef9bd233dd7eb129165d4b5514feb2c6c914e858e271a223ff",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip"
+    },
+    "contract": {
+      "wav_count": 90,
+      "unique_rendered_programs": 71,
+      "duration_seconds": 594,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "encoding": "IEEE float32 WAV",
+      "level_processing": "Unnormalized source capture; actual WAV values, settings and CSV metrics checked",
+      "complete_inventory_programs": 523,
+      "parameters_per_program": 198,
+      "body_model_count": 19,
+      "member_files": 107,
+      "checksummed_member_files": 106
+    },
+    "sample_results": {
+      "stereo_frames": 28512000,
+      "individual_channel_samples": 57024000,
+      "nonfinite_samples": 0,
+      "samples_at_or_above_full_scale": 0,
+      "highest_peak_dbfs": -13.24640749426045,
+      "intentional_silent_files": [
+        "pressure-zero/444-Pressure-Lead.wav"
+      ]
+    },
+    "acceptance": {
+      "path": "audition/acceptance-summary.json",
+      "bytes": 39791,
+      "sha256": "f308659a131e6d45adbd4d31ef8e60475326b9562fc1aca3251b100d6eb6b85a"
+    },
+    "delivered_inventory_identity": {
+      "path": "audition/delivered-inventory-identity.json",
+      "bytes": 3106,
+      "sha256": "f447f6f849a24205197d9394ed905987f7848185663c2c3073ca099a38f8ffc6"
+    }
+  },
+  "artifact_acquisition": "GitHub connector artifact downloads materialized locally, with byte counts and SHA256 checked against independent API digests. Public nightly.link URLs identify those immutable artifacts; no unauthenticated direct-download claim is inferred from connector acquisition.",
+  "limits": [
+    "Authored physically motivated signal models; no measured acoustic-instrument indistinguishability or calibrated physical CS-80 match.",
+    "CI installation bundles lack publisher release signing and Apple notarization; macOS may have ad-hoc signatures.",
+    "Windows pluginval is headless; the recorded tests do not certify every DAW or interactive installation workflow.",
+    "CPU costs depend on model, voices and quality; development measurements are separate from these package tests.",
+    "Actions artifacts expire; the public links are not permanent GitHub release assets.",
+    "The bundled guides reflect the source snapshot before all dependent validators completed. Later repository qualification documents do not alter archived bytes."
+  ],
+  "windows_host_fixture_regressions": {
+    "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "run_id": 45176799427,
+    "run_attempt": 1,
+    "target": "windows-x86_64",
+    "native_job_id": 137700037337,
+    "tests": [
+      {
+        "name": "cs80_circuit_source_host_tests",
+        "seconds": 11.3629,
+        "output_excerpt": "Expression persistence RMS: restored=0.00531658706 expected=0.00531657497 full=0.0177240837 relative_error=2.27501452e-06\nCircuit source/controller host tests: 0 failures",
+        "passed": true
+      },
+      {
+        "name": "cs80_modern_recall_host_tests",
+        "seconds": 9.44828,
+        "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.218643 copy=0.001052 xml=0.009766 session_text=0.001572 fixture_write=0.109460 preset_load=0.021018 session_load=0.014191 audio=0.001424 save=0.024910 round_trip_load=0.028266\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.429357 copy=0.001966 xml=0.019403 session_text=0.003132 fixture_write=0.215121 preset_load=0.041420 session_load=0.028037 audio=0.002771 save=0.049071 round_trip_load=0.056228\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.639609 copy=0.002844 xml=0.028972 session_text=0.004685 fixture_write=0.322107 preset_load=0.061302 session_load=0.041799 audio=0.004097 save=0.072909 round_trip_load=0.083679\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.853123 copy=0.003752 xml=0.039062 session_text=0.006282 fixture_write=0.429357 preset_load=0.081534 session_load=0.055975 audio=0.005501 save=0.097280 round_trip_load=0.111931\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_ui_smoke",
+        "seconds": 124.497,
+        "output_excerpt": "UI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.002652 total_seconds=0.002654\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=6.102909 total_seconds=6.105562\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=13.791905 total_seconds=19.897467\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.481865 total_seconds=20.379332\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.090768 total_seconds=23.470100\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      }
+    ],
+    "prior_failed_source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "prior_failed_run": 45168179474,
+    "correction_scope": "Host-test fixture heap ownership; production audio and preset definitions unchanged."
+  },
+  "supporting_evidence": {
+    "review": {
+      "path": "supporting-ci-final.json",
+      "bytes": 28682,
+      "sha256": "bd503e662901df379ac03b98e2205f7f6b88c5d46925d15517d4602367cb64f7"
+    },
+    "status": "completed_exact_source_supporting_evidence",
+    "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+    "runs": [
+      {
+        "id": 45176799301,
+        "name": "DSP numerical measurements",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301"
+      },
+      {
+        "id": 45176799293,
+        "name": "Hardware panel screenshots",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293"
+      }
+    ],
+    "dsp_jobs": [
+      {
+        "id": 137700036511,
+        "name": "measure",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "status": "completed",
+        "conclusion": "success",
+        "required_steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned numerical plotting tools",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build standalone numerical probe",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Measure and enforce regression bounds",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Export actual-engine candidate with exact-source provenance",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload live envelope candidate trace",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload source-traceable graphs and raw traces",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 137700036773,
+        "name": "Synthetic reference comparison (not hardware evidence)",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "status": "completed",
+        "conclusion": "success",
+        "required_steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Test comparison failures and provenance gates",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Compare deterministic synthetic stand-in traces",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v5",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 137700037009,
+        "name": "sanitizers",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "status": "completed",
+        "conclusion": "success",
+        "required_steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Configure ASan and UBSan core build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build instrument and circuit tests",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run sanitizer and validator-fixture tests",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 137700037102,
+        "name": "Default-off raw audio versus shipped baseline",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "status": "completed",
+        "conclusion": "success",
+        "required_steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build both revisions with the same compiler",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require byte-identical default and noisy-reassignment traces",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v5",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 137700037575,
+        "name": "Source circuit V1 and audio V2 compatibility",
+        "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "status": "completed",
+        "conclusion": "success",
+        "required_steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build immutable circuit and audio checkpoints with one compiler",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require unchanged seven-tone V1 circuit numerics",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require unchanged source-audio V2 and numerical history",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v5",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "exact_final_source_sanitizer_execution": true,
+    "sanitizer_run_id": 45176799301,
+    "sanitizer_job_conclusion": "success",
+    "sanitizer_counts": {
+      "registered": 198,
+      "passed": 197,
+      "failed": 0,
+      "formal_skipped": 1,
+      "disabled": 0
+    },
+    "observed_sanitizer_diagnostics": [],
+    "screenshots": {
+      "run_id": 45176799293,
+      "job_id": 137700035971,
+      "run_attempt": 1,
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install official Ubuntu build dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Configure exact source",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build screenshot renderer and core tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Capture actual editor at every supported size and page",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Publish screenshot evidence",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Refresh repository screenshots from this exact source",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "full_ui_smoke": "UI SMOKE TEST PASSED",
+      "golden_images": [
+        {
+          "name": "main-1600x1000",
+          "changed_pixel_percent": 0.0,
+          "worst_8x8_block_mean": 0.0
+        },
+        {
+          "name": "main-1120x700",
+          "changed_pixel_percent": 0.0,
+          "worst_8x8_block_mean": 0.0
+        }
+      ],
+      "artifact": {
+        "id": 14819867427,
+        "name": "cs80-panel-cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "bytes": 62105463,
+        "sha256": "22a19a8d180430c1e5968ffcd61e39cc10a9d26b0875208b5d46a0e633bf51c1",
+        "upload_log_id_size_digest_match": true,
+        "downloaded_by_this_reviewer": false,
+        "scope": "API metadata and successful producer log verified; screenshot ZIP payload not downloaded by this reviewer."
+      },
+      "log": {
+        "path": "screens-final.log",
+        "bytes": 110084,
+        "sha256": "0b2ab735789d85db81dd97bf7562717e514d9225bc929626db640f89d90a6471"
+      },
+      "assertion_failure_messages": [],
+      "assertion_failures": 0,
+      "instrument_body_host_identity_and_recall_phase_completed": true,
+      "instrument_body_host_phase_seconds": 1.199187,
+      "repository_screenshot_refresh": {
+        "step_conclusion": "success",
+        "main_head_after_refresh": "75853ad6c0ebfceaa14a61a3613d4ce73a2cba79",
+        "bot_commit": "75853ad6c0ebfceaa14a61a3613d4ce73a2cba79",
+        "parent": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "changed_paths": [
+          "docs/screenshots/SHA256SUMS",
+          "docs/screenshots/advanced-page1.png",
+          "docs/screenshots/advanced-page2.png",
+          "docs/screenshots/advanced-page3.png",
+          "docs/screenshots/advanced-page4.png",
+          "docs/screenshots/advanced-populated-page1.png",
+          "docs/screenshots/advanced-populated-page2.png",
+          "docs/screenshots/advanced-populated-page3.png",
+          "docs/screenshots/advanced-populated-page4.png",
+          "docs/screenshots/advanced-source-performance-about.png",
+          "docs/screenshots/advanced-sub-ext-enabled.png",
+          "docs/screenshots/browser-1600x1000.png",
+          "docs/screenshots/main-ext-enabled-1600x1000.png",
+          "docs/screenshots/main-populated-1600x1000.png",
+          "docs/screenshots/main-restored-1600x1000.png",
+          "docs/screenshots/main-source-performance-1120x700.png",
+          "docs/screenshots/memory-programmer-1600x1000.png",
+          "docs/screenshots/memory-programmer-selected-1600x1000.png",
+          "docs/screenshots/provenance.json",
+          "docs/screenshots/studio-drawers-1120x700.png"
+        ],
+        "only_screenshot_documentation_changed": true
+      }
+    },
+    "downloaded_compatibility_artifacts": [
+      {
+        "id": 14820291208,
+        "name": "cs80-source-factory-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "path": "source-factory-compatibility.zip",
+        "bytes": 984,
+        "sha256": "93809d6fb7f4ef93de63fcdfb7fcedc3e260ec12807c15be73e1c306a5e204e7",
+        "producer_job": 137700037575,
+        "producer_conclusion": "success",
+        "upload_log_id_size_digest_match": true,
+        "report": {
+          "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+          "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+          "candidate": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "source_tones": 7,
+          "circuit_values": 16632,
+          "sample_rates": [
+            44100,
+            48000,
+            96000,
+            192000
+          ],
+          "v1_circuit_bytes_unchanged": true,
+          "v2_audio_and_numeric_state_bytes_unchanged": true,
+          "model_metadata_excluded": true,
+          "analog_evidence": false
+        },
+        "raw_trace_hash_pairs": [
+          {
+            "audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+            "audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+          },
+          {
+            "circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+            "circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+          }
+        ],
+        "raw_traces_uploaded": false,
+        "producer_log": {
+          "path": "source_compat.log",
+          "bytes": 20944,
+          "sha256": "0dca7afb1fcfcb809846161c4f603a2f776db9339cc23e78db254639218f7c51"
+        },
+        "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+      },
+      {
+        "id": 14820386968,
+        "name": "cs80-legacy-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "path": "legacy-compatibility.zip",
+        "bytes": 29436,
+        "sha256": "5c94f6876eb3b737929f01530728a04a7dfdd8d75442e62882a6c0c2d1b38c63",
+        "producer_job": 137700037102,
+        "producer_conclusion": "success",
+        "upload_log_id_size_digest_match": true,
+        "report": {
+          "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "candidate": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+          "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "corpus_parameters": 137,
+          "default_off_byte_identical": true,
+          "legacy_programs": 222,
+          "sample_rates": [
+            44100,
+            48000,
+            96000
+          ],
+          "analog_evidence": false
+        },
+        "raw_trace_hash_pairs": [
+          {
+            "baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+            "current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+          },
+          {
+            "baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+            "current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+          }
+        ],
+        "raw_traces_uploaded": false,
+        "producer_log": {
+          "path": "legacy.log",
+          "bytes": 19256,
+          "sha256": "d72e28d5f1609f4ab23428d709b6105d65352c57ad2b793267ed36e6b266b744"
+        },
+        "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+      }
+    ],
+    "historical_a81851b": {
+      "review": {
+        "path": "../source-a81851b/supporting-ci-final.json",
+        "bytes": 19564,
+        "sha256": "c4ee2bbb7609095727c68d8ce4f90ea1f231e1d7a0e21a93ad7d82f1b8d3adb5"
+      },
+      "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "sanitizer_job_conclusion": "failure",
+      "sanitizer_counts": {
+        "registered": 198,
+        "passed": 196,
+        "failed": 1,
+        "formal_skipped": 1,
+        "disabled": 0
+      },
+      "sole_failure": "cs80_packaging_notice_tests",
+      "correction_source": "389a44807813b3dff24847b2c496623ff0a9f4a7"
+    },
+    "filter_source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "filter_run": 45159882417,
+    "filter_conclusion": "success",
+    "scope": "Current DSP and screenshot executions are bound to the exact final source. Earlier supporting outcomes and filter evidence retain their original identities and conclusions.",
+    "api_evidence": {
+      "dsp-run-final-api.json": {
+        "path": "dsp-run-final-api.json",
+        "bytes": 15446,
+        "sha256": "ba6c7e3dfd5be7426d85fa27748188c2e4200e177bb8eec76417313451738627"
+      },
+      "dsp-jobs-final-api.json": {
+        "path": "dsp-jobs-final-api.json",
+        "bytes": 17458,
+        "sha256": "b8a2ae8e6a939d7aa4a1127d2d24b280782bbd58f3e1e3c0a791516b2cc61619"
+      },
+      "screens-run-final-api.json": {
+        "path": "screens-run-final-api.json",
+        "bytes": 15441,
+        "sha256": "f9ab44d9de0a87839918a2cf22b22dd0d7113067ce340632e77490f8acc10efb"
+      },
+      "screens-jobs-final-api.json": {
+        "path": "screens-jobs-final-api.json",
+        "bytes": 4360,
+        "sha256": "9ae0cbf415b058a94ea94eac0f51490776c10f0bd7629218cf8ecb3615cc74bd"
+      }
+    }
+  },
+  "historical_outcomes": {
+    "path": "../../source-fixture-correction.json",
+    "bytes": 7354,
+    "sha256": "47c3e656fe1a644bf0e9ae16436bbf67f9e94fb6c3417b3a830c1cf425d46699"
+  },
+  "verification_tools": {
+    "README.md": {
+      "path": "../verification-tools/README.md",
+      "bytes": 5241,
+      "sha256": "453828776f7325291526c7ba97891d1b29777338ab9d73c97015bad98ed73b61"
+    },
+    "tool-provenance.json": {
+      "path": "../verification-tools/tool-provenance.json",
+      "bytes": 1421,
+      "sha256": "9cf50017bb3b4040f21f1386e70910d5652d716cc917d3b03cad8d6f9a1d548d"
+    },
+    "verify-install-artifact.py": {
+      "path": "../verification-tools/verify-install-artifact.py",
+      "bytes": 19060,
+      "sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062"
+    },
+    "verify-audition-zip.py": {
+      "path": "../verification-tools/verify-audition-zip.py",
+      "bytes": 12534,
+      "sha256": "32514c1dec151af41a873a426b67f2fe7b67fe5533de1e1a9c42851d74b814a9"
+    },
+    "verify-validator-payload.py": {
+      "path": "../verification-tools/verify-validator-payload.py",
+      "bytes": 36579,
+      "sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330"
+    },
+    "history/windows-sidecar-correction.json": {
+      "path": "../verification-tools/history/windows-sidecar-correction.json",
+      "bytes": 4235,
+      "sha256": "0dc9a2bed4ac448810f1170669dfb2d222834088afc55a6c978d8a4aba7af9e0"
+    },
+    "history/verify-validator-payload-before-windows-sidecars.py": {
+      "path": "../verification-tools/history/verify-validator-payload-before-windows-sidecars.py",
+      "bytes": 21884,
+      "sha256": "c44b84bcc73860d68933cf5c3bea85f080d27eb916c51261ecbaa1b3b4f5ff67"
+    },
+    "history/windows-sidecar-fixture-results.json": {
+      "path": "../verification-tools/history/windows-sidecar-fixture-results.json",
+      "bytes": 2734,
+      "sha256": "a112f5c99d661ecf4cca615a9174c3d739b0e382702841338592f72b41fdfc6e"
+    }
+  }
+}

@@ -1,0 +1,1247 @@
+﻿2026-11-23T11:14:12.9089842Z Current runner version: '2.338.2'
+2026-11-23T11:14:12.9116784Z ##[group]Runner Image Provisioner
+2026-11-23T11:14:12.9117649Z Hosted Compute Agent
+2026-11-23T11:14:12.9118530Z Version: 20261111.635
+2026-11-23T11:14:12.9119183Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T11:14:12.9119937Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T11:14:12.9120590Z Worker ID: {96647e55-8306-4b41-9f93-7f1bb1abde3e}
+2026-11-23T11:14:12.9121291Z Region: us-east-1
+2026-11-23T11:14:12.9121991Z Cloud: AWS
+2026-11-23T11:14:12.9122529Z ##[endgroup]
+2026-11-23T11:14:12.9124069Z ##[group]Operating System
+2026-11-23T11:14:12.9124675Z Ubuntu
+2026-11-23T11:14:12.9125486Z 24.04.5
+2026-11-23T11:14:12.9125992Z LTS
+2026-11-23T11:14:12.9126515Z ##[endgroup]
+2026-11-23T11:14:12.9127051Z ##[group]Runner Image
+2026-11-23T11:14:12.9127621Z Image: ubuntu-24.04
+2026-11-23T11:14:12.9128190Z Version: 20261116.133.1
+2026-11-23T11:14:12.9129729Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.133/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T11:14:12.9131298Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.133
+2026-11-23T11:14:12.9132238Z ##[endgroup]
+2026-11-23T11:14:12.9133387Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T11:14:12.9135827Z Contents: write
+2026-11-23T11:14:12.9136385Z Metadata: read
+2026-11-23T11:14:12.9136909Z ##[endgroup]
+2026-11-23T11:14:12.9139458Z Secret source: Actions
+2026-11-23T11:14:12.9140352Z Cache mode: write
+2026-11-23T11:14:12.9141237Z Prepare workflow directory
+2026-11-23T11:14:12.9396261Z Prepare all required actions
+2026-11-23T11:14:12.9433380Z Getting action download info
+2026-11-23T11:14:13.0952666Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T11:14:15.2874825Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T11:14:15.6420274Z Complete job name: screenshots
+2026-11-23T11:14:15.7063880Z ##[group]Run actions/checkout@v5
+2026-11-23T11:14:15.7064621Z with:
+2026-11-23T11:14:15.7065081Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:14:15.7068749Z   token: ***
+2026-11-23T11:14:15.7069226Z   ssh-strict: true
+2026-11-23T11:14:15.7069642Z   ssh-user: git
+2026-11-23T11:14:15.7070075Z   persist-credentials: true
+2026-11-23T11:14:15.7070595Z   clean: true
+2026-11-23T11:14:15.7071032Z   sparse-checkout-cone-mode: true
+2026-11-23T11:14:15.7071532Z   fetch-depth: 1
+2026-11-23T11:14:15.7071937Z   fetch-tags: false
+2026-11-23T11:14:15.7072345Z   show-progress: true
+2026-11-23T11:14:15.7072835Z   lfs: false
+2026-11-23T11:14:15.7073253Z   submodules: false
+2026-11-23T11:14:15.7073691Z   set-safe-directory: true
+2026-11-23T11:14:15.7074160Z   allow-unsafe-pr-checkout: false
+2026-11-23T11:14:15.7074788Z ##[endgroup]
+2026-11-23T11:14:19.6338162Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:14:19.6340123Z ##[group]Getting Git version info
+2026-11-23T11:14:19.6340867Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T11:14:19.6341922Z [command]/usr/bin/git version
+2026-11-23T11:14:19.9422663Z git version 2.56.1
+2026-11-23T11:14:19.9438527Z ##[endgroup]
+2026-11-23T11:14:19.9448222Z Temporarily overriding HOME='/home/runner/work/_temp/77fba963-2f66-4912-8d99-9a4f9ff22877' before making global git config changes
+2026-11-23T11:14:19.9449176Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T11:14:19.9452496Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T11:14:20.0039970Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T11:14:20.0046190Z ##[group]Initializing the repository
+2026-11-23T11:14:20.0050591Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T11:14:20.0938429Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T11:14:20.0939359Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T11:14:20.0940312Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T11:14:20.0940794Z hint: call:
+2026-11-23T11:14:20.0941043Z hint:
+2026-11-23T11:14:20.0941383Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T11:14:20.0941757Z hint:
+2026-11-23T11:14:20.0942072Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T11:14:20.0942540Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T11:14:20.0942911Z hint:
+2026-11-23T11:14:20.0943160Z hint: 	git branch -m <name>
+2026-11-23T11:14:20.0943433Z hint:
+2026-11-23T11:14:20.0943766Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T11:14:20.0948958Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T11:14:20.0957688Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:14:20.1008549Z ##[endgroup]
+2026-11-23T11:14:20.1009419Z ##[group]Disabling automatic garbage collection
+2026-11-23T11:14:20.1011587Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T11:14:20.1034140Z ##[endgroup]
+2026-11-23T11:14:20.1034884Z ##[group]Setting up auth
+2026-11-23T11:14:20.1039450Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T11:14:20.1067585Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T11:14:20.4951512Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T11:14:20.4977666Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T11:14:20.5129387Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T11:14:20.5152539Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T11:14:20.5296690Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T11:14:20.5322439Z ##[endgroup]
+2026-11-23T11:14:20.5322851Z ##[group]Fetching the repository
+2026-11-23T11:14:20.5335276Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a81851bc87b5ac16277c185585d36dec7ffe712e:refs/remotes/origin/main
+2026-11-23T11:14:24.4794809Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:14:24.4795554Z  * [new ref]         a81851bc87b5ac16277c185585d36dec7ffe712e -> origin/main
+2026-11-23T11:14:24.4798706Z ##[endgroup]
+2026-11-23T11:14:24.4799183Z ##[group]Determining the checkout info
+2026-11-23T11:14:24.4801200Z ##[endgroup]
+2026-11-23T11:14:24.4806290Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T11:14:24.4879275Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T11:14:24.4901147Z ##[group]Checking out the ref
+2026-11-23T11:14:24.4905167Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T11:14:25.1814511Z Switched to a new branch 'main'
+2026-11-23T11:14:25.1822388Z branch 'main' set up to track 'origin/main'.
+2026-11-23T11:14:25.1844380Z ##[endgroup]
+2026-11-23T11:14:25.1888667Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T11:14:25.1909152Z a81851bc87b5ac16277c185585d36dec7ffe712e
+2026-11-23T11:14:25.2081815Z ##[group]Run sudo apt-get update
+2026-11-23T11:14:25.2082264Z [36;1msudo apt-get update[0m
+2026-11-23T11:14:25.2083174Z [36;1msudo apt-get install -y --no-install-recommends cmake ninja-build g++ pkg-config libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev libfreetype-dev libfontconfig1-dev fonts-dejavu-core xvfb xauth openbox x11-utils[0m
+2026-11-23T11:14:25.5085003Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:14:25.5085337Z ##[endgroup]
+2026-11-23T11:14:25.6452717Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T11:14:25.6738055Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-23T11:14:25.7711773Z Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-23T11:14:25.7869020Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [762 kB]
+2026-11-23T11:14:25.7870211Z Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-23T11:14:25.8105323Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [832 kB]
+2026-11-23T11:14:25.8452078Z Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-23T11:14:25.9003857Z Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-23T11:14:25.9181389Z Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1475 kB]
+2026-11-23T11:14:25.9778117Z Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [319 kB]
+2026-11-23T11:14:25.9952283Z Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1716 kB]
+2026-11-23T11:14:26.0527590Z Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [346 kB]
+2026-11-23T11:14:26.0681281Z Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1922 kB]
+2026-11-23T11:14:26.1275642Z Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [443 kB]
+2026-11-23T11:14:26.1486241Z Get:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1198 kB]
+2026-11-23T11:14:26.1807239Z Get:16 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/main Translation-en [239 kB]
+2026-11-23T11:14:26.2007326Z Get:17 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1230 kB]
+2026-11-23T11:14:26.2342827Z Get:18 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1792 kB]
+2026-11-23T11:14:26.2924895Z Get:19 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [414 kB]
+2026-11-23T11:14:37.5947620Z Fetched 13.1 MB in 1s (10.7 MB/s)
+2026-11-23T11:14:38.5239073Z Reading package lists...
+2026-11-23T11:14:38.5545975Z Reading package lists...
+2026-11-23T11:14:38.7652006Z Building dependency tree...
+2026-11-23T11:14:38.7657332Z Reading state information...
+2026-11-23T11:14:38.9098566Z g++ is already the newest version (4:13.2.0-7ubuntu1).
+2026-11-23T11:14:38.9099502Z pkg-config is already the newest version (1.8.1-2build1).
+2026-11-23T11:14:38.9099892Z fonts-dejavu-core is already the newest version (2.37-8).
+2026-11-23T11:14:38.9100357Z fonts-dejavu-core set to manually installed.
+2026-11-23T11:14:38.9100758Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-11-23T11:14:38.9101170Z xauth is already the newest version (1:1.1.2-1build1).
+2026-11-23T11:14:38.9101573Z xauth set to manually installed.
+2026-11-23T11:14:38.9101944Z The following additional packages will be installed:
+2026-11-23T11:14:38.9102470Z   cmake-data fonts-urw-base35 libbrotli-dev libbz2-dev libegl-dev libegl-mesa0
+2026-11-23T11:14:38.9103015Z   libegl1 libfontconfig-dev libgbm1 libgif7 libgl-dev libgl1-mesa-dri
+2026-11-23T11:14:38.9103979Z   libgles-dev libgles1 libgles2 libglvnd-core-dev libglvnd-dev libglx-dev
+2026-11-23T11:14:38.9104396Z   libglx-mesa0 libgs-common libgs10 libgs10-common libhwy1t64 libid3tag0
+2026-11-23T11:14:38.9104787Z   libidn12 libijs-0.35 libimlib2t64 libjbig2dec0 libjsoncpp25 libjxl0.7
+2026-11-23T11:14:38.9105220Z   libobrender32v5 libobt2v5 libopengl-dev libopengl0 libpangoxft-1.0-0
+2026-11-23T11:14:38.9109171Z   libpaper1 libpng-dev libpthread-stubs0-dev librhash0 librsvg2-2 libspectre1
+2026-11-23T11:14:38.9114223Z   libstartup-notification0 libxau-dev libxcb-shape0 libxcb-util1 libxcb1-dev
+2026-11-23T11:14:38.9114740Z   libxdmcp-dev libxfixes-dev libxv1 libxxf86dga1 mesa-libgallium poppler-data
+2026-11-23T11:14:38.9115142Z   uuid-dev x11proto-dev xfonts-encodings xfonts-utils xorg-sgml-doctools
+2026-11-23T11:14:38.9115487Z   xtrans-dev
+2026-11-23T11:14:38.9115718Z Suggested packages:
+2026-11-23T11:14:38.9116027Z   cmake-doc cmake-format elpa-cmake-mode fonts-freefont-otf
+2026-11-23T11:14:38.9116473Z   | fonts-freefont-ttf fonts-texgyre libasound2-doc freetype2-doc librsvg2-bin
+2026-11-23T11:14:38.9116846Z   libx11-doc libxcb-doc libxext-doc tint2 openbox-gnome-session
+2026-11-23T11:14:38.9117773Z   openbox-kde-session poppler-utils ghostscript fonts-japanese-mincho
+2026-11-23T11:14:38.9118187Z   | fonts-ipafont-mincho fonts-japanese-gothic | fonts-ipafont-gothic
+2026-11-23T11:14:38.9118737Z   fonts-arphic-ukai fonts-arphic-uming fonts-nanum mesa-utils
+2026-11-23T11:14:38.9119059Z Recommended packages:
+2026-11-23T11:14:38.9119371Z   bzip2-doc fonts-droid-fallback libpaper-utils libpng-tools librsvg2-common
+2026-11-23T11:14:38.9119767Z   obconf | obconf-qt scrot luit
+2026-11-23T11:14:39.1770008Z The following NEW packages will be installed:
+2026-11-23T11:14:39.1772147Z   cmake cmake-data fonts-urw-base35 libasound2-dev libbrotli-dev libbz2-dev
+2026-11-23T11:14:39.1772696Z   libegl-dev libegl-mesa0 libegl1 libfontconfig-dev libfontconfig1-dev
+2026-11-23T11:14:39.1773322Z   libfreetype-dev libgif7 libgl-dev libgl1-mesa-dev libgles-dev libgles1
+2026-11-23T11:14:39.1773896Z   libgles2 libglvnd-core-dev libglvnd-dev libglx-dev libgs-common libgs10
+2026-11-23T11:14:39.1774493Z   libgs10-common libhwy1t64 libid3tag0 libidn12 libijs-0.35 libimlib2t64
+2026-11-23T11:14:39.1775087Z   libjbig2dec0 libjsoncpp25 libjxl0.7 libobrender32v5 libobt2v5 libopengl-dev
+2026-11-23T11:14:39.1775614Z   libopengl0 libpangoxft-1.0-0 libpaper1 libpng-dev libpthread-stubs0-dev
+2026-11-23T11:14:39.1779352Z   librhash0 librsvg2-2 libspectre1 libstartup-notification0 libx11-dev
+2026-11-23T11:14:39.1779900Z   libxau-dev libxcb-shape0 libxcb-util1 libxcb1-dev libxcomposite-dev
+2026-11-23T11:14:39.1780457Z   libxcursor-dev libxdmcp-dev libxext-dev libxfixes-dev libxinerama-dev
+2026-11-23T11:14:39.1781346Z   libxrandr-dev libxrender-dev libxv1 libxxf86dga1 ninja-build openbox
+2026-11-23T11:14:39.1783604Z   poppler-data uuid-dev x11-utils x11proto-dev xfonts-encodings xfonts-utils
+2026-11-23T11:14:39.1784337Z   xorg-sgml-doctools xtrans-dev
+2026-11-23T11:14:39.1788606Z The following packages will be upgraded:
+2026-11-23T11:14:39.1793923Z   libgbm1 libgl1-mesa-dri libglx-mesa0 mesa-libgallium
+2026-11-23T11:14:39.1955926Z 4 upgraded, 69 newly installed, 0 to remove and 61 not upgraded.
+2026-11-23T11:14:39.1956636Z Need to get 51.5 MB of archives.
+2026-11-23T11:14:39.1957323Z After this operation, 141 MB of additional disk space will be used.
+2026-11-23T11:14:39.1957946Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T11:15:09.2645817Z Ign:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 poppler-data all 0.4.12-1
+2026-11-23T11:15:09.2892699Z Ign:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1
+2026-11-23T11:15:09.3136225Z Ign:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1
+2026-11-23T11:15:09.3424170Z Ign:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7
+2026-11-23T11:15:09.3676232Z Ign:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7
+2026-11-23T11:15:09.3957969Z Ign:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2
+2026-11-23T11:15:09.4210873Z Ign:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3
+2026-11-23T11:15:09.4497469Z Ign:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 fonts-urw-base35 all 20200910-8
+2026-11-23T11:15:09.4749683Z Ign:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libasound2-dev amd64 1.2.11-1ubuntu0.3
+2026-11-23T11:15:09.5044212Z Ign:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libbrotli-dev amd64 1.1.0-2ubuntu0.1
+2026-11-23T11:15:09.5295540Z Ign:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libbz2-dev amd64 1.0.8-5.1ubuntu0.1
+2026-11-23T11:15:09.5533487Z Ign:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dri amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:09.5816145Z Ign:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglx-mesa0 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:09.6060591Z Ign:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:09.6334568Z Ign:16 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:09.6578516Z Ign:17 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libegl-mesa0 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:09.6878835Z Ign:18 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libegl1 amd64 1.7.0-1build1
+2026-11-23T11:15:09.7165815Z Ign:19 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xorg-sgml-doctools all 1:1.11-1.1
+2026-11-23T11:15:09.7452718Z Ign:20 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 x11proto-dev all 2023.2-1
+2026-11-23T11:15:09.7714294Z Ign:21 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxau-dev amd64 1:1.0.9-1build6
+2026-11-23T11:15:09.7993725Z Ign:22 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxdmcp-dev amd64 1:1.1.3-0ubuntu6
+2026-11-23T11:15:09.8248134Z Ign:23 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xtrans-dev all 1.4.0-1
+2026-11-23T11:15:09.8534136Z Ign:24 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpthread-stubs0-dev amd64 0.4-1build3
+2026-11-23T11:15:09.8820451Z Ign:25 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb1-dev amd64 1.15-1ubuntu2
+2026-11-23T11:15:09.9077587Z Ign:26 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libx11-dev amd64 2:1.8.7-1ubuntu0.1
+2026-11-23T11:15:09.9357821Z Ign:27 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglx-dev amd64 1.7.0-1build1
+2026-11-23T11:15:09.9605126Z Ign:28 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:09.9888939Z Ign:29 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libegl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:10.0157530Z Ign:30 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpng-dev amd64 1.6.43-5ubuntu0.7
+2026-11-23T11:15:10.0421225Z Ign:31 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype-dev amd64 2.13.2+dfsg-1ubuntu0.2
+2026-11-23T11:15:10.0668083Z Ign:32 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 uuid-dev amd64 2.39.3-9ubuntu6.6
+2026-11-23T11:15:10.0934098Z Ign:33 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig-dev amd64 2.15.0-1.1ubuntu2
+2026-11-23T11:15:10.1190923Z Ign:34 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig1-dev amd64 2.15.0-1.1ubuntu2
+2026-11-23T11:15:10.1473975Z Ign:35 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgif7 amd64 5.2.2-1ubuntu1.2
+2026-11-23T11:15:10.1720915Z Ign:36 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles1 amd64 1.7.0-1build1
+2026-11-23T11:15:10.2012183Z Ign:37 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles2 amd64 1.7.0-1build1
+2026-11-23T11:15:10.2304300Z Ign:38 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles-dev amd64 1.7.0-1build1
+2026-11-23T11:15:10.2573575Z Ign:39 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs-common all 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:10.2802942Z Ign:40 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10-common all 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:10.3087556Z Ign:41 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libidn12 amd64 1.42-1ubuntu0.1
+2026-11-23T11:15:10.3364822Z Ign:42 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libijs-0.35 amd64 0.35-15.1build1
+2026-11-23T11:15:10.3616523Z Ign:43 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libjbig2dec0 amd64 0.20-1ubuntu0.24.04.1
+2026-11-23T11:15:10.3897879Z Ign:44 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpaper1 amd64 1.1.29build1
+2026-11-23T11:15:10.4154886Z Ign:45 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10 amd64 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:10.4438997Z Ign:46 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libhwy1t64 amd64 1.0.7-8.1build1
+2026-11-23T11:15:10.4685145Z Ign:47 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libid3tag0 amd64 0.15.1b-14build1
+2026-11-23T11:15:10.4924799Z Ign:48 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libjxl0.7 amd64 0.7.0-10.2ubuntu6.1
+2026-11-23T11:15:10.5220603Z Ign:49 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 librsvg2-2 amd64 2.58.0+dfsg-1ubuntu0.1
+2026-11-23T11:15:10.5500880Z Ign:50 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libspectre1 amd64 0.2.12-1build2
+2026-11-23T11:15:10.5802242Z Ign:51 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libimlib2t64 amd64 1.12.1-1.1build2
+2026-11-23T11:15:10.6093692Z Ign:52 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libobt2v5 amd64 3.6.1-12build5
+2026-11-23T11:15:10.6343770Z Ign:53 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpangoxft-1.0-0 amd64 1.52.1+ds-1build1
+2026-11-23T11:15:10.6628870Z Ign:54 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libobrender32v5 amd64 3.6.1-12build5
+2026-11-23T11:15:10.6913021Z Ign:55 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libopengl0 amd64 1.7.0-1build1
+2026-11-23T11:15:10.7202695Z Ign:56 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libopengl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:10.7454086Z Ign:57 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb-util1 amd64 0.4.0-1build3
+2026-11-23T11:15:10.7749753Z Ign:58 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libstartup-notification0 amd64 0.12-6build3
+2026-11-23T11:15:10.8040864Z Ign:59 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb-shape0 amd64 1.15-1ubuntu2
+2026-11-23T11:15:10.8284462Z Ign:60 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxfixes-dev amd64 1:6.0.0-2build1
+2026-11-23T11:15:10.8538169Z Ign:61 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxext-dev amd64 2:1.3.4-1build2
+2026-11-23T11:15:10.8829248Z Ign:62 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcomposite-dev amd64 1:0.4.5-1build3
+2026-11-23T11:15:10.9120006Z Ign:63 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxrender-dev amd64 1:0.9.10-1.1build1
+2026-11-23T11:15:10.9374481Z Ign:64 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcursor-dev amd64 1:1.2.1-1build1
+2026-11-23T11:15:10.9665869Z Ign:65 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxinerama-dev amd64 2:1.1.4-3build1
+2026-11-23T11:15:10.9958150Z Ign:66 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxrandr-dev amd64 2:1.5.2-2build1
+2026-11-23T11:15:11.0248004Z Ign:67 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxv1 amd64 2:1.0.11-1.1build1
+2026-11-23T11:15:11.0536435Z Ign:68 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxxf86dga1 amd64 2:1.1.5-1build1
+2026-11-23T11:15:11.0784892Z Ign:69 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 ninja-build amd64 1.11.1-2
+2026-11-23T11:15:11.1085249Z Ign:70 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 openbox amd64 3.6.1-12build5
+2026-11-23T11:15:11.1333052Z Ign:71 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 x11-utils amd64 7.7+6build2
+2026-11-23T11:15:11.1577458Z Ign:72 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-core-dev amd64 1.7.0-1build1
+2026-11-23T11:15:11.1828752Z Ign:73 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-dev amd64 1.7.0-1build1
+2026-11-23T11:15:11.2111783Z Ign:74 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dev amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.2390641Z Ign:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 poppler-data all 0.4.12-1
+2026-11-23T11:15:11.2648108Z Ign:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1
+2026-11-23T11:15:11.2919098Z Ign:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1
+2026-11-23T11:15:11.3216162Z Ign:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7
+2026-11-23T11:15:11.3503650Z Ign:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7
+2026-11-23T11:15:11.3773294Z Ign:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2
+2026-11-23T11:15:11.4023982Z Ign:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3
+2026-11-23T11:15:11.4324651Z Ign:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 fonts-urw-base35 all 20200910-8
+2026-11-23T11:15:11.4570918Z Ign:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libasound2-dev amd64 1.2.11-1ubuntu0.3
+2026-11-23T11:15:11.4789886Z Ign:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libbrotli-dev amd64 1.1.0-2ubuntu0.1
+2026-11-23T11:15:11.5076356Z Ign:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libbz2-dev amd64 1.0.8-5.1ubuntu0.1
+2026-11-23T11:15:11.5363897Z Ign:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dri amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.5652492Z Ign:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglx-mesa0 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.5938853Z Ign:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.6221210Z Ign:16 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.6437141Z Ign:17 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libegl-mesa0 amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:11.6735403Z Ign:18 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libegl1 amd64 1.7.0-1build1
+2026-11-23T11:15:11.7019656Z Ign:19 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xorg-sgml-doctools all 1:1.11-1.1
+2026-11-23T11:15:11.7314262Z Ign:20 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 x11proto-dev all 2023.2-1
+2026-11-23T11:15:11.7560873Z Ign:21 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxau-dev amd64 1:1.0.9-1build6
+2026-11-23T11:15:11.7852169Z Ign:22 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxdmcp-dev amd64 1:1.1.3-0ubuntu6
+2026-11-23T11:15:11.8169349Z Ign:23 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xtrans-dev all 1.4.0-1
+2026-11-23T11:15:11.8421823Z Ign:24 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpthread-stubs0-dev amd64 0.4-1build3
+2026-11-23T11:15:11.8672490Z Ign:25 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb1-dev amd64 1.15-1ubuntu2
+2026-11-23T11:15:11.8954189Z Ign:26 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libx11-dev amd64 2:1.8.7-1ubuntu0.1
+2026-11-23T11:15:11.9234192Z Ign:27 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglx-dev amd64 1.7.0-1build1
+2026-11-23T11:15:11.9520382Z Ign:28 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:11.9801672Z Ign:29 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libegl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:12.0024988Z Ign:30 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpng-dev amd64 1.6.43-5ubuntu0.7
+2026-11-23T11:15:12.0301167Z Ign:31 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype-dev amd64 2.13.2+dfsg-1ubuntu0.2
+2026-11-23T11:15:12.0557935Z Ign:32 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 uuid-dev amd64 2.39.3-9ubuntu6.6
+2026-11-23T11:15:12.0806972Z Ign:33 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig-dev amd64 2.15.0-1.1ubuntu2
+2026-11-23T11:15:12.1111469Z Ign:34 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig1-dev amd64 2.15.0-1.1ubuntu2
+2026-11-23T11:15:12.1399796Z Ign:35 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgif7 amd64 5.2.2-1ubuntu1.2
+2026-11-23T11:15:12.1683305Z Ign:36 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles1 amd64 1.7.0-1build1
+2026-11-23T11:15:12.1926800Z Ign:37 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles2 amd64 1.7.0-1build1
+2026-11-23T11:15:12.2173528Z Ign:38 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libgles-dev amd64 1.7.0-1build1
+2026-11-23T11:15:12.2447220Z Ign:39 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs-common all 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:12.2734109Z Ign:40 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10-common all 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:12.3034454Z Ign:41 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libidn12 amd64 1.42-1ubuntu0.1
+2026-11-23T11:15:12.3320240Z Ign:42 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libijs-0.35 amd64 0.35-15.1build1
+2026-11-23T11:15:12.3658956Z Ign:43 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libjbig2dec0 amd64 0.20-1ubuntu0.24.04.1
+2026-11-23T11:15:12.3952673Z Ign:44 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpaper1 amd64 1.1.29build1
+2026-11-23T11:15:12.4242421Z Ign:45 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10 amd64 10.02.1~dfsg1-0ubuntu7.10
+2026-11-23T11:15:12.4529277Z Ign:46 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libhwy1t64 amd64 1.0.7-8.1build1
+2026-11-23T11:15:12.4748188Z Ign:47 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libid3tag0 amd64 0.15.1b-14build1
+2026-11-23T11:15:12.5037037Z Ign:48 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libjxl0.7 amd64 0.7.0-10.2ubuntu6.1
+2026-11-23T11:15:12.5280298Z Ign:49 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 librsvg2-2 amd64 2.58.0+dfsg-1ubuntu0.1
+2026-11-23T11:15:12.5525350Z Ign:50 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libspectre1 amd64 0.2.12-1build2
+2026-11-23T11:15:12.5780994Z Ign:51 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libimlib2t64 amd64 1.12.1-1.1build2
+2026-11-23T11:15:12.6071026Z Ign:52 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libobt2v5 amd64 3.6.1-12build5
+2026-11-23T11:15:12.6316899Z Ign:53 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libpangoxft-1.0-0 amd64 1.52.1+ds-1build1
+2026-11-23T11:15:12.6557395Z Ign:54 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libobrender32v5 amd64 3.6.1-12build5
+2026-11-23T11:15:12.6810340Z Ign:55 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libopengl0 amd64 1.7.0-1build1
+2026-11-23T11:15:12.7051145Z Ign:56 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libopengl-dev amd64 1.7.0-1build1
+2026-11-23T11:15:12.7304895Z Ign:57 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb-util1 amd64 0.4.0-1build3
+2026-11-23T11:15:12.7553735Z Ign:58 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libstartup-notification0 amd64 0.12-6build3
+2026-11-23T11:15:12.7811632Z Ign:59 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcb-shape0 amd64 1.15-1ubuntu2
+2026-11-23T11:15:12.8064672Z Ign:60 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxfixes-dev amd64 1:6.0.0-2build1
+2026-11-23T11:15:12.8278895Z Ign:61 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxext-dev amd64 2:1.3.4-1build2
+2026-11-23T11:15:12.8549844Z Ign:62 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcomposite-dev amd64 1:0.4.5-1build3
+2026-11-23T11:15:12.8804675Z Ign:63 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxrender-dev amd64 1:0.9.10-1.1build1
+2026-11-23T11:15:12.9069269Z Ign:64 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxcursor-dev amd64 1:1.2.1-1build1
+2026-11-23T11:15:12.9318960Z Ign:65 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxinerama-dev amd64 2:1.1.4-3build1
+2026-11-23T11:15:12.9628688Z Ign:66 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxrandr-dev amd64 2:1.5.2-2build1
+2026-11-23T11:15:12.9882691Z Ign:67 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxv1 amd64 2:1.0.11-1.1build1
+2026-11-23T11:15:13.0167536Z Ign:68 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libxxf86dga1 amd64 2:1.1.5-1build1
+2026-11-23T11:15:13.0459753Z Ign:69 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 ninja-build amd64 1.11.1-2
+2026-11-23T11:15:13.0743820Z Ign:70 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 openbox amd64 3.6.1-12build5
+2026-11-23T11:15:13.1037747Z Ign:71 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 x11-utils amd64 7.7+6build2
+2026-11-23T11:15:13.1319808Z Ign:72 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-core-dev amd64 1.7.0-1build1
+2026-11-23T11:15:13.1602583Z Ign:73 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-dev amd64 1.7.0-1build1
+2026-11-23T11:15:13.1896617Z Ign:74 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dev amd64 25.2.8-0ubuntu0.24.04.5
+2026-11-23T11:15:16.9792327Z Get:2 https://archive.ubuntu.com/ubuntu noble/main amd64 poppler-data all 0.4.12-1 [2060 kB]
+2026-11-23T11:15:17.6395967Z Get:3 https://archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1 [82.8 kB]
+2026-11-23T11:15:17.7170712Z Get:4 https://archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1 [129 kB]
+2026-11-23T11:15:17.7973792Z Get:5 https://archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7 [2155 kB]
+2026-11-23T11:15:17.9446993Z Get:6 https://archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7 [11.2 MB]
+2026-11-23T11:15:18.2293259Z Get:7 https://archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-11-23T11:15:18.3076691Z Get:8 https://archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-11-23T11:15:18.3840615Z Get:9 https://archive.ubuntu.com/ubuntu noble/main amd64 fonts-urw-base35 all 20200910-8 [11.0 MB]
+2026-11-23T11:15:18.5187571Z Get:10 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libasound2-dev amd64 1.2.11-1ubuntu0.3 [115 kB]
+2026-11-23T11:15:18.5980094Z Get:11 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libbrotli-dev amd64 1.1.0-2ubuntu0.1 [353 kB]
+2026-11-23T11:15:18.6757091Z Get:12 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libbz2-dev amd64 1.0.8-5.1ubuntu0.1 [33.6 kB]
+2026-11-23T11:15:18.7524661Z Get:13 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dri amd64 25.2.8-0ubuntu0.24.04.5 [38.0 kB]
+2026-11-23T11:15:18.8289138Z Get:14 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libglx-mesa0 amd64 25.2.8-0ubuntu0.24.04.5 [110 kB]
+2026-11-23T11:15:18.9090131Z Get:15 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.5 [34.2 kB]
+2026-11-23T11:15:18.9855117Z Get:16 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.5 [10.8 MB]
+2026-11-23T11:15:19.1279204Z Get:17 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libegl-mesa0 amd64 25.2.8-0ubuntu0.24.04.5 [117 kB]
+2026-11-23T11:15:19.2056387Z Get:18 https://archive.ubuntu.com/ubuntu noble/main amd64 libegl1 amd64 1.7.0-1build1 [28.7 kB]
+2026-11-23T11:15:19.2843966Z Get:19 https://archive.ubuntu.com/ubuntu noble/main amd64 xorg-sgml-doctools all 1:1.11-1.1 [10.9 kB]
+2026-11-23T11:15:19.3600227Z Get:20 https://archive.ubuntu.com/ubuntu noble/main amd64 x11proto-dev all 2023.2-1 [602 kB]
+2026-11-23T11:15:19.5575727Z Get:21 https://archive.ubuntu.com/ubuntu noble/main amd64 libxau-dev amd64 1:1.0.9-1build6 [9570 B]
+2026-11-23T11:15:19.6336603Z Get:22 https://archive.ubuntu.com/ubuntu noble/main amd64 libxdmcp-dev amd64 1:1.1.3-0ubuntu6 [26.5 kB]
+2026-11-23T11:15:19.7107969Z Get:23 https://archive.ubuntu.com/ubuntu noble/main amd64 xtrans-dev all 1.4.0-1 [68.9 kB]
+2026-11-23T11:15:19.7872171Z Get:24 https://archive.ubuntu.com/ubuntu noble/main amd64 libpthread-stubs0-dev amd64 0.4-1build3 [4746 B]
+2026-11-23T11:15:19.8633050Z Get:25 https://archive.ubuntu.com/ubuntu noble/main amd64 libxcb1-dev amd64 1.15-1ubuntu2 [85.8 kB]
+2026-11-23T11:15:19.9391064Z Get:26 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libx11-dev amd64 2:1.8.7-1ubuntu0.1 [732 kB]
+2026-11-23T11:15:20.0201111Z Get:27 https://archive.ubuntu.com/ubuntu noble/main amd64 libglx-dev amd64 1.7.0-1build1 [14.2 kB]
+2026-11-23T11:15:20.0958630Z Get:28 https://archive.ubuntu.com/ubuntu noble/main amd64 libgl-dev amd64 1.7.0-1build1 [102 kB]
+2026-11-23T11:15:20.1728006Z Get:29 https://archive.ubuntu.com/ubuntu noble/main amd64 libegl-dev amd64 1.7.0-1build1 [18.2 kB]
+2026-11-23T11:15:20.2484237Z Get:30 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpng-dev amd64 1.6.43-5ubuntu0.7 [265 kB]
+2026-11-23T11:15:20.3289257Z Get:31 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype-dev amd64 2.13.2+dfsg-1ubuntu0.2 [574 kB]
+2026-11-23T11:15:20.4077175Z Get:32 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 uuid-dev amd64 2.39.3-9ubuntu6.6 [33.5 kB]
+2026-11-23T11:15:20.4850757Z Get:33 https://archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig-dev amd64 2.15.0-1.1ubuntu2 [161 kB]
+2026-11-23T11:15:20.5613825Z Get:34 https://archive.ubuntu.com/ubuntu noble/main amd64 libfontconfig1-dev amd64 2.15.0-1.1ubuntu2 [1840 B]
+2026-11-23T11:15:20.6369705Z Get:35 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgif7 amd64 5.2.2-1ubuntu1.2 [35.6 kB]
+2026-11-23T11:15:20.7128690Z Get:36 https://archive.ubuntu.com/ubuntu noble/main amd64 libgles1 amd64 1.7.0-1build1 [11.6 kB]
+2026-11-23T11:15:20.7884024Z Get:37 https://archive.ubuntu.com/ubuntu noble/main amd64 libgles2 amd64 1.7.0-1build1 [17.1 kB]
+2026-11-23T11:15:20.8653699Z Get:38 https://archive.ubuntu.com/ubuntu noble/main amd64 libgles-dev amd64 1.7.0-1build1 [50.5 kB]
+2026-11-23T11:15:20.9426526Z Get:39 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs-common all 10.02.1~dfsg1-0ubuntu7.10 [176 kB]
+2026-11-23T11:15:21.1369102Z Get:40 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10-common all 10.02.1~dfsg1-0ubuntu7.10 [488 kB]
+2026-11-23T11:15:21.2156548Z Get:41 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libidn12 amd64 1.42-1ubuntu0.1 [56.1 kB]
+2026-11-23T11:15:21.2949309Z Get:42 https://archive.ubuntu.com/ubuntu noble/main amd64 libijs-0.35 amd64 0.35-15.1build1 [15.3 kB]
+2026-11-23T11:15:21.3708829Z Get:43 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libjbig2dec0 amd64 0.20-1ubuntu0.24.04.1 [65.2 kB]
+2026-11-23T11:15:21.4471458Z Get:44 https://archive.ubuntu.com/ubuntu noble/main amd64 libpaper1 amd64 1.1.29build1 [13.4 kB]
+2026-11-23T11:15:21.5230862Z Get:45 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgs10 amd64 10.02.1~dfsg1-0ubuntu7.10 [3900 kB]
+2026-11-23T11:15:21.6262257Z Get:46 https://archive.ubuntu.com/ubuntu noble/universe amd64 libhwy1t64 amd64 1.0.7-8.1build1 [584 kB]
+2026-11-23T11:15:21.7119979Z Get:47 https://archive.ubuntu.com/ubuntu noble/universe amd64 libid3tag0 amd64 0.15.1b-14build1 [33.6 kB]
+2026-11-23T11:15:21.7889910Z Get:48 https://archive.ubuntu.com/ubuntu noble-updates/universe amd64 libjxl0.7 amd64 0.7.0-10.2ubuntu6.1 [1001 kB]
+2026-11-23T11:15:21.8753431Z Get:49 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 librsvg2-2 amd64 2.58.0+dfsg-1ubuntu0.1 [2141 kB]
+2026-11-23T11:15:21.9662266Z Get:50 https://archive.ubuntu.com/ubuntu noble/main amd64 libspectre1 amd64 0.2.12-1build2 [30.9 kB]
+2026-11-23T11:15:22.0478947Z Get:51 https://archive.ubuntu.com/ubuntu noble/universe amd64 libimlib2t64 amd64 1.12.1-1.1build2 [208 kB]
+2026-11-23T11:15:22.1246252Z Get:52 https://archive.ubuntu.com/ubuntu noble/universe amd64 libobt2v5 amd64 3.6.1-12build5 [33.3 kB]
+2026-11-23T11:15:22.2043958Z Get:53 https://archive.ubuntu.com/ubuntu noble/main amd64 libpangoxft-1.0-0 amd64 1.52.1+ds-1build1 [20.3 kB]
+2026-11-23T11:15:22.2814025Z Get:54 https://archive.ubuntu.com/ubuntu noble/universe amd64 libobrender32v5 amd64 3.6.1-12build5 [42.5 kB]
+2026-11-23T11:15:22.3571914Z Get:55 https://archive.ubuntu.com/ubuntu noble/main amd64 libopengl0 amd64 1.7.0-1build1 [32.8 kB]
+2026-11-23T11:15:22.4349821Z Get:56 https://archive.ubuntu.com/ubuntu noble/main amd64 libopengl-dev amd64 1.7.0-1build1 [3454 B]
+2026-11-23T11:15:22.5116389Z Get:57 https://archive.ubuntu.com/ubuntu noble/main amd64 libxcb-util1 amd64 0.4.0-1build3 [10.7 kB]
+2026-11-23T11:15:22.6020484Z Get:58 https://archive.ubuntu.com/ubuntu noble/main amd64 libstartup-notification0 amd64 0.12-6build3 [18.4 kB]
+2026-11-23T11:15:22.7959219Z Get:59 https://archive.ubuntu.com/ubuntu noble/main amd64 libxcb-shape0 amd64 1.15-1ubuntu2 [6100 B]
+2026-11-23T11:15:22.8715885Z Get:60 https://archive.ubuntu.com/ubuntu noble/main amd64 libxfixes-dev amd64 1:6.0.0-2build1 [12.1 kB]
+2026-11-23T11:15:22.9480350Z Get:61 https://archive.ubuntu.com/ubuntu noble/main amd64 libxext-dev amd64 2:1.3.4-1build2 [83.5 kB]
+2026-11-23T11:15:23.0242925Z Get:62 https://archive.ubuntu.com/ubuntu noble/main amd64 libxcomposite-dev amd64 1:0.4.5-1build3 [9374 B]
+2026-11-23T11:15:23.1001789Z Get:63 https://archive.ubuntu.com/ubuntu noble/main amd64 libxrender-dev amd64 1:0.9.10-1.1build1 [26.3 kB]
+2026-11-23T11:15:23.1809906Z Get:64 https://archive.ubuntu.com/ubuntu noble/main amd64 libxcursor-dev amd64 1:1.2.1-1build1 [31.8 kB]
+2026-11-23T11:15:23.2575548Z Get:65 https://archive.ubuntu.com/ubuntu noble/main amd64 libxinerama-dev amd64 2:1.1.4-3build1 [7988 B]
+2026-11-23T11:15:23.3385864Z Get:66 https://archive.ubuntu.com/ubuntu noble/main amd64 libxrandr-dev amd64 2:1.5.2-2build1 [26.4 kB]
+2026-11-23T11:15:23.4156345Z Get:67 https://archive.ubuntu.com/ubuntu noble/main amd64 libxv1 amd64 2:1.0.11-1.1build1 [10.7 kB]
+2026-11-23T11:15:23.4921000Z Get:68 https://archive.ubuntu.com/ubuntu noble/main amd64 libxxf86dga1 amd64 2:1.1.5-1build1 [11.6 kB]
+2026-11-23T11:15:23.5690405Z Get:69 https://archive.ubuntu.com/ubuntu noble/universe amd64 ninja-build amd64 1.11.1-2 [129 kB]
+2026-11-23T11:15:23.6573607Z Get:70 https://archive.ubuntu.com/ubuntu noble/universe amd64 openbox amd64 3.6.1-12build5 [304 kB]
+2026-11-23T11:15:23.7347318Z Get:71 https://archive.ubuntu.com/ubuntu noble/main amd64 x11-utils amd64 7.7+6build2 [189 kB]
+2026-11-23T11:15:23.8134966Z Get:72 https://archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-core-dev amd64 1.7.0-1build1 [13.6 kB]
+2026-11-23T11:15:23.8900317Z Get:73 https://archive.ubuntu.com/ubuntu noble/main amd64 libglvnd-dev amd64 1.7.0-1build1 [3198 B]
+2026-11-23T11:15:23.9679424Z Get:74 https://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dev amd64 25.2.8-0ubuntu0.24.04.5 [22.9 kB]
+2026-11-23T11:15:24.9582092Z Preconfiguring packages ...
+2026-11-23T11:15:25.0038444Z Fetched 51.5 MB in 45s (1149 kB/s)
+2026-11-23T11:15:25.1070120Z Selecting previously unselected package poppler-data.
+2026-11-23T11:15:25.3229560Z (Reading database ... 
+2026-11-23T11:15:25.3230245Z (Reading database ... 5%
+2026-11-23T11:15:25.3230550Z (Reading database ... 10%
+2026-11-23T11:15:25.3230981Z (Reading database ... 15%
+2026-11-23T11:15:25.3231275Z (Reading database ... 20%
+2026-11-23T11:15:25.3231565Z (Reading database ... 25%
+2026-11-23T11:15:25.3231870Z (Reading database ... 30%
+2026-11-23T11:15:25.3232134Z (Reading database ... 35%
+2026-11-23T11:15:25.3232445Z (Reading database ... 40%
+2026-11-23T11:15:25.3232718Z (Reading database ... 45%
+2026-11-23T11:15:25.3233095Z (Reading database ... 50%
+2026-11-23T11:15:25.3319688Z (Reading database ... 55%
+2026-11-23T11:15:25.7969530Z (Reading database ... 60%
+2026-11-23T11:15:25.9422371Z (Reading database ... 65%
+2026-11-23T11:15:26.0744403Z (Reading database ... 70%
+2026-11-23T11:15:26.1849753Z (Reading database ... 75%
+2026-11-23T11:15:26.2764070Z (Reading database ... 80%
+2026-11-23T11:15:27.6214733Z (Reading database ... 85%
+2026-11-23T11:15:29.4129715Z (Reading database ... 90%
+2026-11-23T11:15:30.5370601Z (Reading database ... 95%
+2026-11-23T11:15:30.5371149Z (Reading database ... 100%
+2026-11-23T11:15:30.5374031Z (Reading database ... 216720 files and directories currently installed.)
+2026-11-23T11:15:30.5415571Z Preparing to unpack .../00-poppler-data_0.4.12-1_all.deb ...
+2026-11-23T11:15:30.5436786Z Unpacking poppler-data (0.4.12-1) ...
+2026-11-23T11:15:30.7043734Z Selecting previously unselected package libjsoncpp25:amd64.
+2026-11-23T11:15:30.7145837Z Preparing to unpack .../01-libjsoncpp25_1.9.5-6build1_amd64.deb ...
+2026-11-23T11:15:30.7161553Z Unpacking libjsoncpp25:amd64 (1.9.5-6build1) ...
+2026-11-23T11:15:30.7302251Z Selecting previously unselected package librhash0:amd64.
+2026-11-23T11:15:30.7400752Z Preparing to unpack .../02-librhash0_1.4.3-3build1_amd64.deb ...
+2026-11-23T11:15:30.7406266Z Unpacking librhash0:amd64 (1.4.3-3build1) ...
+2026-11-23T11:15:30.7554024Z Selecting previously unselected package cmake-data.
+2026-11-23T11:15:30.7646972Z Preparing to unpack .../03-cmake-data_3.28.3-1build7_all.deb ...
+2026-11-23T11:15:30.7700388Z Unpacking cmake-data (3.28.3-1build7) ...
+2026-11-23T11:15:30.9626295Z Selecting previously unselected package cmake.
+2026-11-23T11:15:30.9746293Z Preparing to unpack .../04-cmake_3.28.3-1build7_amd64.deb ...
+2026-11-23T11:15:30.9751068Z Unpacking cmake (3.28.3-1build7) ...
+2026-11-23T11:15:31.1203167Z Selecting previously unselected package xfonts-encodings.
+2026-11-23T11:15:31.1305560Z Preparing to unpack .../05-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-11-23T11:15:31.1309466Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-23T11:15:31.1481565Z Selecting previously unselected package xfonts-utils.
+2026-11-23T11:15:31.1581962Z Preparing to unpack .../06-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-11-23T11:15:31.1585811Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-11-23T11:15:31.2571889Z Selecting previously unselected package fonts-urw-base35.
+2026-11-23T11:15:31.2674872Z Preparing to unpack .../07-fonts-urw-base35_20200910-8_all.deb ...
+2026-11-23T11:15:31.3107119Z Unpacking fonts-urw-base35 (20200910-8) ...
+2026-11-23T11:15:31.4045022Z Selecting previously unselected package libasound2-dev:amd64.
+2026-11-23T11:15:31.4149426Z Preparing to unpack .../08-libasound2-dev_1.2.11-1ubuntu0.3_amd64.deb ...
+2026-11-23T11:15:31.4170303Z Unpacking libasound2-dev:amd64 (1.2.11-1ubuntu0.3) ...
+2026-11-23T11:15:31.4643026Z Selecting previously unselected package libbrotli-dev:amd64.
+2026-11-23T11:15:31.4745138Z Preparing to unpack .../09-libbrotli-dev_1.1.0-2ubuntu0.1_amd64.deb ...
+2026-11-23T11:15:31.4749508Z Unpacking libbrotli-dev:amd64 (1.1.0-2ubuntu0.1) ...
+2026-11-23T11:15:31.4911198Z Selecting previously unselected package libbz2-dev:amd64.
+2026-11-23T11:15:31.5007735Z Preparing to unpack .../10-libbz2-dev_1.0.8-5.1ubuntu0.1_amd64.deb ...
+2026-11-23T11:15:31.5013300Z Unpacking libbz2-dev:amd64 (1.0.8-5.1ubuntu0.1) ...
+2026-11-23T11:15:31.5236475Z Preparing to unpack .../11-libgl1-mesa-dri_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:31.5344402Z Unpacking libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.5) over (25.2.8-0ubuntu0.24.04.4) ...
+2026-11-23T11:15:31.5972005Z Preparing to unpack .../12-libglx-mesa0_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:31.5990461Z Unpacking libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.5) over (25.2.8-0ubuntu0.24.04.4) ...
+2026-11-23T11:15:31.6234993Z Preparing to unpack .../13-libgbm1_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:31.6252428Z Unpacking libgbm1:amd64 (25.2.8-0ubuntu0.24.04.5) over (25.2.8-0ubuntu0.24.04.4) ...
+2026-11-23T11:15:31.6521447Z Preparing to unpack .../14-mesa-libgallium_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:31.6538978Z Unpacking mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.5) over (25.2.8-0ubuntu0.24.04.4) ...
+2026-11-23T11:15:31.7921962Z Selecting previously unselected package libegl-mesa0:amd64.
+2026-11-23T11:15:31.8031899Z Preparing to unpack .../15-libegl-mesa0_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:31.8036090Z Unpacking libegl-mesa0:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:31.8180093Z Selecting previously unselected package libegl1:amd64.
+2026-11-23T11:15:31.8279469Z Preparing to unpack .../16-libegl1_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:31.8284652Z Unpacking libegl1:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:31.8406721Z Selecting previously unselected package xorg-sgml-doctools.
+2026-11-23T11:15:31.8505852Z Preparing to unpack .../17-xorg-sgml-doctools_1%3a1.11-1.1_all.deb ...
+2026-11-23T11:15:31.8509672Z Unpacking xorg-sgml-doctools (1:1.11-1.1) ...
+2026-11-23T11:15:31.8986054Z Selecting previously unselected package x11proto-dev.
+2026-11-23T11:15:31.9091461Z Preparing to unpack .../18-x11proto-dev_2023.2-1_all.deb ...
+2026-11-23T11:15:31.9094835Z Unpacking x11proto-dev (2023.2-1) ...
+2026-11-23T11:15:31.9354948Z Selecting previously unselected package libxau-dev:amd64.
+2026-11-23T11:15:31.9456879Z Preparing to unpack .../19-libxau-dev_1%3a1.0.9-1build6_amd64.deb ...
+2026-11-23T11:15:31.9460709Z Unpacking libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-11-23T11:15:31.9664168Z Selecting previously unselected package libxdmcp-dev:amd64.
+2026-11-23T11:15:31.9766210Z Preparing to unpack .../20-libxdmcp-dev_1%3a1.1.3-0ubuntu6_amd64.deb ...
+2026-11-23T11:15:31.9770927Z Unpacking libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-11-23T11:15:31.9893309Z Selecting previously unselected package xtrans-dev.
+2026-11-23T11:15:31.9991815Z Preparing to unpack .../21-xtrans-dev_1.4.0-1_all.deb ...
+2026-11-23T11:15:31.9996066Z Unpacking xtrans-dev (1.4.0-1) ...
+2026-11-23T11:15:32.0151221Z Selecting previously unselected package libpthread-stubs0-dev:amd64.
+2026-11-23T11:15:32.0247380Z Preparing to unpack .../22-libpthread-stubs0-dev_0.4-1build3_amd64.deb ...
+2026-11-23T11:15:32.0252173Z Unpacking libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-11-23T11:15:32.0370912Z Selecting previously unselected package libxcb1-dev:amd64.
+2026-11-23T11:15:32.0466848Z Preparing to unpack .../23-libxcb1-dev_1.15-1ubuntu2_amd64.deb ...
+2026-11-23T11:15:32.0471475Z Unpacking libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-11-23T11:15:32.0616289Z Selecting previously unselected package libx11-dev:amd64.
+2026-11-23T11:15:32.0712068Z Preparing to unpack .../24-libx11-dev_2%3a1.8.7-1ubuntu0.1_amd64.deb ...
+2026-11-23T11:15:32.0716872Z Unpacking libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-11-23T11:15:32.0928125Z Selecting previously unselected package libglx-dev:amd64.
+2026-11-23T11:15:32.1026055Z Preparing to unpack .../25-libglx-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.1030903Z Unpacking libglx-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.1151753Z Selecting previously unselected package libgl-dev:amd64.
+2026-11-23T11:15:32.1248196Z Preparing to unpack .../26-libgl-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.1252572Z Unpacking libgl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.1409367Z Selecting previously unselected package libegl-dev:amd64.
+2026-11-23T11:15:32.1506115Z Preparing to unpack .../27-libegl-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.1509967Z Unpacking libegl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.1634622Z Selecting previously unselected package libpng-dev:amd64.
+2026-11-23T11:15:32.1731103Z Preparing to unpack .../28-libpng-dev_1.6.43-5ubuntu0.7_amd64.deb ...
+2026-11-23T11:15:32.1735236Z Unpacking libpng-dev:amd64 (1.6.43-5ubuntu0.7) ...
+2026-11-23T11:15:32.1914058Z Selecting previously unselected package libfreetype-dev:amd64.
+2026-11-23T11:15:32.2008854Z Preparing to unpack .../29-libfreetype-dev_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+2026-11-23T11:15:32.2013485Z Unpacking libfreetype-dev:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+2026-11-23T11:15:32.2219918Z Selecting previously unselected package uuid-dev:amd64.
+2026-11-23T11:15:32.2314900Z Preparing to unpack .../30-uuid-dev_2.39.3-9ubuntu6.6_amd64.deb ...
+2026-11-23T11:15:32.2319525Z Unpacking uuid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-11-23T11:15:32.2459930Z Selecting previously unselected package libfontconfig-dev:amd64.
+2026-11-23T11:15:32.2554358Z Preparing to unpack .../31-libfontconfig-dev_2.15.0-1.1ubuntu2_amd64.deb ...
+2026-11-23T11:15:32.2559089Z Unpacking libfontconfig-dev:amd64 (2.15.0-1.1ubuntu2) ...
+2026-11-23T11:15:32.2711648Z Selecting previously unselected package libfontconfig1-dev:amd64.
+2026-11-23T11:15:32.2803898Z Preparing to unpack .../32-libfontconfig1-dev_2.15.0-1.1ubuntu2_amd64.deb ...
+2026-11-23T11:15:32.2808590Z Unpacking libfontconfig1-dev:amd64 (2.15.0-1.1ubuntu2) ...
+2026-11-23T11:15:32.2928942Z Selecting previously unselected package libgif7:amd64.
+2026-11-23T11:15:32.3020666Z Preparing to unpack .../33-libgif7_5.2.2-1ubuntu1.2_amd64.deb ...
+2026-11-23T11:15:32.3025004Z Unpacking libgif7:amd64 (5.2.2-1ubuntu1.2) ...
+2026-11-23T11:15:32.3151003Z Selecting previously unselected package libgles1:amd64.
+2026-11-23T11:15:32.3241622Z Preparing to unpack .../34-libgles1_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.3246245Z Unpacking libgles1:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.3372873Z Selecting previously unselected package libgles2:amd64.
+2026-11-23T11:15:32.3464253Z Preparing to unpack .../35-libgles2_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.3468965Z Unpacking libgles2:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.3590482Z Selecting previously unselected package libgles-dev:amd64.
+2026-11-23T11:15:32.3681884Z Preparing to unpack .../36-libgles-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.3686300Z Unpacking libgles-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.3827831Z Selecting previously unselected package libgs-common.
+2026-11-23T11:15:32.3920386Z Preparing to unpack .../37-libgs-common_10.02.1~dfsg1-0ubuntu7.10_all.deb ...
+2026-11-23T11:15:32.3924832Z Unpacking libgs-common (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:32.4064671Z Selecting previously unselected package libgs10-common.
+2026-11-23T11:15:32.4163967Z Preparing to unpack .../38-libgs10-common_10.02.1~dfsg1-0ubuntu7.10_all.deb ...
+2026-11-23T11:15:32.4168368Z Unpacking libgs10-common (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:32.4471521Z Selecting previously unselected package libidn12:amd64.
+2026-11-23T11:15:32.4571385Z Preparing to unpack .../39-libidn12_1.42-1ubuntu0.1_amd64.deb ...
+2026-11-23T11:15:32.4575493Z Unpacking libidn12:amd64 (1.42-1ubuntu0.1) ...
+2026-11-23T11:15:32.4705013Z Selecting previously unselected package libijs-0.35:amd64.
+2026-11-23T11:15:32.4803440Z Preparing to unpack .../40-libijs-0.35_0.35-15.1build1_amd64.deb ...
+2026-11-23T11:15:32.4808390Z Unpacking libijs-0.35:amd64 (0.35-15.1build1) ...
+2026-11-23T11:15:32.4933971Z Selecting previously unselected package libjbig2dec0:amd64.
+2026-11-23T11:15:32.5029576Z Preparing to unpack .../41-libjbig2dec0_0.20-1ubuntu0.24.04.1_amd64.deb ...
+2026-11-23T11:15:32.5034161Z Unpacking libjbig2dec0:amd64 (0.20-1ubuntu0.24.04.1) ...
+2026-11-23T11:15:32.5173756Z Selecting previously unselected package libpaper1:amd64.
+2026-11-23T11:15:32.5269659Z Preparing to unpack .../42-libpaper1_1.1.29build1_amd64.deb ...
+2026-11-23T11:15:32.5275002Z Unpacking libpaper1:amd64 (1.1.29build1) ...
+2026-11-23T11:15:32.5414098Z Selecting previously unselected package libgs10:amd64.
+2026-11-23T11:15:32.5508708Z Preparing to unpack .../43-libgs10_10.02.1~dfsg1-0ubuntu7.10_amd64.deb ...
+2026-11-23T11:15:32.5514278Z Unpacking libgs10:amd64 (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:32.6352678Z Selecting previously unselected package libhwy1t64:amd64.
+2026-11-23T11:15:32.6453844Z Preparing to unpack .../44-libhwy1t64_1.0.7-8.1build1_amd64.deb ...
+2026-11-23T11:15:32.6458924Z Unpacking libhwy1t64:amd64 (1.0.7-8.1build1) ...
+2026-11-23T11:15:32.6688030Z Selecting previously unselected package libid3tag0:amd64.
+2026-11-23T11:15:32.6787394Z Preparing to unpack .../45-libid3tag0_0.15.1b-14build1_amd64.deb ...
+2026-11-23T11:15:32.6791356Z Unpacking libid3tag0:amd64 (0.15.1b-14build1) ...
+2026-11-23T11:15:32.6923130Z Selecting previously unselected package libjxl0.7:amd64.
+2026-11-23T11:15:32.7020106Z Preparing to unpack .../46-libjxl0.7_0.7.0-10.2ubuntu6.1_amd64.deb ...
+2026-11-23T11:15:32.7024377Z Unpacking libjxl0.7:amd64 (0.7.0-10.2ubuntu6.1) ...
+2026-11-23T11:15:32.7272653Z Selecting previously unselected package librsvg2-2:amd64.
+2026-11-23T11:15:32.7365710Z Preparing to unpack .../47-librsvg2-2_2.58.0+dfsg-1ubuntu0.1_amd64.deb ...
+2026-11-23T11:15:32.7370131Z Unpacking librsvg2-2:amd64 (2.58.0+dfsg-1ubuntu0.1) ...
+2026-11-23T11:15:32.7724001Z Selecting previously unselected package libspectre1:amd64.
+2026-11-23T11:15:32.7817354Z Preparing to unpack .../48-libspectre1_0.2.12-1build2_amd64.deb ...
+2026-11-23T11:15:32.7821781Z Unpacking libspectre1:amd64 (0.2.12-1build2) ...
+2026-11-23T11:15:32.7948725Z Selecting previously unselected package libimlib2t64:amd64.
+2026-11-23T11:15:32.8041165Z Preparing to unpack .../49-libimlib2t64_1.12.1-1.1build2_amd64.deb ...
+2026-11-23T11:15:32.8045465Z Unpacking libimlib2t64:amd64 (1.12.1-1.1build2) ...
+2026-11-23T11:15:32.8205101Z Selecting previously unselected package libobt2v5:amd64.
+2026-11-23T11:15:32.8296695Z Preparing to unpack .../50-libobt2v5_3.6.1-12build5_amd64.deb ...
+2026-11-23T11:15:32.8300855Z Unpacking libobt2v5:amd64 (3.6.1-12build5) ...
+2026-11-23T11:15:32.8430295Z Selecting previously unselected package libpangoxft-1.0-0:amd64.
+2026-11-23T11:15:32.8521029Z Preparing to unpack .../51-libpangoxft-1.0-0_1.52.1+ds-1build1_amd64.deb ...
+2026-11-23T11:15:32.8525682Z Unpacking libpangoxft-1.0-0:amd64 (1.52.1+ds-1build1) ...
+2026-11-23T11:15:32.8653290Z Selecting previously unselected package libobrender32v5.
+2026-11-23T11:15:32.8743659Z Preparing to unpack .../52-libobrender32v5_3.6.1-12build5_amd64.deb ...
+2026-11-23T11:15:32.8748446Z Unpacking libobrender32v5 (3.6.1-12build5) ...
+2026-11-23T11:15:32.8880105Z Selecting previously unselected package libopengl0:amd64.
+2026-11-23T11:15:32.8969419Z Preparing to unpack .../53-libopengl0_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.8974154Z Unpacking libopengl0:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.9100947Z Selecting previously unselected package libopengl-dev:amd64.
+2026-11-23T11:15:32.9190458Z Preparing to unpack .../54-libopengl-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:32.9195465Z Unpacking libopengl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:32.9321503Z Selecting previously unselected package libxcb-util1:amd64.
+2026-11-23T11:15:32.9409459Z Preparing to unpack .../55-libxcb-util1_0.4.0-1build3_amd64.deb ...
+2026-11-23T11:15:32.9414329Z Unpacking libxcb-util1:amd64 (0.4.0-1build3) ...
+2026-11-23T11:15:32.9541590Z Selecting previously unselected package libstartup-notification0:amd64.
+2026-11-23T11:15:32.9631206Z Preparing to unpack .../56-libstartup-notification0_0.12-6build3_amd64.deb ...
+2026-11-23T11:15:32.9636102Z Unpacking libstartup-notification0:amd64 (0.12-6build3) ...
+2026-11-23T11:15:32.9766025Z Selecting previously unselected package libxcb-shape0:amd64.
+2026-11-23T11:15:32.9862848Z Preparing to unpack .../57-libxcb-shape0_1.15-1ubuntu2_amd64.deb ...
+2026-11-23T11:15:32.9866271Z Unpacking libxcb-shape0:amd64 (1.15-1ubuntu2) ...
+2026-11-23T11:15:32.9985682Z Selecting previously unselected package libxfixes-dev:amd64.
+2026-11-23T11:15:33.0080670Z Preparing to unpack .../58-libxfixes-dev_1%3a6.0.0-2build1_amd64.deb ...
+2026-11-23T11:15:33.0084698Z Unpacking libxfixes-dev:amd64 (1:6.0.0-2build1) ...
+2026-11-23T11:15:33.0204167Z Selecting previously unselected package libxext-dev:amd64.
+2026-11-23T11:15:33.0295488Z Preparing to unpack .../59-libxext-dev_2%3a1.3.4-1build2_amd64.deb ...
+2026-11-23T11:15:33.0299691Z Unpacking libxext-dev:amd64 (2:1.3.4-1build2) ...
+2026-11-23T11:15:33.0450297Z Selecting previously unselected package libxcomposite-dev:amd64.
+2026-11-23T11:15:33.0537889Z Preparing to unpack .../60-libxcomposite-dev_1%3a0.4.5-1build3_amd64.deb ...
+2026-11-23T11:15:33.0542717Z Unpacking libxcomposite-dev:amd64 (1:0.4.5-1build3) ...
+2026-11-23T11:15:33.0666471Z Selecting previously unselected package libxrender-dev:amd64.
+2026-11-23T11:15:33.0754797Z Preparing to unpack .../61-libxrender-dev_1%3a0.9.10-1.1build1_amd64.deb ...
+2026-11-23T11:15:33.0759461Z Unpacking libxrender-dev:amd64 (1:0.9.10-1.1build1) ...
+2026-11-23T11:15:33.0877108Z Selecting previously unselected package libxcursor-dev:amd64.
+2026-11-23T11:15:33.0966731Z Preparing to unpack .../62-libxcursor-dev_1%3a1.2.1-1build1_amd64.deb ...
+2026-11-23T11:15:33.0970221Z Unpacking libxcursor-dev:amd64 (1:1.2.1-1build1) ...
+2026-11-23T11:15:33.1103581Z Selecting previously unselected package libxinerama-dev:amd64.
+2026-11-23T11:15:33.1192605Z Preparing to unpack .../63-libxinerama-dev_2%3a1.1.4-3build1_amd64.deb ...
+2026-11-23T11:15:33.1196083Z Unpacking libxinerama-dev:amd64 (2:1.1.4-3build1) ...
+2026-11-23T11:15:33.1313565Z Selecting previously unselected package libxrandr-dev:amd64.
+2026-11-23T11:15:33.1402574Z Preparing to unpack .../64-libxrandr-dev_2%3a1.5.2-2build1_amd64.deb ...
+2026-11-23T11:15:33.1406624Z Unpacking libxrandr-dev:amd64 (2:1.5.2-2build1) ...
+2026-11-23T11:15:33.1534833Z Selecting previously unselected package libxv1:amd64.
+2026-11-23T11:15:33.1623837Z Preparing to unpack .../65-libxv1_2%3a1.0.11-1.1build1_amd64.deb ...
+2026-11-23T11:15:33.1628171Z Unpacking libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-11-23T11:15:33.1747761Z Selecting previously unselected package libxxf86dga1:amd64.
+2026-11-23T11:15:33.1836847Z Preparing to unpack .../66-libxxf86dga1_2%3a1.1.5-1build1_amd64.deb ...
+2026-11-23T11:15:33.1840720Z Unpacking libxxf86dga1:amd64 (2:1.1.5-1build1) ...
+2026-11-23T11:15:33.1954747Z Selecting previously unselected package ninja-build.
+2026-11-23T11:15:33.2044106Z Preparing to unpack .../67-ninja-build_1.11.1-2_amd64.deb ...
+2026-11-23T11:15:33.2048099Z Unpacking ninja-build (1.11.1-2) ...
+2026-11-23T11:15:33.2610710Z Selecting previously unselected package openbox.
+2026-11-23T11:15:33.2711225Z Preparing to unpack .../68-openbox_3.6.1-12build5_amd64.deb ...
+2026-11-23T11:15:33.2731004Z Unpacking openbox (3.6.1-12build5) ...
+2026-11-23T11:15:33.4209834Z Selecting previously unselected package x11-utils.
+2026-11-23T11:15:33.4315408Z Preparing to unpack .../69-x11-utils_7.7+6build2_amd64.deb ...
+2026-11-23T11:15:33.4318788Z Unpacking x11-utils (7.7+6build2) ...
+2026-11-23T11:15:33.4520944Z Selecting previously unselected package libglvnd-core-dev:amd64.
+2026-11-23T11:15:33.4624521Z Preparing to unpack .../70-libglvnd-core-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:33.4627648Z Unpacking libglvnd-core-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.4750200Z Selecting previously unselected package libglvnd-dev:amd64.
+2026-11-23T11:15:33.4852382Z Preparing to unpack .../71-libglvnd-dev_1.7.0-1build1_amd64.deb ...
+2026-11-23T11:15:33.4855082Z Unpacking libglvnd-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.4970109Z Selecting previously unselected package libgl1-mesa-dev:amd64.
+2026-11-23T11:15:33.5068456Z Preparing to unpack .../72-libgl1-mesa-dev_25.2.8-0ubuntu0.24.04.5_amd64.deb ...
+2026-11-23T11:15:33.5083309Z Unpacking libgl1-mesa-dev:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.5338773Z Setting up libhwy1t64:amd64 (1.0.7-8.1build1) ...
+2026-11-23T11:15:33.5349608Z Setting up libpaper1:amd64 (1.1.29build1) ...
+2026-11-23T11:15:33.6256671Z 
+2026-11-23T11:15:33.6257589Z Creating config file /etc/papersize with new version
+2026-11-23T11:15:33.6620925Z Setting up mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.6629591Z Setting up libpangoxft-1.0-0:amd64 (1.52.1+ds-1build1) ...
+2026-11-23T11:15:33.6639305Z Setting up libglvnd-core-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.6649006Z Setting up libgbm1:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.6660734Z Setting up libijs-0.35:amd64 (0.35-15.1build1) ...
+2026-11-23T11:15:33.6670545Z Setting up libgs-common (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:33.6680392Z Setting up libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.6729444Z Setting up libpng-dev:amd64 (1.6.43-5ubuntu0.7) ...
+2026-11-23T11:15:33.6739286Z Setting up libxcb-shape0:amd64 (1.15-1ubuntu2) ...
+2026-11-23T11:15:33.6749157Z Setting up libxxf86dga1:amd64 (2:1.1.5-1build1) ...
+2026-11-23T11:15:33.6760210Z Setting up libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-11-23T11:15:33.6771211Z Setting up libopengl0:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.6780107Z Setting up ninja-build (1.11.1-2) ...
+2026-11-23T11:15:33.6790929Z Setting up libxcb-util1:amd64 (0.4.0-1build3) ...
+2026-11-23T11:15:33.6799412Z Setting up poppler-data (0.4.12-1) ...
+2026-11-23T11:15:33.6834949Z Setting up librsvg2-2:amd64 (2.58.0+dfsg-1ubuntu0.1) ...
+2026-11-23T11:15:33.6844477Z Setting up libid3tag0:amd64 (0.15.1b-14build1) ...
+2026-11-23T11:15:33.6853516Z Setting up xtrans-dev (1.4.0-1) ...
+2026-11-23T11:15:33.6869421Z Setting up libegl-mesa0:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.6878411Z Setting up libgles2:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.6886333Z Setting up libjbig2dec0:amd64 (0.20-1ubuntu0.24.04.1) ...
+2026-11-23T11:15:33.6897178Z Setting up uuid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-11-23T11:15:33.6907348Z Setting up libgles1:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.6918050Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-23T11:15:33.6929113Z Setting up libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-11-23T11:15:33.6938166Z Setting up libidn12:amd64 (1.42-1ubuntu0.1) ...
+2026-11-23T11:15:33.6948103Z Setting up libobt2v5:amd64 (3.6.1-12build5) ...
+2026-11-23T11:15:33.6958222Z Setting up libjsoncpp25:amd64 (1.9.5-6build1) ...
+2026-11-23T11:15:33.6968553Z Setting up libjxl0.7:amd64 (0.7.0-10.2ubuntu6.1) ...
+2026-11-23T11:15:33.6977803Z Setting up libgif7:amd64 (5.2.2-1ubuntu1.2) ...
+2026-11-23T11:15:33.6988578Z Setting up librhash0:amd64 (1.4.3-3build1) ...
+2026-11-23T11:15:33.6997481Z Setting up libegl1:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.7008486Z Setting up x11-utils (7.7+6build2) ...
+2026-11-23T11:15:33.7059847Z Setting up xorg-sgml-doctools (1:1.11-1.1) ...
+2026-11-23T11:15:33.7070066Z Setting up cmake-data (3.28.3-1build7) ...
+2026-11-23T11:15:33.7112487Z Setting up libopengl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:33.7123318Z Setting up libasound2-dev:amd64 (1.2.11-1ubuntu0.3) ...
+2026-11-23T11:15:33.7134194Z Setting up libbrotli-dev:amd64 (1.1.0-2ubuntu0.1) ...
+2026-11-23T11:15:33.7145066Z Setting up libbz2-dev:amd64 (1.0.8-5.1ubuntu0.1) ...
+2026-11-23T11:15:33.7152329Z Setting up libstartup-notification0:amd64 (0.12-6build3) ...
+2026-11-23T11:15:33.7162078Z Setting up libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:33.7172281Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-11-23T11:15:33.7196835Z Setting up libfreetype-dev:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+2026-11-23T11:15:33.7205756Z Setting up cmake (3.28.3-1build7) ...
+2026-11-23T11:15:33.7214435Z Setting up libfontconfig-dev:amd64 (2.15.0-1.1ubuntu2) ...
+2026-11-23T11:15:33.7225423Z Setting up fonts-urw-base35 (20200910-8) ...
+2026-11-23T11:15:33.8173862Z Setting up libgs10-common (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:33.8184438Z Setting up libfontconfig1-dev:amd64 (2.15.0-1.1ubuntu2) ...
+2026-11-23T11:15:33.8194988Z Setting up libgs10:amd64 (10.02.1~dfsg1-0ubuntu7.10) ...
+2026-11-23T11:15:33.8206140Z Setting up libspectre1:amd64 (0.2.12-1build2) ...
+2026-11-23T11:15:33.8215957Z Setting up libimlib2t64:amd64 (1.12.1-1.1build2) ...
+2026-11-23T11:15:33.8225447Z Setting up libobrender32v5 (3.6.1-12build5) ...
+2026-11-23T11:15:33.8235672Z Setting up openbox (3.6.1-12build5) ...
+2026-11-23T11:15:33.8291156Z update-alternatives: using /usr/bin/openbox to provide /usr/bin/x-window-manager (x-window-manager) in auto mode
+2026-11-23T11:15:33.8316638Z update-alternatives: using /usr/bin/openbox-session to provide /usr/bin/x-session-manager (x-session-manager) in auto mode
+2026-11-23T11:15:33.8417589Z Processing triggers for sgml-base (1.31) ...
+2026-11-23T11:15:33.8521958Z Setting up x11proto-dev (2023.2-1) ...
+2026-11-23T11:15:33.8537915Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-11-23T11:15:34.0364215Z Setting up libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-11-23T11:15:34.0385537Z Processing triggers for libc-bin (2.39-0ubuntu8.12) ...
+2026-11-23T11:15:39.1398196Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-11-23T11:15:39.1423317Z Not building database; man-db/auto-update is not 'true'.
+2026-11-23T11:15:39.1432464Z Setting up libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-11-23T11:15:39.1466186Z Setting up libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-11-23T11:15:39.1485568Z Setting up libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-11-23T11:15:39.1502723Z Setting up libxfixes-dev:amd64 (1:6.0.0-2build1) ...
+2026-11-23T11:15:39.1516565Z Setting up libxext-dev:amd64 (2:1.3.4-1build2) ...
+2026-11-23T11:15:39.1533894Z Setting up libglx-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:39.1551431Z Setting up libxrender-dev:amd64 (1:0.9.10-1.1build1) ...
+2026-11-23T11:15:39.1569016Z Setting up libgl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:39.1583475Z Setting up libegl-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:39.1596443Z Setting up libxcomposite-dev:amd64 (1:0.4.5-1build3) ...
+2026-11-23T11:15:39.1608535Z Setting up libxcursor-dev:amd64 (1:1.2.1-1build1) ...
+2026-11-23T11:15:39.1623309Z Setting up libxrandr-dev:amd64 (2:1.5.2-2build1) ...
+2026-11-23T11:15:39.1635283Z Setting up libxinerama-dev:amd64 (2:1.1.4-3build1) ...
+2026-11-23T11:15:39.1653289Z Setting up libgles-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:39.1667325Z Setting up libglvnd-dev:amd64 (1.7.0-1build1) ...
+2026-11-23T11:15:39.1682647Z Setting up libgl1-mesa-dev:amd64 (25.2.8-0ubuntu0.24.04.5) ...
+2026-11-23T11:15:39.8961949Z 
+2026-11-23T11:15:39.8962804Z Running kernel seems to be up-to-date.
+2026-11-23T11:15:39.8963093Z 
+2026-11-23T11:15:39.8963223Z No services need to be restarted.
+2026-11-23T11:15:39.8963356Z 
+2026-11-23T11:15:39.8963803Z No containers need to be restarted.
+2026-11-23T11:15:39.8963978Z 
+2026-11-23T11:15:39.8964094Z No user sessions are running outdated binaries.
+2026-11-23T11:15:39.8964327Z 
+2026-11-23T11:15:39.8964474Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-23T11:15:40.7234398Z ##[group]Run cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+2026-11-23T11:15:40.7234810Z [36;1mcmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release[0m
+2026-11-23T11:15:40.7261739Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:15:40.7262065Z ##[endgroup]
+2026-11-23T11:15:43.7240084Z -- The C compiler identification is GNU 13.3.0
+2026-11-23T11:15:45.2041200Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-23T11:15:45.3369929Z -- Detecting C compiler ABI info
+2026-11-23T11:15:45.5156592Z -- Detecting C compiler ABI info - done
+2026-11-23T11:15:45.5260847Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-23T11:15:45.5614842Z -- Detecting C compile features
+2026-11-23T11:15:45.5626108Z -- Detecting C compile features - done
+2026-11-23T11:15:45.5746619Z -- Detecting CXX compiler ABI info
+2026-11-23T11:15:45.7218554Z -- Detecting CXX compiler ABI info - done
+2026-11-23T11:15:45.7325694Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-23T11:15:45.7327991Z -- Detecting CXX compile features
+2026-11-23T11:15:45.7332405Z -- Detecting CXX compile features - done
+2026-11-23T11:15:45.8421563Z -- Found Python3: /usr/bin/python3.12 (found suitable version "3.12.3", minimum required is "3.10") found components: Interpreter
+2026-11-23T11:15:45.8459525Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-23T11:15:46.1650411Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-11-23T11:15:46.1656987Z -- Found Threads: TRUE
+2026-11-23T11:15:51.8151040Z -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+2026-11-23T11:15:51.8192816Z -- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR
+2026-11-23T11:15:51.8602414Z -- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR - Success
+2026-11-23T11:15:51.8602965Z -- Looking for getentropy
+2026-11-23T11:15:51.9021870Z -- Looking for getentropy - found
+2026-11-23T11:15:51.9022710Z -- Looking for glob
+2026-11-23T11:15:51.9368814Z -- Looking for glob - found
+2026-11-23T11:15:51.9369948Z -- Looking for mmap
+2026-11-23T11:15:51.9749758Z -- Looking for mmap - found
+2026-11-23T11:15:51.9750948Z -- Looking for include file stdint.h
+2026-11-23T11:15:52.0127632Z -- Looking for include file stdint.h - found
+2026-11-23T11:16:12.0284524Z -- Checking for module 'alsa'
+2026-11-23T11:16:12.0352806Z --   Found alsa, version 1.2.11
+2026-11-23T11:16:12.0972866Z -- Checking for modules 'freetype2;fontconfig'
+2026-11-23T11:16:12.1076723Z --   Found freetype2, version 26.1.20
+2026-11-23T11:16:12.1132454Z --   Found fontconfig, version 2.15.0
+2026-11-23T11:16:12.1450232Z -- Checking for module 'gl'
+2026-11-23T11:16:12.1529289Z --   Found gl, version 1.2
+2026-11-23T11:16:12.1783584Z -- Checking for module 'libcurl'
+2026-11-23T11:16:12.2084985Z --   Package 'libcurl', required by 'virtual:world', not found
+2026-11-23T11:16:12.2178707Z -- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+2026-11-23T11:16:12.2206913Z --   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+2026-11-23T11:16:12.2232410Z --   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+2026-11-23T11:16:12.2260477Z -- Configuring juceaide
+2026-11-23T11:16:12.6672782Z -- Building juceaide
+2026-11-23T11:16:40.0232912Z -- Exporting juceaide
+2026-11-23T11:16:40.0235281Z -- Testing juceaide
+2026-11-23T11:16:40.0263150Z -- Finished setting up juceaide
+2026-11-23T11:16:40.1348912Z -- Found Python3: /usr/bin/python3.12 (found version "3.12.3") found components: Interpreter
+2026-11-23T11:16:40.2909335Z -- Configuring done (58.7s)
+2026-11-23T11:16:40.4513720Z -- Generating done (0.2s)
+2026-11-23T11:16:40.4518614Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build
+2026-11-23T11:16:40.4737226Z ##[group]Run cmake --build build --target CS80Snapshots cs80_tests --parallel 2
+2026-11-23T11:16:40.4737744Z [36;1mcmake --build build --target CS80Snapshots cs80_tests --parallel 2[0m
+2026-11-23T11:16:40.4763544Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:16:40.4763931Z ##[endgroup]
+2026-11-23T11:16:40.4906404Z [0/2] Re-checking globbed directories...
+2026-11-23T11:16:40.5247136Z [1/76] Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+2026-11-23T11:16:40.5320236Z [2/76] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-23T11:16:47.6564042Z [3/76] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-23T11:16:48.2691825Z [4/76] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-23T11:16:48.3574777Z [5/76] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp.o
+2026-11-23T11:16:48.4397879Z [6/76] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp.o
+2026-11-23T11:16:48.6566015Z [7/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/buf.c.o
+2026-11-23T11:16:48.6997312Z [8/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/chvalid.c.o
+2026-11-23T11:16:48.8469835Z [9/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/dict.c.o
+2026-11-23T11:16:49.0910304Z [10/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/encoding.c.o
+2026-11-23T11:16:49.1945261Z [11/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/entities.c.o
+2026-11-23T11:16:49.3365597Z [12/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/error.c.o
+2026-11-23T11:16:49.4050019Z [13/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/globals.c.o
+2026-11-23T11:16:49.6312399Z [14/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/hash.c.o
+2026-11-23T11:16:49.6390930Z [15/76] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-23T11:16:49.7258823Z [16/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/list.c.o
+2026-11-23T11:16:50.1703419Z [17/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/parserInternals.c.o
+2026-11-23T11:16:50.3692499Z [18/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/SAX2.c.o
+2026-11-23T11:16:50.4232803Z [19/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/threads.c.o
+2026-11-23T11:16:51.3305711Z [20/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/parser.c.o
+2026-11-23T11:16:51.7599078Z [21/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/uri.c.o
+2026-11-23T11:16:51.8416368Z [22/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/tree.c.o
+2026-11-23T11:16:52.0063627Z [23/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/valid.c.o
+2026-11-23T11:16:52.0153661Z [24/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/xmlIO.c.o
+2026-11-23T11:16:52.0696019Z [25/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/xmlmemory.c.o
+2026-11-23T11:16:52.2016300Z [26/76] Building C object _deps/cs80_libxml2-build/CMakeFiles/LibXml2.dir/xmlstring.c.o
+2026-11-23T11:16:55.7586039Z [27/76] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+2026-11-23T11:17:02.3581559Z [28/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+2026-11-23T11:17:02.5061023Z [29/76] Linking CXX static library libcs80_core.a
+2026-11-23T11:17:05.9841893Z [30/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+2026-11-23T11:17:10.8610338Z [31/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+2026-11-23T11:17:14.2545310Z [32/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+2026-11-23T11:17:18.1266337Z [33/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterComboBox.cpp.o
+2026-11-23T11:17:21.7862933Z [34/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+2026-11-23T11:17:21.9755788Z [35/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContextButton.cpp.o
+2026-11-23T11:17:22.5733688Z [36/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-23T11:17:26.5523207Z [37/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+2026-11-23T11:17:30.0860471Z [38/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+2026-11-23T11:17:30.1645755Z [39/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+2026-11-23T11:17:34.3147743Z [40/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+2026-11-23T11:17:35.4290258Z [41/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+2026-11-23T11:17:37.4892819Z [42/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o
+2026-11-23T11:17:39.3043155Z [43/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+2026-11-23T11:17:41.1659344Z [44/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+2026-11-23T11:17:43.0266568Z [45/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+2026-11-23T11:17:45.0806049Z [46/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+2026-11-23T11:17:46.0736219Z [47/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o
+2026-11-23T11:17:47.3322835Z [48/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+2026-11-23T11:17:50.1853945Z [49/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+2026-11-23T11:17:51.3354554Z [50/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+2026-11-23T11:17:53.4272154Z [51/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o
+2026-11-23T11:17:54.3933849Z [52/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o
+2026-11-23T11:18:00.5592190Z [53/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_utils/juce_audio_utils.cpp.o
+2026-11-23T11:18:06.3921251Z [54/76] Building CXX object CMakeFiles/CS80Snapshots.dir/cs80-state-mirror/juce_audio_processors.cpp.o
+2026-11-23T11:18:13.8563047Z [55/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.cpp.o
+2026-11-23T11:18:34.3688471Z [56/76] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+2026-11-23T11:18:34.3689036Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp: In lambda function:
+2026-11-23T11:18:34.3698844Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3717:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+2026-11-23T11:18:34.3699809Z  3717 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+2026-11-23T11:18:34.3700286Z       |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-23T11:18:34.3701161Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3718:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+2026-11-23T11:18:34.3701908Z  3718 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+2026-11-23T11:18:34.3702572Z       |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-23T11:18:59.3798489Z [57/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp.o
+2026-11-23T11:18:59.3799591Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_StandardHeader.h:95,
+2026-11-23T11:18:59.3800382Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/juce_core.h:215,
+2026-11-23T11:18:59.3801215Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/juce_graphics.h:67,
+2026-11-23T11:18:59.3802033Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.h:68,
+2026-11-23T11:18:59.3802872Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:55:
+2026-11-23T11:18:59.3806382Z /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: ‘#pragma message: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored’
+2026-11-23T11:18:59.3807402Z   292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+2026-11-23T11:18:59.3807858Z       |                                      ^~~~~~~
+2026-11-23T11:18:59.3809129Z /home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: note: in expansion of macro ‘JUCE_COMPILER_WARNING’
+2026-11-23T11:18:59.3810073Z    61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-11-23T11:18:59.3810629Z       |  ^~~~~~~~~~~~~~~~~~~~~
+2026-11-23T11:19:07.0586406Z [58/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.cpp.o
+2026-11-23T11:19:07.5810613Z [59/76] Building C object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+2026-11-23T11:19:11.0345336Z [60/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_events/juce_events.cpp.o
+2026-11-23T11:19:27.9216521Z [61/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core.cpp.o
+2026-11-23T11:19:27.9296341Z [62/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core_CompilationTime.cpp.o
+2026-11-23T11:19:29.0814729Z [63/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+2026-11-23T11:19:30.6058218Z [64/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_data_structures/juce_data_structures.cpp.o
+2026-11-23T11:19:30.6135921Z [65/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+2026-11-23T11:19:30.6205093Z [66/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+2026-11-23T11:19:35.1465967Z [67/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o
+2026-11-23T11:19:38.7607122Z [68/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_basics/juce_audio_basics.cpp.o
+2026-11-23T11:19:47.7628190Z [69/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.cpp.o
+2026-11-23T11:19:49.9446734Z [70/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.cpp.o
+2026-11-23T11:19:50.0123404Z [71/76] Linking CXX static library libcs80_panel_fonts.a
+2026-11-23T11:19:50.0776339Z [72/76] Linking C static library _deps/cs80_libxml2-build/libxml2.a
+2026-11-23T11:19:50.1285456Z [73/76] Linking CXX executable cs80_tests
+2026-11-23T11:19:55.7310251Z [74/76] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.cpp.o
+2026-11-23T11:19:56.0279131Z [75/76] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+2026-11-23T11:19:56.0321896Z ##[group]Run ./build/cs80_tests
+2026-11-23T11:19:56.0322213Z [36;1m./build/cs80_tests[0m
+2026-11-23T11:19:56.0347995Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:19:56.0348449Z ##[endgroup]
+2026-11-23T11:20:04.8978098Z EXT reconstruction sr=44100 tone=21.533Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+2026-11-23T11:20:04.8979017Z EXT reconstruction sr=44100 tone=1001.294Hz gain=-0.000047dB image=-114.60dB delay=63.5host
+2026-11-23T11:20:04.8979631Z EXT reconstruction sr=44100 tone=20004.346Hz gain=0.000378dB image=-108.18dB delay=63.5host
+2026-11-23T11:20:04.8980252Z EXT reconstruction sr=48000 tone=23.438Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+2026-11-23T11:20:04.8981296Z EXT reconstruction sr=48000 tone=996.094Hz gain=-0.000036dB image=-120.37dB delay=63.5host
+2026-11-23T11:20:04.8981902Z EXT reconstruction sr=48000 tone=20003.906Hz gain=0.000097dB image=-106.94dB delay=63.5host
+2026-11-23T11:20:04.8982613Z EXT reconstruction sr=96000 tone=23.438Hz gain=-0.000000dB image=-114.32dB delay=63.5host
+2026-11-23T11:20:04.8983166Z EXT reconstruction sr=96000 tone=1007.812Hz gain=-0.000035dB image=-121.11dB delay=63.5host
+2026-11-23T11:20:04.8983767Z EXT reconstruction sr=96000 tone=19992.188Hz gain=-0.000045dB image=-114.90dB delay=63.5host
+2026-11-23T11:20:04.8984275Z ALL 11540 CHECKS PASSED
+2026-11-23T11:20:04.9053088Z ##[group]Run mkdir -p artifacts/ui
+2026-11-23T11:20:04.9053547Z [36;1mmkdir -p artifacts/ui[0m
+2026-11-23T11:20:04.9053877Z [36;1mstatus=0[0m
+2026-11-23T11:20:04.9054774Z [36;1mJUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test > artifacts/run.log 2>&1 || status=$?[0m
+2026-11-23T11:20:04.9055766Z [36;1mcat artifacts/run.log[0m
+2026-11-23T11:20:04.9056124Z [36;1mcp artifacts/run.log artifacts/ui/run.log[0m
+2026-11-23T11:20:04.9056526Z [36;1mif (( status != 0 )); then[0m
+2026-11-23T11:20:04.9057036Z [36;1m    # Run logs are not always downloadable; surface the evidence as an annotation too.[0m
+2026-11-23T11:20:04.9057729Z [36;1m    msg=$(tail -n 40 artifacts/run.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')[0m
+2026-11-23T11:20:04.9058610Z [36;1m    echo "::error title=UI smoke exit ${status}::${msg}"[0m
+2026-11-23T11:20:04.9059142Z [36;1m    exit "$status"[0m
+2026-11-23T11:20:04.9059453Z [36;1mfi[0m
+2026-11-23T11:20:04.9060083Z [36;1mprintf '{"commit":"%s","run":"%s","renderer":"JUCE software, actual plugin editor"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json[0m
+2026-11-23T11:20:04.9060846Z [36;1msha256sum artifacts/ui/*.png > artifacts/ui/SHA256SUMS[0m
+2026-11-23T11:20:04.9097256Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:20:04.9097700Z ##[endgroup]
+2026-11-23T11:21:26.3185945Z UI smoke: WM_PROTOCOLS absent before window-manager startup.
+2026-11-23T11:21:26.3186597Z UI smoke: Openbox ready on :99; WM_PROTOCOLS present; running unchanged test command.
+2026-11-23T11:21:26.3187258Z UI SMOKE START: processor=437712 bytes engine=386968 bytes
+2026-11-23T11:21:26.3187723Z UI SMOKE PHASE: JUCE initialization
+2026-11-23T11:21:26.3188198Z UI SMOKE TIMING: phase=JUCE initialization seconds=0.000017 total_seconds=0.000020
+2026-11-23T11:21:26.3188909Z UI SMOKE PHASE: host metadata
+2026-11-23T11:21:26.3189401Z HOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1
+2026-11-23T11:21:26.3190086Z HOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1
+2026-11-23T11:21:26.3190705Z UI SMOKE TIMING: phase=host metadata seconds=3.410497 total_seconds=3.410516
+2026-11-23T11:21:26.3191169Z UI SMOKE PHASE: output meter host
+2026-11-23T11:21:26.3191703Z Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f
+2026-11-23T11:21:26.3192378Z UI SMOKE TIMING: phase=output meter host seconds=7.417668 total_seconds=10.828185
+2026-11-23T11:21:26.3192910Z UI SMOKE PHASE: source performance host
+2026-11-23T11:21:26.3193348Z UI SMOKE TIMING: phase=source performance host seconds=0.247888 total_seconds=11.076072
+2026-11-23T11:21:26.3193828Z UI SMOKE PHASE: ws3 keyboard/tuning host
+2026-11-23T11:21:26.3194344Z UI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=1.375163 total_seconds=12.451235
+2026-11-23T11:21:26.3194852Z UI SMOKE PHASE: preset recall host
+2026-11-23T11:21:26.3195279Z UI SMOKE TIMING: phase=preset recall host seconds=0.151511 total_seconds=12.602746
+2026-11-23T11:21:26.3195755Z UI SMOKE PHASE: instrument body host identity and recall
+2026-11-23T11:21:26.3196336Z UI SMOKE TIMING: phase=instrument body host identity and recall seconds=1.378446 total_seconds=13.981192
+2026-11-23T11:21:26.3197040Z UI SMOKE PHASE: preset file host
+2026-11-23T11:21:26.3197369Z UI SMOKE TIMING: phase=preset file host seconds=0.325595 total_seconds=14.306786
+2026-11-23T11:21:26.3197733Z UI SMOKE PHASE: session schema host
+2026-11-23T11:21:26.3198076Z UI SMOKE TIMING: phase=session schema host seconds=1.619951 total_seconds=15.926738
+2026-11-23T11:21:26.3198733Z UI SMOKE PHASE: session undo host
+2026-11-23T11:21:26.3199078Z UI SMOKE TIMING: phase=session undo host seconds=0.178548 total_seconds=16.105286
+2026-11-23T11:21:26.3199414Z UI SMOKE PHASE: engine I/O host
+2026-11-23T11:21:26.3199839Z UI SMOKE TIMING: phase=engine I/O host seconds=3.978592 total_seconds=20.083878
+2026-11-23T11:21:26.3200229Z UI SMOKE PHASE: editor initial size
+2026-11-23T11:21:26.3200540Z Editor initial size: 1600x1000; logical usable display: 1920x1200
+2026-11-23T11:21:26.3201048Z UI SMOKE TIMING: phase=editor initial size seconds=0.023295 total_seconds=20.107173
+2026-11-23T11:21:26.3201502Z UI SMOKE PHASE: external input host
+2026-11-23T11:21:26.3201932Z UI SMOKE TIMING: phase=external input host seconds=1.047105 total_seconds=21.154278
+2026-11-23T11:21:26.3202454Z UI SMOKE PHASE: circuit performance and retired policy host
+2026-11-23T11:21:26.3202991Z UI SMOKE TIMING: phase=circuit performance and retired policy host seconds=2.023511 total_seconds=23.177789
+2026-11-23T11:21:26.3203421Z UI SMOKE PHASE: keyboard and expression host
+2026-11-23T11:21:26.3204070Z Expression persistence RMS: restored=0.00531658664 expected=0.00531657453 full=0.0177240822 relative_error=2.27792911e-06
+2026-11-23T11:21:26.3204601Z UI SMOKE TIMING: phase=keyboard and expression host seconds=1.570835 total_seconds=24.748624
+2026-11-23T11:21:26.3205024Z UI SMOKE PHASE: live envelope and factory source host
+2026-11-23T11:21:26.3205426Z UI SMOKE TIMING: phase=live envelope and factory source host seconds=1.804461 total_seconds=26.553085
+2026-11-23T11:21:26.3205830Z UI SMOKE PHASE: editor, state and automation
+2026-11-23T11:21:26.3206277Z Preset timer refresh: elapsed=129.5ms model='Timer Refresh Verified' label='Timer Refresh Verified' stateWrites=600
+2026-11-23T11:21:26.3206789Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-1600x1000.png
+2026-11-23T11:21:26.3207292Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-ext-enabled-1600x1000.png
+2026-11-23T11:21:26.3207776Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-sub-ext-enabled.png
+2026-11-23T11:21:26.3208223Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-1200x760.png
+2026-11-23T11:21:26.3208835Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-1120x700.png
+2026-11-23T11:21:26.3209445Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-page1.png
+2026-11-23T11:21:26.3210010Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-page2.png
+2026-11-23T11:21:26.3210585Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-page3.png
+2026-11-23T11:21:26.3211113Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-page4.png
+2026-11-23T11:21:26.3211570Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/browser-1600x1000.png
+2026-11-23T11:21:26.3212009Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-restored-1600x1000.png
+2026-11-23T11:21:26.3212485Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-populated-1600x1000.png
+2026-11-23T11:21:26.3212954Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-populated-page1.png
+2026-11-23T11:21:26.3213411Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-populated-page2.png
+2026-11-23T11:21:26.3214006Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-populated-page3.png
+2026-11-23T11:21:26.3214476Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-populated-page4.png
+2026-11-23T11:21:26.3214957Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/memory-programmer-1600x1000.png
+2026-11-23T11:21:26.3215577Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/memory-programmer-selected-1600x1000.png
+2026-11-23T11:21:26.3216103Z UI SMOKE TIMING: phase=editor, state and automation seconds=15.896160 total_seconds=42.449245
+2026-11-23T11:21:26.3216505Z UI SMOKE PHASE: source performance captures
+2026-11-23T11:21:26.3217298Z source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0970498472, meter=SAMPLE PEAK -20.3 dBFS READ-ONLY
+2026-11-23T11:21:26.3218158Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-source-performance-1600x1000.png
+2026-11-23T11:21:26.3219525Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-source-performance-1120x700.png
+2026-11-23T11:21:26.3220271Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/advanced-source-performance-about.png
+2026-11-23T11:21:26.3222794Z source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -0.2 dBFS READ-ONLY
+2026-11-23T11:21:26.3223627Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/main-source-performance-headroom-1600x1000.png
+2026-11-23T11:21:26.3224359Z UI SMOKE TIMING: phase=source performance captures seconds=1.684276 total_seconds=44.133521
+2026-11-23T11:21:26.3224877Z UI SMOKE PHASE: preset save and panic
+2026-11-23T11:21:26.3225269Z Preset rejection case 0, audition=0: missing file
+2026-11-23T11:21:26.3225697Z Preset rejection case 0, audition=1: missing file
+2026-11-23T11:21:26.3226134Z Preset rejection case 1, audition=0: <CS80_PARAMS><
+2026-11-23T11:21:26.3226569Z Preset rejection case 1, audition=1: <CS80_PARAMS><
+2026-11-23T11:21:26.3227058Z Preset rejection case 2, audition=0: <NOT_A_PRESET/>
+2026-11-23T11:21:26.3227505Z Preset rejection case 2, audition=1: <NOT_A_PRESET/>
+2026-11-23T11:21:26.3227970Z Preset rejection case 3, audition=0: <cs80_params/>
+2026-11-23T11:21:26.3228611Z Preset rejection case 3, audition=1: <cs80_params/>
+2026-11-23T11:21:26.3229047Z Preset rejection case 4, audition=0: 
+2026-11-23T11:21:26.3229437Z Preset rejection case 4, audition=1: 
+2026-11-23T11:21:26.3229835Z Preset rejection case 5, audition=0: <CS80_PARAMS
+2026-11-23T11:21:26.3230265Z Preset rejection case 5, audition=1: <CS80_PARAMS
+2026-11-23T11:21:26.3230685Z Preset rejection case 6, audition=0: <CS80_PARAMS 
+2026-11-23T11:21:26.3231151Z Preset rejection case 6, audition=1: <CS80_PARAMS 
+2026-11-23T11:21:26.3231660Z Preset rejection case 7, audition=0: <CS80_PARAMS presetName='truncated'
+2026-11-23T11:21:26.3232266Z Preset rejection case 7, audition=1: <CS80_PARAMS presetName='truncated'
+2026-11-23T11:21:26.3232780Z Preset rejection case 8, audition=0: <CS80_PARAMS>
+2026-11-23T11:21:26.3233194Z Preset rejection case 8, audition=1: <CS80_PARAMS>
+2026-11-23T11:21:26.3233637Z Preset rejection case 9, audition=0: <CS80_PARAMS></CS80_PARAMS
+2026-11-23T11:21:26.3234125Z Preset rejection case 9, audition=1: <CS80_PARAMS></CS80_PARAMS
+2026-11-23T11:21:26.3234619Z Preset rejection case 10, audition=0: <CS80_PARAMS></OTHER>
+2026-11-23T11:21:26.3235155Z Preset rejection case 10, audition=1: <CS80_PARAMS></OTHER>
+2026-11-23T11:21:26.3235678Z Preset rejection case 11, audition=0: <CS80_PARAMS><PARAM/></OTHER>
+2026-11-23T11:21:26.3236178Z Preset rejection case 11, audition=1: <CS80_PARAMS><PARAM/></OTHER>
+2026-11-23T11:21:26.3236763Z Preset rejection case 12, audition=0: <CS80_PARAMS><PARAM></CS80_PARAMS>
+2026-11-23T11:21:26.3237328Z Preset rejection case 12, audition=1: <CS80_PARAMS><PARAM></CS80_PARAMS>
+2026-11-23T11:21:26.3237876Z Preset rejection case 13, audition=0: <CS80_PARAMS/><CS80_PARAMS/>
+2026-11-23T11:21:26.3238592Z Preset rejection case 13, audition=1: <CS80_PARAMS/><CS80_PARAMS/>
+2026-11-23T11:21:26.3239083Z Preset rejection case 14, audition=0: <CS80_PARAMS/>junk
+2026-11-23T11:21:26.3239603Z Preset rejection case 14, audition=1: <CS80_PARAMS/>junk
+2026-11-23T11:21:26.3240123Z Preset rejection case 15, audition=0: <CS80_PARAMS/><!--
+2026-11-23T11:21:26.3240578Z Preset rejection case 15, audition=1: <CS80_PARAMS/><!--
+2026-11-23T11:21:26.3241195Z Preset rejection case 16, audition=0: <CS80_PARAMS/><?unfinished
+2026-11-23T11:21:26.3241688Z Preset rejection case 16, audition=1: <CS80_PARAMS/><?unfinished
+2026-11-23T11:21:26.3242177Z Preset rejection case 17, audition=0: <CS80_PARAMS/> <
+2026-11-23T11:21:26.3242671Z Preset rejection case 17, audition=1: <CS80_PARAMS/> <
+2026-11-23T11:21:26.3243195Z Preset rejection case 18, audition=0: <CS80_PARAMS/> </CS80_PARAMS>
+2026-11-23T11:21:26.3243705Z Preset rejection case 18, audition=1: <CS80_PARAMS/> </CS80_PARAMS>
+2026-11-23T11:21:26.3244513Z Preset rejection case 19, audition=0: <CS80_PARAMS presetName='unclosed>
+2026-11-23T11:21:26.3245121Z Preset rejection case 19, audition=1: <CS80_PARAMS presetName='unclosed>
+2026-11-23T11:21:26.3245710Z Preset rejection case 20, audition=0: <CS80_PARAMS presetName=bare/>
+2026-11-23T11:21:26.3246235Z Preset rejection case 20, audition=1: <CS80_PARAMS presetName=bare/>
+2026-11-23T11:21:26.3246850Z Preset rejection case 21, audition=0: <CS80_PARAMS presetName='a' presetName='b'/>
+2026-11-23T11:21:26.3247458Z Preset rejection case 21, audition=1: <CS80_PARAMS presetName='a' presetName='b'/>
+2026-11-23T11:21:26.3248138Z Preset rejection case 22, audition=0: <CS80_PARAMS presetName='&unknown;'/>
+2026-11-23T11:21:26.3249021Z Preset rejection case 22, audition=1: <CS80_PARAMS presetName='&unknown;'/>
+2026-11-23T11:21:26.3249546Z Preset rejection case 23, audition=0: <CS80_PARAMS presetName='&#0;'/>
+2026-11-23T11:21:26.3250128Z Preset rejection case 23, audition=1: <CS80_PARAMS presetName='&#0;'/>
+2026-11-23T11:21:26.3250721Z Preset rejection case 24, audition=0: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+2026-11-23T11:21:26.3251350Z Preset rejection case 24, audition=1: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+2026-11-23T11:21:26.3251984Z Preset rejection case 25, audition=0: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+2026-11-23T11:21:26.3252642Z Preset rejection case 25, audition=1: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+2026-11-23T11:21:26.3253361Z Preset rejection case 26, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+2026-11-23T11:21:26.3254083Z Preset rejection case 26, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+2026-11-23T11:21:26.3255317Z Preset rejection case 27, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+2026-11-23T11:21:26.3256074Z Preset rejection case 27, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+2026-11-23T11:21:26.3256761Z XXE sentinel path: /tmp/temp_9ae25b7-cs80-xml-admission/cs80-xml-xxe-sentinel.txt
+2026-11-23T11:21:26.3257715Z XML valid case 0: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3258504Z XML valid case 1: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3259286Z XML valid case 2: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3259873Z XML valid case 3: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3260433Z XML valid case 4: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3261032Z XML valid case 5: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3261586Z XML valid case 6: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3262153Z XML valid case 7: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3262719Z XML valid case 8: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3263259Z XML valid case 9: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3263844Z XML valid case 10: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+2026-11-23T11:21:26.3264350Z Browser XML case 0, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3264954Z Browser XML case 0, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3265463Z Browser XML case 1, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3265949Z Browser XML case 1, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3266609Z Browser XML case 2, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3267147Z Browser XML case 2, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3267669Z Browser XML case 3, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3268199Z Browser XML case 3, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3268902Z Browser XML case 4, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3269476Z Browser XML case 4, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3270095Z Browser XML case 5, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3270617Z Browser XML case 5, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3271145Z Browser XML case 6, audition=0: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3271677Z Browser XML case 6, audition=1: name=Admission, styles=6, fallback=6
+2026-11-23T11:21:26.3272173Z Browser dirty XML case 0: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3272656Z Browser dirty XML case 1: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3273120Z Browser dirty XML case 2: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3273617Z Browser dirty XML case 3: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3274058Z Browser dirty XML case 4: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3274554Z Browser dirty XML case 5: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3275036Z Browser dirty XML case 6: brilliance=0, used=0, edited=0
+2026-11-23T11:21:26.3275590Z UI SMOKE TIMING: phase=preset save and panic seconds=2.708018 total_seconds=46.841539
+2026-11-23T11:21:26.3276188Z UI SMOKE PHASE: program library, Program Change, A/B and randomise
+2026-11-23T11:21:26.3276864Z UI SMOKE TIMING: phase=program library, Program Change, A/B and randomise seconds=0.405777 total_seconds=47.247315
+2026-11-23T11:21:26.3277535Z UI SMOKE PHASE: pressure ownership and UI readiness
+2026-11-23T11:21:26.3278139Z Pointer fixture desktop window 0: 24Cs80AudioProcessorEditor '' 400,500 1120x700 visible=1
+2026-11-23T11:21:26.3278998Z Pointer fixture component at key60: N4cs802ui16HardwareKeyboardE '' (keyboard=1)
+2026-11-23T11:21:26.3279604Z Pointer fixture peer contains key60=1 foreground=0 settle=0 ms
+2026-11-23T11:21:26.3280181Z Pointer fixture: editor=400,500 1120x700; usable=0,0 1920x1200; key60 screen=1063,1131 hit=60
+2026-11-23T11:21:26.3280957Z UI SMOKE TIMING: phase=pressure ownership and UI readiness seconds=4.110360 total_seconds=51.357675
+2026-11-23T11:21:26.3281575Z UI SMOKE PHASE: original panel editor (ws7)
+2026-11-23T11:21:26.3282160Z golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)
+2026-11-23T11:21:26.3282944Z golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)
+2026-11-23T11:21:26.3283522Z crinkle neighbour difference: 1x 0.02009, 2x 0.02173
+2026-11-23T11:21:26.3284169Z UI SMOKE TIMING: phase=original panel editor (ws7) seconds=2.354748 total_seconds=53.712423
+2026-11-23T11:21:26.3284760Z UI SMOKE PHASE: studio views
+2026-11-23T11:21:26.3285247Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-main-1600x1000.png
+2026-11-23T11:21:26.3285958Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-1600x1000.png
+2026-11-23T11:21:26.3286711Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-2-1600x1000.png
+2026-11-23T11:21:26.3287453Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-3-1600x1000.png
+2026-11-23T11:21:26.3288208Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-1600x1000.png
+2026-11-23T11:21:26.3289091Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-2-1600x1000.png
+2026-11-23T11:21:26.3289797Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-3-1600x1000.png
+2026-11-23T11:21:26.3290592Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-fx-1600x1000.png
+2026-11-23T11:21:26.3291257Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-fx-2-1600x1000.png
+2026-11-23T11:21:26.3291930Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-arp-1600x1000.png
+2026-11-23T11:21:26.3292651Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-settings-1600x1000.png
+2026-11-23T11:21:26.3293324Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-main-1120x700.png
+2026-11-23T11:21:26.3294082Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-1120x700.png
+2026-11-23T11:21:26.3295056Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-2-1120x700.png
+2026-11-23T11:21:26.3295790Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-modulation-3-1120x700.png
+2026-11-23T11:21:26.3296498Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-1120x700.png
+2026-11-23T11:21:26.3297204Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-2-1120x700.png
+2026-11-23T11:21:26.3297900Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-3-1120x700.png
+2026-11-23T11:21:26.3298772Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-fx-1120x700.png
+2026-11-23T11:21:26.3299446Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-fx-2-1120x700.png
+2026-11-23T11:21:26.3300093Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-arp-1120x700.png
+2026-11-23T11:21:26.3300758Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-settings-1120x700.png
+2026-11-23T11:21:26.3301471Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-drawers-1600x1000.png
+2026-11-23T11:21:26.3302202Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-drawers-1120x700.png
+2026-11-23T11:21:26.3302954Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-lfo-selected-waves-1600x1000.png
+2026-11-23T11:21:26.3303727Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-lfo-selected-waves-1120x700.png
+2026-11-23T11:21:26.3304391Z UI SMOKE TIMING: phase=studio views seconds=10.099054 total_seconds=63.811476
+2026-11-23T11:21:26.3304921Z UI SMOKE PHASE: ring curve gestures
+2026-11-23T11:21:26.3305436Z UI SMOKE TIMING: phase=ring curve gestures seconds=0.542136 total_seconds=64.353612
+2026-11-23T11:21:26.3305941Z UI SMOKE PHASE: studio interaction
+2026-11-23T11:21:26.3306429Z UI SMOKE TIMING: phase=studio interaction seconds=0.258618 total_seconds=64.612230
+2026-11-23T11:21:26.3306966Z UI SMOKE PHASE: studio MIDI learn
+2026-11-23T11:21:26.3307620Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-keyboard-midi-learn-1600x1000.png
+2026-11-23T11:21:26.3308518Z UI SMOKE TIMING: phase=studio MIDI learn seconds=0.781692 total_seconds=65.393923
+2026-11-23T11:21:26.3309018Z UI SMOKE PHASE: studio undo and redo
+2026-11-23T11:21:26.3309515Z UI SMOKE TIMING: phase=studio undo and redo seconds=1.989043 total_seconds=67.382966
+2026-11-23T11:21:26.3310044Z UI SMOKE PHASE: studio learning tools
+2026-11-23T11:21:26.3310578Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-1-1600x1000.png
+2026-11-23T11:21:26.3311313Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-2-1600x1000.png
+2026-11-23T11:21:26.3311991Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-3-1600x1000.png
+2026-11-23T11:21:26.3312673Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-1-1120x700.png
+2026-11-23T11:21:26.3313356Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-2-1120x700.png
+2026-11-23T11:21:26.3314032Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-3-1120x700.png
+2026-11-23T11:21:26.3314706Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-4-1120x700.png
+2026-11-23T11:21:26.3315457Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-5-1120x700.png
+2026-11-23T11:21:26.3316194Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-6-1120x700.png
+2026-11-23T11:21:26.3316845Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-7-1120x700.png
+2026-11-23T11:21:26.3317542Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-tour-8-1120x700.png
+2026-11-23T11:21:26.3318430Z wrote /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/ui/studio-help-card-1600x1000.png
+2026-11-23T11:21:26.3319191Z UI SMOKE TIMING: phase=studio learning tools seconds=4.483108 total_seconds=71.866074
+2026-11-23T11:21:26.3319784Z UI SMOKE PHASE: studio tab order, hit targets and contrast
+2026-11-23T11:21:26.3320490Z hit targets at 1120 x 700: 328 modern-layer targets checked, 0 undersized; 0 other panel targets undersized; 26 documented exceptions
+2026-11-23T11:21:26.3321740Z UI SMOKE TIMING: phase=studio tab order, hit targets and contrast seconds=1.276109 total_seconds=73.142183
+2026-11-23T11:21:26.3322337Z UI SMOKE PHASE: modern modulation and FX layer
+2026-11-23T11:21:26.3322875Z UI SMOKE TIMING: phase=modern modulation and FX layer seconds=0.358097 total_seconds=73.500280
+2026-11-23T11:21:26.3323472Z UI SMOKE PHASE: modern layer integer state ranges
+2026-11-23T11:21:26.3324574Z UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.078472 copy=0.000882 xml=0.004225 session_text=0.000807 fixture_write=0.009034 preset_load=0.013555 session_load=0.009668 audio=0.000787 save=0.014646 round_trip_load=0.020555
+2026-11-23T11:21:26.3326290Z UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.152168 copy=0.001678 xml=0.008395 session_text=0.001574 fixture_write=0.015480 preset_load=0.026745 session_load=0.019240 audio=0.001575 save=0.029062 round_trip_load=0.040810
+2026-11-23T11:21:26.3327852Z UI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.225612 copy=0.002499 xml=0.012568 session_text=0.002329 fixture_write=0.021554 preset_load=0.039879 session_load=0.028839 audio=0.002379 save=0.043552 round_trip_load=0.061032
+2026-11-23T11:21:26.3329615Z UI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.298442 copy=0.003328 xml=0.016759 session_text=0.003085 fixture_write=0.026985 preset_load=0.053012 session_load=0.038440 audio=0.003166 save=0.058125 round_trip_load=0.081244
+2026-11-23T11:21:26.3331232Z UI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=0.371638 copy=0.004142 xml=0.020931 session_text=0.003873 fixture_write=0.032855 preset_load=0.066167 session_load=0.048065 audio=0.003941 save=0.072593 round_trip_load=0.101463
+2026-11-23T11:21:26.3332868Z UI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=0.444613 copy=0.004949 xml=0.025113 session_text=0.004649 fixture_write=0.038560 preset_load=0.079322 session_load=0.057588 audio=0.004707 save=0.087085 round_trip_load=0.121713
+2026-11-23T11:21:26.3334453Z UI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=0.517393 copy=0.005765 xml=0.029294 session_text=0.005422 fixture_write=0.043978 preset_load=0.092487 session_load=0.067185 audio=0.005485 save=0.101559 round_trip_load=0.141927
+2026-11-23T11:21:26.3336029Z UI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=0.589637 copy=0.006562 xml=0.033403 session_text=0.006211 fixture_write=0.049061 preset_load=0.105683 session_load=0.076721 audio=0.006281 save=0.115960 round_trip_load=0.162172
+2026-11-23T11:21:26.3337596Z UI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=0.662474 copy=0.007364 xml=0.037634 session_text=0.006968 fixture_write=0.054578 preset_load=0.118799 session_load=0.086372 audio=0.007065 save=0.130406 round_trip_load=0.182406
+2026-11-23T11:21:26.3339418Z UI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=0.736191 copy=0.008171 xml=0.041788 session_text=0.007748 fixture_write=0.061101 preset_load=0.131932 session_load=0.095952 audio=0.007836 save=0.144862 round_trip_load=0.202643
+2026-11-23T11:21:26.3341133Z UI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=0.811272 copy=0.009041 xml=0.046105 session_text=0.008530 fixture_write=0.066482 preset_load=0.145869 session_load=0.105852 audio=0.008626 save=0.159738 round_trip_load=0.223248
+2026-11-23T11:21:26.3342743Z UI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=0.883688 copy=0.009851 xml=0.050321 session_text=0.009311 fixture_write=0.071659 preset_load=0.158995 session_load=0.115444 audio=0.009384 save=0.174156 round_trip_load=0.243427
+2026-11-23T11:21:26.3344400Z UI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=0.955932 copy=0.010687 xml=0.054529 session_text=0.010066 fixture_write=0.077034 preset_load=0.172081 session_load=0.124961 audio=0.010151 save=0.188384 round_trip_load=0.263572
+2026-11-23T11:21:26.3346034Z UI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=1.028017 copy=0.011469 xml=0.058760 session_text=0.010827 fixture_write=0.082023 preset_load=0.185137 session_load=0.134569 audio=0.010921 save=0.202770 round_trip_load=0.283800
+2026-11-23T11:21:26.3347631Z UI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=1.099797 copy=0.012257 xml=0.062972 session_text=0.011588 fixture_write=0.086907 preset_load=0.198213 session_load=0.144087 audio=0.011716 save=0.217073 round_trip_load=0.303916
+2026-11-23T11:21:26.3349449Z UI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=1.171682 copy=0.013040 xml=0.067178 session_text=0.012398 fixture_write=0.091933 preset_load=0.211277 session_load=0.153527 audio=0.012487 save=0.231378 round_trip_load=0.324120
+2026-11-23T11:21:26.3351041Z UI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=1.243969 copy=0.013858 xml=0.071378 session_text=0.013198 fixture_write=0.097266 preset_load=0.224316 session_load=0.163105 audio=0.013253 save=0.245699 round_trip_load=0.344252
+2026-11-23T11:21:26.3352661Z UI SMOKE TIMING: modern_state_ranges cases=216 paths=432 total_seconds=1.315542 copy=0.014650 xml=0.075540 session_text=0.013966 fixture_write=0.101941 preset_load=0.237395 session_load=0.172633 audio=0.014044 save=0.259959 round_trip_load=0.364460
+2026-11-23T11:21:26.3354246Z UI SMOKE TIMING: modern_state_ranges cases=228 paths=456 total_seconds=1.387892 copy=0.015438 xml=0.079750 session_text=0.014738 fixture_write=0.107267 preset_load=0.250529 session_load=0.182151 audio=0.014822 save=0.274306 round_trip_load=0.384670
+2026-11-23T11:21:26.3355892Z UI SMOKE TIMING: modern_state_ranges cases=240 paths=480 total_seconds=1.460162 copy=0.016232 xml=0.084014 session_text=0.015493 fixture_write=0.112589 preset_load=0.263551 session_load=0.191719 audio=0.015581 save=0.288740 round_trip_load=0.404735
+2026-11-23T11:21:26.3357511Z UI SMOKE TIMING: modern_state_ranges cases=252 paths=504 total_seconds=1.532352 copy=0.017026 xml=0.088233 session_text=0.016246 fixture_write=0.117794 preset_load=0.276558 session_load=0.201322 audio=0.016346 save=0.303184 round_trip_load=0.424804
+2026-11-23T11:21:26.3359427Z UI SMOKE TIMING: modern_state_ranges cases=263 paths=526 total_seconds=1.599188 copy=0.017782 xml=0.092010 session_text=0.016941 fixture_write=0.123106 preset_load=0.288469 session_load=0.210185 audio=0.017074 save=0.316456 round_trip_load=0.443287
+2026-11-23T11:21:26.3360598Z UI SMOKE TIMING: phase=modern layer integer state ranges seconds=1.629494 total_seconds=75.129774
+2026-11-23T11:21:26.3361211Z UI SMOKE PHASE: modern layer page painting and interaction
+2026-11-23T11:21:26.3361922Z UI SMOKE TIMING: modern_page=modern-modulation width=1100 height=640 total_seconds=0.102516 snapshot=0.004227 png=0.027525
+2026-11-23T11:21:26.3362769Z UI SMOKE TIMING: modern_page=modern-modulation width=1560 height=820 total_seconds=0.124102 snapshot=0.005710 png=0.046751
+2026-11-23T11:21:26.3363698Z UI SMOKE TIMING: modern_page=modern-keyboard width=1100 height=360 total_seconds=0.075811 snapshot=0.000891 png=0.013042
+2026-11-23T11:21:26.3364628Z UI SMOKE TIMING: modern_page=modern-fx width=1100 height=380 total_seconds=0.076881 snapshot=0.001053 png=0.013077
+2026-11-23T11:21:26.3365544Z UI SMOKE TIMING: phase=modern layer page painting and interaction seconds=0.921876 total_seconds=76.051650
+2026-11-23T11:21:26.3366233Z UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)
+2026-11-23T11:21:26.3366909Z UI SMOKE TIMING: phase=integration wiring (pages, toolbar, library, undo) seconds=0.335038 total_seconds=76.386688
+2026-11-23T11:21:26.3367523Z UI SMOKE TEST PASSED
+2026-11-23T11:21:26.3733254Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T11:21:26.3733564Z with:
+2026-11-23T11:21:26.3733872Z   name: cs80-panel-a81851bc87b5ac16277c185585d36dec7ffe712e
+2026-11-23T11:21:26.3734204Z   path: artifacts/ui
+2026-11-23T11:21:26.3734471Z   if-no-files-found: error
+2026-11-23T11:21:26.3734762Z   compression-level: 6
+2026-11-23T11:21:26.3734996Z   overwrite: false
+2026-11-23T11:21:26.3735232Z   include-hidden-files: false
+2026-11-23T11:21:26.3735506Z ##[endgroup]
+2026-11-23T11:21:26.5056843Z (node:4593) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T11:21:26.5057441Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T11:21:26.5146495Z With the provided path, there will be 73 files uploaded
+2026-11-23T11:21:26.5150288Z Artifact name is valid!
+2026-11-23T11:21:26.5150767Z Root directory input is valid!
+2026-11-23T11:21:26.8228418Z Beginning upload of artifact content to blob storage
+2026-11-23T11:21:27.2672725Z (node:4593) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T11:21:27.5014770Z Uploaded bytes 8388608
+2026-11-23T11:21:27.6799770Z Uploaded bytes 16777216
+2026-11-23T11:21:27.9463969Z Uploaded bytes 25165824
+2026-11-23T11:21:28.1132017Z Uploaded bytes 33554432
+2026-11-23T11:21:28.2777635Z Uploaded bytes 41943040
+2026-11-23T11:21:28.5277439Z Uploaded bytes 50331648
+2026-11-23T11:21:28.7408752Z Uploaded bytes 58720256
+2026-11-23T11:21:28.8396202Z Uploaded bytes 62105146
+2026-11-23T11:21:28.8556989Z Finished uploading artifact content to blob storage!
+2026-11-23T11:21:28.8557643Z SHA256 digest of uploaded artifact zip is f5e7ba741b05d1e07132050d4d3c4135a0ea29feedd293e105cf54cf770adee9
+2026-11-23T11:21:28.8558085Z Finalizing artifact upload
+2026-11-23T11:21:29.2278630Z Artifact cs80-panel-a81851bc87b5ac16277c185585d36dec7ffe712e.zip successfully finalized. Artifact ID 14814106476
+2026-11-23T11:21:29.2279642Z Artifact cs80-panel-a81851bc87b5ac16277c185585d36dec7ffe712e has been successfully uploaded! Final size is 62105146 bytes. Artifact ID is 14814106476
+2026-11-23T11:21:29.2283592Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45163325385/artifacts/14814106476
+2026-11-23T11:21:29.2447456Z ##[group]Run set -euo pipefail
+2026-11-23T11:21:29.2447819Z [36;1mset -euo pipefail[0m
+2026-11-23T11:21:29.2448072Z [36;1mgit fetch origin main[0m
+2026-11-23T11:21:29.2448791Z [36;1mif [ "$(git rev-parse origin/main)" != "$GITHUB_SHA" ]; then[0m
+2026-11-23T11:21:29.2449312Z [36;1m  echo "Newer code is already on main; keeping this run's screenshots as artifacts only."[0m
+2026-11-23T11:21:29.2449775Z [36;1m  exit 0[0m
+2026-11-23T11:21:29.2449989Z [36;1mfi[0m
+2026-11-23T11:21:29.2450217Z [36;1mcp artifacts/ui/*.png docs/screenshots/[0m
+2026-11-23T11:21:29.2450670Z [36;1mcp artifacts/ui/provenance.json docs/screenshots/provenance.json[0m
+2026-11-23T11:21:29.2451069Z [36;1mcp artifacts/ui/SHA256SUMS docs/screenshots/SHA256SUMS[0m
+2026-11-23T11:21:29.2451419Z [36;1mgit config user.name "github-actions[bot]"[0m
+2026-11-23T11:21:29.2451839Z [36;1mgit config user.email "41898282+github-actions[bot]@users.noreply.github.com"[0m
+2026-11-23T11:21:29.2452313Z [36;1mgit add docs/screenshots[0m
+2026-11-23T11:21:29.2452592Z [36;1mif ! git diff --cached --quiet; then[0m
+2026-11-23T11:21:29.2453095Z [36;1m  git commit -m "docs: refresh verified panel screenshots [skip ci]"[0m
+2026-11-23T11:21:29.2453445Z [36;1m  git push origin HEAD:main[0m
+2026-11-23T11:21:29.2453725Z [36;1mfi[0m
+2026-11-23T11:21:29.2479435Z shell: /usr/bin/bash -e {0}
+2026-11-23T11:21:29.2479766Z ##[endgroup]
+2026-11-23T11:21:29.4021156Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:21:29.4021578Z  * branch            main       -> FETCH_HEAD
+2026-11-23T11:21:30.3182425Z [main af83e6f] docs: refresh verified panel screenshots [skip ci]
+2026-11-23T11:21:30.3182830Z  23 files changed, 22 insertions(+), 22 deletions(-)
+2026-11-23T11:21:33.6916773Z To https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T11:21:33.6917121Z    a81851b..af83e6f  HEAD -> main
+2026-11-23T11:21:33.7040015Z Post job cleanup.
+2026-11-23T11:21:33.7710426Z [command]/usr/bin/git version
+2026-11-23T11:21:33.7747991Z git version 2.56.1
+2026-11-23T11:21:33.7779613Z Temporarily overriding HOME='/home/runner/work/_temp/5b6d7f86-734b-4b9c-87a5-1cdfe3237c5e' before making global git config changes
+2026-11-23T11:21:33.7780433Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T11:21:33.7784344Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T11:21:33.7814868Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T11:21:33.7840148Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T11:21:33.8022648Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T11:21:33.8037635Z http.https://github.com/.extraheader
+2026-11-23T11:21:33.8044397Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T11:21:33.8067116Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T11:21:33.8235090Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T11:21:33.8256078Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T11:21:33.8552639Z Cleaning up orphan processes
+2026-11-23T11:21:33.8739935Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,206 @@
+{
+  "status": "failed",
+  "counts": {
+    "registered": 227,
+    "passed": 222,
+    "failed": 3,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "ctest_seconds_junit": 1810.0,
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "failures": [
+    {
+      "name": "cs80_circuit_source_host_tests",
+      "status": "fail",
+      "failure": "<testcase name=\"cs80_circuit_source_host_tests\" classname=\"cs80_circuit_source_host_tests\" time=\"0.0961685\" status=\"fail\">\n\t\t<failure message=\"SEGFAULT\" />\n\t\t<properties />\n\t\t<system-out />\n\t</testcase>\n\t"
+    },
+    {
+      "name": "cs80_modern_recall_host_tests",
+      "status": "fail",
+      "failure": "<testcase name=\"cs80_modern_recall_host_tests\" classname=\"cs80_modern_recall_host_tests\" time=\"5.7739\" status=\"fail\">\n\t\t<failure message=\"SEGFAULT\" />\n\t\t<properties />\n\t\t<system-out>UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.204041 copy=0.001205 xml=0.011161 session_text=0.001445 fixture_write=0.090851 preset_load=0.022269 session_load=0.014307 audio=0.001612 save=0.025193 round_trip_load=0.028759\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.401342 copy=0.002336 xml=0.022085 session_text=0.002860 fixture_write=0.178586 preset_load=0.043821 session_load=0.028563 audio=0.003222 save=0.049935 round_trip_load=0.057148\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.610855 copy=0.003611 xml=0.033439 session_text=0.004357 fixture_write=0.273517 preset_load=0.067052 session_load=0.042943 audio=0.004965 save=0.075532 round_trip_load=0.086795\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.823560 copy=0.004924 xml=0.044519 session_text=0.005888 fixture_write=0.372557 preset_load=0.089804 session_load=0.057484 audio=0.006744 save=0.100833 round_trip_load=0.116199\nUI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=1.040741 copy=0.006262 xml=0.057031 session_text=0.007599 fixture_write=0.465412 preset_load=0.114145 session_load=0.074125 audio=0.008557 save=0.128400 round_trip_load=0.148408\nUI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=1.273411 copy=0.007699 xml=0.070513 session_text=0.009452 fixture_write=0.558824 preset_load=0.140614 session_load=0.092377 audio=0.010587 save=0.160664 round_trip_load=0.184879\nUI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=1.481156 copy=0.008813 xml=0.081565 session_text=0.010880 fixture_write=0.655352 preset_load=0.163126 session_load=0.106601 audio=0.012230 save=0.185883 round_trip_load=0.213393\nUI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=1.682279 copy=0.009899 xml=0.092515 session_text=0.012278 fixture_write=0.747406 preset_load=0.184504 session_load=0.120663 audio=0.013778 save=0.210766 round_trip_load=0.241755\nUI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=1.884964 copy=0.011211 xml=0.103723 session_text=0.013700 fixture_write=0.838266 preset_load=0.206689 session_load=0.134987 audio=0.015429 save=0.235879 round_trip_load=0.270631\nUI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=2.090211 copy=0.012327 xml=0.114639 session_text=0.015111 fixture_write=0.933691 preset_load=0.228065 session_load=0.149201 audio=0.017080 save=0.261164 round_trip_load=0.298998\nUI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=2.284779 copy=0.013329 xml=0.125665 session_text=0.016532 fixture_write=1.020005 preset_load=0.248844 session_load=0.163196 audio=0.018506 save=0.286170 round_trip_load=0.327128\nUI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=2.477580 copy=0.014390 xml=0.136753 session_text=0.017960 fixture_write=1.104797 preset_load=0.269714 session_load=0.177374 audio=0.020010 save=0.310843 round_trip_load=0.355013\nUI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=2.682505 copy=0.015495 xml=0.147763 session_text=0.019367 fixture_write=1.198892 preset_load=0.292051 session_load=0.191449 audio=0.021577 save=0.336025 round_trip_load=0.383559\nUI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=2.901331 copy=0.016677 xml=0.159837 session_text=0.020815 fixture_write=1.305532 preset_load=0.313879 session_load=0.205778 audio=0.023207 save=0.361025 round_trip_load=0.412569\nUI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=3.109966 copy=0.017807 xml=0.170827 session_text=0.022303 fixture_write=1.404182 preset_load=0.335415 session_load=0.219905 audio=0.024823 save=0.385966 round_trip_load=0.441100\nUI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=3.311241 copy=0.018939 xml=0.181905 session_text=0.023737 fixture_write=1.496031 preset_load=0.357081 session_load=0.233938 audio=0.026354 save=0.410673 round_trip_load=0.469490\nUI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=3.513866 copy=0.019947 xml=0.192962 session_text=0.02\n</system-out>\n\t</testcase>\n\t"
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "status": "fail",
+      "failure": "<testcase name=\"cs80_ui_smoke\" classname=\"cs80_ui_smoke\" time=\"44.5948\" status=\"fail\">\n\t\t<failure message=\"SEGFAULT\" />\n\t\t<properties />\n\t\t<system-out>UI SMOKE START: processor=437792 bytes engine=386968 bytes\nUI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.002706 total_seconds=0.002708\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=6.483622 total_seconds=6.486330\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=14.458552 total_seconds=20.944882\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.481321 total_seconds=21.426203\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.063677 total_seconds=24.489879\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=0.499680 total_seconds=24.989559\nUI SMOKE PHASE: instrument body host identity and recall\nUI SMOKE TIMING: phase=instrument body host identity and recall seconds=2.897492 total_seconds=27.887051\nUI SMOKE PHASE: preset file host\nUI SMOKE TIMING: phase=preset file host seconds=0.917320 total_seconds=28.804371\nUI SMOKE PHASE: session schema host\nUI SMOKE TIMING: phase=session schema host seconds=4.781597 total_seconds=33.585968\nUI SMOKE PHASE: session undo host\nUI SMOKE TIMING: phase=session undo host seconds=0.532665 total_seconds=34.118632\nUI SMOKE PHASE: engine I/O host\nUI SMOKE TIMING: phase=engine I/O host seconds=8.556376 total_seconds=42.675008\nUI SMOKE PHASE: editor initial size\nEditor initial size: 1120x700; logical usable display: 1024x728\nUI SMOKE TIMING: phase=editor initial size seconds=0.045570 total_seconds=42.720578\nUI SMOKE PHASE: external input host\nUI SMOKE TIMING: phase=external input host seconds=1.855225 total_seconds=44.575803\nUI SMOKE PHASE: circuit performance and retired policy host\n</system-out>\n\t</testcase>\n\t"
+    }
+  ],
+  "relevant_test_results": [
+    {
+      "name": "cs80_packaging_notice_tests",
+      "seconds": 10.1652,
+      "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_instrument_body_tests",
+      "seconds": 1.55674,
+      "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "seconds": 10.6826,
+      "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86112972e-08\nREGISTER Bowed strings relative waveform error 1.01320705e-07\nREGISTER Oboe relative waveform error 1.08556522e-07\nREGISTER Bassoon relative waveform error 1.01848545e-07\nKBC body LOW lever -1 relative waveform change 0.107108775\nKBC body LOW lever +1 relative waveform change 0.107108804\nKBC body HIGH lever -1 relative waveform change 0.0371089858\nKBC body HIGH lever +1 relative waveform change 0.037108994\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23847, sample step 0.00075409 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+      "passed": true
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "seconds": 490.254,
+      "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "seconds": 16.989,
+      "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.7 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_character_tests",
+      "seconds": 6.63387,
+      "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.5 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.3 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -144.0 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "seconds": 44.5843,
+      "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_modern_recall_host_tests",
+      "seconds": 5.7739,
+      "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.401342 copy=0.002336 xml=0.022085 session_text=0.002860 fixture_write=0.178586 preset_load=0.043821 session_load=0.028563 audio=0.003222 save=0.049935 round_trip_load=0.057148\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.610855 copy=0.003611 xml=0.033439 session_text=0.004357 fixture_write=0.273517 preset_load=0.067052 session_load=0.042943 audio=0.004965 save=0.075532 round_trip_load=0.086795\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.823560 copy=0.004924 xml=0.044519 session_text=0.005888 fixture_write=0.372557 preset_load=0.089804 session_load=0.057484 audio=0.006744 save=0.100833 round_trip_load=0.116199\nUI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=1.040741 copy=0.006262 xml=0.057031 session_text=0.007599 fixture_write=0.465412 preset_load=0.114145 session_load=0.074125 audio=0.008557 save=0.128400 round_trip_load=0.148408\nUI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=1.273411 copy=0.007699 xml=0.070513 session_text=0.009452 fixture_write=0.558824 preset_load=0.140614 session_load=0.092377 audio=0.010587 save=0.160664 round_trip_load=0.184879\nUI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=1.481156 copy=0.008813 xml=0.081565 session_text=0.010880 fixture_write=0.655352 preset_load=0.163126 session_load=0.106601 audio=0.012230 save=0.185883 round_trip_load=0.213393\nUI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=1.682279 copy=0.009899 xml=0.092515 session_text=0.012278 fixture_write=0.747406 preset_load=0.184504 session_load=0.120663 audio=0.013778 save=0.210766 round_trip_load=0.241755\nUI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=1.884964 copy=0.011211 xml=0.103723 session_text=0.013700 fixture_write=0.838266 preset_load=0.206689 session_load=0.134987 audio=0.015429 save=0.235879 round_trip_load=0.270631\nUI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=2.090211 copy=0.012327 xml=0.114639 session_text=0.015111 fixture_write=0.933691 preset_load=0.228065 session_load=0.149201 audio=0.017080 save=0.261164 round_trip_load=0.298998\nUI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=2.284779 copy=0.013329 xml=0.125665 session_text=0.016532 fixture_write=1.020005 preset_load=0.248844 session_load=0.163196 audio=0.018506 save=0.286170 round_trip_load=0.327128\nUI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=2.477580 copy=0.014390 xml=0.136753 session_text=0.017960 fixture_write=1.104797 preset_load=0.269714 session_load=0.177374 audio=0.020010 save=0.310843 round_trip_load=0.355013\nUI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=2.682505 copy=0.015495 xml=0.147763 session_text=0.019367 fixture_write=1.198892 preset_load=0.292051 session_load=0.191449 audio=0.021577 save=0.336025 round_trip_load=0.383559\nUI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=2.901331 copy=0.016677 xml=0.159837 session_text=0.020815 fixture_write=1.305532 preset_load=0.313879 session_load=0.205778 audio=0.023207 save=0.361025 round_trip_load=0.412569\nUI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=3.109966 copy=0.017807 xml=0.170827 session_text=0.022303 fixture_write=1.404182 preset_load=0.335415 session_load=0.219905 audio=0.024823 save=0.385966 round_trip_load=0.441100\nUI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=3.311241 copy=0.018939 xml=0.181905 session_text=0.023737 fixture_write=1.496031 preset_load=0.357081 session_load=0.233938 audio=0.026354 save=0.410673 round_trip_load=0.469490\nUI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=3.513866 copy=0.019947 xml=0.192962 session_text=0.02",
+      "passed": false
+    },
+    {
+      "name": "cs80_typed_value_unit_tests",
+      "seconds": 0.0754676,
+      "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+      "passed": true
+    }
+  ],
+  "nested_python_skips": {
+    "total": 11,
+    "suites": [
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ]
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          12
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_validator_diagnostic_selection_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          9
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_preset_capture_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          10
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "python_skipped": 3,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_truth_render_tests",
+        "python_skipped": 2,
+        "tests_run_summaries": [
+          16
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_vca_reference_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          12
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_float_wav_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          4
+        ],
+        "explicit_skip_lines": []
+      }
+    ]
+  },
+  "juce_provenance": {
+    "checked_at": "2026-11-23T11:49:24Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "workflow_run": "45168179474",
+    "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "schema": 1,
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "run_id": 45168179474,
+  "artifact_id": 14819875095,
+  "artifact_name": "cs80-windows-test-evidence",
+  "archive_bytes": 57683,
+  "archive_sha256": "762a34090ac3452329011267fc356faf1378d5280223b6d2cd1751b70344f8ca",
+  "members": {
+    "ctest-results.xml": {
+      "bytes": 105133,
+      "sha256": "7b8b77d817a3b9de5cee4780605e42a50d60190bcc0a0a83ad9f55080e29dbb1"
+    },
+    "LastTest.log": {
+      "bytes": 282603,
+      "sha256": "76d5609c10d5748003716973311e0870587a8058ea17e5015061ae7e22c13ce6"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 585,
+      "sha256": "48a4cf5e67b279cfa78c5520a10bce501d7dc1edb05916cd52d6c59d2b5136dc"
+    }
+  },
+  "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately."
+}

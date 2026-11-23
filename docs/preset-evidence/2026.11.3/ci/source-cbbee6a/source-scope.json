@@ -1,0 +1,167 @@
+{
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "parent_source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "changed_paths": [
+    "src/tools/ui_snapshot.cpp",
+    "tests/ProgramLibraryHostTests.h"
+  ],
+  "objects": [
+    {
+      "path": "src/core",
+      "previous": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+      "current": "0b28faab1684c8d818e7e4e3a784fa254665f205"
+    },
+    {
+      "path": "scripts",
+      "previous": "7b5479718c0e2b68ee33afc1a4102b2cdeea3e68",
+      "current": "7b5479718c0e2b68ee33afc1a4102b2cdeea3e68"
+    },
+    {
+      "path": ".github/workflows",
+      "previous": "8290a1094ec61b527228098541b081c2ade37da0",
+      "current": "8290a1094ec61b527228098541b081c2ade37da0"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "previous": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+      "current": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180"
+    }
+  ],
+  "parent_filter": {
+    "run_id": 45159882417,
+    "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "conclusion": "success",
+    "exact_current_source_run": false,
+    "qualification_scope": "Parent-source result with unchanged core and filter-workflow build inputs; not a new exact-source run.",
+    "lanes": [
+      {
+        "job_id": 137642238717,
+        "name": "clang++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "45cf6a240747607e683768106b38d6fb5f9c4a6b5a940c80b3176f903d489a9b",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239107,
+        "name": "g++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "d11e64315fd5f74fa4502ecb7ebf2c8f9ec7c6da1aa7056902556c266f6b351f",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239128,
+        "name": "g++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "6aea8059d675cd273f78336ecf1a2706951baa0193e4ed1b678f7b519e10fd79",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239231,
+        "name": "clang++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "e057c76d53966c213db9ca9656fa33ee874b7a28cc42a1f7ee22048c99faff2b",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239265,
+        "name": "clang++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "00b2487d8c4007dfa5269b49173773bdb30b31d477707e2ac7044fe540909355",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239312,
+        "name": "g++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "dd5ee1594b0564444c896ef9870b9b19d1c76ec77c54b111d73c2e88d0b80f6b",
+        "clang_requested_batch_remains_scalar": false
+      }
+    ],
+    "unchanged_inputs": [
+      {
+        "path": "src/core",
+        "parent_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "corrected_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "equal": true
+      },
+      {
+        "path": ".github/workflows/filter-batch.yml",
+        "parent_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+        "corrected_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+        "equal": true
+      },
+      {
+        "path": "CMakeLists.txt",
+        "parent_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "corrected_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "equal": true
+      },
+      {
+        "path": "src/experimental/ContinuousVoiceCircuit.h",
+        "parent_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+        "corrected_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+        "equal": true
+      },
+      {
+        "path": "tests/test_filter_batch_admission.py",
+        "parent_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+        "corrected_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+        "equal": true
+      }
+    ],
+    "complete_changed_paths_since_parent": [
+      ".github/workflows/screenshots.yml",
+      "src/tools/ui_snapshot.cpp",
+      "tests/PanelEditorTests.h"
+    ]
+  }
+}

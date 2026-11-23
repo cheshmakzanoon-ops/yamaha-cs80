@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "reviewer": "/root/a60_final_acceptance_review",
+  "reviewed_at_utc": "2026-11-23T13:29:03.252067+00:00",
+  "status": "incremental_current_source_evidence_review_passed_overall_release_pending",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "native_run": 45176799427,
+  "scope": [
+    "macos-arm64 native/validators/installation",
+    "current screenshot producer/log evidence",
+    "two current compatibility archives"
+  ],
+  "checks": [
+    "Current source/tree/workflow/checker bindings and every retained platform file reference match.",
+    "Raw API snapshots and full producer log bind ARM native evidence, installation artifact and all four original validator steps to the current run/attempt.",
+    "Actual native and validator evidence ZIPs match recorded hashes; JUnit independently counts 247 passed/2 skipped/0 failed, and all eight validator console/report members contain SUCCESS.",
+    "Actual 14,933,623-byte ARM installation ZIP, inner manifest/all 37 inventory entries, three arm64 Mach-O headers and SOURCE.txt independently match the retained acceptance record.",
+    "Both retained compatibility ZIPs match report/producer digests, embedded reports/checksum pairs, and the separately recorded Git blob SHAs; raw traces remain explicitly outside those ZIPs.",
+    "Current screenshot report matches retained full log: full UI/body-host phase passed, both golden sizes exactly match, and artifact identity is producer-bound; ZIP payload remains correctly marked uninspected."
+  ],
+  "findings": [
+    {
+      "kind": "template_schema_mismatch",
+      "resolution": "fixed",
+      "path": "/tmp/cs80-work/assemble-qualification.py",
+      "detail": "Current screenshot artifact proof uses upload_log_id_size_digest_match; replaced the old producer_log_and_api_id_digest_match lookup. Boolean/source/artifact gates preserved.",
+      "sha256_after": "69fea9cf9d2820a8d262a48818177243c71b1a649c569027b16fea408404f5c1"
+    }
+  ],
+  "actual_reviewed_files": [
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/snapshots/api/jobs-latest-api-593ef9eed1f6aee3a5f3fc28094422a1cdf34a1c5e33ffe20d2639461c6304d6.json",
+      "bytes": 13870,
+      "sha256": "593ef9eed1f6aee3a5f3fc28094422a1cdf34a1c5e33ffe20d2639461c6304d6"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/snapshots/api/artifacts-latest-api-c7603f8e49b56d9fc37518e379694abd5a76b526c97742a637fea723af3d2890.json",
+      "bytes": 2175,
+      "sha256": "c7603f8e49b56d9fc37518e379694abd5a76b526c97742a637fea723af3d2890"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/reports/macos-arm64-native.json",
+      "bytes": 13842,
+      "sha256": "eef9a340aeac653961dcb9492a7a015cf13fe1298c28cc4f235f15c9ece88eb0"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/reports/macos-arm64-validators.json",
+      "bytes": 4092,
+      "sha256": "8ebb57f543302173b9b666b4fe332c2283f1d55ed83c51f0f83cf8c2d76007c6"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/job-logs/137700037485-macos-arm64.log",
+      "bytes": 229216,
+      "sha256": "3e3c0bf34c877011b663876c226653657798d0d1a3cbb07b38397af0ddb8811c"
+    },
+    {
+      "path": "/tmp/cs80-agent54/artifacts/cs80-macos-15-test-evidence-14821652824.zip",
+      "bytes": 64073,
+      "sha256": "53a3b81c03ae3366ed6f3441974ab49c0edd4403347ceec89367b7e87ccc396d"
+    },
+    {
+      "path": "/tmp/cs80-agent54/artifacts/cs80-pluginval-macos-15-14821637752.zip",
+      "bytes": 9630,
+      "sha256": "2ca347e28984d5bf67880cee5dd0ea8f33ae84205d037b047a5863b5ba5592dd"
+    },
+    {
+      "path": "/tmp/cs80-release/source-cbbee6a/downloads/cs80-macos-15-install-bundle-14820874764.zip",
+      "bytes": 14933623,
+      "sha256": "be2447d5f726543612198b19dd1257e840ae538eb90180e67e3dbda73a376d83"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/source-factory-compatibility.zip",
+      "bytes": 984,
+      "sha256": "93809d6fb7f4ef93de63fcdfb7fcedc3e260ec12807c15be73e1c306a5e204e7"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/source_compat.log",
+      "bytes": 20944,
+      "sha256": "0dca7afb1fcfcb809846161c4f603a2f776db9339cc23e78db254639218f7c51"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/legacy-compatibility.zip",
+      "bytes": 29436,
+      "sha256": "5c94f6876eb3b737929f01530728a04a7dfdd8d75442e62882a6c0c2d1b38c63"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/legacy.log",
+      "bytes": 19256,
+      "sha256": "d72e28d5f1609f4ab23428d709b6105d65352c57ad2b793267ed36e6b266b744"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/screens-final.log",
+      "bytes": 110084,
+      "sha256": "0b2ab735789d85db81dd97bf7562717e514d9225bc929626db640f89d90a6471"
+    }
+  ],
+  "current_arm_counts": {
+    "registered": 249,
+    "passed": 247,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "current_arm_validator_lanes": 4,
+  "current_arm_validator_retries": 0,
+  "remaining_scope": [
+    "Other three current native platforms and dependent validator evidence",
+    "Current exact-source sanitizer completion",
+    "Final actual audition and complete download qualification",
+    "Complete assembled proof and final generated-document/download-link review"
+  ],
+  "publication_note": "The two deliberately retained small compatibility ZIPs have matching Git blob identities but remain covered by ignore rules and require explicit force-add when staging.",
+  "limits": [
+    "This is an incremental evidence inspection, not overall release acceptance.",
+    "No native test, product or publication helper was executed.",
+    "Screenshot archive payload was not downloaded in this review; producer identity and full screenshot log were checked."
+  ]
+}

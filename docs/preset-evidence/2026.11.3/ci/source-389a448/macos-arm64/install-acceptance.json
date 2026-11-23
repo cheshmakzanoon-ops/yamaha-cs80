@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "status": "artifact_bytes_verified",
+  "verified_at_utc": "2026-11-23T12:20:37.886615+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "preset_library_revision": "2026.11.3",
+  "run_id": 45168179474,
+  "target": "macos-arm64",
+  "artifact": {
+    "id": 14816594181,
+    "name": "cs80-macos-15-install-bundle",
+    "size_in_bytes": 14933601,
+    "digest": "sha256:25803a272560e8ed8e0453c3cab707cf810c3d527e403209947f0b17a301bdf4",
+    "created_at": "2026-11-23T12:20:16Z",
+    "expires_at": "2027-02-21T11:46:27Z",
+    "workflow_run": {
+      "id": 45168179474,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "389a44807813b3dff24847b2c496623ff0a9f4a7"
+    }
+  },
+  "outer_zip": {
+    "file": "cs80-macos-15-install-bundle-14816594181.zip",
+    "bytes": 14933601,
+    "sha256": "25803a272560e8ed8e0453c3cab707cf810c3d527e403209947f0b17a301bdf4",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-macos-arm64-389a44807813.manifest.json",
+      "cs80-reference-macos-arm64-389a44807813.tar.gz"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-macos-arm64-389a44807813.tar.gz",
+    "bytes": 14925228,
+    "sha256": "2427206ac04500ef36b1b6c4abdbce7a4fad85ce4d540e5ddf4293abd36a1c3b"
+  },
+  "manifest_sha256": "a1a805df13357d8aa1c266bcc1ebb5b5ecf724a862ea5dbd8b71969ffaef896f",
+  "checksum_manifest_sha256": "aba23e865e4d2ce2ff9bf2f9c5ed07f49bb89a2ce4b9fa02ee1a9287247a8700",
+  "inventory_entries": 37,
+  "formats": [
+    "VST3",
+    "Standalone",
+    "AU"
+  ],
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 14570592,
+      "sha256": "7c043f0f4b4e8f6b20ef5aa0bacd82a9860ec5f294c43a5accf2b46ef11269c5",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    },
+    {
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 14274704,
+      "sha256": "b17a6114d8420bffaf0e9bb751af1906e941483359696d55ba63278c55f53cd2",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14125440,
+      "sha256": "3c6acd23e2a3d18db359dc9bcf749fb10fd9c8b5e6620892a8929e1f310cfab6",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "standalone",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    }
+  ],
+  "inner_checker": {
+    "result": "integrity and declared source consistency verified",
+    "commit": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "platform": "macos",
+    "architecture": "arm64",
+    "files": 37,
+    "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+  },
+  "checker_sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+  "source_checker_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "source_scripts_compared_to_commit": true,
+  "scope": "Outer bytes, complete inner inventory/checksums, declared source/revision/run, JUCE provenance, and native headers. No product executed.",
+  "remaining_qualification": "Producer/upload/attempt binding, complete native tests, 13 validator invocations and payload identity with validator inputs must be established separately.",
+  "signing_status": "not inspected; no release signing/notarization performed by this helper"
+}

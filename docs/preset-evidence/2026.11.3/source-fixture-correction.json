@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "implementation_source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+  "qualification_source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "qualification_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "audio_preset_parameter_and_plugin_sources_unchanged": true,
+  "prior_screenshot_run": 45159882253,
+  "prior_screenshot_conclusion": "failure",
+  "prior_assertions": {
+    "missing_performance_fields": 1,
+    "discrete_model_roundtrips": 6,
+    "golden_images": 2
+  },
+  "prior_native_run": 45159882288,
+  "prior_native_conclusion": "cancelled_after_source_superseded",
+  "prior_native_validators": "skipped",
+  "corrections": [
+    "Assert defaults only for the ten fields actually removed, and separately preserve retained appended fields.",
+    "Snap both model-selector expectations to their discrete legal host values.",
+    "Pin golden-layout chorus controls to their captured 0.28 Hz / 0.36 positions; actual factory-value checks remain separate.",
+    "Retain failed screenshot candidates and run logs without allowing a failed run to refresh published screenshots."
+  ],
+  "golden_images_and_all_tolerances_unchanged": true,
+  "golden_diagnosis_scope": "Failed-run candidates were not uploaded by the old workflow. Baseline images were inspected; the only changed pre-existing program-zero controls were the two visible chorus controls. Corrected-source CI subsequently matched both unchanged golden images exactly.",
+  "new_native_run": 45176799427,
+  "new_screenshot_run": 45176799293,
+  "qualification_status": "final_source_native_supporting_and_actual_download_acceptance_passed",
+  "corrected_screenshot_conclusion": "success",
+  "corrected_screenshot_golden_results": {
+    "1600x1000": {
+      "changed_percent": 0.0,
+      "worst_8x8_mean": 0.0
+    },
+    "1120x700": {
+      "changed_percent": 0.0,
+      "worst_8x8_mean": 0.0
+    }
+  },
+  "fixture_correction_source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+  "fixture_correction_tree": "9fa859d89b721e9b696f9aa718bfe7b0a0553008",
+  "fixture_correction_paths": [
+    ".github/workflows/screenshots.yml",
+    "src/tools/ui_snapshot.cpp",
+    "tests/PanelEditorTests.h"
+  ],
+  "source_history": [
+    {
+      "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "native_run": 45159882288,
+      "native_conclusion": "cancelled_after_source_superseded",
+      "screenshot_run": 45159882253,
+      "screenshot_conclusion": "failure",
+      "scope": "Nine stale test-fixture assertions; production audio/preset code subsequently unchanged."
+    },
+    {
+      "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "native_run": 45163325280,
+      "native_conclusion": "cancelled_after_source_superseded",
+      "macos_arm64": {
+        "registered": 249,
+        "passed": 246,
+        "failed": 1,
+        "formal_skipped": 2,
+        "nested_python_skips": 5,
+        "failed_test": "cs80_packaging_notice_tests",
+        "reason": "Historical 2026.11.2 report Markdown link label did not match the packaging-notice contract."
+      },
+      "other_native_jobs": "cancelled",
+      "dependent_validators": "skipped",
+      "screenshot_run": 45163325385,
+      "screenshot_conclusion": "success",
+      "supporting_dsp": {
+        "run_id": 45163325296,
+        "job_id": 137654058236,
+        "conclusion": "failure",
+        "registered": 198,
+        "passed": 196,
+        "failed": 1,
+        "formal_skipped": 1,
+        "failed_test": "cs80_packaging_notice_tests",
+        "reason": "Same historical guide-link label assertion as the native ARM run. No observed sanitizer diagnostic.",
+        "source_repair": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+        "focused_exact_source_retest_passed": true,
+        "supporting_record": "ci/source-a81851b/supporting-ci-final.json"
+      }
+    },
+    {
+      "source": "af83e6f21dcd0aaeb64e9b5f4bcb29e9e8ca1004",
+      "scope": "Successful screenshot workflow bot updated 23 files under docs/screenshots; preserved in main."
+    },
+    {
+      "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "native_run": 45168179474,
+      "native_run_attempt": 1,
+      "conclusion": "failure",
+      "changed_paths": [
+        "docs/PRESET_GUIDE.md"
+      ],
+      "correction": "Restored the exact historical link label: 2026.11.2 circuit library report. No audio, preset, host, UI, test, workflow or threshold changes.",
+      "local_packaging_preflight": {
+        "registered": 7,
+        "passed": 7,
+        "failed": 0,
+        "junit": "development-packaging-results.xml"
+      },
+      "macos_arm64": {
+        "native_registered": 249,
+        "native_passed": 247,
+        "native_failed": 0,
+        "formal_skipped": 2,
+        "nested_python_skips": 5,
+        "validator_lanes_passed": 4,
+        "validation_retries": 0,
+        "install_artifact_id": 14816594181,
+        "archive_acceptance": "ci/source-389a448/macos-arm64/install-acceptance.json",
+        "scope": "Platform accepted for this source; does not qualify later source or all-system release."
+      },
+      "windows_x86_64": {
+        "native_registered": 227,
+        "native_passed": 222,
+        "native_failed": 3,
+        "formal_skipped": 2,
+        "nested_python_skips": 11,
+        "failed_tests": [
+          "cs80_circuit_source_host_tests",
+          "cs80_modern_recall_host_tests",
+          "cs80_ui_smoke"
+        ],
+        "ctest_classification": "SEGFAULT",
+        "raw_nt_exception_code_available": false,
+        "native_job_id": 137670477656,
+        "evidence_artifact_id": 14819875095
+      },
+      "macos_x86_64": "Cancelled during AU GUI validation after native Test, VST3 and AU headless validation passed; not fully accepted.",
+      "linux_x86_64": "Cancelled during Test; not accepted.",
+      "dependent_validators": "Both skipped."
+    },
+    {
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+      "native_run": 45176799427,
+      "native_run_attempt": 1,
+      "conclusion": "success",
+      "changed_paths": [
+        "src/tools/ui_snapshot.cpp",
+        "tests/ProgramLibraryHostTests.h"
+      ],
+      "correction": "Heap-own 34 named processor fixtures and one temporary; preserve constructor arguments, calls, assertions, scopes and destruction order. Keep 8 MiB stack reserve and numerical/golden thresholds unchanged.",
+      "production_dsp_plugin_preset_parameter_sources_unchanged": true,
+      "local_validation": {
+        "actual_juce_syntax": "passed",
+        "optimized_gcc_object_compilation": "passed",
+        "independent_review": "passed",
+        "gcc_main_frame_bytes_before_after": [
+          1754640,
+          3984
+        ],
+        "gcc_performance_fixture_frame_bytes_before_after": [
+          3502544,
+          1072
+        ],
+        "gcc_program_library_frame_bytes_before_after": [
+          [
+            1757632,
+            24368
+          ],
+          [
+            1759264,
+            26000
+          ]
+        ]
+      },
+      "diagnosis_scope": "Large fixture stack pressure is supported by code/size/frame evidence; original Windows artifacts contain no raw NT exception code or crash dump. Native rerun must confirm resolution."
+    }
+  ],
+  "new_dsp_run": 45176799301,
+  "qualification_record": "ci/source-cbbee6a/release-qualification.json"
+}

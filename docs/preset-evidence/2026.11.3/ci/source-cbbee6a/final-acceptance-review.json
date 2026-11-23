@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "status": "final_acceptance_review_passed",
+  "reviewer": "/root/a60_final_acceptance_review",
+  "reviewed_at_utc": "2026-11-23T16:19:24.809349+00:00",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "run_id": 45176799427,
+  "run_attempt": 1,
+  "verdict": "Accepted qualified source, actual download payloads, consolidated evidence and prepared publication documents for the root publication step.",
+  "unresolved_findings": [],
+  "publication_scope": "The reviewer did not commit or push. This report records acceptance before the root publication commit and does not itself certify a main-branch update.",
+  "paths_relative_to": "docs/preset-evidence/2026.11.3/ci/source-cbbee6a",
+  "user_scope": {
+    "ordered_names_categories_and_addresses_preserved": 523,
+    "musical_programs_changed": 521,
+    "initialization_programs_preserved": [
+      "Init Circuit",
+      "Init Patch"
+    ],
+    "presets_added": 0,
+    "presets_renamed": 0,
+    "body_enabled_programs": 259,
+    "active_body_models": 19,
+    "ledger_entries": 60,
+    "unique_recorded_worker_task_names": 60,
+    "worker_count_basis": "Actual spawned-task ledger recorded during this revision; failed launches, follow-ups and the root are excluded. The count is not a listening-panel result."
+  },
+  "native_qualification": {
+    "successful_jobs": 6,
+    "required_workflow_steps": 39,
+    "counts": {
+      "registered": 1310,
+      "passed": 1303,
+      "failed": 0,
+      "formal_skipped": 7,
+      "disabled": 0
+    },
+    "nested_python_subtest_skips": 24,
+    "validators": {
+      "required_lanes": 13,
+      "validation_invocations": 13,
+      "validation_retries": 0,
+      "normal_original_exit_zero": 13,
+      "version": "1.0.4",
+      "strictness": 10
+    },
+    "three_prior_windows_crash_regressions": "All passed on the qualified source; earlier failures remain retained."
+  },
+  "supporting_qualification": {
+    "dsp_run": 45176799301,
+    "screenshot_run": 45176799293,
+    "attempt": 1,
+    "successful_dsp_jobs": 5,
+    "sanitizer_counts": {
+      "registered": 198,
+      "passed": 197,
+      "failed": 0,
+      "formal_skipped": 1,
+      "disabled": 0
+    },
+    "observed_sanitizer_diagnostics": [],
+    "historical_a818_sanitizer_failure_preserved": true,
+    "historical_389_windows_failures_preserved": true,
+    "older_filter_evidence_keeps_original_source": true
+  },
+  "installation_downloads": [
+    {
+      "target": "windows-x86_64",
+      "id": 14822019089,
+      "name": "cs80-windows-install-bundle",
+      "bytes": 6323870,
+      "sha256": "8fe6ee8249ab5818acc99be4c73d8780ecf0f20729f4659175cce5202bac0346",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "id": 14820874764,
+      "name": "cs80-macos-15-install-bundle",
+      "bytes": 14933623,
+      "sha256": "be2447d5f726543612198b19dd1257e840ae538eb90180e67e3dbda73a376d83",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "id": 14822214497,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "bytes": 16090841,
+      "sha256": "37a5e414b689f76de3b3dea40b3764a6c764ee3bb08696d903af2f7695e4493f",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip"
+    },
+    {
+      "target": "linux-x86_64",
+      "id": 14837191097,
+      "name": "cs80-linux-install-bundle",
+      "bytes": 13282726,
+      "sha256": "f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip"
+    }
+  ],
+  "audition": {
+    "artifact": {
+      "id": 14836886459,
+      "name": "cs80-curated-preset-audition-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "bytes": 204465925,
+      "sha256": "3a4b57fc49e05aef9bd233dd7eb129165d4b5514feb2c6c914e858e271a223ff",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip"
+    },
+    "wav_count": 90,
+    "seconds": 594.0,
+    "stereo_frames": 28512000,
+    "individual_channel_samples": 57024000,
+    "nonfinite_samples": 0,
+    "samples_at_or_above_full_scale": 0,
+    "peak_dbfs": -13.24640749426045,
+    "selected_programs": 71,
+    "body_models": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "intentional_silent_files": [
+      "pressure-zero/444-Pressure-Lead.wav"
+    ],
+    "inventory_programs": 523,
+    "parameters_per_program": 198,
+    "inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+    "inventory_matches_both_reviewed_development_files_byte_for_byte": true,
+    "member_checksums_verified": 106
+  },
+  "independent_review": [
+    "Inspected all four actual installation archives, their complete inventories, native binary headers, API digests and producing-job evidence.",
+    "Inspected both actual Windows/Linux validator-input archives; complete selected VST3 payloads match the distributed bundles.",
+    "Reviewed the narrowly scoped Windows compiler-sidecar correction, preserved rejection, unchanged strict comparison functions, exact consumer log and both actual bundle selections.",
+    "Inspected raw native and validator evidence ZIPs, successful original steps, normal exits, explicit skips and frozen platform wrapper identities.",
+    "Independently measured every actual WAV header, frame count and sample set, with per-file peak/RMS agreement and all member checksums.",
+    "Checked final source/run/artifact identities, all four installation links and audition link, history, coverage, claims and Library reload instructions."
+  ],
+  "reference_review": {
+    "hashed_reference_entries_checked": 75,
+    "unique_reference_files": 56,
+    "broken_or_mismatched_references": 0,
+    "final_markdown_file_links_checked": 242
+  },
+  "proof_records": [
+    {
+      "path": "release-qualification.json",
+      "bytes": 155722,
+      "sha256": "a6ebb43e0d97e10dcc1117203297e97ccae9aa9d8511d67ff2c58cb1731fc297"
+    },
+    {
+      "path": "native-validator-qualification.json",
+      "bytes": 111562,
+      "sha256": "887a4c5fdd05f333580485e48ce5e090215022e0ef292a32929294d19ef88244"
+    },
+    {
+      "path": "artifact-producer-bindings.json",
+      "bytes": 14532,
+      "sha256": "1b09d2e92e5b29660035bf72e9dffd17b342bad3206d5394aa0e438e3c96356e"
+    },
+    {
+      "path": "supporting-ci-final.json",
+      "bytes": 28682,
+      "sha256": "bd503e662901df379ac03b98e2205f7f6b88c5d46925d15517d4602367cb64f7"
+    },
+    {
+      "path": "../../source-fixture-correction.json",
+      "bytes": 7354,
+      "sha256": "47c3e656fe1a644bf0e9ae16436bbf67f9e94fb6c3417b3a830c1cf425d46699"
+    },
+    {
+      "path": "../../parameter-coverage.json",
+      "bytes": 278064,
+      "sha256": "bea36a2d0527c50d5d4563a8a632ad1db92468a76f35d218bb32435961b073c6"
+    },
+    {
+      "path": "audition/acceptance-summary.json",
+      "bytes": 39791,
+      "sha256": "f308659a131e6d45adbd4d31ef8e60475326b9562fc1aca3251b100d6eb6b85a"
+    },
+    {
+      "path": "audition/delivered-inventory-identity.json",
+      "bytes": 3106,
+      "sha256": "f447f6f849a24205197d9394ed905987f7848185663c2c3073ca099a38f8ffc6"
+    },
+    {
+      "path": "canonical-platform-reconciliation.json",
+      "bytes": 1345,
+      "sha256": "2da2b35d6fadb9722b7898b8c1602185acc837388b60bf68b008072c6bc89e2c"
+    }
+  ],
+  "reviewed_documents": [
+    {
+      "path": "../../../../../README.md",
+      "bytes": 16510,
+      "sha256": "c020b9c4b71c0ae7c3a33f4f459c1145e1478b39249baa1e0e4905e3f9bdcb41"
+    },
+    {
+      "path": "../../../../CI_DISTRIBUTION_STATUS.md",
+      "bytes": 25589,
+      "sha256": "fed54626ee3bcc208e24483323ae8f27dc8132b874151d931aa257bf10b25f57"
+    },
+    {
+      "path": "../../../../CIRCUIT_LIBRARY_2026_11_3.md",
+      "bytes": 19506,
+      "sha256": "6e8a9679f2d5e9e9bdeb1b968ad2e90fc62525ab17a822dcaadbb56ea9aba23d"
+    },
+    {
+      "path": "../../../../TEAM_REVIEW_2026_11_3.md",
+      "bytes": 29595,
+      "sha256": "501268ef82e914d360c4848a5a3fb590a503cb1ac0c3df785b5457e77a2b7bfb"
+    }
+  ],
+  "focused_documentation_check": {
+    "record": {
+      "path": "final-documentation-packaging-results.xml",
+      "bytes": 1403,
+      "sha256": "5966934ac93d7ee591cfee90b0788faa89fa380a5623afce05e8482e176d5eb3"
+    },
+    "ctest_wrappers_passed": 1,
+    "nested_python_checks_passed": 7,
+    "scope": "Completed root packaging-notice check. Subsequent reviewer edits were the ledger entries and a singular/plural wording correction."
+  },
+  "reviewer_repository_edits": {
+    "docs/TEAM_REVIEW_2026_11_3.md": "Recorded this final acceptance in row60 and clarified agent59\u2019s later sidecar correction and three-positive/22-negative fixture results.",
+    "docs/CI_DISTRIBUTION_STATUS.md": "Changed the current sanitizer phrase to one formal skip.",
+    "docs/preset-evidence/2026.11.3/ci/source-cbbee6a/final-acceptance-review.json": "Added this acceptance record."
+  },
+  "limits": [
+    "Authored synthesized instrument models; acoustic indistinguishability, physical-CS-80 calibration and controlled listening-panel judgments are not established.",
+    "Signing, notarization and arbitrary DAW compatibility are not certified.",
+    "Actions download links identify verified immutable artifacts and retain their recorded expiry; public unauthenticated HTTP download behavior was not separately certified.",
+    "Native counts are platform executions; nested Python skips and supporting-workflow counts remain separate."
+  ]
+}

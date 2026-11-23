@@ -1,0 +1,73 @@
+{
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "files": [
+    {
+      "path": "scripts/test-packaging-notices.py",
+      "bytes": 15702,
+      "sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/OFL.txt",
+      "bytes": 4377,
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/SOURCE.txt",
+      "bytes": 994,
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+    },
+    {
+      "path": "src/vendor/mts-esp/LICENSE",
+      "bytes": 661,
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+    },
+    {
+      "path": "src/vendor/libxml2/Copyright",
+      "bytes": 1314,
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+    },
+    {
+      "path": "src/vendor/libxml2/SOURCE.txt",
+      "bytes": 667,
+      "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+    },
+    {
+      "path": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
+      "bytes": 1406,
+      "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 16535,
+      "sha256": "7d95ebada1e98e90365c2e4b8060849d0097e24c840ee4b110845aad93586eda"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 19871,
+      "sha256": "aeed17907565be70590687d9d33ed6ffca169f428bb5146812aba923bab18f25"
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 24207,
+      "sha256": "faf57f7a89facd28a5e2dc095751d2a1faae377b2f5c0c54cf0c0959c77d2edd"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "016642234bf7d5ab13e53d3e7e4559ce5120af1c34ebab742f90d796759b4753"
+    }
+  ],
+  "case": "NoticeTests.test_actual_ci_payload_and_archive_bytes",
+  "exit_code": 0,
+  "scope": "Exact committed source files; inert packaging fixtures for four platforms; no instrument execution."
+}

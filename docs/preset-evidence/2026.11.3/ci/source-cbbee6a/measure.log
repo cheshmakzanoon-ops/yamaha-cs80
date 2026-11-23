@@ -1,0 +1,373 @@
+﻿2026-11-23T12:42:12.6292272Z Current runner version: '2.338.2'
+2026-11-23T12:42:12.6308773Z ##[group]Runner Image Provisioner
+2026-11-23T12:42:12.6309386Z Hosted Compute Agent
+2026-11-23T12:42:12.6309895Z Version: 20261111.635
+2026-11-23T12:42:12.6310373Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T12:42:12.6310924Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T12:42:12.6311413Z Worker ID: {710e30db-5f34-426f-83a2-5fb9b482a870}
+2026-11-23T12:42:12.6311919Z Region: us-west-2
+2026-11-23T12:42:12.6312317Z Cloud: AWS
+2026-11-23T12:42:12.6312689Z ##[endgroup]
+2026-11-23T12:42:12.6314071Z ##[group]Operating System
+2026-11-23T12:42:12.6314563Z Ubuntu
+2026-11-23T12:42:12.6314933Z 24.04.5
+2026-11-23T12:42:12.6315435Z LTS
+2026-11-23T12:42:12.6315856Z ##[endgroup]
+2026-11-23T12:42:12.6316230Z ##[group]Runner Image
+2026-11-23T12:42:12.6316672Z Image: ubuntu-24.04
+2026-11-23T12:42:12.6317071Z Version: 20261116.133.1
+2026-11-23T12:42:12.6318136Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.133/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T12:42:12.6319251Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.133
+2026-11-23T12:42:12.6319948Z ##[endgroup]
+2026-11-23T12:42:12.6320762Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T12:42:12.6322464Z Contents: read
+2026-11-23T12:42:12.6322881Z Metadata: read
+2026-11-23T12:42:12.6323279Z ##[endgroup]
+2026-11-23T12:42:12.6325053Z Secret source: Actions
+2026-11-23T12:42:12.6325728Z Cache mode: write
+2026-11-23T12:42:12.6326230Z Prepare workflow directory
+2026-11-23T12:42:12.6555053Z Prepare all required actions
+2026-11-23T12:42:12.6590741Z Getting action download info
+2026-11-23T12:42:13.0229154Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T12:42:14.8846279Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-23T12:42:15.0523454Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T12:42:15.3660124Z Complete job name: measure
+2026-11-23T12:42:15.4243544Z ##[group]Run actions/checkout@v5
+2026-11-23T12:42:15.4244365Z with:
+2026-11-23T12:42:15.4244726Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:15.4246804Z   token: ***
+2026-11-23T12:42:15.4247076Z   ssh-strict: true
+2026-11-23T12:42:15.4247370Z   ssh-user: git
+2026-11-23T12:42:15.4247649Z   persist-credentials: true
+2026-11-23T12:42:15.4247967Z   clean: true
+2026-11-23T12:42:15.4248240Z   sparse-checkout-cone-mode: true
+2026-11-23T12:42:15.4248548Z   fetch-depth: 1
+2026-11-23T12:42:15.4248830Z   fetch-tags: false
+2026-11-23T12:42:15.4249099Z   show-progress: true
+2026-11-23T12:42:15.4249376Z   lfs: false
+2026-11-23T12:42:15.4249638Z   submodules: false
+2026-11-23T12:42:15.4249926Z   set-safe-directory: true
+2026-11-23T12:42:15.4250239Z   allow-unsafe-pr-checkout: false
+2026-11-23T12:42:15.4250647Z ##[endgroup]
+2026-11-23T12:42:19.3368825Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:19.3370090Z ##[group]Getting Git version info
+2026-11-23T12:42:19.3370609Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T12:42:19.3371241Z [command]/usr/bin/git version
+2026-11-23T12:42:19.5835189Z git version 2.56.1
+2026-11-23T12:42:19.5847349Z ##[endgroup]
+2026-11-23T12:42:19.5858431Z Temporarily overriding HOME='/home/runner/work/_temp/2ed5aff6-855d-406b-aedb-9fb69c2c467b' before making global git config changes
+2026-11-23T12:42:19.5859506Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T12:42:19.5862298Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:42:19.5912220Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T12:42:19.5914858Z ##[group]Initializing the repository
+2026-11-23T12:42:19.5918532Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:42:19.6429861Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T12:42:19.6430792Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T12:42:19.6431327Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T12:42:19.6431726Z hint: call:
+2026-11-23T12:42:19.6432013Z hint:
+2026-11-23T12:42:19.6432373Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T12:42:19.6432701Z hint:
+2026-11-23T12:42:19.6433164Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T12:42:19.6433775Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T12:42:19.6434189Z hint:
+2026-11-23T12:42:19.6434443Z hint: 	git branch -m <name>
+2026-11-23T12:42:19.6434705Z hint:
+2026-11-23T12:42:19.6435099Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T12:42:19.6442069Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T12:42:19.6448423Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:19.6500226Z ##[endgroup]
+2026-11-23T12:42:19.6500757Z ##[group]Disabling automatic garbage collection
+2026-11-23T12:42:19.6502458Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T12:42:19.6525616Z ##[endgroup]
+2026-11-23T12:42:19.6526249Z ##[group]Setting up auth
+2026-11-23T12:42:19.6530676Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T12:42:19.6557995Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T12:42:19.9955747Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T12:42:19.9977928Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T12:42:20.0124288Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T12:42:20.0147665Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T12:42:20.0290748Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T12:42:20.0316923Z ##[endgroup]
+2026-11-23T12:42:20.0317595Z ##[group]Fetching the repository
+2026-11-23T12:42:20.0331723Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cbbee6a940985ad3c550768414960d2e1b1e802e:refs/remotes/origin/main
+2026-11-23T12:42:25.0432123Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:25.0432900Z  * [new ref]         cbbee6a940985ad3c550768414960d2e1b1e802e -> origin/main
+2026-11-23T12:42:25.0436413Z ##[endgroup]
+2026-11-23T12:42:25.0437129Z ##[group]Determining the checkout info
+2026-11-23T12:42:25.0439061Z ##[endgroup]
+2026-11-23T12:42:25.0443260Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T12:42:25.0534712Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T12:42:25.0536259Z ##[group]Checking out the ref
+2026-11-23T12:42:25.0536841Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T12:42:25.7454409Z Switched to a new branch 'main'
+2026-11-23T12:42:25.7462256Z branch 'main' set up to track 'origin/main'.
+2026-11-23T12:42:25.7486094Z ##[endgroup]
+2026-11-23T12:42:25.7526776Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T12:42:25.7545681Z cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:42:25.7764816Z ##[group]Run actions/setup-python@v5
+2026-11-23T12:42:25.7765123Z with:
+2026-11-23T12:42:25.7765387Z   python-version: 3.12
+2026-11-23T12:42:25.7765616Z   check-latest: false
+2026-11-23T12:42:25.7767490Z   token: ***
+2026-11-23T12:42:25.7767855Z   update-environment: true
+2026-11-23T12:42:25.7768087Z   allow-prereleases: false
+2026-11-23T12:42:25.7768361Z   freethreaded: false
+2026-11-23T12:42:25.7768604Z ##[endgroup]
+2026-11-23T12:42:25.8745869Z ##[group]Installed versions
+2026-11-23T12:42:26.0987569Z (node:2145) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:42:26.0988360Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:42:26.0989015Z Successfully set up CPython (3.12.16)
+2026-11-23T12:42:26.0989743Z ##[endgroup]
+2026-11-23T12:42:26.1090397Z ##[group]Run python -m pip install numpy==2.2.6 matplotlib==3.10.3
+2026-11-23T12:42:26.1091137Z [36;1mpython -m pip install numpy==2.2.6 matplotlib==3.10.3[0m
+2026-11-23T12:42:26.4006991Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:42:26.4007338Z env:
+2026-11-23T12:42:26.4007656Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:26.4008061Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:42:26.4008476Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:26.4008816Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:26.4009168Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:26.4009524Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:42:26.4009829Z ##[endgroup]
+2026-11-23T12:42:31.4584107Z Collecting numpy==2.2.6
+2026-11-23T12:42:31.5132841Z   Downloading numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+2026-11-23T12:42:31.6260183Z Collecting matplotlib==3.10.3
+2026-11-23T12:42:31.6367087Z   Downloading matplotlib-3.10.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+2026-11-23T12:42:31.6846980Z Collecting contourpy>=1.0.1 (from matplotlib==3.10.3)
+2026-11-23T12:42:31.6937301Z   Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+2026-11-23T12:42:31.7073900Z Collecting cycler>=0.10 (from matplotlib==3.10.3)
+2026-11-23T12:42:31.7166664Z   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+2026-11-23T12:42:31.8190321Z Collecting fonttools>=4.22.0 (from matplotlib==3.10.3)
+2026-11-23T12:42:31.8279022Z   Downloading fonttools-4.68.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (139 kB)
+2026-11-23T12:42:31.8932363Z Collecting kiwisolver>=1.3.1 (from matplotlib==3.10.3)
+2026-11-23T12:42:31.9023896Z   Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)
+2026-11-23T12:42:31.9188387Z Collecting packaging>=20.0 (from matplotlib==3.10.3)
+2026-11-23T12:42:31.9280800Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-11-23T12:42:32.0387703Z Collecting pillow>=8 (from matplotlib==3.10.3)
+2026-11-23T12:42:32.0478691Z   Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+2026-11-23T12:42:32.0686428Z Collecting pyparsing>=2.3.1 (from matplotlib==3.10.3)
+2026-11-23T12:42:32.0774576Z   Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+2026-11-23T12:42:32.0920730Z Collecting python-dateutil>=2.7 (from matplotlib==3.10.3)
+2026-11-23T12:42:32.1009076Z   Downloading python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+2026-11-23T12:42:32.1317680Z Collecting tzdata (from python-dateutil>=2.7->matplotlib==3.10.3)
+2026-11-23T12:42:32.1405277Z   Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+2026-11-23T12:42:32.1515985Z Downloading numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.5 MB)
+2026-11-23T12:42:32.6107187Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 44.4 MB/s  0:00:00
+2026-11-23T12:42:32.6228547Z Downloading matplotlib-3.10.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.6 MB)
+2026-11-23T12:42:32.6921610Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.6/8.6 MB 124.6 MB/s  0:00:00
+2026-11-23T12:42:32.7015835Z Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (383 kB)
+2026-11-23T12:42:32.7131731Z Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+2026-11-23T12:42:32.7238322Z Downloading fonttools-4.68.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.4 MB)
+2026-11-23T12:42:32.7582286Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 158.6 MB/s  0:00:00
+2026-11-23T12:42:32.7672194Z Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
+2026-11-23T12:42:32.7758184Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 176.1 MB/s  0:00:00
+2026-11-23T12:42:32.7846306Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+2026-11-23T12:42:32.7951730Z Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)
+2026-11-23T12:42:32.8342767Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 184.4 MB/s  0:00:00
+2026-11-23T12:42:32.8430287Z Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+2026-11-23T12:42:32.8532822Z Downloading python_dateutil-4.0.0-py3-none-any.whl (92 kB)
+2026-11-23T12:42:32.8634419Z Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+2026-11-23T12:42:33.3214227Z Installing collected packages: tzdata, pyparsing, pillow, packaging, numpy, kiwisolver, fonttools, cycler, python-dateutil, contourpy, matplotlib
+2026-11-23T12:42:36.7765243Z 
+2026-11-23T12:42:36.7777815Z Successfully installed contourpy-1.4.0 cycler-0.12.1 fonttools-4.68.0 kiwisolver-1.5.1 matplotlib-3.10.3 numpy-2.2.6 packaging-26.3 pillow-13.0.0 pyparsing-3.3.3 python-dateutil-4.0.0 tzdata-2026.6
+2026-11-23T12:42:36.8495616Z ##[group]Run cmake -S . -B build-probe -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF
+2026-11-23T12:42:36.8496174Z [36;1mcmake -S . -B build-probe -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF[0m
+2026-11-23T12:42:36.8496648Z [36;1mcmake --build build-probe --target cs80_dsp_probe cs80_parity_capture --parallel 2[0m
+2026-11-23T12:42:36.8522659Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:42:36.8522963Z env:
+2026-11-23T12:42:36.8523252Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:36.8523807Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:42:36.8524163Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:36.8524518Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:36.8524843Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:42:36.8525178Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:42:36.8525589Z ##[endgroup]
+2026-11-23T12:42:40.1752961Z -- The C compiler identification is GNU 13.3.0
+2026-11-23T12:42:41.8538873Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-23T12:42:41.9063993Z -- Detecting C compiler ABI info
+2026-11-23T12:42:42.0291430Z -- Detecting C compiler ABI info - done
+2026-11-23T12:42:42.0405884Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-23T12:42:42.0414317Z -- Detecting C compile features
+2026-11-23T12:42:42.0423125Z -- Detecting C compile features - done
+2026-11-23T12:42:42.0535288Z -- Detecting CXX compiler ABI info
+2026-11-23T12:42:42.1374047Z -- Detecting CXX compiler ABI info - done
+2026-11-23T12:42:42.1485744Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-23T12:42:42.1487792Z -- Detecting CXX compile features
+2026-11-23T12:42:42.1491921Z -- Detecting CXX compile features - done
+2026-11-23T12:42:42.2723074Z -- Found Python3: /opt/hostedtoolcache/Python/3.12.16/x64/bin/python3.12 (found suitable version "3.12.16", minimum required is "3.10") found components: Interpreter
+2026-11-23T12:42:42.2764312Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-23T12:42:42.8127717Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-11-23T12:42:42.8134610Z -- Found Threads: TRUE
+2026-11-23T12:42:42.8242893Z -- Configuring done (5.2s)
+2026-11-23T12:42:42.9215347Z -- Generating done (0.1s)
+2026-11-23T12:42:42.9216306Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build-probe
+2026-11-23T12:42:42.9561874Z [  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-23T12:42:42.9562779Z [  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-23T12:42:42.9649553Z [  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-23T12:42:51.6665956Z [ 50%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-23T12:42:53.0737539Z [ 50%] Linking CXX static library libcs80_core.a
+2026-11-23T12:43:05.8346714Z [ 50%] Built target cs80_core
+2026-11-23T12:43:05.8400185Z [100%] Building CXX object CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o
+2026-11-23T12:43:07.2281977Z [100%] Linking CXX executable cs80_dsp_probe
+2026-11-23T12:43:07.3070995Z [100%] Built target cs80_dsp_probe
+2026-11-23T12:43:07.3306515Z [100%] Built target cs80_core
+2026-11-23T12:43:07.3354568Z [100%] Building CXX object CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o
+2026-11-23T12:43:08.6668949Z [100%] Linking CXX executable cs80_parity_capture
+2026-11-23T12:43:08.7149194Z [100%] Built target cs80_parity_capture
+2026-11-23T12:43:08.7200530Z ##[group]Run ./build-probe/cs80_dsp_probe artifacts/dsp-probe
+2026-11-23T12:43:08.7200968Z [36;1m./build-probe/cs80_dsp_probe artifacts/dsp-probe[0m
+2026-11-23T12:43:08.7201318Z [36;1mpython scripts/analyze_dsp.py artifacts/dsp-probe[0m
+2026-11-23T12:43:08.7227034Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:43:08.7227369Z env:
+2026-11-23T12:43:08.7227685Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:08.7228089Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:43:08.7228480Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:08.7228819Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:08.7229152Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:08.7229532Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:43:08.7229827Z ##[endgroup]
+2026-11-23T12:43:09.3979786Z DSP probes: 0 failures; output "artifacts/dsp-probe"
+2026-11-23T12:43:13.9879601Z   110.60 Hz: off-harmonic improvement 21.77 dB
+2026-11-23T12:43:13.9880009Z   440.19 Hz: off-harmonic improvement 21.71 dB
+2026-11-23T12:43:13.9880452Z  2198.00 Hz: off-harmonic improvement 20.79 dB
+2026-11-23T12:43:13.9880734Z  4395.26 Hz: off-harmonic improvement 22.15 dB
+2026-11-23T12:43:13.9885536Z DECIMATOR_MEASUREMENTS {"actual_quadrature_tones": [{"cycles_per_internal_sample": 0.05, "gain_db": -4.610859707e-05}, {"cycles_per_internal_sample": 0.2, "gain_db": 1.267147366e-05}, {"cycles_per_internal_sample": 0.2267573696, "gain_db": 0.0003657002397}, {"cycles_per_internal_sample": 0.25, "gain_db": -87.07346806}, {"cycles_per_internal_sample": 0.255, "gain_db": -90.97145295}, {"cycles_per_internal_sample": 0.26, "gain_db": -97.00887445}, {"cycles_per_internal_sample": 0.3, "gain_db": -129.6078558}, {"cycles_per_internal_sample": 0.4, "gain_db": -116.8804091}, {"cycles_per_internal_sample": 0.49, "gain_db": -127.6819759}], "captured_and_design_comparisons": [{"dc_gain": 0.9999999867167528, "fir_group_delay_internal_samples": 127.00000000000001, "indexed_source_to_host_delay_samples": 63.000000000000014, "label": "Captured production FIR", "passband_through_20khz_at_44100_max_db": 0.0003656058093718849, "passband_through_20khz_at_44100_min_db": -0.0003936737320452868, "stopband_from_internal_0p25_max_db": -87.0734682867838, "taps": 255}, {"dc_gain": 1.0000000093132257, "fir_group_delay_internal_samples": 15.0, "indexed_source_to_host_delay_samples": 7.000000000000003, "label": "Legacy 31-tap design (reconstructed)", "passband_through_20khz_at_44100_max_db": 0.0038884864882013925, "passband_through_20khz_at_44100_min_db": -8.18617864540564, "stopband_from_internal_0p25_max_db": -19.76501443341561, "taps": 31}, {"dc_gain": 0.9999999799019861, "fir_group_delay_internal_samples": 63.0, "indexed_source_to_host_delay_samples": 31.000000000000004, "label": "127-tap / 18 kHz alternative", "passband_through_20khz_at_44100_max_db": 0.0003871863815906591, "passband_through_20khz_at_44100_min_db": -5.7631878431514485, "stopband_from_internal_0p25_max_db": -86.61328113148744, "taps": 127}], "config": {"declared_host_latency": 63, "internal_rate": 88200, "retained_internal_phase": 1}, "convention": "Internal x[n] starts at zero; host y[m]=filtered[2*m+1]. Not a complete instrument impulse response.", "fft_size": 262144, "response_and_declared_latency_gates_passed": true, "response_units": "cycles per internal sample, twice host rate"}
+2026-11-23T12:43:13.9890552Z Wrote 5 PNG/SVG figures and artifacts/dsp-probe/measurements.json
+2026-11-23T12:43:14.0646991Z ##[group]Run python tests/test_parity_capture.py --capture ./build-probe/cs80_parity_capture
+2026-11-23T12:43:14.0647582Z [36;1mpython tests/test_parity_capture.py --capture ./build-probe/cs80_parity_capture[0m
+2026-11-23T12:43:14.0648034Z [36;1m./build-probe/cs80_parity_capture --out artifacts/engine-candidate[0m
+2026-11-23T12:43:14.0648535Z [36;1m./build-probe/cs80_parity_capture --out artifacts/engine-live-adr --fixture live-adr-v1[0m
+2026-11-23T12:43:14.0649000Z [36;1mfor capture in artifacts/engine-candidate artifacts/engine-live-adr; do[0m
+2026-11-23T12:43:14.0649520Z [36;1m  printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > "$capture/provenance.json"[0m
+2026-11-23T12:43:14.0650914Z [36;1m  sha256sum src/core/Engine.cpp src/core/Engine.h src/core/InstrumentBody.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/PraWahCircuit.h src/core/OutputTapCircuit.h src/core/SourceFactoryTones.h src/core/FactoryToneHypotheses.h src/core/HardwareControl.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > "$capture/SOURCE_SHA256SUMS"[0m
+2026-11-23T12:43:14.0652221Z [36;1m  sha256sum build-probe/cs80_parity_capture > "$capture/BINARY_SHA256SUMS"[0m
+2026-11-23T12:43:14.0652852Z [36;1m  { c++ --version; cmake --version; uname -sm; grep -E '^CMAKE_(BUILD_TYPE|CXX_COMPILER|CXX_FLAGS)' build-probe/CMakeCache.txt; } > "$capture/build-environment.txt"[0m
+2026-11-23T12:43:14.0653694Z [36;1m  (cd "$capture" && sha256sum *.csv *.json SOURCE_SHA256SUMS BINARY_SHA256SUMS build-environment.txt > SHA256SUMS)[0m
+2026-11-23T12:43:14.0654151Z [36;1mdone[0m
+2026-11-23T12:43:14.0681067Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:43:14.0681359Z env:
+2026-11-23T12:43:14.0681633Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:14.0682040Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:43:14.0682424Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:14.0682787Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:14.0683119Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:14.0683438Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:43:14.0683901Z ##[endgroup]
+2026-11-23T12:43:16.2237741Z .............
+2026-11-23T12:43:16.2238278Z ----------------------------------------------------------------------
+2026-11-23T12:43:16.2238609Z Ran 13 tests in 2.112s
+2026-11-23T12:43:16.2238778Z 
+2026-11-23T12:43:16.2238856Z OK
+2026-11-23T12:43:16.4939622Z Captured 96000 engine candidate frames; no reference comparison or analog evidence.
+2026-11-23T12:43:16.7345968Z Captured live A/D/R candidate trace; no reference comparison or analog evidence.
+2026-11-23T12:43:16.7968770Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T12:43:16.7969105Z with:
+2026-11-23T12:43:16.7969408Z   name: cs80-engine-candidate-cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:43:16.7969778Z   path: artifacts/engine-candidate
+2026-11-23T12:43:16.7970114Z   if-no-files-found: error
+2026-11-23T12:43:16.7970348Z   compression-level: 6
+2026-11-23T12:43:16.7970600Z   overwrite: false
+2026-11-23T12:43:16.7970910Z   include-hidden-files: false
+2026-11-23T12:43:16.7971159Z env:
+2026-11-23T12:43:16.7971440Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:16.7971831Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:43:16.7972223Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:16.7972568Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:16.7972925Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:16.7973350Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:43:16.7973878Z ##[endgroup]
+2026-11-23T12:43:16.9135516Z (node:2412) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:43:16.9136377Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:43:16.9211460Z With the provided path, there will be 8 files uploaded
+2026-11-23T12:43:16.9215454Z Artifact name is valid!
+2026-11-23T12:43:16.9216100Z Root directory input is valid!
+2026-11-23T12:43:17.4493473Z Beginning upload of artifact content to blob storage
+2026-11-23T12:43:17.7763180Z (node:2412) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T12:43:18.6713530Z Uploaded bytes 1437939
+2026-11-23T12:43:18.7628167Z Finished uploading artifact content to blob storage!
+2026-11-23T12:43:18.7628820Z SHA256 digest of uploaded artifact zip is a49a642cedf2c22a7b369262ca3934553c6b4103c57a8ca3b0f48fc82695ab05
+2026-11-23T12:43:18.7629477Z Finalizing artifact upload
+2026-11-23T12:43:19.2177215Z Artifact cs80-engine-candidate-cbbee6a940985ad3c550768414960d2e1b1e802e.zip successfully finalized. Artifact ID 14818916851
+2026-11-23T12:43:19.2178663Z Artifact cs80-engine-candidate-cbbee6a940985ad3c550768414960d2e1b1e802e has been successfully uploaded! Final size is 1437939 bytes. Artifact ID is 14818916851
+2026-11-23T12:43:19.2182711Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301/artifacts/14818916851
+2026-11-23T12:43:19.2312349Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T12:43:19.2312652Z with:
+2026-11-23T12:43:19.2312951Z   name: cs80-engine-live-adr-cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:43:19.2313299Z   path: artifacts/engine-live-adr
+2026-11-23T12:43:19.2313856Z   if-no-files-found: error
+2026-11-23T12:43:19.2314109Z   compression-level: 6
+2026-11-23T12:43:19.2314363Z   overwrite: false
+2026-11-23T12:43:19.2314592Z   include-hidden-files: false
+2026-11-23T12:43:19.2314880Z env:
+2026-11-23T12:43:19.2315152Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:19.2315534Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:43:19.2315922Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:19.2316312Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:19.2316677Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:19.2317114Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:43:19.2317466Z ##[endgroup]
+2026-11-23T12:43:19.3501659Z (node:2426) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:43:19.3502356Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:43:19.3590783Z With the provided path, there will be 9 files uploaded
+2026-11-23T12:43:19.3591666Z Artifact name is valid!
+2026-11-23T12:43:19.3591983Z Root directory input is valid!
+2026-11-23T12:43:19.7784089Z Beginning upload of artifact content to blob storage
+2026-11-23T12:43:19.9370042Z (node:2426) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T12:43:20.8636248Z Uploaded bytes 1454370
+2026-11-23T12:43:20.9530710Z Finished uploading artifact content to blob storage!
+2026-11-23T12:43:20.9531584Z SHA256 digest of uploaded artifact zip is 9a9d717bf58c29f9f3c4bb64fe5030bc1888548f6f2a75d5acd1391556be0b4e
+2026-11-23T12:43:20.9532544Z Finalizing artifact upload
+2026-11-23T12:43:21.3705516Z Artifact cs80-engine-live-adr-cbbee6a940985ad3c550768414960d2e1b1e802e.zip successfully finalized. Artifact ID 14818683163
+2026-11-23T12:43:21.3706819Z Artifact cs80-engine-live-adr-cbbee6a940985ad3c550768414960d2e1b1e802e has been successfully uploaded! Final size is 1454370 bytes. Artifact ID is 14818683163
+2026-11-23T12:43:21.3710110Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301/artifacts/14818683163
+2026-11-23T12:43:21.3831900Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T12:43:21.3832201Z with:
+2026-11-23T12:43:21.3832507Z   name: cs80-dsp-cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:43:21.3832864Z   path: artifacts/dsp-probe
+2026-11-23T12:43:21.3833126Z   if-no-files-found: error
+2026-11-23T12:43:21.3833420Z   compression-level: 6
+2026-11-23T12:43:21.3833898Z   overwrite: false
+2026-11-23T12:43:21.3834151Z   include-hidden-files: false
+2026-11-23T12:43:21.3834465Z env:
+2026-11-23T12:43:21.3834739Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:21.3835170Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-23T12:43:21.3835570Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:21.3835918Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:21.3836313Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-23T12:43:21.3836767Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-23T12:43:21.3837082Z ##[endgroup]
+2026-11-23T12:43:21.5028721Z (node:2438) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:43:21.5029549Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:43:21.5103972Z With the provided path, there will be 26 files uploaded
+2026-11-23T12:43:21.5107458Z Artifact name is valid!
+2026-11-23T12:43:21.5108000Z Root directory input is valid!
+2026-11-23T12:43:21.8680149Z Beginning upload of artifact content to blob storage
+2026-11-23T12:43:22.7727620Z (node:2438) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T12:43:23.8971682Z Uploaded bytes 8388608
+2026-11-23T12:43:23.9864721Z Uploaded bytes 8505880
+2026-11-23T12:43:24.0785294Z Finished uploading artifact content to blob storage!
+2026-11-23T12:43:24.0786060Z SHA256 digest of uploaded artifact zip is 5a98b4a6629b4ff897ccad1ea324888af19690d38b0efa6c4b59b5a813fa9b8f
+2026-11-23T12:43:24.0787407Z Finalizing artifact upload
+2026-11-23T12:43:24.5034195Z Artifact cs80-dsp-cbbee6a940985ad3c550768414960d2e1b1e802e.zip successfully finalized. Artifact ID 14818493944
+2026-11-23T12:43:24.5035307Z Artifact cs80-dsp-cbbee6a940985ad3c550768414960d2e1b1e802e has been successfully uploaded! Final size is 8505880 bytes. Artifact ID is 14818493944
+2026-11-23T12:43:24.5040152Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301/artifacts/14818493944
+2026-11-23T12:43:24.5194416Z Post job cleanup.
+2026-11-23T12:43:24.6080928Z (node:2450) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:43:24.6081656Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:43:24.6239741Z Post job cleanup.
+2026-11-23T12:43:24.6914543Z [command]/usr/bin/git version
+2026-11-23T12:43:24.6940679Z git version 2.56.1
+2026-11-23T12:43:24.6965653Z Temporarily overriding HOME='/home/runner/work/_temp/aabb5271-b4db-4bfe-bef8-fc361533c799' before making global git config changes
+2026-11-23T12:43:24.6966735Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T12:43:24.6968591Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:43:24.6998034Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T12:43:24.7021275Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T12:43:24.7251432Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T12:43:24.7258330Z http.https://github.com/.extraheader
+2026-11-23T12:43:24.7266142Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T12:43:24.7288142Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T12:43:24.7450202Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T12:43:24.7473147Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T12:43:24.7760715Z Cleaning up orphan processes
+2026-11-23T12:43:24.8017132Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-python@v5, actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

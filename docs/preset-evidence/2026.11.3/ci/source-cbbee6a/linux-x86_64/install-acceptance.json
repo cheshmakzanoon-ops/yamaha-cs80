@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "status": "artifact_bytes_verified",
+  "verified_at_utc": "2026-11-23T16:04:56.753191+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "preset_library_revision": "2026.11.3",
+  "run_id": 45176799427,
+  "target": "linux-x86_64",
+  "artifact": {
+    "id": 14837191097,
+    "name": "cs80-linux-install-bundle",
+    "size_in_bytes": 13282726,
+    "digest": "sha256:f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76",
+    "created_at": "2026-11-23T16:03:33Z",
+    "expires_at": "2027-02-21T12:42:09Z",
+    "workflow_run": {
+      "id": 45176799427,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e"
+    }
+  },
+  "outer_zip": {
+    "file": "cs80-linux-install-bundle-14837191097.zip",
+    "bytes": 13282726,
+    "sha256": "f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-linux-x86_64-cbbee6a94098.manifest.json",
+      "cs80-reference-linux-x86_64-cbbee6a94098.tar.gz"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-linux-x86_64-cbbee6a94098.tar.gz",
+    "bytes": 13277405,
+    "sha256": "ce0e663858e0ec8d9c5f15a33953a229bc0c7265476ba4c3d71c7c5da6297e12"
+  },
+  "manifest_sha256": "d6cd2d32322a6b943a241875287d99ca2b97b36f373cfede3c1fcb22f1fc6cba",
+  "checksum_manifest_sha256": "0b51f36822fb8b73989b802c0fc389aad0db60bb8adc5f9a8cab7e03211e2832",
+  "inventory_entries": 20,
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "bytes": 17444296,
+      "sha256": "dd5f5da6e239b1d969908fbebc9f36b28257a6cb2dc9903da9b4540a4aa85a83",
+      "platform": "linux",
+      "architecture": "x86_64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "ELF64 little-endian",
+        "machine": 62,
+        "image_type": 3
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference",
+      "bytes": 16785984,
+      "sha256": "6b7736b19cdf1edfa7e79536946aaba09f7703ef816ad6e75516d9a9658eeef6",
+      "platform": "linux",
+      "architecture": "x86_64",
+      "role": "standalone",
+      "header_check": "PASS",
+      "header": {
+        "format": "ELF64 little-endian",
+        "machine": 62,
+        "image_type": 3
+      }
+    }
+  ],
+  "inner_checker": {
+    "result": "integrity and declared source consistency verified",
+    "commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "platform": "linux",
+    "architecture": "x86_64",
+    "files": 20,
+    "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+  },
+  "checker_sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+  "source_checker_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "source_scripts_compared_to_commit": true,
+  "scope": "Outer bytes, complete inner inventory/checksums, declared source/revision/run, JUCE provenance, and native headers. No product executed.",
+  "remaining_qualification": "Producer/upload/attempt binding, complete native tests, 13 validator invocations and payload identity with validator inputs must be established separately.",
+  "signing_status": "not inspected; no release signing/notarization performed by this helper"
+}

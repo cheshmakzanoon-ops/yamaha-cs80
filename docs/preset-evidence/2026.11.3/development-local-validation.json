@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "status": "local_focused_and_all_program_audio_checks_passed",
+  "source_commit": "0b81c3d1a42828accc1c4f3287b5551915303831",
+  "source_tree": "c22e660682ece1951138155b7cc8b6756f42465b",
+  "scope": "Development executables compiled from the code in the source commit before Git publication; not native plug-in or distributed-binary qualification. Native results are recorded separately.",
+  "library_programs": 523,
+  "phrase_peak_max_dbfs": -5.0,
+  "window_rms_range_dbfs": [
+    -29.9,
+    -18.0
+  ],
+  "eight_voice_stress_peak_max_dbfs": -1.5,
+  "level_values_precision": "Rounded to 0.1 dB by unchanged audit printer. Acceptance used unrounded values.",
+  "focused_ctest": {
+    "passed": 8,
+    "failed": 0,
+    "tests": [
+      {
+        "name": "cs80_instrument_body_tests",
+        "seconds": 1.31221
+      },
+      {
+        "name": "cs80_instrument_body_engine_tests",
+        "seconds": 6.75834
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "seconds": 11.2255
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "seconds": 6.42534
+      },
+      {
+        "name": "cs80_preset_precision_tests",
+        "seconds": 40.1618
+      },
+      {
+        "name": "cs80_preset_capture_tests",
+        "seconds": 2.66094
+      },
+      {
+        "name": "cs80_evidence_register_tests",
+        "seconds": 0.00356276
+      },
+      {
+        "name": "cs80_parity_capture_tests",
+        "seconds": 3.45398
+      }
+    ]
+  },
+  "inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+  "audit_log_sha256": "1e8414a2fcbcbf16d4976ee73ad70e1a9f455a29d9e23bd2bb940c3384e2f068",
+  "source_file_sha256": {
+    "src/core/Engine.cpp": "624d3f4b7c2148f772e4027fe999d1550496d072f8e5e56be8080c78c8ac8c33",
+    "src/core/Engine.h": "170741e9671290569e76ded2b3e85a948642e56eed96729c790ec3560e977bd7",
+    "src/core/InstrumentBody.h": "d15605d641d7c292244466f5d7116183ae8b4794efe4a536bd345b8719c807c2",
+    "src/core/FactoryPresets.cpp": "e4e392b427e3b29c08f63cf0fe00939743e005914cf51a5d9d5a04d2da5a14c8",
+    "src/core/Params.h": "cef330a674f721396750d740f0acaa0545808ef0de37b203a976399bcb69f3ea",
+    "tests/LibraryAuditTests.cpp": "41160b16166f47e960c5129792287e772bf39fa6f7b6bfcac54c7973a3080407",
+    "tests/InstrumentBodyTests.cpp": "c73f861a7e4fdf04bff8226dc390b82cf911967d50337334001b8f62c4787206",
+    "tests/InstrumentBodyEngineTests.cpp": "cd7ea94d42bcae36b43de7f1cbf81d853dcdc05db706a5bf6a8d6742e16a78d9"
+  },
+  "limits": [
+    "Level and articulation tests do not establish exact acoustic equivalence or a listening-panel judgment.",
+    "Previous full core pass had 23 quiet-program failures and two fresh-capture reuse errors; those were corrected/retested separately. This record reports the final focused and complete-library checks, not a new execution of every core test."
+  ]
+}

@@ -18,12 +18,14 @@ tones, expression and motion.
 [Body implementation](../src/core/InstrumentBody.h) ·
 [Authored recipes](../src/core/CuratedLibrary.inc)
 
-This report describes the source revision and its development evidence. The
-final level audit and native build qualification are still being completed at
-the time of this report's preparation. A downloadable build is qualified only
-by its exact source commit, workflow results and package evidence in the
-[download section](../README.md#downloads); earlier archives do not acquire new
-sounds when this document changes.
+The complete 523-program audio audit and native/download qualification have
+passed for source [`cbbee6a940985ad3c550768414960d2e1b1e802e`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/cbbee6a940985ad3c550768414960d2e1b1e802e),
+[build 45176799427, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427).
+All four native build/test/package jobs and all 13 required strictness-10
+pluginval lanes passed. The actual installation and audition archives
+were downloaded and checked. See the [qualification record](preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json) and
+[current downloads](../README.md#downloads) for exact identities and hashes;
+earlier archives retain their original contents.
 
 ## What changes in the sound
 
@@ -197,8 +199,8 @@ That earlier migration and the new optional body defaults are separate matters.
 | [Instrument model tests](../tests/InstrumentBodyTests.cpp) | All 19 active models across registers, velocities and sample rates; spectral distinctions and decay, brightness, tuning, Nyquist rejection, long holds, resets and malformed numeric inputs. |
 | [Engine integration tests](../tests/InstrumentBodyEngineTests.cpp) | Scalar/batched and block-partition equality, sounding-register initialization, source isolation, default-off behavior, next-note selection and audible-tail handoff. |
 | [Voicing](../tests/PresetVoicingTests.cpp), [character](../tests/PresetCharacterTests.cpp) and [precision](../tests/PresetPrecisionTests.cpp) tests | Actual rendered articulation, velocity, pressure, transients, sustained bodies, tracked partials, stereo behavior and named tremolo. Negative controls retain the diagnosed defects and must fail the relevant criteria. |
-| [Host tests](../tests/InstrumentBodyHostTests.h) | Automation identities/types, old-state defaults, session/file/A-B/undo recall, all factory and MIDI programs, and hardware-source separation. Native execution remains a platform qualification gate. |
-| [Complete library audit](../tests/LibraryAuditTests.cpp) | All 523 programs: finite audio, authored ranges, phrase level, eight-voice stress headroom and the unchanged level acceptance window. Final trim/voicing acceptance belongs to the completed source run. |
+| [Host tests](../tests/InstrumentBodyHostTests.h) | Automation identities/types, old-state defaults, session/file/A-B/undo recall, all factory and MIDI programs, and hardware-source separation. Included in the completed native qualification for the exact source above. |
+| [Complete library audit](../tests/LibraryAuditTests.cpp) | All 523 programs: finite audio, authored ranges, phrase level, eight-voice stress headroom and the unchanged level acceptance window. The final local audit and all four native suites passed this gate. |
 | [Audition artifact tests](../scripts/test-capture-factory-auditions.py) | Roster, inventory, exact settings, unchanged WAV bytes, clean-source/executable provenance and failure boundaries. |
 
 A separate development comparison built the previous source commit
@@ -239,9 +241,10 @@ eventual release binaries.
 
 ## Auditions from the committed source
 
-The [audition generator](../scripts/capture-factory-auditions.py) is configured
-to produce **90 unnormalized 48 kHz stereo float WAVs**, covering **71 existing
-programs** and **594 seconds (9 minutes 54 seconds)** in 12 folders. The roster
+The [published audition archive](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip) contains **90 unnormalized 48 kHz
+stereo float WAVs**, covering **71 existing programs** and **594 measured seconds
+(9 minutes 54 seconds)** in 12 folders. The
+[audition generator](../scripts/capture-factory-auditions.py) records the exact source. The roster
 includes all 19 active body models and retains the previous keyboard, family,
 original-address and register examples.
 
@@ -264,8 +267,13 @@ that changes during capture. It marks completion only after those checks and
 all requested WAVs succeed. **Pressure Lead is intentionally silent in its
 zero-pressure example.** [Capture instructions](PRESET_GUIDE.md#reproduce-an-audition-from-source)
 
-The configured roster is not a claim that an archive has already been rendered
-or published. A completed capture provides reproducible listening material; it
-does not prove acoustic similarity, every chord/register/controller history,
-native host validation, signing or notarization. Use the exact published build
-and artifact qualification record for those platform facts.
+All actual WAV headers, frame counts, sample values, metrics and checksums
+passed the independent archive inspection. The complete delivered inventory
+matches the reviewed 523-by-198 implementation inventory.
+[Audition acceptance](preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json) ·
+[Inventory identity](preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json)
+
+These excerpts provide reproducible listening material. They do not prove
+acoustic indistinguishability or cover every chord, register and controller
+history. Native platform qualification is recorded separately; signing and
+notarization remain outside these CI bundles.

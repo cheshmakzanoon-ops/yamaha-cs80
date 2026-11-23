@@ -1,0 +1,7 @@
+src/tools/ui_snapshot.cpp: In lambda function:
+src/tools/ui_snapshot.cpp:3745:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3745 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/tools/ui_snapshot.cpp:3746:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3746 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

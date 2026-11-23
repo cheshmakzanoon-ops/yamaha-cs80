@@ -1,0 +1,40 @@
+{
+  "compiler": "GCC14.2 -std=c++20 -O2 -fstack-usage, actual JUCE8.0.11 headers",
+  "before": {
+    "performance_controls": {
+      "bytes": 3502544,
+      "classification": "static"
+    },
+    "program_library_lambda_check": {
+      "bytes": 1757632,
+      "classification": "dynamic,bounded"
+    },
+    "program_library_pointer_check": {
+      "bytes": 1759264,
+      "classification": "dynamic,bounded"
+    },
+    "main": {
+      "bytes": 1754640,
+      "classification": "dynamic,bounded"
+    }
+  },
+  "after": {
+    "performance_controls": {
+      "bytes": 1072,
+      "classification": "static"
+    },
+    "program_library_lambda_check": {
+      "bytes": 24368,
+      "classification": "dynamic,bounded"
+    },
+    "program_library_pointer_check": {
+      "bytes": 26000,
+      "classification": "dynamic,bounded"
+    },
+    "main": {
+      "bytes": 3984,
+      "classification": "dynamic,bounded"
+    }
+  },
+  "scope": "Same compiler and flags; Linux frame data, not an MSVC stack backtrace or native execution result."
+}

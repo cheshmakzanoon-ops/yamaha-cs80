@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "reviewer": "a56_supporting_ci_review",
+  "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+  "reviewed_at_utc": "2026-11-23T11:09:13.891083+00:00",
+  "status": "historical_screenshot_failure_and_dsp_cancelled",
+  "runs": [
+    {
+      "id": 45159882226,
+      "name": "DSP numerical measurements",
+      "head_sha": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45159882226"
+    },
+    {
+      "id": 45159882417,
+      "name": "Filter batch qualification",
+      "head_sha": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45159882417"
+    },
+    {
+      "id": 45159882253,
+      "name": "Hardware panel screenshots",
+      "head_sha": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45159882253"
+    }
+  ],
+  "filter_lanes": [
+    {
+      "job_id": 137642238717,
+      "name": "clang++ / batch DEFAULT",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "45cf6a240747607e683768106b38d6fb5f9c4a6b5a940c80b3176f903d489a9b",
+      "clang_requested_batch_remains_scalar": true
+    },
+    {
+      "job_id": 137642239107,
+      "name": "g++ / batch OFF",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "d11e64315fd5f74fa4502ecb7ebf2c8f9ec7c6da1aa7056902556c266f6b351f",
+      "clang_requested_batch_remains_scalar": false
+    },
+    {
+      "job_id": 137642239128,
+      "name": "g++ / batch DEFAULT",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "6aea8059d675cd273f78336ecf1a2706951baa0193e4ed1b678f7b519e10fd79",
+      "clang_requested_batch_remains_scalar": false
+    },
+    {
+      "job_id": 137642239231,
+      "name": "clang++ / batch OFF",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "e057c76d53966c213db9ca9656fa33ee874b7a28cc42a1f7ee22048c99faff2b",
+      "clang_requested_batch_remains_scalar": false
+    },
+    {
+      "job_id": 137642239265,
+      "name": "clang++ / batch ON",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "00b2487d8c4007dfa5269b49173773bdb30b31d477707e2ac7044fe540909355",
+      "clang_requested_batch_remains_scalar": true
+    },
+    {
+      "job_id": 137642239312,
+      "name": "g++ / batch ON",
+      "conclusion": "success",
+      "ctest_passed": 4,
+      "ctest_failed": 0,
+      "tests": [
+        "cs80_ig00156_batch_tests",
+        "cs80_filter_batch_engine_tests",
+        "cs80_filter_batch_scheduling_tests",
+        "cs80_filter_batch_admission_tests"
+      ],
+      "log_sha256": "dd5ee1594b0564444c896ef9870b9b19d1c76ec77c54b111d73c2e88d0b80f6b",
+      "clang_requested_batch_remains_scalar": false
+    }
+  ],
+  "filter_platform_test_executions": 24,
+  "filter_unique_ctest_definitions": 4,
+  "dsp_jobs": [
+    {
+      "id": 137642238827,
+      "name": "Default-off raw audio versus shipped baseline",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137642239096,
+      "name": "sanitizers",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 137642239133,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137642239142,
+      "name": "measure",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137642239326,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "downloaded_compatibility_artifacts": [
+    {
+      "id": 14809718462,
+      "name": "cs80-source-factory-compatibility-0b81c3d1a42828accc1c4f3287b5551915303831",
+      "bytes": 983,
+      "sha256": "a469f5b90efe93abe080a7293d5866c79d9142e6afcc37a1dfc03eec7cb7ccb9",
+      "producer_job": 137642239133,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "0b81c3d1a42828accc1c4f3287b5551915303831",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+        },
+        {
+          "circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "verification_scope": "Downloaded report/checksum/corpus bytes and producer success; raw trace comparison executes in the required CI cmp steps."
+    },
+    {
+      "id": 14810965935,
+      "name": "cs80-legacy-compatibility-0b81c3d1a42828accc1c4f3287b5551915303831",
+      "bytes": 29436,
+      "sha256": "155be3b162c273ac1b148a3659e991d726241f7b83f53b5ab862f581c5375c86",
+      "producer_job": 137642238827,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "0b81c3d1a42828accc1c4f3287b5551915303831",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+        },
+        {
+          "baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "verification_scope": "Downloaded report/checksum/corpus bytes and producer success; raw trace comparison executes in the required CI cmp steps."
+    }
+  ],
+  "pending": [],
+  "screenshot_main_mutation_note": "Successful main-triggered screenshot capture can create a docs-only [skip ci] commit after verifying main still equals source; re-read main before documentation publication.",
+  "limits": [
+    "No physical acoustic-instrument or hardware match established.",
+    "Synthetic comparison is harness plumbing, not measured hardware evidence.",
+    "Filter DEFAULT/ON on Clang intentionally use the scalar fallback; six lane successes do not mean AVX2 execution on all compilers.",
+    "Native install bundles and 13 pluginval lanes belong to separate run45159882288 and are outside this review."
+  ],
+  "screenshots": {
+    "run_id": 45159882253,
+    "job_id": 137642238636,
+    "run_attempt": 1,
+    "conclusion": "failure",
+    "failed_step": "Capture actual editor at every supported size and page",
+    "core_build_and_verify_steps": "success",
+    "smoke_failure_count": 9,
+    "assertion_failures": [
+      "FAIL: a session saved before these controls restores neutral values, not live ones",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: physical parameter round trips host skew",
+      "FAIL: main view matches its golden image within tolerance: main-1600x1000",
+      "FAIL: main view matches its golden image within tolerance: main-1120x700"
+    ],
+    "log": {
+      "path": "screens-failure.log",
+      "bytes": 110314,
+      "sha256": "cc9b1dafd9e7128da18409d1a2cf8470040416f62b46c0576350bf29ef26b206"
+    },
+    "screenshot_evidence_upload": "skipped",
+    "repository_screenshot_refresh": "skipped",
+    "source_diagnosis": [
+      "Performance-control old-state fixture removes ten fields but expects defaults across the expanded remainder of P_numParams, including serialized new body values.",
+      "Physical sweep discrete-parameter list omits both new body model selectors, producing six mismatches against snapped choice values.",
+      "Golden fixture loads revised factory program zero; the two image differences require candidate inspection rather than relaxing image tolerances."
+    ],
+    "diagnosis_status": "Read-only source diagnosis; no test or production changes made by this reviewer."
+  },
+  "main_head_at_refresh": {
+    "sha": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "message": "feat: revoice all existing factory programs with instrument-specific bodies\n\nReprogram all 521 musical factory programs while preserving both initialization patches and all 523 names, categories, and program addresses.\n\nAdd 19 optional instrument excitations with independently evolving partials, precise register and expression routing, and continuous released-voice handoffs. Refine struck, sustained, synthetic, and original-address voicings and measured level trims.\n\nPreserve the existing 190 core and 296 host parameter positions; append eight default-off body controls with complete session, preset, A/B, and MIDI recall coverage.\n\nExpand rendered articulation, model identity, compatibility, host, and artifact-provenance checks. Prepare 90 unnormalized audition captures and updated installation guidance for native qualification.",
+    "screenshot_bot_advanced_main": false,
+    "evidence": "Screenshot refresh step skipped; observed main equals exact binary source0b81c3d1a42828accc1c4f3287b5551915303831."
+  }
+}

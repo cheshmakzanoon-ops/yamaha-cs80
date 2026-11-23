@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "status": "payload_checks_passed_pending_workflow_step_binding",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "artifact_id": 14821637752,
+  "artifact_name": "cs80-pluginval-macos-15",
+  "archive_bytes": 9630,
+  "archive_sha256": "2ca347e28984d5bf67880cee5dd0ea8f33ae84205d037b047a5863b5ba5592dd",
+  "required_lanes": 4,
+  "validation_invocations": 4,
+  "validation_retries": 0,
+  "version_evidence": {
+    "path": "pluginval-download.json",
+    "bytes": 694,
+    "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+    "version": "1.0.4",
+    "verified": true
+  },
+  "lanes": [
+    {
+      "step": "Validate VST3 with pluginval",
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "seed": "0x2a17ea",
+      "fixed_seed": null,
+      "console": {
+        "path": "pluginval-vst3.log",
+        "bytes": 7398,
+        "sha256": "076d0eff69f3686902a32258c223a81318d40ba87cd5afa4b393cffb96f1da6e"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-vst3",
+        "bytes": 7271,
+        "sha256": "00a9c832f352e077371fd0e79000b87c72b1cc00b03e218846e8c57e50d4a4d9"
+      },
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "exit_basis": "Requires successful original workflow step: source workflow enforces pipefail (Mac) or LASTEXITCODE (Windows), plus clean SUCCESS."
+    },
+    {
+      "step": "Validate AU with pluginval",
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "seed": "0x471bdc8",
+      "fixed_seed": null,
+      "console": {
+        "path": "pluginval-au.log",
+        "bytes": 7308,
+        "sha256": "154a33b53deacde89a30a35d22520a115b7fbed96f7eaec17008bbe7c811ea8e"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au",
+        "bytes": 7214,
+        "sha256": "af5255add21acfc568f348d4435ba7aa15a4c3e2a2bbcfecefa8c96111aeb4a8"
+      },
+      "explicit_skips": [],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "exit_basis": "Requires successful original workflow step: source workflow enforces pipefail (Mac) or LASTEXITCODE (Windows), plus clean SUCCESS."
+    },
+    {
+      "step": "Validate AU with pluginval GUI",
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "seed": "0x6d0f0be",
+      "fixed_seed": null,
+      "console": {
+        "path": "pluginval-au-gui.log",
+        "bytes": 7990,
+        "sha256": "bacf768327e4f893db2ada3525358990a6f3b590c5046c4e15a58d1f59fa9393"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au-gui",
+        "bytes": 7896,
+        "sha256": "62887a1434b0ab3fa955b7dac4492b97c1033de97f794cc1c2db395c53c699a0"
+      },
+      "explicit_skips": [],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "exit_basis": "Requires successful original workflow step: source workflow enforces pipefail (Mac) or LASTEXITCODE (Windows), plus clean SUCCESS."
+    },
+    {
+      "step": "Validate AU GUI fixed-seed regression",
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "seed": "0x2b4eef5",
+      "fixed_seed": "0x2b4eef5",
+      "console": {
+        "path": "pluginval-au-seed-regression.log",
+        "bytes": 7990,
+        "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au-seed-regression",
+        "bytes": 7896,
+        "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+      },
+      "explicit_skips": [],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "exit_basis": "Requires successful original workflow step: source workflow enforces pipefail (Mac) or LASTEXITCODE (Windows), plus clean SUCCESS."
+    }
+  ]
+}

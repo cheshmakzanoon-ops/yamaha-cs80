@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "run_attempt": 1,
+  "status": "root_reviewed_wrapper_bytes_adopted_after_semantic_and_hash_checks",
+  "platforms": [
+    {
+      "target": "windows-x86_64",
+      "path": "reports/windows-x86_64-platform.json",
+      "bytes": 25369,
+      "canonical_sha256": "9f078a743f298d31cc13fd39a434af8733480f8157dcbce336bc561fbb4bf1fe",
+      "previous_temp_sha256": "50f267517b5e49a942a1a54bc30cb62db564c5a066f035d7074657c53f60f282",
+      "differences": [
+        "api_evidence",
+        "qualified_at_utc"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "path": "reports/macos-arm64-platform.json",
+      "bytes": 27226,
+      "canonical_sha256": "7e641e30e6ee66238b843fc2ed6c846f1d6063f027d51786cbdf8797cda0dddb",
+      "previous_temp_sha256": "293185f92b14fee5e0fb53bcc4e9e5c647a0383ab662f1865d0273028bb2e813",
+      "differences": [
+        "api_evidence",
+        "qualified_at_utc"
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "path": "reports/macos-x86_64-platform.json",
+      "bytes": 27295,
+      "canonical_sha256": "7b8a26675bb82eb21d9359bc6087d38f870be5ad5d8e4ead406d3cb05e310240",
+      "previous_temp_sha256": "7b8a26675bb82eb21d9359bc6087d38f870be5ad5d8e4ead406d3cb05e310240",
+      "differences": []
+    }
+  ]
+}

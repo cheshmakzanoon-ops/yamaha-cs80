@@ -1,0 +1,108 @@
+{
+  "status": "synthetic_fixture_checks_passed",
+  "positive_platform_fixtures": 3,
+  "rejected_mutations": [
+    {
+      "platform": "linux",
+      "mutation": "changed-binary"
+    },
+    {
+      "platform": "linux",
+      "mutation": "missing-resource"
+    },
+    {
+      "platform": "linux",
+      "mutation": "extra-resource"
+    },
+    {
+      "platform": "linux",
+      "mutation": "unsafe-path"
+    },
+    {
+      "platform": "linux",
+      "mutation": "changed-link"
+    },
+    {
+      "platform": "linux",
+      "mutation": "windows-sidecars-on-linux"
+    },
+    {
+      "platform": "windows",
+      "mutation": "changed-binary"
+    },
+    {
+      "platform": "windows",
+      "mutation": "missing-resource"
+    },
+    {
+      "platform": "windows",
+      "mutation": "extra-resource"
+    },
+    {
+      "platform": "windows",
+      "mutation": "unsafe-path"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "changed-binary"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "missing-resource"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "extra-resource"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "inside-bundle-sidecar"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "unknown-sidecar"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "other-export-basename"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "bad-exp-format"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "bad-lib-format"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "missing-sidecar"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "wrong-consumer-artifact"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "wrong-consumer-target"
+    },
+    {
+      "platform": "windows",
+      "with_compiler_sidecars": true,
+      "mutation": "missing-consumer-log"
+    }
+  ],
+  "scope": "Inert Windows/Linux header fixtures with resources and a Linux symbolic link, plus the Windows compiler-sidecar container boundary with source workflow and fixture consumer log. Mutated validator ZIPs receive correct updated API digests; strict bundle equality and sidecar exclusions are tested independently of download integrity.",
+  "checker_sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330"
+}

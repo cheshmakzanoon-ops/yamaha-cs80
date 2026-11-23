@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="8"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="72"
+	timestamp="2026-11-23T03:46:04"
+	>
+	<testcase name="cs80_instrument_body_tests" classname="cs80_instrument_body_tests" time="1.31221" status="run">
+		<properties/>
+		<system-out>DECAY Piano strings        upper/fundamental change  -15.72 dB
+DECAY Tine electric piano  upper/fundamental change  -21.91 dB
+DECAY Reed electric piano  upper/fundamental change  -29.96 dB
+DECAY Nylon strings        upper/fundamental change  -19.00 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -22.91 dB
+DECAY Vibraphone           upper/fundamental change  -16.72 dB
+DECAY Marimba              upper/fundamental change  -54.88 dB
+DECAY Celesta              upper/fundamental change  -16.33 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MA...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_engine_tests" classname="cs80_instrument_body_engine_tests" time="6.75834" status="run">
+		<properties/>
+		<system-out>BATCH comparison backend: runtime-dispatched exact batch
+REGISTER Piano strings relative waveform error 8.86112972e-08
+REGISTER Bowed strings relative waveform error 1.01320705e-07
+REGISTER Oboe relative waveform error 1.08556522e-07
+REGISTER Bassoon relative waveform error 1.01848545e-07
+KBC body LOW lever -1 relative waveform change 0.107108774
+KBC body LOW lever +1 relative waveform change 0.107108804
+KBC body HIGH lever -1 relative waveform change 0.0371089862
+KBC body HIGH lever +1 relative waveform change 0.037108994
+TAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS
+TAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS
+TAIL rate 96000 maximum onset/pre derivative 1.23846, sample step 0.00075410 FS
+Instrument body Engine integration: 18148 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_voicing_tests" classname="cs80_preset_voicing_tests" time="11.2255" status="run">
+		<properties/>
+		<system-out>MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative
+TRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS
+TRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS
+MIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.6 dB relative
+PERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB
+REGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative
+REGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative
+REGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative
+VELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS
+VELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS
+STRI...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_character_tests" classname="cs80_preset_character_tests" time="6.42534" status="run">
+		<properties/>
+		<system-out>RECONSTRUCT Flute                0.000-0.750 s error  -143.5 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.5 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.3 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative
+BREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body
+RECONSTRUCT Harp                 0.000-1.200 s error  -143.8 dB relative
+RECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative
+RECONSTRUCT Harp                 0.800-1.100 s error  -143.9 dB relative
+STRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB
+RECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative
+RECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative
+STRIKE    ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_precision_tests" classname="cs80_preset_precision_tests" time="40.1618" status="run">
+		<properties/>
+		<system-out>VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB
+VIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB
+VIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB
+VIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB
+VIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB
+VIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB
+TREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak
+TREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak
+TREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak
+TREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak
+TREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak
+TREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak
+TREM...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_capture_tests" classname="cs80_preset_capture_tests" time="2.66094" status="run">
+		<properties/>
+		<system-out>..........
+----------------------------------------------------------------------
+Ran 10 tests in 2.525s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_evidence_register_tests" classname="cs80_evidence_register_tests" time="0.00356276" status="run">
+		<properties/>
+		<system-out>1072 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_parity_capture_tests" classname="cs80_parity_capture_tests" time="3.45398" status="run">
+		<properties/>
+		<system-out>.............
+----------------------------------------------------------------------
+Ran 13 tests in 3.325s
+
+OK
+</system-out>
+	</testcase>
+</testsuite>

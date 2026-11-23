@@ -1,0 +1,129 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 137700035971,
+      "run_id": 45176799293,
+      "workflow_name": "Hardware panel screenshots",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgD4_Ngw",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137700035971",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293/job/137700035971",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-23T12:42:09Z",
+      "started_at": "2026-11-23T12:42:11Z",
+      "completed_at": "2026-11-23T12:49:03Z",
+      "name": "screenshots",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T12:42:11Z",
+          "completed_at": "2026-11-23T12:42:12Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T12:42:12Z",
+          "completed_at": "2026-11-23T12:42:18Z"
+        },
+        {
+          "name": "Install official Ubuntu build dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T12:42:18Z",
+          "completed_at": "2026-11-23T12:42:41Z"
+        },
+        {
+          "name": "Configure exact source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T12:42:41Z",
+          "completed_at": "2026-11-23T12:43:45Z"
+        },
+        {
+          "name": "Build screenshot renderer and core tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T12:43:45Z",
+          "completed_at": "2026-11-23T12:47:21Z"
+        },
+        {
+          "name": "Verify core",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T12:47:21Z",
+          "completed_at": "2026-11-23T12:47:30Z"
+        },
+        {
+          "name": "Capture actual editor at every supported size and page",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T12:47:30Z",
+          "completed_at": "2026-11-23T12:48:51Z"
+        },
+        {
+          "name": "Publish screenshot evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T12:48:51Z",
+          "completed_at": "2026-11-23T12:48:54Z"
+        },
+        {
+          "name": "Publish preview PNGs to the ui-preview branch (non-main only)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-11-23T12:48:54Z",
+          "completed_at": "2026-11-23T12:48:54Z"
+        },
+        {
+          "name": "Refresh repository screenshots from this exact source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-23T12:48:54Z",
+          "completed_at": "2026-11-23T12:49:00Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-23T12:49:00Z",
+          "completed_at": "2026-11-23T12:49:00Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-23T12:49:00Z",
+          "completed_at": "2026-11-23T12:49:00Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137700035971",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000043371,
+      "runner_name": "GitHub Actions 1000043371",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

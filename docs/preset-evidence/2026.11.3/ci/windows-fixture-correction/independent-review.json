@@ -1,0 +1,66 @@
+{
+  "source_commit": "389a448",
+  "measurement": "GCC14.2 Linux O2 fstack-usage, actual ui_snapshot.cpp and JUCE8.0.11 headers; not MSVC frame sizes",
+  "before": [
+    {
+      "function": "src/tools/ui_snapshot.cpp:1766:6:void {anonymous}::testPerformanceControlsHost()",
+      "bytes": 3502544,
+      "classification": "static"
+    },
+    {
+      "function": "src/tools/../../tests/ProgramLibraryHostTests.h:20:6:void cs80::tests::testProgramLibraryHost(Check&&) [with Check = const main(int, char**)::<lambda(bool, const char*)>&]",
+      "bytes": 1757632,
+      "classification": "dynamic,bounded"
+    },
+    {
+      "function": "src/tools/../../tests/ProgramLibraryHostTests.h:20:6:void cs80::tests::testProgramLibraryHost(Check&&) [with Check = void (&)(bool, const char*)]",
+      "bytes": 1759264,
+      "classification": "dynamic,bounded"
+    },
+    {
+      "function": "src/tools/ui_snapshot.cpp:2058:5:int main(int, char**)",
+      "bytes": 1754640,
+      "classification": "dynamic,bounded"
+    }
+  ],
+  "notes": [
+    "CS80Snapshots MSVC reserve8MiB unchanged at73dc,a818,389",
+    "Windows CTest evidence reports SEGFAULT without raw NT exception code",
+    "New body host tests already heap-own processors; observed Windows smoke completed that phase"
+  ],
+  "after": [
+    {
+      "function": "src/tools/ui_snapshot.cpp:1766:6:void {anonymous}::testPerformanceControlsHost()",
+      "bytes": 1072,
+      "classification": "static"
+    },
+    {
+      "function": "src/tools/../../tests/ProgramLibraryHostTests.h:21:6:void cs80::tests::testProgramLibraryHost(Check&&) [with Check = const main(int, char**)::<lambda(bool, const char*)>&]",
+      "bytes": 24368,
+      "classification": "dynamic,bounded"
+    },
+    {
+      "function": "src/tools/../../tests/ProgramLibraryHostTests.h:21:6:void cs80::tests::testProgramLibraryHost(Check&&) [with Check = void (&)(bool, const char*)]",
+      "bytes": 26000,
+      "classification": "dynamic,bounded"
+    },
+    {
+      "function": "src/tools/ui_snapshot.cpp:2071:5:int main(int, char**)",
+      "bytes": 3984,
+      "classification": "dynamic,bounded"
+    }
+  ],
+  "files": {
+    "src/tools/ui_snapshot.cpp": "1426d00b5b92180df6ef1c1f8f4d959557653d8cd67d5a3c7059a90bd3006049",
+    "tests/ProgramLibraryHostTests.h": "c7d5c2481fd0a6a1efcbcdac2b9961b02f387420d1a93ec9409e129fcc2d4a30"
+  },
+  "review": {
+    "named_fixtures_heap_owned": 34,
+    "full_expression_temporaries_heap_owned": 1,
+    "assertions_control_flow_constructor_arguments_and_destruction_scopes_preserved": true,
+    "actual_juce_gcc_optimized_compile_succeeded": true,
+    "msvc_stack_reserve_changed": false,
+    "shipping_code_changed": false,
+    "native_windows_confirmation": "pending"
+  }
+}

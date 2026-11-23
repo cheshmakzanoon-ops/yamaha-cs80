@@ -1,0 +1,164 @@
+{
+  "id": 137700037238,
+  "run_id": 45176799427,
+  "workflow_name": "build",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOVaLxy88AAAAgD4_Sdg",
+  "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137700037238",
+  "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427/job/137700037238",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-23T12:42:09Z",
+  "started_at": "2026-11-23T12:42:29Z",
+  "completed_at": "2026-11-23T16:03:36Z",
+  "name": "Linux / VST3 + Standalone",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-23T12:42:30Z",
+      "completed_at": "2026-11-23T12:42:31Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-23T12:42:31Z",
+      "completed_at": "2026-11-23T12:42:34Z"
+    },
+    {
+      "name": "Install build dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T12:42:34Z",
+      "completed_at": "2026-11-23T12:43:11Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T12:43:11Z",
+      "completed_at": "2026-11-23T12:44:30Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T12:44:30Z",
+      "completed_at": "2026-11-23T12:44:31Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T12:44:31Z",
+      "completed_at": "2026-11-23T12:55:59Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T12:55:59Z",
+      "completed_at": "2026-11-23T15:59:56Z"
+    },
+    {
+      "name": "Capture curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T15:59:56Z",
+      "completed_at": "2026-11-23T16:01:35Z"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T16:01:35Z",
+      "completed_at": "2026-11-23T16:01:44Z"
+    },
+    {
+      "name": "Upload Linux VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-23T16:01:44Z",
+      "completed_at": "2026-11-23T16:01:46Z"
+    },
+    {
+      "name": "Render demo and screenshots",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-23T16:01:46Z",
+      "completed_at": "2026-11-23T16:03:21Z"
+    },
+    {
+      "name": "Upload render artifacts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-11-23T16:03:21Z",
+      "completed_at": "2026-11-23T16:03:25Z"
+    },
+    {
+      "name": "Package Linux VST3 and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-23T16:03:25Z",
+      "completed_at": "2026-11-23T16:03:31Z"
+    },
+    {
+      "name": "Upload Linux install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-23T16:03:31Z",
+      "completed_at": "2026-11-23T16:03:33Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-23T16:03:33Z",
+      "completed_at": "2026-11-23T16:03:34Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 30,
+      "started_at": "2026-11-23T16:03:34Z",
+      "completed_at": "2026-11-23T16:03:34Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 31,
+      "started_at": "2026-11-23T16:03:34Z",
+      "completed_at": "2026-11-23T16:03:34Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137700037238",
+  "labels": [
+    "ubuntu-24.04"
+  ],
+  "runner_id": 1000043384,
+  "runner_name": "GitHub Actions 1000043384",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "status": "distributed_vst3_matches_validator_input",
+  "verified_at_utc": "2026-11-23T16:05:00.802699+00:00",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "platform": "linux",
+  "architecture": "x86_64",
+  "installation_artifact": {
+    "artifact_id": 14837191097,
+    "name": "cs80-linux-install-bundle",
+    "file": "cs80-linux-install-bundle-14837191097.zip",
+    "bytes": 13282726,
+    "sha256": "f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76"
+  },
+  "validator_input_artifact": {
+    "artifact_id": 14836566834,
+    "name": "cs80-linux-vst3",
+    "file": "cs80-linux-vst3-14836566834.zip",
+    "bytes": 6916689,
+    "sha256": "74b81c73bdb2dd3b88c9eccaddcaeb0f394263975a8fd25aaacbc9e30ed38a89"
+  },
+  "validator_container_sidecars": [],
+  "validator_container_contract": null,
+  "inner_archive": {
+    "file": "cs80-reference-linux-x86_64-cbbee6a94098.tar.gz",
+    "bytes": 13277405,
+    "sha256": "ce0e663858e0ec8d9c5f15a33953a229bc0c7265476ba4c3d71c7c5da6297e12"
+  },
+  "payload_tree_sha256": "f7ec36613660cea1006c16fa10c1e9f0267e07f687458479373b6ed160337579",
+  "payload_entries": 6,
+  "files": 2,
+  "symlinks": 0,
+  "file_bytes": 17445391,
+  "members": [
+    {
+      "path": "CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "type": "file",
+      "bytes": 1095,
+      "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/x86_64-linux",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "type": "file",
+      "bytes": 17444296,
+      "sha256": "dd5f5da6e239b1d969908fbebc9f36b28257a6cb2dc9903da9b4540a4aa85a83"
+    }
+  ],
+  "source_checker_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "checker_sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330",
+  "scope": "Complete selected VST3 bundle file bytes, resources, directory topology and symbolic-link targets. Only the exact Windows top-level .exp/.lib compiler pair can be recorded separately, with format, source-workflow and actual consumer-log checks. Parent directories are inferred when Actions ZIP omits directory records. Archive timestamps, ownership and permission normalization are not compared.",
+  "remaining_qualification": "Artifact producer/upload/attempt binding and successful original pluginval exits are separate requirements. No binary executed by this checker."
+}

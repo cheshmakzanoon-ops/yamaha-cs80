@@ -1,0 +1,199 @@
+﻿2026-11-23T12:42:36.6438151Z Current runner version: '2.338.2'
+2026-11-23T12:42:36.6475359Z ##[group]Runner Image Provisioner
+2026-11-23T12:42:36.6476092Z Hosted Compute Agent
+2026-11-23T12:42:36.6476488Z Version: 20261111.635
+2026-11-23T12:42:36.6476933Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T12:42:36.6477451Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T12:42:36.6477912Z Worker ID: {d639233e-a143-4d36-99b7-795bfabcf1fe}
+2026-11-23T12:42:36.6478440Z Region: us-east-1
+2026-11-23T12:42:36.6478816Z Cloud: AWS
+2026-11-23T12:42:36.6479227Z ##[endgroup]
+2026-11-23T12:42:36.6480217Z ##[group]Operating System
+2026-11-23T12:42:36.6480632Z Ubuntu
+2026-11-23T12:42:36.6481063Z 24.04.5
+2026-11-23T12:42:36.6481412Z LTS
+2026-11-23T12:42:36.6481768Z ##[endgroup]
+2026-11-23T12:42:36.6482140Z ##[group]Runner Image
+2026-11-23T12:42:36.6482530Z Image: ubuntu-24.04
+2026-11-23T12:42:36.6482957Z Version: 20261116.133.1
+2026-11-23T12:42:36.6483848Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.133/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T12:42:36.6484964Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.133
+2026-11-23T12:42:36.6485852Z ##[endgroup]
+2026-11-23T12:42:36.6486727Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T12:42:36.6488471Z Actions: read
+2026-11-23T12:42:36.6488867Z Contents: read
+2026-11-23T12:42:36.6489240Z Metadata: read
+2026-11-23T12:42:36.6489728Z ##[endgroup]
+2026-11-23T12:42:36.6491569Z Secret source: Actions
+2026-11-23T12:42:36.6492240Z Cache mode: write
+2026-11-23T12:42:36.6492848Z Prepare workflow directory
+2026-11-23T12:42:36.6965548Z Prepare all required actions
+2026-11-23T12:42:36.7017948Z Getting action download info
+2026-11-23T12:42:36.8449057Z Download action repository 'actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b' (SHA:f28e40c7f34bde8b3046d885e986cb6290c5673b)
+2026-11-23T12:42:37.8636109Z Download action repository 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0' (SHA:634f93cb2916e3fdff6788551b99b062d0335ce0)
+2026-11-23T12:42:37.9855712Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T12:42:38.1521361Z Complete job name: Official beta3 / headless-subset / 0x4f31605
+2026-11-23T12:42:38.2082000Z ##[group]Run actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+2026-11-23T12:42:38.2082960Z with:
+2026-11-23T12:42:38.2100759Z   script: const fs = require('fs');
+const eventRun = context.payload.workflow_run;
+const repository = `${context.repo.owner}/${context.repo.repo}`;
+fs.mkdirSync('reports', { recursive: true });
+if (repository !== 'cheshmakzanoon-ops/yamaha-cs80' ||
+    context.eventName !== 'workflow_run' ||
+    eventRun?.head_repository?.full_name !== repository ||
+    eventRun?.event !== 'push' || eventRun?.head_branch !== 'main' ||
+    eventRun?.status !== 'completed') {
+  throw new Error('Refusing an origin other than a completed same-repository main push');
+}
+const { data: run } = await github.rest.actions.getWorkflowRun({
+  ...context.repo, run_id: eventRun.id
+});
+const { data: workflow } = await github.rest.actions.getWorkflow({
+  ...context.repo, workflow_id: 'build.yml'
+});
+if (run.id !== eventRun.id || run.run_attempt !== eventRun.run_attempt ||
+    run.head_sha !== eventRun.head_sha || !/^[0-9a-f]{40}$/.test(run.head_sha) ||
+    run.repository?.full_name !== repository ||
+    run.head_repository?.full_name !== repository ||
+    run.event !== 'push' || run.head_branch !== 'main' ||
+    run.status !== 'completed' || run.name !== 'build' ||
+    run.workflow_id !== workflow.id || workflow.path !== '.github/workflows/build.yml') {
+  throw new Error('Build metadata changed or does not match the trusted workflow');
+}
+const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+  ...context.repo, run_id: run.id, per_page: 100
+});
+const matches = artifacts.filter(a => a.name === 'cs80-linux-vst3' && !a.expired);
+if (matches.length !== 1) throw new Error('Expected exactly one non-expired cs80-linux-vst3 artifact');
+const artifact = matches[0];
+if (artifact.workflow_run?.id !== run.id ||
+    artifact.workflow_run?.head_sha !== run.head_sha ||
+    artifact.workflow_run?.repository_id !== run.repository.id ||
+    artifact.workflow_run?.head_repository_id !== run.head_repository.id) {
+  throw new Error('Artifact origin does not match the verified source build');
+}
+const provenance = {
+  schema_version: 1,
+  scope: 'separate official prerelease comparison; not a stable-gate replacement',
+  repository,
+  source_sha: run.head_sha,
+  source_run_id: run.id,
+  source_run_attempt: run.run_attempt,
+  source_run_url: run.html_url,
+  source_run_conclusion: run.conclusion,
+  source_workflow_id: run.workflow_id,
+  source_workflow_path: workflow.path,
+  source_artifact: {
+    id: artifact.id, name: artifact.name, size_bytes: artifact.size_in_bytes,
+    digest: artifact.digest ?? null, created_at: artifact.created_at,
+    updated_at: artifact.updated_at
+  },
+  comparison_run_id: context.runId,
+  comparison_run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+  comparison_workflow_sha: process.env.COMPARISON_WORKFLOW_SHA,
+  validator: {
+    repository: 'Tracktion/pluginval', tag: process.env.VALIDATOR_TAG,
+    commit: process.env.VALIDATOR_COMMIT, asset: process.env.VALIDATOR_ASSET,
+    asset_sha256: process.env.VALIDATOR_SHA256,
+    asset_url: `https://github.com/Tracktion/pluginval/releases/download/${process.env.VALIDATOR_TAG}/${process.env.VALIDATOR_ASSET}`,
+    juce_tag: process.env.VALIDATOR_JUCE_TAG,
+    juce_commit: process.env.VALIDATOR_JUCE_COMMIT,
+    source_modifications: false
+  },
+  lane: process.env.COMPARISON_LANE,
+  seed: process.env.COMPARISON_SEED,
+  strictness: 10, repeats: 1,
+  skip_gui_tests: process.env.SKIP_GUI === 'true',
+  sample_rates: [44100, 48000, 96000],
+  block_sizes: [64, 128, 256, 512, 1024],
+  test_timeout_ms: 120000, process_timeout_seconds: 600,
+  validation_retries: 0
+};
+fs.writeFileSync('reports/provenance.json', JSON.stringify(provenance, null, 2) + '\n');
+core.setOutput('artifact_id', String(artifact.id));
+core.setOutput('source_sha', run.head_sha);
+core.info(`Using artifact ${artifact.id} from run ${run.id}, source ${run.head_sha}; original conclusion ${run.conclusion}`);
+
+2026-11-23T12:42:38.2121333Z   github-token: ***
+2026-11-23T12:42:38.2121848Z   debug: false
+2026-11-23T12:42:38.2122296Z   user-agent: actions/github-script
+2026-11-23T12:42:38.2122813Z   result-encoding: json
+2026-11-23T12:42:38.2123242Z   retries: 0
+2026-11-23T12:42:38.2123867Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-11-23T12:42:38.2124683Z env:
+2026-11-23T12:42:38.2125270Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-23T12:42:38.2125971Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-23T12:42:38.2126589Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-23T12:42:38.2127277Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-23T12:42:38.2128022Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-23T12:42:38.2128600Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-23T12:42:38.2129351Z   COMPARISON_WORKFLOW_SHA: cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:42:38.2130068Z   COMPARISON_LANE: headless-subset
+2026-11-23T12:42:38.2130593Z   COMPARISON_SEED: 0x4f31605
+2026-11-23T12:42:38.2131102Z   SKIP_GUI: true
+2026-11-23T12:42:38.2131587Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-23T12:42:38.2132138Z ##[endgroup]
+2026-11-23T12:42:40.8768168Z Error: Expected exactly one non-expired cs80-linux-vst3 artifact
+2026-11-23T12:42:40.8769466Z     at eval (eval at callAsyncFunction (/home/runner/work/_actions/actions/github-script/f28e40c7f34bde8b3046d885e986cb6290c5673b/dist/index.js:36187:16), <anonymous>:33:33)
+2026-11-23T12:42:40.8799902Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact
+2026-11-23T12:42:40.8805935Z     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-11-23T12:42:40.8806642Z     at async main (/home/runner/work/_actions/actions/github-script/f28e40c7f34bde8b3046d885e986cb6290c5673b/dist/index.js:36285:20)
+2026-11-23T12:42:40.8941933Z ##[group]Run {
+2026-11-23T12:42:40.8942364Z [36;1m{[0m
+2026-11-23T12:42:40.8942801Z [36;1m  echo '## Official pluginval prerelease comparison — not a stable-gate replacement'[0m
+2026-11-23T12:42:40.8943282Z [36;1m  echo "- Source build: $SOURCE_RUN_ID; source SHA: $SOURCE_SHA"[0m
+2026-11-23T12:42:40.8943792Z [36;1m  echo "- Validator: $VALIDATOR_TAG; lane: $COMPARISON_LANE; fixed seed: $COMPARISON_SEED"[0m
+2026-11-23T12:42:40.8944233Z [36;1m  echo "- Validation step: $VALIDATION_OUTCOME"[0m
+2026-11-23T12:42:40.8944640Z [36;1m  if [ -f reports/process-exit-code.txt ]; then[0m
+2026-11-23T12:42:40.8945300Z [36;1m    echo "- Process/timeout exit: $(cat reports/process-exit-code.txt)"[0m
+2026-11-23T12:42:40.8945687Z [36;1m  else[0m
+2026-11-23T12:42:40.8946108Z [36;1m    echo '- No completed process exit recorded; do not count this lane as passed.'[0m
+2026-11-23T12:42:40.8946533Z [36;1m  fi[0m
+2026-11-23T12:42:40.8947083Z [36;1m  echo '- Different validator/JUCE/test inventory. No retries, repair, crash reproduction or causality claim.'[0m
+2026-11-23T12:42:40.8947683Z [36;1m  echo '- The stable 1.0.4 build gate and every historical failure remain unchanged.'[0m
+2026-11-23T12:42:40.8948109Z [36;1m} >> "$GITHUB_STEP_SUMMARY"[0m
+2026-11-23T12:42:41.0068887Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:42:41.0069340Z env:
+2026-11-23T12:42:41.0069620Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-23T12:42:41.0069980Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-23T12:42:41.0070349Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-23T12:42:41.0070745Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-23T12:42:41.0071182Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-23T12:42:41.0071512Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-23T12:42:41.0071932Z   COMPARISON_WORKFLOW_SHA: cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:42:41.0072345Z   COMPARISON_LANE: headless-subset
+2026-11-23T12:42:41.0072667Z   COMPARISON_SEED: 0x4f31605
+2026-11-23T12:42:41.0072982Z   SKIP_GUI: true
+2026-11-23T12:42:41.0073271Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-23T12:42:41.0073650Z   VALIDATION_OUTCOME: skipped
+2026-11-23T12:42:41.0073932Z   SOURCE_SHA: 
+2026-11-23T12:42:41.0074183Z   SOURCE_RUN_ID: 45168179474
+2026-11-23T12:42:41.0074547Z ##[endgroup]
+2026-11-23T12:42:41.0217869Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-23T12:42:41.0218251Z with:
+2026-11-23T12:42:41.0218606Z   name: upstream-beta3-headless-subset-source-45168179474-attempt-1
+2026-11-23T12:42:41.0218968Z   path: reports/
+2026-11-23T12:42:41.0219241Z   if-no-files-found: warn
+2026-11-23T12:42:41.0219512Z   retention-days: 30
+2026-11-23T12:42:41.0219771Z   compression-level: 6
+2026-11-23T12:42:41.0220067Z   overwrite: false
+2026-11-23T12:42:41.0220320Z   include-hidden-files: false
+2026-11-23T12:42:41.0220645Z env:
+2026-11-23T12:42:41.0220889Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-23T12:42:41.0221209Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-23T12:42:41.0221568Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-23T12:42:41.0221964Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-23T12:42:41.0222358Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-23T12:42:41.0222779Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-23T12:42:41.0223167Z   COMPARISON_WORKFLOW_SHA: cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:42:41.0223553Z   COMPARISON_LANE: headless-subset
+2026-11-23T12:42:41.0223860Z   COMPARISON_SEED: 0x4f31605
+2026-11-23T12:42:41.0224160Z   SKIP_GUI: true
+2026-11-23T12:42:41.0224481Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-23T12:42:41.0224771Z ##[endgroup]
+2026-11-23T12:42:41.1380735Z (node:2048) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:42:41.1381671Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:42:41.1429106Z ##[warning]No files were found with the provided path: reports/. No artifacts will be uploaded.
+2026-11-23T12:42:41.1590081Z Cleaning up orphan processes
+2026-11-23T12:42:41.1893092Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

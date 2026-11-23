@@ -1,0 +1,89 @@
+{
+  "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+  "parent": "73dc17b8d93d027a8a7de19a9eaeb0915122c621",
+  "tree": "c22e660682ece1951138155b7cc8b6756f42465b",
+  "file_status_counts": {
+    "M": 39,
+    "A": 9
+  },
+  "changed_files": 48,
+  "new_files": [
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_3.md",
+      "bytes": 18696,
+      "sha256": "e570b0e14408cf458f7b0e7d2fefdc1bd653bed7518fac7841676a9e6b189407"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.3/development-default-off-comparison.json",
+      "bytes": 4660,
+      "sha256": "30740df657d0b262a602f95d56c7109f1216d877e4c3f76b568fb4ceaea5b458"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.3/development-performance.json",
+      "bytes": 5888,
+      "sha256": "16546154ce4dd0a29dca00d89e9df43d7f3c4e60f5da1f8df4ea6d8d3d7b7caa"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.3/parameter-coverage.json",
+      "bytes": 278064,
+      "sha256": "bea36a2d0527c50d5d4563a8a632ad1db92468a76f35d218bb32435961b073c6"
+    },
+    {
+      "path": "scripts/compare-factory-revisions.py",
+      "bytes": 13773,
+      "sha256": "a9d8ddb4b26a32389c1b6f87c343a0927cc87f33b9d942bda491fe1d832e4f49"
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 26232,
+      "sha256": "d15605d641d7c292244466f5d7116183ae8b4794efe4a536bd345b8719c807c2"
+    },
+    {
+      "path": "tests/InstrumentBodyEngineTests.cpp",
+      "bytes": 12685,
+      "sha256": "cd7ea94d42bcae36b43de7f1cbf81d853dcdc05db706a5bf6a8d6742e16a78d9"
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "bytes": 20391,
+      "sha256": "510b3cc516c9d5fc6b1ebc3463738f532148e81ef653d79e931ca61294587a23"
+    },
+    {
+      "path": "tests/InstrumentBodyTests.cpp",
+      "bytes": 21599,
+      "sha256": "c73f861a7e4fdf04bff8226dc390b82cf911967d50337334001b8f62c4787206"
+    }
+  ],
+  "all_changed_files_utf8": true,
+  "accidental_binary_or_cache_changes": false,
+  "secret_pattern_hit_counts": {
+    "private_key": 0,
+    "github_token": 0,
+    "aws_access_key": 0,
+    "signed_blob_url": 0
+  },
+  "modified_workflows": [
+    ".github/workflows/dsp-measurements.yml"
+  ],
+  "native_build_workflow_unchanged": true,
+  "stable_inventory_identities": 523,
+  "source_working_tree_diff": [],
+  "coverage_top_keys": [
+    "schema",
+    "evidence_kind",
+    "interpretation",
+    "before",
+    "after",
+    "validation",
+    "summary",
+    "programs"
+  ],
+  "inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+  "committed_coverage_matches_both_inventory_hashes": true,
+  "github_git_commit_api_verified": {
+    "sha": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "tree": "c22e660682ece1951138155b7cc8b6756f42465b",
+    "parent": "73dc17b8d93d027a8a7de19a9eaeb0915122c621"
+  },
+  "scope": "Read-only exact published source/tree/diff review; no native build, listening test, or all-audio re-execution. Secret scan covers listed common literal patterns only."
+}

@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "run_id": 45168179474,
+  "run_attempt": 1,
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "qualification_status": "failed_not_qualified",
+  "jobs": [
+    {
+      "id": 137670477438,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "failed_or_cancelled_steps": []
+    },
+    {
+      "id": 137670477656,
+      "name": "Windows / VST3 + Standalone",
+      "status": "completed",
+      "conclusion": "failure",
+      "failed_or_cancelled_steps": [
+        {
+          "name": "Test",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 137670477685,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "failed_or_cancelled_steps": [
+        {
+          "name": "Validate AU with pluginval GUI",
+          "conclusion": "cancelled"
+        }
+      ]
+    },
+    {
+      "id": 137670477709,
+      "name": "Linux / VST3 + Standalone",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "failed_or_cancelled_steps": [
+        {
+          "name": "Test",
+          "conclusion": "cancelled"
+        }
+      ]
+    },
+    {
+      "id": 137695449911,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "status": "completed",
+      "conclusion": "skipped",
+      "failed_or_cancelled_steps": []
+    },
+    {
+      "id": 137700206447,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "status": "completed",
+      "conclusion": "skipped",
+      "failed_or_cancelled_steps": []
+    }
+  ],
+  "native_counts": {
+    "macos-arm64": {
+      "registered": 249,
+      "passed": 247,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "windows-x86_64": {
+      "registered": 227,
+      "passed": 222,
+      "failed": 3,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "macos-x86_64": {
+      "registered": 249,
+      "passed": 247,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "linux-x86_64": null
+  },
+  "scope_notes": [
+    "ARM native and four original validator lanes passed.",
+    "Windows failed three CS80Snapshots cases, preserved as SEGFAULT; dependent validator skipped.",
+    "Intel native evidence passed, but its job was cancelled during the AU GUI lane; incomplete validator evidence does not qualify that platform.",
+    "Linux was cancelled during Test; its small evidence ZIP contains only JUCE provenance and cannot establish native totals.",
+    "All outcomes belong to source389 and do not count toward the superseding source."
+  ],
+  "partial_artifact_inspection": [
+    {
+      "artifact_id": 14820211491,
+      "artifact_name": "cs80-pluginval-macos-15-intel",
+      "bytes": 6016,
+      "digest": "sha256:73a83415f078ce20cf0c6a63b9c9aa6a790808214f0062bcbb9d1c6c5e51b85c",
+      "members": [
+        {
+          "path": "pluginval-download.json",
+          "bytes": 918,
+          "sha256": "d970efc590335f1afb232c1e89426abcdc29fc8afe3d538c55ba95b91346f0a1",
+          "terminal_SUCCESS": false
+        },
+        {
+          "path": "pluginval-reports/cs80-au",
+          "bytes": 7214,
+          "sha256": "23b237964a5924e3ea5d03678a735c4550537e4f439024b786081d53fb15ecbd",
+          "terminal_SUCCESS": true
+        },
+        {
+          "path": "pluginval-reports/cs80-au-gui",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "terminal_SUCCESS": false
+        },
+        {
+          "path": "pluginval-reports/cs80-vst3",
+          "bytes": 7272,
+          "sha256": "a4253f6c200c5f2d7805251a10346a6c7f7543db55a50f09a1f42965cd47cb18",
+          "terminal_SUCCESS": true
+        },
+        {
+          "path": "pluginval-vst3.log",
+          "bytes": 7399,
+          "sha256": "58876a7bfb903ec20ad0954a8c1605ae743737771dbeac723aac20617ed0a947",
+          "terminal_SUCCESS": true
+        },
+        {
+          "path": "pluginval-au.log",
+          "bytes": 7308,
+          "sha256": "5d435d197853a5665ec3568c268d5548a05ff5096ae1e50bf210d89fc41e417f",
+          "terminal_SUCCESS": true
+        },
+        {
+          "path": "pluginval-au-gui.log",
+          "bytes": 5648,
+          "sha256": "9178494433b808cdbeb371303a4ea7c4909f9429413b95d14fa9a43d3a26a692",
+          "terminal_SUCCESS": false
+        }
+      ],
+      "status": "incomplete_cancelled_job_evidence_not_qualified"
+    },
+    {
+      "artifact_id": 14819306305,
+      "artifact_name": "cs80-linux-test-evidence",
+      "bytes": 462,
+      "digest": "sha256:7127bd413e6d871af9c503e3a94949d80f761d1644b9a0dc283aae95417cc14f",
+      "members": [
+        {
+          "path": "ci-juce-provenance.txt",
+          "bytes": 609,
+          "sha256": "bb4baca01a8d2df90902ea86e35db73c0be74f670b678e1704d043780937d9f6",
+          "terminal_SUCCESS": null
+        }
+      ],
+      "status": "incomplete_cancelled_job_evidence_not_qualified"
+    }
+  ],
+  "recorded_at_utc": "2026-11-23T12:44:18.016000+00:00"
+}

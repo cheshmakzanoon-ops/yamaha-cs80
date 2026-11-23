@@ -16,52 +16,61 @@ a DAW or a standalone app.
 
 ## Downloads
 
-**2026.11.2 — the existing 523-program factory library, revised for one circuit
-engine.** These builds include the original-address revoicing, keyboard and
-instrument refinements, and removal of the Legacy/Pure engine selectors.
+**2026.11.3 — all 521 existing musical presets revoiced.** The two initialization
+patches and all 523 names, categories and program addresses are preserved.
+No presets were added. These builds include the new instrument bodies and the
+individual articulation, expression, decay and level refinements.
 
 All four native build/test/package jobs and all **13 required strictness-10
-pluginval invocations passed**, with zero native test failures and zero validator
-retries used. The actual installation and audition archives were downloaded and
-checked against their published sizes, hashes and producing jobs.
+pluginval lanes passed**, with **1,303 native CTest executions passed,
+zero failed and 7 formally skipped** across 1,310 registered platform
+executions. The 24 nested Python subtest skips are counted separately.
+The validators completed with zero runtime validation retries. Actual installation and
+audition archives were downloaded and checked against their API identities,
+sizes, hashes and producing jobs.
 
 | Platform | Included formats | Verified installation download |
 | --- | --- | --- |
-| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip) |
-| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip) |
-| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip) |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip) |
+| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip) |
 
 Binary source:
-[`9c0d2baef5643a983a0e7a378b6be033371248f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9c0d2baef5643a983a0e7a378b6be033371248f4) ·
-[Build 45112404257, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257) ·
-[Qualification, download hashes and exact artifact identities](docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json)
+[`cbbee6a940985ad3c550768414960d2e1b1e802e`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/cbbee6a940985ad3c550768414960d2e1b1e802e) ·
+[Build 45176799427, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427) ·
+[Qualification, download hashes and exact artifact identities](docs/preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json)
 
-**Hear the revised sounds:** [68 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip)
-cover **56 existing programs and 431 seconds** of 48 kHz stereo audio. They
-include all 24 keyboard programs, soft-strike comparisons, three Tine Piano
-registers, pressure examples and revised original addresses. The archive also
-contains all 523 preset parameter vectors, metrics, provenance and checksums.
-[Actual audition verification](docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json)
+**Hear the revised sounds:** [90 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip)
+cover **71 existing programs and 594 seconds (9 minutes 54 seconds)** of 48 kHz
+stereo audio. They include all 24 later-bank keyboard programs, soft-strike and
+register comparisons, pressure examples, original addresses and all 19 active
+instrument-body models. The archive also contains all **523 preset vectors with
+198 parameters each**, metrics, provenance and checksums.
+[Actual audition verification](docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json)
 
 Unpack the outer ZIP, verify its included `SHA256SUMS`, and unpack the inner
-archive while keeping each plug-in/app bundle intact. The linked qualification
-record gives the outer ZIP hashes. Follow the
+archive while keeping each plug-in/app bundle intact. The qualification record
+gives the outer ZIP hashes. Follow the
 [installation guide](docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need).
 Choose the Mac build for your **host process architecture**. These are CI
-installation bundles without release signing or notarization; Linux requires
-compatible system libraries. They are retained Actions artifacts with API
-expiry **21 February 2027 at 04:31:50 UTC**, rather than permanent release assets. No GitHub
-sign-in is required for the public links; the same run's Artifacts list is the
-fallback while the artifacts remain retained.
+installation bundles without publisher release signing or Apple notarization;
+Linux requires compatible system libraries. The earliest recorded API expiry
+is **21 February 2027 at 08:42:09 AST (12:42:09 UTC)**. These retained Actions artifacts
+are not permanent release assets; the same run's Artifacts list is the fallback
+while they remain retained.
+
+**Select the presets again from Library after installing.** Old sessions restore
+their stored settings, so simply opening a project does not replace its patch
+with the revised factory recipe.
 
 Each manifest and `SOURCE.txt` identifies the exact binary source. Later
 screenshot or documentation commits on `main` do not change those bytes.
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes,
-saved-session migration and measured limits. The
-[60-assignment review](docs/TEAM_REVIEW_2026_11_2.md) links the implementation and
-acceptance work. Earlier builds and their original failures remain in the
-[distribution history](docs/CI_DISTRIBUTION_STATUS.md).
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_3.md) explains the sound changes,
+saved-state behavior and measured limits. The
+[60-agent review ledger](docs/TEAM_REVIEW_2026_11_3.md) records the actual spawned
+workers and their work. Earlier failures and builds retain their original
+outcomes in the [distribution history](docs/CI_DISTRIBUTION_STATUS.md).
 
 ## Play your first sound
 
@@ -83,23 +92,40 @@ on-screen key to try pressure.
   not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Revoiced factory library — 2026.11.2
+## Instrument voicing revision — 2026.11.3
 
-The existing **222 original-address programs** now use explicit instrument recipes
-and controlled variations in place of randomized voicings. The **24 keyboard
-programs** in the later collection have revised strike/body balance, velocity
-response, decay and key-release damping. Focused refinements also improve brass and bowed attacks, wind onsets, bass decay, plucked-string harmonics, vibraphone partials, centered leads and five tremolo voices. No presets were added or renamed.
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes,
-program addressing and compatibility consequences.
+All **521 existing musical factory programs** have revised sound controls. The
+two initialization patches and all **523 names, categories and program addresses**
+are preserved. No presets were added. The work covers the original-address
+collection as well as every musical program in the later collection.
+
+An optional body for each synthesizer rank supplies independently evolving
+partials for struck strings, electric pianos, winds, bowed strings, brass,
+organs and bars. **259 existing programs use these bodies**, with 19 model
+choices; the remaining 264 entries, including the two initialization patches,
+retain circuit excitation. Synthetic pads, polysynths, leads, basses and
+effects also have individually revised articulation, expression and motion.
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_3.md) explains the sound changes,
+controls, measured behavior and limits. The
+[complete coverage record](docs/preset-evidence/2026.11.3/parameter-coverage.json)
+checks every existing address.
 
 | Try | Revised character and playing suggestion |
 | --- | --- |
-| Electric Piano I / Electric Piano II | A more audible short strike above a separately decaying body. Compare soft and firm notes, then release early to hear damping. |
-| Tine Piano | A velocity-sensitive third-harmonic strike that follows the keyboard and fades before the body. Compare low, middle and high notes. |
-| Reed Piano / Stage Keys / Saw Pulse Piano | More defined bark or hammer-like onset followed by a falling body. Hold a key to hear the decay. |
-| Toy Piano / Celesta / Vibes Keys | Distinct upper strikes and ringing bodies with their own decay times and registers. Start with single notes. |
-| Analog Piano / Bright Keys / Slow Keys 106 | Existing original addresses now inherit specific keyboard recipes. Even the longer-decaying variation keeps a struck onset. |
-| Tone I: E. Piano / Tone II: Bass | The named rank now carries the dominant instrument instead of being outweighed by the unrelated opposite rank. |
+| Analog Piano / Stage Keys / Soft Keys | Hammer-shaped attacks, slightly stretched upper partials and separate string-course decay. Compare soft and firm notes, then hold a key as the upper content softens. |
+| Electric Piano I / Electric Piano II / Tine Piano / Reed Piano | Distinct tine and reed spectra, a defined strike and more responsive touch. Compare soft and firm strikes in low, middle and high registers. |
+| Guitar I / Guitar II / Nylon Pluck / Steel Pluck | Different pluck notches, body weighting and upper-partial losses. Listen to the onset and decay of single notes before playing chords. |
+| Solo Violin / Solo Cello / Flute / Clarinet / Oboe / Bassoon | Sustained instrument bodies with controlled bow or air texture and pressure expression. Hold a note, then add aftertouch. |
+| Vibraphone / Marimba / Celesta / Toy Piano | Distinct modal ratios and decay profiles. Marimba's upper mode fades substantially faster than Vibraphone's; compare sustained keys and early release. |
+| Covered Horn / Trombone Glide | A sustained brass body and stronger fundamental, with the authored touch, slide and initial scoop. |
+| Percussive Organ / Theatre Organ | Fading octave percussion or a gentle whole-registration tremulant, while the organ body keeps steady strike dynamics. |
+| Pads / Polysynth / Leads / FX | Individually programmed attack, bloom, sustain, release and controller roles; environmental effects retain distinct noise bands and envelopes. |
+
+The eight body controls are available in the DAW's parameter list and automation
+editor. Model and partial decay are captured on the next note; mix and
+brightness are live. The custom Studio editor and standalone interface do not
+yet have dedicated body-control widgets. Factory selection and saved-state
+recall load these settings normally.
 
 **Pressure Lead requires aftertouch** and is intentionally silent until pressure
 is applied. Use channel/polyphonic aftertouch or drag downward on a held
@@ -117,9 +143,11 @@ There is no promise of identical old rendering. Reload a factory program from
 replace its stored patch with the current factory recipe. Keep the older binary
 and a rendered reference when an existing project's exact sound must be retained.
 
-Instrument names describe synthesized interpretations. This instrument does not
-contain sampled pianos or physical models of acoustic instruments, and the software checks do
-not establish an exact acoustic or physical CS-80 match. Build and validator
+Instrument names describe synthesized interpretations. The new bodies are
+authored signal models with physically motivated spectra and losses; they are
+not sampled instruments or complete measured simulations of instrument
+mechanics. The software checks do not establish an indistinguishable acoustic
+instrument or calibrated physical CS-80 match. Build and validator
 results belong to the specific download and source commit listed above. The
 earlier [2026.11.1 report](docs/PRESET_REFINEMENT_2026_11_1.md) also records a native
 VST3 Program-queue controller dependency; **Library** selection is the direct

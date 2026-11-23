@@ -1,0 +1,170 @@
+{
+  "status": "passed",
+  "counts": {
+    "registered": 249,
+    "passed": 247,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "ctest_seconds_junit": 2325.0,
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "failures": [],
+  "relevant_test_results": [
+    {
+      "name": "cs80_packaging_notice_tests",
+      "seconds": 4.36669,
+      "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_instrument_body_tests",
+      "seconds": 1.47049,
+      "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "seconds": 13.5966,
+      "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86112972e-08\nREGISTER Bowed strings relative waveform error 1.01320705e-07\nREGISTER Oboe relative waveform error 1.08556522e-07\nREGISTER Bassoon relative waveform error 1.01848545e-07\nKBC body LOW lever -1 relative waveform change 0.107108774\nKBC body LOW lever +1 relative waveform change 0.107108804\nKBC body HIGH lever -1 relative waveform change 0.0371089862\nKBC body HIGH lever +1 relative waveform change 0.037108994\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99407, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23846, sample step 0.00075410 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+      "passed": true
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "seconds": 552.914,
+      "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "seconds": 17.8017,
+      "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -142.6 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_character_tests",
+      "seconds": 6.93152,
+      "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.3 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.4 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.4 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.3 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.6 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -143.9 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "seconds": 53.9488,
+      "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_circuit_source_host_tests",
+      "seconds": 16.4916,
+      "output_excerpt": "Expression persistence RMS: restored=0.00531658664 expected=0.00531657453 full=0.0177240822 relative_error=2.27844029e-06\nCircuit source/controller host tests: 0 failures",
+      "passed": true
+    },
+    {
+      "name": "cs80_modern_recall_host_tests",
+      "seconds": 9.79762,
+      "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.174497 copy=0.001379 xml=0.009375 session_text=0.002927 fixture_write=0.017967 preset_load=0.030331 session_load=0.021886 audio=0.001973 save=0.035262 round_trip_load=0.043554\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.351394 copy=0.002820 xml=0.019656 session_text=0.006005 fixture_write=0.034845 preset_load=0.061825 session_load=0.044856 audio=0.004200 save=0.071083 round_trip_load=0.087734\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.523573 copy=0.004201 xml=0.029400 session_text=0.009052 fixture_write=0.052922 preset_load=0.092416 session_load=0.066985 audio=0.006253 save=0.105278 round_trip_load=0.130465\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.696594 copy=0.005525 xml=0.039202 session_text=0.011882 fixture_write=0.070765 preset_load=0.123238 session_load=0.088218 audio=0.008160 save=0.139545 round_trip_load=0.175421\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "seconds": 170.321,
+      "output_excerpt": "UI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.000745 total_seconds=0.000745\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406724 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=7.785630 total_seconds=7.786375\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nUI SMOKE TIMING: phase=output meter host seconds=17.261634 total_seconds=25.048009\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.593506 total_seconds=25.641515\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.919486 total_seconds=29.561000\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host seconds=...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+      "passed": true
+    },
+    {
+      "name": "cs80_typed_value_unit_tests",
+      "seconds": 0.18265,
+      "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+      "passed": true
+    }
+  ],
+  "nested_python_skips": {
+    "total": 5,
+    "suites": [
+      {
+        "ctest_test": "cs80_package_binary_identity_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          13
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ]
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "python_skipped": 2,
+        "tests_run_summaries": [
+          12
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": []
+      }
+    ]
+  },
+  "juce_provenance": {
+    "checked_at": "2026-11-23T12:45:22Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "workflow_run": "45176799427",
+    "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "schema": 1,
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "artifact_id": 14822454312,
+  "artifact_name": "cs80-macos-15-intel-test-evidence",
+  "archive_bytes": 64153,
+  "archive_sha256": "9569964275f303b362d00a80c2f39f28350b2bd46c19dae151551eaa7718a92c",
+  "members": {
+    "ctest-results.xml": {
+      "bytes": 108275,
+      "sha256": "05cf08d97a9245b20047a3ee1346c69762db5327d3f88c0d48a7840d599fb980"
+    },
+    "LastTest.log": {
+      "bytes": 318169,
+      "sha256": "8cbef2924b99d7fc3bd1fc088db40323dd15bbb307c78fa4466f4e977bd6ff34"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 612,
+      "sha256": "6f5d2ea6a0084eec8cdcf3683ab3ca2e0f09798334fde9299202d1f7331e3836"
+    }
+  },
+  "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately."
+}

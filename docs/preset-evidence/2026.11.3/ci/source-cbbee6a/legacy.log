@@ -1,0 +1,231 @@
+﻿2026-11-23T12:42:11.8806710Z Current runner version: '2.338.2'
+2026-11-23T12:42:11.8827690Z ##[group]Runner Image Provisioner
+2026-11-23T12:42:11.8828486Z Hosted Compute Agent
+2026-11-23T12:42:11.8828990Z Version: 20261111.635
+2026-11-23T12:42:11.8830295Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T12:42:11.8831016Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T12:42:11.8831621Z Worker ID: {9db0ba59-f511-4b91-8ae5-9d669796b1ae}
+2026-11-23T12:42:11.8832248Z Region: centralus
+2026-11-23T12:42:11.8832745Z Cloud: Azure
+2026-11-23T12:42:11.8833191Z ##[endgroup]
+2026-11-23T12:42:11.8834798Z ##[group]Operating System
+2026-11-23T12:42:11.8835333Z Ubuntu
+2026-11-23T12:42:11.8835823Z 24.04.5
+2026-11-23T12:42:11.8836279Z LTS
+2026-11-23T12:42:11.8836745Z ##[endgroup]
+2026-11-23T12:42:11.8837502Z ##[group]Runner Image
+2026-11-23T12:42:11.8838059Z Image: ubuntu-24.04
+2026-11-23T12:42:11.8838570Z Version: 20261116.376.1
+2026-11-23T12:42:11.8839776Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T12:42:11.8842364Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-23T12:42:11.8843553Z ##[endgroup]
+2026-11-23T12:42:11.8844984Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T12:42:11.8847477Z Contents: read
+2026-11-23T12:42:11.8848332Z Metadata: read
+2026-11-23T12:42:11.8849031Z ##[endgroup]
+2026-11-23T12:42:11.8851289Z Secret source: Actions
+2026-11-23T12:42:11.8852538Z Cache mode: write
+2026-11-23T12:42:11.8853771Z Prepare workflow directory
+2026-11-23T12:42:11.9193162Z Prepare all required actions
+2026-11-23T12:42:11.9235039Z Getting action download info
+2026-11-23T12:42:12.1545826Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T12:42:12.3522574Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T12:42:12.6447754Z Complete job name: Default-off raw audio versus shipped baseline
+2026-11-23T12:42:12.7104703Z ##[group]Run actions/checkout@v5
+2026-11-23T12:42:12.7105355Z with:
+2026-11-23T12:42:12.7105741Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:12.7108850Z   token: ***
+2026-11-23T12:42:12.7109199Z   ssh-strict: true
+2026-11-23T12:42:12.7109559Z   ssh-user: git
+2026-11-23T12:42:12.7109921Z   persist-credentials: true
+2026-11-23T12:42:12.7110317Z   clean: true
+2026-11-23T12:42:12.7110677Z   sparse-checkout-cone-mode: true
+2026-11-23T12:42:12.7111090Z   fetch-depth: 1
+2026-11-23T12:42:12.7111437Z   fetch-tags: false
+2026-11-23T12:42:12.7111797Z   show-progress: true
+2026-11-23T12:42:12.7112162Z   lfs: false
+2026-11-23T12:42:12.7112486Z   submodules: false
+2026-11-23T12:42:12.7112844Z   set-safe-directory: true
+2026-11-23T12:42:12.7113251Z   allow-unsafe-pr-checkout: false
+2026-11-23T12:42:12.7113800Z env:
+2026-11-23T12:42:12.7114179Z   BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+2026-11-23T12:42:12.7114649Z ##[endgroup]
+2026-11-23T12:42:12.9392784Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:12.9395162Z ##[group]Getting Git version info
+2026-11-23T12:42:12.9396065Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T12:42:12.9397487Z [command]/usr/bin/git version
+2026-11-23T12:42:12.9462180Z git version 2.56.1
+2026-11-23T12:42:12.9500873Z ##[endgroup]
+2026-11-23T12:42:12.9513631Z Temporarily overriding HOME='/home/runner/work/_temp/242fe9ea-f303-442f-902c-ab2ea44a02b4' before making global git config changes
+2026-11-23T12:42:12.9515471Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T12:42:12.9517013Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:42:12.9563611Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T12:42:12.9587497Z ##[group]Initializing the repository
+2026-11-23T12:42:12.9592236Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:42:12.9696908Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T12:42:12.9698372Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T12:42:12.9699320Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T12:42:12.9699901Z hint: call:
+2026-11-23T12:42:12.9700281Z hint:
+2026-11-23T12:42:12.9700880Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T12:42:12.9701611Z hint:
+2026-11-23T12:42:12.9702311Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T12:42:12.9703427Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T12:42:12.9704152Z hint:
+2026-11-23T12:42:12.9704484Z hint: 	git branch -m <name>
+2026-11-23T12:42:12.9704879Z hint:
+2026-11-23T12:42:12.9705657Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T12:42:12.9706836Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T12:42:12.9713281Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:12.9756980Z ##[endgroup]
+2026-11-23T12:42:12.9758204Z ##[group]Disabling automatic garbage collection
+2026-11-23T12:42:12.9760460Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T12:42:12.9789493Z ##[endgroup]
+2026-11-23T12:42:12.9790420Z ##[group]Setting up auth
+2026-11-23T12:42:12.9795119Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T12:42:12.9828565Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T12:42:13.0151145Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T12:42:13.0191659Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T12:42:13.0394142Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T12:42:13.0430719Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T12:42:13.0639263Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T12:42:13.0687524Z ##[endgroup]
+2026-11-23T12:42:13.0688304Z ##[group]Fetching the repository
+2026-11-23T12:42:13.0696864Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cbbee6a940985ad3c550768414960d2e1b1e802e:refs/remotes/origin/main
+2026-11-23T12:42:17.9230567Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:17.9232051Z  * [new ref]         cbbee6a940985ad3c550768414960d2e1b1e802e -> origin/main
+2026-11-23T12:42:17.9234764Z ##[endgroup]
+2026-11-23T12:42:17.9235784Z ##[group]Determining the checkout info
+2026-11-23T12:42:17.9236883Z ##[endgroup]
+2026-11-23T12:42:17.9249579Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T12:42:17.9302498Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T12:42:17.9337602Z ##[group]Checking out the ref
+2026-11-23T12:42:17.9340955Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T12:42:18.6034147Z Switched to a new branch 'main'
+2026-11-23T12:42:18.6038478Z branch 'main' set up to track 'origin/main'.
+2026-11-23T12:42:18.6079903Z ##[endgroup]
+2026-11-23T12:42:18.6125782Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T12:42:18.6154756Z cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:42:18.6345700Z ##[group]Run git fetch --depth=1 origin "$BASELINE"
+2026-11-23T12:42:18.6346137Z [36;1mgit fetch --depth=1 origin "$BASELINE"[0m
+2026-11-23T12:42:18.6346480Z [36;1mgit worktree add --detach baseline "$BASELINE"[0m
+2026-11-23T12:42:18.6346977Z [36;1mfor source in baseline .; do[0m
+2026-11-23T12:42:18.6347719Z [36;1m  cmake -S "$source" -B "$source/build-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF[0m
+2026-11-23T12:42:18.6348278Z [36;1m  cmake --build "$source/build-compat" --target cs80_core --parallel 2[0m
+2026-11-23T12:42:18.6348614Z [36;1mdone[0m
+2026-11-23T12:42:18.6349076Z [36;1mc++ -O2 -std=c++20 -Ibaseline/src src/tools/compatibility_probe.cpp baseline/build-compat/libcs80_core.a -o baseline-probe[0m
+2026-11-23T12:42:18.6349702Z [36;1mc++ -O2 -std=c++20 -Isrc src/tools/compatibility_probe.cpp build-compat/libcs80_core.a -o current-probe[0m
+2026-11-23T12:42:18.6370187Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:42:18.6370505Z env:
+2026-11-23T12:42:18.6370751Z   BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+2026-11-23T12:42:18.6371050Z ##[endgroup]
+2026-11-23T12:42:19.5747594Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T12:42:19.5749207Z  * branch            d56911a7c5f6953cd244457226b126cc567a538b -> FETCH_HEAD
+2026-11-23T12:42:19.5771620Z Preparing worktree (detached HEAD d56911a)
+2026-11-23T12:42:19.5974602Z HEAD is now at d56911a docs: refresh verified panel screenshots [skip ci]
+2026-11-23T12:42:21.4585174Z -- The C compiler identification is GNU 13.3.0
+2026-11-23T12:42:22.4546923Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-23T12:42:22.5764355Z -- Detecting C compiler ABI info
+2026-11-23T12:42:22.8445679Z -- Detecting C compiler ABI info - done
+2026-11-23T12:42:22.8577320Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-23T12:42:22.8619402Z -- Detecting C compile features
+2026-11-23T12:42:22.8624340Z -- Detecting C compile features - done
+2026-11-23T12:42:22.9327679Z -- Detecting CXX compiler ABI info
+2026-11-23T12:42:23.0453636Z -- Detecting CXX compiler ABI info - done
+2026-11-23T12:42:23.0588765Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-23T12:42:23.0591374Z -- Detecting CXX compile features
+2026-11-23T12:42:23.0597055Z -- Detecting CXX compile features - done
+2026-11-23T12:42:23.0692449Z -- Configuring done (2.8s)
+2026-11-23T12:42:23.0791247Z -- Generating done (0.0s)
+2026-11-23T12:42:23.0794015Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/baseline/build-compat
+2026-11-23T12:42:23.1033877Z [ 33%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-23T12:42:23.1034875Z [ 66%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-23T12:42:25.3191482Z [100%] Linking CXX static library libcs80_core.a
+2026-11-23T12:42:32.2955203Z [100%] Built target cs80_core
+2026-11-23T12:42:32.3402928Z -- The C compiler identification is GNU 13.3.0
+2026-11-23T12:42:32.3871138Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-23T12:42:32.3937012Z -- Detecting C compiler ABI info
+2026-11-23T12:42:32.4379380Z -- Detecting C compiler ABI info - done
+2026-11-23T12:42:32.4511447Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-23T12:42:32.4514236Z -- Detecting C compile features
+2026-11-23T12:42:32.4517805Z -- Detecting C compile features - done
+2026-11-23T12:42:32.4615652Z -- Detecting CXX compiler ABI info
+2026-11-23T12:42:32.5142766Z -- Detecting CXX compiler ABI info - done
+2026-11-23T12:42:32.5280335Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-23T12:42:32.5283076Z -- Detecting CXX compile features
+2026-11-23T12:42:32.5290407Z -- Detecting CXX compile features - done
+2026-11-23T12:42:32.5413681Z -- Configuring done (0.2s)
+2026-11-23T12:42:32.5573190Z -- Generating done (0.0s)
+2026-11-23T12:42:32.5576013Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build-compat
+2026-11-23T12:42:32.5776500Z [ 20%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-23T12:42:32.5777407Z [ 40%] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-23T12:42:32.5879856Z [ 60%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-23T12:42:40.6522286Z [ 80%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-23T12:42:42.7784024Z [100%] Linking CXX static library libcs80_core.a
+2026-11-23T12:42:42.8690169Z [100%] Built target cs80_core
+2026-11-23T12:42:45.3750339Z ##[group]Run mkdir -p artifacts/compatibility
+2026-11-23T12:42:45.3750769Z [36;1mmkdir -p artifacts/compatibility[0m
+2026-11-23T12:42:45.3751168Z [36;1mcorpus=artifacts/compatibility/baseline-corpus.txt[0m
+2026-11-23T12:42:45.3751601Z [36;1m./baseline-probe --export-corpus "$corpus"[0m
+2026-11-23T12:42:45.3752044Z [36;1mcorpus_sha256="$(sha256sum "$corpus" | cut -d ' ' -f 1)"[0m
+2026-11-23T12:42:45.3752467Z [36;1mfor scenario in default tails; do[0m
+2026-11-23T12:42:45.3752777Z [36;1m  args=()[0m
+2026-11-23T12:42:45.3753084Z [36;1m  if [ "$scenario" = tails ]; then args=(--tails); fi[0m
+2026-11-23T12:42:45.3753815Z [36;1m  ./baseline-probe "artifacts/compatibility/baseline-$scenario.f32" --corpus "$corpus" "${args[@]}"[0m
+2026-11-23T12:42:45.3754707Z [36;1m  ./current-probe "artifacts/compatibility/current-$scenario.f32" --corpus "$corpus" "${args[@]}"[0m
+2026-11-23T12:42:45.3755673Z [36;1m  cmp "artifacts/compatibility/baseline-$scenario.f32" "artifacts/compatibility/current-$scenario.f32"[0m
+2026-11-23T12:42:45.3756299Z [36;1mdone[0m
+2026-11-23T12:42:45.3756760Z [36;1msha256sum "$corpus" artifacts/compatibility/*.f32 > artifacts/compatibility/SHA256SUMS[0m
+2026-11-23T12:42:45.3758585Z [36;1mprintf '{"baseline":"%s","candidate":"%s","corpus_source":"%s","corpus_sha256":"%s","corpus_parameters":137,"default_off_byte_identical":true,"legacy_programs":222,"sample_rates":[44100,48000,96000],"analog_evidence":false}\n' "$BASELINE" "$GITHUB_SHA" "$BASELINE" "$corpus_sha256" > artifacts/compatibility/report.json[0m
+2026-11-23T12:42:45.3760069Z [36;1mc++ --version > artifacts/compatibility/compiler.txt[0m
+2026-11-23T12:42:45.3778665Z shell: /usr/bin/bash -e {0}
+2026-11-23T12:42:45.3778884Z env:
+2026-11-23T12:42:45.3779077Z   BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+2026-11-23T12:42:45.3779323Z ##[endgroup]
+2026-11-23T12:45:30.0193478Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T12:45:30.0193740Z with:
+2026-11-23T12:45:30.0194015Z   name: cs80-legacy-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T12:45:30.0194666Z   path: artifacts/compatibility/report.json
+artifacts/compatibility/SHA256SUMS
+artifacts/compatibility/compiler.txt
+artifacts/compatibility/baseline-corpus.txt
+
+2026-11-23T12:45:30.0195213Z   if-no-files-found: error
+2026-11-23T12:45:30.0195412Z   compression-level: 6
+2026-11-23T12:45:30.0195588Z   overwrite: false
+2026-11-23T12:45:30.0195778Z   include-hidden-files: false
+2026-11-23T12:45:30.0195974Z env:
+2026-11-23T12:45:30.0196159Z   BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+2026-11-23T12:45:30.0196397Z ##[endgroup]
+2026-11-23T12:45:30.1530525Z (node:2367) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T12:45:30.1531523Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T12:45:30.1598894Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-23T12:45:30.1601192Z The least common ancestor is /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/compatibility. This will be the root directory of the artifact
+2026-11-23T12:45:30.1601977Z With the provided path, there will be 4 files uploaded
+2026-11-23T12:45:30.1602852Z Artifact name is valid!
+2026-11-23T12:45:30.1603182Z Root directory input is valid!
+2026-11-23T12:45:30.4335493Z Beginning upload of artifact content to blob storage
+2026-11-23T12:45:30.4614546Z (node:2367) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T12:45:30.6631670Z Uploaded bytes 29436
+2026-11-23T12:45:30.7090457Z Finished uploading artifact content to blob storage!
+2026-11-23T12:45:30.7091228Z SHA256 digest of uploaded artifact zip is 5c94f6876eb3b737929f01530728a04a7dfdd8d75442e62882a6c0c2d1b38c63
+2026-11-23T12:45:30.7092539Z Finalizing artifact upload
+2026-11-23T12:45:31.0871445Z Artifact cs80-legacy-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e.zip successfully finalized. Artifact ID 14820386968
+2026-11-23T12:45:31.0872489Z Artifact cs80-legacy-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e has been successfully uploaded! Final size is 29436 bytes. Artifact ID is 14820386968
+2026-11-23T12:45:31.0878108Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301/artifacts/14820386968
+2026-11-23T12:45:31.1086538Z Post job cleanup.
+2026-11-23T12:45:31.1770511Z [command]/usr/bin/git version
+2026-11-23T12:45:31.1808125Z git version 2.56.1
+2026-11-23T12:45:31.1870984Z Temporarily overriding HOME='/home/runner/work/_temp/c68b2f26-cee9-4163-a15a-0c178dc212e7' before making global git config changes
+2026-11-23T12:45:31.1871999Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T12:45:31.1875531Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T12:45:31.1919024Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T12:45:31.1954043Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T12:45:31.2188084Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T12:45:31.2212047Z http.https://github.com/.extraheader
+2026-11-23T12:45:31.2221760Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T12:45:31.2261250Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T12:45:31.2496483Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T12:45:31.2534528Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T12:45:31.2885691Z Cleaning up orphan processes
+2026-11-23T12:45:31.3183421Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

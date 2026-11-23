@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "status": "delivered_inventory_matches_reviewed_implementation",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "delivered_inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+  "reviewed_development_inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+  "byte_identical": true,
+  "json_values_and_all_metadata_identical": true,
+  "program_count": 523,
+  "parameter_count": 198,
+  "coverage_report_sha256": "bea36a2d0527c50d5d4563a8a632ad1db92468a76f35d218bb32435961b073c6",
+  "coverage_summary": {
+    "program_count": 523,
+    "body_enabled_programs": 259,
+    "circuit_only_programs": 264,
+    "active_body_ranks_by_model": {
+      "Bassoon": 2,
+      "Bell": 47,
+      "Bowed strings": 91,
+      "Brass": 79,
+      "Celesta": 15,
+      "Clarinet": 3,
+      "Clavichord": 29,
+      "Flute": 9,
+      "Harpsichord": 14,
+      "Marimba": 7,
+      "Nylon strings": 12,
+      "Oboe": 7,
+      "Organ": 30,
+      "Piano strings": 20,
+      "Plucked bass": 20,
+      "Reed electric piano": 7,
+      "Steel strings": 31,
+      "Tine electric piano": 28,
+      "Vibraphone": 5
+    },
+    "families": [
+      {
+        "category": "Bass",
+        "programs": 50,
+        "changed_musical_programs": 50
+      },
+      {
+        "category": "Bells",
+        "programs": 23,
+        "changed_musical_programs": 23
+      },
+      {
+        "category": "Brass",
+        "programs": 59,
+        "changed_musical_programs": 59
+      },
+      {
+        "category": "FX",
+        "programs": 46,
+        "changed_musical_programs": 46
+      },
+      {
+        "category": "Hardware Studies",
+        "programs": 22,
+        "changed_musical_programs": 22
+      },
+      {
+        "category": "Init",
+        "programs": 2,
+        "changed_musical_programs": 0
+      },
+      {
+        "category": "Keys",
+        "programs": 45,
+        "changed_musical_programs": 45
+      },
+      {
+        "category": "Leads",
+        "programs": 56,
+        "changed_musical_programs": 56
+      },
+      {
+        "category": "Organ",
+        "programs": 15,
+        "changed_musical_programs": 15
+      },
+      {
+        "category": "Pads",
+        "programs": 63,
+        "changed_musical_programs": 63
+      },
+      {
+        "category": "Plucked",
+        "programs": 17,
+        "changed_musical_programs": 17
+      },
+      {
+        "category": "Polysynth",
+        "programs": 25,
+        "changed_musical_programs": 25
+      },
+      {
+        "category": "Sequences",
+        "programs": 27,
+        "changed_musical_programs": 27
+      },
+      {
+        "category": "Strings",
+        "programs": 59,
+        "changed_musical_programs": 59
+      },
+      {
+        "category": "Winds",
+        "programs": 14,
+        "changed_musical_programs": 14
+      }
+    ]
+  },
+  "scope": "Every delivered program name, category, description, tag, address and parameter vector agrees with the separately reviewed implementation inventory. Perceptual realism and native execution are separate evidence."
+}

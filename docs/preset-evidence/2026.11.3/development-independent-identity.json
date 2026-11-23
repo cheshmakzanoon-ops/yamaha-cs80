@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "baseline_sha256": "b006831955137c71f4d175c5dead3ffc58cfb1f648f87640bae0883bb32fc6b9",
+  "revised_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+  "ordered_identities": 523,
+  "old_parameter_prefix": 190,
+  "appended_parameters": 8,
+  "unchanged_init": [
+    "Init Patch",
+    "Init Circuit"
+  ],
+  "changed_musical_programs": 521,
+  "changed_original_musical": 221,
+  "changed_curated_musical": 300,
+  "programs_with_old_nonvolume_control_changes": 487,
+  "programs_changed_only_through_active_body_controls_excluding_volume": [
+    "Tone I: String 3",
+    "Tone I: Brass 1",
+    "Tone II: Brass 2",
+    "Tone I: Flute",
+    "Tone II: Brass 3",
+    "Tone I: Organ 1",
+    "French Horn",
+    "Velvet Brass 2",
+    "Neon Brass 4",
+    "Midnight Brass 9",
+    "Slow Brass 10",
+    "Dark Brass 12",
+    "Soft Brass 14",
+    "Amber Brass 15",
+    "Neon Brass 18",
+    "Slow Strings 32",
+    "Amber Strings 37",
+    "Velvet Strings 38",
+    "Brass Swell I",
+    "Brass Swell II",
+    "Sforzando Brass",
+    "Covered Horn",
+    "Fanfare Brass",
+    "Low Brass",
+    "Brass Crescendo",
+    "Reed Brass",
+    "Slow Strings",
+    "Swell Strings",
+    "Bowed Swell Strings",
+    "Flute Organ 8+4",
+    "Flute Organ 16+8",
+    "Church Organ",
+    "Flute",
+    "Bass Clarinet"
+  ],
+  "changed_old_nonvolume_controls_per_musical_program": {
+    "minimum": 0,
+    "maximum": 43
+  },
+  "configured_body_programs": 259,
+  "audible_rank_body_programs": 259,
+  "active_body_rank_counts_by_model": {
+    "1": 20,
+    "2": 28,
+    "3": 7,
+    "4": 29,
+    "5": 14,
+    "6": 12,
+    "7": 31,
+    "8": 20,
+    "9": 91,
+    "10": 9,
+    "11": 3,
+    "12": 7,
+    "13": 2,
+    "14": 79,
+    "15": 30,
+    "16": 47,
+    "17": 5,
+    "18": 7,
+    "19": 15
+  },
+  "body_model_count": 19,
+  "exact_nonvolume_duplicates": [],
+  "duplicates_after_discarding_inactive_body_controls_and_sustained_model_decay": [],
+  "duplicates_after_additional_inactive_route_screen": [],
+  "unchanged_midi_mapping_function": true,
+  "unique_midi_addresses": 523,
+  "lowest_old_control_change_counts": [
+    {
+      "index": 2,
+      "name": "Tone I: String 3",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 4,
+      "name": "Tone I: Brass 1",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 5,
+      "name": "Tone II: Brass 2",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 6,
+      "name": "Tone I: Flute",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 7,
+      "name": "Tone II: Brass 3",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 14,
+      "name": "Tone I: Organ 1",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 24,
+      "name": "French Horn",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 45,
+      "name": "Velvet Brass 2",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 47,
+      "name": "Neon Brass 4",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 52,
+      "name": "Midnight Brass 9",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 53,
+      "name": "Slow Brass 10",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    },
+    {
+      "index": 55,
+      "name": "Dark Brass 12",
+      "old_nonvolume_changed": 0,
+      "effective_changed": true,
+      "old_controls": []
+    }
+  ],
+  "limits": "Static parameter and routing-aware comparison, not proof of perceived distinctness or exact acoustic realism; no audio rendered for this review.",
+  "unique_casefolded_names": 523,
+  "init_metadata_unchanged": true,
+  "body_only_change_address_ranges": {
+    "original": 18,
+    "curated": 16
+  },
+  "category_counts": {
+    "Hardware Studies": 22,
+    "Brass": 59,
+    "Strings": 59,
+    "Pads": 63,
+    "Bass": 50,
+    "Leads": 56,
+    "Keys": 45,
+    "FX": 46,
+    "Sequences": 27,
+    "Init": 2,
+    "Polysynth": 25,
+    "Organ": 15,
+    "Winds": 14,
+    "Plucked": 17,
+    "Bells": 23
+  }
+}

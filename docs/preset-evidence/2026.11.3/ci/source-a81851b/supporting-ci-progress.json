@@ -1,0 +1,347 @@
+{
+  "schema": 1,
+  "reviewer": "a56_supporting_ci_review",
+  "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+  "source_tree": "9fa859d89b721e9b696f9aa718bfe7b0a0553008",
+  "reviewed_at_utc": "2026-11-23T11:23:20.626082+00:00",
+  "status": "corrected_screenshot_passed_dsp_sanitizers_pending",
+  "historical_sources": [
+    {
+      "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "summary": "supporting-ci-summary-0b81c3d.json",
+      "screenshot_run": 45159882253,
+      "screenshot_conclusion": "failure",
+      "screenshot_failure_count": 9,
+      "note": "Original failure and all nine assertion messages retained; never relabeled as successful."
+    }
+  ],
+  "parent_filter_evidence": {
+    "run_id": 45159882417,
+    "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "conclusion": "success",
+    "exact_current_source_run": false,
+    "qualification_scope": "Parent-source result with unchanged core and filter-workflow build inputs; not a new exact-source run.",
+    "lanes": [
+      {
+        "job_id": 137642238717,
+        "name": "clang++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "45cf6a240747607e683768106b38d6fb5f9c4a6b5a940c80b3176f903d489a9b",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239107,
+        "name": "g++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "d11e64315fd5f74fa4502ecb7ebf2c8f9ec7c6da1aa7056902556c266f6b351f",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239128,
+        "name": "g++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "6aea8059d675cd273f78336ecf1a2706951baa0193e4ed1b678f7b519e10fd79",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239231,
+        "name": "clang++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "e057c76d53966c213db9ca9656fa33ee874b7a28cc42a1f7ee22048c99faff2b",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239265,
+        "name": "clang++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "00b2487d8c4007dfa5269b49173773bdb30b31d477707e2ac7044fe540909355",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239312,
+        "name": "g++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "dd5ee1594b0564444c896ef9870b9b19d1c76ec77c54b111d73c2e88d0b80f6b",
+        "clang_requested_batch_remains_scalar": false
+      }
+    ],
+    "unchanged_inputs": [
+      {
+        "path": "src/core",
+        "parent_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "corrected_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "equal": true
+      },
+      {
+        "path": ".github/workflows/filter-batch.yml",
+        "parent_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+        "corrected_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+        "equal": true
+      },
+      {
+        "path": "CMakeLists.txt",
+        "parent_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "corrected_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "equal": true
+      },
+      {
+        "path": "src/experimental/ContinuousVoiceCircuit.h",
+        "parent_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+        "corrected_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+        "equal": true
+      },
+      {
+        "path": "tests/test_filter_batch_admission.py",
+        "parent_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+        "corrected_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+        "equal": true
+      }
+    ],
+    "complete_changed_paths_since_parent": [
+      ".github/workflows/screenshots.yml",
+      "src/tools/ui_snapshot.cpp",
+      "tests/PanelEditorTests.h"
+    ]
+  },
+  "runs": [
+    {
+      "id": 45163325296,
+      "name": "DSP numerical measurements",
+      "head_sha": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "run_attempt": 1,
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45163325296"
+    },
+    {
+      "id": 45163325385,
+      "name": "Hardware panel screenshots",
+      "head_sha": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45163325385"
+    }
+  ],
+  "pending": [
+    "DSP sanitizers job is executing the sanitizer and validator-fixture tests; overall corrected-source DSP run remains in progress."
+  ],
+  "limits": [
+    "No physical acoustic-instrument or hardware match established.",
+    "Synthetic comparison is harness plumbing, not measured hardware evidence.",
+    "Filter DEFAULT/ON on Clang intentionally use the scalar fallback; six lane successes do not mean AVX2 execution on all compilers.",
+    "Native install bundles and 13 pluginval lanes belong to separate run45159882288 and are outside this review."
+  ],
+  "downloaded_compatibility_artifacts": [
+    {
+      "id": 14814530345,
+      "name": "cs80-source-factory-compatibility-a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "bytes": 984,
+      "sha256": "93c03fc86f4bc07a2d7af06151b1ef860d0bff76e782b00502cc87ee871a95df",
+      "producer_job": 137654058158,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+        },
+        {
+          "circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+    },
+    {
+      "id": 14813017282,
+      "name": "cs80-legacy-compatibility-a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "bytes": 29436,
+      "sha256": "1f4b95247bc1f0a8f38f48c6ebd809459fa152a8d724ca27d94d0fae32572f1f",
+      "producer_job": 137654058049,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+        },
+        {
+          "baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+    }
+  ],
+  "dsp_jobs": [
+    {
+      "id": 137654057668,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137654058049,
+      "name": "Default-off raw audio versus shipped baseline",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137654058158,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137654058236,
+      "name": "sanitizers",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 137654058338,
+      "name": "measure",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "screenshots": {
+    "run_id": 45163325385,
+    "job_id": 137653923029,
+    "run_attempt": 1,
+    "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+    "conclusion": "success",
+    "required_steps": [
+      "Build screenshot renderer and core tests",
+      "Verify core",
+      "Capture actual editor at every supported size and page",
+      "Publish screenshot evidence",
+      "Refresh repository screenshots from this exact source"
+    ],
+    "full_ui_smoke": "UI SMOKE TEST PASSED",
+    "instrument_body_host_identity_and_recall_phase_completed": true,
+    "assertion_failures": 0,
+    "golden_images": [
+      {
+        "name": "main-1600x1000",
+        "changed_pixel_percent": 0.0,
+        "worst_8x8_block_mean": 0.0
+      },
+      {
+        "name": "main-1120x700",
+        "changed_pixel_percent": 0.0,
+        "worst_8x8_block_mean": 0.0
+      }
+    ],
+    "log": {
+      "path": "a81851b/screens_log.log",
+      "bytes": 129953,
+      "sha256": "9ad71971dd9ebc91961e5317891b41ce744b17087a043a6991d5e434c4e62433"
+    },
+    "artifact": {
+      "id": 14814106476,
+      "name": "cs80-panel-a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "bytes": 62105146,
+      "sha256": "f5e7ba741b05d1e07132050d4d3c4135a0ea29feedd293e105cf54cf770adee9",
+      "expires_at": "2027-02-21T11:14:10Z",
+      "producer_log_and_api_id_digest_match": true,
+      "payload_downloaded_by_reviewer": false
+    },
+    "repository_screenshot_refresh": {
+      "commit": "af83e6f21dcd0aaeb64e9b5f4bcb29e9e8ca1004",
+      "parent": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "message": "docs: refresh verified panel screenshots [skip ci]",
+      "changed_files": 23,
+      "only_docs_screenshots_changed": true
+    }
+  },
+  "main_head_at_refresh": {
+    "sha": "af83e6f21dcd0aaeb64e9b5f4bcb29e9e8ca1004",
+    "screenshot_bot_advanced_main": true,
+    "binary_source_unchanged": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+    "scope": "23 documentation screenshot/provenance files; exact binary source remains a81851bc87b5ac16277c185585d36dec7ffe712e."
+  }
+}

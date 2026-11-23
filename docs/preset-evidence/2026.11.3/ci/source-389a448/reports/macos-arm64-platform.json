@@ -1,0 +1,507 @@
+{
+  "schema": 1,
+  "status": "native_and_validator_platform_accepted",
+  "target": "macos-arm64",
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "source_tree": "c459b4c19241d847aa32324f70ecee0860e3a8ee",
+  "run_id": 45168179474,
+  "run_attempt": 1,
+  "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+  "native_job_id": 137670477438,
+  "native_job_conclusion": "success",
+  "validator_job_id": 137670477438,
+  "validator_job_conclusion": "success",
+  "required_steps": [
+    {
+      "job_id": 137670477438,
+      "name": "Configure",
+      "number": 4,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Verify configured JUCE source",
+      "number": 5,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Build",
+      "number": 6,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Test",
+      "number": 7,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Validate VST3 with pluginval",
+      "number": 10,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Validate AU with pluginval",
+      "number": 11,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Validate AU with pluginval GUI",
+      "number": 12,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Validate AU GUI fixed-seed regression",
+      "number": 13,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Package native macOS VST3, AU and Standalone",
+      "number": 14,
+      "conclusion": "success"
+    },
+    {
+      "job_id": 137670477438,
+      "name": "Upload native macOS install bundle",
+      "number": 15,
+      "conclusion": "success"
+    }
+  ],
+  "native": {
+    "status": "passed",
+    "counts": {
+      "registered": 249,
+      "passed": 247,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "ctest_seconds_junit": 1346.0,
+    "formal_skips": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      }
+    ],
+    "failures": [],
+    "relevant_test_results": [
+      {
+        "name": "cs80_packaging_notice_tests",
+        "seconds": 3.19023,
+        "output_excerpt": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 test...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_instrument_body_tests",
+        "seconds": 0.651151,
+        "output_excerpt": "DECAY Piano strings        upper/fundamental change  -15.72 dB\nDECAY Tine electric piano  upper/fundamental change  -21.91 dB\nDECAY Reed electric piano  upper/fundamental change  -29.96 dB\nDECAY Nylon strings        upper/fundamental change  -19.00 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -22.91 dB\nDECAY Vibraphone           upper/fundamental change  -16.72 dB\nDECAY Marimba              upper/fundamental change  -54.88 dB\nDECAY Celesta              upper/fundamental change  -16.33 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay\nMA...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_instrument_body_engine_tests",
+        "seconds": 6.49295,
+        "output_excerpt": "BATCH comparison backend: scalar fallback on this platform\nREGISTER Piano strings relative waveform error 8.86306378e-08\nREGISTER Bowed strings relative waveform error 1.02181611e-07\nREGISTER Oboe relative waveform error 1.08994832e-07\nREGISTER Bassoon relative waveform error 1.01931474e-07\nKBC body LOW lever -1 relative waveform change 0.107108774\nKBC body LOW lever +1 relative waveform change 0.107108803\nKBC body HIGH lever -1 relative waveform change 0.037108985\nKBC body HIGH lever +1 relative waveform change 0.0371089867\nTAIL rate 44100 maximum onset/pre derivative 0.99877, sample step 0.00165974 FS\nTAIL rate 48000 maximum onset/pre derivative 0.99408, sample step 0.00152200 FS\nTAIL rate 96000 maximum onset/pre derivative 1.23849, sample step 0.00075410 FS\nInstrument body Engine integration: 18148 checks, 0 failures",
+        "passed": true
+      },
+      {
+        "name": "cs80_library_audit_tests",
+        "seconds": 293.581,
+        "output_excerpt": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.423)\nphrase peak max -5.0 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs",
+        "passed": true
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "seconds": 9.68219,
+        "output_excerpt": "MIX ONSET Pan Flute           transient/body   -11.2 dB; reconstruction error  -142.5 dB relative\nTRANSIENT Pan Flute           transient late/onset   -94.4 dB; body late/early   -0.1 dB; full late  -33.4 dBFS\nTRANSIENT Sine Bass           transient late/onset  -101.0 dB; body late/early   -0.0 dB; full late  -25.7 dBFS\nMIX ONSET Nylon Pluck         transient/body   -23.4 dB; reconstruction error  -143.0 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -12.2 dB; octave late/early  -22.6 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -29.0 dBFS; strongest lower octave   -84.6 dB relative\nREGISTER  Ocarina             intended  -27.8 dBFS; strongest lower octave   -93.7 dB relative\nREGISTER  Whistle             intended  -24.0 dBFS; strongest lower octave  -100.4 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +11.9 dB; body  +11.2 dB; soft body  -53.3 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +10.3 dB; body  +10.6 dB; soft body  -36.8 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "seconds": 4.8572,
+        "output_excerpt": "RECONSTRUCT Flute                0.000-0.750 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -144.4 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.4 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.4 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -144.4 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -144.4 dB relative\nBREATH      Flute  -20.9 dB, Breathy Flute  -14.2 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.9 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -144.0 dB relative\nSTRIKE      Harp                 onset/body  -15.2 dB, late/body   -41.5 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.5 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -144.0 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.3 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_preset_precision_tests",
+        "seconds": 34.1404,
+        "output_excerpt": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-19.624 H2/H1=-61.328 oldH4/H1=-60.164 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-16.644 H2/H1=-60.677 oldH4/H1=-59.833 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-19.655 H2/H1=-67.301 oldH4/H1=-66.022 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-16.683 H2/H1=-66.646 oldH4/H1=-65.665 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-19.742 H2/H1=-73.070 oldH4/H1=-67.727 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-16.796 H2/H1=-72.407 oldH4/H1=-67.301 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4097 wetOnly=0.0198 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3867 wetOnly=0.0238 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4022 wetOnly=0.0112 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.7772 wetOnly=0.0383 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.7382 wetOnly=0.0480 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.7970 wetOnly=0.0594 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_modern_recall_host_tests",
+        "seconds": 4.15398,
+        "output_excerpt": "UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.067923 copy=0.000318 xml=0.003825 session_text=0.000721 fixture_write=0.009339 preset_load=0.012049 session_load=0.008243 audio=0.000849 save=0.013029 round_trip_load=0.016426\nUI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.132992 copy=0.000614 xml=0.007677 session_text=0.001436 fixture_write=0.017213 preset_load=0.023813 session_load=0.016399 audio=0.001669 save=0.025873 round_trip_load=0.032818\nUI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.201508 copy=0.000944 xml=0.011668 session_text=0.002178 fixture_write=0.025927 preset_load=0.036027 session_load=0.024827 audio=0.002584 save=0.039287 round_trip_load=0.050052\nUI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.264200 copy=0.001223 xml=0.015376 session_text=0.002874 fixture_write=0.033082 preset_load=0.047193 session_load=0.033029 audio=0.003331 save=0.052005 round_trip_load=0.065861\nUI SMOKE TIMING: modern_state_ranges...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]",
+        "passed": true
+      },
+      {
+        "name": "cs80_typed_value_unit_tests",
+        "seconds": 0.0855556,
+        "output_excerpt": "Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f\nTyped-value unit tests: 191 checks, 0 failures",
+        "passed": true
+      }
+    ],
+    "nested_python_skips": {
+      "total": 5,
+      "suites": [
+        {
+          "ctest_test": "cs80_package_binary_identity_tests",
+          "python_skipped": 1,
+          "tests_run_summaries": [
+            13
+          ],
+          "explicit_skip_lines": []
+        },
+        {
+          "ctest_test": "cs80_packaging_notice_tests",
+          "python_skipped": 1,
+          "tests_run_summaries": [
+            7
+          ],
+          "explicit_skip_lines": [
+            "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+          ]
+        },
+        {
+          "ctest_test": "cs80_windows_installer_preflight_tests",
+          "python_skipped": 2,
+          "tests_run_summaries": [
+            12
+          ],
+          "explicit_skip_lines": []
+        },
+        {
+          "ctest_test": "cs80_render_cli_tests",
+          "python_skipped": 1,
+          "tests_run_summaries": [
+            7
+          ],
+          "explicit_skip_lines": []
+        }
+      ]
+    },
+    "juce_provenance": {
+      "checked_at": "2026-11-23T11:47:51Z",
+      "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "expected_version": "8.0.11",
+      "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "workflow_commit": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "workflow_run": "45168179474",
+      "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "source_override": "",
+      "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+      "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "origin": "https://github.com/juce-framework/JUCE.git",
+      "git_description": "8.0.11",
+      "source_clean": "true",
+      "actual_version": "8.0.11",
+      "verification": "PASS"
+    },
+    "schema": 1,
+    "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "run_id": 45168179474,
+    "artifact_id": 14816729001,
+    "artifact_name": "cs80-macos-15-test-evidence",
+    "archive_bytes": 64064,
+    "archive_sha256": "f324f578b12732d12b8b5f29d831a97b34eb37c61c597cb6c79b1234471c1618",
+    "members": {
+      "ctest-results.xml": {
+        "bytes": 108442,
+        "sha256": "8db9cd4ac1386a70def2c03fbf395273d50298f8eec256e47f5f9daa4ce05f04"
+      },
+      "LastTest.log": {
+        "bytes": 318432,
+        "sha256": "285adfbfc69e521a3f8115b731ba60a1709f9af7fc3ef26c0a19e6573eaa1cb6"
+      },
+      "ci-juce-provenance.txt": {
+        "bytes": 612,
+        "sha256": "971a395f0c9bb979beab647cc4d24026ec180abbb49627013456b3041b31d3c7"
+      }
+    },
+    "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately.",
+    "ctest_exit": {
+      "value": 0,
+      "basis": "Completed successful unmasked Test step, with complete matching JUnit and LastTest case lists."
+    }
+  },
+  "validators": {
+    "schema": 1,
+    "status": "accepted_with_successful_original_workflow_steps",
+    "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "run_id": 45168179474,
+    "artifact_id": 14818625261,
+    "artifact_name": "cs80-pluginval-macos-15",
+    "archive_bytes": 9684,
+    "archive_sha256": "72513051f9b2af2d95db228694691caba3d72def085cc858c85cd28c5656fff8",
+    "required_lanes": 4,
+    "validation_invocations": 4,
+    "validation_retries": 0,
+    "version_evidence": {
+      "path": "pluginval-download.json",
+      "bytes": 918,
+      "sha256": "d970efc590335f1afb232c1e89426abcdc29fc8afe3d538c55ba95b91346f0a1",
+      "version": "1.0.4",
+      "verified": true
+    },
+    "lanes": [
+      {
+        "step": "Validate VST3 with pluginval",
+        "strictness": 10,
+        "gui": false,
+        "program_count": 523,
+        "seed": "0x7c73a3b",
+        "fixed_seed": null,
+        "console": {
+          "path": "pluginval-vst3.log",
+          "bytes": 7399,
+          "sha256": "1357274f37517cccc56533a945a6463543d88b2d4e7efdc426c916e5ca41954a"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-vst3",
+          "bytes": 7272,
+          "sha256": "42338dc71749f5b4dfb9a2998f25e85069d3f897011e13c38069f716280b64d2"
+        },
+        "explicit_skips": [
+          "INFO: Skipping vst3 validator as validator path hasn't been set"
+        ],
+        "preserved_failed_attempts": [],
+        "validation_retries": 0,
+        "validation_invocations": 1,
+        "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+        "exit": 0,
+        "step_binding": {
+          "job_id": 137670477438,
+          "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+          "run_id": 45168179474,
+          "run_attempt": 1,
+          "step_name": "Validate VST3 with pluginval",
+          "step_number": 10,
+          "conclusion": "success",
+          "started_at": "2026-11-23T12:17:05Z",
+          "completed_at": "2026-11-23T12:17:09Z"
+        }
+      },
+      {
+        "step": "Validate AU with pluginval",
+        "strictness": 10,
+        "gui": false,
+        "program_count": 523,
+        "seed": "0x6e10b4c",
+        "fixed_seed": null,
+        "console": {
+          "path": "pluginval-au.log",
+          "bytes": 7308,
+          "sha256": "f020d025f2d760ee0c94b637a74656ac50cfbbb90eaa3ddd34ca9bfb3aa46b63"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-au",
+          "bytes": 7214,
+          "sha256": "2a4e2db3d4014221b1231df003e1d81d93e65c739c085c6847d82eb937b77398"
+        },
+        "explicit_skips": [],
+        "preserved_failed_attempts": [],
+        "validation_retries": 0,
+        "validation_invocations": 1,
+        "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+        "exit": 0,
+        "step_binding": {
+          "job_id": 137670477438,
+          "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+          "run_id": 45168179474,
+          "run_attempt": 1,
+          "step_name": "Validate AU with pluginval",
+          "step_number": 11,
+          "conclusion": "success",
+          "started_at": "2026-11-23T12:17:09Z",
+          "completed_at": "2026-11-23T12:17:35Z"
+        }
+      },
+      {
+        "step": "Validate AU with pluginval GUI",
+        "strictness": 10,
+        "gui": true,
+        "program_count": 523,
+        "seed": "0x7c26303",
+        "fixed_seed": null,
+        "console": {
+          "path": "pluginval-au-gui.log",
+          "bytes": 7990,
+          "sha256": "95c72b1f546667b997ba6f199afd5efeae71d198344d02a8c840b10db3e38626"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-au-gui",
+          "bytes": 7896,
+          "sha256": "dc61b3cf48d7e03b4adc53fa26633d781c5ae9fc0a487238558c8d08405a7d25"
+        },
+        "explicit_skips": [],
+        "preserved_failed_attempts": [],
+        "validation_retries": 0,
+        "validation_invocations": 1,
+        "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+        "exit": 0,
+        "step_binding": {
+          "job_id": 137670477438,
+          "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+          "run_id": 45168179474,
+          "run_attempt": 1,
+          "step_name": "Validate AU with pluginval GUI",
+          "step_number": 12,
+          "conclusion": "success",
+          "started_at": "2026-11-23T12:17:35Z",
+          "completed_at": "2026-11-23T12:18:57Z"
+        }
+      },
+      {
+        "step": "Validate AU GUI fixed-seed regression",
+        "strictness": 10,
+        "gui": true,
+        "program_count": 523,
+        "seed": "0x2b4eef5",
+        "fixed_seed": "0x2b4eef5",
+        "console": {
+          "path": "pluginval-au-seed-regression.log",
+          "bytes": 7990,
+          "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-au-seed-regression",
+          "bytes": 7896,
+          "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+        },
+        "explicit_skips": [],
+        "preserved_failed_attempts": [],
+        "validation_retries": 0,
+        "validation_invocations": 1,
+        "exit_basis": "Original pluginval command uses set -euo pipefail before tee, then exact SUCCESS grep; its original GitHub step completed successfully. Actual downloaded console/report both end in clean SUCCESS.",
+        "exit": 0,
+        "step_binding": {
+          "job_id": 137670477438,
+          "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+          "run_id": 45168179474,
+          "run_attempt": 1,
+          "step_name": "Validate AU GUI fixed-seed regression",
+          "step_number": 13,
+          "conclusion": "success",
+          "started_at": "2026-11-23T12:18:57Z",
+          "completed_at": "2026-11-23T12:20:11Z"
+        }
+      }
+    ]
+  },
+  "evidence_artifact_bindings": [
+    {
+      "artifact_id": 14816729001,
+      "artifact_name": "cs80-macos-15-test-evidence",
+      "size_in_bytes": 64064,
+      "digest": "sha256:f324f578b12732d12b8b5f29d831a97b34eb37c61c597cb6c79b1234471c1618",
+      "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "run_id": 45168179474,
+      "run_attempt": 1,
+      "payload_role": "independently_inspected_evidence",
+      "producer_job_id": 137670477438,
+      "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload test and JUCE source evidence",
+      "producer_step_number": 19,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T12:20:16Z",
+      "producer_step_completed_at": "2026-11-23T12:20:17Z",
+      "created_at": "2026-11-23T12:20:17Z",
+      "expires_at": "2027-02-21T11:46:27Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-macos-15-test-evidence has been successfully uploaded! Final size is 64064 bytes. Artifact ID is 14816729001",
+        "digest_line": "SHA256 digest of uploaded artifact zip is f324f578b12732d12b8b5f29d831a97b34eb37c61c597cb6c79b1234471c1618"
+      },
+      "job_log": {
+        "job_id": 137670477438,
+        "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "path": "job-logs/137670477438-macos-arm64.log",
+        "bytes": 229217,
+        "sha256": "1886f4c159c30e6ba6b66798e1e186442b6ae535cd26057e00a3e5488123ada4"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14818625261,
+      "artifact_name": "cs80-pluginval-macos-15",
+      "size_in_bytes": 9684,
+      "digest": "sha256:72513051f9b2af2d95db228694691caba3d72def085cc858c85cd28c5656fff8",
+      "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "run_id": 45168179474,
+      "run_attempt": 1,
+      "payload_role": "independently_inspected_evidence",
+      "producer_job_id": 137670477438,
+      "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload pluginval reports",
+      "producer_step_number": 18,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T12:20:15Z",
+      "producer_step_completed_at": "2026-11-23T12:20:16Z",
+      "created_at": "2026-11-23T12:20:16Z",
+      "expires_at": "2027-02-21T11:46:27Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-pluginval-macos-15 has been successfully uploaded! Final size is 9684 bytes. Artifact ID is 14818625261",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 72513051f9b2af2d95db228694691caba3d72def085cc858c85cd28c5656fff8"
+      },
+      "job_log": {
+        "job_id": 137670477438,
+        "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "path": "job-logs/137670477438-macos-arm64.log",
+        "bytes": 229217,
+        "sha256": "1886f4c159c30e6ba6b66798e1e186442b6ae535cd26057e00a3e5488123ada4"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    }
+  ],
+  "job_logs": [
+    {
+      "job_id": 137670477438,
+      "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "path": "job-logs/137670477438-macos-arm64.log",
+      "bytes": 229217,
+      "sha256": "1886f4c159c30e6ba6b66798e1e186442b6ae535cd26057e00a3e5488123ada4"
+    }
+  ],
+  "raw_report_records": {
+    "native": {
+      "path": "reports/macos-arm64-native.json",
+      "bytes": 12343,
+      "sha256": "5748339626ff77d3bc34082d5469356161f4023a82b3bf7d447431cc4d0065ea"
+    },
+    "validators": {
+      "path": "reports/macos-arm64-validators.json",
+      "bytes": 4093,
+      "sha256": "4b26111563bbacc49ffcfaa9d98565f80375fc37b24b45569ba0851cdfcbc112"
+    }
+  },
+  "api_evidence": {
+    "jobs": {
+      "path": "snapshots/api/jobs-latest-api-3c75e3b9cac28ee9e3881e7d33a437ac9fed7c62162c896cae7a6bda321ea964.json",
+      "bytes": 15198,
+      "sha256": "3c75e3b9cac28ee9e3881e7d33a437ac9fed7c62162c896cae7a6bda321ea964"
+    },
+    "artifacts": {
+      "path": "snapshots/api/artifacts-latest-api-1f290ed20e81ec03dc4e26c154a50c697bffb6b2876665e714d526f039339ec8.json",
+      "bytes": 2889,
+      "sha256": "1f290ed20e81ec03dc4e26c154a50c697bffb6b2876665e714d526f039339ec8"
+    }
+  },
+  "scope": "Native build/test/package and original validator lanes accepted. Install payload acceptance is separate; optional external Steinberg VST3 validation is not configured.",
+  "qualified_at_utc": "2026-11-23T12:35:57.669763+00:00"
+}

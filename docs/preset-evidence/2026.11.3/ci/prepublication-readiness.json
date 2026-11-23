@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "reviewer": "a60_final_acceptance_review",
+  "status": "prepublication_readiness_review_complete_actual_release_acceptance_pending",
+  "source_commit": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "source_tree": "c459b4c19241d847aa32324f70ecee0860e3a8ee",
+  "native_run_id": 45168179474,
+  "native_run_attempt": 1,
+  "native_monitoring_performed": false,
+  "scope": "Retained verification-tool portability, documentation contract, local evidence references, and source-history boundaries. No actual final release archives or native outcomes were accepted by this review.",
+  "verified": {
+    "retained_verifier_hashes": [
+      {
+        "path": "verify-audition-zip.py",
+        "sha256": "32514c1dec151af41a873a426b67f2fe7b67fe5533de1e1a9c42851d74b814a9",
+        "matches_tool_provenance": true,
+        "only_change_from_reviewed_development_script": "Default REPO becomes Path.cwd(), with explicit --repo retained."
+      },
+      {
+        "path": "verify-install-artifact.py",
+        "sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+        "matches_tool_provenance": true,
+        "only_change_from_reviewed_development_script": "Default REPO becomes Path.cwd(), with explicit --repo retained."
+      },
+      {
+        "path": "verify-validator-payload.py",
+        "sha256": "c44b84bcc73860d68933cf5c3bea85f080d27eb916c51261ecbaa1b3b4f5ff67",
+        "matches_tool_provenance": true,
+        "only_change_from_reviewed_development_script": "Default REPO becomes Path.cwd(), with explicit --repo retained."
+      }
+    ],
+    "development_per_wav_reference_and_sha256_match": true,
+    "existing_local_markdown_targets_checked": 260,
+    "missing_local_markdown_targets": 0,
+    "retained_install_fixtures": {
+      "positive": 4,
+      "rejected_mutations": 8
+    },
+    "retained_payload_fixtures": {
+      "positive": 2,
+      "rejected_mutations": 9
+    },
+    "local_packaging_junit_passed": 7,
+    "audio_core_and_plugin_source_paths_unchanged_since_0b81c3d": true,
+    "later_changes_scope": "UI test fixtures, screenshot evidence retention/generated images, and historical report link label. Local development results correctly remain labeled with their original source."
+  },
+  "repository_files_modified": [
+    "docs/preset-evidence/2026.11.3/ci/verification-tools/README.md"
+  ],
+  "readme_corrections": [
+    "Require Python3.11+ because the payload tool uses hashlib.file_digest, and require Git with the requested source commit available.",
+    "Clarify --repo applies to actual verification; current self-test fixture helpers require execution from the repository root.",
+    "Clarify synthetic Unix permissions/symlink fixtures should run on Linux or macOS.",
+    "Clarify audition expected SHA256 is copied from the independent artifact API digest with its prefix removed, not derived from the downloaded archive."
+  ],
+  "verifier_code_and_tool_provenance_unchanged": true,
+  "required_before_release_acceptance": [
+    "Actual four native build/test/package jobs and all13 required strictness10 validator invocations qualified for389a448/run45168179474/attempt1.",
+    "Actual installation and audition archives accepted with source/run identity, API size/digest, complete contents, native headers/WAV samples and Windows/Linux validator-input equality.",
+    "Final README platform links, binarysource, run, audition/count/duration, expiry and qualification references updated from accepted actual artifacts.",
+    "Final TEAMledger, revision report and distribution status use finalsource/run while preserving failed/superseded historical source outcomes.",
+    "Fresh main-head lease for finaldocumentation push, preserving screenshot commits and excluding caches."
+  ],
+  "pending_followup": "Independent final review after root assembles actual qualification records and final publication documents."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "tools": [
+    {
+      "path": "verify-audition-zip.py",
+      "sha256": "32514c1dec151af41a873a426b67f2fe7b67fe5533de1e1a9c42851d74b814a9",
+      "only_portability_change": "Default repository is current directory; --repo remains explicit."
+    },
+    {
+      "path": "verify-install-artifact.py",
+      "sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+      "only_portability_change": "Default repository is current directory; --repo remains explicit."
+    },
+    {
+      "path": "verify-validator-payload.py",
+      "sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330",
+      "initial_portability_change": "Default repository is current directory; --repo remains explicit.",
+      "subsequent_correction": {
+        "record": "history/windows-sidecar-correction.json",
+        "sha256": "0dc9a2bed4ac448810f1170669dfb2d222834088afc55a6c978d8a4aba7af9e0",
+        "reason": "Actual Windows artifact includes a format-checked compiler .exp/.lib pair outside the bundle explicitly selected by both required validator invocations. The pair is separately hashed, and exact source-workflow plus actual consumer-log binding is required; all selected-bundle members retain strict equality."
+      }
+    }
+  ],
+  "scope": "Read-only post-build acceptance of actual downloaded archives. Native and validator execution remain separate required evidence."
+}

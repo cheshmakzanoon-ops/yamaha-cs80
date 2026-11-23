@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "reviewer": "/root/a60_final_acceptance_review",
+  "reviewed_at_utc": "2026-11-23T13:45:38.952210+00:00",
+  "status": "incremental_windows_and_final_supporting_review_passed_overall_release_pending",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "native_run": 45176799427,
+  "dsp_run": 45176799301,
+  "checks": [
+    "Retained old rejection, old/current checker hashes, correction provenance and 3-positive/22-negative fixture record match. Three core comparison functions and selected ZIP-member handling are byte-identical.",
+    "Actual Windows native/validator evidence ZIPs and raw job APIs/logs agree: 225 passed/2 formal skips/0 failures, all three previous crash gates passed, two strictness 10 validators exited normally with zero retries.",
+    "Actual Windows installation and validator-input archives match APIs and producer logs. All six selected bundle entries/two files are identical; only the two recorded outer compiler sidecars are excluded. Both resolved paths and command logs bind to the same successful current validator job.",
+    "Current final supporting report agrees with all four raw run/job API files. Independent parsing of all 198 sanitizer log results confirms 197 passed/1 formal skip/0 failures, including the formerly failing packaging notice and all six body/preset cases; no observed ASan/UBSan diagnostic."
+  ],
+  "unresolved_defects_in_reviewed_scope": [],
+  "retained_checker_review": {
+    "current_sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330",
+    "prior_sha256": "c44b84bcc73860d68933cf5c3bea85f080d27eb916c51261ecbaa1b3b4f5ff67",
+    "fixture_reruns_performed": false,
+    "fixture_record": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/history/windows-sidecar-fixture-results.json",
+    "full_selected_bundle_equality_preserved": true
+  },
+  "temporary_assembler_changes": [
+    "Require unchanged source checker hashes and self-consistent complete payload tree; forbid all sidecar exclusions on Linux.",
+    "Require exact two Windows sidecars and source-pinned workflow contract. Bind consumer-log file/size/hash and actual artifact ID/size/digest to the current qualified Windows validator job and both original lanes.",
+    "Retain sidecar scope and correction history in consolidated qualification.",
+    "Cross-check final supporting summary against all four retained raw API files and the source-bound complete sanitizer case list; require the packaging-notice regression to pass."
+  ],
+  "assembler_sha256": "91794469888daaa7c320905a553d79350c49646cf2a20df4f49aa6ed0f417f46",
+  "actual_reviewed_files": [
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/windows-x86_64/validator-payload-identity.json",
+      "bytes": 5151,
+      "sha256": "b945e603070c7990c69ef92f01b924cfd86a33b7f0bb796e29680ccc1dae8c7b"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/reports/windows-x86_64-platform.json",
+      "bytes": 25369,
+      "sha256": "9f078a743f298d31cc13fd39a434af8733480f8157dcbce336bc561fbb4bf1fe"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/windows-x86_64/install-acceptance.json",
+      "bytes": 3637,
+      "sha256": "46ef7d1923fd8fb3d60dee0f8590d5535a4b18815ebb99d29d45dab2a23b4bc1"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json",
+      "bytes": 28682,
+      "sha256": "bd503e662901df379ac03b98e2205f7f6b88c5d46925d15517d4602367cb64f7"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/verify-validator-payload.py",
+      "bytes": 36579,
+      "sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/history/verify-validator-payload-before-windows-sidecars.py",
+      "bytes": 21884,
+      "sha256": "c44b84bcc73860d68933cf5c3bea85f080d27eb916c51261ecbaa1b3b4f5ff67"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/history/windows-sidecar-correction.json",
+      "bytes": 4235,
+      "sha256": "0dc9a2bed4ac448810f1170669dfb2d222834088afc55a6c978d8a4aba7af9e0"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/history/windows-sidecar-fixture-results.json",
+      "bytes": 2734,
+      "sha256": "a112f5c99d661ecf4cca615a9174c3d739b0e382702841338592f72b41fdfc6e"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/tool-provenance.json",
+      "bytes": 1421,
+      "sha256": "9cf50017bb3b4040f21f1386e70910d5652d716cc917d3b03cad8d6f9a1d548d"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/verification-tools/history/../../source-cbbee6a/windows-x86_64/validator-payload-pre-sidecar-correction.json",
+      "bytes": 1889,
+      "sha256": "db7bddef3138f80b6ead63b2499c84a78c2140c772375d5dfac42330384e668a"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/windows-x86_64/validator-payload-pre-sidecar-correction.log",
+      "bytes": 97,
+      "sha256": "eab5a164beb3079eee75473dd589a8488d593e262bd3629d7dcaa0daa5cedc44"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/snapshots/api/jobs-latest-api-656f535358af9d4e024df94e1c9e8852b31f1dd5646c0de12fe747fcec868808.json",
+      "bytes": 16872,
+      "sha256": "656f535358af9d4e024df94e1c9e8852b31f1dd5646c0de12fe747fcec868808"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/snapshots/api/artifacts-latest-api-4c0874e4f265c39d3cabd643dd9b2aa76bd810e6ccca45ca84a7604fc9cb35fb.json",
+      "bytes": 5022,
+      "sha256": "4c0874e4f265c39d3cabd643dd9b2aa76bd810e6ccca45ca84a7604fc9cb35fb"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/reports/windows-x86_64-native.json",
+      "bytes": 14546,
+      "sha256": "94051c0fbc019353ef30d7fa49af30b36bae42ae9c9aa03b0d166bc6db11958b"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/reports/windows-x86_64-validators.json",
+      "bytes": 2536,
+      "sha256": "1ac5b989bbe59d6d7bbcf03962ba3c79eb14a30a8634d8812343fcf12cee97ef"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/job-logs/137700037337-windows-x86_64-native.log",
+      "bytes": 136805,
+      "sha256": "a5efc61db2a2a2c2647d368a565cb97a415962fb320e79d93c72f062c7c09c81"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/job-logs/137726296450-windows-x86_64-validator.log",
+      "bytes": 46044,
+      "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec"
+    },
+    {
+      "path": "/tmp/cs80-agent54/artifacts/cs80-windows-test-evidence-14822608305.zip",
+      "bytes": 61199,
+      "sha256": "df410b14331e4e1bcbb95dee3d1dcd7f123030b891d1e96dc4649a5e86b3f6f1"
+    },
+    {
+      "path": "/tmp/cs80-agent54/artifacts/cs80-pluginval-windows-14822074107.zip",
+      "bytes": 5083,
+      "sha256": "1f4b7bc83e0996964fc5792170553e405265ab9c090d30d8098ca293a5e1270f"
+    },
+    {
+      "path": "/tmp/cs80-release/source-cbbee6a/downloads/cs80-windows-vst3-14821979268.zip",
+      "bytes": 3168094,
+      "sha256": "9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46"
+    },
+    {
+      "path": "/tmp/cs80-release/source-cbbee6a/downloads/cs80-windows-install-bundle-14822019089.zip",
+      "bytes": 6323870,
+      "sha256": "8fe6ee8249ab5818acc99be4c73d8780ecf0f20729f4659175cce5202bac0346"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/windows-x86_64/install-artifact-api.json",
+      "bytes": 799,
+      "sha256": "451a96c4daeaeeb10b62daf9b8aabf074910c3bb23fc1872cf92067886089e67"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/windows-x86_64/validator-artifact-api.json",
+      "bytes": 789,
+      "sha256": "38b1e49965329685f857bb66b48dcc01e1f77af60a0257a7df3869d9ed314b58"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/dsp-run-final-api.json",
+      "bytes": 15446,
+      "sha256": "ba6c7e3dfd5be7426d85fa27748188c2e4200e177bb8eec76417313451738627"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/dsp-jobs-final-api.json",
+      "bytes": 17458,
+      "sha256": "b8a2ae8e6a939d7aa4a1127d2d24b280782bbd58f3e1e3c0a791516b2cc61619"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/screens-run-final-api.json",
+      "bytes": 15441,
+      "sha256": "f9ab44d9de0a87839918a2cf22b22dd0d7113067ce340632e77490f8acc10efb"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/screens-jobs-final-api.json",
+      "bytes": 4360,
+      "sha256": "9ae0cbf415b058a94ea94eac0f51490776c10f0bd7629218cf8ecb3615cc74bd"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/sanitizers-final.log",
+      "bytes": 111333,
+      "sha256": "1da8993fa995e052ff87012d4a8f4c7f24a0ae2ecaa7935ecb7cd0c7e7b057dc"
+    },
+    {
+      "path": "/workspace/scratch/3152723d2891/yamaha-cs80/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/sanitizer-cases.json",
+      "bytes": 30802,
+      "sha256": "bf3bdbdddca29a0a9f47f8b4e43067265046ecb070df16b695113f1390d3011a"
+    },
+    {
+      "path": "/tmp/cs80-work/assemble-qualification.py",
+      "bytes": 30293,
+      "sha256": "91794469888daaa7c320905a553d79350c49646cf2a20df4f49aa6ed0f417f46"
+    }
+  ],
+  "scope_limits": [
+    "No native tests, fixtures or publication helpers executed; temporary assembler AST parsed only.",
+    "Overall release acceptance still requires remaining native/validator, audition and final publication-document evidence.",
+    "This review does not certify signing, notarization or acoustic indistinguishability."
+  ]
+}

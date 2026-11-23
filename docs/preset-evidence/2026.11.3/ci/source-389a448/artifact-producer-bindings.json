@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "status": "partial_bindings_qualification_in_progress",
+  "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+  "source_tree": "c459b4c19241d847aa32324f70ecee0860e3a8ee",
+  "run_id": 45168179474,
+  "run_attempt": 1,
+  "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+  "required_artifact_bindings": 7,
+  "required_validator_input_bindings": 2,
+  "artifact_bindings": [
+    {
+      "artifact_id": 14816594181,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "size_in_bytes": 14933601,
+      "digest": "sha256:25803a272560e8ed8e0453c3cab707cf810c3d527e403209947f0b17a301bdf4",
+      "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "run_id": 45168179474,
+      "run_attempt": 1,
+      "payload_role": "installation",
+      "producer_job_id": 137670477438,
+      "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload native macOS install bundle",
+      "producer_step_number": 15,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T12:20:14Z",
+      "producer_step_completed_at": "2026-11-23T12:20:15Z",
+      "created_at": "2026-11-23T12:20:16Z",
+      "expires_at": "2027-02-21T11:46:27Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-macos-15-install-bundle has been successfully uploaded! Final size is 14933601 bytes. Artifact ID is 14816594181",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 25803a272560e8ed8e0453c3cab707cf810c3d527e403209947f0b17a301bdf4"
+      },
+      "job_log": {
+        "job_id": 137670477438,
+        "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "path": "job-logs/137670477438-macos-arm64.log",
+        "bytes": 229217,
+        "sha256": "1886f4c159c30e6ba6b66798e1e186442b6ae535cd26057e00a3e5488123ada4"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    }
+  ],
+  "validator_input_bindings": [],
+  "api_evidence": {
+    "jobs": {
+      "path": "snapshots/api/jobs-latest-api-3c75e3b9cac28ee9e3881e7d33a437ac9fed7c62162c896cae7a6bda321ea964.json",
+      "bytes": 15198,
+      "sha256": "3c75e3b9cac28ee9e3881e7d33a437ac9fed7c62162c896cae7a6bda321ea964"
+    },
+    "artifacts": {
+      "path": "snapshots/api/artifacts-latest-api-1f290ed20e81ec03dc4e26c154a50c697bffb6b2876665e714d526f039339ec8.json",
+      "bytes": 2889,
+      "sha256": "1f290ed20e81ec03dc4e26c154a50c697bffb6b2876665e714d526f039339ec8"
+    }
+  },
+  "payload_scope": "Original producer/consumer metadata and full log bindings. Actual seven payload ZIPs are inspected separately by root; this file does not claim their payload acceptance.",
+  "qualified_at_utc": "2026-11-23T12:35:57.670331+00:00"
+}

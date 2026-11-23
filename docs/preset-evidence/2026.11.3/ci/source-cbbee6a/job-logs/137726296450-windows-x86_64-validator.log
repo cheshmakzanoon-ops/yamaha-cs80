@@ -1,0 +1,557 @@
+﻿2026-11-23T13:29:38.1231588Z Current runner version: '2.338.2'
+2026-11-23T13:29:38.1267463Z ##[group]Runner Image Provisioner
+2026-11-23T13:29:38.1268605Z Hosted Compute Agent
+2026-11-23T13:29:38.1269500Z Version: 20261111.635
+2026-11-23T13:29:38.1270621Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T13:29:38.1271933Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T13:29:38.1273285Z Worker ID: {30a0465c-6b8b-4aee-b255-5946fb113dff}
+2026-11-23T13:29:38.1274524Z Region: eastus
+2026-11-23T13:29:38.1275411Z Cloud: Azure
+2026-11-23T13:29:38.1276262Z ##[endgroup]
+2026-11-23T13:29:38.1278496Z ##[group]Operating System
+2026-11-23T13:29:38.1279524Z Microsoft Windows Server 2022
+2026-11-23T13:29:38.1280494Z 10.0.20348
+2026-11-23T13:29:38.1281348Z Datacenter
+2026-11-23T13:29:38.1282203Z ##[endgroup]
+2026-11-23T13:29:38.1283033Z ##[group]Runner Image
+2026-11-23T13:29:38.1283994Z Image: windows-2022
+2026-11-23T13:29:38.1284894Z Version: 20261116.370.1
+2026-11-23T13:29:38.1287520Z Included Software: https://github.com/actions/runner-images/blob/win22/20261116.370/images/windows/Windows2022-Readme.md
+2026-11-23T13:29:38.1290171Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261116.370
+2026-11-23T13:29:38.1291783Z ##[endgroup]
+2026-11-23T13:29:38.1293709Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T13:29:38.1296535Z Contents: read
+2026-11-23T13:29:38.1297473Z Metadata: read
+2026-11-23T13:29:38.1298427Z Packages: read
+2026-11-23T13:29:38.1299281Z ##[endgroup]
+2026-11-23T13:29:38.1302261Z Secret source: Actions
+2026-11-23T13:29:38.1303660Z Cache mode: write
+2026-11-23T13:29:38.1304724Z Prepare workflow directory
+2026-11-23T13:29:38.1679928Z Prepare all required actions
+2026-11-23T13:29:38.1726420Z Getting action download info
+2026-11-23T13:29:38.3484284Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T13:29:38.4686771Z Download action repository 'actions/download-artifact@v5' (SHA:634f93cb2916e3fdff6788551b99b062d0335ce0)
+2026-11-23T13:29:38.7375752Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T13:29:39.0577310Z Complete job name: pluginval / Windows VST3 (strictness 10)
+2026-11-23T13:29:39.2181607Z ##[group]Run actions/checkout@v5
+2026-11-23T13:29:39.2182627Z with:
+2026-11-23T13:29:39.2183051Z   persist-credentials: false
+2026-11-23T13:29:39.2183593Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T13:29:39.2187654Z   token: ***
+2026-11-23T13:29:39.2188052Z   ssh-strict: true
+2026-11-23T13:29:39.2188455Z   ssh-user: git
+2026-11-23T13:29:39.2188840Z   clean: true
+2026-11-23T13:29:39.2189250Z   sparse-checkout-cone-mode: true
+2026-11-23T13:29:39.2189737Z   fetch-depth: 1
+2026-11-23T13:29:39.2190132Z   fetch-tags: false
+2026-11-23T13:29:39.2190537Z   show-progress: true
+2026-11-23T13:29:39.2190949Z   lfs: false
+2026-11-23T13:29:39.2191319Z   submodules: false
+2026-11-23T13:29:39.2191718Z   set-safe-directory: true
+2026-11-23T13:29:39.2192204Z   allow-unsafe-pr-checkout: false
+2026-11-23T13:29:39.2192866Z env:
+2026-11-23T13:29:39.2193248Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:29:39.2193689Z ##[endgroup]
+2026-11-23T13:29:39.3595465Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T13:29:39.3597335Z ##[group]Getting Git version info
+2026-11-23T13:29:39.3597997Z Working directory is 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-11-23T13:29:39.5359468Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-23T13:29:39.8393313Z git version 2.56.1.windows.1
+2026-11-23T13:29:39.8434310Z ##[endgroup]
+2026-11-23T13:29:39.8453309Z Temporarily overriding HOME='D:\a\_temp\8170950e-07b5-41ab-9354-3a2d7593f12c' before making global git config changes
+2026-11-23T13:29:39.8455556Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T13:29:39.8464805Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-11-23T13:29:39.9053411Z Deleting the contents of 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-11-23T13:29:39.9059014Z ##[group]Initializing the repository
+2026-11-23T13:29:39.9068168Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\yamaha-cs80\yamaha-cs80
+2026-11-23T13:29:39.9789754Z Initialized empty Git repository in D:/a/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T13:29:39.9827728Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T13:29:40.0378327Z ##[endgroup]
+2026-11-23T13:29:40.0380402Z ##[group]Disabling automatic garbage collection
+2026-11-23T13:29:40.0386704Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-23T13:29:40.0732354Z ##[endgroup]
+2026-11-23T13:29:40.0733736Z ##[group]Setting up auth
+2026-11-23T13:29:40.0737146Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T13:29:40.1050379Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-23T13:29:41.3838450Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T13:29:41.4135691Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-23T13:29:41.9155103Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T13:29:41.9443985Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-23T13:29:42.4177120Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-23T13:29:42.4484665Z ##[endgroup]
+2026-11-23T13:29:42.4485506Z ##[group]Fetching the repository
+2026-11-23T13:29:42.4506763Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cbbee6a940985ad3c550768414960d2e1b1e802e:refs/remotes/origin/main
+2026-11-23T13:29:47.3308349Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T13:29:47.3309406Z  * [new ref]         cbbee6a940985ad3c550768414960d2e1b1e802e -> origin/main
+2026-11-23T13:29:47.3345201Z ##[endgroup]
+2026-11-23T13:29:47.3348216Z ##[group]Determining the checkout info
+2026-11-23T13:29:47.3349033Z ##[endgroup]
+2026-11-23T13:29:47.3359090Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-23T13:29:47.3781237Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-23T13:29:47.4108569Z ##[group]Checking out the ref
+2026-11-23T13:29:47.4122572Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T13:29:48.4645080Z Updating files:  54% (5015/9126)
+2026-11-23T13:29:48.4804401Z Updating files:  55% (5020/9126)
+2026-11-23T13:29:48.4949837Z Updating files:  56% (5111/9126)
+2026-11-23T13:29:48.5102295Z Updating files:  57% (5202/9126)
+2026-11-23T13:29:48.5271746Z Updating files:  58% (5294/9126)
+2026-11-23T13:29:48.5428570Z Updating files:  59% (5385/9126)
+2026-11-23T13:29:48.5582677Z Updating files:  60% (5476/9126)
+2026-11-23T13:29:48.5776610Z Updating files:  61% (5567/9126)
+2026-11-23T13:29:48.5938524Z Updating files:  62% (5659/9126)
+2026-11-23T13:29:48.6050470Z Updating files:  63% (5750/9126)
+2026-11-23T13:29:48.6205331Z Updating files:  64% (5841/9126)
+2026-11-23T13:29:48.6353221Z Updating files:  65% (5932/9126)
+2026-11-23T13:29:48.6603932Z Updating files:  66% (6024/9126)
+2026-11-23T13:29:48.6768712Z Updating files:  67% (6115/9126)
+2026-11-23T13:29:48.6920493Z Updating files:  68% (6206/9126)
+2026-11-23T13:29:48.7105690Z Updating files:  69% (6297/9126)
+2026-11-23T13:29:48.7265082Z Updating files:  70% (6389/9126)
+2026-11-23T13:29:48.7489114Z Updating files:  71% (6480/9126)
+2026-11-23T13:29:48.7713404Z Updating files:  72% (6571/9126)
+2026-11-23T13:29:48.7961661Z Updating files:  73% (6662/9126)
+2026-11-23T13:29:48.8214826Z Updating files:  74% (6754/9126)
+2026-11-23T13:29:48.8452681Z Updating files:  75% (6845/9126)
+2026-11-23T13:29:48.8646639Z Updating files:  76% (6936/9126)
+2026-11-23T13:29:48.8848343Z Updating files:  77% (7028/9126)
+2026-11-23T13:29:48.9107215Z Updating files:  78% (7119/9126)
+2026-11-23T13:29:48.9333269Z Updating files:  79% (7210/9126)
+2026-11-23T13:29:48.9570519Z Updating files:  80% (7301/9126)
+2026-11-23T13:29:48.9778376Z Updating files:  81% (7393/9126)
+2026-11-23T13:29:48.9983100Z Updating files:  82% (7484/9126)
+2026-11-23T13:29:49.4100393Z Updating files:  83% (7575/9126)
+2026-11-23T13:29:49.4361558Z Updating files:  84% (7666/9126)
+2026-11-23T13:29:49.4553217Z Updating files:  85% (7758/9126)
+2026-11-23T13:29:49.4633041Z Updating files:  86% (7849/9126)
+2026-11-23T13:29:49.4764328Z Updating files:  86% (7889/9126)
+2026-11-23T13:29:49.4966187Z Updating files:  87% (7940/9126)
+2026-11-23T13:29:49.5165749Z Updating files:  88% (8031/9126)
+2026-11-23T13:29:49.5368772Z Updating files:  89% (8123/9126)
+2026-11-23T13:29:49.5559098Z Updating files:  90% (8214/9126)
+2026-11-23T13:29:49.5731503Z Updating files:  91% (8305/9126)
+2026-11-23T13:29:49.6141661Z Updating files:  92% (8396/9126)
+2026-11-23T13:29:49.6291158Z Updating files:  93% (8488/9126)
+2026-11-23T13:29:49.6492260Z Updating files:  94% (8579/9126)
+2026-11-23T13:29:49.6648909Z Updating files:  95% (8670/9126)
+2026-11-23T13:29:49.7020268Z Updating files:  96% (8761/9126)
+2026-11-23T13:29:49.7193467Z Updating files:  97% (8853/9126)
+2026-11-23T13:29:49.7354253Z Updating files:  98% (8944/9126)
+2026-11-23T13:29:49.7560496Z Updating files:  99% (9035/9126)
+2026-11-23T13:29:49.7561255Z Updating files: 100% (9126/9126)
+2026-11-23T13:29:49.7561508Z Updating files: 100% (9126/9126), done.
+2026-11-23T13:29:49.7781141Z Switched to a new branch 'main'
+2026-11-23T13:29:49.7795926Z branch 'main' set up to track 'origin/main'.
+2026-11-23T13:29:49.8000033Z ##[endgroup]
+2026-11-23T13:29:49.8244410Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-23T13:29:49.8506747Z cbbee6a940985ad3c550768414960d2e1b1e802e
+2026-11-23T13:29:49.8540257Z ##[group]Removing auth
+2026-11-23T13:29:49.8548688Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T13:29:49.8836584Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-23T13:29:50.3503899Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T13:29:50.3781502Z http.https://github.com/.extraheader
+2026-11-23T13:29:50.3816379Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T13:29:50.4121744Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-23T13:29:50.9314599Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T13:29:50.9609580Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-23T13:29:51.4289871Z ##[endgroup]
+2026-11-23T13:29:51.4631532Z ##[group]Run actions/download-artifact@v5
+2026-11-23T13:29:51.4631872Z with:
+2026-11-23T13:29:51.4632069Z   name: cs80-windows-vst3
+2026-11-23T13:29:51.4632478Z   path: vst3
+2026-11-23T13:29:51.4632675Z   merge-multiple: false
+2026-11-23T13:29:51.4632916Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T13:29:51.4633193Z   run-id: 45176799427
+2026-11-23T13:29:51.4633377Z env:
+2026-11-23T13:29:51.4633545Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:29:51.4633752Z ##[endgroup]
+2026-11-23T13:29:51.6281526Z Downloading single artifact
+2026-11-23T13:29:51.6491943Z (node:7440) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T13:29:51.6493202Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T13:29:51.7978094Z Preparing to download the following artifacts:
+2026-11-23T13:29:51.7979235Z - cs80-windows-vst3 (ID: 14821979268, Size: 3168094, Expected Digest: sha256:9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46)
+2026-11-23T13:29:51.9365210Z Redirecting to blob download url: https://productionresultssa7.blob.core.windows.net/actions-results/d02f664b-a687-8fc5-955c-fff4eb68fd42/workflow-job-run-b77db641-b1e4-53f7-83f5-6ded2be92c6e/artifacts/20ec3b41eae2d2298b93c97cc616939d313a4d15061bc609961d01b316707fc7.zip
+2026-11-23T13:29:51.9366662Z Starting download of artifact to: D:\a\yamaha-cs80\yamaha-cs80\vst3
+2026-11-23T13:29:51.9917180Z (node:7440) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-23T13:29:52.1014186Z SHA256 digest of downloaded artifact is 9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46
+2026-11-23T13:29:52.1014949Z Artifact download completed successfully.
+2026-11-23T13:29:52.1015248Z Total of 1 artifact(s) downloaded
+2026-11-23T13:29:52.1022112Z Download artifact has finished successfully
+2026-11-23T13:29:52.1327991Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-23T13:29:52.1328476Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-23T13:29:52.1329096Z [36;1mpython scripts/download-pluginval-windows.py --output pluginval.zip --evidence pluginval-download.json[0m
+2026-11-23T13:29:52.1329709Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-23T13:29:52.1330170Z [36;1mExpand-Archive -Path pluginval.zip -DestinationPath pluginval -Force[0m
+2026-11-23T13:29:52.1330617Z [36;1mUnblock-File -Path pluginval\pluginval.exe[0m
+2026-11-23T13:29:52.1331093Z [36;1m& .\pluginval\pluginval.exe --version | Tee-Object -FilePath pluginval-version.txt[0m
+2026-11-23T13:29:52.1331576Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-23T13:29:52.1451457Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-23T13:29:52.1451851Z env:
+2026-11-23T13:29:52.1452058Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:29:52.1452298Z ##[endgroup]
+2026-11-23T13:29:54.5848922Z Verified official pluginval 1.0.4 Windows asset 210999198: 2408590 bytes, SHA256 c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab
+2026-11-23T13:29:55.1358133Z pluginval - 1.0.4
+2026-11-23T13:29:55.1991615Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-23T13:29:55.1992053Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-23T13:29:55.1992489Z [36;1mNew-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null[0m
+2026-11-23T13:29:55.1992925Z [36;1m& .\pluginval\pluginval.exe `[0m
+2026-11-23T13:29:55.1993189Z [36;1m  --strictness-level 10 `[0m
+2026-11-23T13:29:55.1993451Z [36;1m  --validate-in-process `[0m
+2026-11-23T13:29:55.1993698Z [36;1m  --skip-gui-tests `[0m
+2026-11-23T13:29:55.1993925Z [36;1m  --timeout-ms 120000 `[0m
+2026-11-23T13:29:55.1994187Z [36;1m  --output-dir pluginval-reports `[0m
+2026-11-23T13:29:55.1994479Z [36;1m  --output-filename cs80-windows `[0m
+2026-11-23T13:29:55.1994881Z [36;1m  "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows.log[0m
+2026-11-23T13:29:55.1995329Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-23T13:29:55.1996047Z [36;1mif (-not (Select-String -Path pluginval-windows.log -Pattern '^SUCCESS$' -Quiet)) {[0m
+2026-11-23T13:29:55.1996681Z [36;1m  Write-Output "::error title=pluginval Windows::validator exited without printing SUCCESS"[0m
+2026-11-23T13:29:55.1997128Z [36;1m  exit 1[0m
+2026-11-23T13:29:55.1997306Z [36;1m}[0m
+2026-11-23T13:29:55.2035320Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-23T13:29:55.2035664Z env:
+2026-11-23T13:29:55.2035848Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:29:55.2036059Z ##[endgroup]
+2026-11-23T13:29:55.7325047Z Started validating: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3
+2026-11-23T13:29:55.8013217Z Random seed: 0x1ed9074
+2026-11-23T13:29:55.8016170Z Validation started
+2026-11-23T13:29:55.8018582Z Strictness level: 10
+2026-11-23T13:29:55.8021025Z -----------------------------------------------------------------
+2026-11-23T13:29:55.8023871Z Starting tests in: pluginval / Scan for plugins located in: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3...
+2026-11-23T13:29:55.8026113Z Num plugins found: 1
+2026-11-23T13:29:55.8028501Z 
+2026-11-23T13:29:55.8030871Z Testing plugin: VST3-CS-80 Reference-91d73331-8c22ac91
+2026-11-23T13:29:55.8033183Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-23T13:29:55.8036211Z Completed tests in pluginval / Scan for plugins located in: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3
+2026-11-23T13:29:55.8038311Z -----------------------------------------------------------------
+2026-11-23T13:29:55.8040544Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-23T13:29:56.0035620Z Completed tests in pluginval / Open plugin (cold)
+2026-11-23T13:29:56.0038344Z -----------------------------------------------------------------
+2026-11-23T13:29:56.0041329Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-23T13:29:56.0456866Z Running tests 1 times
+2026-11-23T13:29:56.1963794Z Completed tests in pluginval / Open plugin (warm)
+2026-11-23T13:29:56.1964986Z -----------------------------------------------------------------
+2026-11-23T13:29:56.1968876Z Starting tests in: pluginval / Plugin info...
+2026-11-23T13:29:56.1971139Z 
+2026-11-23T13:29:56.1974090Z Plugin name: CS-80 Reference
+2026-11-23T13:29:56.1976925Z Alternative names: CS-80 Reference
+2026-11-23T13:29:56.1979230Z SupportsDoublePrecision: no
+2026-11-23T13:29:56.1981002Z Reported latency: 0
+2026-11-23T13:29:56.1982993Z Reported taillength: inf
+2026-11-23T13:29:56.1986107Z Completed tests in pluginval / Plugin info
+2026-11-23T13:29:56.1989014Z -----------------------------------------------------------------
+2026-11-23T13:29:56.1992354Z Starting tests in: pluginval / Plugin programs...
+2026-11-23T13:29:56.1994474Z Num programs: 523
+2026-11-23T13:29:56.1996382Z All program names checked
+2026-11-23T13:29:56.1998248Z 
+2026-11-23T13:29:56.2000281Z Changing program
+2026-11-23T13:29:56.2002324Z Completed tests in pluginval / Plugin programs
+2026-11-23T13:29:56.2004492Z -----------------------------------------------------------------
+2026-11-23T13:29:56.2009077Z Starting tests in: pluginval / Audio processing...
+2026-11-23T13:29:56.2064044Z Testing with sample rate [44100] and block size [64]
+2026-11-23T13:29:56.2195958Z Testing with sample rate [44100] and block size [128]
+2026-11-23T13:29:56.2355236Z Testing with sample rate [44100] and block size [256]
+2026-11-23T13:29:56.2582128Z Testing with sample rate [44100] and block size [512]
+2026-11-23T13:29:56.3066202Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T13:29:56.3752796Z Testing with sample rate [48000] and block size [64]
+2026-11-23T13:29:56.3910127Z Testing with sample rate [48000] and block size [128]
+2026-11-23T13:29:56.4089025Z Testing with sample rate [48000] and block size [256]
+2026-11-23T13:29:56.4360417Z Testing with sample rate [48000] and block size [512]
+2026-11-23T13:29:56.4756037Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T13:29:56.5467422Z Testing with sample rate [96000] and block size [64]
+2026-11-23T13:29:56.5608742Z Testing with sample rate [96000] and block size [128]
+2026-11-23T13:29:56.5803093Z Testing with sample rate [96000] and block size [256]
+2026-11-23T13:29:56.6053574Z Testing with sample rate [96000] and block size [512]
+2026-11-23T13:29:56.6423384Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T13:29:56.7015508Z Completed tests in pluginval / Audio processing
+2026-11-23T13:29:56.7016323Z -----------------------------------------------------------------
+2026-11-23T13:29:56.7016848Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-23T13:29:56.7110527Z Testing with sample rate [44100] and block size [64]
+2026-11-23T13:29:56.7147451Z Testing with sample rate [44100] and block size [128]
+2026-11-23T13:29:56.7308435Z Testing with sample rate [44100] and block size [256]
+2026-11-23T13:29:56.7533524Z Testing with sample rate [44100] and block size [512]
+2026-11-23T13:29:56.8027298Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T13:29:56.8722084Z Testing with sample rate [48000] and block size [64]
+2026-11-23T13:29:56.8859074Z Testing with sample rate [48000] and block size [128]
+2026-11-23T13:29:56.9041446Z Testing with sample rate [48000] and block size [256]
+2026-11-23T13:29:56.9337471Z Testing with sample rate [48000] and block size [512]
+2026-11-23T13:29:56.9712241Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T13:29:57.0422246Z Testing with sample rate [96000] and block size [64]
+2026-11-23T13:29:57.0589492Z Testing with sample rate [96000] and block size [128]
+2026-11-23T13:29:57.0784647Z Testing with sample rate [96000] and block size [256]
+2026-11-23T13:29:57.1044001Z Testing with sample rate [96000] and block size [512]
+2026-11-23T13:29:57.1405139Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T13:29:57.2004372Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-23T13:29:57.2005301Z -----------------------------------------------------------------
+2026-11-23T13:29:57.2005938Z Starting tests in: pluginval / Plugin state...
+2026-11-23T13:29:57.2055167Z Completed tests in pluginval / Plugin state
+2026-11-23T13:29:57.2056052Z -----------------------------------------------------------------
+2026-11-23T13:29:57.2057052Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-23T13:29:57.7010883Z Completed tests in pluginval / Plugin state restoration
+2026-11-23T13:29:57.7012289Z -----------------------------------------------------------------
+2026-11-23T13:29:57.7014151Z Starting tests in: pluginval / Automation...
+2026-11-23T13:29:57.7131290Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-23T13:29:57.7234208Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-23T13:29:57.7338337Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-23T13:29:57.7450107Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-23T13:29:57.7609695Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-23T13:29:57.7865034Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-23T13:29:57.7971063Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-23T13:29:57.8081017Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-23T13:29:57.8216509Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-23T13:29:57.8436486Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-23T13:29:57.9090084Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-23T13:29:57.9229227Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-23T13:29:57.9377539Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-23T13:29:57.9557705Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-23T13:29:57.9862193Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-23T13:29:58.0329299Z Completed tests in pluginval / Automation
+2026-11-23T13:29:58.0330283Z -----------------------------------------------------------------
+2026-11-23T13:29:58.0330939Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-23T13:29:58.0643220Z Completed tests in pluginval / Automatable Parameters
+2026-11-23T13:29:58.0644332Z -----------------------------------------------------------------
+2026-11-23T13:29:58.0644885Z Starting tests in: pluginval / Parameters...
+2026-11-23T13:29:58.0951842Z Completed tests in pluginval / Parameters
+2026-11-23T13:29:58.0952769Z -----------------------------------------------------------------
+2026-11-23T13:29:58.0953637Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-23T13:29:59.9592469Z Completed tests in pluginval / Parameter thread safety
+2026-11-23T13:29:59.9593338Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9594352Z Starting tests in: pluginval / auval...
+2026-11-23T13:29:59.9594800Z Completed tests in pluginval / auval
+2026-11-23T13:29:59.9595588Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9596826Z Starting tests in: pluginval / vst3 validator...
+2026-11-23T13:29:59.9597870Z INFO: Skipping vst3 validator as validator path hasn't been set
+2026-11-23T13:29:59.9598581Z Completed tests in pluginval / vst3 validator
+2026-11-23T13:29:59.9599660Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9600504Z Starting tests in: pluginval / Basic bus...
+2026-11-23T13:29:59.9601475Z Completed tests in pluginval / Basic bus
+2026-11-23T13:29:59.9602303Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9603074Z Starting tests in: pluginval / Listing available buses...
+2026-11-23T13:29:59.9660197Z Inputs:
+2026-11-23T13:29:59.9661459Z 	Named layouts: Mono
+2026-11-23T13:29:59.9662305Z 	Discrete layouts: Discrete #1
+2026-11-23T13:29:59.9710441Z Outputs:
+2026-11-23T13:29:59.9711404Z 	Named layouts: Mono, Stereo
+2026-11-23T13:29:59.9712367Z 	Discrete layouts: Discrete #1
+2026-11-23T13:29:59.9713752Z Main bus num input channels: 0
+2026-11-23T13:29:59.9715213Z Main bus num output channels: 2
+2026-11-23T13:29:59.9716613Z Completed tests in pluginval / Listing available buses
+2026-11-23T13:29:59.9717893Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9719374Z Starting tests in: pluginval / Enabling all buses...
+2026-11-23T13:29:59.9720718Z Completed tests in pluginval / Enabling all buses
+2026-11-23T13:29:59.9721998Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9722984Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-23T13:29:59.9724311Z Completed tests in pluginval / Disabling non-main busses
+2026-11-23T13:29:59.9725420Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9726483Z Starting tests in: pluginval / Restoring default layout...
+2026-11-23T13:29:59.9727096Z Main bus num input channels: 0
+2026-11-23T13:29:59.9727529Z Main bus num output channels: 2
+2026-11-23T13:29:59.9804428Z Completed tests in pluginval / Restoring default layout
+2026-11-23T13:29:59.9806740Z -----------------------------------------------------------------
+2026-11-23T13:29:59.9807705Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-23T13:30:00.2667211Z Completed tests in pluginval / Fuzz parameters
+2026-11-23T13:30:00.2667749Z SUCCESS
+2026-11-23T13:30:00.5129587Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-23T13:30:00.5130032Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-23T13:30:00.5130458Z [36;1mNew-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null[0m
+2026-11-23T13:30:00.5130878Z [36;1m& .\pluginval\pluginval.exe `[0m
+2026-11-23T13:30:00.5131343Z [36;1m  --random-seed 0x5037a0c `[0m
+2026-11-23T13:30:00.5131605Z [36;1m  --strictness-level 10 `[0m
+2026-11-23T13:30:00.5131871Z [36;1m  --validate-in-process `[0m
+2026-11-23T13:30:00.5132119Z [36;1m  --skip-gui-tests `[0m
+2026-11-23T13:30:00.5132350Z [36;1m  --timeout-ms 120000 `[0m
+2026-11-23T13:30:00.5132616Z [36;1m  --output-dir pluginval-reports `[0m
+2026-11-23T13:30:00.5132968Z [36;1m  --output-filename cs80-windows-seed-regression `[0m
+2026-11-23T13:30:00.5133492Z [36;1m  "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows-seed-regression.log[0m
+2026-11-23T13:30:00.5134133Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-23T13:30:00.5134675Z [36;1mif (-not (Select-String -Path pluginval-windows-seed-regression.log -Pattern '^SUCCESS$' -Quiet)) {[0m
+2026-11-23T13:30:00.5135431Z [36;1m  Write-Output "::error title=pluginval Windows seeded regression::validator exited without printing SUCCESS"[0m
+2026-11-23T13:30:00.5135948Z [36;1m  exit 1[0m
+2026-11-23T13:30:00.5136122Z [36;1m}[0m
+2026-11-23T13:30:00.5173509Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-23T13:30:00.5173865Z env:
+2026-11-23T13:30:00.5174051Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:30:00.5174273Z ##[endgroup]
+2026-11-23T13:30:01.0513859Z Started validating: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3
+2026-11-23T13:30:01.1332813Z Random seed: 0x5037a0c
+2026-11-23T13:30:01.1335901Z Validation started
+2026-11-23T13:30:01.1339165Z Strictness level: 10
+2026-11-23T13:30:01.1343209Z -----------------------------------------------------------------
+2026-11-23T13:30:01.1346395Z Starting tests in: pluginval / Scan for plugins located in: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3...
+2026-11-23T13:30:01.1348472Z Num plugins found: 1
+2026-11-23T13:30:01.1350816Z 
+2026-11-23T13:30:01.1353626Z Testing plugin: VST3-CS-80 Reference-91d73331-8c22ac91
+2026-11-23T13:30:01.1356611Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-23T13:30:01.1359806Z Completed tests in pluginval / Scan for plugins located in: D:\a\yamaha-cs80\yamaha-cs80\vst3\CS-80 Reference.vst3
+2026-11-23T13:30:01.1362259Z -----------------------------------------------------------------
+2026-11-23T13:30:01.1366511Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-23T13:30:01.3315467Z Completed tests in pluginval / Open plugin (cold)
+2026-11-23T13:30:01.3318699Z -----------------------------------------------------------------
+2026-11-23T13:30:01.3322013Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-23T13:30:01.3706180Z Running tests 1 times
+2026-11-23T13:30:01.5211482Z Completed tests in pluginval / Open plugin (warm)
+2026-11-23T13:30:01.5214259Z -----------------------------------------------------------------
+2026-11-23T13:30:01.5216969Z Starting tests in: pluginval / Plugin info...
+2026-11-23T13:30:01.5219098Z 
+2026-11-23T13:30:01.5221770Z Plugin name: CS-80 Reference
+2026-11-23T13:30:01.5224808Z Alternative names: CS-80 Reference
+2026-11-23T13:30:01.5227145Z SupportsDoublePrecision: no
+2026-11-23T13:30:01.5229324Z Reported latency: 0
+2026-11-23T13:30:01.5231490Z Reported taillength: inf
+2026-11-23T13:30:01.5234049Z Completed tests in pluginval / Plugin info
+2026-11-23T13:30:01.5236689Z -----------------------------------------------------------------
+2026-11-23T13:30:01.5238934Z Starting tests in: pluginval / Plugin programs...
+2026-11-23T13:30:01.5240725Z Num programs: 523
+2026-11-23T13:30:01.5242968Z All program names checked
+2026-11-23T13:30:01.5245012Z 
+2026-11-23T13:30:01.5247430Z Changing program
+2026-11-23T13:30:01.5251568Z Completed tests in pluginval / Plugin programs
+2026-11-23T13:30:01.5252208Z -----------------------------------------------------------------
+2026-11-23T13:30:01.5253292Z Starting tests in: pluginval / Audio processing...
+2026-11-23T13:30:01.5313862Z Testing with sample rate [44100] and block size [64]
+2026-11-23T13:30:01.5450290Z Testing with sample rate [44100] and block size [128]
+2026-11-23T13:30:01.5608288Z Testing with sample rate [44100] and block size [256]
+2026-11-23T13:30:01.5838305Z Testing with sample rate [44100] and block size [512]
+2026-11-23T13:30:01.6198360Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T13:30:01.6822066Z Testing with sample rate [48000] and block size [64]
+2026-11-23T13:30:01.6955070Z Testing with sample rate [48000] and block size [128]
+2026-11-23T13:30:01.7137678Z Testing with sample rate [48000] and block size [256]
+2026-11-23T13:30:01.7365650Z Testing with sample rate [48000] and block size [512]
+2026-11-23T13:30:01.7755327Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T13:30:01.8447627Z Testing with sample rate [96000] and block size [64]
+2026-11-23T13:30:01.8592896Z Testing with sample rate [96000] and block size [128]
+2026-11-23T13:30:01.8778926Z Testing with sample rate [96000] and block size [256]
+2026-11-23T13:30:01.9067753Z Testing with sample rate [96000] and block size [512]
+2026-11-23T13:30:01.9438683Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T13:30:02.0046103Z Completed tests in pluginval / Audio processing
+2026-11-23T13:30:02.0046755Z -----------------------------------------------------------------
+2026-11-23T13:30:02.0048365Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-23T13:30:02.0144773Z Testing with sample rate [44100] and block size [64]
+2026-11-23T13:30:02.0179658Z Testing with sample rate [44100] and block size [128]
+2026-11-23T13:30:02.0340605Z Testing with sample rate [44100] and block size [256]
+2026-11-23T13:30:02.0565254Z Testing with sample rate [44100] and block size [512]
+2026-11-23T13:30:02.0922613Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T13:30:02.1556624Z Testing with sample rate [48000] and block size [64]
+2026-11-23T13:30:02.1692824Z Testing with sample rate [48000] and block size [128]
+2026-11-23T13:30:02.1875056Z Testing with sample rate [48000] and block size [256]
+2026-11-23T13:30:02.2103105Z Testing with sample rate [48000] and block size [512]
+2026-11-23T13:30:02.2504990Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T13:30:02.3194413Z Testing with sample rate [96000] and block size [64]
+2026-11-23T13:30:02.3337263Z Testing with sample rate [96000] and block size [128]
+2026-11-23T13:30:02.3509122Z Testing with sample rate [96000] and block size [256]
+2026-11-23T13:30:02.3754172Z Testing with sample rate [96000] and block size [512]
+2026-11-23T13:30:02.4115905Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T13:30:02.4716234Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-23T13:30:02.4716911Z -----------------------------------------------------------------
+2026-11-23T13:30:02.4717445Z Starting tests in: pluginval / Plugin state...
+2026-11-23T13:30:02.4769504Z Completed tests in pluginval / Plugin state
+2026-11-23T13:30:02.4770394Z -----------------------------------------------------------------
+2026-11-23T13:30:02.4772142Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-23T13:30:02.9686844Z Completed tests in pluginval / Plugin state restoration
+2026-11-23T13:30:02.9688055Z -----------------------------------------------------------------
+2026-11-23T13:30:02.9688650Z Starting tests in: pluginval / Automation...
+2026-11-23T13:30:02.9785556Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-23T13:30:02.9885076Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-23T13:30:03.0010826Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-23T13:30:03.0283635Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-23T13:30:03.0736486Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-23T13:30:03.1925185Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-23T13:30:03.2113408Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-23T13:30:03.2345272Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-23T13:30:03.2684620Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-23T13:30:03.3186007Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-23T13:30:03.3540775Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-23T13:30:03.3666565Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-23T13:30:03.3804289Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-23T13:30:03.3961486Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-23T13:30:03.4127661Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-23T13:30:03.4394479Z Completed tests in pluginval / Automation
+2026-11-23T13:30:03.4395771Z -----------------------------------------------------------------
+2026-11-23T13:30:03.4396508Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-23T13:30:03.4747442Z Completed tests in pluginval / Automatable Parameters
+2026-11-23T13:30:03.4749594Z -----------------------------------------------------------------
+2026-11-23T13:30:03.4750240Z Starting tests in: pluginval / Parameters...
+2026-11-23T13:30:03.5143554Z Completed tests in pluginval / Parameters
+2026-11-23T13:30:03.5144337Z -----------------------------------------------------------------
+2026-11-23T13:30:03.5145019Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-23T13:30:05.4409528Z Completed tests in pluginval / Parameter thread safety
+2026-11-23T13:30:05.4415578Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4416326Z Starting tests in: pluginval / auval...
+2026-11-23T13:30:05.4417167Z Completed tests in pluginval / auval
+2026-11-23T13:30:05.4418137Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4419304Z Starting tests in: pluginval / vst3 validator...
+2026-11-23T13:30:05.4420025Z INFO: Skipping vst3 validator as validator path hasn't been set
+2026-11-23T13:30:05.4421064Z Completed tests in pluginval / vst3 validator
+2026-11-23T13:30:05.4421961Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4422632Z Starting tests in: pluginval / Basic bus...
+2026-11-23T13:30:05.4423150Z Completed tests in pluginval / Basic bus
+2026-11-23T13:30:05.4423778Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4424687Z Starting tests in: pluginval / Listing available buses...
+2026-11-23T13:30:05.4457232Z Inputs:
+2026-11-23T13:30:05.4457795Z 	Named layouts: Mono
+2026-11-23T13:30:05.4458390Z 	Discrete layouts: Discrete #1
+2026-11-23T13:30:05.4493633Z Outputs:
+2026-11-23T13:30:05.4494833Z 	Named layouts: Mono, Stereo
+2026-11-23T13:30:05.4495999Z 	Discrete layouts: Discrete #1
+2026-11-23T13:30:05.4497189Z Main bus num input channels: 0
+2026-11-23T13:30:05.4498382Z Main bus num output channels: 2
+2026-11-23T13:30:05.4499636Z Completed tests in pluginval / Listing available buses
+2026-11-23T13:30:05.4500742Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4501882Z Starting tests in: pluginval / Enabling all buses...
+2026-11-23T13:30:05.4502824Z Completed tests in pluginval / Enabling all buses
+2026-11-23T13:30:05.4503866Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4505459Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-23T13:30:05.4506457Z Completed tests in pluginval / Disabling non-main busses
+2026-11-23T13:30:05.4507379Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4508055Z Starting tests in: pluginval / Restoring default layout...
+2026-11-23T13:30:05.4508827Z Main bus num input channels: 0
+2026-11-23T13:30:05.4509219Z Main bus num output channels: 2
+2026-11-23T13:30:05.4614821Z Completed tests in pluginval / Restoring default layout
+2026-11-23T13:30:05.4615930Z -----------------------------------------------------------------
+2026-11-23T13:30:05.4616647Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-23T13:30:05.7509615Z Completed tests in pluginval / Fuzz parameters
+2026-11-23T13:30:05.7512570Z SUCCESS
+2026-11-23T13:30:05.8423310Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T13:30:05.8423643Z with:
+2026-11-23T13:30:05.8423843Z   name: cs80-pluginval-windows
+2026-11-23T13:30:05.8424489Z   path: pluginval-download.json
+pluginval-reports
+pluginval-windows.log
+pluginval-windows-seed-regression.log
+pluginval-version.txt
+
+2026-11-23T13:30:05.8425129Z   if-no-files-found: warn
+2026-11-23T13:30:05.8425345Z   compression-level: 6
+2026-11-23T13:30:05.8425543Z   overwrite: false
+2026-11-23T13:30:05.8425746Z   include-hidden-files: false
+2026-11-23T13:30:05.8425990Z env:
+2026-11-23T13:30:05.8426159Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T13:30:05.8426369Z ##[endgroup]
+2026-11-23T13:30:06.0294045Z (node:7540) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T13:30:06.0294774Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T13:30:06.0388248Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-23T13:30:06.0392476Z The least common ancestor is D:\a\yamaha-cs80\yamaha-cs80. This will be the root directory of the artifact
+2026-11-23T13:30:06.0393363Z With the provided path, there will be 6 files uploaded
+2026-11-23T13:30:06.0398867Z Artifact name is valid!
+2026-11-23T13:30:06.0401292Z Root directory input is valid!
+2026-11-23T13:30:06.2267918Z Beginning upload of artifact content to blob storage
+2026-11-23T13:30:06.2580899Z (node:7540) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T13:30:06.2977364Z Uploaded bytes 5083
+2026-11-23T13:30:06.3164174Z Finished uploading artifact content to blob storage!
+2026-11-23T13:30:06.3165662Z SHA256 digest of uploaded artifact zip is 1f4b7bc83e0996964fc5792170553e405265ab9c090d30d8098ca293a5e1270f
+2026-11-23T13:30:06.3167902Z Finalizing artifact upload
+2026-11-23T13:30:06.6203875Z Artifact cs80-pluginval-windows.zip successfully finalized. Artifact ID 14822074107
+2026-11-23T13:30:06.6205513Z Artifact cs80-pluginval-windows has been successfully uploaded! Final size is 5083 bytes. Artifact ID is 14822074107
+2026-11-23T13:30:06.6215142Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427/artifacts/14822074107
+2026-11-23T13:30:06.6513602Z Post job cleanup.
+2026-11-23T13:30:06.8336858Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-23T13:30:06.8606694Z git version 2.56.1.windows.1
+2026-11-23T13:30:06.8674277Z Temporarily overriding HOME='D:\a\_temp\3424a70d-e845-4eaf-9220-61705a7e068d' before making global git config changes
+2026-11-23T13:30:06.8675553Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T13:30:06.8690724Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-11-23T13:30:06.9007476Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T13:30:06.9352400Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-23T13:30:07.4288993Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T13:30:07.4579666Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-23T13:30:07.9474706Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T13:30:07.9768153Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-23T13:30:08.4464015Z Cleaning up orphan processes
+2026-11-23T13:30:08.4574179Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@v5, actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,150 @@
+{
+  "status": "failed",
+  "counts": {
+    "registered": 249,
+    "passed": 246,
+    "failed": 1,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "ctest_seconds_junit": 1214.0,
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "failures": [
+    {
+      "name": "cs80_packaging_notice_tests",
+      "status": "fail",
+      "failure": "<testcase name=\"cs80_packaging_notice_tests\" classname=\"cs80_packaging_notice_tests\" time=\"2.16035\" status=\"fail\">\n\t\t<failure message=\"Failed\" />\n\t\t<properties>\n\t\t\t<property name=\"cmake_labels\" value=\"packaging\" />\n\t\t</properties>\n\t\t<system-out>test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... FAIL\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n======================================================================\nFAIL: test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/runner/work/yamaha-cs80/yamaha-cs80/scripts/test-packaging-notices.py\", line 111, in test_actual_ci_payload_and_archive_bytes\n    self.assertIn(f\"[2026.11.2 circuit library report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/docs/CIRCUIT_LIBRARY_2026_11_2.md)\", guide)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '[2026.11.2 circuit library report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/CIRCUIT_LIBRARY_2026_11_2.md)' not found in '# Factory preset guide\\n\\nThe **2026.11.3 factory library** contains **523 existing programs**. Its **521\\nmusical programs** have been reprogrammed; **Init Patch** and **Init Circuit**\\nremain starting points. All names, categories and program addresses keep their\\nexisting order. No presets have been added or removed.\\n\\nThe same circuit instrument now supports optional string, tine, reed, wind and\\nbar excitations: **259 programs use these instrument bodies**, while the other\\n264 entries retain circuit excitation. The bodies give partials their own\\nspectra and decay rates; envelopes, touch, register and effects complete the\\nindividual sounds. These are authored synthesized interpretations, not samples\\nor a demonstrated exact match to an acoustic instrument or physical CS-80.\\nThe [2026.11.3 revision report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/CIRCUIT_LIBRARY_2026_11_3.md) explains the sound\\nchanges, new controls and evidence. The\\n[2026.11.2 report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/CIRCUIT_LIBRARY_2026_11_2.md) documents the earlier original-bank\\nrevoicing and retirement of old engine settings. The\\n[2026.11.1 refinement report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/PRESET_REFINEMENT_2026_11_1.md) and\\n[original revision report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/PRESET_REVISION_2026_11.md) retain the earlier history.\\n\\n## Start with your hands\\n\\nA fresh instance opens **Brass Swell I**. Hold a three-note chord around MIDI\\n48\u201367, wait for the brighter layer to arrive, then gradually add pressure.\\nRelease the pressure before releasing the keys to hear the chord settle back.\\nOpen **Library** to choose the following programs.\\n\\nTry each sound in three ways: strike softly and firmly; hold long enough to hear\\nwhat remains after the attack; then release and listen to its damping or tail.\\nFor a repeatable velocity comparison, try MIDI velocities 40 and 110. These are\\nsuggested playing values, not required settings. Some organ and harpsichord\\nprograms intentionally keep a comparatively even strike level.\\n\\n**Velocity** describes the initial strike. **Aftertouch**, or pressure, changes\\na note after that strike. Polyphonic aftertouch lets you emphasize one held note;\\nchannel aftertouch affects notes on that MIDI channel together. Polyphonic\\naftertouch does not require MPE. Without a pressure keyboard, hold an on-screen\\nkey and drag downward along it. See the [playing and performance instructions](INSTALL_AND_QUICKSTART.md#one-circuit-instrument).\\n\\nFor on-screen pressure, leave **KAS Scan Timing** off; if it is on, use MIDI\\naftertouch instead. This optional physical setup setting is retained when you\\nchange presets.\\n\\n**Pressure Lead is intentionally silent without pressure.** Hold a key and apply\\npolyphonic or channel aftertouch, or drag down on the on-screen key. A harder\\nstrike alone will not produce its sound. Pressure brings up its level and\\nbrightness; easing off fades it again. [Lead voicings](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Leads.inc)\\n\\n## Find a family\\n\\nCounts below cover the complete **523-program catalogue**. The **modern** tag is\\na playing-technique label, so those programs appear in their musical categories.\\nThe [original-address recipes](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/OriginalCircuitLibrary.inc) and\\n[later collection](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/CuratedLibrary.inc) define the stable order.\\nUse **ALL PATCHES** to browse factory and user patches, or **FACTORY LIBRARY** to\\nshow just the factory catalogue.\\n\\n| Family | Programs | Useful starting points |\\n| --- | ---: | --- |\\n| [Brass](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Brass.inc) | 59 | Brass Swell I for held chords; Brass Stab for short accents. |\\n| [Strings](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Strings.inc) | 59 | Solo Violin for melody; Chamber Strings for a smaller section. |\\n| [Pads](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Pads.inc) | 63 | Slow Pad for overlapping chords; Sweep Pad for a long opening. |\\n| [Polysynth](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Polysynth.inc) | 25 | Velocity Poly for touch dynamics; Poly Pluck for decaying chords. |\\n| [Keys](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Keys.inc) | 45 | Electric Piano I for soft-to-firm playing; Analog Piano for a revoiced original address. |\\n| [Organ](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Organ.inc) | 15 | Flute Organ 8+4 for steady chords; Percussive Organ for separated notes. |\\n| [Winds](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Winds.inc) | 14 | Clarinet for hollow reed lines; Pan Flute for a distinct breath onset. |\\n| [Plucked](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Plucked.inc) | 17 | Guitar I for picked phrases; Harp for ringing broken chords. |\\n| [Bass](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Bass.inc) | 50 | Analog Bass for body and bite; Sub Bass for a plain low foundation. |\\n| [Leads](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Leads.inc) | 56 | Touch Lead for expression; Ribbon Glide Lead for connected slides. |\\n| [Bells](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Bells.inc) | 23 | Marimba for rounded mallets; Clock Bells for paired bell tones. |\\n| [FX](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Fx.inc) | 46 | Wind for sustained air; Random Filter for stepped motion. |\\n| [Sequences](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Modern.inc) | 27 | Arp Poly, Arp Bells, Arp Bass and the revoiced Arp Motion. |\\n| [Hardware Studies](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/OriginalCircuitLibrary.inc) | 22 | Tone I: E. Piano and Tone II: Bass; panel voicings named after the original tone families. |\\n| [Init](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/OriginalCircuitLibrary.inc) | 2 | Init Patch and Init Circuit provide starting points for programming. |\\n\\n## Hear the differences\\n\\nThe ranges here are suggested **played MIDI notes**, not acoustic instrument\\nlimits. This guide calls MIDI 60 C4; some hosts use a different octave label.\\nA *rank* means one of the two synthesizer layers sounding a note.\\n\\n### Swells, bows and sustained chords\\n\\n**Brass Swell I / Brass Swell II / Pressure Swell Brass:** try MIDI 48\u201367.\\nSwell I layers a rounded onset and a later bright bloom at the same register.\\nSwell II adds a 16\u2032 foundation below its 8\u2032 upper voice, making the same keys\\nsound broader and lower. Pressure Swell Brass starts as a quiet bed; use your\\nfingers to perform most of its crescendo. [Brass source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Brass.inc)\\n\\n**Sforzando Brass** gives a distinct initial accent that settles into a quieter\\nbody. **Covered Horn** keeps a steadier held body with a restrained supporting\\nrank. Try separated notes, then a long hold, to compare the accent and sustain.\\n[Brass source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Brass.inc)\\n\\n**Solo Violin / Solo Cello:** begin around MIDI 60\u201384 for violin and 48\u201372 for\\ncello. Each uses one dry pitched rank and a short bow-friction layer, with\\npressure introducing restrained vibrato. Cello\\'s 16\u2032 registration sounds an\\noctave below the played key. **Marcato Strings** has a stronger opening accent\\nthat decays into its sustained body.\\n**Chamber Strings** uses closely tuned sections without chorus;\\n**Wide Strings** adds greater stereo breadth and chorus. Compare the same\\nopen chord to hear the difference in ensemble size. [String source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Strings.inc)\\n\\n**Slow Pad / Sweep Pad:** play open voicings around MIDI 48\u201372. Slow Pad lets\\nits brighter second layer enter behind the body. Sweep Pad needs more than four\\nseconds for both brightness crests to emerge. Leave a gap between phrases to\\nhear their releases rather than continually covering them with new chords.\\n[Pad source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Pads.inc)\\n\\n### Strikes, plucks and breath\\n\\n**Electric Piano I / Electric Piano II:** try MIDI 48\u201384, first softly, then\\nfirmly. I keeps a rounded 8\u2032 body under a brief bark. II adds a shorter 4\u2032\\ntine-like edge and light chorus. Hold the key to hear the strike disappear\\nbefore the body; release early to damp the decay. **Tine Piano** places a shorter\\nthird-harmonic strike over its 8\u2032 body. Play MIDI 48, 60 and 84 to hear both\\npartials follow the key; a firm strike brings the upper partial forward.\\n**Reed Piano** has a denser even/odd reed spectrum. **Stage Keys** and **Analog\\nPiano** use piano-string excitation with separately softening upper partials;\\n**Saw Pulse Piano** retains more of its deliberately synthetic circuit edge.\\nAll decay while the key is held. The bodies have physically motivated features,\\nbut they are not samples or complete measured acoustic-piano models.\\n[Key source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Keys.inc) \u00b7\\n[Instrument-body scope](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/docs/CIRCUIT_LIBRARY_2026_11_3.md#what-changes-in-the-sound)\\n\\n**Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs\\nnow draw on specific keyboard recipes. Try the same soft/firm comparison around\\nMIDI 48\u201384. A name such as *Slow Keys* lengthens the decay while retaining a\\nstruck onset; it no longer randomly assigns a pad-like swell or portamento.\\n[Original-address recipes](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/OriginalCircuitLibrary.inc)\\n\\n**Guitar I / Guitar II / Nylon Pluck / Steel Pluck:** start around MIDI 48\u201372.\\nI gives a warm body and short pick; II is brighter and rings longer. Nylon Pluck\\nhas a mellow finger transient and a centered, unchorused body. Steel Pluck\\nadds a faster-fading octave course. **Harp** pairs a long 8\u2032 body with a shorter\\n4\u2032 glint: spread the notes of a chord and vary key release for damping.\\nNylon Pluck now carries independently fading string modes beneath its soft\\nfinger attack. **Mandolin** keeps its paired-course decay with gentler amplitude motion;\\ntry repeated picked notes rather than relying on a deep automatic flutter.\\n[Plucked source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Plucked.inc)\\n\\n**Flute / Pan Flute:** try MIDI 60\u201384. Flute keeps a separate air layer during\\nthe held note; pressure can bring it forward. Pan Flute\\'s short breath attack\\ndies away while the pitch continues. Similarly, **Percussive Organ** has an\\n8\u2032 sustained body and a disappearing 4\u2032 strike, whereas **Flute Organ 8+4**\\nkeeps both stops sounding. Try the organs around MIDI 48\u201372 and release between\\nnotes to hear fresh percussion. [Wind source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Winds.inc) \u00b7\\n[Organ source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Organ.inc)\\n\\n**Recorder / Clarinet:** play separated notes around MIDI 48\u201372 to expose their\\nshort tongue/breath onsets, then hold to hear the pitched body take over.\\nClarinet emphasizes odd harmonics; **Oboe** and **Bassoon** have denser reed\\nspectra. **Breathy Flute** carries more air than Flute. Try zero pressure first,\\nthen add it to hear the authored level, brightness and vibrato response.\\n[Wind source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Winds.inc)\\n\\n**Marimba / Xylophone / Clock Bells:** try Marimba around MIDI 48\u201372 and the\\nhigher registrations around MIDI 48\u201367. Marimba\\'s rounded body outlasts its\\nshort wooden knock. Xylophone uses a brighter 4\u2032 body and very brief 2\u2032 strike.\\nClock Bells combines 4\u2032 and 2\u2154\u2032 ranks a fifth apart, with different decay\\nlengths. Play single notes first so the two ringing pitches remain easy to hear.\\n[Bell source](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/598afcaa81cab11675341fdbfa120f1e1bcc21f4/src/core/curated/Bells.inc"
+    }
+  ],
+  "relevant_test_results": [
+    {
+      "name": "cs80_instrument_body_tests",
+      "seconds": 0.64939,
+      "passed": true
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "seconds": 5.93296,
+      "passed": true
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "seconds": 285.593,
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "seconds": 9.83472,
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_character_tests",
+      "seconds": 3.74559,
+      "passed": true
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "seconds": 26.5685,
+      "passed": true
+    },
+    {
+      "name": "cs80_modern_recall_host_tests",
+      "seconds": 3.7686,
+      "passed": true
+    },
+    {
+      "name": "cs80_typed_value_unit_tests",
+      "seconds": 0.0913171,
+      "passed": true
+    }
+  ],
+  "nested_python_skips": {
+    "total": 5,
+    "suites": [
+      {
+        "ctest_test": "cs80_package_binary_identity_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          13
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ]
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "python_skipped": 2,
+        "tests_run_summaries": [
+          12
+        ],
+        "explicit_skip_lines": []
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "python_skipped": 1,
+        "tests_run_summaries": [
+          7
+        ],
+        "explicit_skip_lines": []
+      }
+    ]
+  },
+  "juce_provenance": {
+    "checked_at": "2026-11-23T11:15:36Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+    "workflow_run": "45163325280",
+    "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "schema": 1,
+  "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+  "run_id": 45163325280,
+  "artifact_id": 14815620464,
+  "artifact_name": "cs80-macos-15-test-evidence",
+  "archive_bytes": 84756,
+  "archive_sha256": "3c1e2ac51389d7bc40990c396d4065551a3b08c641dd73cf79dd4478dedb4c03",
+  "members": {
+    "ctest-results.xml": {
+      "bytes": 139942,
+      "sha256": "d4f644c5020547392b07098f057670f992dc174d355c2aa8a86ece80211666a8"
+    },
+    "LastTest.log": {
+      "bytes": 349946,
+      "sha256": "14bbcc477f41839df0d8c1a1762fab6929e3dd30a13c306d376f13b609bc64ca"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 612,
+      "sha256": "1979d1dfd246911385c21b96d28652c3a70f33ee36612ea5fcea929bd92ce7bb"
+    }
+  },
+  "scope": "Downloaded native evidence inspection; successful unmasked workflow Test step and overall job are checked separately."
+}

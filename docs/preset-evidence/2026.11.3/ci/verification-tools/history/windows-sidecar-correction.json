@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "status": "offline_validator_container_boundary_corrected",
+  "recorded_at_utc": "2026-11-23T13:38:14.512799+00:00",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "prior_checker": {
+    "file": "verify-validator-payload-before-windows-sidecars.py",
+    "sha256": "c44b84bcc73860d68933cf5c3bea85f080d27eb916c51261ecbaa1b3b4f5ff67"
+  },
+  "current_checker": {
+    "file": "../verify-validator-payload.py",
+    "sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330"
+  },
+  "failure_evidence": {
+    "kind": "Unmodified-checker replay of the reported actual failure before editing",
+    "record": "../../source-cbbee6a/windows-x86_64/validator-payload-pre-sidecar-correction.json",
+    "log": "../../source-cbbee6a/windows-x86_64/validator-payload-pre-sidecar-correction.log",
+    "exit_code": 1
+  },
+  "actual_corrected_acceptance": "../../source-cbbee6a/windows-x86_64/validator-payload-identity.json",
+  "actual_bundle": {
+    "files": 2,
+    "bytes": 7314551,
+    "tree_entries": 6,
+    "payload_tree_sha256": "542fb5a1e90d442caff22281cc7fa20d5188c8f0e89d3596f46b9b81e6ae2940"
+  },
+  "separately_recorded_compiler_sidecars": [
+    {
+      "path": "CS-80 Reference.exp",
+      "type": "file",
+      "bytes": 968,
+      "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+      "format_check": {
+        "format": "AMD64 COFF object",
+        "sections": 2,
+        "symbols": 14
+      },
+      "included_in_vst3_payload_comparison": false
+    },
+    {
+      "path": "CS-80 Reference.lib",
+      "type": "file",
+      "bytes": 2266,
+      "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+      "format_check": {
+        "format": "COFF import archive",
+        "archive_members": 9,
+        "coff_object_members": 3,
+        "short_import_members": 3
+      },
+      "included_in_vst3_payload_comparison": false
+    }
+  ],
+  "workflow_and_consumer_evidence": {
+    "workflow_path": ".github/workflows/build.yml",
+    "workflow_commit": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "workflow_source_pinned": true,
+    "uploaded_directory": "build/CS80Reference_artefacts/Release/VST3",
+    "download_directory": "vst3",
+    "selected_plugin": "vst3\\CS-80 Reference.vst3",
+    "required_command_logs": [
+      "pluginval-windows-seed-regression.log",
+      "pluginval-windows.log"
+    ],
+    "consumer_log": {
+      "file": "137726296450-windows-x86_64-validator.log",
+      "bytes": 46044,
+      "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec",
+      "artifact_download_identity_matched": true,
+      "started_validation_paths": [
+        "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3",
+        "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3"
+      ]
+    },
+    "excluded_container_paths": [
+      "CS-80 Reference.exp",
+      "CS-80 Reference.lib"
+    ],
+    "exclusion_rationale": "The committed workflow uploads the whole VST3 output directory, including the MSVC export object and import library. Both actual consumer invocations explicitly select its CS-80 Reference.vst3 subdirectory. Only this exact, format-checked top-level compiler sidecar pair is recorded separately; every member inside the selected bundle remains subject to strict equality."
+  },
+  "fixtures": {
+    "file": "windows-sidecar-fixture-results.json",
+    "sha256": "a112f5c99d661ecf4cca615a9174c3d739b0e382702841338592f72b41fdfc6e",
+    "positive_cases": 3,
+    "rejected_mutations": 22
+  },
+  "unchanged_comparison_function_sha256": {
+    "compare_maps": "66dc14a11b902ebf196aa69bd5f36c461fb294ecd394bcbbd44b23dff06729c6",
+    "finish_map": "ddb348e62849eb2aafbbe36b7c8d26a555e9b8161eefac7624f3163a7b7c0746",
+    "tar_payload": "cd118cb356c52415e09b25cce85e49bc38023ac2491f48cd13786c1d73aa16e5"
+  },
+  "selected_zip_member_handling_byte_identical": true,
+  "production_changes": false,
+  "scope": "Only retained offline verification tooling and its evidence documentation changed. Complete selected-bundle equality and all production CI/validator gates remain unchanged."
+}

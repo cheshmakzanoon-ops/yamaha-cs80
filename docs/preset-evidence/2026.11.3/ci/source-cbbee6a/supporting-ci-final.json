@@ -1,0 +1,827 @@
+{
+  "schema": 1,
+  "reviewer": "actual agent 56 of 60",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "reviewed_at_utc": "2026-11-23T13:35:13.819413+00:00",
+  "status": "completed_exact_source_supporting_evidence",
+  "runs": [
+    {
+      "id": 45176799301,
+      "name": "DSP numerical measurements",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301"
+    },
+    {
+      "id": 45176799293,
+      "name": "Hardware panel screenshots",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293"
+    }
+  ],
+  "dsp_jobs": [
+    {
+      "id": 137700036511,
+      "name": "measure",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install pinned numerical plotting tools",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build standalone numerical probe",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Measure and enforce regression bounds",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Export actual-engine candidate with exact-source provenance",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload live envelope candidate trace",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload source-traceable graphs and raw traces",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 137700036773,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test comparison failures and provenance gates",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Compare deterministic synthetic stand-in traces",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 137700037009,
+      "name": "sanitizers",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Configure ASan and UBSan core build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build instrument and circuit tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run sanitizer and validator-fixture tests",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 137700037102,
+      "name": "Default-off raw audio versus shipped baseline",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build both revisions with the same compiler",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Require byte-identical default and noisy-reassignment traces",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 137700037575,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "head_sha": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "status": "completed",
+      "conclusion": "success",
+      "required_steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build immutable circuit and audio checkpoints with one compiler",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Require unchanged seven-tone V1 circuit numerics",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Require unchanged source-audio V2 and numerical history",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "pending": [],
+  "qualification_failures": [],
+  "source_scope": {
+    "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+    "parent_source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "changed_paths": [
+      "src/tools/ui_snapshot.cpp",
+      "tests/ProgramLibraryHostTests.h"
+    ],
+    "objects": [
+      {
+        "path": "src/core",
+        "previous": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "current": "0b28faab1684c8d818e7e4e3a784fa254665f205"
+      },
+      {
+        "path": "scripts",
+        "previous": "7b5479718c0e2b68ee33afc1a4102b2cdeea3e68",
+        "current": "7b5479718c0e2b68ee33afc1a4102b2cdeea3e68"
+      },
+      {
+        "path": ".github/workflows",
+        "previous": "8290a1094ec61b527228098541b081c2ade37da0",
+        "current": "8290a1094ec61b527228098541b081c2ade37da0"
+      },
+      {
+        "path": "CMakeLists.txt",
+        "previous": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "current": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180"
+      }
+    ]
+  },
+  "native_workflow": {
+    "run_id": 45176799427,
+    "reviewer": "agent 54",
+    "scope": "Separate native workflow; not qualified by this supporting report."
+  },
+  "limits": [
+    "These tests do not establish exact acoustic, instrument, performance, or hardware identity.",
+    "The synthetic reference comparison is explicitly not hardware evidence.",
+    "CTest totals include Python/tool fixtures; they are not a count of distinct instrumented binaries.",
+    "Passing nested Python test output is not fully printed by output-on-failure; nested skip counts are not inferred.",
+    "Compatibility ZIPs contain reports and checksum records, not raw audio traces; successful required CI cmp steps compared those raw traces.",
+    "The filter-batch workflow did not rerun on this exact source; its prior result is separately scoped using unchanged inputs."
+  ],
+  "historical_sources": [
+    {
+      "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+      "summary": "../source-a81851b/supporting-ci-summary-0b81c3d.json",
+      "screenshot_run": 45159882253,
+      "screenshot_conclusion": "failure",
+      "screenshot_failure_count": 9,
+      "note": "Original failure and all nine assertion messages retained; never relabeled as successful.",
+      "dsp_run": 45159882226,
+      "dsp_conclusion": "cancelled",
+      "dsp_scope": "Four jobs passed; sanitizer job cancelled after supersession. Overall run remains cancelled."
+    },
+    {
+      "source": "a81851bc87b5ac16277c185585d36dec7ffe712e",
+      "summary": "../source-a81851b/supporting-ci-final.json",
+      "dsp_run": 45163325296,
+      "dsp_conclusion": "failure",
+      "sanitizer_job": 137654058236,
+      "sanitizer_counts": {
+        "registered": 198,
+        "passed": 196,
+        "failed": 1,
+        "formal_skipped": 1,
+        "disabled": 0
+      },
+      "failed_ctest": {
+        "id": 12,
+        "name": "cs80_packaging_notice_tests",
+        "status": "failed",
+        "seconds": 1.62
+      },
+      "failed_python_case": "NoticeTests.test_actual_ci_payload_and_archive_bytes",
+      "failure_location": "scripts/test-packaging-notices.py:111",
+      "failure_kind": "Documentation link-label assertion; not a sanitizer diagnostic or timeout.",
+      "observed_sanitizer_diagnostics": [],
+      "screenshot_run": 45163325385,
+      "screenshot_conclusion": "success",
+      "correction_source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "note": "Preserved failed run. Historical guide label corrected before current exact-source run; do not relabel the old run successful."
+    },
+    {
+      "source": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+      "native_run": 45168179474,
+      "summary": "../source-389a448/final-outcome/summary.json",
+      "known_windows_failures": [
+        "cs80_ui_smoke",
+        "cs80_circuit_source_host_tests",
+        "cs80_modern_recall_host_tests"
+      ],
+      "failure_kind": "Three Windows host-fixture SEGFAULTs; superseded native outcome retained separately by agent 54.",
+      "correction_source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "correction_scope": "Move large test-only processor fixtures to heap in src/tools/ui_snapshot.cpp and tests/ProgramLibraryHostTests.h; source diff independently verified."
+    }
+  ],
+  "parent_filter_evidence": {
+    "run_id": 45159882417,
+    "source": "0b81c3d1a42828accc1c4f3287b5551915303831",
+    "conclusion": "success",
+    "exact_current_source_run": false,
+    "qualification_scope": "Parent-source result with unchanged core and filter-workflow build inputs; not a new exact-source run.",
+    "lanes": [
+      {
+        "job_id": 137642238717,
+        "name": "clang++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "45cf6a240747607e683768106b38d6fb5f9c4a6b5a940c80b3176f903d489a9b",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239107,
+        "name": "g++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "d11e64315fd5f74fa4502ecb7ebf2c8f9ec7c6da1aa7056902556c266f6b351f",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239128,
+        "name": "g++ / batch DEFAULT",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "6aea8059d675cd273f78336ecf1a2706951baa0193e4ed1b678f7b519e10fd79",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239231,
+        "name": "clang++ / batch OFF",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "e057c76d53966c213db9ca9656fa33ee874b7a28cc42a1f7ee22048c99faff2b",
+        "clang_requested_batch_remains_scalar": false
+      },
+      {
+        "job_id": 137642239265,
+        "name": "clang++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "00b2487d8c4007dfa5269b49173773bdb30b31d477707e2ac7044fe540909355",
+        "clang_requested_batch_remains_scalar": true
+      },
+      {
+        "job_id": 137642239312,
+        "name": "g++ / batch ON",
+        "conclusion": "success",
+        "ctest_passed": 4,
+        "ctest_failed": 0,
+        "tests": [
+          "cs80_ig00156_batch_tests",
+          "cs80_filter_batch_engine_tests",
+          "cs80_filter_batch_scheduling_tests",
+          "cs80_filter_batch_admission_tests"
+        ],
+        "log_sha256": "dd5ee1594b0564444c896ef9870b9b19d1c76ec77c54b111d73c2e88d0b80f6b",
+        "clang_requested_batch_remains_scalar": false
+      }
+    ],
+    "unchanged_inputs": [
+      {
+        "path": "src/core",
+        "parent_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205",
+        "equal": true,
+        "current_git_object": "0b28faab1684c8d818e7e4e3a784fa254665f205"
+      },
+      {
+        "path": ".github/workflows/filter-batch.yml",
+        "parent_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+        "equal": true,
+        "current_git_object": "e56e10f7b248c8182fd9f077b561daadb53149c6"
+      },
+      {
+        "path": "CMakeLists.txt",
+        "parent_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180",
+        "equal": true,
+        "current_git_object": "e6991bbc39cdb6b6ec2370d334d55d0f090ee180"
+      },
+      {
+        "path": "src/experimental/ContinuousVoiceCircuit.h",
+        "parent_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+        "equal": true,
+        "current_git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3"
+      },
+      {
+        "path": "tests/test_filter_batch_admission.py",
+        "parent_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+        "equal": true,
+        "current_git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e"
+      }
+    ],
+    "complete_changed_paths_since_parent": [
+      ".github/workflows/screenshots.yml",
+      "docs/PRESET_GUIDE.md",
+      "docs/screenshots/SHA256SUMS",
+      "docs/screenshots/advanced-page1.png",
+      "docs/screenshots/advanced-page2.png",
+      "docs/screenshots/advanced-page3.png",
+      "docs/screenshots/advanced-page4.png",
+      "docs/screenshots/advanced-populated-page1.png",
+      "docs/screenshots/advanced-populated-page2.png",
+      "docs/screenshots/advanced-populated-page3.png",
+      "docs/screenshots/advanced-populated-page4.png",
+      "docs/screenshots/advanced-source-performance-about.png",
+      "docs/screenshots/advanced-sub-ext-enabled.png",
+      "docs/screenshots/browser-1600x1000.png",
+      "docs/screenshots/main-1120x700.png",
+      "docs/screenshots/main-1200x760.png",
+      "docs/screenshots/main-1600x1000.png",
+      "docs/screenshots/main-ext-enabled-1600x1000.png",
+      "docs/screenshots/main-populated-1600x1000.png",
+      "docs/screenshots/main-restored-1600x1000.png",
+      "docs/screenshots/memory-programmer-1600x1000.png",
+      "docs/screenshots/memory-programmer-selected-1600x1000.png",
+      "docs/screenshots/provenance.json",
+      "docs/screenshots/studio-drawers-1120x700.png",
+      "docs/screenshots/studio-drawers-1600x1000.png",
+      "src/tools/ui_snapshot.cpp",
+      "tests/PanelEditorTests.h",
+      "tests/ProgramLibraryHostTests.h"
+    ],
+    "current_comparison_source": "cbbee6a940985ad3c550768414960d2e1b1e802e"
+  },
+  "downloaded_compatibility_artifacts": [
+    {
+      "id": 14820291208,
+      "name": "cs80-source-factory-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "path": "source-factory-compatibility.zip",
+      "bytes": 984,
+      "sha256": "93809d6fb7f4ef93de63fcdfb7fcedc3e260ec12807c15be73e1c306a5e204e7",
+      "producer_job": 137700037575,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+        },
+        {
+          "circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "producer_log": {
+        "path": "source_compat.log",
+        "bytes": 20944,
+        "sha256": "0dca7afb1fcfcb809846161c4f603a2f776db9339cc23e78db254639218f7c51"
+      },
+      "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+    },
+    {
+      "id": 14820386968,
+      "name": "cs80-legacy-compatibility-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "path": "legacy-compatibility.zip",
+      "bytes": 29436,
+      "sha256": "5c94f6876eb3b737929f01530728a04a7dfdd8d75442e62882a6c0c2d1b38c63",
+      "producer_job": 137700037102,
+      "producer_conclusion": "success",
+      "upload_log_id_size_digest_match": true,
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "raw_trace_hash_pairs": [
+        {
+          "baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+        },
+        {
+          "baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        }
+      ],
+      "raw_traces_uploaded": false,
+      "producer_log": {
+        "path": "legacy.log",
+        "bytes": 19256,
+        "sha256": "d72e28d5f1609f4ab23428d709b6105d65352c57ad2b793267ed36e6b266b744"
+      },
+      "verification_scope": "Downloaded report/checksum/corpus bytes and successful producer; required CI cmp steps compare raw traces."
+    }
+  ],
+  "screenshots": {
+    "run_id": 45176799293,
+    "job_id": 137700035971,
+    "run_attempt": 1,
+    "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "status": "completed",
+    "conclusion": "success",
+    "required_steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install official Ubuntu build dependencies",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Configure exact source",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build screenshot renderer and core tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify core",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Capture actual editor at every supported size and page",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Publish screenshot evidence",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Refresh repository screenshots from this exact source",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "full_ui_smoke": "UI SMOKE TEST PASSED",
+    "golden_images": [
+      {
+        "name": "main-1600x1000",
+        "changed_pixel_percent": 0.0,
+        "worst_8x8_block_mean": 0.0
+      },
+      {
+        "name": "main-1120x700",
+        "changed_pixel_percent": 0.0,
+        "worst_8x8_block_mean": 0.0
+      }
+    ],
+    "artifact": {
+      "id": 14819867427,
+      "name": "cs80-panel-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "bytes": 62105463,
+      "sha256": "22a19a8d180430c1e5968ffcd61e39cc10a9d26b0875208b5d46a0e633bf51c1",
+      "upload_log_id_size_digest_match": true,
+      "downloaded_by_this_reviewer": false,
+      "scope": "API metadata and successful producer log verified; screenshot ZIP payload not downloaded by this reviewer."
+    },
+    "log": {
+      "path": "screens-final.log",
+      "bytes": 110084,
+      "sha256": "0b2ab735789d85db81dd97bf7562717e514d9225bc929626db640f89d90a6471"
+    },
+    "assertion_failure_messages": [],
+    "assertion_failures": 0,
+    "instrument_body_host_identity_and_recall_phase_completed": true,
+    "instrument_body_host_phase_seconds": 1.199187,
+    "repository_screenshot_refresh": {
+      "step_conclusion": "success",
+      "main_head_after_refresh": "75853ad6c0ebfceaa14a61a3613d4ce73a2cba79",
+      "bot_commit": "75853ad6c0ebfceaa14a61a3613d4ce73a2cba79",
+      "parent": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "changed_paths": [
+        "docs/screenshots/SHA256SUMS",
+        "docs/screenshots/advanced-page1.png",
+        "docs/screenshots/advanced-page2.png",
+        "docs/screenshots/advanced-page3.png",
+        "docs/screenshots/advanced-page4.png",
+        "docs/screenshots/advanced-populated-page1.png",
+        "docs/screenshots/advanced-populated-page2.png",
+        "docs/screenshots/advanced-populated-page3.png",
+        "docs/screenshots/advanced-populated-page4.png",
+        "docs/screenshots/advanced-source-performance-about.png",
+        "docs/screenshots/advanced-sub-ext-enabled.png",
+        "docs/screenshots/browser-1600x1000.png",
+        "docs/screenshots/main-ext-enabled-1600x1000.png",
+        "docs/screenshots/main-populated-1600x1000.png",
+        "docs/screenshots/main-restored-1600x1000.png",
+        "docs/screenshots/main-source-performance-1120x700.png",
+        "docs/screenshots/memory-programmer-1600x1000.png",
+        "docs/screenshots/memory-programmer-selected-1600x1000.png",
+        "docs/screenshots/provenance.json",
+        "docs/screenshots/studio-drawers-1120x700.png"
+      ],
+      "only_screenshot_documentation_changed": true
+    }
+  },
+  "sanitizers": {
+    "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "run_id": 45176799301,
+    "run_attempt": 1,
+    "job_id": 137700037009,
+    "status": "completed",
+    "overall_job_conclusion": "success",
+    "counts": {
+      "registered": 198,
+      "passed": 197,
+      "failed": 0,
+      "formal_skipped": 1,
+      "disabled": 0
+    },
+    "formal_skips": [
+      {
+        "index": 79,
+        "name": "cs80_stereo_pra_exact_tests",
+        "result": "***Skipped",
+        "seconds": 0.01,
+        "status": "skipped"
+      }
+    ],
+    "observed_sanitizer_diagnostics": [],
+    "asan_options": "detect_leaks=1:halt_on_error=1",
+    "ubsan_options": "halt_on_error=1:print_stacktrace=1",
+    "scope": "Only results actually executed on this exact source; previous a818 results are separately retained.",
+    "log": {
+      "path": "sanitizers-final.log",
+      "bytes": 111333,
+      "sha256": "1da8993fa995e052ff87012d4a8f4c7f24a0ae2ecaa7935ecb7cd0c7e7b057dc"
+    },
+    "case_results": {
+      "path": "sanitizer-cases.json",
+      "bytes": 30802,
+      "sha256": "bf3bdbdddca29a0a9f47f8b4e43067265046ecb070df16b695113f1390d3011a"
+    },
+    "sanitizer_environment_confirmed_in_log": true,
+    "failed_cases": [],
+    "body_and_preset_cases": [
+      {
+        "id": 149,
+        "name": "cs80_instrument_body_tests",
+        "status": "passed",
+        "seconds": 3.16
+      },
+      {
+        "id": 150,
+        "name": "cs80_instrument_body_engine_tests",
+        "status": "passed",
+        "seconds": 28.98
+      },
+      {
+        "id": 152,
+        "name": "cs80_preset_voicing_tests",
+        "status": "passed",
+        "seconds": 80.67
+      },
+      {
+        "id": 153,
+        "name": "cs80_preset_character_tests",
+        "status": "passed",
+        "seconds": 31.08
+      },
+      {
+        "id": 154,
+        "name": "cs80_preset_precision_tests",
+        "status": "passed",
+        "seconds": 228.26
+      },
+      {
+        "id": 151,
+        "name": "cs80_library_audit_tests",
+        "status": "passed",
+        "seconds": 1516.09
+      }
+    ],
+    "ctest_total_seconds": 2755.01,
+    "ctest_exit_code": 0
+  },
+  "ancillary_upstream_history": {
+    "comparison_run_id": 45176865558,
+    "comparison_workflow_revision": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+    "conclusion": "failure",
+    "source_native_run": 45168179474,
+    "source_binary_commit": "389a44807813b3dff24847b2c496623ff0a9f4a7",
+    "jobs": [
+      {
+        "id": 137700261590,
+        "name": "Official beta3 / gui-current-regression / 0x3ca4063",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 137700261812,
+        "name": "Official beta3 / gui-inclusive / 0x63421ca",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 137700262000,
+        "name": "Official beta3 / headless-subset / 0x4f31605",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ],
+    "failure": "Expected exactly one non-expired cs80-linux-vst3 artifact",
+    "validator_executed": false,
+    "scope": "Triggered by superseded native run45168179474; comparison workflow revision cbbee6a does not make it a test of cbbee6a plugin bytes.",
+    "logs": [
+      {
+        "path": "upstream_gui_current.log",
+        "bytes": 13068,
+        "sha256": "eafe7b9714bc8024d3d5f44ae0cbfdb8719641d2065f5b4b77553787a3ea92f6"
+      },
+      {
+        "path": "upstream_gui.log",
+        "bytes": 13023,
+        "sha256": "453eab5ea7007e8352a8b317bc0626f5411c0e0cca04e99b8434700e895c7105"
+      },
+      {
+        "path": "upstream_headless.log",
+        "bytes": 13030,
+        "sha256": "41b60e9abaa27e310e5664ee7aa02b582f5f8f17a60d86ebbdf4295e91f9596f"
+      }
+    ]
+  }
+}

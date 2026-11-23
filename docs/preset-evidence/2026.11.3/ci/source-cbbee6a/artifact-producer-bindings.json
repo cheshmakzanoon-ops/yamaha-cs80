@@ -1,0 +1,323 @@
+{
+  "schema": 1,
+  "status": "all_required_producer_and_consumer_bindings_passed",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "source_tree": "ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2",
+  "run_id": 45176799427,
+  "run_attempt": 1,
+  "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+  "required_artifact_bindings": 7,
+  "required_validator_input_bindings": 2,
+  "artifact_bindings": [
+    {
+      "artifact_id": 14837191097,
+      "artifact_name": "cs80-linux-install-bundle",
+      "size_in_bytes": 13282726,
+      "digest": "sha256:f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "installation",
+      "producer_job_id": 137700037238,
+      "producer_job_name": "Linux / VST3 + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload Linux install bundle",
+      "producer_step_number": 14,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T16:03:31Z",
+      "producer_step_completed_at": "2026-11-23T16:03:33Z",
+      "created_at": "2026-11-23T16:03:33Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-linux-install-bundle has been successfully uploaded! Final size is 13282726 bytes. Artifact ID is 14837191097",
+        "digest_line": "SHA256 digest of uploaded artifact zip is f1bd9e5fe4776c4080832af575e7b596e56cf1f394dffc39b651b81779f93f76"
+      },
+      "job_log": {
+        "job_id": 137700037238,
+        "job_name": "Linux / VST3 + Standalone",
+        "path": "job-logs/137700037238-linux-x86_64-native.log",
+        "bytes": 452948,
+        "sha256": "c7c465eb933c65fba3878f748c5c351a2ba7c954c3b313426518328d5e1d7f8e"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14822019089,
+      "artifact_name": "cs80-windows-install-bundle",
+      "size_in_bytes": 6323870,
+      "digest": "sha256:8fe6ee8249ab5818acc99be4c73d8780ecf0f20729f4659175cce5202bac0346",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "installation",
+      "producer_job_id": 137700037337,
+      "producer_job_name": "Windows / VST3 + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload Windows install bundle",
+      "producer_step_number": 10,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T13:29:29Z",
+      "producer_step_completed_at": "2026-11-23T13:29:31Z",
+      "created_at": "2026-11-23T13:29:31Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-windows-install-bundle has been successfully uploaded! Final size is 6323870 bytes. Artifact ID is 14822019089",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 8fe6ee8249ab5818acc99be4c73d8780ecf0f20729f4659175cce5202bac0346"
+      },
+      "job_log": {
+        "job_id": 137700037337,
+        "job_name": "Windows / VST3 + Standalone",
+        "path": "job-logs/137700037337-windows-x86_64-native.log",
+        "bytes": 136805,
+        "sha256": "a5efc61db2a2a2c2647d368a565cb97a415962fb320e79d93c72f062c7c09c81"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14820874764,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "size_in_bytes": 14933623,
+      "digest": "sha256:be2447d5f726543612198b19dd1257e840ae538eb90180e67e3dbda73a376d83",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "installation",
+      "producer_job_id": 137700037485,
+      "producer_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload native macOS install bundle",
+      "producer_step_number": 15,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T13:14:34Z",
+      "producer_step_completed_at": "2026-11-23T13:14:37Z",
+      "created_at": "2026-11-23T13:14:37Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-macos-15-install-bundle has been successfully uploaded! Final size is 14933623 bytes. Artifact ID is 14820874764",
+        "digest_line": "SHA256 digest of uploaded artifact zip is be2447d5f726543612198b19dd1257e840ae538eb90180e67e3dbda73a376d83"
+      },
+      "job_log": {
+        "job_id": 137700037485,
+        "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "path": "job-logs/137700037485-macos-arm64.log",
+        "bytes": 229216,
+        "sha256": "3e3c0bf34c877011b663876c226653657798d0d1a3cbb07b38397af0ddb8811c"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14822214497,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "size_in_bytes": 16090841,
+      "digest": "sha256:37a5e414b689f76de3b3dea40b3764a6c764ee3bb08696d903af2f7695e4493f",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "installation",
+      "producer_job_id": 137700037479,
+      "producer_job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload native macOS install bundle",
+      "producer_step_number": 15,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T13:43:12Z",
+      "producer_step_completed_at": "2026-11-23T13:43:15Z",
+      "created_at": "2026-11-23T13:43:15Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-macos-15-intel-install-bundle has been successfully uploaded! Final size is 16090841 bytes. Artifact ID is 14822214497",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 37a5e414b689f76de3b3dea40b3764a6c764ee3bb08696d903af2f7695e4493f"
+      },
+      "job_log": {
+        "job_id": 137700037479,
+        "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+        "path": "job-logs/137700037479-macos-x86_64.log",
+        "bytes": 232363,
+        "sha256": "b34f1868f69d3997eda9c67fb21756cb273a3a807a5421e5c6e43fe2e76552d6"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14836886459,
+      "artifact_name": "cs80-curated-preset-audition-cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "size_in_bytes": 204465925,
+      "digest": "sha256:3a4b57fc49e05aef9bd233dd7eb129165d4b5514feb2c6c914e858e271a223ff",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "audition",
+      "producer_job_id": 137700037238,
+      "producer_job_name": "Linux / VST3 + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload curated preset auditions",
+      "producer_step_number": 9,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T16:01:35Z",
+      "producer_step_completed_at": "2026-11-23T16:01:44Z",
+      "created_at": "2026-11-23T16:01:44Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-curated-preset-audition-cbbee6a940985ad3c550768414960d2e1b1e802e has been successfully uploaded! Final size is 204465925 bytes. Artifact ID is 14836886459",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 3a4b57fc49e05aef9bd233dd7eb129165d4b5514feb2c6c914e858e271a223ff"
+      },
+      "job_log": {
+        "job_id": 137700037238,
+        "job_name": "Linux / VST3 + Standalone",
+        "path": "job-logs/137700037238-linux-x86_64-native.log",
+        "bytes": 452948,
+        "sha256": "c7c465eb933c65fba3878f748c5c351a2ba7c954c3b313426518328d5e1d7f8e"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14836566834,
+      "artifact_name": "cs80-linux-vst3",
+      "size_in_bytes": 6916689,
+      "digest": "sha256:74b81c73bdb2dd3b88c9eccaddcaeb0f394263975a8fd25aaacbc9e30ed38a89",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "validator_input",
+      "producer_job_id": 137700037238,
+      "producer_job_name": "Linux / VST3 + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload Linux VST3",
+      "producer_step_number": 10,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T16:01:44Z",
+      "producer_step_completed_at": "2026-11-23T16:01:46Z",
+      "created_at": "2026-11-23T16:01:46Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-linux-vst3 has been successfully uploaded! Final size is 6916689 bytes. Artifact ID is 14836566834",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 74b81c73bdb2dd3b88c9eccaddcaeb0f394263975a8fd25aaacbc9e30ed38a89"
+      },
+      "job_log": {
+        "job_id": 137700037238,
+        "job_name": "Linux / VST3 + Standalone",
+        "path": "job-logs/137700037238-linux-x86_64-native.log",
+        "bytes": 452948,
+        "sha256": "c7c465eb933c65fba3878f748c5c351a2ba7c954c3b313426518328d5e1d7f8e"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    },
+    {
+      "artifact_id": 14821979268,
+      "artifact_name": "cs80-windows-vst3",
+      "size_in_bytes": 3168094,
+      "digest": "sha256:9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "payload_role": "validator_input",
+      "producer_job_id": 137700037337,
+      "producer_job_name": "Windows / VST3 + Standalone",
+      "producer_job_conclusion": "success",
+      "producer_step": "Upload Windows VST3",
+      "producer_step_number": 8,
+      "producer_step_conclusion": "success",
+      "producer_step_started_at": "2026-11-23T13:29:24Z",
+      "producer_step_completed_at": "2026-11-23T13:29:26Z",
+      "created_at": "2026-11-23T13:29:26Z",
+      "expires_at": "2027-02-21T12:42:09Z",
+      "console_match": {
+        "name_id_size": true,
+        "digest": true,
+        "name_id_size_line": "Artifact cs80-windows-vst3 has been successfully uploaded! Final size is 3168094 bytes. Artifact ID is 14821979268",
+        "digest_line": "SHA256 digest of uploaded artifact zip is 9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46"
+      },
+      "job_log": {
+        "job_id": 137700037337,
+        "job_name": "Windows / VST3 + Standalone",
+        "path": "job-logs/137700037337-windows-x86_64-native.log",
+        "bytes": 136805,
+        "sha256": "a5efc61db2a2a2c2647d368a565cb97a415962fb320e79d93c72f062c7c09c81"
+      },
+      "upload_timestamp_allowance_seconds": 2
+    }
+  ],
+  "validator_input_bindings": [
+    {
+      "artifact_id": 14836566834,
+      "artifact_name": "cs80-linux-vst3",
+      "size_in_bytes": 6916689,
+      "digest": "sha256:74b81c73bdb2dd3b88c9eccaddcaeb0f394263975a8fd25aaacbc9e30ed38a89",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "consumer_job_id": 137823582986,
+      "consumer_job_name": "pluginval / Linux VST3 (strictness 10)",
+      "consumer_job_conclusion": "success",
+      "consumer_step": "Download Linux VST3",
+      "consumer_step_number": 3,
+      "consumer_step_conclusion": "success",
+      "consumer_step_started_at": "2026-11-23T16:03:52Z",
+      "consumer_step_completed_at": "2026-11-23T16:03:55Z",
+      "console_match": {
+        "artifact_name": true,
+        "artifact_id": true
+      },
+      "job_log": {
+        "job_id": 137823582986,
+        "job_name": "pluginval / Linux VST3 (strictness 10)",
+        "path": "job-logs/137823582986-linux-x86_64-validator.log",
+        "bytes": 81430,
+        "sha256": "b79981a4f20541ff855409bbecbe311606c6613feb8ea85c8e6ad8fc94875b35"
+      }
+    },
+    {
+      "artifact_id": 14821979268,
+      "artifact_name": "cs80-windows-vst3",
+      "size_in_bytes": 3168094,
+      "digest": "sha256:9df53ab124076a363645d0e47adf509d4bd23286b0addb7ec035596931ba7b46",
+      "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+      "run_id": 45176799427,
+      "run_attempt": 1,
+      "consumer_job_id": 137726296450,
+      "consumer_job_name": "pluginval / Windows VST3 (strictness 10)",
+      "consumer_job_conclusion": "success",
+      "consumer_step": "Download Windows VST3",
+      "consumer_step_number": 3,
+      "consumer_step_conclusion": "success",
+      "consumer_step_started_at": "2026-11-23T13:29:51Z",
+      "consumer_step_completed_at": "2026-11-23T13:29:52Z",
+      "console_match": {
+        "artifact_name": true,
+        "artifact_id": true
+      },
+      "job_log": {
+        "job_id": 137726296450,
+        "job_name": "pluginval / Windows VST3 (strictness 10)",
+        "path": "job-logs/137726296450-windows-x86_64-validator.log",
+        "bytes": 46044,
+        "sha256": "34c6d0fb3140ba55808d1dffbd6764985a04b974faaeaaa4ebcc2bccfc2835ec"
+      }
+    }
+  ],
+  "api_evidence": {
+    "jobs": {
+      "path": "snapshots/api/jobs-final-api-3868da109546aae93e3aa7e3cd636f982398021aa88ff593a7cf5a306cd0c2c4.json",
+      "bytes": 22221,
+      "sha256": "3868da109546aae93e3aa7e3cd636f982398021aa88ff593a7cf5a306cd0c2c4"
+    },
+    "artifacts": {
+      "path": "snapshots/api/artifacts-final-api-671d2b19bf325544cc79831a6347b3a68adb0882e699935067ae38da222ffb91.json",
+      "bytes": 11500,
+      "sha256": "671d2b19bf325544cc79831a6347b3a68adb0882e699935067ae38da222ffb91"
+    }
+  },
+  "payload_scope": "Original producer/consumer metadata and full log bindings. Actual seven payload ZIPs are inspected separately by root; this file does not claim their payload acceptance.",
+  "qualified_at_utc": "2026-11-23T16:06:33.275637+00:00"
+}

@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "status": "payload_checks_passed_pending_workflow_step_binding",
+  "source": "cbbee6a940985ad3c550768414960d2e1b1e802e",
+  "run_id": 45176799427,
+  "artifact_id": 14835594564,
+  "artifact_name": "cs80-pluginval-reports",
+  "archive_bytes": 8902,
+  "archive_sha256": "dd199c9c5dd63338b446193f8d35d60b95beb5415ab1873e9d54703fb822b6f2",
+  "required_lanes": 3,
+  "validation_invocations": 3,
+  "validation_retries": 0,
+  "version_evidence": {
+    "path": "pluginval-version.txt",
+    "bytes": 18,
+    "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f",
+    "version": "1.0.4",
+    "text": "pluginval - 1.0.4"
+  },
+  "lanes": [
+    {
+      "step": "Validate VST3 headless",
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "seed": "0x673ebde",
+      "fixed_seed": null,
+      "console": {
+        "path": "pluginval-headless.log",
+        "bytes": 7282,
+        "sha256": "7a84d72d80799c3a2f66da4cf7df0891fab561cd53ebdf81cc11983a48a683cd"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-headless",
+        "bytes": 7194,
+        "sha256": "2b87e972e113aef07806283114fde9c71c70414cf452b35748233a80c667efe8"
+      },
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "original_terminations": [
+        {
+          "pid": 2683,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0"
+        }
+      ],
+      "core_log": {
+        "path": "pluginval-headless-core.log",
+        "bytes": 443,
+        "sha256": "ae0d45f9db5fb1bb48c8ec86aceeab94f892ca33713c5a4066f17d9246ef3280"
+      },
+      "final_raw_exit": 0,
+      "exit_basis": "Original process return code recorded by diagnostic wrapper; successful required workflow step checked separately."
+    },
+    {
+      "step": "Validate VST3 GUI under Xvfb",
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "seed": "0x4ddd989",
+      "fixed_seed": null,
+      "console": {
+        "path": "pluginval-gui.log",
+        "bytes": 7964,
+        "sha256": "c36df7323b4c3e6b987532116e9423d28a74aac0d154543cfd1b4322a8ccfceb"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-gui",
+        "bytes": 7876,
+        "sha256": "d376240ce1a027d28732c4c4fc13ce50ebee8b22288bdd3dd761bf3fa242ab86"
+      },
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "original_terminations": [
+        {
+          "pid": 2714,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0"
+        }
+      ],
+      "core_log": {
+        "path": "pluginval-gui-core.log",
+        "bytes": 443,
+        "sha256": "ac80b4356bdd079f803207bae521b7afb0a2d3a94404a255b64c0579ff3b58df"
+      },
+      "final_raw_exit": 0,
+      "exit_basis": "Original process return code recorded by diagnostic wrapper; successful required workflow step checked separately."
+    },
+    {
+      "step": "Validate GUI state regression seed 0x2da72db",
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "seed": "0x2da72db",
+      "fixed_seed": "0x2da72db",
+      "console": {
+        "path": "pluginval-gui-seed-regression.log",
+        "bytes": 7964,
+        "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-gui-seed-regression",
+        "bytes": 7876,
+        "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+      },
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ],
+      "preserved_failed_attempts": [],
+      "validation_retries": 0,
+      "validation_invocations": 1,
+      "original_terminations": [
+        {
+          "pid": 2758,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0"
+        }
+      ],
+      "core_log": {
+        "path": "pluginval-gui-seed-regression-core.log",
+        "bytes": 443,
+        "sha256": "c8b3f563fbadb7b4654973fb679d900887b63562a7125478478968d7df39d436"
+      },
+      "final_raw_exit": 0,
+      "exit_basis": "Original process return code recorded by diagnostic wrapper; successful required workflow step checked separately."
+    }
+  ]
+}

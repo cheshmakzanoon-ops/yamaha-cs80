@@ -1,0 +1,47 @@
+218/227 Testing: cs80_ui_smoke
+218/227 Test: cs80_ui_smoke
+Command: "D:/a/yamaha-cs80/yamaha-cs80/build/CS80Snapshots_artefacts/Release/CS80Snapshots.exe" "--out" "D:/a/yamaha-cs80/yamaha-cs80/build/ui-smoke" "--self-test"
+Directory: D:/a/yamaha-cs80/yamaha-cs80/build
+"cs80_ui_smoke" start time: Nov 23 12:32 Coordinated Universal Time
+Output:
+----------------------------------------------------------
+UI SMOKE START: processor=437792 bytes engine=386968 bytes
+UI SMOKE PHASE: JUCE initialization
+UI SMOKE TIMING: phase=JUCE initialization seconds=0.002706 total_seconds=0.002708
+UI SMOKE PHASE: host metadata
+HOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1
+HOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1
+UI SMOKE TIMING: phase=host metadata seconds=6.483622 total_seconds=6.486330
+UI SMOKE PHASE: output meter host
+Typed-value formatter compatibility: 990 cases, 990 accepted, digest b7af992766b6e83f
+UI SMOKE TIMING: phase=output meter host seconds=14.458552 total_seconds=20.944882
+UI SMOKE PHASE: source performance host
+UI SMOKE TIMING: phase=source performance host seconds=0.481321 total_seconds=21.426203
+UI SMOKE PHASE: ws3 keyboard/tuning host
+UI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=3.063677 total_seconds=24.489879
+UI SMOKE PHASE: preset recall host
+UI SMOKE TIMING: phase=preset recall host seconds=0.499680 total_seconds=24.989559
+UI SMOKE PHASE: instrument body host identity and recall
+UI SMOKE TIMING: phase=instrument body host identity and recall seconds=2.897492 total_seconds=27.887051
+UI SMOKE PHASE: preset file host
+UI SMOKE TIMING: phase=preset file host seconds=0.917320 total_seconds=28.804371
+UI SMOKE PHASE: session schema host
+UI SMOKE TIMING: phase=session schema host seconds=4.781597 total_seconds=33.585968
+UI SMOKE PHASE: session undo host
+UI SMOKE TIMING: phase=session undo host seconds=0.532665 total_seconds=34.118632
+UI SMOKE PHASE: engine I/O host
+UI SMOKE TIMING: phase=engine I/O host seconds=8.556376 total_seconds=42.675008
+UI SMOKE PHASE: editor initial size
+Editor initial size: 1120x700; logical usable display: 1024x728
+UI SMOKE TIMING: phase=editor initial size seconds=0.045570 total_seconds=42.720578
+UI SMOKE PHASE: external input host
+UI SMOKE TIMING: phase=external input host seconds=1.855225 total_seconds=44.575803
+UI SMOKE PHASE: circuit performance and retired policy host
+<end of output>
+Test time =  44.59 sec
+----------------------------------------------------------
+Test Failed.
+"cs80_ui_smoke" end time: Nov 23 12:33 Coordinated Universal Time
+"cs80_ui_smoke" time elapsed: 00:00:44
+----------------------------------------------------------
+
