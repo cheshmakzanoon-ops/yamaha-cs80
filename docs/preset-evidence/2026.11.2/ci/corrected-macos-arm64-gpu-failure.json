@@ -1,0 +1,167 @@
+{
+  "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "run_id": 45091496524,
+  "attempt": 1,
+  "job_id": 137421859961,
+  "target": "macos-arm64",
+  "job_conclusion": "failure",
+  "native": {
+    "registered": 247,
+    "passed": 245,
+    "failures": 0,
+    "disabled": 0,
+    "formal_skips": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "nested_python_skips": [
+      {
+        "ctest": "cs80_package_binary_identity_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_packaging_notice_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_windows_installer_preflight_tests",
+        "count": 2
+      },
+      {
+        "ctest": "cs80_render_cli_tests",
+        "count": 1
+      }
+    ],
+    "ctest_seconds": 1247.82
+  },
+  "validators": [
+    {
+      "name": "VST3 headless",
+      "seed": "0x2672fd2",
+      "step": "success",
+      "exit": 0,
+      "success_text": true
+    },
+    {
+      "name": "AU headless",
+      "seed": "0xb289d2",
+      "step": "success",
+      "exit": 0,
+      "auval_exit": 0,
+      "success_text": true
+    },
+    {
+      "name": "AU GUI",
+      "seed": "0x2b4eef5",
+      "step": "failure",
+      "exit": 9,
+      "success_text": false,
+      "phase": "Editor Automation",
+      "reported_signal": "Abort trap: 6",
+      "assertion": "Assertion failed: (_commandCurrentStorage.currentOffset), function -[AppleParavirtCommandBuffer endCurrentChunk], file AppleParavirtCommandBuffer.mm, line 266.",
+      "report_bytes": 0
+    }
+  ],
+  "pluginval_download": {
+    "repository": "Tracktion/pluginval",
+    "version": "1.0.4",
+    "release_id": 188928656,
+    "asset_id": 210999197,
+    "asset_name": "pluginval_macOS.zip",
+    "expected_size": 9202795,
+    "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+    "attempts": [
+      {
+        "number": 1,
+        "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+        "reason": "api_forbidden",
+        "http_status": 403,
+        "transfer_exit": 12
+      },
+      {
+        "number": 2,
+        "source_url": "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_macOS.zip",
+        "reason": "downloaded",
+        "bytes": 9202795,
+        "final_host": "release-assets.githubusercontent.com",
+        "transfer_exit": 0
+      }
+    ],
+    "verified": true,
+    "actual_size": 9202795,
+    "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+  },
+  "validator_artifact_members": [
+    {
+      "path": "pluginval-reports/cs80-au",
+      "bytes": 7213,
+      "sha256": "ab28302d3de4fb2cb346d818b4da4bedb26305de5e2b38926627f72421a268a2"
+    },
+    {
+      "path": "pluginval-download.json",
+      "bytes": 918,
+      "sha256": "d970efc590335f1afb232c1e89426abcdc29fc8afe3d538c55ba95b91346f0a1"
+    },
+    {
+      "path": "pluginval-reports/cs80-au-gui",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pluginval-reports/cs80-vst3",
+      "bytes": 7272,
+      "sha256": "e8ddd6e8d50858b314614bafe269d06099bd01e377f5d2334e195519b2a672df"
+    },
+    {
+      "path": "pluginval-vst3.log",
+      "bytes": 7399,
+      "sha256": "910482f6f36502005d0ed78666a98c83386b8ed5bb223c4e2f3ac26959783c78"
+    },
+    {
+      "path": "pluginval-au.log",
+      "bytes": 7307,
+      "sha256": "f4efc3131ef341f60df46aaa34c5435733aee684f499a370b13605e143705db3"
+    },
+    {
+      "path": "pluginval-au-gui.log",
+      "bytes": 5862,
+      "sha256": "9405b0517af41ef7a2c71cd3249dcbe4b1ecd65a709f3ed4134be49cc06825c6"
+    }
+  ],
+  "packaging": "skipped",
+  "acceptance": "blocked",
+  "cause": "The failing assertion is in AppleParavirtCommandBuffer during Editor Automation; no stack/core identifies the underlying cause. Graphics-stack involvement is supported; exclusive runner versus plugin ownership is unresolved.",
+  "limits": [
+    "No rerun or source edit performed.",
+    "No install bundle produced or accepted.",
+    "VST3 external Steinberg validator was skipped because its path was unset.",
+    "This failed original attempt remains separate from any future retry."
+  ],
+  "retained_files": [
+    {
+      "path": "artifacts-api.json",
+      "bytes": 1669,
+      "sha256": "d849573a197ee59d2735acb6709709863b4be809192e94e93c62e78fc28938ed"
+    },
+    {
+      "path": "job-api.json",
+      "bytes": 2838,
+      "sha256": "ba0c3584674c4630d135e5eee5abbb52a05afc707a61cf5feddbf9e6d35b8d77"
+    },
+    {
+      "path": "job.log",
+      "bytes": 212099,
+      "sha256": "03abc58019a48ffe9bc9771463cd7ff9d6f3d3487a9240e01941c30a27a920ec"
+    },
+    {
+      "path": "native-tests-14782703377.zip",
+      "bytes": 62543,
+      "sha256": "c74aa3b92888c449e8f3ad2b110fa719a3cb07980c7ebfa292bc21342c5e2abd"
+    },
+    {
+      "path": "pluginval-14782623235.zip",
+      "bytes": 6134,
+      "sha256": "733a9458567b99a7d0e66e550a3da83a630b3a10da8cbd78ba2c91fd389fa4a1"
+    }
+  ]
+}

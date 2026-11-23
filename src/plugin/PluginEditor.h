@@ -15,6 +15,7 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override;
+    bool wantsLayerBackedView() const override;
 
     void showAdvancedPanel(bool shouldShow);
     void showAdvancedPage(int pageIndex);

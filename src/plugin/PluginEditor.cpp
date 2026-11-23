@@ -2332,6 +2332,20 @@ Cs80AudioProcessorEditor::~Cs80AudioProcessorEditor()
     impl.reset();
 }
 
+bool Cs80AudioProcessorEditor::wantsLayerBackedView() const
+{
+   #if JUCE_MAC
+    // Request JUCE's synchronous CoreGraphics peer before the AU/VST3 wrapper
+    // attaches the editor. The asynchronous layer-backed AU view aborted in
+    // AppleParavirtCommandBuffer during native editor-automation validation.
+    // The host can still composite its own window; full GUI validation remains
+    // required, including the recorded failing seed.
+    return false;
+   #else
+    return juce::AudioProcessorEditor::wantsLayerBackedView();
+   #endif
+}
+
 void Cs80AudioProcessorEditor::paint(juce::Graphics& g)
 {
     g.fillAll(ui::charcoal);

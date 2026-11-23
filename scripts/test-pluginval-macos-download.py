@@ -304,8 +304,34 @@ class DownloadTests(unittest.TestCase):
         macos = workflow.split("  macos:", 1)[1].split("  windows:", 1)[0]
         gate = macos.split("      - name: Register built AU", 1)[1].split(
             "      - name: Package native macOS", 1)[0]
-        self.assertEqual(hashlib.sha256(gate.encode()).hexdigest(),
+        # Keep the original registration and all three validator commands byte
+        # for byte. The additional failing-seed replay has its own exact body
+        # contract, so no original gate can be hidden in an excluded region.
+        seed_step = "      - name: Validate AU GUI fixed-seed regression\n"
+        self.assertEqual(gate.count(seed_step), 1)
+        original_gate, seed_regression = gate.split(seed_step, 1)
+        self.assertEqual(hashlib.sha256(original_gate.encode()).hexdigest(),
                          "17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84")
+        self.assertEqual(seed_regression,
+                         "        run: |\n"
+                         "          set -euo pipefail\n"
+                         "          ./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n"
+                         "            --strictness-level 10 \\\n"
+                         "            --validate-in-process \\\n"
+                         "            --random-seed 0x2b4eef5 \\\n"
+                         "            --timeout-ms 120000 \\\n"
+                         "            --output-dir pluginval-reports \\\n"
+                         "            --output-filename cs80-au-seed-regression \\\n"
+                         "            \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n"
+                         "            2>&1 | tee pluginval-au-seed-regression.log\n"
+                         "          grep -qx 'SUCCESS' pluginval-au-seed-regression.log\n\n")
+        failure = macos.split("      - name: Report pluginval failure", 1)[1].split(
+            "      - name: Upload pluginval reports", 1)[0]
+        self.assertIn("          for log in pluginval-vst3.log pluginval-au.log "
+                      "pluginval-au-gui.log pluginval-au-seed-regression.log; do\n", failure)
+        upload = macos.split("      - name: Upload pluginval reports", 1)[1].split(
+            "      - name: Upload test and JUCE source evidence", 1)[0]
+        self.assertIn("            pluginval-au-seed-regression.log\n", upload)
         fetch = macos.split("      - name: Fetch pluginval", 1)[1].split(
             "      # Audio Unit hosts", 1)[0]
         self.assertIn("timeout-minutes: 5", fetch)

@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "scope": "Local compilation, focused panel/layout checks and additive workflow-gate checks. macOS runtime qualification is pending for the next native build.",
+  "parent_commit": "6f6255623caa0db6ef232002b8adc0d2f390e1b9",
+  "observed_failure": "corrected-macos-arm64-gpu-failure.json",
+  "policy": {
+    "macos": "Override AudioProcessorEditor::wantsLayerBackedView() to false before AU/VST3 wrapper peer creation; request synchronous CoreGraphics.",
+    "other_platforms": "Delegate to the JUCE base implementation.",
+    "host_limit": "The host may still composite its own window through an asynchronous or GPU layer; the override does not establish exclusive ownership of the earlier AppleParavirtCommandBuffer abort.",
+    "qualification": "Keep all prior validator commands and add mandatory strictness-10 full AU GUI replay with seed 0x2b4eef5 before packaging."
+  },
+  "juce": {
+    "version": "8.0.11",
+    "commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "implementation_paths": [
+      "modules/juce_audio_processors/processors/juce_AudioProcessorEditor.h",
+      "modules/juce_audio_plugin_client/detail/juce_PluginUtilities.h",
+      "modules/juce_gui_basics/native/juce_NSViewComponentPeer_mac.mm"
+    ]
+  },
+  "source_sha256": {
+    "src/plugin/PluginEditor.h": "2a4899e6420260f8c6340aabdad71c56d645e11ccbd33ceb88f6676c0e279c4c",
+    "src/plugin/PluginEditor.cpp": "9fe6e695b7a6ae7d74a9a566ba04b82ed676dffc899071fbcafb0ecc95ec99bc",
+    ".github/workflows/build.yml": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "scripts/test-pluginval-macos-download.py": "7629af24883ba69c42c54ea1717a31459d04fee5a4246d8d10b4931254fc5101",
+    "scripts/test-pluginval-macos-download-negative.py": "f0d47329a46a7a7134196a64b539972f482c10b6d02a22c1a64e33f6d62ad9dc"
+  },
+  "local_build": {
+    "platform": "Linux x86_64",
+    "compiled_project_translation_units": [
+      {
+        "file": "PluginProcessorAutomation.cpp",
+        "exit": 0,
+        "seconds": 10.96
+      },
+      {
+        "file": "PluginProcessor.cpp",
+        "exit": 0,
+        "seconds": 17.78
+      },
+      {
+        "file": "PluginEditor.cpp",
+        "exit": 0,
+        "seconds": 15.36
+      },
+      {
+        "file": "UiComponents.cpp",
+        "exit": 0,
+        "seconds": 15.35
+      },
+      {
+        "file": "ParameterComboBox.cpp",
+        "exit": 0,
+        "seconds": 8.2
+      },
+      {
+        "file": "AdvancedPanel.cpp",
+        "exit": 0,
+        "seconds": 18.64
+      },
+      {
+        "file": "ParameterContextButton.cpp",
+        "exit": 0,
+        "seconds": 7.94
+      },
+      {
+        "file": "MtsEspClient.cpp",
+        "exit": 0,
+        "seconds": 1.16
+      },
+      {
+        "file": "KeyboardTuningPage.cpp",
+        "exit": 0,
+        "seconds": 6.99
+      },
+      {
+        "file": "PresetBrowser.cpp",
+        "exit": 0,
+        "seconds": 13.23
+      },
+      {
+        "file": "ModernLayerState.cpp",
+        "exit": 0,
+        "seconds": 7.67
+      },
+      {
+        "file": "ModernModulationUi.cpp",
+        "exit": 0,
+        "seconds": 9.99
+      },
+      {
+        "file": "PluginProcessorLibrary.cpp",
+        "exit": 0,
+        "seconds": 6.57
+      },
+      {
+        "file": "ArtCommon.cpp",
+        "exit": 0,
+        "seconds": 4.98
+      },
+      {
+        "file": "PanelWidgets.cpp",
+        "exit": 0,
+        "seconds": 6.79
+      },
+      {
+        "file": "ChannelRow.cpp",
+        "exit": 0,
+        "seconds": 6.82
+      },
+      {
+        "file": "CentreRow.cpp",
+        "exit": 0,
+        "seconds": 5.83
+      },
+      {
+        "file": "PerformanceDeck.cpp",
+        "exit": 0,
+        "seconds": 5.78
+      },
+      {
+        "file": "EditorPreferences.cpp",
+        "exit": 0,
+        "seconds": 1.58
+      },
+      {
+        "file": "MemoryLid.cpp",
+        "exit": 0,
+        "seconds": 7.57
+      },
+      {
+        "file": "StudioToolbar.cpp",
+        "exit": 0,
+        "seconds": 7.61
+      },
+      {
+        "file": "StudioDrawers.cpp",
+        "exit": 0,
+        "seconds": 6.79
+      },
+      {
+        "file": "UndoHistory.cpp",
+        "exit": 0,
+        "seconds": 5.79
+      },
+      {
+        "file": "StudioTour.cpp",
+        "exit": 0,
+        "seconds": 5.55
+      },
+      {
+        "file": "ui_snapshot.cpp",
+        "exit": 0,
+        "seconds": 18.37
+      }
+    ],
+    "link_succeeded": true,
+    "executable_sha256": "d482c33263be3a697d5a0baa6f656b42bcba8420fd1252289b9362099f9f5dc9",
+    "scope_limit": "Reuses previously compiled unchanged JUCE modules and circuit core; all 25 project objects depending on the editor header were rebuilt. No macOS binary or native GUI validator was executed locally."
+  },
+  "focused_panel": {
+    "exit": 0,
+    "checks": 41,
+    "failures": 0,
+    "log": "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)\ngolden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)\nPanel golden tests: 41 checks, 0 failures\n",
+    "pixel_fraction_limit_percent": 0.3,
+    "worst_8x8_block_mean_limit": 8.0,
+    "golden_files_changed": false
+  },
+  "workflow_validation": {
+    "scope": "Additive macOS AU GUI validator regression gate only; no native validator executed locally.",
+    "seed": "0x2b4eef5",
+    "unit_suite_tests": 22,
+    "unit_suite_passed": true,
+    "negative_faults_detected": 19,
+    "original_gate_sha256": "17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84",
+    "original_negative_anchor_count": 1,
+    "new_seed_count": 1,
+    "shell_syntax": "pass",
+    "source_sha256": {
+      ".github/workflows/build.yml": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+      "scripts/test-pluginval-macos-download.py": "7629af24883ba69c42c54ea1717a31459d04fee5a4246d8d10b4931254fc5101",
+      "scripts/test-pluginval-macos-download-negative.py": "f0d47329a46a7a7134196a64b539972f482c10b6d02a22c1a64e33f6d62ad9dc"
+    }
+  },
+  "negative_controls": [
+    {
+      "case": "candidate",
+      "exit": 0,
+      "expected_outcome": "pass"
+    },
+    {
+      "case": "checksum-bypass",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "unbounded-read",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "unsafe-redirect",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "no-hop-counter",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "retry-permanent",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "no-wall-timeout",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "extra-attempt",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "no-api-403-fallback",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "browser-403-fallback",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "browser-worker-fallback",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "tls-retry",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "false-provenance",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "signed-url-leak",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "weaken-validator",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "remove-au-gui-regression-seed",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "change-au-gui-regression-seed",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "ignore-fetch-failure",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "no-step-timeout",
+      "exit": 1,
+      "expected_outcome": "detected"
+    },
+    {
+      "case": "no-provenance-upload",
+      "exit": 1,
+      "expected_outcome": "detected"
+    }
+  ],
+  "native_status": "pending"
+}

@@ -553,6 +553,20 @@ jobs:
             2>&1 | tee pluginval-au-gui.log
           grep -qx 'SUCCESS' pluginval-au-gui.log
 
+      - name: Validate AU GUI fixed-seed regression
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --random-seed 0x2b4eef5 \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au-seed-regression \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au-seed-regression.log
+          grep -qx 'SUCCESS' pluginval-au-seed-regression.log
+
       - name: Package native macOS VST3, AU and Standalone
         run: |
           python scripts/package-ci-artifacts.py --self-test
@@ -578,7 +592,7 @@ jobs:
       - name: Report pluginval failure
         if: failure()
         run: |
-          for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do
+          for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log pluginval-au-seed-regression.log; do
             if [ -f "$log" ]; then
               echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
             fi
@@ -595,6 +609,7 @@ jobs:
             pluginval-vst3.log
             pluginval-au.log
             pluginval-au-gui.log
+            pluginval-au-seed-regression.log
           if-no-files-found: warn
 
       - name: Upload test and JUCE source evidence
