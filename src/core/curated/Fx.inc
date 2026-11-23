@@ -56,7 +56,7 @@ void buildFx(Builder& add)
                .eg(I, 0.001f, 0.86f, 0.0f, 0.26f).eg(II, 0.001f, 0.051f, 0.0f, 0.025f).g(P_drift, 0.0f)
                .contour(-0.08f, -0.22f, -0.03f, 0.07f));
     add("Wind", "FX", { "noise", "sub-mod", "aftertouch" },
-        "A broad low wind bed supports a separate airy gust that arrives later. Shallow SUB motion avoids a regular throbbing cycle; pressure brings forward the upper air and the unequal releases let it subside.",
+        "An airy gust enters first as a broader low wind bed blooms underneath. Shallow SUB motion adds gentle movement; pressure brings forward the upper air, and its shorter release lets it subside ahead of the low bed.",
         effect()
                .wave(I, false, false, 0.0f, 1.0f).wave(II, false, false, 0.0f, 0.85f).level(I, 1.0f, 0.72f).level(II, 0.95f, 0.50f)
                .touch(I, 0.0f, 0.24f, 0.10f, 0.43f).touch(II, 0.0f, 0.16f, 0.18f, 0.59f).sub(subSine, 0.70f, 0.0f, 0.025f, 0.035f)

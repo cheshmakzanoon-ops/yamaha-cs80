@@ -1,0 +1,234 @@
+{
+  "scope": "Full Engine, 8 active voices, native existing presets, realtime Standard2x at48kHz,64frame blocks; no host/plugin wrappers.",
+  "baseline": "Tine-corrected header19f9fb23 before bowed correction, a09 static archive",
+  "candidate": "Bowed-corrected headerd33f34f5",
+  "measurements": "7 interleaved process pairs per case; alternating order; pinned allowedCPU7; CLOCK_THREAD_CPUTIME_ID around0.5s render after12032warmup frames.",
+  "pitch": "Moving=5Hz external pitchbend +/-40cents updated per64frames. Fixed=no added pitchbend; original preset drift and modulation remain.",
+  "limits": "Shared-machine paired estimates, not realtime deadlines or DAW CPU percentages; includes input pitchbend calls equally on both versions. Initialization excluded.",
+  "cases": [
+    {
+      "case": 0,
+      "preset": "Solo Violin",
+      "moving": false,
+      "body_off_control": false,
+      "paired_ratios": [
+        0.9804315333996285,
+        0.7514917419807787,
+        1.0375080646177433,
+        0.6499431207863379,
+        1.1467291025812245,
+        1.0062432049157335,
+        0.960108007009205
+      ],
+      "median_ratio": 0.9804315333996285,
+      "minimum_ratio": 0.6499431207863379,
+      "maximum_ratio": 1.1467291025812245,
+      "baseline_cpu_median": 0.36554366400000005,
+      "candidate_cpu_median": 0.3575405450000001,
+      "baseline_audio_hashes": [
+        "7040585982579165611"
+      ],
+      "candidate_audio_hashes": [
+        "8920878468044435821"
+      ]
+    },
+    {
+      "case": 0,
+      "preset": "Solo Violin",
+      "moving": true,
+      "body_off_control": false,
+      "paired_ratios": [
+        0.9920734794459877,
+        1.1326849127247656,
+        1.1245431718467676,
+        0.951565343021696,
+        1.0983975343928618,
+        1.1139090525096942,
+        1.088856874878432
+      ],
+      "median_ratio": 1.0983975343928618,
+      "minimum_ratio": 0.951565343021696,
+      "maximum_ratio": 1.1326849127247656,
+      "baseline_cpu_median": 0.487371338,
+      "candidate_cpu_median": 0.483337847,
+      "baseline_audio_hashes": [
+        "17776109827997344325"
+      ],
+      "candidate_audio_hashes": [
+        "14737808625119500363"
+      ]
+    },
+    {
+      "case": 1,
+      "preset": "Solo Cello",
+      "moving": false,
+      "body_off_control": false,
+      "paired_ratios": [
+        1.0583108499862302,
+        0.6988702505272192,
+        1.0441796299284838,
+        1.0468400656468437,
+        1.0005503566392875,
+        0.9181895190268367,
+        1.2480206783988657
+      ],
+      "median_ratio": 1.0441796299284838,
+      "minimum_ratio": 0.6988702505272192,
+      "maximum_ratio": 1.2480206783988657,
+      "baseline_cpu_median": 0.378188056,
+      "candidate_cpu_median": 0.377034234,
+      "baseline_audio_hashes": [
+        "6255342030662053146"
+      ],
+      "candidate_audio_hashes": [
+        "13290375478537696528"
+      ]
+    },
+    {
+      "case": 1,
+      "preset": "Solo Cello",
+      "moving": true,
+      "body_off_control": false,
+      "paired_ratios": [
+        1.064634240542553,
+        0.7926412468791978,
+        1.7035675448898042,
+        0.90718123707502,
+        0.9920456404783435,
+        1.035043620749734,
+        0.8920589029908428
+      ],
+      "median_ratio": 0.9920456404783435,
+      "minimum_ratio": 0.7926412468791978,
+      "maximum_ratio": 1.7035675448898042,
+      "baseline_cpu_median": 0.495204256,
+      "candidate_cpu_median": 0.501410991,
+      "baseline_audio_hashes": [
+        "4197500717898971446"
+      ],
+      "candidate_audio_hashes": [
+        "10847786167702654749"
+      ]
+    },
+    {
+      "case": 2,
+      "preset": "Ensemble Strings",
+      "moving": false,
+      "body_off_control": false,
+      "paired_ratios": [
+        1.0043295316171899,
+        1.011861883587672,
+        0.6875805137483022,
+        0.9896462041845084,
+        1.0393427426706252,
+        1.0171267528859804,
+        1.2318867461626437
+      ],
+      "median_ratio": 1.011861883587672,
+      "minimum_ratio": 0.6875805137483022,
+      "maximum_ratio": 1.2318867461626437,
+      "baseline_cpu_median": 0.45570577400000006,
+      "candidate_cpu_median": 0.5044587800000001,
+      "baseline_audio_hashes": [
+        "4467567587091108743"
+      ],
+      "candidate_audio_hashes": [
+        "4784509825374543394"
+      ]
+    },
+    {
+      "case": 2,
+      "preset": "Ensemble Strings",
+      "moving": true,
+      "body_off_control": false,
+      "paired_ratios": [
+        0.9493881730325303,
+        0.9388866617071462,
+        0.7932774914563963,
+        1.0356426511686136,
+        1.028147608912864,
+        1.0226162055075443,
+        1.0949663088621526
+      ],
+      "median_ratio": 1.0226162055075443,
+      "minimum_ratio": 0.7932774914563963,
+      "maximum_ratio": 1.0949663088621526,
+      "baseline_cpu_median": 0.6154358560000002,
+      "candidate_cpu_median": 0.595705269,
+      "baseline_audio_hashes": [
+        "10600501252232177540"
+      ],
+      "candidate_audio_hashes": [
+        "8220331153702380919"
+      ]
+    },
+    {
+      "case": 3,
+      "preset": "Ensemble Strings",
+      "moving": false,
+      "body_off_control": true,
+      "paired_ratios": [
+        1.0904741213466633,
+        0.9941467664684563,
+        0.9145609735846533,
+        1.3827648093121199,
+        0.8622073198114794,
+        1.0064075738974334,
+        1.0234069997333965
+      ],
+      "median_ratio": 1.0064075738974334,
+      "minimum_ratio": 0.8622073198114794,
+      "maximum_ratio": 1.3827648093121199,
+      "baseline_cpu_median": 0.36498260299999996,
+      "candidate_cpu_median": 0.3673212560000001,
+      "baseline_audio_hashes": [
+        "16555913207001045685"
+      ],
+      "candidate_audio_hashes": [
+        "16555913207001045685"
+      ]
+    },
+    {
+      "case": 3,
+      "preset": "Ensemble Strings",
+      "moving": true,
+      "body_off_control": true,
+      "paired_ratios": [
+        1.5573281757732296,
+        0.9741147648367088,
+        0.8911288353385168,
+        0.9780911958443541,
+        1.0935484093172299,
+        0.9875836595078855,
+        1.0489387630997833
+      ],
+      "median_ratio": 0.9875836595078855,
+      "minimum_ratio": 0.8911288353385168,
+      "maximum_ratio": 1.5573281757732296,
+      "baseline_cpu_median": 0.48148859400000005,
+      "candidate_cpu_median": 0.48631919799999995,
+      "baseline_audio_hashes": [
+        "6016312564680764872"
+      ],
+      "candidate_audio_hashes": [
+        "6016312564680764872"
+      ]
+    }
+  ],
+  "total_runs": 112,
+  "wall_seconds": 88.08786487579346,
+  "validity": {
+    "all_eight_active_voices": true,
+    "max_peak": 0.523883044719696,
+    "body_off_output_hashes_identical": true,
+    "engine_bytes": {
+      "baseline": 478632,
+      "candidate": 491432,
+      "increase": 12800
+    },
+    "total_measured_audio_seconds_per_version": 28.0
+  },
+  "interpretation": "Moving Solo Violin median was1.0984x; moving Solo Cello0.9920x and Ensemble1.0226x. Controls and pair ranges are wide, so these data do not establish a precise fullEngine overhead or a realtime-performance guarantee. Do not claim unchanged cost; retain the direct-body measured increase and these uncertainty bounds.",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+}

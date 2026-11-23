@@ -212,6 +212,14 @@ modal-rotation loop. Control-boundary work increases for moving bowed notes.
 The bowed correction follows the qualitative body-filtering relationship in
 [UNSW's violin articulation research](https://www.phys.unsw.edu.au/jw/violinarticulation.html).
 The model's formant positions and widths remain authored approximations.
+Eleven paired isolated-body trials measured a 1.1243× median cost with bowed
+vibrato. Seven paired full-Engine trials per case measured moving-pitch medians
+of 1.0984× for Solo Violin, 0.9920× for Solo Cello and 1.0226× for Ensemble
+Strings. The unchanged bodies-off control also had wide timing variation, so
+these shared-machine results do not establish a precise runtime overhead or a
+DAW CPU percentage. The correction is not described as free of CPU cost.
+[Full-Engine trials and limitations](preset-evidence/2026.11.4/continuation/a20/FINDINGS.md)
+
 These continuation measurements are development evidence. The current README
 download record identifies the separately qualified native source and files.
 

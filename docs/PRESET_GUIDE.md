@@ -183,6 +183,12 @@ MIDI 36–60. Picked Bass now leaves a longer decaying body behind its brief pic
 Rubber Bass falls away completely under a held key, with no permanent sustain
 bed. [Bass source](../src/core/curated/Bass.inc)
 
+**Wind / Surf / Thunder:** hold Wind to hear its faster airy gust followed by
+the slower low bed; pressure brings the upper air forward. Surf instead lets
+its low surge rise before the brighter spray, while Thunder starts with a
+short crack above the slower rumble. These are synthesized noise gestures.
+[FX source](../src/core/curated/Fx.inc)
+
 ### Rhythmic motion and centered leads
 
 The named tremolo programs now apply a gentle pulse to the note's body while
@@ -274,9 +280,10 @@ appended **Resonant size** parameters control the corresponding ranks. Model,
 partial decay and size are captured on the **next accepted note**; mix and
 brightness remain live. Selecting Off also takes effect on the next note,
 preserving an already-ringing body. On struck models, a larger Partial decay
-lets the modes ring longer; sustained bowed, wind, brass and organ modes do
-not decay while held. The rank's normal amplitude envelope and key release still determine
-the complete note.
+lets the modes ring longer. **Partial decay has no effect on sustained bowed,
+wind, brass or organ models:** their modes do not lose energy while held.
+The rank's normal amplitude envelope and key release still determine the
+complete note's decay and damping.
 
 Resonant size ranges from **0.5× to 2.5×**, with **1×** as its neutral value.
 For models that use body resonances, increasing it lowers those resonances
