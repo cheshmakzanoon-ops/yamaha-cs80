@@ -1,0 +1,71 @@
+{
+  "parser_sha256": "7ca789be476e6c3ce06a06083849c2fdbb1dc11c1965b78921e6834862cb2e77",
+  "actual_evidence": {
+    "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+    "run_id": 45091496524,
+    "job_id": 137421859961,
+    "counts": {
+      "registered": 247,
+      "passed": 245,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "job_conclusion": "failure",
+    "error_annotation_count": 4,
+    "later_failed_steps": [
+      {
+        "name": "Validate AU with pluginval GUI",
+        "number": 12,
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ],
+    "proof_path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/8ffe-native-review/native-proof.json"
+  },
+  "synthetic_mutation_scope": "Only console-format compatibility and refusal controls; mutated artifacts are not CI evidence. Temporary fixtures removed.",
+  "cases": [
+    {
+      "case": "old-comma-summary",
+      "expected": "pass-native-only",
+      "exit_code": 0,
+      "success_proof_written": true
+    },
+    {
+      "case": "nonzero-comma-summary",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    },
+    {
+      "case": "missing-summary",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    },
+    {
+      "case": "failed-Test-step",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    },
+    {
+      "case": "dirty-JUnit",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    },
+    {
+      "case": "normalized-job-wrapper",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    },
+    {
+      "case": "wrong-source",
+      "expected": "reject",
+      "exit_code": 1,
+      "success_proof_written": false
+    }
+  ]
+}

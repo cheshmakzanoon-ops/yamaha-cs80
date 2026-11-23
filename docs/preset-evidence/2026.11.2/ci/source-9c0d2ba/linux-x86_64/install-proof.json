@@ -1,0 +1,682 @@
+{
+  "schema": 1,
+  "assignment": 51,
+  "status": "artifact_bytes_verified",
+  "verified_at_utc": "2026-11-23T07:05:34.414351+00:00",
+  "checker_sha256": "4cced6aa065a41c2df45e4f9b5090814ac58dc959281ce6844de5c1bac2aca4f",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "target": "linux-x86_64",
+  "artifact_name": "cs80-linux-install-bundle",
+  "artifact_api": {
+    "id": 14796735944,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc5NjczNTk0NA==",
+    "name": "cs80-linux-install-bundle",
+    "size_in_bytes": 13207738,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944/zip",
+    "expired": false,
+    "digest": "sha256:e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+    "created_at": "2026-11-23T07:02:08Z",
+    "updated_at": "2026-11-23T07:02:08Z",
+    "expires_at": "2027-02-21T04:31:50Z",
+    "workflow_run": {
+      "id": 45112404257,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+    }
+  },
+  "run_api": {
+    "id": 45112404257,
+    "name": "build",
+    "node_id": "WFR_kwLOVaLxy88AAAAKgOipIQ",
+    "head_branch": "main",
+    "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "path": ".github/workflows/build.yml",
+    "display_title": "Align tests with the fixed circuit policy and allow for Intel runner \u2026",
+    "run_number": 1216,
+    "event": "push",
+    "status": "in_progress",
+    "conclusion": null,
+    "workflow_id": 399616500,
+    "check_suite_id": 122078439440,
+    "check_suite_node_id": "CS_kwDOVaLxy88AAAAcbHEoEA",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257",
+    "pull_requests": [],
+    "created_at": "2026-11-23T04:31:50Z",
+    "updated_at": "2026-11-23T07:04:50Z",
+    "actor": {
+      "login": "cheshmakzanoon-ops",
+      "id": 318354914,
+      "node_id": "U_kgDOEvm14g",
+      "avatar_url": "https://avatars.githubusercontent.com/u/318354914?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/cheshmakzanoon-ops",
+      "html_url": "https://github.com/cheshmakzanoon-ops",
+      "followers_url": "https://api.github.com/users/cheshmakzanoon-ops/followers",
+      "following_url": "https://api.github.com/users/cheshmakzanoon-ops/following{/other_user}",
+      "gists_url": "https://api.github.com/users/cheshmakzanoon-ops/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/cheshmakzanoon-ops/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/cheshmakzanoon-ops/subscriptions",
+      "organizations_url": "https://api.github.com/users/cheshmakzanoon-ops/orgs",
+      "repos_url": "https://api.github.com/users/cheshmakzanoon-ops/repos",
+      "events_url": "https://api.github.com/users/cheshmakzanoon-ops/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/cheshmakzanoon-ops/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-11-23T04:31:50Z",
+    "triggering_actor": {
+      "login": "cheshmakzanoon-ops",
+      "id": 318354914,
+      "node_id": "U_kgDOEvm14g",
+      "avatar_url": "https://avatars.githubusercontent.com/u/318354914?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/cheshmakzanoon-ops",
+      "html_url": "https://github.com/cheshmakzanoon-ops",
+      "followers_url": "https://api.github.com/users/cheshmakzanoon-ops/followers",
+      "following_url": "https://api.github.com/users/cheshmakzanoon-ops/following{/other_user}",
+      "gists_url": "https://api.github.com/users/cheshmakzanoon-ops/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/cheshmakzanoon-ops/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/cheshmakzanoon-ops/subscriptions",
+      "organizations_url": "https://api.github.com/users/cheshmakzanoon-ops/orgs",
+      "repos_url": "https://api.github.com/users/cheshmakzanoon-ops/repos",
+      "events_url": "https://api.github.com/users/cheshmakzanoon-ops/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/cheshmakzanoon-ops/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/jobs",
+    "logs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/logs",
+    "check_suite_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-suites/122078439440",
+    "artifacts_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/artifacts",
+    "cancel_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/cancel",
+    "rerun_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/399616500",
+    "head_commit": {
+      "id": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "tree_id": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+      "message": "Align tests with the fixed circuit policy and allow for Intel runner timing",
+      "timestamp": "2026-11-23T04:31:43Z",
+      "author": {
+        "name": "cheshmakzanoon-ops",
+        "email": "cheshmakzanoon@gmail.com"
+      },
+      "committer": {
+        "name": "cheshmakzanoon-ops",
+        "email": "cheshmakzanoon@gmail.com"
+      }
+    },
+    "repository": {
+      "id": 1436742091,
+      "node_id": "R_kgDOVaLxyw",
+      "name": "yamaha-cs80",
+      "full_name": "cheshmakzanoon-ops/yamaha-cs80",
+      "private": false,
+      "owner": {
+        "login": "cheshmakzanoon-ops",
+        "id": 318354914,
+        "node_id": "U_kgDOEvm14g",
+        "avatar_url": "https://avatars.githubusercontent.com/u/318354914?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/cheshmakzanoon-ops",
+        "html_url": "https://github.com/cheshmakzanoon-ops",
+        "followers_url": "https://api.github.com/users/cheshmakzanoon-ops/followers",
+        "following_url": "https://api.github.com/users/cheshmakzanoon-ops/following{/other_user}",
+        "gists_url": "https://api.github.com/users/cheshmakzanoon-ops/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/cheshmakzanoon-ops/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/cheshmakzanoon-ops/subscriptions",
+        "organizations_url": "https://api.github.com/users/cheshmakzanoon-ops/orgs",
+        "repos_url": "https://api.github.com/users/cheshmakzanoon-ops/repos",
+        "events_url": "https://api.github.com/users/cheshmakzanoon-ops/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/cheshmakzanoon-ops/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80",
+      "forks_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/forks",
+      "keys_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/teams",
+      "hooks_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/hooks",
+      "issue_events_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/events",
+      "assignees_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/tags",
+      "blobs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/languages",
+      "stargazers_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/stargazers",
+      "contributors_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/contributors",
+      "subscribers_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/subscribers",
+      "subscription_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/subscription",
+      "commits_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/merges",
+      "archive_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/downloads",
+      "issues_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/labels{/name}",
+      "releases_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/deployments"
+    },
+    "head_repository": {
+      "id": 1436742091,
+      "node_id": "R_kgDOVaLxyw",
+      "name": "yamaha-cs80",
+      "full_name": "cheshmakzanoon-ops/yamaha-cs80",
+      "private": false,
+      "owner": {
+        "login": "cheshmakzanoon-ops",
+        "id": 318354914,
+        "node_id": "U_kgDOEvm14g",
+        "avatar_url": "https://avatars.githubusercontent.com/u/318354914?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/cheshmakzanoon-ops",
+        "html_url": "https://github.com/cheshmakzanoon-ops",
+        "followers_url": "https://api.github.com/users/cheshmakzanoon-ops/followers",
+        "following_url": "https://api.github.com/users/cheshmakzanoon-ops/following{/other_user}",
+        "gists_url": "https://api.github.com/users/cheshmakzanoon-ops/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/cheshmakzanoon-ops/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/cheshmakzanoon-ops/subscriptions",
+        "organizations_url": "https://api.github.com/users/cheshmakzanoon-ops/orgs",
+        "repos_url": "https://api.github.com/users/cheshmakzanoon-ops/repos",
+        "events_url": "https://api.github.com/users/cheshmakzanoon-ops/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/cheshmakzanoon-ops/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80",
+      "forks_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/forks",
+      "keys_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/teams",
+      "hooks_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/hooks",
+      "issue_events_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/events",
+      "assignees_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/tags",
+      "blobs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/languages",
+      "stargazers_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/stargazers",
+      "contributors_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/contributors",
+      "subscribers_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/subscribers",
+      "subscription_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/subscription",
+      "commits_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/merges",
+      "archive_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/downloads",
+      "issues_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/labels{/name}",
+      "releases_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/deployments"
+    }
+  },
+  "archive": {
+    "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip",
+    "bytes": 13207738,
+    "sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+    "api_digest_matches": true,
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip"
+  },
+  "inner_archive": {
+    "name": "cs80-reference-linux-x86_64-9c0d2baef564.tar.gz",
+    "bytes": 13202419,
+    "sha256": "88a8c31bd525cf94742c3904748067f645a45a91a89326e2cd8f0ccd701ba913"
+  },
+  "manifest_identity": {
+    "commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "platform": "linux",
+    "architecture": "x86_64",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "preset_library_revision": "2026.11.2",
+    "workflow_run_id": "45112404257",
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_version": "8.0.11"
+  },
+  "v3_verification": {
+    "driver": {
+      "version": "3.0",
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/cs80-bundle-check-1rfrvttw/artifact-verifier-v3.py",
+      "sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6"
+    },
+    "expected_commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "expected_run_id": "45112404257",
+    "expected_preset_revision": "2026.11.2",
+    "source_root": "/dev/shm/cs80-circuit-011b6ba4a170/repository-worktree",
+    "packaging_contract": {
+      "reviewed_at_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+      "script_sha256": {
+        "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+        "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+      },
+      "source_read_policy": "immutable Git blobs at expected commit; concurrent worktree untouched",
+      "guide_destinations": {
+        "docs/PRESET_GUIDE.md": "PRESET_GUIDE.md",
+        "docs/INSTALL_AND_QUICKSTART.md": "INSTALL_AND_QUICKSTART.md",
+        "docs/CI_DISTRIBUTION_STATUS.md": "DISTRIBUTION_STATUS.md"
+      },
+      "guide_comparison": "exact source-commit packaged_markdown output on every platform"
+    },
+    "verifier_source_sha256": {
+      "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "all_four_targets_supplied": false,
+    "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+    "artifacts": [
+      {
+        "target": "linux-x86_64",
+        "expected_artifact_name": "cs80-linux-install-bundle",
+        "outer_zip": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip",
+        "status": "PASS",
+        "outer_sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+        "trusted_expected_outer_sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+        "trusted_outer_sha256_verified": true,
+        "outer_members": [
+          {
+            "path": "cs80-reference-linux-x86_64-9c0d2baef564.manifest.json",
+            "size": 4564,
+            "selected": true
+          },
+          {
+            "path": "SHA256SUMS",
+            "size": 235,
+            "selected": true
+          },
+          {
+            "path": "cs80-reference-linux-x86_64-9c0d2baef564.tar.gz",
+            "size": 13202419,
+            "selected": true
+          }
+        ],
+        "verifier_command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/cs80-bundle-check-1rfrvttw/review/source-snapshot/scripts/verify-ci-bundle.py",
+          "--archive",
+          "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/cs80-bundle-check-1rfrvttw/review/linux-x86_64/cs80-reference-linux-x86_64-9c0d2baef564.tar.gz",
+          "--expected-commit",
+          "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        ],
+        "verifier_exit_code": 0,
+        "existing_verifier": {
+          "result": "integrity and declared source consistency verified",
+          "commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+          "platform": "linux",
+          "architecture": "x86_64",
+          "files": 20,
+          "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+        },
+        "archive": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/cs80-bundle-check-1rfrvttw/review/linux-x86_64/cs80-reference-linux-x86_64-9c0d2baef564.tar.gz",
+        "archive_sha256": "88a8c31bd525cf94742c3904748067f645a45a91a89326e2cd8f0ccd701ba913",
+        "manifest_sha256": "92579e8a96ebb2073fa0d1936f3ed56dded130137f694975f6261dc12f239c4d",
+        "checks": {
+          "preset_library_revision": "2026.11.2",
+          "workflow_run_id": "45112404257",
+          "documents": [
+            {
+              "path": "PRESET_GUIDE.md",
+              "source_path": "docs/PRESET_GUIDE.md",
+              "bytes": 25625,
+              "source_bytes": 20462,
+              "sha256": "62f08d4225b0e8bc6b03ed40c952fe6ddf77881d3e9dc97cbfe61a298f4213ce",
+              "source_sha256": "f61fcab6aeef159e56a5d73e99e91ce50ecbe39db22efcc2107a453a5e0bd31f",
+              "archived_sha256": "62f08d4225b0e8bc6b03ed40c952fe6ddf77881d3e9dc97cbfe61a298f4213ce",
+              "expected_packaged_sha256": "62f08d4225b0e8bc6b03ed40c952fe6ddf77881d3e9dc97cbfe61a298f4213ce",
+              "exact_source_bytes": false,
+              "exact_source_bound_packaged_bytes": true,
+              "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+              "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+            },
+            {
+              "path": "INSTALL_AND_QUICKSTART.md",
+              "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+              "bytes": 16899,
+              "source_bytes": 16394,
+              "sha256": "59a78950102b56e8bcdf03352bd7dc395de7e3966cd53aa6c94d338d5a9f4ead",
+              "source_sha256": "de1cfc02a1f8f765a36a2e4129ee492b4212fe0765cd6564fbd5e35aa741d474",
+              "archived_sha256": "59a78950102b56e8bcdf03352bd7dc395de7e3966cd53aa6c94d338d5a9f4ead",
+              "expected_packaged_sha256": "59a78950102b56e8bcdf03352bd7dc395de7e3966cd53aa6c94d338d5a9f4ead",
+              "exact_source_bytes": false,
+              "exact_source_bound_packaged_bytes": true,
+              "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+              "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+            },
+            {
+              "path": "DISTRIBUTION_STATUS.md",
+              "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+              "bytes": 16730,
+              "source_bytes": 14306,
+              "sha256": "cd3f5a10001c2ff4e408b8af1af6f93766ad51d1f03f52ecf6d5f308c231219b",
+              "source_sha256": "6ef45e5b44d379cb3b73e13687fcec62a5c411633b6d843408a78fe8cf7f9d65",
+              "archived_sha256": "cd3f5a10001c2ff4e408b8af1af6f93766ad51d1f03f52ecf6d5f308c231219b",
+              "expected_packaged_sha256": "cd3f5a10001c2ff4e408b8af1af6f93766ad51d1f03f52ecf6d5f308c231219b",
+              "exact_source_bytes": false,
+              "exact_source_bound_packaged_bytes": true,
+              "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+              "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+            }
+          ],
+          "binaries": [
+            {
+              "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+              "bytes": 17362328,
+              "sha256": "a74b10499e8f769f193733ef893ec5196ef22f47152ef5a3256cf7b199dc413d",
+              "platform": "linux",
+              "architecture": "x86_64",
+              "role": "plugin",
+              "header_check": "PASS"
+            },
+            {
+              "path": "Standalone/CS-80 Reference",
+              "bytes": 16699920,
+              "sha256": "b2b5143f12664d9c2dba0ef1c5e8434adb8a4ea8583badfe61d794fc54a6d47b",
+              "platform": "linux",
+              "architecture": "x86_64",
+              "role": "standalone",
+              "header_check": "PASS"
+            }
+          ],
+          "source_txt": {
+            "commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+            "sha256": "b4c20297c76ce7bb1ecfa80922e603da58abbd20f78e70b42ed7f9e773a37543",
+            "source_sha256": "b4c20297c76ce7bb1ecfa80922e603da58abbd20f78e70b42ed7f9e773a37543",
+            "archived_sha256": "b4c20297c76ce7bb1ecfa80922e603da58abbd20f78e70b42ed7f9e773a37543",
+            "exact_expected_bytes": true,
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          }
+        }
+      }
+    ],
+    "status": "PASS",
+    "all_four_targets_verified": false
+  },
+  "additional_metadata": {
+    "required_metadata_files": [
+      "DISTRIBUTION_STATUS.md",
+      "INSTALL_AND_QUICKSTART.md",
+      "LICENSE",
+      "PRESET_GUIDE.md",
+      "SOURCE.txt",
+      "evidence/juce-provenance.txt",
+      "licenses/BarlowCondensed-OFL.txt",
+      "licenses/BarlowCondensed-SOURCE.txt",
+      "licenses/JUCE-LICENSE.md",
+      "licenses/MTS-ESP-LICENSE.txt",
+      "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "licenses/libxml2-Copyright.txt",
+      "licenses/libxml2-SOURCE.txt"
+    ],
+    "notices": [
+      {
+        "path": "LICENSE",
+        "source_path": "LICENSE",
+        "bytes": 34523,
+        "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+        "source_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/BarlowCondensed-OFL.txt",
+        "source_path": "assets/fonts/barlow-condensed/OFL.txt",
+        "bytes": 4377,
+        "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+        "source_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/BarlowCondensed-SOURCE.txt",
+        "source_path": "assets/fonts/barlow-condensed/SOURCE.txt",
+        "bytes": 994,
+        "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+        "source_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/MTS-ESP-LICENSE.txt",
+        "source_path": "src/vendor/mts-esp/LICENSE",
+        "bytes": 661,
+        "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+        "source_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/libxml2-Copyright.txt",
+        "source_path": "src/vendor/libxml2/Copyright",
+        "bytes": 1314,
+        "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+        "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/libxml2-SOURCE.txt",
+        "source_path": "src/vendor/libxml2/SOURCE.txt",
+        "bytes": 667,
+        "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+        "source_sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      },
+      {
+        "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+        "source_path": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
+        "bytes": 1406,
+        "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+        "source_sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+        "exact_source_bytes": true,
+        "windows_checkout_crlf_only": false
+      }
+    ],
+    "juce_license": {
+      "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+      "pinned_source_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+      "source_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "exact_source_bytes": true
+    },
+    "juce_provenance": {
+      "checked_at": "2026-11-23T04:35:47Z",
+      "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "expected_version": "8.0.11",
+      "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "workflow_commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "workflow_run": "45112404257",
+      "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "source_override": "",
+      "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "origin": "https://github.com/juce-framework/JUCE.git",
+      "git_description": "8.0.11",
+      "source_clean": "true",
+      "actual_version": "8.0.11",
+      "verification": "PASS"
+    },
+    "inventory": [
+      {
+        "path": "Standalone/CS-80 Reference",
+        "type": "file",
+        "size": 16699920,
+        "sha256": "b2b5143f12664d9c2dba0ef1c5e8434adb8a4ea8583badfe61d794fc54a6d47b",
+        "mode": "0o755"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3",
+        "type": "directory",
+        "mode": "0o755"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents",
+        "type": "directory",
+        "mode": "0o755"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+        "type": "directory",
+        "mode": "0o755"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "type": "file",
+        "size": 1095,
+        "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+        "mode": "0o644"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux",
+        "type": "directory",
+        "mode": "0o755"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "type": "file",
+        "size": 17362328,
+        "sha256": "a74b10499e8f769f193733ef893ec5196ef22f47152ef5a3256cf7b199dc413d",
+        "mode": "0o755"
+      },
+      {
+        "path": "DISTRIBUTION_STATUS.md",
+        "type": "file",
+        "size": 16730,
+        "sha256": "cd3f5a10001c2ff4e408b8af1af6f93766ad51d1f03f52ecf6d5f308c231219b",
+        "mode": "0o644"
+      },
+      {
+        "path": "INSTALL_AND_QUICKSTART.md",
+        "type": "file",
+        "size": 16899,
+        "sha256": "59a78950102b56e8bcdf03352bd7dc395de7e3966cd53aa6c94d338d5a9f4ead",
+        "mode": "0o644"
+      },
+      {
+        "path": "LICENSE",
+        "type": "file",
+        "size": 34523,
+        "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+        "mode": "0o644"
+      },
+      {
+        "path": "PRESET_GUIDE.md",
+        "type": "file",
+        "size": 25625,
+        "sha256": "62f08d4225b0e8bc6b03ed40c952fe6ddf77881d3e9dc97cbfe61a298f4213ce",
+        "mode": "0o644"
+      },
+      {
+        "path": "SOURCE.txt",
+        "type": "file",
+        "size": 404,
+        "sha256": "b4c20297c76ce7bb1ecfa80922e603da58abbd20f78e70b42ed7f9e773a37543",
+        "mode": "0o644"
+      },
+      {
+        "path": "evidence/juce-provenance.txt",
+        "type": "file",
+        "size": 609,
+        "sha256": "419ad4c3388cec24740a989465932b83bcaf9ead2b6586b09a6fd3731e45f202",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/BarlowCondensed-OFL.txt",
+        "type": "file",
+        "size": 4377,
+        "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/BarlowCondensed-SOURCE.txt",
+        "type": "file",
+        "size": 994,
+        "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/JUCE-LICENSE.md",
+        "type": "file",
+        "size": 4971,
+        "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/MTS-ESP-LICENSE.txt",
+        "type": "file",
+        "size": 661,
+        "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+        "type": "file",
+        "size": 1406,
+        "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/libxml2-Copyright.txt",
+        "type": "file",
+        "size": 1314,
+        "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+        "mode": "0o644"
+      },
+      {
+        "path": "licenses/libxml2-SOURCE.txt",
+        "type": "file",
+        "size": 667,
+        "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+        "mode": "0o644"
+      }
+    ],
+    "inventory_count": 20
+  },
+  "limitations": "Caller supplies authenticated fresh API records. Integrity/source-run consistency, product inventory and binary headers only. No downloaded product executed, no native CI/validator success inferred. No signing, listening, acoustic identity or DAW qualification. Package does not enumerate runtime presets; the separate audition inventory verifies all523 addresses. Temporary extracted archive removed after verification."
+}

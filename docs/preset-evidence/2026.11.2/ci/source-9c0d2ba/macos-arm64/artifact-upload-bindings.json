@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "status": "all_three_artifacts_bound_to_successful_native_job_uploads",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485061,
+  "verified_at_utc": "2026-11-23T05:09:13.016152+00:00",
+  "checker_sha256": "c6016213978cdb66848f611dd6441aecd98ad0082301bdf9722ae2b949919d16",
+  "job_log_sha256": "42e81ce8db4c3101cbbc9f750ab9eb814908886e037f9719127a69fcfd9f3d71",
+  "bindings": [
+    {
+      "kind": "install",
+      "binding": {
+        "job_id": 137487485061,
+        "run_attempt": 1,
+        "artifact_id": 14791856136,
+        "artifact_created_at": "2026-11-23T05:06:34Z",
+        "upload_success_log_timestamp": "2026-11-23T05:06:34.3269280Z",
+        "job_started_at": "2026-11-23T04:33:11Z",
+        "job_completed_at": "2026-11-23T05:06:43Z",
+        "upload_step_name": "Upload native macOS install bundle",
+        "upload_step_number": 15,
+        "upload_step_started_at": "2026-11-23T05:06:31Z",
+        "upload_step_completed_at": "2026-11-23T05:06:34Z",
+        "log_matches_artifact_id_and_bytes": true,
+        "timestamps_within_selected_job": true,
+        "upload_step_timestamp_tolerance_seconds": 2,
+        "api_creation_outside_upload_step_seconds": 0.0,
+        "success_log_outside_upload_step_seconds": 0.326928,
+        "api_creation_minus_success_log_seconds": -0.326928,
+        "timestamps_within_upload_step_tolerance": true,
+        "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+      }
+    },
+    {
+      "kind": "native",
+      "binding": {
+        "job_id": 137487485061,
+        "run_attempt": 1,
+        "artifact_id": 14791836232,
+        "artifact_created_at": "2026-11-23T05:06:37Z",
+        "upload_success_log_timestamp": "2026-11-23T05:06:37.3459970Z",
+        "job_started_at": "2026-11-23T04:33:11Z",
+        "job_completed_at": "2026-11-23T05:06:43Z",
+        "upload_step_name": "Upload test and JUCE source evidence",
+        "upload_step_number": 19,
+        "upload_step_started_at": "2026-11-23T05:06:35Z",
+        "upload_step_completed_at": "2026-11-23T05:06:37Z",
+        "log_matches_artifact_id_and_bytes": true,
+        "timestamps_within_selected_job": true,
+        "upload_step_timestamp_tolerance_seconds": 2,
+        "api_creation_outside_upload_step_seconds": 0.0,
+        "success_log_outside_upload_step_seconds": 0.345997,
+        "api_creation_minus_success_log_seconds": -0.345997,
+        "timestamps_within_upload_step_tolerance": true,
+        "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+      }
+    },
+    {
+      "kind": "validators",
+      "binding": {
+        "job_id": 137487485061,
+        "run_attempt": 1,
+        "artifact_id": 14790989775,
+        "artifact_created_at": "2026-11-23T05:06:35Z",
+        "upload_success_log_timestamp": "2026-11-23T05:06:35.7970910Z",
+        "job_started_at": "2026-11-23T04:33:11Z",
+        "job_completed_at": "2026-11-23T05:06:43Z",
+        "upload_step_name": "Upload pluginval reports",
+        "upload_step_number": 18,
+        "upload_step_started_at": "2026-11-23T05:06:34Z",
+        "upload_step_completed_at": "2026-11-23T05:06:35Z",
+        "log_matches_artifact_id_and_bytes": true,
+        "timestamps_within_selected_job": true,
+        "upload_step_timestamp_tolerance_seconds": 2,
+        "api_creation_outside_upload_step_seconds": 0.0,
+        "success_log_outside_upload_step_seconds": 0.797091,
+        "api_creation_minus_success_log_seconds": -0.797091,
+        "timestamps_within_upload_step_tolerance": true,
+        "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+      }
+    }
+  ],
+  "scope": "Exact artifact name, ID and byte count in timestamped original upload success lines; fresh API source identity checked separately. Explicit two-second step timestamp tolerance accounts for clock precision only, not validation retries."
+}

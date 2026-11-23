@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "status": "prepared_not_accepted_no_artifact_acquired",
+  "prepared_at_utc": "2026-11-23T05:48:55.001877+00:00",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "native_producer_job_id": 137487485114,
+  "native_producer_job_name": "Linux / VST3 + Standalone",
+  "expected_artifact_name": "cs80-curated-preset-audition-9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "required_steps": [
+    "Configure",
+    "Verify configured JUCE source",
+    "Build",
+    "Test",
+    "Capture curated preset auditions",
+    "Upload curated preset auditions"
+  ],
+  "source_hashes": {
+    ".github/workflows/build.yml": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "scripts/capture-factory-auditions.py": "b8841e22af84978cc81eab38b7733856852cccc439c5a5813580dd0b14a82af9"
+  },
+  "frozen_audition_contract": {
+    "revision": "2026.11.2",
+    "wav_count": 68,
+    "unique_programs": 56,
+    "seconds": 431,
+    "rate_hz": 48000,
+    "channels": 2,
+    "format": "IEEE float32, raw unnormalized capture",
+    "inventory_programs": 523,
+    "parameter_count": 190,
+    "program_identity_sha256": "153dc26a4cc6777258b4cc9005d81ca51355375c7a3fd7563d4072c51f8f2ce6",
+    "ordered_parameter_ids_sha256": "7e03391b29dced09464af746967e799841d23f99bada52d14e935882482b060b",
+    "only_intentionally_silent_excerpt": "pressure-zero / Pressure Lead"
+  },
+  "checkers": [
+    {
+      "name": "verify-audition.py",
+      "sha256": "b3cdb252f8cdddc4766622ba7ef2dab5ccde2548a0b31443b647ae71a9fbc7ef",
+      "bytes": 24638,
+      "origin": "9c0d2baef5643a983a0e7a378b6be033371248f4:docs/preset-evidence/2026.11.2/verify-audition.py",
+      "scope": "Unchanged committed offline audition verifier"
+    },
+    {
+      "name": "download-public-artifact.py",
+      "sha256": "2c6a2346450eb6007a2455373add839fda54731305823af96d5837c0915fff78",
+      "bytes": 3776,
+      "origin": "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/download-public-artifact.py",
+      "scope": "Unchanged reviewed public downloader; no authentication sent; exact API size and SHA256 required"
+    },
+    {
+      "name": "upload-binding-helper.py",
+      "sha256": "c6016213978cdb66848f611dd6441aecd98ad0082301bdf9722ae2b949919d16",
+      "bytes": 21096,
+      "origin": "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/verify-arm-validators.py",
+      "scope": "Reviewed local immutable copy; only bind_validator_upload() will be imported from the upload helper, not its main validator workflow."
+    }
+  ],
+  "acquisition_and_attempt_binding": [
+    "Fetch fresh full raw run/jobs/artifacts API collections for source and run; select the exact native producer job and artifact uniquely.",
+    "Retain any native/capture/upload failure or incomplete status. Full acceptance needs completed producer log and exact raw job attempt; a manifest run_attempt does not establish producer attempt.",
+    "Download actual ID-pinned public ZIP without authentication, retain HTTP status, size, digest and all transfer attempts.",
+    "Use unchanged verify-audition.py with explicit --source, --run-id and --run-attempt 1; write new proof only.",
+    "Apply the unchanged reviewed bind_validator_upload() to the exact Upload curated preset auditions step. Require matching original successful upload artifact name, ID and byte count, strict job time interval and recorded two-second step-clock tolerance.",
+    "Freeze compact proofs, fresh metadata, upload binding, original capture excerpt/log and audition metadata under new ci/source-9c0d2ba/audition/. Keep large ZIP/WAV payloads only in /dev/shm."
+  ],
+  "remaining_inputs": "Actual source-9c0d audition artifact, fresh API metadata and completed native producer job log; parent will wake this agent once available.",
+  "limitations": "Preparation only: no download, verifier execution, synthetic test, product execution, acoustic assessment, native CI acceptance or publication has occurred."
+}

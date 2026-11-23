@@ -1,0 +1,89 @@
+{
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "attempt": 1,
+  "job_id": 137437185127,
+  "target": "macos-arm64",
+  "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+  "native": {
+    "registered": 247,
+    "passed": 245,
+    "failed": 0,
+    "formal_skips": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "nested_python_skips": [
+      {
+        "ctest": "cs80_package_binary_identity_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_packaging_notice_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_windows_installer_preflight_tests",
+        "count": 2
+      },
+      {
+        "ctest": "cs80_render_cli_tests",
+        "count": 1
+      }
+    ],
+    "junit_time_seconds": "1184"
+  },
+  "validators": [
+    {
+      "step": "Validate VST3 with pluginval",
+      "seed": "0x3e4fc65",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-vst3.log",
+      "log_sha256": "4ff6ad88562bb806d38b1aacdf6b0a7d3a1b089dad41c329f4eeaf8c96f3e947",
+      "gui": false
+    },
+    {
+      "step": "Validate AU with pluginval",
+      "seed": "0x57e1899",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au.log",
+      "log_sha256": "9627836b6d35afc50b7d18a8eb344953d24d0e980981949dd8241c0ea109ec74",
+      "gui": false
+    },
+    {
+      "step": "Validate AU with pluginval GUI",
+      "seed": "0x5c64b4a",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au-gui.log",
+      "log_sha256": "bca3b9e590217bf3ba02e0d4047b14bb23397e5d04628adfbfb0b5ea66e62eb7",
+      "gui": true
+    },
+    {
+      "step": "Validate AU GUI fixed-seed regression",
+      "seed": "0x2b4eef5",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au-seed-regression.log",
+      "log_sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+      "gui": true
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14784378673,
+      "name": "cs80-macos-15-test-evidence",
+      "size": 62499,
+      "sha256": "eea7e1ff7dfa92adbb6487e51f9a2a699a911c7dbb8e67420a65d2ee6d4375de"
+    },
+    {
+      "id": 14784314450,
+      "name": "cs80-pluginval-macos-15",
+      "size": 9686,
+      "sha256": "2c098b2674868e60e8e038887fbfa03322de918a25b3578b4c31fd9b06c6a90f"
+    }
+  ],
+  "scope": "Native test and four validator evidence acceptance only. Install archive requires the separate bundle verifier. The original 8ffe AU GUI abort remains failed; these passes do not establish root-cause ownership or universal host safety."
+}

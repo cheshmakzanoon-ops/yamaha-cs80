@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "reviewer": "A60",
+  "status": "independent_current_linux_validator_review_passed",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "validator_job_id": 137537383323,
+  "final_run_updated_at_utc": "2026-11-23T07:06:23Z",
+  "all_six_jobs_success": true,
+  "original_invocations": [
+    {
+      "lane": "headless",
+      "seed": "0x2e888b9",
+      "pid": 2677,
+      "raw_returncode": 0
+    },
+    {
+      "lane": "gui",
+      "seed": "0x20b4bb1",
+      "pid": 2709,
+      "raw_returncode": 0
+    },
+    {
+      "lane": "fixed_gui",
+      "seed": "0x2da72db",
+      "pid": 2751,
+      "raw_returncode": 0
+    }
+  ],
+  "strictness": 10,
+  "program_count": 523,
+  "internal_retries_used": 0,
+  "failure_diagnostic_replays": 0,
+  "gui_required_phases": [
+    "Editor",
+    "Open editor whilst processing",
+    "Editor Automation"
+  ],
+  "both_gui_invocations_complete": true,
+  "full_log": {
+    "bytes": 81430,
+    "sha256": "a56ddf83c49cb732c84769bec52e61729e5bb2e6e95db55020d17a362b74f3bb",
+    "root_independently_obtained_hash_match": true
+  },
+  "reviewer_raw_attempt_api_digests": {
+    "run": {
+      "bytes": 13499,
+      "sha256": "47f6a155ff9aee0765e3f1701ac757aec05e35539fb36f5235cdec4717c26c60"
+    },
+    "jobs": {
+      "bytes": 22221,
+      "sha256": "532fb808d6dac120d15ef385ae480fab03297019194888926395e9332297919a"
+    }
+  },
+  "api_serialization_note": "These are A60 raw explicit-attempt API response hashes; root final API files have their own recorded serialization/hash. All identity/outcome fields agree.",
+  "validator_artifact_id": 14797200567,
+  "vst3_input_artifact_id": 14796373585,
+  "scope": "Independent fresh final APIs, complete original validator log, workflow/wrapper identities and artifact upload/download bindings. Root separately downloaded and compared the ZIPs. No source mutation, CI rerun, separate Steinberg-validator or permanent earlier-crash-fix claim."
+}

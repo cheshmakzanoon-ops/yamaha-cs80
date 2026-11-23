@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "native_job_id": 137487485173,
+  "target": "macos-x86_64",
+  "status": "root_cross_check_passed",
+  "checked_at_utc": "2026-11-23T05:37:34.895821+00:00",
+  "artifacts": [
+    {
+      "artifact_id": 14792995139,
+      "name": "cs80-pluginval-macos-15-intel",
+      "bytes": 9632,
+      "sha256": "9203ac934bf63f708a5e99c7d736f4fb3699e68ead29e738cbca19ba049a5c44",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14792770742,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "bytes": 62654,
+      "sha256": "eef166b02e33dd98e0d2c73f5b723f63be20813c90c68ae589c21bd71984312a",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14791699516,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "bytes": 16000310,
+      "sha256": "eba5ccee2b3d7f0daafadf6a91749d75333b741decf0929b985dba5ac345ee96",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    }
+  ],
+  "inner_archive_rehashed": {
+    "name": "cs80-reference-macos-x86_64-9c0d2baef564.tar.gz",
+    "bytes": 15991928,
+    "sha256": "4ded62c0355e2e6a4bd8fe85c5d88a4f24fc2fce66ced261f2bb0338c5b88def"
+  },
+  "proof_sha256": {
+    "acceptance-summary.json": "b2a4ab67de810795f361d3546c5d7519dadb8d7cfcdf8be2aabef84d771a1be0",
+    "native-ctest-proof.json": "1cb3e93dc2b22092a681005c6f32d3752113d8f08c10f48c3a500ef7d0f30c41",
+    "validator-proof.json": "fb5f16ee6c9ac095580709f707a49f6bf7cdf4d791fd67cd6b8ec47a88604686",
+    "install-bundle-proof.json": "3b1b30003be637edbdc777bd8f31db4cf52f2fa6616a8214d74f28b69b4d4699",
+    "artifact-producer-bindings.json": "bb0b037e6d4ced5514c1e76b6999cd6298b3769d3ce080d71ad3e899d618e4ac",
+    "evidence-manifest.json": "e399a5d023025c487929ae5e4188f189d93e17b338fd550c51e4a0ff851c9dd7"
+  },
+  "native_counts": {
+    "registered": 247,
+    "passed": 245,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "validator_invocations": 4,
+  "validator_retries": 0,
+  "gui_lanes": 2,
+  "previously_time_limited_tests_in_fresh_run": [
+    {
+      "name": "cs80_library_audit_tests",
+      "result": "passed",
+      "seconds": 437.29
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "result": "passed",
+      "seconds": 158.799
+    }
+  ],
+  "scope": "Root rehashed all three original downloaded ZIPs and the inner installation tarball against a fresh connected GitHub artifact API, reviewed native/validator proofs and approved checker hashes, and checked all four successful required validator lanes. A51 performed the complete native/archive/validator and producer-binding checks. No downloaded product or validator was executed by root. Previous-source Intel timeout remains failed historical evidence.",
+  "overall_build_accepted": false
+}

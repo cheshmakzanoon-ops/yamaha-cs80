@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485061,
+  "target": "macos-arm64",
+  "status": "root_cross_check_passed",
+  "checked_at_utc": "2026-11-23T05:13:32.932883+00:00",
+  "artifacts": [
+    {
+      "artifact_id": 14791856136,
+      "name": "cs80-macos-15-install-bundle",
+      "bytes": 14850900,
+      "sha256": "48b4bf218d456c8ea48139ba8ceddc677ece8dbae51be81fb80edd468c06bc42",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14791836232,
+      "name": "cs80-macos-15-test-evidence",
+      "bytes": 62554,
+      "sha256": "6ad755115d6ac032ed3ff3fa3476fea786760c6a4d74782b7003056483282691",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14790989775,
+      "name": "cs80-pluginval-macos-15",
+      "bytes": 9686,
+      "sha256": "fd393eb308ee7a025fd0cd9548c1be3820f64819c13e444f989040d77f071e2f",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    }
+  ],
+  "inner_archive_rehashed": {
+    "name": "cs80-reference-macos-arm64-9c0d2baef564.tar.gz",
+    "bytes": 14842527,
+    "sha256": "3fadb79ca8816465cf98e10e41cdd2b5f8e5ef68f21284eb7d1be76a1800ecbe"
+  },
+  "proof_sha256": {
+    "acceptance-summary.json": "7733482458668195e570e7032e790a81248734eac09baa557a62bd63445b3817",
+    "native-proof.json": "7bba40deffaa5338c8533083f14ffe51d8d7b9e79bb39d6fcab9e4d33e1558ea",
+    "validator-proof.json": "a46fd6572e323a4655185510b8552d3829d308a4b2d33b0b942b7a4f3768fccc",
+    "install-proof.json": "4ea3dafa079b3773ba222e78ffb11dabee09d805a38fa1a1810f7bd391150c58",
+    "artifact-upload-bindings.json": "4b8dbfd29b05feec794407fe3d00767beec33ca3c990b923817b33517080e626",
+    "evidence-files.json": "7251d052af9402f5a377abb7de9f28bc66ad689189f5be296d557fed299c98ce"
+  },
+  "native_counts": {
+    "registered": 247,
+    "passed": 245,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "validator_invocations": 4,
+  "validator_retries": 0,
+  "validator_download_attempts": 2,
+  "validator_download_fallback_is_not_validation_retry": true,
+  "scope": "Root rehashed all three original downloaded ZIPs and inner installation tarball against a fresh connected GitHub artifact API, inspected exact-source native and validator proofs, verified all four successful lanes and approved checker hashes. A55 performed the complete offline native/archive/validator checks. No second product or validator execution is claimed.",
+  "overall_build_accepted": false
+}

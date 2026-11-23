@@ -16,68 +16,52 @@ a DAW or a standalone app.
 
 ## Downloads
 
-**2026.11.1 development candidates — the full release is blocked by a Linux
-GUI validator crash.** All four native build/test/package jobs passed, and
-Windows and both Mac targets passed their required validators. The Linux
-randomized GUI validator printed SUCCESS and then terminated by SIGSEGV
-(raw −11 / wrapper 139). The complete build therefore **failed**; the automatic
-publisher was skipped and no qualified 2026.11.1 prerelease was published.
+**2026.11.2 — the existing 523-program factory library, revised for one circuit
+engine.** These builds include the original-address revoicing, keyboard and
+instrument refinements, and removal of the Legacy/Pure engine selectors.
 
-These pinned ZIPs contain the complete 300-program redesign plus the twelve
-2026.11.1 refinements. Their actual downloaded bytes, package inventories,
-architectures and installation contents have been checked. **They remain
-unsigned development candidates; Linux has the unresolved GUI validation
-failure above.** No GitHub sign-in is required for these links.
+All four native build/test/package jobs and all **13 required strictness-10
+pluginval invocations passed**, with zero native test failures and zero validator
+retries used. The actual installation and audition archives were downloaded and
+checked against their published sizes, hashes and producing jobs.
 
-| Platform | Formats | Candidate download |
+| Platform | Included formats | Verified installation download |
 | --- | --- | --- |
-| Windows x64 | VST3, Standalone | [Windows candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
-| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
-| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux experimental ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
+| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip) |
 
 Binary source:
-[`6d3cc220`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c) ·
-[Build 45044040694, attempt 1 — failed](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694) ·
-[Download hashes and public GET evidence](docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json) ·
-[Four-archive installation checks](docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) ·
-[Linux validator failure](docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
+[`9c0d2baef5643a983a0e7a378b6be033371248f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9c0d2baef5643a983a0e7a378b6be033371248f4) ·
+[Build 45112404257, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257) ·
+[Qualification, download hashes and exact artifact identities](docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json)
 
-[Consolidated qualification](docs/preset-evidence/2026.11.1/ci/release-qualification.json) ·
-[Acceptance of the reviewed downloads](docs/preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md)
+**Hear the revised sounds:** [68 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip)
+cover **56 existing programs and 431 seconds** of 48 kHz stereo audio. They
+include all 24 keyboard programs, soft-strike comparisons, three Tine Piano
+registers, pressure examples and revised original addresses. The archive also
+contains all 523 preset parameter vectors, metrics, provenance and checksums.
+[Actual audition verification](docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json)
 
-**Hear the revised factory bank:** [24 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip)
-from the same source, including every refined program: **117 seconds** of
-48 kHz stereo audio, with inventory, metrics, provenance and checksums.
-Pressure Lead is captured with aftertouch; the excerpts do not cover every
-natural release or performance history. These are core-engine captures and do
-not certify the failed Linux GUI gate.
-[Actual audition verification](docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json)
+Unpack the outer ZIP, verify its included `SHA256SUMS`, and unpack the inner
+archive while keeping each plug-in/app bundle intact. The linked qualification
+record gives the outer ZIP hashes. Follow the
+[installation guide](docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need).
+Choose the Mac build for your **host process architecture**. These are CI
+installation bundles without release signing or notarization; Linux requires
+compatible system libraries. They are retained Actions artifacts with API
+expiry **21 February 2027 at 04:31:50 UTC**, rather than permanent release assets. No GitHub
+sign-in is required for the public links; the same run's Artifacts list is the
+fallback while the artifacts remain retained.
 
-Unzip the outer artifact, verify its included `SHA256SUMS`, and unpack the inner
-archive without splitting the plug-in or app bundle. The linked download record
-above gives the outer ZIP hashes. Each manifest and `SOURCE.txt` retains the
-exact binary source; an application version or later `main` commit does not
-identify these bytes. Follow the
-[verification instructions](docs/INSTALL_AND_QUICKSTART.md#offline-inventory-verification-python-310)
-and [install paths](docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need).
-
-Choose the Mac bundle for the **host process** architecture; these are separate
-arm64 and x86-64 builds without release signing or notarization. Linux requires
-compatible system libraries. These are retained GitHub Actions artifacts, with
-API expiry **20 February 2027 at 16:28:38 UTC**, rather than permanent release
-assets. If the mirror is unavailable, use the same build's GitHub **Artifacts**
-list while they remain retained.
-
-The [refinement report](docs/PRESET_REFINEMENT_2026_11_1.md) separates passing
-native/archive checks from the failed Linux validator and the pre-existing
-VST3 Program queue limitation. The earlier **2026.11** downloads, original
-review and their separate failure/retry history remain in the
-[distribution history](docs/CI_DISTRIBUTION_STATUS.md) and
-[original revision report](docs/PRESET_REVISION_2026_11.md).
-The [2026.11.1 60-agent review](docs/TEAM_REVIEW_2026_11_1.md) records this
-refinement's assignments and their qualification limits separately from the
-earlier review.
+Each manifest and `SOURCE.txt` identifies the exact binary source. Later
+screenshot or documentation commits on `main` do not change those bytes.
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes,
+saved-session migration and measured limits. The
+[60-assignment review](docs/TEAM_REVIEW_2026_11_2.md) links the implementation and
+acceptance work. Earlier builds and their original failures remain in the
+[distribution history](docs/CI_DISTRIBUTION_STATUS.md).
 
 ## Play your first sound
 

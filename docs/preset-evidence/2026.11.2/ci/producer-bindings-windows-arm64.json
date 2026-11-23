@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "status": "exact_artifact_ids_bound_to_producer_attempts",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "reviewed_at_utc": "2026-11-23T03:32:22.423255+00:00",
+  "bindings": [
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14785486091,
+      "artifact_name": "cs80-windows-install-bundle",
+      "bytes": 6251477,
+      "api_sha256": "sha256:0a0c2af419687048bebda60d30ebc467d6b8923c633f7dca0776e2ba54682225",
+      "job_id": 137437184878,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload Windows install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T02:33:40Z",
+        "completed_at": "2026-11-23T02:33:42Z"
+      },
+      "artifact_created_at": "2026-11-23T02:33:42Z",
+      "success_log_timestamp": "2026-11-23T02:33:42.6398567Z",
+      "success_log_line": "2026-11-23T02:33:42.6398567Z Artifact cs80-windows-install-bundle has been successfully uploaded! Final size is 6251477 bytes. Artifact ID is 14785486091",
+      "api_time_outside_step_seconds": 0.0,
+      "success_time_outside_step_seconds": 0.639856,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "windows-x86_64/install-api.json",
+        "bytes": 799,
+        "sha256": "bca5aac42554e6518321f0995ca2a6ea6c8506cf144b794843930ce3d8d265f8"
+      },
+      "producer_log": {
+        "filename": "native-job.log",
+        "bytes": 136673,
+        "sha256": "ead15f8b14ba3d3ec656a758a13ea0da7fe2a167ecb7d98b9ce0c343e3f9dbc3"
+      }
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14785206822,
+      "artifact_name": "cs80-windows-test-evidence",
+      "bytes": 59652,
+      "api_sha256": "sha256:0cb7cd4abaeabe77070185928baa595c126f53e3f2c000dd99bd409c3bf2aacf",
+      "job_id": 137437184878,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-23T02:33:42Z",
+        "completed_at": "2026-11-23T02:33:44Z"
+      },
+      "artifact_created_at": "2026-11-23T02:33:43Z",
+      "success_log_timestamp": "2026-11-23T02:33:44.0802105Z",
+      "success_log_line": "2026-11-23T02:33:44.0802105Z Artifact cs80-windows-test-evidence has been successfully uploaded! Final size is 59652 bytes. Artifact ID is 14785206822",
+      "api_time_outside_step_seconds": 0,
+      "success_time_outside_step_seconds": 0.08021,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "windows-x86_64/native-api.json",
+        "bytes": 796,
+        "sha256": "08b7a74c737366a2970d49c9557ee8b55806961d31a6b813aa7b40dc1f67bcd9"
+      },
+      "producer_log": {
+        "filename": "native-job.log",
+        "bytes": 136673,
+        "sha256": "ead15f8b14ba3d3ec656a758a13ea0da7fe2a167ecb7d98b9ce0c343e3f9dbc3"
+      }
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14785491077,
+      "artifact_name": "cs80-windows-vst3",
+      "bytes": 3133547,
+      "api_sha256": "sha256:f346ce7d5a616c059a2837f0320cd70fb8efa6ec87bfdfbaf74686e5a36b6817",
+      "job_id": 137437184878,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload Windows VST3",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T02:33:34Z",
+        "completed_at": "2026-11-23T02:33:37Z"
+      },
+      "artifact_created_at": "2026-11-23T02:33:36Z",
+      "success_log_timestamp": "2026-11-23T02:33:37.1857456Z",
+      "success_log_line": "2026-11-23T02:33:37.1857456Z Artifact cs80-windows-vst3 has been successfully uploaded! Final size is 3133547 bytes. Artifact ID is 14785491077",
+      "api_time_outside_step_seconds": 0,
+      "success_time_outside_step_seconds": 0.185745,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "windows-x86_64/vst3-api.json",
+        "bytes": 789,
+        "sha256": "fde11689574ab3d1e23317a57cd1e902fed03c216915114f6f723a8ee98e1b5f"
+      },
+      "producer_log": {
+        "filename": "native-job.log",
+        "bytes": 136673,
+        "sha256": "ead15f8b14ba3d3ec656a758a13ea0da7fe2a167ecb7d98b9ce0c343e3f9dbc3"
+      }
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14784794527,
+      "artifact_name": "cs80-pluginval-windows",
+      "bytes": 5081,
+      "api_sha256": "sha256:9e715ecab51f77221fc5fcab22064e098183b544918eaa0edf5071b898897aa2",
+      "job_id": 137451348288,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T02:34:23Z",
+        "completed_at": "2026-11-23T02:34:24Z"
+      },
+      "artifact_created_at": "2026-11-23T02:34:24Z",
+      "success_log_timestamp": "2026-11-23T02:34:24.5422040Z",
+      "success_log_line": "2026-11-23T02:34:24.5422040Z Artifact cs80-pluginval-windows has been successfully uploaded! Final size is 5081 bytes. Artifact ID is 14784794527",
+      "api_time_outside_step_seconds": 0.0,
+      "success_time_outside_step_seconds": 0.542204,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "windows-x86_64/validators-api.json",
+        "bytes": 791,
+        "sha256": "49c6cf79ee744d99b4847e007502416938c76ae1d8ac4cc6a95f71acf459fc83"
+      },
+      "producer_log": {
+        "filename": "validator-job.log",
+        "bytes": 45037,
+        "sha256": "65049788c8598d08350171c5a744d9da850ba537f2cb132d7709fb61aca714a9"
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14784458163,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "bytes": 14850927,
+      "api_sha256": "sha256:a338bd92d85e2ed6e4a01b7454e94a1b6b482d9ff89fd05677cc78f53dc01c64",
+      "job_id": 137437185127,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T02:18:45Z",
+        "completed_at": "2026-11-23T02:18:47Z"
+      },
+      "artifact_created_at": "2026-11-23T02:18:48Z",
+      "success_log_timestamp": "2026-11-23T02:18:47.7331820Z",
+      "success_log_line": "2026-11-23T02:18:47.7331820Z Artifact cs80-macos-15-install-bundle has been successfully uploaded! Final size is 14850927 bytes. Artifact ID is 14784458163",
+      "api_time_outside_step_seconds": 1.0,
+      "success_time_outside_step_seconds": 0.733182,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "macos-arm64/install-api.json",
+        "bytes": 801,
+        "sha256": "26db45a9c795d94ba11583b2022ce36fe7381f09d1acc2f4a32b4b9a8428abb7"
+      },
+      "producer_log": {
+        "filename": "job.log",
+        "bytes": 226006,
+        "sha256": "54f6ba8d1fb934f56061b1a9fe80e28a47b15cd9f4588523b629252afb00eb05"
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14784378673,
+      "artifact_name": "cs80-macos-15-test-evidence",
+      "bytes": 62499,
+      "api_sha256": "sha256:eea7e1ff7dfa92adbb6487e51f9a2a699a911c7dbb8e67420a65d2ee6d4375de",
+      "job_id": 137437185127,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-23T02:18:48Z",
+        "completed_at": "2026-11-23T02:18:50Z"
+      },
+      "artifact_created_at": "2026-11-23T02:18:50Z",
+      "success_log_timestamp": "2026-11-23T02:18:50.0181770Z",
+      "success_log_line": "2026-11-23T02:18:50.0181770Z Artifact cs80-macos-15-test-evidence has been successfully uploaded! Final size is 62499 bytes. Artifact ID is 14784378673",
+      "api_time_outside_step_seconds": 0.0,
+      "success_time_outside_step_seconds": 0.018177,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "macos-arm64/native-api.json",
+        "bytes": 797,
+        "sha256": "12a8ab895c775e67024b320156ca064b4c3cf22106851b20faddabaea34839db"
+      },
+      "producer_log": {
+        "filename": "job.log",
+        "bytes": 226006,
+        "sha256": "54f6ba8d1fb934f56061b1a9fe80e28a47b15cd9f4588523b629252afb00eb05"
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14784314450,
+      "artifact_name": "cs80-pluginval-macos-15",
+      "bytes": 9686,
+      "api_sha256": "sha256:2c098b2674868e60e8e038887fbfa03322de918a25b3578b4c31fd9b06c6a90f",
+      "job_id": 137437185127,
+      "run_attempt": 1,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "upload_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-23T02:18:47Z",
+        "completed_at": "2026-11-23T02:18:48Z"
+      },
+      "artifact_created_at": "2026-11-23T02:18:49Z",
+      "success_log_timestamp": "2026-11-23T02:18:48.8163330Z",
+      "success_log_line": "2026-11-23T02:18:48.8163330Z Artifact cs80-pluginval-macos-15 has been successfully uploaded! Final size is 9686 bytes. Artifact ID is 14784314450",
+      "api_time_outside_step_seconds": 1.0,
+      "success_time_outside_step_seconds": 0.816333,
+      "step_timestamp_tolerance_seconds": 2,
+      "creation_within_job_interval": true,
+      "id_and_size_match": true,
+      "artifact_api_file": {
+        "path": "macos-arm64/validators-api.json",
+        "bytes": 792,
+        "sha256": "782f878b21b2273dd2a7b1c7273590f61ee26034bc99c6bb047b6a38a3e55e46"
+      },
+      "producer_log": {
+        "filename": "job.log",
+        "bytes": 226006,
+        "sha256": "54f6ba8d1fb934f56061b1a9fe80e28a47b15cd9f4588523b629252afb00eb05"
+      }
+    }
+  ],
+  "method": "Bind exact artifact name, ID and byte count in the completed producer job log to its raw job API source/run/attempt and successful upload step. Package manifests do not carry attempt. Artifact and log timestamps corroborate the ID binding; upload-step timestamps allow an explicit 2-second precision/clock tolerance while API artifact creation remains strictly inside the enclosing job interval.",
+  "scope": "Previously accepted Windows and Apple Silicon artifacts only; no Linux or Intel acceptance implied."
+}

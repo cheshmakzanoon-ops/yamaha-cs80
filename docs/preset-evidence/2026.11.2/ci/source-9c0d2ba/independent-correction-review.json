@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "reviewer": "a60_release_acceptance_and_recovery_review",
+  "reviewed_source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "review_scope": "Immutable remote commit, all four corrected fixtures, CMake deadlines, preserved failure reports, actual previous Linux full log and validator helper rebind. Fresh native/DSP package acceptance remains separate.",
+  "changed_files": 22,
+  "changed_file_roles": {
+    "cmake": 1,
+    "fixtures": 4,
+    "history_json": 17
+  },
+  "unchanged_objects_from_366c": {
+    "src": "72d28d546686aa1f5bf9a3bb98f26ce2ddfbcb3b",
+    "tests/parity": "e98d2d5af9747d5e38f43d5efb59e69a52b499df",
+    ".github/workflows": "6c3da600188fe134e313203373eeca7b3d23dd72",
+    "tests/parity/tolerances-v2/main-vst3-multirecall-state.json": "4ad7b4d835f9eaf0901c5fd577f003b2e27b5d69"
+  },
+  "fixture_findings": {
+    "SubRoutingDisplayTests.cpp": "Both waveform sets, all four amounts and all retired policy requests retained; independent literal display anchors and immutability/invalidation checks.",
+    "MidiMapNotificationTests.cpp": "Mapping notifications and coalescing retained; live controller use, relearning, preservation and forgetting checked.",
+    "AudioCallbackAllocationTests.cpp": "All three sample rates, both requests and both voice capacities retained; allocation/deallocation probes remain; added populated held-note continuity.",
+    "MainVst3MultiRecallStateTests.cpp": "All five pairs and original queues retained; independent final endpoint values, exact-zero errors, one commit per lane, idempotent end and later ordinary edit enforced."
+  },
+  "before_after_local": {
+    "original_checks": 438,
+    "original_failing_assertions": 74,
+    "corrected_checks": 551,
+    "corrected_failing_assertions": 0,
+    "scope": "Local direct processor/offscreen witness; not native GUI or download acceptance."
+  },
+  "intel_budget_review": {
+    "audit_seconds": 1200,
+    "ui_smoke_seconds": 480,
+    "other_platforms_unchanged": true,
+    "assertions_internal_waits_validators_and_exit_rules_unchanged": true
+  },
+  "failure_integrity": {
+    "original_linux_full_log_sha256": "55be393fe3c62f5e9ff0177678a4a0e55df98b4634c1c217e2ec76c5f031d8f6",
+    "baseline_failure_multiset_matches_remote_log": true,
+    "baseline_failure_lines": 74,
+    "lasttest_and_junit_excerpt_hashes_match_roster": true,
+    "intel_preservation_manifest_members_verified": 10
+  },
+  "platform_helper_review": {
+    "baseline_sha256": "fec10a56a2ba27d9bf31118ecc383fb6372f0ed5c013a68541f3f2f8c9d998c0",
+    "current_sha256": "94cfb12bf52e77e8fdf28f5df3e6e8b8c9b9bf84cc5951346ee097942096a179",
+    "changes": [
+      "SOURCE constant",
+      "RUN constant"
+    ],
+    "method": "A60 reconstructed all 21105 baseline bytes from supplied local source, independently hashed original and constant-only copy, and reviewed all predicates; root also compared both files directly. The helper had not yet been published when reviewed."
+  },
+  "decision": "approve_correction_and_exact_helper_rebind",
+  "root_recorded_at_utc": "2026-11-23T05:06:47.504255+00:00"
+}

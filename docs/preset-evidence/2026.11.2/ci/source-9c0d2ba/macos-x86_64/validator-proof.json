@@ -1,0 +1,423 @@
+{
+  "schema": 1,
+  "status": "required_validators_verified",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485173,
+  "target": "macos-x86_64",
+  "job_conclusion": "success",
+  "verified_at_utc": "2026-11-23T05:31:41.142267+00:00",
+  "job_api": {
+    "id": 137487485173,
+    "run_id": 45112404257,
+    "workflow_name": "build",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVaLxy88AAAAgAuSI9Q",
+    "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137487485173",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257/job/137487485173",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T04:31:51Z",
+    "started_at": "2026-11-23T04:32:58Z",
+    "completed_at": "2026-11-23T05:29:51Z",
+    "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T04:32:59Z",
+        "completed_at": "2026-11-23T04:33:00Z"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T04:33:00Z",
+        "completed_at": "2026-11-23T04:33:11Z"
+      },
+      {
+        "name": "Record native platform",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T04:33:11Z",
+        "completed_at": "2026-11-23T04:33:11Z"
+      },
+      {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T04:33:11Z",
+        "completed_at": "2026-11-23T04:35:02Z"
+      },
+      {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T04:35:02Z",
+        "completed_at": "2026-11-23T04:35:02Z"
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T04:35:02Z",
+        "completed_at": "2026-11-23T04:47:03Z"
+      },
+      {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T04:47:03Z",
+        "completed_at": "2026-11-23T05:24:34Z"
+      },
+      {
+        "name": "Fetch pluginval 1.0.4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T05:24:34Z",
+        "completed_at": "2026-11-23T05:24:37Z"
+      },
+      {
+        "name": "Register built AU",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T05:24:37Z",
+        "completed_at": "2026-11-23T05:24:39Z"
+      },
+      {
+        "name": "Validate VST3 with pluginval",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T05:24:39Z",
+        "completed_at": "2026-11-23T05:24:47Z"
+      },
+      {
+        "name": "Validate AU with pluginval",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-23T05:24:47Z",
+        "completed_at": "2026-11-23T05:25:26Z"
+      },
+      {
+        "name": "Validate AU with pluginval GUI",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-11-23T05:25:26Z",
+        "completed_at": "2026-11-23T05:27:18Z"
+      },
+      {
+        "name": "Validate AU GUI fixed-seed regression",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-11-23T05:27:18Z",
+        "completed_at": "2026-11-23T05:29:35Z"
+      },
+      {
+        "name": "Package native macOS VST3, AU and Standalone",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T05:29:35Z",
+        "completed_at": "2026-11-23T05:29:42Z"
+      },
+      {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T05:29:42Z",
+        "completed_at": "2026-11-23T05:29:45Z"
+      },
+      {
+        "name": "AU registration diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 16,
+        "started_at": "2026-11-23T05:29:45Z",
+        "completed_at": "2026-11-23T05:29:45Z"
+      },
+      {
+        "name": "Report pluginval failure",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 17,
+        "started_at": "2026-11-23T05:29:45Z",
+        "completed_at": "2026-11-23T05:29:45Z"
+      },
+      {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-23T05:29:45Z",
+        "completed_at": "2026-11-23T05:29:47Z"
+      },
+      {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-23T05:29:47Z",
+        "completed_at": "2026-11-23T05:29:48Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 38,
+        "started_at": "2026-11-23T05:29:48Z",
+        "completed_at": "2026-11-23T05:29:49Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 39,
+        "started_at": "2026-11-23T05:29:49Z",
+        "completed_at": "2026-11-23T05:29:49Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137487485173",
+    "labels": [
+      "macos-15-intel"
+    ],
+    "runner_id": 1000042708,
+    "runner_name": "GitHub Actions 1000042708",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifact_api": {
+    "id": 14792995139,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc5Mjk5NTEzOQ==",
+    "name": "cs80-pluginval-macos-15-intel",
+    "size_in_bytes": 9632,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792995139",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792995139/zip",
+    "expired": false,
+    "digest": "sha256:9203ac934bf63f708a5e99c7d736f4fb3699e68ead29e738cbca19ba049a5c44",
+    "created_at": "2026-11-23T05:29:47Z",
+    "updated_at": "2026-11-23T05:29:47Z",
+    "expires_at": "2027-02-21T04:31:50Z",
+    "workflow_run": {
+      "id": 45112404257,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+    }
+  },
+  "run_status_at_check": "in_progress",
+  "run_snapshot_attempt": 1,
+  "overall_run_acceptance": "not assessed",
+  "preserved_previous_attempt": null,
+  "validator_artifact_attempt_binding": {
+    "job_id": 137487485173,
+    "run_attempt": 1,
+    "artifact_id": 14792995139,
+    "artifact_created_at": "2026-11-23T05:29:47Z",
+    "upload_success_log_timestamp": "2026-11-23T05:29:47.0251840Z",
+    "job_started_at": "2026-11-23T04:32:58Z",
+    "job_completed_at": "2026-11-23T05:29:51Z",
+    "upload_step_name": "Upload pluginval reports",
+    "upload_step_number": 18,
+    "upload_step_started_at": "2026-11-23T05:29:45Z",
+    "upload_step_completed_at": "2026-11-23T05:29:47Z",
+    "log_matches_artifact_id_and_bytes": true,
+    "timestamps_within_selected_job": true,
+    "upload_step_timestamp_tolerance_seconds": 2,
+    "api_creation_outside_upload_step_seconds": 0.0,
+    "success_log_outside_upload_step_seconds": 0.025184,
+    "api_creation_minus_success_log_seconds": -0.025184,
+    "timestamps_within_upload_step_tolerance": true,
+    "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+  },
+  "workflow_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+  "validator_download": {
+    "repository": "Tracktion/pluginval",
+    "version": "1.0.4",
+    "release_id": 188928656,
+    "asset_id": 210999197,
+    "asset_name": "pluginval_macOS.zip",
+    "expected_size": 9202795,
+    "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+    "attempts": [
+      {
+        "number": 1,
+        "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+        "reason": "downloaded",
+        "bytes": 9202795,
+        "final_host": "release-assets.githubusercontent.com",
+        "transfer_exit": 0
+      }
+    ],
+    "verified": true,
+    "actual_size": 9202795,
+    "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+  },
+  "validator_download_attempts": 1,
+  "validator_download_retries_or_alternate_routes": 0,
+  "validation_invocations": 4,
+  "validation_retries": 0,
+  "invocation_scope": "Selected job attempt only. Prior native-test failures remain recorded separately; a whole-job rerun is not a validator invocation retry.",
+  "validators": [
+    {
+      "step": "Validate VST3 with pluginval",
+      "seed": "0x1befcfe",
+      "fixed_regression": false,
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-vst3.log",
+      "log_bytes": 7399,
+      "log_sha256": "65e53026cae2674a6424e3ea36aa51c103390aeb569fd9a35da33659bf1a4cbc",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-vst3",
+      "report_bytes": 7272,
+      "report_sha256": "8e3bb451b21f6d3476b839005992a8bd5d3f96c3fa5dabb7c7d1d7e8eef17de2",
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "step": "Validate AU with pluginval",
+      "seed": "0x6334324",
+      "fixed_regression": false,
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-au.log",
+      "log_bytes": 7308,
+      "log_sha256": "96becfc866e609bdd606fd810b7819240bfb55b216c874972e481e4880268a18",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-au",
+      "report_bytes": 7214,
+      "report_sha256": "fd204e7ed1bec83f60c33bb7156e7350ece1f1b59b74d9e9e1f39e7dfa247d29",
+      "explicit_skips": []
+    },
+    {
+      "step": "Validate AU with pluginval GUI",
+      "seed": "0x1cf3b3f",
+      "fixed_regression": false,
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-au-gui.log",
+      "log_bytes": 7990,
+      "log_sha256": "9e7c68bb80553e2385ed13798a36606249841ab6d67373f4e04d6f0116117f1f",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-au-gui",
+      "report_bytes": 7896,
+      "report_sha256": "5dbbe35f955dca52c48e83c160faeef0dfc911850324904641a013adc351a1e7",
+      "explicit_skips": []
+    },
+    {
+      "step": "Validate AU GUI fixed-seed regression",
+      "seed": "0x2b4eef5",
+      "fixed_regression": true,
+      "strictness": 10,
+      "gui": true,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-au-seed-regression.log",
+      "log_bytes": 7990,
+      "log_sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-au-seed-regression",
+      "report_bytes": 7896,
+      "report_sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde",
+      "explicit_skips": []
+    }
+  ],
+  "validator_input_identity": null,
+  "artifact": {
+    "id": 14792995139,
+    "name": "cs80-pluginval-macos-15-intel",
+    "bytes": 9632,
+    "sha256": "9203ac934bf63f708a5e99c7d736f4fb3699e68ead29e738cbca19ba049a5c44"
+  },
+  "members": [
+    {
+      "path": "pluginval-download.json",
+      "bytes": 694,
+      "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c"
+    },
+    {
+      "path": "pluginval-reports/cs80-au-gui",
+      "bytes": 7896,
+      "sha256": "5dbbe35f955dca52c48e83c160faeef0dfc911850324904641a013adc351a1e7"
+    },
+    {
+      "path": "pluginval-reports/cs80-au-seed-regression",
+      "bytes": 7896,
+      "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+    },
+    {
+      "path": "pluginval-reports/cs80-au",
+      "bytes": 7214,
+      "sha256": "fd204e7ed1bec83f60c33bb7156e7350ece1f1b59b74d9e9e1f39e7dfa247d29"
+    },
+    {
+      "path": "pluginval-reports/cs80-vst3",
+      "bytes": 7272,
+      "sha256": "8e3bb451b21f6d3476b839005992a8bd5d3f96c3fa5dabb7c7d1d7e8eef17de2"
+    },
+    {
+      "path": "pluginval-vst3.log",
+      "bytes": 7399,
+      "sha256": "65e53026cae2674a6424e3ea36aa51c103390aeb569fd9a35da33659bf1a4cbc"
+    },
+    {
+      "path": "pluginval-au.log",
+      "bytes": 7308,
+      "sha256": "96becfc866e609bdd606fd810b7819240bfb55b216c874972e481e4880268a18"
+    },
+    {
+      "path": "pluginval-au-gui.log",
+      "bytes": 7990,
+      "sha256": "9e7c68bb80553e2385ed13798a36606249841ab6d67373f4e04d6f0116117f1f"
+    },
+    {
+      "path": "pluginval-au-seed-regression.log",
+      "bytes": 7990,
+      "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+    }
+  ],
+  "job_log": {
+    "bytes": 230765,
+    "sha256": "8de7e3df9def9c207320393ffed8c3a0a596a81998782bca0461e50b37f01993"
+  },
+  "scope": "Exact-source required validator steps and their original results only; transfer attempts are distinct from validator invocations. No failed invocation is replaced by a retry. Native CTest and install archive checks are separate. No full workflow, signing, all-DAW or acoustic/hardware-equivalence claim."
+}

@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "target": "macos-x86_64",
+  "files": [
+    {
+      "path": "14791699516-public-get.json",
+      "bytes": 822,
+      "sha256": "3490afe01460236a3f617cb994d46c2bbfe641faa7193290baa724d75d549e66"
+    },
+    {
+      "path": "14792770742-public-get.json",
+      "bytes": 814,
+      "sha256": "a6d84ad2f03e0d2a32084c9bb0b216abf99693b5a65197757860a63a3607e820"
+    },
+    {
+      "path": "14792770742.zip",
+      "bytes": 62654,
+      "sha256": "eef166b02e33dd98e0d2c73f5b723f63be20813c90c68ae589c21bd71984312a"
+    },
+    {
+      "path": "14792995139-public-get.json",
+      "bytes": 809,
+      "sha256": "eb4e20584e6068f48783e4c68f19ee381eb0007b047ab07d6ed465097a6dcf1a"
+    },
+    {
+      "path": "14792995139.zip",
+      "bytes": 9632,
+      "sha256": "9203ac934bf63f708a5e99c7d736f4fb3699e68ead29e738cbca19ba049a5c44"
+    },
+    {
+      "path": "acceptance-summary.json",
+      "bytes": 11809,
+      "sha256": "b2a4ab67de810795f361d3546c5d7519dadb8d7cfcdf8be2aabef84d771a1be0"
+    },
+    {
+      "path": "artifact-producer-bindings.json",
+      "bytes": 5300,
+      "sha256": "bb0b037e6d4ced5514c1e76b6999cd6298b3769d3ce080d71ad3e899d618e4ac"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 8828,
+      "sha256": "04fa11d56d97890e83a355bd363634567bf1d458aee7bc07a704a26ad746b2f4"
+    },
+    {
+      "path": "install-artifact-api.json",
+      "bytes": 807,
+      "sha256": "0f45a96f49af383bdc634f736168404a809510887c1dab79153a84f8a741016c"
+    },
+    {
+      "path": "install-bundle-proof.json",
+      "bytes": 38699,
+      "sha256": "3b1b30003be637edbdc777bd8f31db4cf52f2fa6616a8214d74f28b69b4d4699"
+    },
+    {
+      "path": "jobs-api.json",
+      "bytes": 26015,
+      "sha256": "bfb71594bf9ec382e02c5d4dcc9f68c613369a3a8aee30b40e633676e881ec2a"
+    },
+    {
+      "path": "native-artifact-api.json",
+      "bytes": 803,
+      "sha256": "e5848500a468d49302682940e959aba56519d45b0ed215648f43f0ff876a1133"
+    },
+    {
+      "path": "native-ctest-proof.json",
+      "bytes": 41151,
+      "sha256": "1cb3e93dc2b22092a681005c6f32d3752113d8f08c10f48c3a500ef7d0f30c41"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 230765,
+      "sha256": "8de7e3df9def9c207320393ffed8c3a0a596a81998782bca0461e50b37f01993"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 14803,
+      "sha256": "ea6874787161fda17e8ffe6ee56a0ed13f7e974253177eeffeff7ab0c46b4d0f"
+    },
+    {
+      "path": "validator-artifact-api.json",
+      "bytes": 798,
+      "sha256": "e0f8e05fe0328b97b371163367c7b475c66c18f1e3da68eb27149aecd8714cbe"
+    },
+    {
+      "path": "validator-proof.json",
+      "bytes": 15289,
+      "sha256": "fb5f16ee6c9ac095580709f707a49f6bf7cdf4d791fd67cd6b8ec47a88604686"
+    },
+    {
+      "path": "verification-execution.json",
+      "bytes": 3446,
+      "sha256": "6d74b02a7224851383cb70fa96f5ca3a094b9002672db5693fbe683f97bba4ad"
+    }
+  ],
+  "large_archives": [
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/14791699516.zip",
+      "bytes": 16000310,
+      "sha256": "eba5ccee2b3d7f0daafadf6a91749d75333b741decf0929b985dba5ac345ee96",
+      "checkpoint_policy": "Not copied; retained in /dev/shm. Recover through artifact ID/public URL retained in API and public-GET evidence."
+    }
+  ],
+  "compact_file_count": 18,
+  "compact_bytes": 473244,
+  "scope": "Compact current-source Intel Mac acceptance evidence; all prior-source histories remain unchanged. The full raw run snapshot was still in_progress when fetched."
+}

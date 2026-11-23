@@ -1,0 +1,1317 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404278,
+  "run_attempt": 1,
+  "job_id": 137487484958,
+  "conclusion": "success",
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404278/job/137487484958",
+  "job_api": {
+    "id": 137487484958,
+    "run_id": 45112404278,
+    "workflow_name": "DSP numerical measurements",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404278",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVaLxy88AAAAgAuSIHg",
+    "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137487484958",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404278/job/137487484958",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T04:31:51Z",
+    "started_at": "2026-11-23T04:33:03Z",
+    "completed_at": "2026-11-23T05:23:04Z",
+    "name": "sanitizers",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T04:33:04Z",
+        "completed_at": "2026-11-23T04:33:06Z"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T04:33:06Z",
+        "completed_at": "2026-11-23T04:33:14Z"
+      },
+      {
+        "name": "Configure ASan and UBSan core build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T04:33:14Z",
+        "completed_at": "2026-11-23T04:33:21Z"
+      },
+      {
+        "name": "Build instrument and circuit tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T04:33:21Z",
+        "completed_at": "2026-11-23T04:39:20Z"
+      },
+      {
+        "name": "Run sanitizer and validator-fixture tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T04:39:20Z",
+        "completed_at": "2026-11-23T05:23:02Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T05:23:02Z",
+        "completed_at": "2026-11-23T05:23:03Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-23T05:23:03Z",
+        "completed_at": "2026-11-23T05:23:03Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137487484958",
+    "labels": [
+      "ubuntu-24.04"
+    ],
+    "runner_id": 1000042710,
+    "runner_name": "GitHub Actions 1000042710",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "counts": {
+    "registered": 196,
+    "passed": 195,
+    "failed": 0,
+    "formal_skipped": 1,
+    "disabled": 0
+  },
+  "ctest_seconds": 2621.56,
+  "formal_skips": [
+    {
+      "number": 79,
+      "name": "cs80_stereo_pra_exact_tests",
+      "result": "formal_skip",
+      "seconds": 0.01
+    }
+  ],
+  "formal_skip_basis": "Current immutable test requires GCC14.2 and its specified ISA/FP conditions. Actual GNU13.3.0 does not satisfy that specialization and returns77, mapped by CMake to SKIP_RETURN_CODE77. A60 independently read the current test and CMake.",
+  "nested_python_skips": null,
+  "nested_python_skip_limit": "Successful child output is suppressed by --output-on-failure. No sanitizer JUnit or LastTest artifact is uploaded; nested Python counts/skips are unavailable, not zero.",
+  "configuration": {
+    "build_type": "RelWithDebInfo",
+    "plugin_enabled": false,
+    "compile_flags": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+    "link_flags": "-fsanitize=address,undefined",
+    "test_timeout_scale": 4,
+    "ctest_parallel": 2,
+    "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1",
+    "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1"
+  },
+  "sanitizer_diagnostics_found": [],
+  "cases": [
+    {
+      "number": 2,
+      "name": "cs80_wsc_held_endpoint_tests",
+      "result": "passed",
+      "seconds": 0.1
+    },
+    {
+      "number": 1,
+      "name": "cs80_engine_output_fir_packed_tests",
+      "result": "passed",
+      "seconds": 1.22
+    },
+    {
+      "number": 4,
+      "name": "cs80_ig00156_batch_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 3,
+      "name": "cs80_legacy_sub_lfo_oracle_tests",
+      "result": "passed",
+      "seconds": 5.85
+    },
+    {
+      "number": 6,
+      "name": "cs80_filter_batch_scheduling_tests",
+      "result": "passed",
+      "seconds": 7.6
+    },
+    {
+      "number": 7,
+      "name": "cs80_ig00151_zero_ei_tests",
+      "result": "passed",
+      "seconds": 0.04
+    },
+    {
+      "number": 8,
+      "name": "cs80_event_timeline_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 9,
+      "name": "cs80_pump_until_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 10,
+      "name": "cs80_filter_batch_admission_tests",
+      "result": "passed",
+      "seconds": 7.14
+    },
+    {
+      "number": 11,
+      "name": "cs80_package_binary_identity_tests",
+      "result": "passed",
+      "seconds": 0.35
+    },
+    {
+      "number": 12,
+      "name": "cs80_packaging_notice_tests",
+      "result": "passed",
+      "seconds": 1.76
+    },
+    {
+      "number": 13,
+      "name": "cs80_factory_audition_artifact_tests",
+      "result": "passed",
+      "seconds": 0.12
+    },
+    {
+      "number": 14,
+      "name": "cs80_ci_juce_provenance_tests",
+      "result": "passed",
+      "seconds": 0.22
+    },
+    {
+      "number": 15,
+      "name": "cs80_pluginval_windows_download_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 16,
+      "name": "cs80_pluginval_macos_download_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 5,
+      "name": "cs80_filter_batch_engine_tests",
+      "result": "passed",
+      "seconds": 22.99
+    },
+    {
+      "number": 18,
+      "name": "cs80_ci_bundle_verification_tests",
+      "result": "passed",
+      "seconds": 0.2
+    },
+    {
+      "number": 19,
+      "name": "cs80_windows_installer_preflight_tests",
+      "result": "passed",
+      "seconds": 0.68
+    },
+    {
+      "number": 17,
+      "name": "cs80_deb_runtime_dependency_tests",
+      "result": "passed",
+      "seconds": 2.55
+    },
+    {
+      "number": 20,
+      "name": "cs80_parity_harness_tests",
+      "result": "passed",
+      "seconds": 1.75
+    },
+    {
+      "number": 22,
+      "name": "cs80_preset_trash_safety_tests",
+      "result": "passed",
+      "seconds": 0.49
+    },
+    {
+      "number": 23,
+      "name": "cs80_preset_signature_math_tests",
+      "result": "passed",
+      "seconds": 10.03
+    },
+    {
+      "number": 24,
+      "name": "cs80_macos_installer_architecture_tests",
+      "result": "passed",
+      "seconds": 2.39
+    },
+    {
+      "number": 25,
+      "name": "cs80_continuous_voice_circuit_tests",
+      "result": "passed",
+      "seconds": 0.06
+    },
+    {
+      "number": 21,
+      "name": "cs80_ui_environment_tests",
+      "result": "passed",
+      "seconds": 15.01
+    },
+    {
+      "number": 27,
+      "name": "cs80_lfo_scope_preview_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 28,
+      "name": "cs80_preset_preview_math_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 29,
+      "name": "cs80_output_meter_display_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 30,
+      "name": "cs80_voice_activity_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 31,
+      "name": "cs80_output_meter_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 32,
+      "name": "cs80_output_meter_audit_tests",
+      "result": "passed",
+      "seconds": 0.05
+    },
+    {
+      "number": 33,
+      "name": "cs80_keyboard_pressure_audit_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 34,
+      "name": "cs80_captured_keyboard_events_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 35,
+      "name": "cs80_keyboard_event_queue_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 26,
+      "name": "cs80_continuous_voice_circuit_audit_tests",
+      "result": "passed",
+      "seconds": 1.68
+    },
+    {
+      "number": 36,
+      "name": "cs80_keyboard_epoch_interleaving_tests",
+      "result": "passed",
+      "seconds": 1.41
+    },
+    {
+      "number": 37,
+      "name": "cs80_parity_mode_tests",
+      "result": "passed",
+      "seconds": 13.13
+    },
+    {
+      "number": 39,
+      "name": "cs80_source_performance_audit_tests",
+      "result": "passed",
+      "seconds": 11.61
+    },
+    {
+      "number": 38,
+      "name": "cs80_source_performance_tests",
+      "result": "passed",
+      "seconds": 42.74
+    },
+    {
+      "number": 41,
+      "name": "cs80_filter_default_history_tests",
+      "result": "passed",
+      "seconds": 0.1
+    },
+    {
+      "number": 42,
+      "name": "cs80_filter_default_history_missing_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 43,
+      "name": "cs80_filter_default_history_truncated_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 44,
+      "name": "cs80_filter_idle_fallback_tests",
+      "result": "passed",
+      "seconds": 0.1
+    },
+    {
+      "number": 45,
+      "name": "cs80_filter_idle_fallback_missing_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 46,
+      "name": "cs80_filter_idle_fallback_truncated_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 47,
+      "name": "cs80_filter_batch_cap_tests",
+      "result": "passed",
+      "seconds": 0.27
+    },
+    {
+      "number": 48,
+      "name": "cs80_filter_batch_cap_missing_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 49,
+      "name": "cs80_filter_batch_cap_truncated_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 50,
+      "name": "cs80_ig00156_cache_tests",
+      "result": "passed",
+      "seconds": 0.53
+    },
+    {
+      "number": 51,
+      "name": "cs80_ig00156_filter_tests",
+      "result": "passed",
+      "seconds": 1.07
+    },
+    {
+      "number": 52,
+      "name": "cs80_envelope_rc_model_tests",
+      "result": "passed",
+      "seconds": 0.92
+    },
+    {
+      "number": 53,
+      "name": "cs80_live_envelope_level_tests",
+      "result": "passed",
+      "seconds": 20.94
+    },
+    {
+      "number": 54,
+      "name": "cs80_live_envelope_timing_tests",
+      "result": "passed",
+      "seconds": 6.75
+    },
+    {
+      "number": 55,
+      "name": "cs80_active_tail_continuity_tests",
+      "result": "passed",
+      "seconds": 45.94
+    },
+    {
+      "number": 56,
+      "name": "cs80_core_tests",
+      "result": "passed",
+      "seconds": 35.31
+    },
+    {
+      "number": 57,
+      "name": "cs80_voice_release_tests",
+      "result": "passed",
+      "seconds": 4.84
+    },
+    {
+      "number": 58,
+      "name": "cs80_sixteen_voice_release_tests",
+      "result": "passed",
+      "seconds": 10.59
+    },
+    {
+      "number": 59,
+      "name": "cs80_unison_glide_tests",
+      "result": "passed",
+      "seconds": 24.94
+    },
+    {
+      "number": 60,
+      "name": "cs80_unison_detune_latch_tests",
+      "result": "passed",
+      "seconds": 0.68
+    },
+    {
+      "number": 61,
+      "name": "cs80_pedal_release_tests",
+      "result": "passed",
+      "seconds": 4.79
+    },
+    {
+      "number": 62,
+      "name": "cs80_high_resolution_velocity_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 40,
+      "name": "cs80_envelope_precision_tests",
+      "result": "passed",
+      "seconds": 195.28
+    },
+    {
+      "number": 63,
+      "name": "cs80_controller_reset_tests",
+      "result": "passed",
+      "seconds": 30.99
+    },
+    {
+      "number": 64,
+      "name": "cs80_experimental_oscillator_tests",
+      "result": "passed",
+      "seconds": 45.21
+    },
+    {
+      "number": 66,
+      "name": "cs80_source_factory_tone_tests",
+      "result": "passed",
+      "seconds": 0.33
+    },
+    {
+      "number": 67,
+      "name": "cs80_hardware_control_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 68,
+      "name": "cs80_ig00156_reference_tests",
+      "result": "passed",
+      "seconds": 0.11
+    },
+    {
+      "number": 69,
+      "name": "cs80_keyboard_contour_reference_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 70,
+      "name": "cs80_loaded_control_reference_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 71,
+      "name": "cs80_loaded_control_rank_tests",
+      "result": "passed",
+      "seconds": 0.03
+    },
+    {
+      "number": 72,
+      "name": "cs80_loaded_control_transient_tests",
+      "result": "passed",
+      "seconds": 0.12
+    },
+    {
+      "number": 73,
+      "name": "cs80_output_tap_integration_tests",
+      "result": "passed",
+      "seconds": 5.63
+    },
+    {
+      "number": 74,
+      "name": "cs80_output_tap_circuit_tests",
+      "result": "passed",
+      "seconds": 6.5
+    },
+    {
+      "number": 75,
+      "name": "cs80_output_taps_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 76,
+      "name": "cs80_level_control_tests",
+      "result": "passed",
+      "seconds": 0.16
+    },
+    {
+      "number": 77,
+      "name": "cs80_resonance_control_tests",
+      "result": "passed",
+      "seconds": 0.07
+    },
+    {
+      "number": 78,
+      "name": "cs80_oe2_filters_tests",
+      "result": "passed",
+      "seconds": 0.04
+    },
+    {
+      "number": 79,
+      "name": "cs80_stereo_pra_exact_tests",
+      "result": "formal_skip",
+      "seconds": 0.01
+    },
+    {
+      "number": 80,
+      "name": "cs80_pra_wah_integration_tests",
+      "result": "passed",
+      "seconds": 5.45
+    },
+    {
+      "number": 81,
+      "name": "cs80_pra_wah_circuit_tests",
+      "result": "passed",
+      "seconds": 2.55
+    },
+    {
+      "number": 82,
+      "name": "cs80_pra_wah_tests",
+      "result": "passed",
+      "seconds": 0.13
+    },
+    {
+      "number": 83,
+      "name": "cs80_bbd_chorus_tests",
+      "result": "passed",
+      "seconds": 2.3
+    },
+    {
+      "number": 84,
+      "name": "cs80_mn3001_packet_tests",
+      "result": "passed",
+      "seconds": 0.14
+    },
+    {
+      "number": 85,
+      "name": "cs80_performance_control_tests",
+      "result": "passed",
+      "seconds": 38.3
+    },
+    {
+      "number": 86,
+      "name": "cs80_validator_diagnostic_selection_tests",
+      "result": "passed",
+      "seconds": 2.97
+    },
+    {
+      "number": 87,
+      "name": "cs80_validator_retry_tests",
+      "result": "passed",
+      "seconds": 4.1
+    },
+    {
+      "number": 88,
+      "name": "cs80_validator_exit_classification_tests",
+      "result": "passed",
+      "seconds": 0.26
+    },
+    {
+      "number": 89,
+      "name": "cs80_ig00156_nodal_tests",
+      "result": "passed",
+      "seconds": 81.09
+    },
+    {
+      "number": 90,
+      "name": "cs80_ig00156_top_octave_tests",
+      "result": "passed",
+      "seconds": 2.22
+    },
+    {
+      "number": 91,
+      "name": "cs80_oscillator_promotion_tests",
+      "result": "passed",
+      "seconds": 18.81
+    },
+    {
+      "number": 92,
+      "name": "cs80_ig00151_vca_tests",
+      "result": "passed",
+      "seconds": 5.39
+    },
+    {
+      "number": 93,
+      "name": "cs80_tolerance_drift_tests",
+      "result": "passed",
+      "seconds": 28.66
+    },
+    {
+      "number": 94,
+      "name": "cs80_fx_loudness_core_tests",
+      "result": "passed",
+      "seconds": 0.33
+    },
+    {
+      "number": 95,
+      "name": "cs80_fx_loudness_gate_tests",
+      "result": "passed",
+      "seconds": 0.31
+    },
+    {
+      "number": 96,
+      "name": "cs80_arp_rate_lifecycle_tests",
+      "result": "passed",
+      "seconds": 0.65
+    },
+    {
+      "number": 97,
+      "name": "cs80_arp_pedal_lifecycle_tests",
+      "result": "passed",
+      "seconds": 0.63
+    },
+    {
+      "number": 98,
+      "name": "cs80_arp_repeat_lifecycle_tests",
+      "result": "passed",
+      "seconds": 0.25
+    },
+    {
+      "number": 99,
+      "name": "cs80_quiet_fx_rack_tests",
+      "result": "passed",
+      "seconds": 5.04
+    },
+    {
+      "number": 100,
+      "name": "cs80_fx_tape_lifecycle_tests",
+      "result": "passed",
+      "seconds": 0.24
+    },
+    {
+      "number": 101,
+      "name": "cs80_external_interpolator_tests",
+      "result": "passed",
+      "seconds": 16.91
+    },
+    {
+      "number": 102,
+      "name": "cs80_oversampling_tests",
+      "result": "passed",
+      "seconds": 6.78
+    },
+    {
+      "number": 103,
+      "name": "cs80_smoothing_tests",
+      "result": "passed",
+      "seconds": 11.45
+    },
+    {
+      "number": 104,
+      "name": "cs80_pitch_bend_range_tests",
+      "result": "passed",
+      "seconds": 7.09
+    },
+    {
+      "number": 105,
+      "name": "cs80_mpe_member_onset_tests",
+      "result": "passed",
+      "seconds": 12.12
+    },
+    {
+      "number": 106,
+      "name": "cs80_mpe_timbre_combination_tests",
+      "result": "passed",
+      "seconds": 3.09
+    },
+    {
+      "number": 107,
+      "name": "cs80_mpe_pressure_combination_tests",
+      "result": "passed",
+      "seconds": 1.76
+    },
+    {
+      "number": 108,
+      "name": "cs80_mpe_released_target_tests",
+      "result": "passed",
+      "seconds": 13.39
+    },
+    {
+      "number": 109,
+      "name": "cs80_mpe_master_smoothing_tests",
+      "result": "passed",
+      "seconds": 1.45
+    },
+    {
+      "number": 110,
+      "name": "cs80_output_listening_tests",
+      "result": "passed",
+      "seconds": 4.19
+    },
+    {
+      "number": 111,
+      "name": "cs80_noise_tests",
+      "result": "passed",
+      "seconds": 31.55
+    },
+    {
+      "number": 112,
+      "name": "cs80_poly_pressure_routing_tests",
+      "result": "passed",
+      "seconds": 3.6
+    },
+    {
+      "number": 113,
+      "name": "cs80_host_automation_curve_tests",
+      "result": "passed",
+      "seconds": 2.71
+    },
+    {
+      "number": 114,
+      "name": "cs80_free_running_voice_tests",
+      "result": "passed",
+      "seconds": 15.78
+    },
+    {
+      "number": 115,
+      "name": "cs80_kas_scanner_tests",
+      "result": "passed",
+      "seconds": 9.99
+    },
+    {
+      "number": 116,
+      "name": "cs80_scanner_ordering_tests",
+      "result": "passed",
+      "seconds": 3.81
+    },
+    {
+      "number": 117,
+      "name": "cs80_scanner_overflow_tests",
+      "result": "passed",
+      "seconds": 5.15
+    },
+    {
+      "number": 118,
+      "name": "cs80_keyboard_contour_key_map_tests",
+      "result": "passed",
+      "seconds": 53.24
+    },
+    {
+      "number": 119,
+      "name": "cs80_touch_circuit_tests",
+      "result": "passed",
+      "seconds": 13.92
+    },
+    {
+      "number": 120,
+      "name": "cs80_mpe_master_bend_routing_tests",
+      "result": "passed",
+      "seconds": 12.89
+    },
+    {
+      "number": 121,
+      "name": "cs80_tuning_midi_tests",
+      "result": "passed",
+      "seconds": 59.24
+    },
+    {
+      "number": 122,
+      "name": "cs80_tuning_frequency_domain_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 123,
+      "name": "cs80_tuning_robustness_tests",
+      "result": "passed",
+      "seconds": 0.03
+    },
+    {
+      "number": 124,
+      "name": "cs80_mts_esp_native_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 125,
+      "name": "cs80_mts_esp_integration_tests",
+      "result": "passed",
+      "seconds": 1.06
+    },
+    {
+      "number": 126,
+      "name": "cs80_mts_esp_channel_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 127,
+      "name": "cs80_mts_esp_fallback_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 128,
+      "name": "cs80_mts_esp_windows_macro_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 129,
+      "name": "cs80_ig00150_sub_tests",
+      "result": "passed",
+      "seconds": 35.84
+    },
+    {
+      "number": 130,
+      "name": "cs80_ring_modulator_circuit_tests",
+      "result": "passed",
+      "seconds": 12.06
+    },
+    {
+      "number": 131,
+      "name": "cs80_oe2_stereo_chorus_tests",
+      "result": "passed",
+      "seconds": 2.87
+    },
+    {
+      "number": 132,
+      "name": "cs80_pra_optical_cell_tests",
+      "result": "passed",
+      "seconds": 4.48
+    },
+    {
+      "number": 133,
+      "name": "cs80_lfo_random_switching_tests",
+      "result": "passed",
+      "seconds": 0.17
+    },
+    {
+      "number": 134,
+      "name": "cs80_lfo_random_variable_rate_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 135,
+      "name": "cs80_modern_lfo_tests",
+      "result": "passed",
+      "seconds": 4.84
+    },
+    {
+      "number": 136,
+      "name": "cs80_mseg_tests",
+      "result": "passed",
+      "seconds": 11.41
+    },
+    {
+      "number": 137,
+      "name": "cs80_mseg_transport_rate_tests",
+      "result": "passed",
+      "seconds": 0.76
+    },
+    {
+      "number": 138,
+      "name": "cs80_mono_mseg_routing_tests",
+      "result": "passed",
+      "seconds": 1.99
+    },
+    {
+      "number": 139,
+      "name": "cs80_mseg_retrigger_rate_tests",
+      "result": "passed",
+      "seconds": 2.84
+    },
+    {
+      "number": 140,
+      "name": "cs80_mseg_combined_interaction_tests",
+      "result": "passed",
+      "seconds": 0.13
+    },
+    {
+      "number": 141,
+      "name": "cs80_mod_matrix_tests",
+      "result": "passed",
+      "seconds": 112.67
+    },
+    {
+      "number": 65,
+      "name": "cs80_source_factory_integration_tests",
+      "result": "passed",
+      "seconds": 850.2
+    },
+    {
+      "number": 143,
+      "name": "cs80_delay_line_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 144,
+      "name": "cs80_plate_reverb_rate_tests",
+      "result": "passed",
+      "seconds": 19.48
+    },
+    {
+      "number": 145,
+      "name": "cs80_tape_echo_time_tests",
+      "result": "passed",
+      "seconds": 6.07
+    },
+    {
+      "number": 146,
+      "name": "cs80_drive_control_cache_tests",
+      "result": "passed",
+      "seconds": 1.47
+    },
+    {
+      "number": 147,
+      "name": "cs80_ensemble_rate_cache_tests",
+      "result": "passed",
+      "seconds": 19.1
+    },
+    {
+      "number": 148,
+      "name": "cs80_tape_echo_control_cache_tests",
+      "result": "passed",
+      "seconds": 14.03
+    },
+    {
+      "number": 142,
+      "name": "cs80_modern_fx_tests",
+      "result": "passed",
+      "seconds": 260.81
+    },
+    {
+      "number": 150,
+      "name": "cs80_preset_voicing_tests",
+      "result": "passed",
+      "seconds": 37.84
+    },
+    {
+      "number": 151,
+      "name": "cs80_preset_character_tests",
+      "result": "passed",
+      "seconds": 16.48
+    },
+    {
+      "number": 152,
+      "name": "cs80_preset_precision_tests",
+      "result": "passed",
+      "seconds": 97.92
+    },
+    {
+      "number": 153,
+      "name": "cs80_preset_capture_tests",
+      "result": "passed",
+      "seconds": 4.1
+    },
+    {
+      "number": 154,
+      "name": "cs80_randomise_tests",
+      "result": "passed",
+      "seconds": 291.31
+    },
+    {
+      "number": 155,
+      "name": "cs80_source_factory_boundary_tests",
+      "result": "passed",
+      "seconds": 0.76
+    },
+    {
+      "number": 156,
+      "name": "cs80_memory_panel_tests",
+      "result": "passed",
+      "seconds": 2.11
+    },
+    {
+      "number": 157,
+      "name": "cs80_memory_panel_ports_tests",
+      "result": "passed",
+      "seconds": 41.17
+    },
+    {
+      "number": 158,
+      "name": "cs80_memory_panel_port_map_tests",
+      "result": "passed",
+      "seconds": 4.45
+    },
+    {
+      "number": 159,
+      "name": "cs80_memory_port_map_negative_controls",
+      "result": "passed",
+      "seconds": 13.05
+    },
+    {
+      "number": 160,
+      "name": "cs80_memory_control_routing_tests",
+      "result": "passed",
+      "seconds": 2.23
+    },
+    {
+      "number": 161,
+      "name": "cs80_memory_receiver_truth_tests",
+      "result": "passed",
+      "seconds": 5.3
+    },
+    {
+      "number": 162,
+      "name": "cs80_memory_qualification_probe_self_tests",
+      "result": "passed",
+      "seconds": 0.02
+    },
+    {
+      "number": 163,
+      "name": "cs80_memory_verified_diode_tests",
+      "result": "passed",
+      "seconds": 9.27
+    },
+    {
+      "number": 164,
+      "name": "cs80_memory_centered_log_rational",
+      "result": "passed",
+      "seconds": 0.35
+    },
+    {
+      "number": 165,
+      "name": "cs80_memory_interval_extrema",
+      "result": "passed",
+      "seconds": 0.28
+    },
+    {
+      "number": 166,
+      "name": "cs80_memory_sparse_update_tests",
+      "result": "passed",
+      "seconds": 29.8
+    },
+    {
+      "number": 167,
+      "name": "cs80_memory_sparse_negative_controls",
+      "result": "passed",
+      "seconds": 6.59
+    },
+    {
+      "number": 168,
+      "name": "cs80_memory_routing_negative_controls",
+      "result": "passed",
+      "seconds": 8.09
+    },
+    {
+      "number": 169,
+      "name": "cs80_programmer_control_identity_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 170,
+      "name": "cs80_fast_math_tests",
+      "result": "passed",
+      "seconds": 0.05
+    },
+    {
+      "number": 171,
+      "name": "cs80_evidence_register_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 172,
+      "name": "cs80_midi_learn_tests",
+      "result": "passed",
+      "seconds": 0.24
+    },
+    {
+      "number": 173,
+      "name": "cs80_render_cli_tests",
+      "result": "passed",
+      "seconds": 1.62
+    },
+    {
+      "number": 174,
+      "name": "cs80_callback_cpu_measurement_tests",
+      "result": "passed",
+      "seconds": 0.01
+    },
+    {
+      "number": 175,
+      "name": "cs80_callback_cpu_benchmark_tests",
+      "result": "passed",
+      "seconds": 44.33
+    },
+    {
+      "number": 176,
+      "name": "cs80_benchmark_preflight_tests",
+      "result": "passed",
+      "seconds": 0.44
+    },
+    {
+      "number": 177,
+      "name": "cs80_parity_capture_tests",
+      "result": "passed",
+      "seconds": 8.16
+    },
+    {
+      "number": 178,
+      "name": "cs80_dsp_probe_tests",
+      "result": "passed",
+      "seconds": 3.44
+    },
+    {
+      "number": 179,
+      "name": "cs80_truth_render_tests",
+      "result": "passed",
+      "seconds": 5.51
+    },
+    {
+      "number": 180,
+      "name": "cs80_ig00156_step_diagnostics_tests",
+      "result": "passed",
+      "seconds": 0.03
+    },
+    {
+      "number": 181,
+      "name": "cs80_truth_input_sha256_tests",
+      "result": "passed",
+      "seconds": 0.03
+    },
+    {
+      "number": 182,
+      "name": "cs80_amplitude_production_comparison_tests",
+      "result": "passed",
+      "seconds": 3.31
+    },
+    {
+      "number": 183,
+      "name": "cs80_filter_production_comparison_tests",
+      "result": "passed",
+      "seconds": 4.52
+    },
+    {
+      "number": 184,
+      "name": "cs80_vca_reference_tests",
+      "result": "passed",
+      "seconds": 0.89
+    },
+    {
+      "number": 185,
+      "name": "cs80_decimal_conversion_tests",
+      "result": "passed",
+      "seconds": 0.06
+    },
+    {
+      "number": 186,
+      "name": "cs80_decimal_conversion_locale_tests",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "number": 187,
+      "name": "cs80_float_wav_tests",
+      "result": "passed",
+      "seconds": 0.75
+    },
+    {
+      "number": 188,
+      "name": "cs80_reference_chain_tests",
+      "result": "passed",
+      "seconds": 17.61
+    },
+    {
+      "number": 189,
+      "name": "cs80_reference_chain_clock_tests",
+      "result": "passed",
+      "seconds": 17.49
+    },
+    {
+      "number": 190,
+      "name": "cs80_amplitude_envelope_reference_tests",
+      "result": "passed",
+      "seconds": 5.69
+    },
+    {
+      "number": 191,
+      "name": "cs80_event_aware_envelope_vca_tests",
+      "result": "passed",
+      "seconds": 0.16
+    },
+    {
+      "number": 192,
+      "name": "cs80_ring_time_reference_tests",
+      "result": "passed",
+      "seconds": 0.17
+    },
+    {
+      "number": 193,
+      "name": "cs80_event_aware_envelope_sine_tests",
+      "result": "passed",
+      "seconds": 0.16
+    },
+    {
+      "number": 194,
+      "name": "cs80_event_aware_ring_vca_tests",
+      "result": "passed",
+      "seconds": 0.19
+    },
+    {
+      "number": 195,
+      "name": "cs80_event_aware_ring_vca_coincident_tests",
+      "result": "passed",
+      "seconds": 0.22
+    },
+    {
+      "number": 196,
+      "name": "cs80_filter_envelope_reference_tests",
+      "result": "passed",
+      "seconds": 6.76
+    },
+    {
+      "number": 149,
+      "name": "cs80_library_audit_tests",
+      "result": "passed",
+      "seconds": 1437.0
+    }
+  ],
+  "job_log": {
+    "bytes": 107291,
+    "sha256": "9703112390fdb7e9aa2c347a833afc149369ef3404e5b7c868f5217ae8d56105",
+    "capture": "Complete decoded GitHub log retained with its original final newline; root and A60 independently parsed the complete result roster."
+  },
+  "workflow_sha256": "208178715b2c60519a106d6e2d53b6e2ae062e784874372f2ce2917b3fcc1381",
+  "sanitizer_artifact_uploaded": false,
+  "artifact_api_ids": [
+    14789493635,
+    14789563578,
+    14790128053,
+    14790411759,
+    14790515768,
+    14790560430
+  ],
+  "scope": "Exact9c0d instrumented core C++ configuration and registered script fixtures. Plugins are disabled; Python is not C++ sanitizer-instrumented. Does not establish native wrapper/GUI, corrected Linux plugin fixture, signing, acoustic or individual-DAW qualification."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "target": "linux-x86_64",
+  "scope": "Offline native evidence and installer archive verification only; no runtime payload execution or validator invocation.",
+  "executions": [
+    {
+      "checker": "native",
+      "command": "python3 -B /tmp/cs80-circuit-011b6ba4a170/inspect-native-evidence.py --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --job-id 137487485114 --target linux-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14795644849.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/native-artifact-api.json --jobs-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/jobs-api.json --job-log /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/native-job.log --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/native-proof.json",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "daaa17",
+          "wall_time_seconds": 0.02208861,
+          "exit_code": 0,
+          "original_token_count": 169,
+          "output": "{\"status\": \"native_ctest_verified\", \"target\": \"linux-x86_64\", \"job_conclusion\": \"success\", \"native_only\": true, \"counts\": {\"registered\": 583, \"passed\": 582, \"failed\": 0, \"formal_skipped\": 1, \"disabled\": 0}, \"ctest_seconds\": 8149.88, \"python_subtest_skips\": {\"total\": 3, \"suites\": [{\"ctest_test\": \"cs80_package_binary_identity_tests\", \"python_tests_run\": 13, \"python_skipped\": 1, \"details\": []}, {\"ctest_test\": \"cs80_windows_installer_preflight_tests\", \"python_tests_run\": 12, \"python_skipped\": 2, \"details\": []}], \"scope\": \"Actual LastTest unittest summaries; distinct from formal CTest skips. Nonverbose suites may omit individual skip reasons.\"}, \"later_failed_steps\": []}\n"
+        }
+      }
+    },
+    {
+      "checker": "install",
+      "command": "python3 -B /workspace/scratch/011b6ba4a170/yamaha-cs80/docs/preset-evidence/2026.11.2/verify-install-bundle.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --target linux-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/install-artifact-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/run-api.json --work-dir /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/install-proof.json",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "08d40a",
+          "wall_time_seconds": 0.000039509,
+          "exit_code": 1,
+          "original_token_count": 13,
+          "output": "Bundle acceptance failed: Workflow has not started\n"
+        }
+      }
+    }
+  ]
+}

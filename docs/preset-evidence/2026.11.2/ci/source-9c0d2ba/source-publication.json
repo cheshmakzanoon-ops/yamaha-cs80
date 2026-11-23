@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "tree_sha": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+  "parent_sha": "92793007d350685e6034831187d7d244695484a3",
+  "source_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "commit_message": "Align tests with the fixed circuit policy and allow for Intel runner timing",
+  "publication": {
+    "method": "GitHub connected create_tree, create_commit, compare-and-set update_ref",
+    "branch": "main",
+    "expected_previous_sha": "92793007d350685e6034831187d7d244695484a3",
+    "force": false,
+    "base_tree_sha": "2d600bee1190fb2b8eaa846d9db3f48bc116c646",
+    "local_index_tree_sha": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+    "created_tree_sha": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+    "created_commit_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "update_ref_success": true
+  },
+  "changed_paths": [
+    "CMakeLists.txt",
+    "docs/preset-evidence/2026.11.2/ci/intel-renderer-path-review.json",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/failed-test-output.json",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/failure-summary.json",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/public-download.json",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/test-roster.json",
+    "docs/preset-evidence/2026.11.2/ci/linux-policy-fixture-repair.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/14786735934-public-get.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/8ffe-reference/14783137932-public-get.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/8ffe-reference/native-api.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/artifact-content-metadata.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/failure-progress.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/failure-summary.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/job-api.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/native-api.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/preservation-manifest.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/scheduler-state-response.json",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/scheduler-state-summary.json",
+    "tests/AudioCallbackAllocationTests.cpp",
+    "tests/MainVst3MultiRecallStateTests.cpp",
+    "tests/MidiMapNotificationTests.cpp",
+    "tests/SubRoutingDisplayTests.cpp"
+  ],
+  "scope": "Four fixtures now assert the fixed Circuit policy and retained VST3 sample-accurate queues. Two finite Intel-macOS-only CTest deadlines account for observed runner timing. Seventeen JSON records preserve prior failures and local before/after evidence.",
+  "product_source_unchanged_from": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "unchanged_contracts": [
+    "complete src/ tree",
+    "tests/parity/ subtree, including zero-tolerance multi-recall thresholds",
+    "all .github/workflows/ files",
+    "three Linux validator lanes, four macOS validator lanes and two Windows headless validator lanes"
+  ],
+  "local_fixture_evidence": "../linux-policy-fixture-repair.json",
+  "historical_failures": {
+    "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run_id": 45096447502,
+    "run_attempt": 1,
+    "conclusion": "failure",
+    "linux": "../linux-initial-failure/failure-summary.json",
+    "intel": "../macos-x86_64-initial-timeout/failure-summary.json",
+    "retry_executed": false
+  },
+  "fresh_runs": {
+    "native": 45112404257,
+    "dsp": 45112404278,
+    "screenshots": 45112404252,
+    "filter_batch": 45112404247
+  },
+  "verification_scope": "Publication proves source identity. Each native platform and supporting workflow requires its separate, source-bound completion evidence; this record does not itself accept any package.",
+  "commit_api": {
+    "sha": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "node_id": "C_kwDOVaLxy9oAKDljMGQyYmFlZjU2NDNhOTgzYTBlN2EzNzhiNmJlMDMzMzcxMjQ4ZjQ",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/commits/9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "author": {
+      "name": "cheshmakzanoon-ops",
+      "email": "cheshmakzanoon@gmail.com",
+      "date": "2026-11-23T04:31:43Z"
+    },
+    "committer": {
+      "name": "cheshmakzanoon-ops",
+      "email": "cheshmakzanoon@gmail.com",
+      "date": "2026-11-23T04:31:43Z"
+    },
+    "tree": {
+      "sha": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/trees/3fba8ecb07864ba61aad34088f9f0cc8c94497b7"
+    },
+    "message": "Align tests with the fixed circuit policy and allow for Intel runner timing",
+    "parents": [
+      {
+        "sha": "92793007d350685e6034831187d7d244695484a3",
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/commits/92793007d350685e6034831187d7d244695484a3",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/92793007d350685e6034831187d7d244695484a3"
+      }
+    ],
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "changed_file_blobs": {
+    "CMakeLists.txt": "aac057eded4179efbf347c4b7dde968c037490c8",
+    "docs/preset-evidence/2026.11.2/ci/intel-renderer-path-review.json": "31fdca826910c2db0cde8b2145faf41af939e1d0",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/failed-test-output.json": "8e07b93b9a5bf8079c2908ee1a87f1f65061d7ae",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/failure-summary.json": "f169b652fbf65e13f4283375c3e68f269b666672",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/public-download.json": "2a45817893f5134523a1ffbec6087217e0ef0ecf",
+    "docs/preset-evidence/2026.11.2/ci/linux-initial-failure/test-roster.json": "18b713468b6aab50747b81a7acfb39501bedf2b7",
+    "docs/preset-evidence/2026.11.2/ci/linux-policy-fixture-repair.json": "1fbb780a2fe32f048d3b89e36e48da0663c52ec6",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/14786735934-public-get.json": "83705e0ea77fad377257c7cc3c62fd1d0e29a414",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/8ffe-reference/14783137932-public-get.json": "18ce87212bef634c8351b7e8108b9699374b5366",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/8ffe-reference/native-api.json": "31427ae59a69e7e33277f0e00ded77a5bd5225d5",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/artifact-content-metadata.json": "a0e1ec94f8c75cd1e434c4d4f0ac0871d9375843",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/failure-progress.json": "3513a199edcf2285c85d5320d7df285b5207df82",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/failure-summary.json": "7721881b46fcd4c2d8ce2b21ccd6aff9651448e4",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/job-api.json": "5adf20577133cb48e9c956aa82a4c23221d5ebbb",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/native-api.json": "da50142659e82900bd0e07752069e1cc1791f998",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/preservation-manifest.json": "8a04117a92873d08a2db983e8f7868a9ae6ca6cd",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/scheduler-state-response.json": "63d28ee247d641ff6c09264d93f57e172f7e3ed6",
+    "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout/scheduler-state-summary.json": "0e70ab58c7a31d97e99891c19b4c82e4a74e1de8",
+    "tests/AudioCallbackAllocationTests.cpp": "30bdf4461a10bb529dfb609c4b57206b3fe8b2bb",
+    "tests/MainVst3MultiRecallStateTests.cpp": "fdb846a2af722b5348d784618e5da8e007fdd41e",
+    "tests/MidiMapNotificationTests.cpp": "aa3d0ebab6922e995eddea699c826ea283eb7a37",
+    "tests/SubRoutingDisplayTests.cpp": "2db8e7de0be662c4a3fb4fcf6b1e3175a4199511"
+  }
+}

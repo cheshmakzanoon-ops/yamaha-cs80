@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "native_job_id": 137487484848,
+  "validator_job_id": 137502330591,
+  "target": "windows-x86_64",
+  "status": "root_cross_check_passed",
+  "checked_at_utc": "2026-11-23T05:26:08.443504+00:00",
+  "artifacts": [
+    {
+      "artifact_id": 14792580154,
+      "name": "cs80-pluginval-windows",
+      "bytes": 5084,
+      "sha256": "b0e0c8c4d0cbba02346bebc4264322f27e252347631f1b9c92f9be186668d194",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14792445167,
+      "name": "cs80-windows-install-bundle",
+      "bytes": 6251474,
+      "sha256": "6e51831597440ade428de77a1b7b98ce85d76cf9403c50e1093fb6580a23d45f",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14792270714,
+      "name": "cs80-windows-vst3",
+      "bytes": 3133544,
+      "sha256": "cc18b39fa907fa4df626b8b1e4f746fbbce0884cbcb43fe33fa27837bcd42618",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "artifact_id": 14791463885,
+      "name": "cs80-windows-test-evidence",
+      "bytes": 59635,
+      "sha256": "eb9a13517e051e8ec837b4bb8f25546dc11f8d1bb4ce6164a7ffaf3d4aed0b42",
+      "fresh_api_size_and_digest_match": true,
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "expires_at": "2027-02-21T04:31:50Z"
+    }
+  ],
+  "inner_archive_rehashed": {
+    "name": "cs80-reference-windows-x86_64-9c0d2baef564.zip",
+    "bytes": 6246158,
+    "sha256": "fb3f8d03070fb2f6f11b4c2118aa3222990b5a91cf5a5cc5a8ddb389e5b71340"
+  },
+  "proof_sha256": {
+    "acceptance-summary.json": "30495ccf5cff70aada6df73b1bb98e66c2367dafede3b4e5a706cb14177d53d2",
+    "native-ctest-proof.json": "db700ba19fa310f5d6c8d4d1b5381f02c1868ce1bf35a350403db5d7e11d75da",
+    "validator-proof.json": "ea8bc236e45f0881377720f0f49ce52f7b6e605afdbd5412b108455740f8eb4d",
+    "install-bundle-proof.json": "7ed29c3d5420c9809af819ba6ba5e79f49b00803f0d621fa60ef23403719a4e0",
+    "artifact-producer-bindings.json": "87782276b2e01358b2b664f101db20a736be224ce5cc4bc0459388b7b0ab6d63",
+    "evidence-manifest.json": "d9e7dbd9b45ded34be266799db1ec0e0a61a0888bda32cffbe182013eedb6b9c"
+  },
+  "native_counts": {
+    "registered": 225,
+    "passed": 223,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0
+  },
+  "validator_invocations": 2,
+  "validator_retries": 0,
+  "validator_gui": false,
+  "actual_vst3_files_compared_again": 2,
+  "vst3_file_mismatches": 0,
+  "input_files_fully_accounted": 4,
+  "scope": "Root rehashed all four actual public ZIPs and the inner installation ZIP against fresh GitHub artifact API, reviewed native/validator proofs and exact checker hashes, and independently compared both runtime VST3 file byte strings between actual input and installation archives. A51 performed the complete native/archive/validator and normalized directory checks. No downloaded product or validator was executed by root.",
+  "overall_build_accepted": false
+}

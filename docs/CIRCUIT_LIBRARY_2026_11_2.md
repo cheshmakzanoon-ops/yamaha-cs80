@@ -262,3 +262,65 @@ Passing these checks establishes the tested software behavior. It does not
 establish exact acoustic realism, every possible chord/controller history,
 unbounded release duration, signing or native host qualification. Use the
 specific download's workflow and package evidence for platform status.
+
+## Final native builds and verified downloads
+
+**All six jobs passed in
+[build 45112404257, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257)**
+for source `9c0d2baef5643a983a0e7a378b6be033371248f4`. The following actual
+installation bundles contain the circuit library described in this report:
+
+| Native target | Formats | CTests passed / registered | Verified download |
+| --- | --- | ---: | --- |
+| Windows x64 | VST3, Standalone | 223 / 225 | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | 245 / 247 | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | 245 / 247 | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip) |
+| Linux x86-64, Ubuntu 24.04 build | VST3, Standalone | 582 / 583 | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip) |
+
+The native total is **1,295 passed / 1,302 registered, zero failures and seven
+formal skips**. The **24 nested Python subtest skips** remain separate. The
+required **13 pluginval 1.0.4 runs at strictness 10** all completed with their
+original exit **0** and **zero runtime validation retries**: two headless VST3
+runs on Windows, VST3/AU plus two AU GUI runs on each Mac architecture, and
+headless plus two GUI VST3 runs on Linux. These include the required fixed-seed
+regressions.
+[Consolidated qualification](preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json)
+
+Every linked installation ZIP was fetched in full without authentication and
+matched its fresh API size and SHA-256. The actual archives passed the source,
+run, revision, inventory, architecture, format, guide and notice checks. Windows
+and Linux validator inputs also matched the complete corresponding VST3
+payloads. This joins the recorded runtime gates to the distributed files.
+
+The same source produced the verified
+[68-WAV audition download](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip):
+**56 distinct programs, 431 seconds, 48 kHz stereo float32, unnormalized**. Its
+complete **523 × 190** parameter inventory preserves every existing program
+address. The actual public ZIP digest, original producer attempt, checksums,
+capture settings and all WAV/CSV measurements were verified. Of 20,688,000
+stereo frames, none contains a nonfinite or full-scale sample. The sole silent
+excerpt is zero-pressure Pressure Lead; the other 67 excerpts peak between
+**−29.591 and −14.517 dBFS**. This audition renders selected examples; its full
+inventory does not imply that all 523 programs have a WAV in the archive.
+[Audition acceptance and measurements](preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/README.md)
+
+These remain **CI development bundles without publisher release signing or
+Apple notarization**; macOS builds may carry ad-hoc signatures. Select the Mac
+package for the host process's architecture and use the
+[installation guide](INSTALL_AND_QUICKSTART.md). The retained artifacts expire
+on **21 February 2027 at 04:31:50 UTC**. Windows pluginval coverage is headless;
+the recorded native tests and editor gates do not qualify every DAW or
+interactive installation. Passing these tests and checking the audition bytes
+does not establish exact acoustic realism or physical CS-80 equivalence.
+
+The [distribution history](CI_DISTRIBUTION_STATUS.md) preserves the earlier
+failures as failures. The original cause of the older Linux post-`SUCCESS`
+crashes remains unproven; this build's three original successful Linux validator
+invocations do not establish a permanent fix.
+
+The binary source is the full `9c0d2ba…` commit above, independently of later
+documentation commits on `main`. Each package keeps its original `SOURCE.txt`,
+manifest and documentation snapshot; this final qualification text does not
+change those archived bytes. Saved sessions retain their serialized patch
+controls. Explicitly recall a factory program to hear its revised voicing at the
+same address, and save a user copy when preserving an edited patch.

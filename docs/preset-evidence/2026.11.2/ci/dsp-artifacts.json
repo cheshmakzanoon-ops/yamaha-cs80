@@ -1,0 +1,808 @@
+{
+  "schema": 1,
+  "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "run_id": 45091496469,
+  "run_attempt": 1,
+  "status": "four_actual_archives_verified",
+  "artifacts": [
+    {
+      "artifact_api": {
+        "id": 14781369701,
+        "name": "cs80-legacy-compatibility-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "size_in_bytes": 29436,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781369701",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781369701/zip",
+        "expired": false,
+        "created_at": "2026-11-23T01:02:02Z",
+        "expires_at": "2027-02-21T00:54:34Z",
+        "updated_at": "2026-11-23T01:02:02Z",
+        "digest": "sha256:6a7052958266d93771cb76c659a53d8cfab87a72251b615b2919624fa07434bb",
+        "workflow_run": {
+          "id": 45091496469,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "8ffe1e46681cbc76679a9244bb2b35189ededbfa"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "run_id": 45091496469,
+        "artifact_id": 14781369701,
+        "artifact_name": "cs80-legacy-compatibility-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781369701.zip",
+        "started_at_utc": "2026-11-23T01:07:43.403307+00:00",
+        "completed_at_utc": "2026-11-23T01:07:53.537922+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa3.blob.core.windows.net",
+        "content_length": 29436,
+        "bytes_received": 29436,
+        "sha256": "6a7052958266d93771cb76c659a53d8cfab87a72251b615b2919624fa07434bb",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T00:54:34Z",
+        "elapsed_seconds": 10.135,
+        "earlier_attempts": []
+      },
+      "members": [
+        {
+          "name": "report.json",
+          "bytes": 392,
+          "sha256": "87d57e0e2ce075e0b606b977cf29c113d6813aeb8895823e9c621d9825f23351"
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 548,
+          "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+        },
+        {
+          "name": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "name": "baseline-corpus.txt",
+          "bytes": 277637,
+          "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+        }
+      ],
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "reported_input_hashes": {
+        "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+        "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+      },
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "reported_comparison_hash_pairs_equal": true,
+      "actual_corpus_hash_verified": true
+    },
+    {
+      "artifact_api": {
+        "id": 14781588182,
+        "name": "cs80-source-factory-compatibility-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "size_in_bytes": 984,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781588182",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781588182/zip",
+        "expired": false,
+        "created_at": "2026-11-23T01:01:04Z",
+        "expires_at": "2027-02-21T00:54:34Z",
+        "updated_at": "2026-11-23T01:01:04Z",
+        "digest": "sha256:dc0d4f64789a75fbb9539567e751150c64b3c73de67a14f7305f480dfc04f31a",
+        "workflow_run": {
+          "id": 45091496469,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "8ffe1e46681cbc76679a9244bb2b35189ededbfa"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "run_id": 45091496469,
+        "artifact_id": 14781588182,
+        "artifact_name": "cs80-source-factory-compatibility-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781588182.zip",
+        "started_at_utc": "2026-11-23T01:07:43.389721+00:00",
+        "completed_at_utc": "2026-11-23T01:07:53.723285+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa3.blob.core.windows.net",
+        "content_length": 984,
+        "bytes_received": 984,
+        "sha256": "dc0d4f64789a75fbb9539567e751150c64b3c73de67a14f7305f480dfc04f31a",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T00:54:34Z",
+        "elapsed_seconds": 10.334,
+        "earlier_attempts": []
+      },
+      "members": [
+        {
+          "name": "report.json",
+          "bytes": 400,
+          "sha256": "3d5a73abc68cdd86f5f70dedd204dddc1bd4d752e76e889af780a79e2b0b791c"
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 486,
+          "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+        },
+        {
+          "name": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        }
+      ],
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "reported_input_hashes": {
+        "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+        "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "reported_comparison_hash_pairs_equal": true
+    },
+    {
+      "artifact_api": {
+        "id": 14781408667,
+        "name": "cs80-dsp-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "size_in_bytes": 8505885,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781408667",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781408667/zip",
+        "expired": false,
+        "created_at": "2026-11-23T01:01:00Z",
+        "expires_at": "2027-02-21T00:54:34Z",
+        "updated_at": "2026-11-23T01:01:00Z",
+        "digest": "sha256:5cb72152af2fde484ebfadb22f7e6e37be2018eb99296f1801acbff67f9206c8",
+        "workflow_run": {
+          "id": 45091496469,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "8ffe1e46681cbc76679a9244bb2b35189ededbfa"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "run_id": 45091496469,
+        "artifact_id": 14781408667,
+        "artifact_name": "cs80-dsp-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781408667.zip",
+        "started_at_utc": "2026-11-23T01:07:43.396425+00:00",
+        "completed_at_utc": "2026-11-23T01:07:54.659140+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa3.blob.core.windows.net",
+        "content_length": 8505885,
+        "bytes_received": 8505885,
+        "sha256": "5cb72152af2fde484ebfadb22f7e6e37be2018eb99296f1801acbff67f9206c8",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T00:54:34Z",
+        "elapsed_seconds": 11.263,
+        "earlier_attempts": []
+      },
+      "members": [
+        {
+          "name": "decimator-impulse.csv",
+          "bytes": 9588,
+          "sha256": "fb3861f5a79241f3567f0111f73e5085dbbbf5b850f5f949b02490b59cc82326"
+        },
+        {
+          "name": "decimator-tones.csv",
+          "bytes": 228,
+          "sha256": "8f3265efbbbc1ad2cf040f8e8cd4a9df4493492442a7cbe27150f1b3cd89aa93"
+        },
+        {
+          "name": "decimator.json",
+          "bytes": 79,
+          "sha256": "c02d9e8f1852998523cb95a57fbd4ade5dbccef95ba06c273a3f5c2e26d3b6d0"
+        },
+        {
+          "name": "filter-envelope-192000.csv",
+          "bytes": 84979,
+          "sha256": "57c9d9b1ed66352326d07b31c3a3c21c33c7fc9811877a2d1ab1983bc0809fed"
+        },
+        {
+          "name": "filter-envelope-48000.csv",
+          "bytes": 85088,
+          "sha256": "ed4827cd7eb9ae79191238a3a6b20d1b82fcc3aa9238ffd278e22108d4af8384"
+        },
+        {
+          "name": "filter-envelope-44100.csv",
+          "bytes": 84878,
+          "sha256": "b6790076bc33b5a3f0e9aa384f3477138f3c1103866b170a4685888b954e235b"
+        },
+        {
+          "name": "filter-envelope-96000.csv",
+          "bytes": 85110,
+          "sha256": "c136936d09d4c1cc057c6a00083912de66818566783a19f301e6d063992b8234"
+        },
+        {
+          "name": "measurements.json",
+          "bytes": 6312,
+          "sha256": "a7f3d9cf4241ed953897e41bf29fdad13edc1d1e56621bced3c9563b491bcd02"
+        },
+        {
+          "name": "oscillator-151.csv",
+          "bytes": 5857683,
+          "sha256": "cdd5815b8d0ae7018ce63dfe680e0e842357fa28c494d3ed3e2555e3654c98b6"
+        },
+        {
+          "name": "oscillator-3001.csv",
+          "bytes": 5974106,
+          "sha256": "e315d2f9ff3bd79ce621cf372ee4ade95a6cdcdab19530a9435d67ded5e27d45"
+        },
+        {
+          "name": "oscillator-6001.csv",
+          "bytes": 6099446,
+          "sha256": "b70ac197820c6f4456198a3f818b308dadc676839021d6846b589aa169c9a5ff"
+        },
+        {
+          "name": "oscillator-601.csv",
+          "bytes": 5875938,
+          "sha256": "6689c8dbce85f3b89e51dc4adeb3afcd3421b41d55f208a0dcf705fdc563d961"
+        },
+        {
+          "name": "plots/decimator-response-latency.png",
+          "bytes": 362158,
+          "sha256": "fad782a2890cd903739e7c5d6df3c66751f3f2d06c6c42e7f324b1c2d269b1c9"
+        },
+        {
+          "name": "plots/decimator-response-latency.svg",
+          "bytes": 227851,
+          "sha256": "e414861f4b2171f3b1e630f43dabdfcd32d69cee70c6c1b79c09eef0f0326ec0"
+        },
+        {
+          "name": "plots/filter-envelope-rate-comparison.png",
+          "bytes": 88060,
+          "sha256": "9c602320dc037f414906841d4bd5334b7ed8e08cbb150e16eb8f51e48e4a4844"
+        },
+        {
+          "name": "plots/filter-envelope-rate-comparison.svg",
+          "bytes": 65047,
+          "sha256": "fa675208e5a4e7d7df781903868388aeef0586cbaf703c1da304cb36c577993a"
+        },
+        {
+          "name": "plots/oscillator-alias-comparison.png",
+          "bytes": 83637,
+          "sha256": "674bd5cc6682fcfa9b1d7e36539a7bee2c813dae462c1e02e97f89333d6e9103"
+        },
+        {
+          "name": "plots/oscillator-alias-comparison.svg",
+          "bytes": 63618,
+          "sha256": "d711a9fded0889071589e627318459f34d12f30be4219552c2677599c3aaad1b"
+        },
+        {
+          "name": "plots/oscillator-waveform-spectrum.png",
+          "bytes": 230988,
+          "sha256": "797054832c4100a6bd841013c14ccc22ba232f8562fc5b0d3e1d9c45df92929d"
+        },
+        {
+          "name": "plots/oscillator-waveform-spectrum.svg",
+          "bytes": 605308,
+          "sha256": "0b1cbc60d0bd7651b10a5001235e4b55767f4d42c52f9a38ee4641fe97c73392"
+        },
+        {
+          "name": "plots/ring-frequency-envelope.png",
+          "bytes": 163184,
+          "sha256": "2d4041a157d355c4e6073679b772250aee1fabf04857ebbc3021c63f51786b38"
+        },
+        {
+          "name": "plots/ring-frequency-envelope.svg",
+          "bytes": 90259,
+          "sha256": "3a2305f604809d22395b73fd6da556f599372d78c23c53c561d1a945660942d1"
+        },
+        {
+          "name": "probe.json",
+          "bytes": 105,
+          "sha256": "bb39a04905115e1eef08fe88063688ec66700192c4e832058bf58b4c05a6e065"
+        },
+        {
+          "name": "ring-200.csv",
+          "bytes": 65547,
+          "sha256": "ff01eb07563e95064a784f60c1d924f03b4d833b04cbc9d804434e081a731130"
+        },
+        {
+          "name": "ring-7.csv",
+          "bytes": 90202,
+          "sha256": "ec9c7eeaee13f14ae91081b4a7f065730770790b22973814e46e0ddd45e21ed0"
+        },
+        {
+          "name": "ring-40.csv",
+          "bytes": 62480,
+          "sha256": "d5bf59b8fd470289f0ce8b16773f483696a16c53b56e78aee82546b0edaab3f5"
+        }
+      ],
+      "report": {
+        "schema": 1,
+        "description": "Software numerical evidence; no physical CS-80 comparison",
+        "reference": "16x Fourier source ideal-lowpassed below host Nyquist before decimation",
+        "git_head": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "working_tree_status": [],
+        "provenance_note": "Hashes sampled at analysis time; archive compiler/CI exact-source evidence separately. They do not attest the executable was built from these bytes.",
+        "analysis_time_source_sha256": {
+          "src/core/Dsp.h": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+          "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+          "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+          "src/tools/dsp_probe.cpp": "08f0f30a9b5ad3a96589ef9e98ebe1905033ee5bf6cba3d500e9cd689aba6e66",
+          "scripts/analyze_dsp.py": "eadfcb62ccaaa31830bc1bff026deabf921b27db1bacc7a49c21a582bbf98b2d"
+        },
+        "oscillators": [
+          {
+            "fundamental_hz": 110.595703125,
+            "fundamental_bin": 151,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -41.68434556601264,
+              "total_reference_residual_db": -32.96770464840718,
+              "peak": 0.9953918457
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -19.91027051997169,
+              "total_reference_residual_db": -19.727743334007016,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 21.77407504604095
+          },
+          {
+            "fundamental_hz": 440.185546875,
+            "fundamental_bin": 601,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -35.57293652847132,
+              "total_reference_residual_db": -26.944951455023,
+              "peak": 0.981742382
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -13.866503113022846,
+              "total_reference_residual_db": -13.685835582621005,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 21.706433415448473
+          },
+          {
+            "fundamental_hz": 2197.998046875,
+            "fundamental_bin": 3001,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -27.344849452962375,
+              "total_reference_residual_db": -19.916925768889733,
+              "peak": 0.9105136395
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -6.557671847441049,
+              "total_reference_residual_db": -6.396544751566676,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 20.787177605521325
+          },
+          {
+            "fundamental_hz": 4395.263671875,
+            "fundamental_bin": 6001,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -25.58876819544505,
+              "total_reference_residual_db": -16.496361186521252,
+              "peak": 0.8252487779
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -3.4417680193843814,
+              "total_reference_residual_db": -3.257288263334685,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 22.14700017606067
+          }
+        ],
+        "filter_envelopes": [
+          {
+            "sample_rate": 44100,
+            "peak_offset_oct": 2.247294903,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 48000,
+            "peak_offset_oct": 2.25,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 96000,
+            "peak_offset_oct": 2.25,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 192000,
+            "peak_offset_oct": 2.247175217,
+            "final_offset_oct": -1.5
+          }
+        ],
+        "probe_failures": 0,
+        "comparative_regression_passed": true,
+        "decimator": {
+          "convention": "Internal x[n] starts at zero; host y[m]=filtered[2*m+1]. Not a complete instrument impulse response.",
+          "config": {
+            "retained_internal_phase": 1,
+            "declared_host_latency": 63,
+            "internal_rate": 88200
+          },
+          "fft_size": 262144,
+          "response_units": "cycles per internal sample, twice host rate",
+          "captured_and_design_comparisons": [
+            {
+              "label": "Captured production FIR",
+              "taps": 255,
+              "dc_gain": 0.9999999867167528,
+              "fir_group_delay_internal_samples": 127.00000000000001,
+              "indexed_source_to_host_delay_samples": 63.000000000000014,
+              "passband_through_20khz_at_44100_min_db": -0.0003936737320452868,
+              "passband_through_20khz_at_44100_max_db": 0.0003656058093718849,
+              "stopband_from_internal_0p25_max_db": -87.0734682867838
+            },
+            {
+              "label": "Legacy 31-tap design (reconstructed)",
+              "taps": 31,
+              "dc_gain": 1.0000000093132257,
+              "fir_group_delay_internal_samples": 15.0,
+              "indexed_source_to_host_delay_samples": 7.000000000000003,
+              "passband_through_20khz_at_44100_min_db": -8.18617864540564,
+              "passband_through_20khz_at_44100_max_db": 0.0038884864882013925,
+              "stopband_from_internal_0p25_max_db": -19.76501443341561
+            },
+            {
+              "label": "127-tap / 18 kHz alternative",
+              "taps": 127,
+              "dc_gain": 0.9999999799019861,
+              "fir_group_delay_internal_samples": 63.0,
+              "indexed_source_to_host_delay_samples": 31.000000000000004,
+              "passband_through_20khz_at_44100_min_db": -5.7631878431514485,
+              "passband_through_20khz_at_44100_max_db": 0.0003871863815906591,
+              "stopband_from_internal_0p25_max_db": -86.61328113148744
+            }
+          ],
+          "actual_quadrature_tones": [
+            {
+              "cycles_per_internal_sample": 0.05,
+              "gain_db": -4.610859707e-05
+            },
+            {
+              "cycles_per_internal_sample": 0.2,
+              "gain_db": 1.267147366e-05
+            },
+            {
+              "cycles_per_internal_sample": 0.2267573696,
+              "gain_db": 0.0003657002397
+            },
+            {
+              "cycles_per_internal_sample": 0.25,
+              "gain_db": -87.07346806
+            },
+            {
+              "cycles_per_internal_sample": 0.255,
+              "gain_db": -90.97145295
+            },
+            {
+              "cycles_per_internal_sample": 0.26,
+              "gain_db": -97.00887445
+            },
+            {
+              "cycles_per_internal_sample": 0.3,
+              "gain_db": -129.6078558
+            },
+            {
+              "cycles_per_internal_sample": 0.4,
+              "gain_db": -116.8804091
+            },
+            {
+              "cycles_per_internal_sample": 0.49,
+              "gain_db": -127.6819759
+            }
+          ],
+          "response_and_declared_latency_gates_passed": true
+        }
+      },
+      "probe": {
+        "schema": 1,
+        "sample_rate": 48000,
+        "sample_count": 65536,
+        "oscillator_bins": [
+          151,
+          601,
+          3001,
+          6001
+        ],
+        "failures": 0
+      },
+      "analysis_source_hashes_verified_against_exact_commit": true
+    },
+    {
+      "artifact_api": {
+        "id": 14781965725,
+        "name": "cs80-synthetic-comparison-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "size_in_bytes": 198614,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781965725",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781965725/zip",
+        "expired": false,
+        "created_at": "2026-11-23T01:00:41Z",
+        "expires_at": "2027-02-21T00:54:34Z",
+        "updated_at": "2026-11-23T01:00:41Z",
+        "digest": "sha256:1e7c83ddb32a8493d2edd094841146ae2e88823bd2516fa090fd9dbdabfc8d24",
+        "workflow_run": {
+          "id": 45091496469,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "8ffe1e46681cbc76679a9244bb2b35189ededbfa"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "run_id": 45091496469,
+        "artifact_id": 14781965725,
+        "artifact_name": "cs80-synthetic-comparison-8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14781965725.zip",
+        "started_at_utc": "2026-11-23T01:07:43.407909+00:00",
+        "completed_at_utc": "2026-11-23T01:07:53.791204+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa3.blob.core.windows.net",
+        "content_length": 198614,
+        "bytes_received": 198614,
+        "sha256": "1e7c83ddb32a8493d2edd094841146ae2e88823bd2516fa090fd9dbdabfc8d24",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T00:54:34Z",
+        "elapsed_seconds": 10.383,
+        "earlier_attempts": []
+      },
+      "members": [
+        {
+          "name": "envelope-candidate.csv",
+          "bytes": 92826,
+          "sha256": "4c17cbb27c835772f4c2f62b6d642c832e53eb06182bc2fde780d76df2dab24b"
+        },
+        {
+          "name": "envelope-reference.csv",
+          "bytes": 42423,
+          "sha256": "41b8f42d8c445c2da3a3955d19bf2b5751eba10f532f180a271ad2d9957d0adc"
+        },
+        {
+          "name": "filter-candidate.csv",
+          "bytes": 104968,
+          "sha256": "d80ea4f18ad4480d855f18db1163c621e16c63f98725620c4be737c137fd7923"
+        },
+        {
+          "name": "filter-reference.csv",
+          "bytes": 104535,
+          "sha256": "10cc8f3fde450cb8df8116252045aa442bebba9b080952c1a9424505636ebbcd"
+        },
+        {
+          "name": "manifest.json",
+          "bytes": 4367,
+          "sha256": "10ee390173797f6d8e0b400f99740e359c18f7ff71bc4238bb8dfddd3432552d"
+        },
+        {
+          "name": "oscillator-candidate.csv",
+          "bytes": 104771,
+          "sha256": "ffa762c74ebc27893fa6e0cce2e653b69a3800a11bba538c7d60320b07356ab6"
+        },
+        {
+          "name": "oscillator-reference.csv",
+          "bytes": 102391,
+          "sha256": "a274e4cfa0127573d8d719cf76666b8024d154e6c79398ab0cc424045fd82b59"
+        },
+        {
+          "name": "output-candidate.csv",
+          "bytes": 105754,
+          "sha256": "566ad6a77224b52d5e885952dc194f0350b687d3219b4ff7eedebb162875d876"
+        },
+        {
+          "name": "output-reference.csv",
+          "bytes": 105338,
+          "sha256": "5a87936b1cacd09280f63a551cf2aa0c5cbad09c6cbfd8882c671ae3838bef41"
+        },
+        {
+          "name": "report.json",
+          "bytes": 5286,
+          "sha256": "9a6753c3c8ea2217e6445a97425a5ff7f60aa401070c2fc156f7c9cf44f0b0d7"
+        }
+      ],
+      "report": {
+        "analog_evidence": false,
+        "claim": "Synthetic plumbing check only; not a CS-80 model or hardware comparison.",
+        "comparator_sha256": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105",
+        "evidence_kind": "synthetic",
+        "manifest_sha256": "10ee390173797f6d8e0b400f99740e359c18f7ff71bc4238bb8dfddd3432552d",
+        "passed": true,
+        "provenance": {
+          "board_ic_revisions": "not applicable: synthetic mathematical fixture",
+          "generator_sha256": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105",
+          "instrument_identity": "not applicable: synthetic mathematical fixture",
+          "probe": "not applicable: synthetic mathematical fixture",
+          "rails": "not applicable: synthetic mathematical fixture",
+          "redistribution_status": "Repository-authored synthetic data; repository license",
+          "scaling": "1 CSV unit = 1 dimensionless synthetic unit",
+          "source_description": "Fixed analytic sine, one-pole recurrence, linear envelope, sum",
+          "source_hashes": {
+            "scripts/parity_harness.py": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105"
+          },
+          "source_revision": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+          "temperature": "not applicable: synthetic mathematical fixture",
+          "trims": "not applicable: synthetic mathematical fixture",
+          "warm_up": "not applicable: synthetic mathematical fixture",
+          "working_tree_dirty": false
+        },
+        "schema_version": 1,
+        "stages": [
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 6.087980787300967e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000454602665e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/oscillator; no hardware source",
+            "split": "validation",
+            "stage": "oscillator",
+            "unaligned_rms_error": 0.028009523695116948,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 6.845267520054587e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000411604013e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/filter; no hardware source",
+            "split": "validation",
+            "stage": "filter",
+            "unaligned_rms_error": 0.02320690986299836,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 2.0117032497289633e-21,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000777458868e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/envelope; no hardware source",
+            "split": "validation",
+            "stage": "envelope",
+            "unaligned_rms_error": 0.052181384308625824,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 4.332805135777261e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000262287485e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/output; no hardware source",
+            "split": "validation",
+            "stage": "output",
+            "unaligned_rms_error": 0.01419850701744406,
+            "units": "dimensionless"
+          }
+        ],
+        "tolerance_profile": "synthetic-plumbing-v1",
+        "tolerances_sha256": "a66b523dbb6f81c8b1f54949d262892ce59c33bf238a988ae9a1a907082bc9d3"
+      }
+    }
+  ],
+  "limitations": [
+    "Public GET, API digests and complete ZIP member inventories verified. Raw frozen-baseline PCM and V1/V2 binary comparison inputs were not uploaded; their hashes and equality are reported by the strict successful CI comparison steps, not independently recomputed here.",
+    "Synthetic comparison exercises the comparison harness, not hardware accuracy. Numerical source hashes identify analysis-time source, not independently the compiled executable. Native plugin, sanitizer and install-package results are separate."
+  ]
+}

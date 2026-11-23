@@ -1,0 +1,70 @@
+{
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "artifact_id": 14785491077,
+  "initial_checker_invocation": {
+    "exit_code": 1,
+    "error_type": "ValueError",
+    "message": "Wrong VST3 artifact root",
+    "phase": "validator-input artifact membership comparison",
+    "interpretation": "The new offline acceptance checker initially assumed that the uploaded VST3 parent directory contained only the runtime bundle. It rejected two legitimate Visual Studio linker sidecars. This was a checker-shape rejection, not a product failure, native-test failure or pluginval failure."
+  },
+  "actual_runtime_validator_results": [
+    {
+      "step": "Validate VST3 headless",
+      "seed": "0x1d5db2",
+      "exit": 0,
+      "validation_invocations": 1,
+      "validation_retries": 0
+    },
+    {
+      "step": "Validate state regression seed 0x5037a0c",
+      "seed": "0x5037a0c",
+      "exit": 0,
+      "validation_invocations": 1,
+      "validation_retries": 0
+    }
+  ],
+  "adjustment": {
+    "only_allowed_sidecar_root_names": [
+      "CS-80 Reference.exp",
+      "CS-80 Reference.lib"
+    ],
+    "both_required": true,
+    "regular_files_only": true,
+    "format_checks": [
+      "x64 COFF exports object",
+      "COFF import library archive"
+    ],
+    "unexpected_root_entries_rejected": true,
+    "all_runtime_bundle_files_compared": true,
+    "runtime_bundle_directory_normalization": "Restore VST3/ prefix; include explicit directories and derive all implicit parents.",
+    "no_runtime_bundle_file_excluded": true,
+    "checker_sha256": "90868617f6ec638c0fe5269ae6d32d78f5eee31c3ff7f591bc61527d4683ad8d"
+  },
+  "sidecars": [
+    {
+      "path": "CS-80 Reference.exp",
+      "bytes": 968,
+      "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+      "format": "x64 COFF exports object",
+      "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+    },
+    {
+      "path": "CS-80 Reference.lib",
+      "bytes": 2266,
+      "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+      "format": "COFF import library archive",
+      "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+    }
+  ],
+  "final_checker_invocation": {
+    "exit_code": 0,
+    "status": "required_validators_verified",
+    "vst3_bundle_files": 2,
+    "normalized_bundle_directories": 4,
+    "mismatches": 0,
+    "all_artifact_files_accounted_for": 4
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "status": "four_corrected_fixtures_passed_in_fresh_native_ci",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485114,
+  "target": "linux-x86_64",
+  "reviewed_at_utc": "2026-11-23T07:07:24.107480+00:00",
+  "native_proof_sha256": "2e3081b71a327c53b7a93a35f9c2260f3d756b9cd5db63b04770106bd5aab337",
+  "artifact_id": 14795644849,
+  "artifact_sha256": "297d15a2640696c71faadcff796db52ba4c08ab1da0ac3ad9f67ae26756619f5",
+  "junit_member": {
+    "path": "ctest-results.xml",
+    "bytes": 463375,
+    "sha256": "2fb8e4986b892412cb81762582c23e70e96d49ac8ee86660109af38504a05bc5"
+  },
+  "lasttest_member": {
+    "path": "Testing/Temporary/LastTest.log",
+    "bytes": 1103668,
+    "sha256": "a45ed444c7e69985a6623c06ead304b25fbf1a50164cb096cae43c687ed3749b"
+  },
+  "fixtures": [
+    {
+      "ctest_name": "cs80_sub_routing_display_tests",
+      "source_file": "tests/SubRoutingDisplayTests.cpp",
+      "source_file_sha256": "a3a19222cf076d038934e6b878bc08e5dc276d448dc06f994999ccf2434131f3",
+      "checks": 95,
+      "failures": 0,
+      "summary_line_from_lasttest": "SUB routing display: 95 checks, 0 failures",
+      "junit_attributes": {
+        "name": "cs80_sub_routing_display_tests",
+        "classname": "cs80_sub_routing_display_tests",
+        "time": "0.978904",
+        "status": "run"
+      },
+      "duration_seconds_from_junit": 0.978904,
+      "junit_result": "passed; status=run with no failure/error/skipped element",
+      "summary_also_present_in_junit": true,
+      "junit_output_truncated_at_1024_bytes": false,
+      "junit_system_out": "SUB routing display: 95 checks, 0 failures\n",
+      "lasttest_block_sha256": "a716203b70056932ac52d646201c4eeb88395a977d118a22d7b88b5c1cd191d1",
+      "lasttest_block": "480/583 Testing: cs80_sub_routing_display_tests\n480/583 Test: cs80_sub_routing_display_tests\nCommand: \"/home/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_sub_routing_display_tests\"\nDirectory: /home/runner/work/yamaha-cs80/yamaha-cs80/build\n\"cs80_sub_routing_display_tests\" start time: Nov 23 06:56 UTC\nOutput:\n----------------------------------------------------------\nSUB routing display: 95 checks, 0 failures\n<end of output>\nTest time =   0.98 sec\n----------------------------------------------------------\nTest Passed.\n\"cs80_sub_routing_display_tests\" end time: Nov 23 06:56 UTC\n\"cs80_sub_routing_display_tests\" time elapsed: 00:00:00\n----------------------------------------------------------\n\n"
+    },
+    {
+      "ctest_name": "cs80_midi_map_notification_tests",
+      "source_file": "tests/MidiMapNotificationTests.cpp",
+      "source_file_sha256": "e9ea07087e466391af01e6c1d95b1a2f13daf2a8e3069cc827e349371a15b792",
+      "checks": 93,
+      "failures": 0,
+      "summary_line_from_lasttest": "93 checks, 0 failures",
+      "junit_attributes": {
+        "name": "cs80_midi_map_notification_tests",
+        "classname": "cs80_midi_map_notification_tests",
+        "time": "3.58103",
+        "status": "run"
+      },
+      "duration_seconds_from_junit": 3.58103,
+      "junit_result": "passed; status=run with no failure/error/skipped element",
+      "summary_also_present_in_junit": true,
+      "junit_output_truncated_at_1024_bytes": false,
+      "junit_system_out": "93 checks, 0 failures\n",
+      "lasttest_block_sha256": "4089970abc6630f1d38d791df5458b4bc0cb0e36e799c61e5b0caf30209e9537",
+      "lasttest_block": "500/583 Testing: cs80_midi_map_notification_tests\n500/583 Test: cs80_midi_map_notification_tests\nCommand: \"/home/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_midi_map_notification_tests\"\nDirectory: /home/runner/work/yamaha-cs80/yamaha-cs80/build\n\"cs80_midi_map_notification_tests\" start time: Nov 23 06:57 UTC\nOutput:\n----------------------------------------------------------\n93 checks, 0 failures\n<end of output>\nTest time =   3.58 sec\n----------------------------------------------------------\nTest Passed.\n\"cs80_midi_map_notification_tests\" end time: Nov 23 06:57 UTC\n\"cs80_midi_map_notification_tests\" time elapsed: 00:00:03\n----------------------------------------------------------\n\n"
+    },
+    {
+      "ctest_name": "cs80_audio_callback_allocation_tests",
+      "source_file": "tests/AudioCallbackAllocationTests.cpp",
+      "source_file_sha256": "cb805262601e7145ec9952a6b15b53cf17ba1de312ae240fa4a846483bf162a8",
+      "checks": 288,
+      "failures": 0,
+      "summary_line_from_lasttest": "Audio callback allocation: 288 checks, 0 failures",
+      "junit_attributes": {
+        "name": "cs80_audio_callback_allocation_tests",
+        "classname": "cs80_audio_callback_allocation_tests",
+        "time": "1.72695",
+        "status": "run"
+      },
+      "duration_seconds_from_junit": 1.72695,
+      "junit_result": "passed; status=run with no failure/error/skipped element",
+      "summary_also_present_in_junit": true,
+      "junit_output_truncated_at_1024_bytes": false,
+      "junit_system_out": "Audio callback allocation: 288 checks, 0 failures\n",
+      "lasttest_block_sha256": "6b54d2273caa83273f406be898ba2db4ca565499685b11990331a058f554b4b4",
+      "lasttest_block": "512/583 Testing: cs80_audio_callback_allocation_tests\n512/583 Test: cs80_audio_callback_allocation_tests\nCommand: \"/home/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_audio_callback_allocation_tests\"\nDirectory: /home/runner/work/yamaha-cs80/yamaha-cs80/build\n\"cs80_audio_callback_allocation_tests\" start time: Nov 23 06:57 UTC\nOutput:\n----------------------------------------------------------\nAudio callback allocation: 288 checks, 0 failures\n<end of output>\nTest time =   1.73 sec\n----------------------------------------------------------\nTest Passed.\n\"cs80_audio_callback_allocation_tests\" end time: Nov 23 06:57 UTC\n\"cs80_audio_callback_allocation_tests\" time elapsed: 00:00:01\n----------------------------------------------------------\n\n"
+    },
+    {
+      "ctest_name": "cs80_main_vst3_multirecall_state_tests",
+      "source_file": "tests/MainVst3MultiRecallStateTests.cpp",
+      "source_file_sha256": "56a9d7315e8d4daf5d47967da29c687f41622a2e326ed11dc186978bd9037f53",
+      "checks": 75,
+      "failures": 0,
+      "summary_line_from_lasttest": "Main VST3 multi-recall state: 75 checks, 0 failures",
+      "junit_attributes": {
+        "name": "cs80_main_vst3_multirecall_state_tests",
+        "classname": "cs80_main_vst3_multirecall_state_tests",
+        "time": "0.802137",
+        "status": "run"
+      },
+      "duration_seconds_from_junit": 0.802137,
+      "junit_result": "passed; status=run with no failure/error/skipped element",
+      "summary_also_present_in_junit": false,
+      "junit_output_truncated_at_1024_bytes": true,
+      "junit_system_out": "CURVED first=0 second=1 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=0 second=1 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=63 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=63 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=64 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=64 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=64 second=700 primary_policy=1 extension_policy=1 primary_error=0 extension_...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]\n",
+      "lasttest_block_sha256": "c04276027b5bb386ee4f3563a0a8131192f16e80e20c89cd24932e3295a3aceb",
+      "lasttest_block": "513/583 Testing: cs80_main_vst3_multirecall_state_tests\n513/583 Test: cs80_main_vst3_multirecall_state_tests\nCommand: \"/home/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_main_vst3_multirecall_state_tests\" \"/home/runner/work/yamaha-cs80/yamaha-cs80/tests/parity/tolerances-v2/main-vst3-multirecall-state.json\"\nDirectory: /home/runner/work/yamaha-cs80/yamaha-cs80/build\n\"cs80_main_vst3_multirecall_state_tests\" start time: Nov 23 06:57 UTC\nOutput:\n----------------------------------------------------------\nCURVED first=0 second=1 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=0 second=1 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=63 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=63 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=64 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=64 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=64 second=700 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=64 second=700 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nCURVED first=700 second=1023 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18\nNO_CURVE_CHARACTERIZATION first=700 second=1023 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1\nMain VST3 multi-recall state: 75 checks, 0 failures\n<end of output>\nTest time =   0.80 sec\n----------------------------------------------------------\nTest Passed.\n\"cs80_main_vst3_multirecall_state_tests\" end time: Nov 23 06:57 UTC\n\"cs80_main_vst3_multirecall_state_tests\" time elapsed: 00:00:00\n----------------------------------------------------------\n\n"
+    }
+  ],
+  "observed_totals": {
+    "checks": 551,
+    "failures": 0,
+    "fixtures_passed": 4
+  },
+  "scope": "Counts are extracted from the original fresh CI LastTest blocks; JUnit confirms each executed passing case and its precise duration. Three JUnit outputs also repeat the count summaries. Multi-recall JUnit output is explicitly truncated at 1024 bytes, so its count comes from complete LastTest only. No local-test result is substituted, and no test is executed here."
+}

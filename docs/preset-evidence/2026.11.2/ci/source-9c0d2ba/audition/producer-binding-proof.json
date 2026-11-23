@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "status": "audition_bound_to_exact_successful_native_producer_attempt",
+  "verified_at_utc": "2026-11-23T07:06:10.786729+00:00",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485114,
+  "job_name": "Linux / VST3 + Standalone",
+  "job_conclusion": "success",
+  "run_status_at_check": "queued",
+  "overall_platform_acceptance": "not assessed; native full-roster/install and dependent validators are separate",
+  "required_steps": [
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T04:34:47Z",
+      "completed_at": "2026-11-23T04:35:47Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T04:35:47Z",
+      "completed_at": "2026-11-23T04:35:47Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T04:35:47Z",
+      "completed_at": "2026-11-23T04:44:03Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T04:44:03Z",
+      "completed_at": "2026-11-23T06:59:54Z"
+    },
+    {
+      "name": "Capture curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T06:59:54Z",
+      "completed_at": "2026-11-23T07:00:37Z"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T07:00:37Z",
+      "completed_at": "2026-11-23T07:00:42Z"
+    }
+  ],
+  "artifact_api": {
+    "id": 14796467679,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc5NjQ2NzY3OQ==",
+    "name": "cs80-curated-preset-audition-9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "size_in_bytes": 147268327,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679/zip",
+    "expired": false,
+    "digest": "sha256:f0d36774708d371ed6dc7a50b15c89420657b29e4f1f1d6566c9763675e99dd8",
+    "created_at": "2026-11-23T07:00:42Z",
+    "updated_at": "2026-11-23T07:00:42Z",
+    "expires_at": "2027-02-21T04:31:50Z",
+    "workflow_run": {
+      "id": 45112404257,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+    }
+  },
+  "upload_binding": {
+    "job_id": 137487485114,
+    "run_attempt": 1,
+    "artifact_id": 14796467679,
+    "artifact_created_at": "2026-11-23T07:00:42Z",
+    "upload_success_log_timestamp": "2026-11-23T07:00:42.9285558Z",
+    "job_started_at": "2026-11-23T04:33:53Z",
+    "job_completed_at": "2026-11-23T07:02:11Z",
+    "upload_step_name": "Upload curated preset auditions",
+    "upload_step_number": 9,
+    "upload_step_started_at": "2026-11-23T07:00:37Z",
+    "upload_step_completed_at": "2026-11-23T07:00:42Z",
+    "log_matches_artifact_id_and_bytes": true,
+    "timestamps_within_selected_job": true,
+    "upload_step_timestamp_tolerance_seconds": 2,
+    "api_creation_outside_upload_step_seconds": 0.0,
+    "success_log_outside_upload_step_seconds": 0.928555,
+    "api_creation_minus_success_log_seconds": -0.928555,
+    "timestamps_within_upload_step_tolerance": true,
+    "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+  },
+  "source_hashes": {
+    ".github/workflows/build.yml": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "scripts/capture-factory-auditions.py": "b8841e22af84978cc81eab38b7733856852cccc439c5a5813580dd0b14a82af9"
+  },
+  "binding_helper_sha256": "c6016213978cdb66848f611dd6441aecd98ad0082301bdf9722ae2b949919d16",
+  "audition_verifier_sha256": "b3cdb252f8cdddc4766622ba7ef2dab5ccde2548a0b31443b647ae71a9fbc7ef",
+  "offline_verifier_exit": 0,
+  "proof_sha256": "e5ffa501e979aeec755dcca4c69ddfd22b008d4df76977d71fe6e74964fa3e7f",
+  "inputs": {
+    "artifact-api.json": {
+      "bytes": 843,
+      "sha256": "fc625923cc7c20841b2cb5225a23b986daffc166fc84397fa30ba5e43df02878"
+    },
+    "run-api.json": {
+      "bytes": 13469,
+      "sha256": "0f965b13a54969b580106f8a1f4cc07ef234408e78f94fbb73cf08f00f3cc5a6"
+    },
+    "jobs-api.json": {
+      "bytes": 19089,
+      "sha256": "339a3f9544bc887f64a6fff8705d32a745a5373ceb385f9cfb51cab88660d2ad"
+    },
+    "job-api.json": {
+      "bytes": 4806,
+      "sha256": "a5ee9c203a7ac7c226fcc167a6242e3706284c93b2db2094f18e5a76f67fa23c"
+    },
+    "job.log": {
+      "bytes": 451723,
+      "sha256": "c25ddc9659949e49cf989c3a472ffe709b60bdaec333bb73d3090953ed9df547"
+    },
+    "14796467679-public-get.json": {
+      "bytes": 860,
+      "sha256": "98e88a7239154b9cbaed7397a652a36067135cf5d492b68fbb35e62f83f42e1f"
+    }
+  },
+  "capture_excerpt": {
+    "file": "capture-and-upload.log",
+    "first_original_line": 3428,
+    "last_original_line": 3559,
+    "bytes": 9537,
+    "sha256": "51124369cf8c8129f446a9987d26673b0f2b232f66e29e25fc71d258a148a1cc",
+    "selection": "Original timestamped lines from capture-step start through upload-step end plus the recorded two-second clock tolerance; no text changes."
+  },
+  "scope": "Requires exact raw run and producer job identity, original successful capture/upload steps, actual public artifact bytes and digest, and matching original upload artifact ID/size. Embedded run_attempt is checked by the offline verifier but does not establish producer attempt by itself."
+}

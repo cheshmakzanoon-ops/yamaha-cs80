@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "status": "offline_parser_validation_and_read_only_review_complete",
+  "recorded_at_utc": "2026-11-23T03:43:19.882283+00:00",
+  "target": {
+    "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run_id": 45096447502,
+    "run_attempt": 1,
+    "native_job_id": 137437184988,
+    "current_acceptance_performed": false
+  },
+  "checker": {
+    "path": "docs/preset-evidence/2026.11.2/verify-linux-validators.py",
+    "bytes": 24420,
+    "sha256": "25cb1b14db5020e3215ef47dc5126d6f24ac791f99f11f3ef64c9518c294917f",
+    "frozen_source_files": {
+      ".github/workflows/build.yml": {
+        "bytes": 33200,
+        "sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220"
+      },
+      "scripts/run-pluginval-linux.sh": {
+        "bytes": 2542,
+        "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105"
+      },
+      "scripts/run-pluginval-with-core.py": {
+        "bytes": 7044,
+        "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea"
+      }
+    }
+  },
+  "historical_fixtures": {
+    "evidence_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+    "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "run_id": 45044040694,
+    "run_attempt": 1,
+    "validator_job_id": 137324977642,
+    "artifact_api": {
+      "id": 14769486678,
+      "node_id": "MDg6QXJ0aWZhY3QxNDc2OTQ4NjY3OA==",
+      "name": "cs80-pluginval-reports",
+      "size_in_bytes": 12870,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769486678",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769486678/zip",
+      "expired": false,
+      "digest": "sha256:8d199d30e368a52390923d0d8d825e7dfb331f76844dd56fcae3b618dab47185",
+      "created_at": "2026-11-22T19:25:03Z",
+      "updated_at": "2026-11-22T19:25:03Z",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "workflow_run": {
+        "id": 45044040694,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      }
+    },
+    "manifest_path": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/validator-reports-manifest.json",
+    "manifest_sha256": "3ce4b037b3e03f1de68f85eb59591f6118ed68eca09e6e4bacea921d8ec68ce2",
+    "members_verified": 17,
+    "exercise_script_sha256": "1c28310d1334a7d62f1eb63b7f2e0186653d5fac9c7dffedde62fd2348906712",
+    "fixture_result_sha256": "22f03f906daa3a6d19a72ebe965388a9bc1cc65d992eeb9a3a0be79727240883",
+    "cases": [
+      {
+        "lane": "headless",
+        "result": "historical_format_fixture_parsed",
+        "current_source_acceptance": false,
+        "members": [
+          {
+            "path": "pluginval-headless.log",
+            "bytes": 7282,
+            "sha256": "e232ff9694bfddcfd3780e48b8c7653b3668562c42206bd786ce3efd382f4abb"
+          },
+          {
+            "path": "pluginval-headless-core.log",
+            "bytes": 443,
+            "sha256": "26434337c4aaaad329c8302632a9691d2df6f33cfc08de1f5cc153a540b5bc16"
+          },
+          {
+            "path": "pluginval-reports/cs80-headless",
+            "bytes": 7194,
+            "sha256": "3bf8c85a6dbe4d3b8d38e101d2654c16cd03840d7e3b6043853ebb7fdb5ee235"
+          }
+        ],
+        "seed": "0x3e72560",
+        "gui": false,
+        "strictness": 10,
+        "program_count": 523,
+        "final_raw_exit": 0,
+        "internal_attempt_count": 1,
+        "internal_retry_count": 0,
+        "original_terminations": [
+          {
+            "pid": 2851,
+            "raw_returncode": 0,
+            "kind": "exit",
+            "details": "exit_code=0",
+            "normalized_exit": 0
+          }
+        ]
+      },
+      {
+        "lane": "state-regression",
+        "result": "historical_format_fixture_parsed",
+        "current_source_acceptance": false,
+        "members": [
+          {
+            "path": "pluginval-gui-seed-regression.log",
+            "bytes": 7964,
+            "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+          },
+          {
+            "path": "pluginval-gui-seed-regression-core.log",
+            "bytes": 443,
+            "sha256": "b2805f31aa250224c823aa1c0df8c1fca4e3d38c98d40d944a803d51701b55ac"
+          },
+          {
+            "path": "pluginval-reports/cs80-gui-seed-regression",
+            "bytes": 7876,
+            "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+          }
+        ],
+        "seed": "0x2da72db",
+        "gui": true,
+        "strictness": 10,
+        "program_count": 523,
+        "final_raw_exit": 0,
+        "internal_attempt_count": 1,
+        "internal_retry_count": 0,
+        "original_terminations": [
+          {
+            "pid": 2936,
+            "raw_returncode": 0,
+            "kind": "exit",
+            "details": "exit_code=0",
+            "normalized_exit": 0
+          }
+        ]
+      },
+      {
+        "lane": "gui",
+        "result": "rejected_as_required",
+        "current_source_acceptance": false,
+        "members": [
+          {
+            "path": "pluginval-gui.log",
+            "bytes": 7964,
+            "sha256": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b"
+          },
+          {
+            "path": "pluginval-gui-core.log",
+            "bytes": 475,
+            "sha256": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073"
+          },
+          {
+            "path": "pluginval-reports/cs80-gui",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "seed": "0x4369262",
+        "rejection": "gui: final raw child exit -11; SUCCESS cannot override a crash",
+        "console_success_markers": 1,
+        "original_terminations": [
+          {
+            "pid": 2883,
+            "raw_returncode": -11,
+            "kind": "signal",
+            "details": "signal_number=11; signal_name=SIGSEGV",
+            "normalized_exit": 139
+          }
+        ],
+        "report_bytes": 0
+      }
+    ],
+    "scope": "Unchanged committed historical files parsed offline. Positive cases exercise format only. Actual post-SUCCESS raw -11 is rejected before the preserved empty-report check. None qualifies current source366."
+  },
+  "reviews": [
+    {
+      "reviewer": "/root/a51_bundle_acceptance_preparation",
+      "type": "independent_read_only",
+      "result": "no_blocker_found_for_intended_attempt_1",
+      "checker_sha256": "25cb1b14db5020e3215ef47dc5126d6f24ac791f99f11f3ef64c9518c294917f",
+      "scope": "Read frozen source hashes, raw exit and retry accounting, complete report equality, artifact upload/download binding, complete VST3 inventory/hash matching, BytesIO parsing and existing fixture evidence. No execution or current acceptance."
+    },
+    {
+      "reviewer": "/root",
+      "type": "independent_read_only",
+      "result": "no_blocker_found_for_intended_attempt_1",
+      "checker_sha256": "25cb1b14db5020e3215ef47dc5126d6f24ac791f99f11f3ef64c9518c294917f",
+      "scope": "Read all 397 checker lines; compared actual installer-proof schema and historical full-job download format. Confirmed proof key names, digests and source hashes. No current acceptance."
+    }
+  ],
+  "remaining_limits": [
+    "Full current-job binding and multiple-internal-attempt paths remain unexercised by these historical lane-only fixtures.",
+    "Stable Linux pluginval1.0.4 is checked from the frozen workflow and emitted version file; the workflow does not retain a validator-download digest record.",
+    "Native CTest, installation archive acceptance, public download proof and audition acceptance are separate.",
+    "No runtime/product/pluginval execution, network action, CI retry, or source/workflow change was performed for this record.",
+    "No complete workflow, release signing/notarization, DAW installation, acoustic/hardware equivalence or earlier-crash ownership claim."
+  ]
+}

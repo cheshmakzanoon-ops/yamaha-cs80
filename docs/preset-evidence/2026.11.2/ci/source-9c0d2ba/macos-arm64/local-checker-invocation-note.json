@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-23T05:08:52.624931+00:00",
+  "scope": "Local acceptance invocation only; no product, validator, native test, or CI job rerun",
+  "first_local_install_check": {
+    "exit": 1,
+    "message": "Bundle acceptance failed: Work directory does not exist",
+    "cause": "Caller did not create the required empty work directory before invoking the unchanged verifier",
+    "product_outcome": "not evaluated"
+  },
+  "correction": "Created the required empty work directory; unchanged checker and identical original artifact will be used again."
+}

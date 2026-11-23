@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "artifact_id": 14796467679,
+  "wav_count": 68,
+  "unique_rendered_programs": 56,
+  "inventory_programs": 523,
+  "parameters_per_program": 190,
+  "groups": [
+    {
+      "folder": "keyboards",
+      "wav_count": 24,
+      "seconds": 120.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "soft-keyboards",
+      "wav_count": 5,
+      "seconds": 25.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "families",
+      "wav_count": 22,
+      "seconds": 198.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "original-addresses",
+      "wav_count": 8,
+      "seconds": 40.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "pressure-zero",
+      "wav_count": 3,
+      "seconds": 18.0,
+      "intentional_silent_files": 1
+    },
+    {
+      "folder": "pressure-full",
+      "wav_count": 3,
+      "seconds": 18.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "tine-register-48",
+      "wav_count": 1,
+      "seconds": 4.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "tine-register-60",
+      "wav_count": 1,
+      "seconds": 4.0,
+      "intentional_silent_files": 0
+    },
+    {
+      "folder": "tine-register-84",
+      "wav_count": 1,
+      "seconds": 4.0,
+      "intentional_silent_files": 0
+    }
+  ],
+  "seconds": 431,
+  "sample_rate": 48000,
+  "stereo_frames": 20688000,
+  "individual_channel_samples": 41376000,
+  "intentional_silent_files": [
+    {
+      "path": "pressure-zero/444-Pressure-Lead.wav",
+      "name": "Pressure Lead",
+      "pressure": 0,
+      "frames": 288000
+    }
+  ],
+  "nonfinite_samples": 0,
+  "samples_at_or_above_full_scale": 0,
+  "highest_peak": {
+    "path": "families/300-Tremolo-Pad.wav",
+    "name": "Tremolo Pad",
+    "dbfs": -14.516989954639264
+  },
+  "lowest_non_silent_peak": {
+    "path": "soft-keyboards/336-Electric-Piano-I.wav",
+    "name": "Electric Piano I",
+    "dbfs": -29.590999327994556
+  },
+  "max_wav_csv_absolute_errors": {
+    "peak_dbfs": 4.991438373735946e-09,
+    "rms_dbfs": 4.942510400951505e-09,
+    "early_rms_dbfs": 4.9903405852091964e-09,
+    "body_rms_dbfs": 2.6165224653595942e-08,
+    "tail_rms_dbfs": 4.860817170992959e-08,
+    "peak_window_seconds": 0.0,
+    "centroid_hz": 5.233096089796163e-08,
+    "low_power": 4.9794501855160433e-11,
+    "mid_power": 4.891279048457875e-11,
+    "high_power": 1.0154821428187688e-11,
+    "tilt": 4.627492833364499e-12,
+    "stereo_correlation": 4.9813486668881524e-11,
+    "nonfinite": 0.0,
+    "samples_over_full_scale": 0.0
+  },
+  "scope": "Aggregates of the original successful frozen verifier measurements. No extra thresholds, audio transformations or subjective sound-quality conclusions."
+}

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "revision": "2026.11.2",
+  "source_commit": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "source_tree": "fc2a24d92c77ec8a344a5548579b39f9d74d6d63",
+  "parent_commit": "6f6255623caa0db6ef232002b8adc0d2f390e1b9",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "branch": "main",
+  "publication": {
+    "local_staged_tree_equals_remote_tree": true,
+    "expected_previous_head": "6f6255623caa0db6ef232002b8adc0d2f390e1b9",
+    "force": false,
+    "update_succeeded": true,
+    "local_fetch_confirmed": true
+  },
+  "scope": "Supported synchronous macOS plugin editor preference; additive full AU GUI seed 0x2b4eef5 gate and gate-contract coverage; original failing-run and local-validation records. No preset or audio-core changes from 8ffe.",
+  "runs": {
+    "native": 45096447502,
+    "screenshots": 45096447546
+  },
+  "run_attempt": 1,
+  "review": {
+    "assignment": 60,
+    "method": "Independent remote review of immutable implementation files and source tree objects.",
+    "original_macos_registration_and_three_validator_commands_unchanged": true,
+    "linux_and_windows_workflow_sections_unchanged": true,
+    "new_seed_gate_before_packaging": true,
+    "native_runtime_qualification_at_source_publication": "pending"
+  },
+  "supporting_numerical_evidence": {
+    "executed_source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+    "run_id": 45091496469,
+    "identical_inputs": [
+      {
+        "path": "CMakeLists.txt",
+        "git_object": "88bc118eab247d4a3df09301d0e856645e236a3c",
+        "identical_between_sources": true
+      },
+      {
+        "path": "src/core",
+        "git_object": "3f3ca7f5c16e302899d7f2918d86053a9efb803b",
+        "identical_between_sources": true
+      },
+      {
+        "path": "src/reference",
+        "git_object": "661f13dcd7fe0075fd9411fa481a421f23272eaf",
+        "identical_between_sources": true
+      },
+      {
+        "path": "src/tools",
+        "git_object": "ac5af2d63f15c2df77e66d5a975237481541f895",
+        "identical_between_sources": true
+      },
+      {
+        "path": "tests",
+        "git_object": "527a4e6b4eff41b7b3df32189ef480ab71c1e162",
+        "identical_between_sources": true
+      },
+      {
+        "path": ".github/workflows/dsp-measurements.yml",
+        "git_object": "68f724aaf3ceeb6f80c84d80d23d40fb96279a94",
+        "identical_between_sources": true
+      },
+      {
+        "path": "scripts/analyze_dsp.py",
+        "git_object": "fc2d8ee9952b03983dc3e050899973b462a2290e",
+        "identical_between_sources": true
+      },
+      {
+        "path": "scripts/parity_harness.py",
+        "git_object": "da3b0dfce34486ec1045e76cb82c6f2db8278f31",
+        "identical_between_sources": true
+      }
+    ],
+    "limits": "The numerical jobs retain their actual 8ffe execution and artifact provenance. Two macOS workflow test scripts changed at366c, so the entire sanitizer/CTest suite is not claimed to be byte-identical. New-source native and local gate tests qualify those changed scripts separately."
+  },
+  "qualification": "Run identities and source publication only. Completed results and actual downloaded artifacts are recorded separately; this record is not acceptance."
+}

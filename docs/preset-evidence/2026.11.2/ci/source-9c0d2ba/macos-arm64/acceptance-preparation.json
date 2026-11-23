@@ -1,0 +1,67 @@
+{
+  "status": "prepared_current_acceptance_not_run",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "job_id": 137487485061,
+  "target": "macos-arm64",
+  "expected_native_count": 247,
+  "expected_formal_skips": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "required_validator_steps": [
+    "Validate VST3 with pluginval",
+    "Validate AU with pluginval",
+    "Validate AU with pluginval GUI",
+    "Validate AU GUI fixed-seed regression"
+  ],
+  "fixed_gui_seed": "0x2b4eef5",
+  "baseline_checker": {
+    "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/366c/verify-platform-validators-attempt.py",
+    "sha256": "fec10a56a2ba27d9bf31118ecc383fb6372f0ed5c013a68541f3f2f8c9d998c0",
+    "provenance": "Previously reviewed 366c scratch checker; copied by exact hash, without claiming this path exists in source9c0d Git tree."
+  },
+  "prepared_checker": {
+    "filename": "verify-arm-validators.py",
+    "bytes": 21096,
+    "sha256": "c6016213978cdb66848f611dd6441aecd98ad0082301bdf9722ae2b949919d16"
+  },
+  "retarget_diff_sha256": "fb3c3fce3aefaa3c6eeab8f061bf9f93e0ab50494a441973c87a89fd0b31a8ec",
+  "replacement_occurrences": {
+    "366c1454fbf3fa6898b9b79d78bde4322a6e3f87": 1,
+    "RUN = 45096447502": 1,
+    "Windows/Intel Mac": 1,
+    "macos-x86_64": 1,
+    "macos-15-intel": 2
+  },
+  "unchanged_helpers": {
+    "inspect-native-evidence.py": {
+      "path": "/workspace/scratch/011b6ba4a170/review-checkpoint/tools/inspect-native-evidence.py",
+      "sha256": "7ca789be476e6c3ce06a06083849c2fdbb1dc11c1965b78921e6834862cb2e77",
+      "bytes": 10122,
+      "policy": "Unchanged reviewed local helper; source/run/job supplied through existing CLI. No claim that this helper path is committed in source9c0d."
+    },
+    "verify-install-bundle.py": {
+      "path": "/workspace/scratch/011b6ba4a170/yamaha-cs80/docs/preset-evidence/2026.11.2/verify-install-bundle.py",
+      "sha256": "4cced6aa065a41c2df45e4f9b5090814ac58dc959281ce6844de5c1bac2aca4f",
+      "bytes": 13907,
+      "policy": "Unchanged reviewed local helper; source/run/job supplied through existing CLI. No claim that this helper path is committed in source9c0d."
+    },
+    "download-public-artifact.py": {
+      "path": "/workspace/scratch/011b6ba4a170/review-checkpoint/tools/download-public-artifact.py",
+      "sha256": "2c6a2346450eb6007a2455373add839fda54731305823af96d5837c0915fff78",
+      "bytes": 3776,
+      "policy": "Unchanged reviewed local helper; source/run/job supplied through existing CLI. No claim that this helper path is committed in source9c0d."
+    }
+  },
+  "new_repo_evidence_directory": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-arm64/",
+  "older_366c_evidence_policy": "Retain all existing accepted artifacts and failure history unchanged; no new-source inference from older byte identity.",
+  "review_required": "Root review of this exact diff before current acceptance.",
+  "additional_binding": "Use the reviewed bind_validator_upload helper with actual step names for validator, native-test and installation uploads; exact IDs/size and bounded step times, with raw job attempt.",
+  "limits": [
+    "Current job was in Configure at initial raw API capture; no current artifact or acceptance result yet.",
+    "Required native records and all four validators must pass independently; full workflow and other platforms remain separate.",
+    "No runtime test, artifact download, CI retry or remote mutation occurred in preparation."
+  ]
+}

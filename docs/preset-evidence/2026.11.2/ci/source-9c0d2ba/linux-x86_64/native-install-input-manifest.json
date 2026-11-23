@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "scope": "Only the explicitly enumerated a51 native/install/input subset. Root-owned validator-proof.json, acceptance-summary.json, later API snapshots and final combined manifest are outside this subset; additions do not invalidate it.",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "native_job_id": 137487485114,
+  "target": "linux-x86_64",
+  "files": [
+    {
+      "path": "14795644849-public-get.json",
+      "bytes": 808,
+      "sha256": "11e97996ac2f676912cebaac2af6564c23d86900c78334013e716a70daf81e3e"
+    },
+    {
+      "path": "14795644849.zip",
+      "bytes": 138508,
+      "sha256": "297d15a2640696c71faadcff796db52ba4c08ab1da0ac3ad9f67ae26756619f5"
+    },
+    {
+      "path": "14796373585-public-get.json",
+      "bytes": 802,
+      "sha256": "aaea079ee6d47595ab1f8cb268ed52273f76fcc2ca86e6e82319abf1e0e9a9f8"
+    },
+    {
+      "path": "14796735944-public-get.json",
+      "bytes": 814,
+      "sha256": "3907a48082a4cf1eff315022c933bfd9f1d0c0e85e4ebce620f1ebe46bf4779e"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 13249,
+      "sha256": "71939c5f12947cfc0b1b40464332b1031703c67e50526368e3793675ce436716"
+    },
+    {
+      "path": "corrected-fixtures-proof.json",
+      "bytes": 10989,
+      "sha256": "414f2d2e29c3462d78cc18bd5e3ec3ac74fecf9d77e984d7f52ff9413b762827"
+    },
+    {
+      "path": "initial-artifacts-api.json",
+      "bytes": 10620,
+      "sha256": "962f0eba3f3eee0a58d642e56cd93f8ac40a29fe9a92135d98ce6368be8e42d5"
+    },
+    {
+      "path": "initial-jobs-api.json",
+      "bytes": 26187,
+      "sha256": "9232226f8648d1c6d920d6445ac4a168dc4868274ad45775cb7d65dd97e22e98"
+    },
+    {
+      "path": "initial-run-api.json",
+      "bytes": 14803,
+      "sha256": "ea6874787161fda17e8ffe6ee56a0ed13f7e974253177eeffeff7ab0c46b4d0f"
+    },
+    {
+      "path": "install-artifact-api.json",
+      "bytes": 798,
+      "sha256": "b379d8cb44d4a5c63b2885295be3dcf1f2e3378c5c379c44197e1c228172fca0"
+    },
+    {
+      "path": "install-proof.json",
+      "bytes": 34985,
+      "sha256": "26250fe8e66b2b7bad25b3e77ff35a545198ba8f2aaeb618977e3abd4e8e2bdf"
+    },
+    {
+      "path": "install-verification-after-queue-execution.json",
+      "bytes": 1711,
+      "sha256": "deefa0a6ddc1fe6cc6c8e75df1d13f46646c1b704219042576d4669a1820de2a"
+    },
+    {
+      "path": "jobs-api.json",
+      "bytes": 27787,
+      "sha256": "3f48d6593834cd3fc0a81b2423a98c6c9f5e7a5d1545e7dad98f9cdb2bade43b"
+    },
+    {
+      "path": "native-artifact-api.json",
+      "bytes": 795,
+      "sha256": "bbb4684291e54510e9da4a6fafe2efcb7ad6c34b69dc3641b508116efd9f8a06"
+    },
+    {
+      "path": "native-install-input-producer-bindings.json",
+      "bytes": 3642,
+      "sha256": "67e0743c7e8b031fc70a342e5783cba0c67c373b2ea0c978c60170ddbbf2b100"
+    },
+    {
+      "path": "native-install-input-summary.json",
+      "bytes": 9634,
+      "sha256": "47b6b893276f61a326255a2d5f44e4fa9a3430da5c512f301e06bf92ce2a060b"
+    },
+    {
+      "path": "native-install-verification-execution.json",
+      "bytes": 2957,
+      "sha256": "63ed698956f55e34494c1e56ec674e6373039f8e0ac385d8908fc75f0785e949"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 451723,
+      "sha256": "c25ddc9659949e49cf989c3a472ffe709b60bdaec333bb73d3090953ed9df547"
+    },
+    {
+      "path": "native-proof.json",
+      "bytes": 83897,
+      "sha256": "2e3081b71a327c53b7a93a35f9c2260f3d756b9cd5db63b04770106bd5aab337"
+    },
+    {
+      "path": "run-api-validator-started.json",
+      "bytes": 14803,
+      "sha256": "25e5d9870e4b8121296efcf8a4e9e545be44ef60f95b235c953dba21a7c32a57"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 14798,
+      "sha256": "b2112151736541813f1b2dc12ce226c4a604826a9d2f1527264c7b5692a87577"
+    },
+    {
+      "path": "vst3-artifact-api.json",
+      "bytes": 787,
+      "sha256": "e4434b9bb26ea601e1748a00c408eafddc2d44ff8c4ecd2238bc5ec88b295787"
+    }
+  ],
+  "large_archives": [
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip",
+      "bytes": 13207738,
+      "sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+      "checkpoint_policy": "Not copied; retained in /dev/shm. Recover through actual artifact ID/public URL and retained API digest."
+    },
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796373585.zip",
+      "bytes": 6879242,
+      "sha256": "9d38cdd7e9e350c00789cbe6829279974ad70b4143a21a5358374b3588b06506",
+      "checkpoint_policy": "Not copied; retained in /dev/shm. Recover through actual artifact ID/public URL and retained API digest."
+    }
+  ],
+  "compact_file_count": 22,
+  "compact_bytes": 865097,
+  "previous_histories": "All earlier-source evidence and the initial queued-state offline rejection are preserved."
+}

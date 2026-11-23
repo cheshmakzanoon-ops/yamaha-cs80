@@ -1,0 +1,1085 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404278,
+  "run_attempt": 1,
+  "status": "six_actual_archives_verified",
+  "artifacts": [
+    {
+      "artifact_api": {
+        "id": 14789493635,
+        "name": "cs80-source-factory-compatibility-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 985,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789493635",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789493635/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:33:49Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:33:49Z",
+        "digest": "sha256:f1afbdd1b23f6f615387e607447f5bad3119bdcee1df31dced2df9c4a34d762a",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14789493635,
+        "artifact_name": "cs80-source-factory-compatibility-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789493635.zip",
+        "started_at_utc": "2026-11-23T04:43:00.185814+00:00",
+        "completed_at_utc": "2026-11-23T04:43:11.123412+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 985,
+        "bytes_received": 985,
+        "sha256": "f1afbdd1b23f6f615387e607447f5bad3119bdcee1df31dced2df9c4a34d762a",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 10.938,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484891,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "SHA256SUMS",
+          "bytes": 486,
+          "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+        },
+        {
+          "name": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "name": "report.json",
+          "bytes": 400,
+          "sha256": "b2a84150feb29ea46187271b1b19b475b97494b8393014736c5cd6f50f0e94dc"
+        }
+      ],
+      "reported_input_hashes": {
+        "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+        "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "reported_comparison_hash_pairs_equal": true
+    },
+    {
+      "artifact_api": {
+        "id": 14789563578,
+        "name": "cs80-legacy-compatibility-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 29435,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789563578",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789563578/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:35:47Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:35:47Z",
+        "digest": "sha256:4aa7041767fe5d10081173e65867e9cddb6fc5b538e3132c840c2e9a4e4e3d43",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14789563578,
+        "artifact_name": "cs80-legacy-compatibility-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789563578.zip",
+        "started_at_utc": "2026-11-23T04:43:00.207172+00:00",
+        "completed_at_utc": "2026-11-23T04:43:11.411106+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 29435,
+        "bytes_received": 29435,
+        "sha256": "4aa7041767fe5d10081173e65867e9cddb6fc5b538e3132c840c2e9a4e4e3d43",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 11.204,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484914,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "SHA256SUMS",
+          "bytes": 548,
+          "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+        },
+        {
+          "name": "baseline-corpus.txt",
+          "bytes": 277637,
+          "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+        },
+        {
+          "name": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "name": "report.json",
+          "bytes": 392,
+          "sha256": "767a2742d0993287374f06a80fa5a620e7d51314d412ff15e566a43d5059f6bb"
+        }
+      ],
+      "reported_input_hashes": {
+        "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+        "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+      },
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "actual_corpus_hash_verified": true,
+      "reported_comparison_hash_pairs_equal": true
+    },
+    {
+      "artifact_api": {
+        "id": 14790128053,
+        "name": "cs80-engine-candidate-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 1437850,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790128053",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790128053/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:32:53Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:32:53Z",
+        "digest": "sha256:755900a998279f9ccc7c66e95b3c88ee7868adcbbb1cfa641fde1feef0e1441b",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14790128053,
+        "artifact_name": "cs80-engine-candidate-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790128053.zip",
+        "started_at_utc": "2026-11-23T04:43:00.204657+00:00",
+        "completed_at_utc": "2026-11-23T04:43:11.602695+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 1437850,
+        "bytes_received": 1437850,
+        "sha256": "755900a998279f9ccc7c66e95b3c88ee7868adcbbb1cfa641fde1feef0e1441b",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 11.398,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484699,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "fc357cf940937eb80c85a37c77d607f8fc6360bd1f6fdb35757d4e817a6f6e63"
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 568,
+          "sha256": "11b2703992690bfd0a29d733909c759627bc39cc2d1a3da09e725b2492f767bf"
+        },
+        {
+          "name": "SOURCE_SHA256SUMS",
+          "bytes": 1207,
+          "sha256": "eef3e507d1bc147b092c311bd0b923a939d4861dc2b903ea3d20d737ce37c2b0"
+        },
+        {
+          "name": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "name": "capture.json",
+          "bytes": 6288,
+          "sha256": "84c22b8e7a0935c81a946d7b5de3e31a09e2f97d67620d9847660b2e435b1ffa"
+        },
+        {
+          "name": "left.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        },
+        {
+          "name": "provenance.json",
+          "bytes": 98,
+          "sha256": "c84388b322d666ff13c12131421737d67e868569be3ff43443bc863e6ec4002d"
+        },
+        {
+          "name": "right.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        }
+      ],
+      "provenance": {
+        "commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run": "45112404278",
+        "analog_evidence": false
+      },
+      "capture_summary": {
+        "schema_version": 1,
+        "capture_kind": "engine_candidate_only",
+        "analog_evidence": false,
+        "fixture_id": "w0-engine-stimulus-v1",
+        "sample_rate_hz": 48000,
+        "internal_sample_rate_hz": 96000,
+        "sample_count": 96000,
+        "latency_samples": 67,
+        "latency_compensated": false,
+        "channels": {
+          "left": "left.csv",
+          "right": "right.csv"
+        },
+        "units": "raw engine floating-point output (not calibrated volts)",
+        "postprocessing": "none: no clipping, normalization, resampling or trimming",
+        "engine_output_processing": "parity mode bypasses output DC blocker and output soft clip; production decimator and provisional filter saturation retained",
+        "initial_state": "fresh Engine; setParams; prepare; reset; no warmup or discarded samples",
+        "transients": "startup, note-start phase reset and release tails retained; existing deterministic engine seed",
+        "external_input": "disconnected",
+        "event_timing": "zero-based host sample; applied before rendering that sample",
+        "render_blocks": "split only at event samples and capture end",
+        "settings_scope": "all submitted core ParamValues; no factory preset or host state; parity mode overrides extensions internally",
+        "parameter_count": 190
+      },
+      "checksums_verified": true,
+      "source_hashes_verified": {
+        "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+        "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+        "src/core/Dsp.h": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+        "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+        "src/core/PerformanceControls.h": "4b73f4c466fbdc9a86352d090709044dccb6daa8292ed86c184969c36d25abb3",
+        "src/core/PraWahCircuit.h": "3ef574d749c2ee466b0b8cd701c4ec37b933f6a503191220c493c986c67be5d4",
+        "src/core/OutputTapCircuit.h": "899ad229e061731b8ef97470070a2dd3df34581f215c078718fcd87455320259",
+        "src/core/SourceFactoryTones.h": "fc209693b74d22dcc05b4dc9882591c5f70992d1b32724cac7dbf423a4aeaf12",
+        "src/core/FactoryToneHypotheses.h": "4e5f50e5ce8bdcf8596ae637fe1b20b6cd0806dcf8a16512976b6021a72c989f",
+        "src/core/HardwareControl.h": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+        "src/core/OriginalSubOscillator.h": "8e16f584b376f8aad3a9ef45a02af17b28ff8d9ca747bb20d201ef1a62ffa69d",
+        "src/core/ExternalModulationInterpolator.h": "1dbd2e6ef7413fe15d8722ae89c9e0d5c10388382f3706d3b3fa1214ee10d0d2",
+        "src/tools/parity_capture.cpp": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051"
+      },
+      "binary_hash_reported_only": "932d915167dd607fb2e257b52eabec83992886524106e9c9448d609324d767d4  build-probe/cs80_parity_capture",
+      "scope": "Actual archived core-engine candidate traces and metadata; not factory preset audition or a product-host execution. The capture executable itself is not in this artifact, so its hash is reported only."
+    },
+    {
+      "artifact_api": {
+        "id": 14790411759,
+        "name": "cs80-dsp-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 8505866,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790411759",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790411759/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:32:58Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:32:58Z",
+        "digest": "sha256:6d5cf7ad8c2f91f7cb2613fa14daa04c1007d3bdcc23af8bc83fa13720a9ac0e",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14790411759,
+        "artifact_name": "cs80-dsp-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790411759.zip",
+        "started_at_utc": "2026-11-23T04:43:00.194516+00:00",
+        "completed_at_utc": "2026-11-23T04:43:12.003743+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 8505866,
+        "bytes_received": 8505866,
+        "sha256": "6d5cf7ad8c2f91f7cb2613fa14daa04c1007d3bdcc23af8bc83fa13720a9ac0e",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 11.809,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484699,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "decimator-impulse.csv",
+          "bytes": 9588,
+          "sha256": "fb3861f5a79241f3567f0111f73e5085dbbbf5b850f5f949b02490b59cc82326"
+        },
+        {
+          "name": "decimator-tones.csv",
+          "bytes": 228,
+          "sha256": "8f3265efbbbc1ad2cf040f8e8cd4a9df4493492442a7cbe27150f1b3cd89aa93"
+        },
+        {
+          "name": "decimator.json",
+          "bytes": 79,
+          "sha256": "c02d9e8f1852998523cb95a57fbd4ade5dbccef95ba06c273a3f5c2e26d3b6d0"
+        },
+        {
+          "name": "filter-envelope-192000.csv",
+          "bytes": 84979,
+          "sha256": "57c9d9b1ed66352326d07b31c3a3c21c33c7fc9811877a2d1ab1983bc0809fed"
+        },
+        {
+          "name": "filter-envelope-44100.csv",
+          "bytes": 84878,
+          "sha256": "b6790076bc33b5a3f0e9aa384f3477138f3c1103866b170a4685888b954e235b"
+        },
+        {
+          "name": "filter-envelope-48000.csv",
+          "bytes": 85088,
+          "sha256": "ed4827cd7eb9ae79191238a3a6b20d1b82fcc3aa9238ffd278e22108d4af8384"
+        },
+        {
+          "name": "filter-envelope-96000.csv",
+          "bytes": 85110,
+          "sha256": "c136936d09d4c1cc057c6a00083912de66818566783a19f301e6d063992b8234"
+        },
+        {
+          "name": "measurements.json",
+          "bytes": 6311,
+          "sha256": "6fdf0f6d2c8594ed725fe09bfacd1d45d06a548da8a53164ad2597ab52391255"
+        },
+        {
+          "name": "oscillator-151.csv",
+          "bytes": 5857683,
+          "sha256": "cdd5815b8d0ae7018ce63dfe680e0e842357fa28c494d3ed3e2555e3654c98b6"
+        },
+        {
+          "name": "oscillator-3001.csv",
+          "bytes": 5974106,
+          "sha256": "e315d2f9ff3bd79ce621cf372ee4ade95a6cdcdab19530a9435d67ded5e27d45"
+        },
+        {
+          "name": "oscillator-6001.csv",
+          "bytes": 6099446,
+          "sha256": "b70ac197820c6f4456198a3f818b308dadc676839021d6846b589aa169c9a5ff"
+        },
+        {
+          "name": "oscillator-601.csv",
+          "bytes": 5875938,
+          "sha256": "6689c8dbce85f3b89e51dc4adeb3afcd3421b41d55f208a0dcf705fdc563d961"
+        },
+        {
+          "name": "plots/decimator-response-latency.png",
+          "bytes": 362158,
+          "sha256": "fad782a2890cd903739e7c5d6df3c66751f3f2d06c6c42e7f324b1c2d269b1c9"
+        },
+        {
+          "name": "plots/decimator-response-latency.svg",
+          "bytes": 227851,
+          "sha256": "7c1140b8306e14711c8a71f00dc11f47ef3dc79dc6ceef0947f770ec687d1046"
+        },
+        {
+          "name": "plots/filter-envelope-rate-comparison.png",
+          "bytes": 88060,
+          "sha256": "9c602320dc037f414906841d4bd5334b7ed8e08cbb150e16eb8f51e48e4a4844"
+        },
+        {
+          "name": "plots/filter-envelope-rate-comparison.svg",
+          "bytes": 65047,
+          "sha256": "ff2802188b5ecf5d333f49f6dda835b269aae2f26d3d6a57acef83290b61fdf6"
+        },
+        {
+          "name": "plots/oscillator-alias-comparison.png",
+          "bytes": 83637,
+          "sha256": "674bd5cc6682fcfa9b1d7e36539a7bee2c813dae462c1e02e97f89333d6e9103"
+        },
+        {
+          "name": "plots/oscillator-alias-comparison.svg",
+          "bytes": 63618,
+          "sha256": "c03124528575602764173d5787b3f12de8d801cafc19bc60e7e10420d7d465b3"
+        },
+        {
+          "name": "plots/oscillator-waveform-spectrum.png",
+          "bytes": 230988,
+          "sha256": "797054832c4100a6bd841013c14ccc22ba232f8562fc5b0d3e1d9c45df92929d"
+        },
+        {
+          "name": "plots/oscillator-waveform-spectrum.svg",
+          "bytes": 605308,
+          "sha256": "70ccdaa4164e175abe276815740b59633d7b45e18bcfcd28676c6310fdc1f20b"
+        },
+        {
+          "name": "plots/ring-frequency-envelope.png",
+          "bytes": 163184,
+          "sha256": "2d4041a157d355c4e6073679b772250aee1fabf04857ebbc3021c63f51786b38"
+        },
+        {
+          "name": "plots/ring-frequency-envelope.svg",
+          "bytes": 90259,
+          "sha256": "497d09718d55760724bf175f5eb2f571503a0248b7a266cdb6347bb5e8024d0b"
+        },
+        {
+          "name": "probe.json",
+          "bytes": 105,
+          "sha256": "bb39a04905115e1eef08fe88063688ec66700192c4e832058bf58b4c05a6e065"
+        },
+        {
+          "name": "ring-200.csv",
+          "bytes": 65547,
+          "sha256": "ff01eb07563e95064a784f60c1d924f03b4d833b04cbc9d804434e081a731130"
+        },
+        {
+          "name": "ring-40.csv",
+          "bytes": 62480,
+          "sha256": "d5bf59b8fd470289f0ce8b16773f483696a16c53b56e78aee82546b0edaab3f5"
+        },
+        {
+          "name": "ring-7.csv",
+          "bytes": 90202,
+          "sha256": "ec9c7eeaee13f14ae91081b4a7f065730770790b22973814e46e0ddd45e21ed0"
+        }
+      ],
+      "measurements": {
+        "schema": 1,
+        "description": "Software numerical evidence; no physical CS-80 comparison",
+        "reference": "16x Fourier source ideal-lowpassed below host Nyquist before decimation",
+        "git_head": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "working_tree_status": [],
+        "provenance_note": "Hashes sampled at analysis time; archive compiler/CI exact-source evidence separately. They do not attest the executable was built from these bytes.",
+        "analysis_time_source_sha256": {
+          "src/core/Dsp.h": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+          "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+          "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+          "src/tools/dsp_probe.cpp": "08f0f30a9b5ad3a96589ef9e98ebe1905033ee5bf6cba3d500e9cd689aba6e66",
+          "scripts/analyze_dsp.py": "eadfcb62ccaaa31830bc1bff026deabf921b27db1bacc7a49c21a582bbf98b2d"
+        },
+        "oscillators": [
+          {
+            "fundamental_hz": 110.595703125,
+            "fundamental_bin": 151,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -41.68434556601264,
+              "total_reference_residual_db": -32.96770464840718,
+              "peak": 0.9953918457
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -19.91027051997169,
+              "total_reference_residual_db": -19.727743334007016,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 21.77407504604095
+          },
+          {
+            "fundamental_hz": 440.185546875,
+            "fundamental_bin": 601,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -35.57293652847132,
+              "total_reference_residual_db": -26.944951455023,
+              "peak": 0.981742382
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -13.866503113022846,
+              "total_reference_residual_db": -13.685835582621005,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 21.706433415448473
+          },
+          {
+            "fundamental_hz": 2197.998046875,
+            "fundamental_bin": 3001,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -27.344849452962375,
+              "total_reference_residual_db": -19.916925768889733,
+              "peak": 0.9105136395
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -6.557671847441049,
+              "total_reference_residual_db": -6.396544751566676,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 20.787177605521325
+          },
+          {
+            "fundamental_hz": 4395.263671875,
+            "fundamental_bin": 6001,
+            "corrected": {
+              "off_harmonic_db_relative_to_reference_rms": -25.58876819544505,
+              "total_reference_residual_db": -16.496361186521252,
+              "peak": 0.8252487779
+            },
+            "legacy_wrong_sign": {
+              "off_harmonic_db_relative_to_reference_rms": -3.441768019384381,
+              "total_reference_residual_db": -3.257288263334685,
+              "peak": 2.0
+            },
+            "alias_energy_improvement_db": 22.14700017606067
+          }
+        ],
+        "filter_envelopes": [
+          {
+            "sample_rate": 44100,
+            "peak_offset_oct": 2.247294903,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 48000,
+            "peak_offset_oct": 2.25,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 96000,
+            "peak_offset_oct": 2.25,
+            "final_offset_oct": -1.5
+          },
+          {
+            "sample_rate": 192000,
+            "peak_offset_oct": 2.247175217,
+            "final_offset_oct": -1.5
+          }
+        ],
+        "probe_failures": 0,
+        "comparative_regression_passed": true,
+        "decimator": {
+          "convention": "Internal x[n] starts at zero; host y[m]=filtered[2*m+1]. Not a complete instrument impulse response.",
+          "config": {
+            "retained_internal_phase": 1,
+            "declared_host_latency": 63,
+            "internal_rate": 88200
+          },
+          "fft_size": 262144,
+          "response_units": "cycles per internal sample, twice host rate",
+          "captured_and_design_comparisons": [
+            {
+              "label": "Captured production FIR",
+              "taps": 255,
+              "dc_gain": 0.9999999867167528,
+              "fir_group_delay_internal_samples": 127.00000000000001,
+              "indexed_source_to_host_delay_samples": 63.000000000000014,
+              "passband_through_20khz_at_44100_min_db": -0.0003936737320452868,
+              "passband_through_20khz_at_44100_max_db": 0.0003656058093718849,
+              "stopband_from_internal_0p25_max_db": -87.0734682867838
+            },
+            {
+              "label": "Legacy 31-tap design (reconstructed)",
+              "taps": 31,
+              "dc_gain": 1.0000000093132257,
+              "fir_group_delay_internal_samples": 15.0,
+              "indexed_source_to_host_delay_samples": 7.000000000000003,
+              "passband_through_20khz_at_44100_min_db": -8.186178645405642,
+              "passband_through_20khz_at_44100_max_db": 0.0038884864882013925,
+              "stopband_from_internal_0p25_max_db": -19.76501443341561
+            },
+            {
+              "label": "127-tap / 18 kHz alternative",
+              "taps": 127,
+              "dc_gain": 0.9999999799019861,
+              "fir_group_delay_internal_samples": 63.0,
+              "indexed_source_to_host_delay_samples": 31.000000000000004,
+              "passband_through_20khz_at_44100_min_db": -5.763187843151448,
+              "passband_through_20khz_at_44100_max_db": 0.0003871863815906591,
+              "stopband_from_internal_0p25_max_db": -86.61328113148744
+            }
+          ],
+          "actual_quadrature_tones": [
+            {
+              "cycles_per_internal_sample": 0.05,
+              "gain_db": -4.610859707e-05
+            },
+            {
+              "cycles_per_internal_sample": 0.2,
+              "gain_db": 1.267147366e-05
+            },
+            {
+              "cycles_per_internal_sample": 0.2267573696,
+              "gain_db": 0.0003657002397
+            },
+            {
+              "cycles_per_internal_sample": 0.25,
+              "gain_db": -87.07346806
+            },
+            {
+              "cycles_per_internal_sample": 0.255,
+              "gain_db": -90.97145295
+            },
+            {
+              "cycles_per_internal_sample": 0.26,
+              "gain_db": -97.00887445
+            },
+            {
+              "cycles_per_internal_sample": 0.3,
+              "gain_db": -129.6078558
+            },
+            {
+              "cycles_per_internal_sample": 0.4,
+              "gain_db": -116.8804091
+            },
+            {
+              "cycles_per_internal_sample": 0.49,
+              "gain_db": -127.6819759
+            }
+          ],
+          "response_and_declared_latency_gates_passed": true
+        }
+      },
+      "analysis_source_hashes_match_immutable_git": true
+    },
+    {
+      "artifact_api": {
+        "id": 14790515768,
+        "name": "cs80-synthetic-comparison-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 198614,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790515768",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790515768/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:32:55Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:32:55Z",
+        "digest": "sha256:86dc9199d06dc4e8803ee48f94f035bd903def8f02d0bdb658c20a310ac52e2b",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14790515768,
+        "artifact_name": "cs80-synthetic-comparison-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790515768.zip",
+        "started_at_utc": "2026-11-23T04:43:00.201421+00:00",
+        "completed_at_utc": "2026-11-23T04:43:11.179444+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 198614,
+        "bytes_received": 198614,
+        "sha256": "86dc9199d06dc4e8803ee48f94f035bd903def8f02d0bdb658c20a310ac52e2b",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 10.978,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484876,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "envelope-candidate.csv",
+          "bytes": 92826,
+          "sha256": "4c17cbb27c835772f4c2f62b6d642c832e53eb06182bc2fde780d76df2dab24b"
+        },
+        {
+          "name": "envelope-reference.csv",
+          "bytes": 42423,
+          "sha256": "41b8f42d8c445c2da3a3955d19bf2b5751eba10f532f180a271ad2d9957d0adc"
+        },
+        {
+          "name": "filter-candidate.csv",
+          "bytes": 104968,
+          "sha256": "d80ea4f18ad4480d855f18db1163c621e16c63f98725620c4be737c137fd7923"
+        },
+        {
+          "name": "filter-reference.csv",
+          "bytes": 104535,
+          "sha256": "10cc8f3fde450cb8df8116252045aa442bebba9b080952c1a9424505636ebbcd"
+        },
+        {
+          "name": "manifest.json",
+          "bytes": 4367,
+          "sha256": "f25bd062b4e2730657c169f258211c3c0113b418f0c6152e084d877e07035f74"
+        },
+        {
+          "name": "oscillator-candidate.csv",
+          "bytes": 104771,
+          "sha256": "ffa762c74ebc27893fa6e0cce2e653b69a3800a11bba538c7d60320b07356ab6"
+        },
+        {
+          "name": "oscillator-reference.csv",
+          "bytes": 102391,
+          "sha256": "a274e4cfa0127573d8d719cf76666b8024d154e6c79398ab0cc424045fd82b59"
+        },
+        {
+          "name": "output-candidate.csv",
+          "bytes": 105754,
+          "sha256": "566ad6a77224b52d5e885952dc194f0350b687d3219b4ff7eedebb162875d876"
+        },
+        {
+          "name": "output-reference.csv",
+          "bytes": 105338,
+          "sha256": "5a87936b1cacd09280f63a551cf2aa0c5cbad09c6cbfd8882c671ae3838bef41"
+        },
+        {
+          "name": "report.json",
+          "bytes": 5286,
+          "sha256": "cfa77621665f43c38108222de1c0e01c773faa086965677760f4cbe65f3304a8"
+        }
+      ],
+      "report": {
+        "analog_evidence": false,
+        "claim": "Synthetic plumbing check only; not a CS-80 model or hardware comparison.",
+        "comparator_sha256": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105",
+        "evidence_kind": "synthetic",
+        "manifest_sha256": "f25bd062b4e2730657c169f258211c3c0113b418f0c6152e084d877e07035f74",
+        "passed": true,
+        "provenance": {
+          "board_ic_revisions": "not applicable: synthetic mathematical fixture",
+          "generator_sha256": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105",
+          "instrument_identity": "not applicable: synthetic mathematical fixture",
+          "probe": "not applicable: synthetic mathematical fixture",
+          "rails": "not applicable: synthetic mathematical fixture",
+          "redistribution_status": "Repository-authored synthetic data; repository license",
+          "scaling": "1 CSV unit = 1 dimensionless synthetic unit",
+          "source_description": "Fixed analytic sine, one-pole recurrence, linear envelope, sum",
+          "source_hashes": {
+            "scripts/parity_harness.py": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105"
+          },
+          "source_revision": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+          "temperature": "not applicable: synthetic mathematical fixture",
+          "trims": "not applicable: synthetic mathematical fixture",
+          "warm_up": "not applicable: synthetic mathematical fixture",
+          "working_tree_dirty": false
+        },
+        "schema_version": 1,
+        "stages": [
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 6.087980787300967e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000454602665e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/oscillator; no hardware source",
+            "split": "validation",
+            "stage": "oscillator",
+            "unaligned_rms_error": 0.028009523695116948,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 6.845267520054587e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000411604013e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/filter; no hardware source",
+            "split": "validation",
+            "stage": "filter",
+            "unaligned_rms_error": 0.02320690986299836,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 2.0117032497289633e-21,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000777458868e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/envelope; no hardware source",
+            "split": "validation",
+            "stage": "envelope",
+            "unaligned_rms_error": 0.052181384308625824,
+            "units": "dimensionless"
+          },
+          {
+            "alignment": {
+              "candidate_start": 63,
+              "latency_samples": 63,
+              "method": "declared_integer_latency",
+              "reference_start": 0,
+              "samples": 4096
+            },
+            "limits": {
+              "abs_bias_error": 1e-08,
+              "max_abs_error": 1e-08,
+              "rms_error": 1e-08
+            },
+            "metrics": {
+              "abs_bias_error": 4.332805135777261e-19,
+              "max_abs_error": 1.000000082740371e-10,
+              "rms_error": 1.0000000262287485e-10
+            },
+            "passed": true,
+            "sample_rate_hz": 48000,
+            "settings": {
+              "amplitude": 0.25,
+              "attack_samples": 512,
+              "frequency_hz": 750,
+              "pole_step": 0.125,
+              "release_samples": 1024
+            },
+            "source_row": "synthetic-v1/output; no hardware source",
+            "split": "validation",
+            "stage": "output",
+            "unaligned_rms_error": 0.01419850701744406,
+            "units": "dimensionless"
+          }
+        ],
+        "tolerance_profile": "synthetic-plumbing-v1",
+        "tolerances_sha256": "a66b523dbb6f81c8b1f54949d262892ce59c33bf238a988ae9a1a907082bc9d3"
+      },
+      "manifest_and_trace_hashes_verified": true
+    },
+    {
+      "artifact_api": {
+        "id": 14790560430,
+        "name": "cs80-engine-live-adr-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "size_in_bytes": 1454278,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790560430",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790560430/zip",
+        "expired": false,
+        "created_at": "2026-11-23T04:32:55Z",
+        "expires_at": "2027-02-21T04:31:50Z",
+        "updated_at": "2026-11-23T04:32:55Z",
+        "digest": "sha256:906e791e97d6a96c14601b7dd5d4a77a0bf379521ecfe19279b8af3c002b38c6",
+        "workflow_run": {
+          "id": 45112404278,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "9c0d2baef5643a983a0e7a378b6be033371248f4"
+        }
+      },
+      "public_get": {
+        "status": "public_get_verified",
+        "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run_id": 45112404278,
+        "artifact_id": 14790560430,
+        "artifact_name": "cs80-engine-live-adr-9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14790560430.zip",
+        "started_at_utc": "2026-11-23T04:43:00.191415+00:00",
+        "completed_at_utc": "2026-11-23T04:43:11.847338+00:00",
+        "http_status": 200,
+        "authentication_sent": false,
+        "final_response_host": "productionresultssa30.blob.core.windows.net",
+        "content_length": 1454278,
+        "bytes_received": 1454278,
+        "sha256": "906e791e97d6a96c14601b7dd5d4a77a0bf379521ecfe19279b8af3c002b38c6",
+        "api_size_and_digest_match": true,
+        "expires_at": "2027-02-21T04:31:50Z",
+        "elapsed_seconds": 11.656,
+        "earlier_attempts": []
+      },
+      "producer_job_id": 137487484699,
+      "producer_run_attempt": 1,
+      "producer_upload_id_size_and_zip_digest_match": true,
+      "members": [
+        {
+          "name": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "fc357cf940937eb80c85a37c77d607f8fc6360bd1f6fdb35757d4e817a6f6e63"
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 654,
+          "sha256": "652af8769812da53b99dcf70eda58fbdc59e57b880983e3e1c4e94ee9b34cef0"
+        },
+        {
+          "name": "SOURCE_SHA256SUMS",
+          "bytes": 1207,
+          "sha256": "eef3e507d1bc147b092c311bd0b923a939d4861dc2b903ea3d20d737ce37c2b0"
+        },
+        {
+          "name": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "name": "capture.json",
+          "bytes": 11102,
+          "sha256": "2539519b91d3855b862b884e441cf796fc529f9a2081a0b38932ff23b549842c"
+        },
+        {
+          "name": "envelope-events.csv",
+          "bytes": 2404,
+          "sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c"
+        },
+        {
+          "name": "left.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        },
+        {
+          "name": "provenance.json",
+          "bytes": 98,
+          "sha256": "c84388b322d666ff13c12131421737d67e868569be3ff43443bc863e6ec4002d"
+        },
+        {
+          "name": "right.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        }
+      ],
+      "provenance": {
+        "commit": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+        "run": "45112404278",
+        "analog_evidence": false
+      },
+      "capture_summary": {
+        "schema_version": 2,
+        "fixture_id": "live-adr-v1",
+        "capture_kind": "engine_candidate_only",
+        "analog_evidence": false,
+        "sample_rate_hz": 48000,
+        "sample_count": 96000,
+        "internal_sample_rate_hz": 96000,
+        "latency_samples": 67,
+        "latency_compensated": false,
+        "channels": {
+          "left": "left.csv",
+          "right": "right.csv"
+        },
+        "envelope_trace": "envelope-events.csv",
+        "event_timing": "zero-based host sample; sequence order; applied before rendering that sample",
+        "render_blocks": "split at events, one-host-frame probes and capture end",
+        "parameter_application": "one full setParams per parameter_batch; old/new are submitted core values",
+        "initial_state": "fresh Engine; setParams; prepare; reset; no warmup or discarded samples",
+        "units": "raw engine floats; software envelope state proxies, not calibrated volts",
+        "postprocessing": "none: no clipping, normalization, resampling or trimming",
+        "engine_output_processing": "parity mode bypasses output DC blocker and output soft clip; production decimator and provisional filter saturation retained",
+        "external_input": "disconnected",
+        "parameter_count": 190
+      },
+      "checksums_verified": true,
+      "source_hashes_verified": {
+        "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+        "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+        "src/core/Dsp.h": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+        "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+        "src/core/PerformanceControls.h": "4b73f4c466fbdc9a86352d090709044dccb6daa8292ed86c184969c36d25abb3",
+        "src/core/PraWahCircuit.h": "3ef574d749c2ee466b0b8cd701c4ec37b933f6a503191220c493c986c67be5d4",
+        "src/core/OutputTapCircuit.h": "899ad229e061731b8ef97470070a2dd3df34581f215c078718fcd87455320259",
+        "src/core/SourceFactoryTones.h": "fc209693b74d22dcc05b4dc9882591c5f70992d1b32724cac7dbf423a4aeaf12",
+        "src/core/FactoryToneHypotheses.h": "4e5f50e5ce8bdcf8596ae637fe1b20b6cd0806dcf8a16512976b6021a72c989f",
+        "src/core/HardwareControl.h": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+        "src/core/OriginalSubOscillator.h": "8e16f584b376f8aad3a9ef45a02af17b28ff8d9ca747bb20d201ef1a62ffa69d",
+        "src/core/ExternalModulationInterpolator.h": "1dbd2e6ef7413fe15d8722ae89c9e0d5c10388382f3706d3b3fa1214ee10d0d2",
+        "src/tools/parity_capture.cpp": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051"
+      },
+      "binary_hash_reported_only": "932d915167dd607fb2e257b52eabec83992886524106e9c9448d609324d767d4  build-probe/cs80_parity_capture",
+      "scope": "Actual archived core-engine candidate traces and metadata; not factory preset audition or a product-host execution. The capture executable itself is not in this artifact, so its hash is reported only."
+    }
+  ],
+  "totals": {
+    "archives": 6,
+    "members": 60,
+    "downloaded_bytes": 11627028
+  },
+  "limitations": [
+    "Full unauthenticated public GET bytes, API digests, complete ZIP member inventories and selected report/source hashes verified. Raw frozen-baseline PCM and V1/V2 binary comparison inputs were not uploaded; their equality is supported by strict successful CI cmp steps and reported hashes, not independently downloaded PCM comparisons.",
+    "Synthetic fixtures and diagnostic core-engine captures do not establish hardware accuracy or acoustic realism. Analysis-time source hashes and a reported executable digest do not independently attest the compiled executable. Native plugin, sanitizer and install-package acceptance are separate."
+  ]
+}

@@ -1,0 +1,445 @@
+{
+  "schema": 1,
+  "status": "platform_accepted",
+  "target": "linux-x86_64",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "source_tree": "3fba8ecb07864ba61aad34088f9f0cc8c94497b7",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "native_job_id": 137487485114,
+  "reviewed_at_utc": "2026-11-23T07:09:18.668244+00:00",
+  "native": {
+    "job_conclusion": "success",
+    "counts": {
+      "registered": 583,
+      "passed": 582,
+      "failed": 0,
+      "formal_skipped": 1,
+      "disabled": 0
+    },
+    "ctest_exit": 0,
+    "ctest_seconds": 8149.88,
+    "formal_skips": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      }
+    ],
+    "python_subtest_skips": {
+      "total": 3,
+      "suites": [
+        {
+          "ctest_test": "cs80_package_binary_identity_tests",
+          "python_tests_run": 13,
+          "python_skipped": 1,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_windows_installer_preflight_tests",
+          "python_tests_run": 12,
+          "python_skipped": 2,
+          "details": []
+        }
+      ],
+      "scope": "Actual LastTest unittest summaries; distinct from formal CTest skips. Nonverbose suites may omit individual skip reasons."
+    },
+    "focused_tests": [
+      {
+        "name": "cs80_library_audit_tests",
+        "summary_lines": [
+          "library audit passed: 301 curated + 222 original circuit programs"
+        ]
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "summary_lines": [
+          "Preset voicing regressions: 188/188 checks passed; 74.0 seconds generated."
+        ]
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "summary_lines": [
+          "Preset character regressions: 128/128 checks passed; 31.4 seconds generated."
+        ]
+      },
+      {
+        "name": "cs80_preset_precision_tests",
+        "summary_lines": [
+          "Preset precision: 255 checks, 0 failures; 188.4 seconds of actual circuit audio"
+        ]
+      },
+      {
+        "name": "cs80_preset_capture_tests",
+        "summary_lines": [
+          "Ran 10 tests in 1.132s",
+          "OK"
+        ]
+      },
+      {
+        "name": "cs80_panel_golden_tests",
+        "summary_lines": [
+          "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+          "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+          "Panel golden tests: 41 checks, 0 failures"
+        ]
+      },
+      {
+        "name": "cs80_circuit_policy_host_tests",
+        "summary_lines": [
+          "Circuit policy host tests: 101 checks, 0 failures"
+        ]
+      },
+      {
+        "name": "cs80_circuit_source_host_tests",
+        "summary_lines": []
+      },
+      {
+        "name": "cs80_ui_smoke",
+        "summary_lines": [
+          "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+          "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+          "UI SMOKE TEST PASSED"
+        ]
+      }
+    ]
+  },
+  "corrected_fixtures": {
+    "observed_totals": {
+      "checks": 551,
+      "failures": 0,
+      "fixtures_passed": 4
+    },
+    "fixtures": [
+      {
+        "name": "cs80_sub_routing_display_tests",
+        "checks": 95,
+        "failures": 0,
+        "duration_seconds_from_junit": 0.978904,
+        "summary_line_from_lasttest": "SUB routing display: 95 checks, 0 failures",
+        "summary_also_present_in_junit": true,
+        "junit_output_truncated_at_1024_bytes": false
+      },
+      {
+        "name": "cs80_midi_map_notification_tests",
+        "checks": 93,
+        "failures": 0,
+        "duration_seconds_from_junit": 3.58103,
+        "summary_line_from_lasttest": "93 checks, 0 failures",
+        "summary_also_present_in_junit": true,
+        "junit_output_truncated_at_1024_bytes": false
+      },
+      {
+        "name": "cs80_audio_callback_allocation_tests",
+        "checks": 288,
+        "failures": 0,
+        "duration_seconds_from_junit": 1.72695,
+        "summary_line_from_lasttest": "Audio callback allocation: 288 checks, 0 failures",
+        "summary_also_present_in_junit": true,
+        "junit_output_truncated_at_1024_bytes": false
+      },
+      {
+        "name": "cs80_main_vst3_multirecall_state_tests",
+        "checks": 75,
+        "failures": 0,
+        "duration_seconds_from_junit": 0.802137,
+        "summary_line_from_lasttest": "Main VST3 multi-recall state: 75 checks, 0 failures",
+        "summary_also_present_in_junit": false,
+        "junit_output_truncated_at_1024_bytes": true
+      }
+    ],
+    "basis": "Actual original CI archive only; counts from complete LastTest, passing status and precise duration from JUnit. Local 551-check results are not an input."
+  },
+  "install": {
+    "artifact_id": 14796735944,
+    "bytes": 13207738,
+    "sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "inventory_count": 20,
+    "inner_archive": {
+      "name": "cs80-reference-linux-x86_64-9c0d2baef564.tar.gz",
+      "bytes": 13202419,
+      "sha256": "88a8c31bd525cf94742c3904748067f645a45a91a89326e2cd8f0ccd701ba913"
+    },
+    "status": "artifact_bytes_verified"
+  },
+  "public_artifacts": [
+    {
+      "kind": "native",
+      "artifact_id": 14795644849,
+      "bytes": 138508,
+      "sha256": "297d15a2640696c71faadcff796db52ba4c08ab1da0ac3ad9f67ae26756619f5",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14795644849.zip",
+      "http_status": 200,
+      "authentication_sent": false,
+      "download_attempts": 1,
+      "earlier_attempts": [],
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "kind": "install",
+      "artifact_id": 14796735944,
+      "bytes": 13207738,
+      "sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip",
+      "http_status": 200,
+      "authentication_sent": false,
+      "download_attempts": 1,
+      "earlier_attempts": [],
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "kind": "vst3",
+      "artifact_id": 14796373585,
+      "bytes": 6879242,
+      "sha256": "9d38cdd7e9e350c00789cbe6829279974ad70b4143a21a5358374b3588b06506",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796373585.zip",
+      "http_status": 200,
+      "authentication_sent": false,
+      "download_attempts": 1,
+      "earlier_attempts": [],
+      "expires_at": "2027-02-21T04:31:50Z"
+    },
+    {
+      "status": "public_get_verified",
+      "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+      "run_id": 45112404257,
+      "artifact_id": 14797200567,
+      "artifact_name": "cs80-pluginval-reports",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14797200567.zip",
+      "started_at_utc": "2026-11-23T07:06:59.488511+00:00",
+      "completed_at_utc": "2026-11-23T07:07:06.970931+00:00",
+      "http_status": 200,
+      "authentication_sent": false,
+      "final_response_host": "productionresultssa11.blob.core.windows.net",
+      "content_length": 8897,
+      "bytes_received": 8897,
+      "sha256": "8c6dd32955605412c5634b28cf04061d6dbf8233960bc91bdc06b1399ce3d0b9",
+      "api_size_and_digest_match": true,
+      "expires_at": "2027-02-21T04:31:50Z",
+      "elapsed_seconds": 7.482,
+      "earlier_attempts": []
+    }
+  ],
+  "producer_binding_count": 3,
+  "proof_files": {
+    "native-proof.json": {
+      "bytes": 83897,
+      "sha256": "2e3081b71a327c53b7a93a35f9c2260f3d756b9cd5db63b04770106bd5aab337"
+    },
+    "install-proof.json": {
+      "bytes": 34985,
+      "sha256": "26250fe8e66b2b7bad25b3e77ff35a545198ba8f2aaeb618977e3abd4e8e2bdf"
+    },
+    "corrected-fixtures-proof.json": {
+      "bytes": 10989,
+      "sha256": "414f2d2e29c3462d78cc18bd5e3ec3ac74fecf9d77e984d7f52ff9413b762827"
+    },
+    "native-install-input-producer-bindings.json": {
+      "bytes": 3642,
+      "sha256": "67e0743c7e8b031fc70a342e5783cba0c67c373b2ea0c978c60170ddbbf2b100"
+    },
+    "native-install-verification-execution.json": {
+      "bytes": 2957,
+      "sha256": "63ed698956f55e34494c1e56ec674e6373039f8e0ac385d8908fc75f0785e949"
+    },
+    "install-verification-after-queue-execution.json": {
+      "bytes": 1711,
+      "sha256": "deefa0a6ddc1fe6cc6c8e75df1d13f46646c1b704219042576d4669a1820de2a"
+    },
+    "validator-proof.json": {
+      "bytes": 25266,
+      "sha256": "394edab01f6e34cc23d1485421d918074119c379d63890669b4c1873c9d08966"
+    },
+    "validator-checker-execution.json": {
+      "bytes": 1733,
+      "sha256": "f28dbb9c88063ca4404b8e9320e2c5a03f61e5c2c871e51c63d8048a84611a29"
+    }
+  },
+  "checkers": {
+    "native": "7ca789be476e6c3ce06a06083849c2fdbb1dc11c1965b78921e6834862cb2e77",
+    "install": "4cced6aa065a41c2df45e4f9b5090814ac58dc959281ce6844de5c1bac2aca4f",
+    "producer_binding_helpers": "75fd6a70711d4315130fbc9f3a046ce3a42cd2c2cd4587834f6a33b862f5eec0"
+  },
+  "offline_installer_verification_history": [
+    {
+      "run_api": "run-api.json",
+      "actual_run_status": "queued",
+      "checker_exit": 1,
+      "diagnostic": "Workflow has not started",
+      "classification": "Offline checker precondition rejected the actual transient run status while the native job was completed and dependent validator queued; no native or product/package failure inferred."
+    },
+    {
+      "run_api": "run-api-validator-started.json",
+      "actual_run_status": "in_progress",
+      "checker_exit": 0,
+      "classification": "Same unchanged offline checker and same downloaded archive; newly fetched actual status independently changed. Earlier API and rejection retained."
+    }
+  ],
+  "runtime_validation_invocations_by_this_reviewer": 0,
+  "ci_reruns_performed": 0,
+  "overall_workflow_acceptance": "All six exact-source build jobs completed successfully; the cross-platform qualification is recorded separately.",
+  "validator_and_payload_identity_acceptance": "Approved unchanged Linux checker passed the actual archive, original raw exits and complete input/install payload comparison.",
+  "scope": "Actual Linux native CTest, installation bytes and producer attempts, all three required strictness-10 pluginval gates and complete VST3 input identity. No signing, arbitrary-DAW, listening, acoustic-equivalence or earlier-crash fix claim.",
+  "accepted_at_utc": "2026-11-23T07:13:48.314331+00:00",
+  "validator_job_id": 137537383323,
+  "validators": {
+    "version": "1.0.4",
+    "strictness": 10,
+    "job_conclusion": "success",
+    "validation_invocations": 3,
+    "validation_retries": 0,
+    "lanes": [
+      {
+        "lane": "headless",
+        "step": "Validate VST3 headless",
+        "gui": false,
+        "seed": "0x2e888b9",
+        "fixed_seed": null,
+        "strictness": 10,
+        "program_count": 523,
+        "final_raw_exit": 0,
+        "internal_attempt_count": 1,
+        "internal_retry_count": 0,
+        "original_terminations": [
+          {
+            "pid": 2677,
+            "raw_returncode": 0,
+            "kind": "exit",
+            "details": "exit_code=0",
+            "normalized_exit": 0
+          }
+        ],
+        "preserved_failed_attempts": [],
+        "members": [
+          {
+            "path": "pluginval-headless.log",
+            "bytes": 7282,
+            "sha256": "15291eb33c907abc62705c982dae61154194b45d939e0c2fe80ce871549f4052"
+          },
+          {
+            "path": "pluginval-headless-core.log",
+            "bytes": 443,
+            "sha256": "a2bb356c3566d5d0fad79b81b9d368b6b952cafa70c818616a4f5693538210c4"
+          },
+          {
+            "path": "pluginval-reports/cs80-headless",
+            "bytes": 7194,
+            "sha256": "cb8342590666f568f529412654dbe91abd9687ce06c9387799d826c653769829"
+          }
+        ]
+      },
+      {
+        "lane": "gui",
+        "step": "Validate VST3 GUI under Xvfb",
+        "gui": true,
+        "seed": "0x20b4bb1",
+        "fixed_seed": null,
+        "strictness": 10,
+        "program_count": 523,
+        "final_raw_exit": 0,
+        "internal_attempt_count": 1,
+        "internal_retry_count": 0,
+        "original_terminations": [
+          {
+            "pid": 2709,
+            "raw_returncode": 0,
+            "kind": "exit",
+            "details": "exit_code=0",
+            "normalized_exit": 0
+          }
+        ],
+        "preserved_failed_attempts": [],
+        "members": [
+          {
+            "path": "pluginval-gui.log",
+            "bytes": 7964,
+            "sha256": "06a4aa4648463a935ff13858cb13a672a289443c39bc92c2974432a761f3f444"
+          },
+          {
+            "path": "pluginval-gui-core.log",
+            "bytes": 443,
+            "sha256": "f17e6d15b42a24a93b416b73167afc668a3962410c69862a5470caa904345079"
+          },
+          {
+            "path": "pluginval-reports/cs80-gui",
+            "bytes": 7876,
+            "sha256": "c3c2ac668248c2d74ef459a7a882d8f6c8b5f19750dbbb1b100c7df45fe6da66"
+          }
+        ]
+      },
+      {
+        "lane": "state-regression",
+        "step": "Validate GUI state regression seed 0x2da72db",
+        "gui": true,
+        "seed": "0x2da72db",
+        "fixed_seed": "0x2da72db",
+        "strictness": 10,
+        "program_count": 523,
+        "final_raw_exit": 0,
+        "internal_attempt_count": 1,
+        "internal_retry_count": 0,
+        "original_terminations": [
+          {
+            "pid": 2751,
+            "raw_returncode": 0,
+            "kind": "exit",
+            "details": "exit_code=0",
+            "normalized_exit": 0
+          }
+        ],
+        "preserved_failed_attempts": [],
+        "members": [
+          {
+            "path": "pluginval-gui-seed-regression.log",
+            "bytes": 7964,
+            "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+          },
+          {
+            "path": "pluginval-gui-seed-regression-core.log",
+            "bytes": 443,
+            "sha256": "518f4fa20f0f3f67b9cfa10cc69ee62fb22806932d0d67d04aacc55edd97d0e1"
+          },
+          {
+            "path": "pluginval-reports/cs80-gui-seed-regression",
+            "bytes": 7876,
+            "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+          }
+        ]
+      }
+    ],
+    "download_digest_limitation": "The frozen Linux workflow records the version but does not retain a validator-download digest."
+  },
+  "validator_input_identity": {
+    "status": "complete_vst3_payload_matches_install",
+    "file_count": 2,
+    "directory_count": 4,
+    "explicit_directory_count": 0,
+    "normalized_directories": [
+      "VST3/CS-80 Reference.vst3",
+      "VST3/CS-80 Reference.vst3/Contents",
+      "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "VST3/CS-80 Reference.vst3/Contents/x86_64-linux"
+    ],
+    "files": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "bytes": 1095,
+        "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "bytes": 17362328,
+        "sha256": "a74b10499e8f769f193733ef893ec5196ef22f47152ef5a3256cf7b199dc413d"
+      }
+    ],
+    "mismatch_count": 0,
+    "normalization": "Add VST3/ prefix; derive every implicit parent directory. No sidecars or unknown extras accepted."
+  },
+  "run_status_at_check": "completed",
+  "overall_workflow_conclusion": "success"
+}

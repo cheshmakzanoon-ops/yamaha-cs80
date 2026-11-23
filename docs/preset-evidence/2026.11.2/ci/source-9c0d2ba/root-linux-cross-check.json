@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "status": "root_linux_cross_check_passed",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "checked_at_utc": "2026-11-23T07:09:14.688623+00:00",
+  "archives_rehashed_against_final_api": [
+    {
+      "artifact_id": 14795644849,
+      "name": "cs80-linux-test-evidence",
+      "bytes": 138508,
+      "sha256": "297d15a2640696c71faadcff796db52ba4c08ab1da0ac3ad9f67ae26756619f5",
+      "api_match": true,
+      "local_archive": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14795644849.zip"
+    },
+    {
+      "artifact_id": 14796735944,
+      "name": "cs80-linux-install-bundle",
+      "bytes": 13207738,
+      "sha256": "e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024",
+      "api_match": true,
+      "local_archive": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip"
+    },
+    {
+      "artifact_id": 14796373585,
+      "name": "cs80-linux-vst3",
+      "bytes": 6879242,
+      "sha256": "9d38cdd7e9e350c00789cbe6829279974ad70b4143a21a5358374b3588b06506",
+      "api_match": true,
+      "local_archive": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796373585.zip"
+    },
+    {
+      "artifact_id": 14797200567,
+      "name": "cs80-pluginval-reports",
+      "bytes": 8897,
+      "sha256": "8c6dd32955605412c5634b28cf04061d6dbf8233960bc91bdc06b1399ce3d0b9",
+      "api_match": true,
+      "local_archive": "/dev/shm/cs80-circuit-011b6ba4a170/linux-9c0d/validator/14797200567.zip"
+    }
+  ],
+  "all_six_build_jobs_completed_success": true,
+  "validator_checker_sha256": "75fd6a70711d4315130fbc9f3a046ce3a42cd2c2cd4587834f6a33b862f5eec0",
+  "validator_proof_sha256": "394edab01f6e34cc23d1485421d918074119c379d63890669b4c1873c9d08966",
+  "validation_invocations": 3,
+  "internal_wrapper_retries": 0,
+  "original_terminations": [
+    {
+      "lane": "headless",
+      "seed": "0x2e888b9",
+      "records": [
+        {
+          "pid": 2677,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0",
+          "normalized_exit": 0
+        }
+      ]
+    },
+    {
+      "lane": "gui",
+      "seed": "0x20b4bb1",
+      "records": [
+        {
+          "pid": 2709,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0",
+          "normalized_exit": 0
+        }
+      ]
+    },
+    {
+      "lane": "state-regression",
+      "seed": "0x2da72db",
+      "records": [
+        {
+          "pid": 2751,
+          "raw_returncode": 0,
+          "kind": "exit",
+          "details": "exit_code=0",
+          "normalized_exit": 0
+        }
+      ]
+    }
+  ],
+  "complete_vst3_payload_identity": {
+    "status": "complete_vst3_payload_matches_install",
+    "file_count": 2,
+    "directory_count": 4,
+    "explicit_directory_count": 0,
+    "normalized_directories": [
+      "VST3/CS-80 Reference.vst3",
+      "VST3/CS-80 Reference.vst3/Contents",
+      "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "VST3/CS-80 Reference.vst3/Contents/x86_64-linux"
+    ],
+    "files": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "bytes": 1095,
+        "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "bytes": 17362328,
+        "sha256": "a74b10499e8f769f193733ef893ec5196ef22f47152ef5a3256cf7b199dc413d"
+      }
+    ],
+    "mismatch_count": 0,
+    "normalization": "Add VST3/ prefix; derive every implicit parent directory. No sidecars or unknown extras accepted."
+  },
+  "scope": "Root rehashed the four actual downloaded Linux evidence/input/install/validator ZIPs against the final API and ran the reviewed unchanged exact-source offline validator checker. No second product execution, signing, listening or earlier-crash fix claim."
+}

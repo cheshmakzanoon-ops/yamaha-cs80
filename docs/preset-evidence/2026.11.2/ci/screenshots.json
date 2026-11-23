@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447546,
+  "run_attempt": 1,
+  "job_id": 137437184863,
+  "conclusion": "success",
+  "core_checks": 11508,
+  "core_failures": 0,
+  "ui_smoke": "UI SMOKE TEST PASSED",
+  "goldens": [
+    {
+      "size": "1600x1000",
+      "changed_pixels_percent": 0.0,
+      "worst_8x8_block_mean": 0.0
+    },
+    {
+      "size": "1120x700",
+      "changed_pixels_percent": 0.0,
+      "worst_8x8_block_mean": 0.0
+    }
+  ],
+  "golden_limits_unchanged": {
+    "changed_pixels_percent": 0.3,
+    "worst_8x8_block_mean": 8
+  },
+  "artifact_api": {
+    "id": 14782884859,
+    "name": "cs80-panel-366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "size_in_bytes": 62102800,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14782884859",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14782884859/zip",
+    "expired": false,
+    "created_at": "2026-11-23T01:55:11Z",
+    "expires_at": "2027-02-21T01:46:29Z",
+    "updated_at": "2026-11-23T01:55:11Z",
+    "digest": "sha256:a649bcd33f92e68f1a0ee98da96a4fc9f4efae1b58a31d9c371dd75f3fcc9638",
+    "workflow_run": {
+      "id": 45096447546,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87"
+    }
+  },
+  "job_api": {
+    "id": 137437184863,
+    "run_id": 45096447546,
+    "workflow_name": "Hardware panel screenshots",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45096447546",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVaLxy88AAAAf_-UDXw",
+    "head_sha": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137437184863",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45096447546/job/137437184863",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T01:46:29Z",
+    "started_at": "2026-11-23T01:48:30Z",
+    "completed_at": "2026-11-23T01:55:19Z",
+    "name": "screenshots",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T01:48:31Z",
+        "completed_at": "2026-11-23T01:48:33Z"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T01:48:33Z",
+        "completed_at": "2026-11-23T01:48:39Z"
+      },
+      {
+        "name": "Install official Ubuntu build dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T01:48:39Z",
+        "completed_at": "2026-11-23T01:49:15Z"
+      },
+      {
+        "name": "Configure exact source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T01:49:15Z",
+        "completed_at": "2026-11-23T01:50:23Z"
+      },
+      {
+        "name": "Build screenshot renderer and core tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T01:50:23Z",
+        "completed_at": "2026-11-23T01:53:40Z"
+      },
+      {
+        "name": "Verify core",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T01:53:40Z",
+        "completed_at": "2026-11-23T01:53:49Z"
+      },
+      {
+        "name": "Capture actual editor at every supported size and page",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T01:53:49Z",
+        "completed_at": "2026-11-23T01:55:08Z"
+      },
+      {
+        "name": "Publish screenshot evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T01:55:08Z",
+        "completed_at": "2026-11-23T01:55:11Z"
+      },
+      {
+        "name": "Publish preview PNGs to the ui-preview branch (non-main only)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 9,
+        "started_at": "2026-11-23T01:55:11Z",
+        "completed_at": "2026-11-23T01:55:11Z"
+      },
+      {
+        "name": "Refresh repository screenshots from this exact source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T01:55:11Z",
+        "completed_at": "2026-11-23T01:55:16Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-23T01:55:16Z",
+        "completed_at": "2026-11-23T01:55:16Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 21,
+        "started_at": "2026-11-23T01:55:16Z",
+        "completed_at": "2026-11-23T01:55:16Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137437184863",
+    "labels": [
+      "ubuntu-24.04"
+    ],
+    "runner_id": 1000042396,
+    "runner_name": "GitHub Actions 1000042396",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "screenshot_publication_commit": "92793007d350685e6034831187d7d244695484a3",
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45096447546/job/137437184863",
+  "scope": "Completed native Linux screenshot and editor-smoke job on source366c. Full source-bound log checked, and actual bot-generated image files fetched through Git. Artifact API metadata retained; no independent full screenshot ZIP download is claimed. Full native platform/validator acceptance remains separate.",
+  "job_log_sha256": "3d045a54eb284c6194d6c0742d0bd9ed523c87ed41c094ad41fd7d0b4b9d8476",
+  "job_log_bytes": 110469,
+  "log_capture": "Complete decoded job log retrieved from GitHub; final line ending normalized to one newline in the retained temporary file.",
+  "repository_screenshot_provenance": {
+    "commit": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run": "45096447546",
+    "renderer": "JUCE software, actual plugin editor"
+  }
+}

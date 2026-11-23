@@ -7,19 +7,76 @@ code. Existing validator input artifacts remain separate and unchanged.
 
 ## Current source revision — 2026.11.2 circuit library
 
-The current source provides one circuit instrument and revoices the existing
-523-program catalogue. It removes the Legacy/Pure choices and includes the
-original 222 addresses in **Library → Factory Library**. The
-[current revision report](CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes
-and the intentional playback change for older engine policies.
+**All six jobs passed in
+[build 45112404257, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257).**
+The verified development bundles below contain source
+`9c0d2baef5643a983a0e7a378b6be033371248f4` and factory-library revision
+**2026.11.2**. This revision provides one circuit instrument, removes the
+Legacy/Pure engine choices and preserves all **523 existing names and host
+program addresses**. The original 222 programs are included in
+**Library → Factory Library**. The
+[revision report](CIRCUIT_LIBRARY_2026_11_2.md) describes the revoicing and the
+intentional playback change for older engine policies.
 
-For an installed package, its own `SOURCE.txt` and manifest identify the binary
-source, native target and workflow run. Consult that exact run and the
-[repository download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80#downloads)
-for its validation status. This document is embedded during packaging, before
-all dependent validation jobs finish; packaging alone does not establish a
-qualified release. The following sections preserve the status and download links
-of earlier revisions and do not describe a 2026.11.2 binary.
+| Platform | Included formats | Native CTests passed / registered | Verified installation download |
+| --- | --- | ---: | --- |
+| Windows x64 | VST3, Standalone | 223 / 225 | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | 245 / 247 | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | 245 / 247 | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip) |
+| Linux x86-64, Ubuntu 24.04 build | VST3, Standalone | 582 / 583 | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip) |
+
+Across the four native suites, **1,295 of 1,302 registered CTest entries passed,
+zero failed and seven were formally skipped**. The **24 nested Python subtest
+skips** are counted separately: 11 on Windows, five on each Mac architecture and
+three on Linux. All **13 required pluginval 1.0.4 invocations at strictness 10**
+completed with their original exit **0**, with **zero runtime validation
+retries**: two Windows headless VST3 runs, four runs on each Mac architecture
+(VST3, AU and two AU GUI runs), and three Linux VST3 runs (headless and two GUI
+runs). The fixed-seed regression gates are included in these totals.
+[Consolidated qualification and original evidence](preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json)
+
+All four installation ZIPs were downloaded in full without authentication and
+matched fresh GitHub API byte counts and SHA-256 digests. The actual archives
+also passed source/run/revision, complete inventory, native binary header,
+guide and notice checks. The complete Windows and Linux VST3 bundles matched
+the separate artifacts consumed by their validators. These checks apply to the
+exact linked artifacts and recorded CI executions.
+
+The verified
+[68-WAV audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip)
+contains **431 seconds across 56 existing programs**, in unnormalized **48 kHz
+stereo float32**, plus the complete inventory of **523 programs with 190
+parameters each**.
+Its public download matched the API digest, and its original upload was bound
+to the same source, run and producing job attempt. All 68 WAVs, settings,
+checksums and sample/CSV measurements passed the frozen verifier. No samples
+are nonfinite or at or above full scale; only the zero-pressure Pressure Lead
+example is intentionally silent.
+[Actual audition acceptance](preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json)
+
+These are **CI development bundles without publisher release signing or Apple
+notarization**. macOS build tools may attach ad-hoc signatures. The Mac packages
+contain separate arm64 and x86-64 binaries; choose the architecture used by the
+host process, keep each plug-in/application bundle intact and follow the
+[installation guide](INSTALL_AND_QUICKSTART.md). Windows pluginval coverage is
+headless. CI editor checks on the other platforms do not qualify every DAW or
+interactive installation workflow. No exact acoustic or hardware
+equivalence is claimed. The recorded artifact expiry is **21 February 2027 at
+04:31:50 UTC**; these retained CI downloads are not permanent release assets.
+
+Each package's `SOURCE.txt` and manifest identify its binary source and target.
+Its bundled documentation is the source snapshot written during packaging,
+before all dependent validators finished. This later repository update records
+the final results; it does not alter the archived guides, manifests or binary
+bytes. Opening an old session retains its stored patch controls: select the
+factory program again to hear the revised recipe, and save a user copy to keep
+an edited patch.
+
+Earlier failures remain recorded as failures in the sections below and the
+linked evidence. In particular, the cause of the older Linux post-`SUCCESS`
+crashes remains unproven; the three successful Linux invocations in this build
+do not establish a permanent fix. The historical sections retain their original
+source identities, outcomes and download links.
 
 ## Historical 2026.11.1 development candidates — release blocked
 

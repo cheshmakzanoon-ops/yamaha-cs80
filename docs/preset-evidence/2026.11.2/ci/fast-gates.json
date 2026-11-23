@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "run_id": 45091496469,
+  "run_attempt": 1,
+  "scope": "All five completed DSP jobs independently reviewed by assignment60 on8ffe / run45091496469. Source-input identity and the scope of applicability to366c are recorded in source-publication.json; native/pluginval results remain separate.",
+  "jobs": [
+    {
+      "id": 137421938682,
+      "name": "measure",
+      "conclusion": "success",
+      "probe_failures": 0,
+      "production_response_and_latency_gates": "passed",
+      "parity_capture_tests": {
+        "passed": 13,
+        "failed": 0
+      },
+      "candidate_frames": 96000
+    },
+    {
+      "id": 137421938344,
+      "name": "Default-off raw audio versus shipped baseline",
+      "conclusion": "success",
+      "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "corpus_parameters": 137,
+      "historical_programs": 222,
+      "sample_rates": [
+        44100,
+        48000,
+        96000
+      ],
+      "compiler_both_revisions": "GNU 13.3.0",
+      "mandatory_cmp": {
+        "default": "passed",
+        "tails": "passed"
+      },
+      "scope": "Frozen historical core regression; the plugin does not expose this as an engine choice. The newly authored factory bank is tested separately."
+    },
+    {
+      "id": 137421938708,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "conclusion": "success",
+      "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+      "source_tones": 7,
+      "circuit_values": 16632,
+      "sample_rates": [
+        44100,
+        48000,
+        96000,
+        192000
+      ],
+      "compiler_both_revisions": "GNU 13.3.0",
+      "mandatory_cmp": {
+        "v1_circuit": "passed",
+        "v2_audio_and_numeric_state": "passed"
+      },
+      "model_metadata_excluded": true
+    },
+    {
+      "id": 137421938744,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "conclusion": "success",
+      "harness_tests": {
+        "passed": 22,
+        "failed": 0
+      },
+      "synthetic_comparison": "passed",
+      "analog_evidence": false
+    },
+    {
+      "id": 137421938768,
+      "name": "sanitizers",
+      "conclusion": "success",
+      "counts": {
+        "registered": 196,
+        "passed": 195,
+        "failed": 0,
+        "formal_skipped": 1,
+        "disabled": 0
+      },
+      "ctest_seconds": 2633.18,
+      "nested_python_skips": null,
+      "plugin_enabled": false,
+      "details": "sanitizers.json"
+    }
+  ],
+  "strictness_review": "Actual exact-source workflow and logs retain mandatory comparisons under bash -e, with no continue-on-error or ignored comparison exit. No superseded source result is substituted.",
+  "downloaded_archive_evidence": "dsp-artifacts.json",
+  "limits": "Reported PCM/binary hashes are supported by successful CI cmp steps; those raw inputs are not included in the evidence ZIPs. Only the frozen corpus itself was independently downloaded and hashed. Numerical and synthetic evidence does not establish acoustic realism, hardware equivalence, native plugin validation or complete release qualification.",
+  "workflow_conclusion": "success"
+}

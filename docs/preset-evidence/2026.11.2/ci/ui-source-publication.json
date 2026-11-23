@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "revision": "2026.11.2",
+  "source_commit": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "source_tree": "58343bb6c99c0c125c51dc5de54f78aadf1c1255",
+  "parent_commit": "b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "branch": "main",
+  "publication": {
+    "local_staged_tree_equals_remote_tree": true,
+    "expected_previous_head": "b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+    "force": false,
+    "update_succeeded": true,
+    "local_fetch_confirmed": true
+  },
+  "scope": "Two UI source corrections, application-generated 1120x700 golden, installation verifier and retained initial-failure/local-repair evidence. No preset, DSP, build-gate, validator or tolerance change from the initial source.",
+  "runs": {
+    "native": 45091496524,
+    "screenshots": 45091496475,
+    "dsp_measurements": 45091496469
+  },
+  "run_attempt": 1,
+  "qualification": "Run identities only. Completed results and actual downloaded artifacts are recorded separately; this publication record is not acceptance."
+}

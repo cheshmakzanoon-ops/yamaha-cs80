@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "status": "independent_prepublication_review_accepted",
+  "reviewed_at_utc": "2026-11-23T07:26:11.525501+00:00",
+  "reviewers": [
+    "A60 final content/evidence review",
+    "A51 publication/inventory/link preflight",
+    "A55 documentation preservation review"
+  ],
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "native_run_id": 45112404257,
+  "run_attempt": 1,
+  "reviewed_files": [
+    {
+      "path": "README.md",
+      "bytes": 14626,
+      "sha256": "c1e03ca8a759e2459f5434242855069c06d59cbe683578a793aec61626383cf7"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/README.md",
+      "bytes": 18326,
+      "sha256": "264ba643ecfc43f3ccee4d04d0511c54d080f91981d7519e9c3bf3d7ce8fab49"
+    },
+    {
+      "path": "docs/TEAM_REVIEW_2026_11_2.md",
+      "bytes": 9964,
+      "sha256": "9882041d4c0e474b7bad08c8aaacadf4028de81078db6c1d2dae49c3593ec516"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 18303,
+      "sha256": "46e99e2e352baa6dcfaf66c9bd45e71e154a03e488977ed9d3c917e26cd991bd"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_2.md",
+      "bytes": 23269,
+      "sha256": "75a6c0f6564ed8b498d6f5fc6162261a62938167f4c8524db22f85ce38d6c4d4"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json",
+      "bytes": 50910,
+      "sha256": "18b6e116801d968ee5f9c6ee50ee3abd800d3d60966b72973306c370a646fcb5"
+    }
+  ],
+  "verified_totals": {
+    "native_registered": 1302,
+    "native_passed": 1295,
+    "native_failed": 0,
+    "formal_ctest_skips": 7,
+    "nested_python_skips": 24,
+    "required_pluginval_invocations": 13,
+    "original_exit_zero": 13,
+    "runtime_validation_retries": 0,
+    "install_archives": 4,
+    "inventory_entries": 114,
+    "native_binary_headers": 10,
+    "audition_wavs": 68,
+    "audition_programs": 56,
+    "audition_seconds": 431
+  },
+  "reference_checks": {
+    "aggregate_references": 39,
+    "unique_aggregate_files": 31,
+    "current_manifest_entries": 172,
+    "current_manifests": 6,
+    "five_document_relative_links": 186,
+    "seven_markdown_relative_links": 192,
+    "seven_markdown_fragments": 14
+  },
+  "resolved_findings": [
+    "Aggregate signing wording now distinguishes absence of publisher release signing/notarization from possible macOS ad-hoc signatures.",
+    "Five manifest-referenced small evidence ZIPs are Git-ignored and must be explicitly staged and published as base64 blobs with the exact Git identities listed here."
+  ],
+  "required_binary_blobs": [
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/linux-x86_64/14795644849.zip",
+      "git_blob_sha1": "a034664b44a153f956c1ce59717c2bb633ec089a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-x86_64/14792770742.zip",
+      "git_blob_sha1": "aa0a07656cfae782e0d45f061cbe4d15b0593ae7"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-x86_64/14792995139.zip",
+      "git_blob_sha1": "0f0e35e2092c1d092fe96d63150b40c2a350aec5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/windows-x86_64/14791463885.zip",
+      "git_blob_sha1": "969149a7c2df25fc1dd8139704558d5fa92c7955"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/windows-x86_64/14792580154.zip",
+      "git_blob_sha1": "f0f3b3dfd5f758952ea74d5a546fbd2496caa89d"
+    }
+  ],
+  "preservation": {
+    "distribution_historical_tail_bytes": 13011,
+    "distribution_historical_tail_sha256": "b903708409c27e2e5033ceeae9851c060ebeecbd72d1b39efb295adcfa9d6cc2",
+    "circuit_report_original_prefix_bytes": 18994,
+    "source_test_script_cmake_workflow_diff_from_binary_source": "empty"
+  },
+  "scope": "Review of exact local documentation and evidence before publication. Does not claim the remote branch update has occurred. No runtime tests, source edits or remote writes were performed by the reviewers.",
+  "publication_whitespace_handling": {
+    "original_full_staged_check_exit": 2,
+    "original_diagnostic_count": 2173,
+    "exact_preserved_evidence_files": [
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/job.log",
+        "diagnostics": 16,
+        "bytes": 451723,
+        "sha256": "c25ddc9659949e49cf989c3a472ffe709b60bdaec333bb73d3090953ed9df547"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/measurements.csv",
+        "diagnostics": 69,
+        "bytes": 26007,
+        "sha256": "b0045196e3fb69092e870255abcc827cbd025c577d3f634c8bdcea2ab930a830"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/linux-x86_64/native-job.log",
+        "diagnostics": 16,
+        "bytes": 451723,
+        "sha256": "c25ddc9659949e49cf989c3a472ffe709b60bdaec333bb73d3090953ed9df547"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/linux-x86_64/validator-job.log",
+        "diagnostics": 23,
+        "bytes": 81430,
+        "sha256": "a56ddf83c49cb732c84769bec52e61729e5bb2e6e95db55020d17a362b74f3bb"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-arm64/job.log",
+        "diagnostics": 16,
+        "bytes": 228052,
+        "sha256": "42e81ce8db4c3101cbbc9f750ab9eb814908886e037f9719127a69fcfd9f3d71"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-arm64/native/Testing/Temporary/LastTest.log",
+        "diagnostics": 9,
+        "bytes": 313529,
+        "sha256": "409672850f5da45f5c64ddb4d5232a61b178de913af77e930d5188b4f0e790b4"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-arm64/native/ctest-results.xml",
+        "diagnostics": 4,
+        "bytes": 106108,
+        "sha256": "16fb6d576d250d6c5e09f0f2c2e2331443576561973c5cf0b77aacaa53573c38"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/macos-x86_64/native-job.log",
+        "diagnostics": 16,
+        "bytes": 230765,
+        "sha256": "8de7e3df9def9c207320393ffed8c3a0a596a81998782bca0461e50b37f01993"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/windows-x86_64/native-job.log",
+        "diagnostics": 1482,
+        "bytes": 136809,
+        "sha256": "dcbc9b606ceb2bb22ed9174e52cd5e2ca2b7f9125c9f749e9e13e1dd0b6536c1"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/windows-x86_64/validator-job.log",
+        "diagnostics": 522,
+        "bytes": 44158,
+        "sha256": "aeb569efbaf2a961d674d405ecfdfe8b939fbc045ad5fce90aba73ae88030d06"
+      }
+    ],
+    "policy": "Preserve exact independently hash-verified raw logs, original XML and exported CSV line endings. Run git diff --cached --check on all remaining staged paths using only these ten explicit path exclusions. No raw evidence rewrite, Git configuration, CI gate or product-source change."
+  }
+}

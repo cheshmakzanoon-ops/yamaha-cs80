@@ -1,0 +1,578 @@
+{
+  "status": "platform_accepted",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "target": "windows-x86_64",
+  "native_job_id": 137437184878,
+  "native_job_conclusion": "success",
+  "native_job_completed_at": "2026-11-23T02:33:48Z",
+  "validator_job_id": 137451348288,
+  "validator_job_conclusion": "success",
+  "validator_job_completed_at": "2026-11-23T02:34:27Z",
+  "native": {
+    "counts": {
+      "registered": 225,
+      "passed": 223,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0
+    },
+    "formal_skips": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      }
+    ],
+    "nested_python_skips": {
+      "total": 11,
+      "suites": [
+        {
+          "ctest_test": "cs80_packaging_notice_tests",
+          "python_tests_run": 7,
+          "python_skipped": 1,
+          "details": [
+            "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+          ]
+        },
+        {
+          "ctest_test": "cs80_windows_installer_preflight_tests",
+          "python_tests_run": 12,
+          "python_skipped": 1,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_validator_diagnostic_selection_tests",
+          "python_tests_run": 9,
+          "python_skipped": 1,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_preset_capture_tests",
+          "python_tests_run": 10,
+          "python_skipped": 1,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_render_cli_tests",
+          "python_tests_run": 7,
+          "python_skipped": 3,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_truth_render_tests",
+          "python_tests_run": 16,
+          "python_skipped": 2,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_vca_reference_tests",
+          "python_tests_run": 12,
+          "python_skipped": 1,
+          "details": []
+        },
+        {
+          "ctest_test": "cs80_float_wav_tests",
+          "python_tests_run": 4,
+          "python_skipped": 1,
+          "details": []
+        }
+      ],
+      "scope": "Actual LastTest unittest summaries; distinct from formal CTest skips. Nonverbose suites may omit individual skip reasons."
+    },
+    "ctest_seconds": 1735.76,
+    "focused_tests": [
+      {
+        "name": "cs80_library_audit_tests",
+        "summary_lines": [
+          "library audit passed: 301 curated + 222 original circuit programs"
+        ]
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "summary_lines": [
+          "Preset voicing regressions: 188/188 checks passed; 74.0 seconds generated."
+        ]
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "summary_lines": [
+          "Preset character regressions: 128/128 checks passed; 31.4 seconds generated."
+        ]
+      },
+      {
+        "name": "cs80_preset_precision_tests",
+        "summary_lines": [
+          "Preset precision: 255 checks, 0 failures; 188.4 seconds of actual circuit audio"
+        ]
+      },
+      {
+        "name": "cs80_preset_capture_tests",
+        "summary_lines": [
+          "Ran 10 tests in 3.758s",
+          "OK (skipped=1)"
+        ]
+      },
+      {
+        "name": "cs80_panel_golden_tests",
+        "summary_lines": [
+          "golden main-1600x1000: changed 0.9401 % of pixels (limit 0.30 %), worst 8x8 block mean 57.34 (limit 8.0) [report only on this platform]",
+          "golden main-1120x700: changed 1.7409 % of pixels (limit 0.30 %), worst 8x8 block mean 72.12 (limit 8.0) [report only on this platform]",
+          "Panel golden tests: 39 checks, 0 failures"
+        ]
+      },
+      {
+        "name": "cs80_circuit_policy_host_tests",
+        "summary_lines": [
+          "Circuit policy host tests: 101 checks, 0 failures"
+        ]
+      },
+      {
+        "name": "cs80_circuit_source_host_tests",
+        "summary_lines": []
+      },
+      {
+        "name": "cs80_ui_smoke",
+        "summary_lines": [
+          "golden main-1600x1000: changed 0.9401 % of pixels (limit 0.30 %), worst 8x8 block mean 57.34 (limit 8.0) [report only on this platform]",
+          "golden main-1120x700: changed 1.7409 % of pixels (limit 0.30 %), worst 8x8 block mean 72.12 (limit 8.0) [report only on this platform]",
+          "UI SMOKE TEST PASSED"
+        ]
+      }
+    ]
+  },
+  "validators": [
+    {
+      "step": "Validate VST3 headless",
+      "seed": "0x1d5db2",
+      "fixed_regression": false,
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-windows.log",
+      "log_bytes": 7381,
+      "log_sha256": "16a7dc0fcfee276f908f759551834e77f3559318740f4a71b62f0d995b00ae5e",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-windows",
+      "report_bytes": 7167,
+      "report_sha256": "2978044d84328e6ecce4449ac4b3c1886fb51450b2448c4387331f0cbc05e2de",
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "step": "Validate state regression seed 0x5037a0c",
+      "seed": "0x5037a0c",
+      "fixed_regression": true,
+      "strictness": 10,
+      "gui": false,
+      "program_count": 523,
+      "exit": 0,
+      "exit_basis": "Required completed successful step and exact source workflow enforcing child exit, plus SUCCESS in both console and report.",
+      "validation_invocations": 1,
+      "validation_retries": 0,
+      "log": "pluginval-windows-seed-regression.log",
+      "log_bytes": 7382,
+      "log_sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+      "log_encoding": "utf-8-sig",
+      "report": "pluginval-reports/cs80-windows-seed-regression",
+      "report_bytes": 7168,
+      "report_sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616",
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    }
+  ],
+  "validation_invocations": 2,
+  "validation_retries": 0,
+  "validator_download": {
+    "repository": "Tracktion/pluginval",
+    "version": "1.0.4",
+    "release_id": 188928656,
+    "asset_id": 210999198,
+    "asset_name": "pluginval_Windows.zip",
+    "expected_size": 2408590,
+    "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+    "attempts": [
+      {
+        "number": 1,
+        "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+        "reason": "downloaded",
+        "bytes": 2408590,
+        "final_host": "release-assets.githubusercontent.com",
+        "transfer_exit": 0
+      }
+    ],
+    "verified": true,
+    "actual_size": 2408590,
+    "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+  },
+  "validator_input_identity": {
+    "status": "byte_identical_to_install_vst3",
+    "artifact": {
+      "id": 14785491077,
+      "name": "cs80-windows-vst3",
+      "bytes": 3133547,
+      "sha256": "f346ce7d5a616c059a2837f0320cd70fb8efa6ec87bfdfbaf74686e5a36b6817"
+    },
+    "install_artifact_id": 14785486091,
+    "file_count": 2,
+    "directory_count": 4,
+    "explicit_input_directories": 0,
+    "normalized_directories": [
+      "VST3/CS-80 Reference.vst3",
+      "VST3/CS-80 Reference.vst3/Contents",
+      "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "VST3/CS-80 Reference.vst3/Contents/x86_64-win"
+    ],
+    "normalization": "Add the VST3/ package prefix; derive implicit parent directories from every VST3 bundle file and include explicit directory entries. Every bundle file is compared; the two top-level Visual Studio linker sidecars are separately inventoried.",
+    "mismatch_count": 0,
+    "files": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "bytes": 1143,
+        "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+        "matches_install_inventory": true
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "bytes": 7230464,
+        "sha256": "7754f4a65e62a991e15826e57913508a82b408fab058f5c2b2b8900d8189e938",
+        "matches_install_inventory": true
+      }
+    ],
+    "linker_sidecars": [
+      {
+        "path": "CS-80 Reference.exp",
+        "bytes": 968,
+        "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+        "format": "x64 COFF exports object",
+        "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+      },
+      {
+        "path": "CS-80 Reference.lib",
+        "bytes": 2266,
+        "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+        "format": "COFF import library archive",
+        "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+      }
+    ],
+    "all_artifact_files_accounted_for": 4
+  },
+  "installation": {
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14785486091.zip",
+    "artifact_id": 14785486091,
+    "bytes": 6251477,
+    "sha256": "0a0c2af419687048bebda60d30ebc467d6b8923c633f7dca0776e2ba54682225",
+    "expires_at": "2027-02-21T01:46:29Z",
+    "inner_archive": {
+      "name": "cs80-reference-windows-x86_64-366c1454fbf3.zip",
+      "bytes": 6246161,
+      "sha256": "a8947d0e3ac74e8801d202a8f35a9771bde813b4e7d1283835928a79a73521ea"
+    },
+    "inventory_count": 20,
+    "manifest_identity": {
+      "commit": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "preset_library_revision": "2026.11.2",
+      "workflow_run_id": "45096447502",
+      "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "juce_version": "8.0.11"
+    },
+    "binaries": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "bytes": 7230464,
+        "sha256": "7754f4a65e62a991e15826e57913508a82b408fab058f5c2b2b8900d8189e938",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "role": "plugin",
+        "header_check": "PASS"
+      },
+      {
+        "path": "Standalone/CS-80 Reference.exe",
+        "bytes": 7432704,
+        "sha256": "a4f32b61c67c28a081b3889d94cf5442df74aee92330dc7b7741a1922cd9f255",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "role": "standalone",
+        "header_check": "PASS"
+      }
+    ]
+  },
+  "public_downloads": [
+    {
+      "status": "public_get_verified",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "artifact_id": 14784794527,
+      "artifact_name": "cs80-pluginval-windows",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14784794527.zip",
+      "started_at_utc": "2026-11-23T02:35:41.220388+00:00",
+      "completed_at_utc": "2026-11-23T02:35:50.321757+00:00",
+      "http_status": 200,
+      "authentication_sent": false,
+      "final_response_host": "productionresultssa31.blob.core.windows.net",
+      "content_length": 5081,
+      "bytes_received": 5081,
+      "sha256": "9e715ecab51f77221fc5fcab22064e098183b544918eaa0edf5071b898897aa2",
+      "api_size_and_digest_match": true,
+      "expires_at": "2027-02-21T01:46:29Z",
+      "elapsed_seconds": 9.101,
+      "earlier_attempts": []
+    },
+    {
+      "status": "public_get_verified",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "artifact_id": 14785206822,
+      "artifact_name": "cs80-windows-test-evidence",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14785206822.zip",
+      "started_at_utc": "2026-11-23T02:35:41.198343+00:00",
+      "completed_at_utc": "2026-11-23T02:35:52.218154+00:00",
+      "http_status": 200,
+      "authentication_sent": false,
+      "final_response_host": "productionresultssa31.blob.core.windows.net",
+      "content_length": 59652,
+      "bytes_received": 59652,
+      "sha256": "0cb7cd4abaeabe77070185928baa595c126f53e3f2c000dd99bd409c3bf2aacf",
+      "api_size_and_digest_match": true,
+      "expires_at": "2027-02-21T01:46:29Z",
+      "elapsed_seconds": 11.02,
+      "earlier_attempts": []
+    },
+    {
+      "status": "public_get_verified",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "artifact_id": 14785486091,
+      "artifact_name": "cs80-windows-install-bundle",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14785486091.zip",
+      "started_at_utc": "2026-11-23T02:35:41.204957+00:00",
+      "completed_at_utc": "2026-11-23T02:35:51.288374+00:00",
+      "http_status": 200,
+      "authentication_sent": false,
+      "final_response_host": "productionresultssa31.blob.core.windows.net",
+      "content_length": 6251477,
+      "bytes_received": 6251477,
+      "sha256": "0a0c2af419687048bebda60d30ebc467d6b8923c633f7dca0776e2ba54682225",
+      "api_size_and_digest_match": true,
+      "expires_at": "2027-02-21T01:46:29Z",
+      "elapsed_seconds": 10.084,
+      "earlier_attempts": []
+    },
+    {
+      "status": "public_get_verified",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "artifact_id": 14785491077,
+      "artifact_name": "cs80-windows-vst3",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14785491077.zip",
+      "started_at_utc": "2026-11-23T02:35:41.176751+00:00",
+      "completed_at_utc": "2026-11-23T02:35:51.240603+00:00",
+      "http_status": 200,
+      "authentication_sent": false,
+      "final_response_host": "productionresultssa31.blob.core.windows.net",
+      "content_length": 3133547,
+      "bytes_received": 3133547,
+      "sha256": "f346ce7d5a616c059a2837f0320cd70fb8efa6ec87bfdfbaf74686e5a36b6817",
+      "api_size_and_digest_match": true,
+      "expires_at": "2027-02-21T01:46:29Z",
+      "elapsed_seconds": 10.064,
+      "earlier_attempts": []
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "14784794527-public-get.json",
+      "bytes": 802,
+      "sha256": "5f2475d066c54b11bf70d673f322f69aba7e49e3b5b22bf0daa79991bac2f2c1"
+    },
+    {
+      "path": "14784794527.zip",
+      "bytes": 5081,
+      "sha256": "9e715ecab51f77221fc5fcab22064e098183b544918eaa0edf5071b898897aa2"
+    },
+    {
+      "path": "14785206822-public-get.json",
+      "bytes": 808,
+      "sha256": "58254ee579ebc5a864e91b337574346cb5483f64753da22306d2c6a793312b75"
+    },
+    {
+      "path": "14785206822.zip",
+      "bytes": 59652,
+      "sha256": "0cb7cd4abaeabe77070185928baa595c126f53e3f2c000dd99bd409c3bf2aacf"
+    },
+    {
+      "path": "14785486091-public-get.json",
+      "bytes": 814,
+      "sha256": "bae5b9c654b93a6d1c19a8e76341f2d04dc6d5d81b857742555c1e5dcbb98c2f"
+    },
+    {
+      "path": "14785486091.zip",
+      "bytes": 6251477,
+      "sha256": "0a0c2af419687048bebda60d30ebc467d6b8923c633f7dca0776e2ba54682225"
+    },
+    {
+      "path": "14785491077-public-get.json",
+      "bytes": 804,
+      "sha256": "a88755617ed564aaa3cab807cd1c2d41b685e0691e994f79301f4278d8fd61eb"
+    },
+    {
+      "path": "14785491077.zip",
+      "bytes": 3133547,
+      "sha256": "f346ce7d5a616c059a2837f0320cd70fb8efa6ec87bfdfbaf74686e5a36b6817"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 6176,
+      "sha256": "2718bc71c00ff542db7615c8ab245eaca53f8eb3572020a1af99cab93b4a9ce7"
+    },
+    {
+      "path": "install-api.json",
+      "bytes": 799,
+      "sha256": "bca5aac42554e6518321f0995ca2a6ea6c8506cf144b794843930ce3d8d265f8"
+    },
+    {
+      "path": "install-proof.json",
+      "bytes": 34973,
+      "sha256": "cc018fff37abdb7a1a1547307453fa65b18ecd872baebee474b7cfcbc68116e1"
+    },
+    {
+      "path": "jobs-api.json",
+      "bytes": 25170,
+      "sha256": "015ae299c040f4d087be39138e6299dc96dad45a687ea24714603ec8393008c5"
+    },
+    {
+      "path": "native-api.json",
+      "bytes": 796,
+      "sha256": "08b7a74c737366a2970d49c9557ee8b55806961d31a6b813aa7b40dc1f67bcd9"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 136673,
+      "sha256": "ead15f8b14ba3d3ec656a758a13ea0da7fe2a167ecb7d98b9ce0c343e3f9dbc3"
+    },
+    {
+      "path": "native-proof.json",
+      "bytes": 37177,
+      "sha256": "241f0b9556c044f090dce77ced4913692441e3bf08615f8c6127ba42fe205265"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 14800,
+      "sha256": "05c35426b0c3d8414e27d9ee7656e810aa201bc0278ac79991babecec8b1143c"
+    },
+    {
+      "path": "validator-job.log",
+      "bytes": 45037,
+      "sha256": "65049788c8598d08350171c5a744d9da850ba537f2cb132d7709fb61aca714a9"
+    },
+    {
+      "path": "validator-proof.json",
+      "bytes": 11332,
+      "sha256": "15eec4c8e22446c25a5a7b25deef911b8397289b61664f3f964e9d75a781d13f"
+    },
+    {
+      "path": "validators-api.json",
+      "bytes": 791,
+      "sha256": "49c6cf79ee744d99b4847e007502416938c76ae1d8ac4cc6a95f71acf459fc83"
+    },
+    {
+      "path": "vst3-api.json",
+      "bytes": 789,
+      "sha256": "fde11689574ab3d1e23317a57cd1e902fed03c216915114f6f723a8ee98e1b5f"
+    },
+    {
+      "path": "checker-shape-adjustment.json",
+      "bytes": 2522,
+      "sha256": "8b489e4f55239fb35aed32b1c2560a4a9ef22903f64a837e58e4d6d033f4d61e"
+    }
+  ],
+  "scope": "Windows native CTest, both required headless strictness-10 pluginval invocations, all four public ZIP downloads, installation archive and exact validator-input VST3 bundle identity accepted for this source/run only. Two external link-time sidecars are separately inventoried. Other platforms and complete workflow remain separate; no signing, interactive DAW install, subjective listening or acoustic/hardware equivalence established.",
+  "checker_shape_adjustment": {
+    "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run_id": 45096447502,
+    "run_attempt": 1,
+    "artifact_id": 14785491077,
+    "initial_checker_invocation": {
+      "exit_code": 1,
+      "error_type": "ValueError",
+      "message": "Wrong VST3 artifact root",
+      "phase": "validator-input artifact membership comparison",
+      "interpretation": "The new offline acceptance checker initially assumed that the uploaded VST3 parent directory contained only the runtime bundle. It rejected two legitimate Visual Studio linker sidecars. This was a checker-shape rejection, not a product failure, native-test failure or pluginval failure."
+    },
+    "actual_runtime_validator_results": [
+      {
+        "step": "Validate VST3 headless",
+        "seed": "0x1d5db2",
+        "exit": 0,
+        "validation_invocations": 1,
+        "validation_retries": 0
+      },
+      {
+        "step": "Validate state regression seed 0x5037a0c",
+        "seed": "0x5037a0c",
+        "exit": 0,
+        "validation_invocations": 1,
+        "validation_retries": 0
+      }
+    ],
+    "adjustment": {
+      "only_allowed_sidecar_root_names": [
+        "CS-80 Reference.exp",
+        "CS-80 Reference.lib"
+      ],
+      "both_required": true,
+      "regular_files_only": true,
+      "format_checks": [
+        "x64 COFF exports object",
+        "COFF import library archive"
+      ],
+      "unexpected_root_entries_rejected": true,
+      "all_runtime_bundle_files_compared": true,
+      "runtime_bundle_directory_normalization": "Restore VST3/ prefix; include explicit directories and derive all implicit parents.",
+      "no_runtime_bundle_file_excluded": true,
+      "checker_sha256": "90868617f6ec638c0fe5269ae6d32d78f5eee31c3ff7f591bc61527d4683ad8d"
+    },
+    "sidecars": [
+      {
+        "path": "CS-80 Reference.exp",
+        "bytes": 968,
+        "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+        "format": "x64 COFF exports object",
+        "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+      },
+      {
+        "path": "CS-80 Reference.lib",
+        "bytes": 2266,
+        "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+        "format": "COFF import library archive",
+        "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+      }
+    ],
+    "final_checker_invocation": {
+      "exit_code": 0,
+      "status": "required_validators_verified",
+      "vst3_bundle_files": 2,
+      "normalized_bundle_directories": 4,
+      "mismatches": 0,
+      "all_artifact_files_accounted_for": 4
+    }
+  }
+}

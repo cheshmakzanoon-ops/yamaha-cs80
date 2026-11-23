@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "scope": "Offline evidence parsers and archive inspection only; no new native or pluginval invocation.",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "record_basis": "Recovered exact CLI commands, original completion exit codes and tool chunk identifiers from the observed tool outputs after the orchestration runtime lost stored values. All underlying proof files survived. These checkers were not re-executed.",
+  "executions": [
+    {
+      "checker": "native",
+      "command": "python3 -B /tmp/cs80-circuit-011b6ba4a170/inspect-native-evidence.py --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --job-id 137487485173 --target macos-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/14792770742.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/native-artifact-api.json --jobs-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/jobs-api.json --job-log /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/native-job.log --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/native-ctest-proof.json",
+      "tool_output_chunk_ids": [
+        "7c9d4d"
+      ],
+      "observed_completion_exit_code": 0,
+      "proof_file": "native-ctest-proof.json",
+      "proof_bytes": 41151,
+      "proof_sha256": "1cb3e93dc2b22092a681005c6f32d3752113d8f08c10f48c3a500ef7d0f30c41"
+    },
+    {
+      "checker": "install",
+      "command": "python3 -B /workspace/scratch/011b6ba4a170/yamaha-cs80/docs/preset-evidence/2026.11.2/verify-install-bundle.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --target macos-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/14791699516.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/install-artifact-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/run-api.json --work-dir /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/install-bundle-proof.json",
+      "tool_output_chunk_ids": [
+        "4568c2",
+        "87438b"
+      ],
+      "observed_completion_exit_code": 0,
+      "proof_file": "install-bundle-proof.json",
+      "proof_bytes": 38699,
+      "proof_sha256": "3b1b30003be637edbdc777bd8f31db4cf52f2fa6616a8214d74f28b69b4d4699"
+    },
+    {
+      "checker": "validator",
+      "command": "python3 -B /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/verify-platform-validators.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --jobs-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/jobs-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/run-api.json --run-attempt 1 --job-log /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/native-job.log --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/14792995139.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/validator-artifact-api.json --target macos-x86_64 --job-id 137487485173 --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/intel/validator-proof.json",
+      "tool_output_chunk_ids": [
+        "ee9c1b"
+      ],
+      "observed_completion_exit_code": 0,
+      "proof_file": "validator-proof.json",
+      "proof_bytes": 15289,
+      "proof_sha256": "fb5f16ee6c9ac095580709f707a49f6bf7cdf4d791fd67cd6b8ec47a88604686"
+    }
+  ]
+}

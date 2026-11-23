@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "scope": "Original unchanged offline byte-verifier invocation; full producer-job binding is separate",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/audition/verify-audition.py",
+    "--archive",
+    "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/audition/14796467679.zip",
+    "--artifact-json",
+    "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/audition/artifact-api.json",
+    "--source",
+    "9c0d2baef5643a983a0e7a378b6be033371248f4",
+    "--run-id",
+    "45112404257",
+    "--run-attempt",
+    "1",
+    "--out",
+    "/dev/shm/cs80-circuit-011b6ba4a170/a55/9c0d/audition/audition-proof.json"
+  ],
+  "started_at_utc": "2026-11-23T07:03:02.726958+00:00",
+  "completed_at_utc": "2026-11-23T07:03:05.376093+00:00",
+  "elapsed_seconds": 2.648948,
+  "exit_code": 0,
+  "verifier_sha256": "b3cdb252f8cdddc4766622ba7ef2dab5ccde2548a0b31443b647ae71a9fbc7ef",
+  "verifier_unchanged_after": true,
+  "stdout_sha256": "affe7fa4f42da5886d34e05b62a0343f0d9d971883d4ad334a092ad0b78d320b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "proof_written": true
+}

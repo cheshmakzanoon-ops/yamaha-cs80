@@ -1,0 +1,305 @@
+{
+  "schema": 1,
+  "assignment": 55,
+  "status": "macos-arm64-native-and-install-accepted",
+  "verified_at_utc": "2026-11-23T02:22:48.503577+00:00",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "job_id": 137437185127,
+  "job_conclusion": "success",
+  "job_completed_at": "2026-11-23T02:18:54Z",
+  "native": {
+    "registered": 247,
+    "passed": 245,
+    "failed": 0,
+    "formal_skips": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "nested_python_skips": [
+      {
+        "ctest": "cs80_package_binary_identity_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_packaging_notice_tests",
+        "count": 1
+      },
+      {
+        "ctest": "cs80_windows_installer_preflight_tests",
+        "count": 2
+      },
+      {
+        "ctest": "cs80_render_cli_tests",
+        "count": 1
+      }
+    ],
+    "junit_time_seconds": "1184",
+    "ctest_wall_seconds": 1185.01,
+    "nested_python_skip_total": 5
+  },
+  "validators": [
+    {
+      "step": "Validate VST3 with pluginval",
+      "seed": "0x3e4fc65",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-vst3.log",
+      "log_sha256": "4ff6ad88562bb806d38b1aacdf6b0a7d3a1b089dad41c329f4eeaf8c96f3e947",
+      "gui": false,
+      "success_time_utc": "2026-11-23T02:15:56.4883200Z"
+    },
+    {
+      "step": "Validate AU with pluginval",
+      "seed": "0x57e1899",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au.log",
+      "log_sha256": "9627836b6d35afc50b7d18a8eb344953d24d0e980981949dd8241c0ea109ec74",
+      "gui": false,
+      "success_time_utc": "2026-11-23T02:16:16.7281350Z"
+    },
+    {
+      "step": "Validate AU with pluginval GUI",
+      "seed": "0x5c64b4a",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au-gui.log",
+      "log_sha256": "bca3b9e590217bf3ba02e0d4047b14bb23397e5d04628adfbfb0b5ea66e62eb7",
+      "gui": true,
+      "success_time_utc": "2026-11-23T02:17:32.7366850Z"
+    },
+    {
+      "step": "Validate AU GUI fixed-seed regression",
+      "seed": "0x2b4eef5",
+      "exit": 0,
+      "exit_basis": "Successful required shell step with source-pinned set -euo pipefail; SUCCESS independently present in console and report.",
+      "log": "pluginval-au-seed-regression.log",
+      "log_sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+      "gui": true,
+      "success_time_utc": "2026-11-23T02:18:42.8297300Z"
+    }
+  ],
+  "package": {
+    "artifact_id": 14784458163,
+    "artifact_name": "cs80-macos-15-install-bundle",
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14784458163.zip",
+    "outer_bytes": 14850927,
+    "outer_sha256": "a338bd92d85e2ed6e4a01b7454e94a1b6b482d9ff89fd05677cc78f53dc01c64",
+    "inner": {
+      "name": "cs80-reference-macos-arm64-366c1454fbf3.tar.gz",
+      "bytes": 14842554,
+      "sha256": "fa5217144d544181575297893bb633375d7667587933e20f97c15d5a0a9a01ee"
+    },
+    "manifest": {
+      "commit": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "platform": "macos",
+      "architecture": "arm64",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "preset_library_revision": "2026.11.2",
+      "workflow_run_id": "45096447502",
+      "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "juce_version": "8.0.11"
+    },
+    "inventory_count": 37,
+    "inventory_types": {
+      "directory": 12,
+      "file": 25
+    },
+    "binaries": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+        "bytes": 14520592,
+        "sha256": "d40ee4f339c4dd4edf336490bfe5964ca9a2fffcae702cf6bbb451ea5e7ada0d",
+        "platform": "macos",
+        "architecture": "arm64",
+        "role": "plugin",
+        "header_check": "PASS"
+      },
+      {
+        "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+        "bytes": 14224704,
+        "sha256": "059d1c1c15abcdac79b0008172d7854ea80fa301de9bd101c5c22c5194e65767",
+        "platform": "macos",
+        "architecture": "arm64",
+        "role": "plugin",
+        "header_check": "PASS"
+      },
+      {
+        "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+        "bytes": 14075440,
+        "sha256": "f34077d851722496125235f236a33c85020bbd959e861b87a08d92869f855438",
+        "platform": "macos",
+        "architecture": "arm64",
+        "role": "standalone",
+        "header_check": "PASS"
+      }
+    ],
+    "expires_at": "2027-02-21T01:46:29Z",
+    "guides_notices_source_and_dependency_checks": "PASS"
+  },
+  "public_downloads": [
+    {
+      "artifact_id": 14784378673,
+      "artifact_name": "cs80-macos-15-test-evidence",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14784378673.zip",
+      "http_status": 200,
+      "final_host": "productionresultssa31.blob.core.windows.net",
+      "bytes": 62499,
+      "sha256": "eea7e1ff7dfa92adbb6487e51f9a2a699a911c7dbb8e67420a65d2ee6d4375de",
+      "api_bytes_and_digest_match": true,
+      "started_at_utc": "2026-11-23T02:20:23.382999+00:00",
+      "completed_at_utc": "2026-11-23T02:20:33.377877+00:00",
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a55/366c/native.zip",
+      "authorization_header_supplied": false
+    },
+    {
+      "artifact_id": 14784314450,
+      "artifact_name": "cs80-pluginval-macos-15",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14784314450.zip",
+      "http_status": 200,
+      "final_host": "productionresultssa31.blob.core.windows.net",
+      "bytes": 9686,
+      "sha256": "2c098b2674868e60e8e038887fbfa03322de918a25b3578b4c31fd9b06c6a90f",
+      "api_bytes_and_digest_match": true,
+      "started_at_utc": "2026-11-23T02:20:33.378162+00:00",
+      "completed_at_utc": "2026-11-23T02:20:41.170976+00:00",
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a55/366c/validators.zip",
+      "authorization_header_supplied": false
+    },
+    {
+      "artifact_id": 14784458163,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14784458163.zip",
+      "http_status": 200,
+      "final_host": "productionresultssa31.blob.core.windows.net",
+      "bytes": 14850927,
+      "sha256": "a338bd92d85e2ed6e4a01b7454e94a1b6b482d9ff89fd05677cc78f53dc01c64",
+      "api_bytes_and_digest_match": true,
+      "started_at_utc": "2026-11-23T02:20:41.172098+00:00",
+      "completed_at_utc": "2026-11-23T02:20:51.018942+00:00",
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a55/366c/install.zip",
+      "authorization_header_supplied": false
+    }
+  ],
+  "preserved_predecessor_failures": [
+    {
+      "source": "b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+      "run_id": 45088113937,
+      "job_id": 137411243207,
+      "result": "UI smoke failed with 3 assertions; no package."
+    },
+    {
+      "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+      "run_id": 45091496524,
+      "job_id": 137421859961,
+      "result": "AU GUI Editor Automation AppleParavirtCommandBuffer assertion; Abort trap 6; pluginval exit9; no package.",
+      "seed": "0x2b4eef5"
+    }
+  ],
+  "scope": [
+    "Accepted this Apple Silicon native job and these exact installation bytes. Other platform jobs and complete workflow qualification are separate.",
+    "No retries initiated by this assignment. Both GUI gates passed on the first invocation of this source/run.",
+    "The earlier failed invocation remains failed. The new success does not establish exclusive ownership or the complete root cause of that earlier abort.",
+    "Developer signing, notarization, interactive DAW installation, subjective listening and acoustic/hardware equivalence are not established.",
+    "The runtime523-program inventory and audition WAVs are checked by a separate artifact acceptance task."
+  ],
+  "evidence_files": [
+    {
+      "path": "download-artifacts.py",
+      "bytes": 2958,
+      "sha256": "2648a8d51ff2adae232f91acc5095a0d7767a8c8cfac8cb504f988c759afcb13"
+    },
+    {
+      "path": "extract-native-evidence.py",
+      "bytes": 7543,
+      "sha256": "97e6ac1e6ad7ddfd8c43b7fae595b7ab0bc7f5942cf037eae5d778b6c87f49b9"
+    },
+    {
+      "path": "install-api.json",
+      "bytes": 801,
+      "sha256": "26db45a9c795d94ba11583b2022ce36fe7381f09d1acc2f4a32b4b9a8428abb7"
+    },
+    {
+      "path": "install-check.log",
+      "bytes": 340,
+      "sha256": "eb55446cd8d58b6202988130ac8e8fa752baae053b41a1d2bfb27e92405e37a9"
+    },
+    {
+      "path": "install-proof.json",
+      "bytes": 38477,
+      "sha256": "bcfe856db73af446590e35778d22504757e8f9ec5a7e70754f050730aef4659d"
+    },
+    {
+      "path": "install.zip",
+      "bytes": 14850927,
+      "sha256": "a338bd92d85e2ed6e4a01b7454e94a1b6b482d9ff89fd05677cc78f53dc01c64"
+    },
+    {
+      "path": "job-api.json",
+      "bytes": 5736,
+      "sha256": "de81cd33e97f13c820455305b66b74bc3c78c97f9986f05895251f8c898e98d6"
+    },
+    {
+      "path": "job.log",
+      "bytes": 226006,
+      "sha256": "54f6ba8d1fb934f56061b1a9fe80e28a47b15cd9f4588523b629252afb00eb05"
+    },
+    {
+      "path": "native-api.json",
+      "bytes": 797,
+      "sha256": "12a8ab895c775e67024b320156ca064b4c3cf22106851b20faddabaea34839db"
+    },
+    {
+      "path": "native-check.log",
+      "bytes": 3081,
+      "sha256": "1042d19f4b5b1d0f9f5faabe3cf56cc5e6a6f5b45b2dee125c31aaecf54fd82f"
+    },
+    {
+      "path": "native-validator-proof.json",
+      "bytes": 3081,
+      "sha256": "1042d19f4b5b1d0f9f5faabe3cf56cc5e6a6f5b45b2dee125c31aaecf54fd82f"
+    },
+    {
+      "path": "native.zip",
+      "bytes": 62499,
+      "sha256": "eea7e1ff7dfa92adbb6487e51f9a2a699a911c7dbb8e67420a65d2ee6d4375de"
+    },
+    {
+      "path": "public-download-proof.json",
+      "bytes": 2612,
+      "sha256": "b910ba288668944d99c99408580af06e3df82a967b5a4ff92a27d31458cf2577"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 14800,
+      "sha256": "e73afa5b33d1c9b18a3f895c6eda189d4b54fc35322b7ce55f99616d452706f6"
+    },
+    {
+      "path": "selected-artifacts-api.json",
+      "bytes": 2516,
+      "sha256": "c62786ce0b3424115288905fc6a6602afb333249af38e5338bc0fedc58eb2b63"
+    },
+    {
+      "path": "validators-api.json",
+      "bytes": 792,
+      "sha256": "782f878b21b2273dd2a7b1c7273590f61ee26034bc99c6bb047b6a38a3e55e46"
+    },
+    {
+      "path": "validators.zip",
+      "bytes": 9686,
+      "sha256": "2c098b2674868e60e8e038887fbfa03322de918a25b3578b4c31fd9b06c6a90f"
+    }
+  ]
+}

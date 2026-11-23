@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "target": "windows-x86_64",
+  "files": [
+    {
+      "path": "14791463885-public-get.json",
+      "bytes": 809,
+      "sha256": "4bd2474876ea10da2d79c730ed58a709b752aa9b5943ad36954d8faa3e14c971"
+    },
+    {
+      "path": "14791463885.zip",
+      "bytes": 59635,
+      "sha256": "eb9a13517e051e8ec837b4bb8f25546dc11f8d1bb4ce6164a7ffaf3d4aed0b42"
+    },
+    {
+      "path": "14792270714-public-get.json",
+      "bytes": 804,
+      "sha256": "8a8641681eb60e3591c3608d1e7f2a83ce6abe997b53b52abd47932efb1c8f8f"
+    },
+    {
+      "path": "14792445167-public-get.json",
+      "bytes": 814,
+      "sha256": "3bc2bceb5dd5b1f8cba00a4d32530a623c6900f8348d737327bde3bff20f579a"
+    },
+    {
+      "path": "14792580154-public-get.json",
+      "bytes": 803,
+      "sha256": "3adc06d539e614f0abe51797453e862099d315ebdcf6fd6e88759a64dde1502b"
+    },
+    {
+      "path": "14792580154.zip",
+      "bytes": 5084,
+      "sha256": "b0e0c8c4d0cbba02346bebc4264322f27e252347631f1b9c92f9be186668d194"
+    },
+    {
+      "path": "acceptance-summary.json",
+      "bytes": 12863,
+      "sha256": "30495ccf5cff70aada6df73b1bb98e66c2367dafede3b4e5a706cb14177d53d2"
+    },
+    {
+      "path": "artifact-producer-bindings.json",
+      "bytes": 6821,
+      "sha256": "87782276b2e01358b2b664f101db20a736be224ce5cc4bc0459388b7b0ab6d63"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 6176,
+      "sha256": "0fdaf10335efdd007572d87a72790e85c1585650c7683be3e3224b9055d732bb"
+    },
+    {
+      "path": "install-artifact-api.json",
+      "bytes": 799,
+      "sha256": "c56f94d8fc59eb3c23e587637e0545d368a2ced2018b3ddec6a9bb2a97f79183"
+    },
+    {
+      "path": "install-bundle-proof.json",
+      "bytes": 34979,
+      "sha256": "7ed29c3d5420c9809af819ba6ba5e79f49b00803f0d621fa60ef23403719a4e0"
+    },
+    {
+      "path": "jobs-api.json",
+      "bytes": 25170,
+      "sha256": "a059af4b3f8c79b0af39525890c6fac14ab1ab4072a5863354efe925e2d2a858"
+    },
+    {
+      "path": "native-artifact-api.json",
+      "bytes": 796,
+      "sha256": "d274938ea729b5e00a0fda13b608ad5b01c4f17170ede4ebf9ce984abf4a3285"
+    },
+    {
+      "path": "native-ctest-proof.json",
+      "bytes": 37176,
+      "sha256": "db700ba19fa310f5d6c8d4d1b5381f02c1868ce1bf35a350403db5d7e11d75da"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 136809,
+      "sha256": "dcbc9b606ceb2bb22ed9174e52cd5e2ca2b7f9125c9f749e9e13e1dd0b6536c1"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 14803,
+      "sha256": "ea6874787161fda17e8ffe6ee56a0ed13f7e974253177eeffeff7ab0c46b4d0f"
+    },
+    {
+      "path": "validator-artifact-api.json",
+      "bytes": 791,
+      "sha256": "c9a1bdfa140788e885049f8b411d01290d1bd578e8f9c72475c26f91ce72f075"
+    },
+    {
+      "path": "validator-job.log",
+      "bytes": 44158,
+      "sha256": "aeb569efbaf2a961d674d405ecfdfe8b939fbc045ad5fce90aba73ae88030d06"
+    },
+    {
+      "path": "validator-proof.json",
+      "bytes": 12770,
+      "sha256": "ea8bc236e45f0881377720f0f49ce52f7b6e605afdbd5412b108455740f8eb4d"
+    },
+    {
+      "path": "verification-execution.json",
+      "bytes": 5521,
+      "sha256": "9e290d5cd7ba7c2d368e3525402e80b41bcf9a6b5d8ddcb9ea6d18ed47380b38"
+    },
+    {
+      "path": "vst3-artifact-api.json",
+      "bytes": 789,
+      "sha256": "4852e877f0892ecfacf43011dad31502d52391e308dce790cb63300ebb6e054e"
+    }
+  ],
+  "large_archives": [
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14792445167.zip",
+      "bytes": 6251474,
+      "sha256": "6e51831597440ade428de77a1b7b98ce85d76cf9403c50e1093fb6580a23d45f",
+      "checkpoint_policy": "Not copied; retained in /dev/shm. Recover through artifact ID/public URL retained in API and public-GET evidence."
+    },
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14792270714.zip",
+      "bytes": 3133544,
+      "sha256": "cc18b39fa907fa4df626b8b1e4f746fbbce0884cbcb43fe33fa27837bcd42618",
+      "checkpoint_policy": "Not copied; retained in /dev/shm. Recover through artifact ID/public URL retained in API and public-GET evidence."
+    }
+  ],
+  "compact_file_count": 21,
+  "compact_bytes": 408370,
+  "scope": "Compact current-source Windows acceptance evidence; all prior-source histories remain unchanged. The full raw run snapshot was still in_progress when fetched."
+}

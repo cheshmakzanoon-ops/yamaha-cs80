@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "target": "linux-x86_64",
+  "scope": "Repeat of only the blocked offline installer verifier after GitHub independently changed actual workflow status from queued to in_progress. Original queued API and exit1 remain in run-api.json and native-install-verification-execution.json. No CI rerun, payload execution, runtime validator retry, checker change or API-status edit.",
+  "command": "python3 -B /workspace/scratch/011b6ba4a170/yamaha-cs80/docs/preset-evidence/2026.11.2/verify-install-bundle.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --target linux-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/14796735944.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/install-artifact-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/run-api-validator-started.json --work-dir /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/install-proof.json",
+  "result": {
+    "chunk_id": "0085fe",
+    "wall_time_seconds": 2.219297717,
+    "exit_code": 0,
+    "original_token_count": 85,
+    "output": "{\n  \"status\": \"artifact_bytes_verified\",\n  \"target\": \"linux-x86_64\",\n  \"artifact_id\": 14796735944,\n  \"sha256\": \"e6f4c19ff91aab7797271634fb70fcc1918a82f8aa4fb292f8a42da65b25e024\",\n  \"inventory_count\": 20,\n  \"formats\": [\n    \"VST3\",\n    \"Standalone\"\n  ],\n  \"proof\": \"/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/linux/install-proof.json\"\n}\n"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "kind": "offline_platform_validator_parser_validation",
+  "recorded_at_utc": "2026-11-23T03:36:23.361864+00:00",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "workflow_run_id": 45096447502,
+  "fixture_run_attempt": 1,
+  "status": "focused_offline_preflights_passed",
+  "checker": {
+    "path": "docs/preset-evidence/2026.11.2/verify-platform-validators.py",
+    "bytes": 21105,
+    "sha256": "fec10a56a2ba27d9bf31118ecc383fb6372f0ed5c013a68541f3f2f8c9d998c0"
+  },
+  "previous_checkers": [
+    {
+      "role": "original accepted Windows checker",
+      "sha256": "90868617f6ec638c0fe5269ae6d32d78f5eee31c3ff7f591bc61527d4683ad8d",
+      "retained_checkpoint_path": "tools/verify-platform-validators.py"
+    },
+    {
+      "role": "strict attempt-aware checker used for full offline Windows preflight",
+      "sha256": "78b6b4d285250e84fc6fd88e065a46a7d36b34ca867d6f6e53ac5e1e9e041e10",
+      "retained_checkpoint_path": "tools/verify-platform-validators-attempt-strict-initial.py"
+    }
+  ],
+  "windows_actual_fixture": {
+    "target": "windows-x86_64",
+    "job_id": 137451348288,
+    "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run_id": 45096447502,
+    "run_attempt": 1,
+    "original_accepted_proof": {
+      "repo_path": "docs/preset-evidence/2026.11.2/ci/windows-x86_64/validator-proof.json",
+      "sha256": "15eec4c8e22446c25a5a7b25deef911b8397289b61664f3f964e9d75a781d13f"
+    },
+    "artifact_inputs": [
+      {
+        "id": 14784794527,
+        "name": "cs80-pluginval-windows",
+        "bytes": 5081,
+        "digest": "sha256:9e715ecab51f77221fc5fcab22064e098183b544918eaa0edf5071b898897aa2"
+      },
+      {
+        "id": 14785491077,
+        "name": "cs80-windows-vst3",
+        "bytes": 3133547,
+        "digest": "sha256:f346ce7d5a616c059a2837f0320cd70fb8efa6ec87bfdfbaf74686e5a36b6817"
+      }
+    ],
+    "preflight": {
+      "checker_sha256": "78b6b4d285250e84fc6fd88e065a46a7d36b34ca867d6f6e53ac5e1e9e041e10",
+      "exit": 0,
+      "checker_invocations": 1,
+      "proof_sha256": "31fa8463d534e30452e43498df0cfdc057e73783d620d72b1b119aba6cf9d0d9",
+      "result_sha256": "6f55e316bb27b8c8d89ad2287c3f26163b7316bfb08ab6880485cca16a0da059",
+      "checkpoint_result_path": "tools/retry-parser-windows-preflight/preflight-result.json",
+      "comparison": {
+        "unchanged_existing_fields_except_verification_time": true,
+        "unchanged_required_validator_outcomes": true,
+        "unchanged_all_vst3_payload_and_sidecar_inventory": true,
+        "new_provenance_fields": [
+          "invocation_scope",
+          "preserved_previous_attempt",
+          "run_snapshot_attempt",
+          "validator_artifact_attempt_binding"
+        ],
+        "changed_existing_fields": [
+          "verified_at_utc"
+        ],
+        "removed_fields": []
+      },
+      "retained_runtime_results": [
+        {
+          "step": "Validate VST3 headless",
+          "seed": "0x1d5db2",
+          "strictness": 10,
+          "exit": 0,
+          "validation_invocations": 1,
+          "validation_retries": 0
+        },
+        {
+          "step": "Validate state regression seed 0x5037a0c",
+          "seed": "0x5037a0c",
+          "strictness": 10,
+          "exit": 0,
+          "validation_invocations": 1,
+          "validation_retries": 0
+        }
+      ],
+      "payload_identity": {
+        "bundle_files": 2,
+        "normalized_bundle_directories": 4,
+        "mismatch_count": 0,
+        "linker_sidecars": [
+          {
+            "path": "CS-80 Reference.exp",
+            "bytes": 968,
+            "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+            "format": "x64 COFF exports object",
+            "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+          },
+          {
+            "path": "CS-80 Reference.lib",
+            "bytes": 2266,
+            "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+            "format": "COFF import library archive",
+            "scope": "Link-time sidecar outside the VST3 bundle; not installed or loaded by validator."
+          }
+        ]
+      }
+    },
+    "scope": "One full offline check of already accepted Windows attempt1 artifacts using the strict initial checker. This preserves the original runtime results and is not another runtime invocation. The later clock-helper adjustment was tested separately below."
+  },
+  "bounded_upload_clock_preflight": {
+    "checker_sha256": "fec10a56a2ba27d9bf31118ecc383fb6372f0ed5c013a68541f3f2f8c9d998c0",
+    "helper_invocations": 5,
+    "checker_main_invocations": 0,
+    "historical_fixture_target": "macos-arm64",
+    "historical_job_id": 137437185127,
+    "historical_attempt": 1,
+    "fixture_sha256": "e6ae3855b3c98bad1de40cddd68f255641bdbe6ba8a96ecdf4e0175477f3c05d",
+    "result_sha256": "65eec7e184d57b94a93106153331ff90a6fa22cb6f912697fdda1a89931d12cd",
+    "checkpoint_fixture_path": "tools/validator-upload-clock-preflight/historical-arm-upload-fixture.json",
+    "checkpoint_result_path": "tools/validator-upload-clock-preflight/binding-preflight-result.json",
+    "positive_cases": [
+      {
+        "case": "actual_historical_arm_install",
+        "status": "accepted",
+        "binding": {
+          "job_id": 137437185127,
+          "run_attempt": 1,
+          "artifact_id": 14784458163,
+          "artifact_created_at": "2026-11-23T02:18:48Z",
+          "upload_success_log_timestamp": "2026-11-23T02:18:47.7331820Z",
+          "job_started_at": "2026-11-23T01:48:12Z",
+          "job_completed_at": "2026-11-23T02:18:54Z",
+          "upload_step_name": "Upload native macOS install bundle",
+          "upload_step_number": 15,
+          "upload_step_started_at": "2026-11-23T02:18:45Z",
+          "upload_step_completed_at": "2026-11-23T02:18:47Z",
+          "log_matches_artifact_id_and_bytes": true,
+          "timestamps_within_selected_job": true,
+          "upload_step_timestamp_tolerance_seconds": 2,
+          "api_creation_outside_upload_step_seconds": 1.0,
+          "success_log_outside_upload_step_seconds": 0.733182,
+          "api_creation_minus_success_log_seconds": 0.266818,
+          "timestamps_within_upload_step_tolerance": true,
+          "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+        }
+      },
+      {
+        "case": "actual_historical_arm_validators",
+        "status": "accepted",
+        "binding": {
+          "job_id": 137437185127,
+          "run_attempt": 1,
+          "artifact_id": 14784314450,
+          "artifact_created_at": "2026-11-23T02:18:49Z",
+          "upload_success_log_timestamp": "2026-11-23T02:18:48.8163330Z",
+          "job_started_at": "2026-11-23T01:48:12Z",
+          "job_completed_at": "2026-11-23T02:18:54Z",
+          "upload_step_name": "Upload pluginval reports",
+          "upload_step_number": 18,
+          "upload_step_started_at": "2026-11-23T02:18:47Z",
+          "upload_step_completed_at": "2026-11-23T02:18:48Z",
+          "log_matches_artifact_id_and_bytes": true,
+          "timestamps_within_selected_job": true,
+          "upload_step_timestamp_tolerance_seconds": 2,
+          "api_creation_outside_upload_step_seconds": 1.0,
+          "success_log_outside_upload_step_seconds": 0.816333,
+          "api_creation_minus_success_log_seconds": 0.183667,
+          "timestamps_within_upload_step_tolerance": true,
+          "basis": "Artifact API has no run-attempt field. Bind the exact uploaded ID and size from this selected job log to the raw producer job API run_attempt. Both timestamps must be inside the job interval and within two seconds of the upload-step interval; original timestamps and measured offsets remain recorded."
+        }
+      }
+    ],
+    "negative_controls": [
+      {
+        "case": "wrong_artifact_id",
+        "status": "rejected_as_expected",
+        "error": "Selected job log does not uniquely identify this artifact ID and byte count"
+      },
+      {
+        "case": "api_time_five_seconds_after_step_but_inside_job",
+        "status": "rejected_as_expected",
+        "error": "Artifact API creation time exceeds the upload-step clock tolerance"
+      },
+      {
+        "case": "success_log_five_seconds_after_step_but_inside_job",
+        "status": "rejected_as_expected",
+        "error": "Upload-success log timestamp exceeds the upload-step clock tolerance"
+      }
+    ],
+    "scope": "Only the artifact-upload binding helper was invoked on actual historical ARM job/API/log records, with mutations for rejection controls. No full ARM or Intel platform verifier pass is claimed."
+  },
+  "provenance_contract": {
+    "expected_run_attempt": "Explicit CLI argument; both supplied raw run API and selected raw job must match.",
+    "artifact_producer_attempt": "Exact uploaded artifact ID and size from the selected producer job log plus raw job API attempt. API creation and upload-success timestamps remain inside the job interval and within a bounded 2-second margin of its upload-step interval. Original times and signed offsets are recorded.",
+    "package_manifest": "Source, workflow_run_id and platform are present; run_attempt is absent. Installer wrapper checks the supplied full run API attempt. Exact producer attempt additionally needs upload ID, producer job API and job log.",
+    "retry_history": "The intended Intel attempt2 requires the preserved source/run/target-matched original native failure record. Accepted Windows and ARM attempt1 artifacts remain attempt1."
+  },
+  "execution_scope": {
+    "new_runtime_validator_invocations": 0,
+    "new_native_test_invocations": 0,
+    "new_builds": 0,
+    "new_downloads": 0,
+    "remote_mutations": 0,
+    "new_platform_acceptance_claimed": false
+  },
+  "limits": [
+    "This record validates offline evidence parsing. It is not new runtime CI or renewed platform acceptance.",
+    "The full Windows preflight used the strict initial checker hash; the final current checker was exercised only through the two positive and three negative upload-binding helper fixtures.",
+    "The retry-only prior-failure branch was independently reviewed but has not been executed against actual Intel attempt2 evidence.",
+    "The current checker is source/run-specific. Its reviewed retry case is an Intel rerun following a native test failure with no installation bundle; it is not a general validator-only retry checker.",
+    "The original Intel attempt1 failure and scheduler-state rejection remain preserved separately; neither is overwritten or reclassified.",
+    "No full workflow success, signing/notarization, all-DAW compatibility or acoustic/hardware equivalence is asserted."
+  ]
+}

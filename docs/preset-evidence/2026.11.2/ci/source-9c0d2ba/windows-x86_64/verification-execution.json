@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "scope": "Offline evidence parsers and archive inspection only; no new native or pluginval invocation.",
+  "source": "9c0d2baef5643a983a0e7a378b6be033371248f4",
+  "run_id": 45112404257,
+  "run_attempt": 1,
+  "executions": [
+    {
+      "checker": "native",
+      "command": "python3 -B /tmp/cs80-circuit-011b6ba4a170/inspect-native-evidence.py --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --job-id 137487484848 --target windows-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14791463885.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/native-artifact-api.json --jobs-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/jobs-api.json --job-log /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/native-job.log --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/native-ctest-proof.json",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "e3ebac",
+          "wall_time_seconds": 0.050368167,
+          "exit_code": 0,
+          "original_token_count": 366,
+          "output": "{\"status\": \"native_ctest_verified\", \"target\": \"windows-x86_64\", \"job_conclusion\": \"success\", \"native_only\": true, \"counts\": {\"registered\": 225, \"passed\": 223, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0}, \"ctest_seconds\": 1741.61, \"python_subtest_skips\": {\"total\": 11, \"suites\": [{\"ctest_test\": \"cs80_packaging_notice_tests\", \"python_tests_run\": 7, \"python_skipped\": 1, \"details\": [\"test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\"]}, {\"ctest_test\": \"cs80_windows_installer_preflight_tests\", \"python_tests_run\": 12, \"python_skipped\": 1, \"details\": []}, {\"ctest_test\": \"cs80_validator_diagnostic_selection_tests\", \"python_tests_run\": 9, \"python_skipped\": 1, \"details\": []}, {\"ctest_test\": \"cs80_preset_capture_tests\", \"python_tests_run\": 10, \"python_skipped\": 1, \"details\": []}, {\"ctest_test\": \"cs80_render_cli_tests\", \"python_tests_run\": 7, \"python_skipped\": 3, \"details\": []}, {\"ctest_test\": \"cs80_truth_render_tests\", \"python_tests_run\": 16, \"python_skipped\": 2, \"details\": []}, {\"ctest_test\": \"cs80_vca_reference_tests\", \"python_tests_run\": 12, \"python_skipped\": 1, \"details\": []}, {\"ctest_test\": \"cs80_float_wav_tests\", \"python_tests_run\": 4, \"python_skipped\": 1, \"details\": []}], \"scope\": \"Actual LastTest unittest summaries; distinct from formal CTest skips. Nonverbose suites may omit individual skip reasons.\"}, \"later_failed_steps\": []}\n"
+        }
+      }
+    },
+    {
+      "checker": "install",
+      "command": "python3 -B /workspace/scratch/011b6ba4a170/yamaha-cs80/docs/preset-evidence/2026.11.2/verify-install-bundle.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --source 9c0d2baef5643a983a0e7a378b6be033371248f4 --run-id 45112404257 --run-attempt 1 --target windows-x86_64 --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14792445167.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/install-artifact-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/run-api.json --work-dir /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/install-bundle-proof.json",
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "f31284",
+          "wall_time_seconds": 0.516893796,
+          "exit_code": 0,
+          "original_token_count": 87,
+          "output": "{\n  \"status\": \"artifact_bytes_verified\",\n  \"target\": \"windows-x86_64\",\n  \"artifact_id\": 14792445167,\n  \"sha256\": \"6e51831597440ade428de77a1b7b98ce85d76cf9403c50e1093fb6580a23d45f\",\n  \"inventory_count\": 20,\n  \"formats\": [\n    \"VST3\",\n    \"Standalone\"\n  ],\n  \"proof\": \"/dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/install-bundle-proof.json\"\n}\n"
+        }
+      }
+    },
+    {
+      "checker": "validator",
+      "command": "python3 -B /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/verify-platform-validators.py --source-root /workspace/scratch/011b6ba4a170/yamaha-cs80 --jobs-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/jobs-api.json --run-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/run-api.json --run-attempt 1 --job-log /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/validator-job.log --archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14792580154.zip --artifact-json /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/validator-artifact-api.json --target windows-x86_64 --job-id 137502330591 --vst3-archive /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/14792270714.zip --vst3-api /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/vst3-artifact-api.json --install-proof /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/install-bundle-proof.json --out /dev/shm/cs80-circuit-011b6ba4a170/a51/9c0d/windows/validator-proof.json",
+      "result": {
+        "chunk_id": "0e924d",
+        "wall_time_seconds": 0.062086007,
+        "exit_code": 0,
+        "original_token_count": 46,
+        "output": "{\"status\": \"required_validators_verified\", \"target\": \"windows-x86_64\", \"job_id\": 137502330591, \"validation_invocations\": 2, \"validation_retries\": 0, \"validator_download_attempts\": 1}\n"
+      }
+    }
+  ]
+}
