@@ -549,7 +549,7 @@ public:
 
     std::function<void(float)> onValueChange;
     // [ws8-studio] Full range from any touch point: sliding from the first contact to either end of the touch
-    // surface gives the whole bend that way. When this returns false (the editor returns false in PURE CS-80) the
+    // surface gives the whole bend that way. When this returns false the
     // bend is proportional to distance, the whole strip being the whole range, as on the hardware ribbon.
     std::function<bool()> fullRangeFromTouch;
     // Pixels from the anchor for a full bend upwards (true) or downwards (false).

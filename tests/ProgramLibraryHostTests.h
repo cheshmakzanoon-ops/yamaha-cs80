@@ -1,6 +1,6 @@
 #pragma once
 
-// [ws6-library] Host tests for the program list, Legacy Library recall, MIDI
+// [ws6-library] Host tests for stable factory program addresses and MIDI
 // Program Change with bank select, A/B compare and randomise. Run from the UI
 // smoke executable after JUCE initialisation; no user files are written.
 
@@ -19,7 +19,7 @@ namespace cs80::tests
 template <typename Check>
 void testProgramLibraryHost(Check&& check)
 {
-    const auto& legacy = cs80::legacyLibrary();
+    const auto& original = cs80::originalLibrary();
     const auto& curated = cs80::curatedLibrary();
     const int L = cs80::legacyProgramCount;
     const int C = (int) curated.size();
@@ -32,9 +32,13 @@ void testProgramLibraryHost(Check&& check)
     };
     auto valuesMatch = [](const Cs80AudioProcessor& host, const cs80::ParamValues& expected)
     {
+        if (host.getParamValue(cs80::P_sourcePerformance) != 1.0f
+            || host.getParamValue(cs80::P_parityMode) != 0.0f)
+            return false;
         for (int i = 0; i < cs80::P_numParams; ++i)
         {
-            if (Cs80AudioProcessor::isPhysicalSetupParameter(i) || i == cs80::P_parityMode)
+            if (Cs80AudioProcessor::isPhysicalSetupParameter(i)
+                || i == cs80::P_parityMode || i == cs80::P_sourcePerformance)
                 continue;
             const auto& d = cs80::paramDef(i);
             if (std::abs(host.getParamValue(i) - expected[i]) > std::max(1.0e-4f, (d.max - d.min) * 1.0e-5f))
@@ -43,7 +47,7 @@ void testProgramLibraryHost(Check&& check)
         return true;
     };
 
-    // --- Program list: Legacy Library keeps host indexes 0..221; curated follows.
+    // --- One factory library: original addresses 0..221; curated follows.
     {
         Cs80AudioProcessor host;
         check(host.getCurrentProgram() == cs80::programIndexForCurated(0)
@@ -52,23 +56,24 @@ void testProgramLibraryHost(Check&& check)
                   && valuesMatch(host, curated[0].values)
                   && host.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "fresh instance recalls the authored Circuit showcase and its factory identity");
-        check(host.getNumPrograms() == L + C && C >= 280, "host program list covers legacy and curated libraries");
-        check(host.getProgramName(0) == juce::String(legacy[0].name)
-                  && host.getProgramName(22) == juce::String(legacy[22].name)
+        check(L == 222 && C == 301 && host.getNumPrograms() == 523,
+              "host program list preserves all 523 original and curated factory addresses");
+        check(host.getProgramName(0) == juce::String(original[0].name)
+                  && host.getProgramName(22) == juce::String(original[22].name)
                   && host.getProgramName(L) == juce::String(curated[0].name)
                   && host.getProgramName(L + C - 1) == juce::String(curated[(size_t) C - 1].name),
-              "program names: legacy at their shipped indexes, curated from 222");
+              "program names: original at their shipped indexes, curated from 222");
         host.setCurrentProgram(L + 4);
         check(host.getCurrentProgram() == L + 4 && host.getPresetName() == juce::String(curated[4].name)
                   && valuesMatch(host, curated[4].values) && host.getParamValue(cs80::P_sourcePerformance) == 1.0f,
               "setCurrentProgram recalls a curated program on the circuit engine");
         host.setCurrentProgram(22);
-        check(host.getCurrentProgram() == 22 && host.getPresetName() == juce::String(legacy[22].name)
-                  && valuesMatch(host, legacy[22].values) && host.getParamValue(cs80::P_sourcePerformance) == 0.0f,
-              "setCurrentProgram recalls a legacy program on the legacy engine");
+        check(host.getCurrentProgram() == 22 && host.getPresetName() == juce::String(original[22].name)
+                  && valuesMatch(host, original[22].values) && host.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+              "setCurrentProgram recalls the revoiced original address on the circuit engine");
     }
 
-    // --- Old sessions recall the Legacy Library by their old index and name.
+    // --- Old sessions keep their original program index and name.
     {
         Cs80AudioProcessor old;
         old.loadFactoryPreset(117);
@@ -76,17 +81,17 @@ void testProgramLibraryHost(Check&& check)
         old.getStateInformation(saved);
         Cs80AudioProcessor restored;
         restored.setStateInformation(saved.getData(), (int) saved.getSize());
-        check(restored.getCurrentProgram() == 117 && restored.getPresetName() == juce::String(legacy[117].name)
-                  && valuesMatch(restored, legacy[117].values),
-              "session naming legacy program 117 restores the same index, name and sound");
+        check(restored.getCurrentProgram() == 117 && restored.getPresetName() == juce::String(original[117].name)
+                  && valuesMatch(restored, original[117].values),
+              "session naming original program 117 restores the same index, name and current sound");
         // A pre-library state carries only factoryIndex + presetName.
         auto tree = old.getAPVTS().copyState();
-        tree.setProperty("presetName", juce::String(legacy[40].name), nullptr);
+        tree.setProperty("presetName", juce::String(original[40].name), nullptr);
         tree.setProperty("factoryIndex", 40, nullptr);
         const auto text = tree.createXml()->toString();
         restored.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
-        check(restored.getCurrentProgram() == 40 && restored.getPresetName() == juce::String(legacy[40].name),
-              "pre-library state metadata keeps its legacy meaning");
+        check(restored.getCurrentProgram() == 40 && restored.getPresetName() == juce::String(original[40].name),
+              "pre-library state metadata retains its original program address");
     }
 
     // --- MIDI Program Change and bank select.
@@ -104,9 +109,9 @@ void testProgramLibraryHost(Check&& check)
         midi.addEvent(juce::MidiMessage::controllerEvent(1, 0, 1), 0);
         midi.addEvent(juce::MidiMessage::programChange(1, 22), 1);
         block(host, midi);
-        check(host.getCurrentProgram() == 22 && host.getPresetName() == juce::String(legacy[22].name)
-                  && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::legacy,
-              "bank MSB 1 addresses the Legacy Library by its old program number");
+        check(host.getCurrentProgram() == 22 && host.getPresetName() == juce::String(original[22].name)
+                  && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::sourcePerformance,
+              "bank MSB 1 keeps original program addresses on the same circuit engine");
         midi.clear();
         midi.addEvent(juce::MidiMessage::programChange(1, 23), 0);
         block(host, midi);
@@ -152,19 +157,20 @@ void testProgramLibraryHost(Check&& check)
         check(host.getCurrentProgram() == L + 7, "MPE master channel Program Change is accepted");
         host.setParamValue(cs80::P_mpeOn, 0.0f);
 
-        // PURE CS-80 ignores Program Change.
+        // Retired isolation writes cannot suppress MIDI Program Change.
         host.setParamValue(cs80::P_parityMode, 1.0f);
         block(host, {});
         midi.clear();
         midi.addEvent(juce::MidiMessage::programChange(1, 9), 0);
         block(host, midi);
-        check(host.getCurrentProgram() == L + 7 && host.getParamValue(cs80::P_parityMode) == 1.0f,
-              "PURE CS-80 ignores MIDI Program Change");
+        check(host.getCurrentProgram() == L + 9 && host.getParamValue(cs80::P_parityMode) == 0.0f
+                  && host.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+              "retired isolation requests leave MIDI Program Change operational on the circuit engine");
         host.setParamValue(cs80::P_parityMode, 0.0f);
 
         // A renamed MIDI-recalled program keeps its index and the new name.
         host.setPresetName("Renamed");
-        check(host.getPresetName() == "Renamed" && host.getCurrentProgram() == L + 7,
+        check(host.getPresetName() == "Renamed" && host.getCurrentProgram() == L + 9,
               "rename after Program Change keeps the index");
     }
 
@@ -369,19 +375,19 @@ void testProgramLibraryHost(Check&& check)
     testAbCompareHistoryHost(check);
     testRandomiseHistoryHost(check);
 
-    // --- Library browser: prev/next through the current filter, Legacy section, audition.
+    // --- Library browser: unified factory order, filtered navigation and audition.
     {
         juce::TemporaryFile folder;
         check(folder.getFile().createDirectory().wasOk(), "isolated preset folder");
         Cs80AudioProcessor host(folder.getFile());
-        host.setCurrentProgram(L);
+        host.setCurrentProgram(0);
         {
             cs80::ui::PresetBrowser browser(host);
             browser.loadAdjacent(1);
-            check(host.getCurrentProgram() == L + 1, "NEXT steps through the factory library");
+            check(host.getCurrentProgram() == 1, "NEXT steps through the unified factory library");
             browser.loadAdjacent(-1);
             browser.loadAdjacent(-1);
-            check(host.getCurrentProgram() == L + C - 1, "PREV wraps within the current filter (legacy excluded)");
+            check(host.getCurrentProgram() == L + C - 1, "PREV wraps from the first original address to the final curated factory sound");
             check(! browser.isAuditioning(), "audition starts off by default");
         }
         const auto saved = host.saveUserPreset("Browser Step");
@@ -392,14 +398,21 @@ void testProgramLibraryHost(Check&& check)
             browser.loadAdjacent(1);
             check(host.getPresetName() == "Browser Step", "NEXT reaches user patches in the same filter");
             browser.loadAdjacent(1);
-            check(host.getCurrentProgram() == L, "and wraps back to the first factory program");
+            check(host.getCurrentProgram() == 0, "and wraps back to the first factory program");
         }
         host.setCurrentProgram(22);
         {
             cs80::ui::PresetBrowser browser(host);
             browser.loadAdjacent(1);
-            check(host.getCurrentProgram() == 23 && host.getPresetName() == juce::String(legacy[23].name),
-                  "a legacy sound opens the Legacy Library section; NEXT stays in it");
+            check(host.getCurrentProgram() == 23 && host.getPresetName() == juce::String(original[23].name),
+                  "an original factory address participates in the unified browser order");
+        }
+        host.setCurrentProgram(L - 1);
+        {
+            cs80::ui::PresetBrowser browser(host);
+            browser.loadAdjacent(1);
+            check(host.getCurrentProgram() == L && host.getPresetName() == juce::String(curated[0].name),
+                  "NEXT crosses from the final original address into the curated sounds without changing scope");
         }
         folder.getFile().deleteRecursively();
     }

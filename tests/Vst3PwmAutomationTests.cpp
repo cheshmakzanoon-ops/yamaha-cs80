@@ -120,7 +120,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = pwmRender(protectedP, 256);
-                check(actual == pwmRender(protectedP, 256, true, true), "pwm Legacy/PURE preserve flattening");
+                check(actual == pwmRender(p, 256), "pwm retired mode requests preserve canonical circuit sample-accurate audio");
                 capturePwm(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

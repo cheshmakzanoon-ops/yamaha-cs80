@@ -181,12 +181,16 @@ int main(int argc,char**argv) {
       for(int prior:{int(cs80::P_volume),int(cs80::P_masterTune),int(cs80::P_tuningRef),int(cs80::P_mod16Amount)}){
         const double v=normalized(prior,p[prior]);preceding.push_back({prior,{{0,v},{1023,v},{4095,.4},{65535,.6}}});}
       save("preceding112",renderSession(module,p,preceding,127));
+      // Retired engine-policy fields migrate to the same circuit instrument.
+      // Keep historical capture suffixes for evidence readers; these are old
+      // state requests, not alternate engines or disabled effects.
+      const auto canonical=renderSession(module,p,curves,256);
       auto legacy=p;legacy[cs80::P_sourcePerformance]=0;
       const auto old=renderSession(module,legacy,curves,256),oldFlat=renderSession(module,legacy,curves,256,true);
-      check(exactAudio(old,oldFlat),"Legacy final-point flattening");save("legacy",old);save("legacy-flat",oldFlat);
+      check(exactAudio(old,canonical),"retired source state preserves canonical circuit sample-accurate FX curves");save("legacy",old);save("legacy-flat",oldFlat);
       auto pure=p;pure[cs80::P_parityMode]=1;
       const auto pureAudio=renderSession(module,pure,curves,256),pureFixed=renderSession(module,pure,constant,256);
-      check(exactAudio(pureAudio,pureFixed),"PURE effects inert");save("pure",pureAudio);save("pure-fixed",pureFixed);
+      check(exactAudio(pureAudio,canonical),"retired isolation state preserves canonical circuit sample-accurate FX curves");save("pure",pureAudio);save("pure-fixed",pureFixed);
       if(!compat){
         const auto scalar=renderSession(module,p,curves,1);save("scalar",scalar);double error=0;
         for(int block:{7,64,256,1024}){

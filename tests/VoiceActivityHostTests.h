@@ -54,10 +54,11 @@ void testVoiceActivityHost(Check check)
         host.setParamValue(P_voiceMode, 1.0f); tick();
         host.requestPanicFromUI(); tick(); fill();
         host.setParamValue(P_parityMode, 1.0f); tick();
-        check(host.getVoiceActivity() == VoiceActivityReading{}, "PURE transition clears voices and forces eight-slot telemetry");
+        check(host.getVoiceActivity() == VoiceActivityReading{0xffffu, 16},
+              "retired isolation write preserves held voices and sixteen-slot telemetry");
         fill();
-        check(host.getVoiceActivity() == VoiceActivityReading{0xffu, 8} && host.getActiveVoiceCount() == 8,
-              "PURE ignores the stored sixteen-voice request");
+        check(host.getVoiceActivity() == VoiceActivityReading{0xffffu, 16} && host.getActiveVoiceCount() == 16,
+              "retired isolation write cannot mask the selected voice capacity");
         host.prepareToPlay(48000.0, 32);
         check(host.getVoiceActivity() == VoiceActivityReading{}, "re-prepare clears previously sounding voice lamps");
         fill();

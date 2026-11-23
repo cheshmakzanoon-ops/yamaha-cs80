@@ -97,6 +97,16 @@ void testVoiceActivityUi(Check check, Flush flush)
         (void) lamps->createComponentSnapshot(lamps->getLocalBounds());
         check(state.isEquivalentTo(host.getAPVTS().copyState()), "telemetry painting does not edit parameter state");
     }
-    host.setParamValue(P_parityMode, 1.0f); tick(); waitCount(0, 8);
+    const auto retainedActivity = host.getVoiceActivity();
+    for (int parameter : { P_parityMode, P_sourcePerformance })
+    {
+        host.setParamValue(parameter, parameter == P_parityMode ? 1.0f : 0.0f);
+        tick(); waitCount(16, 16);
+        check(host.getVoiceActivity() == retainedActivity && lamps->isVisible() && drawer.isVisible(),
+              "obsolete policy writes preserve both active voice rows and their visible monitors");
+    }
+    host.requestPanicFromUI(); tick(); waitCount(0, 16);
+    check(host.getVoiceActivity().mask == 0,
+          "real panic clears both visible voice rows while preserving the selected capacity");
 }
 } // namespace cs80::tests

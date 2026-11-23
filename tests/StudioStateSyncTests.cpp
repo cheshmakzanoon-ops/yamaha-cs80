@@ -74,7 +74,7 @@ int main()
     check(!studio.qwerty.isEnabled(), "open editor follows restored QWERTY flag");
     check(studio.qwerty.heldCount() == 0 && !p.getKeyboardState().isNoteOn(1, 60), "restored disable leaves no held note");
     check(notes.offs >= 1, "held note receives noteOff");
-    check(studio.areControllersShown() && studio.controllers.isVisible(), "restored controller preference visible outside PURE");
+    check(studio.areControllersShown() && studio.controllers.isVisible(), "restored controller preference is visible on the circuit instrument");
     check(cs80::ui::circuitNotesInTooltips(), "open editor follows restored circuit notes flag");
     const int offs = notes.offs;
     for (int i = 0; i < 4; ++i) studio.sync();
@@ -96,23 +96,23 @@ int main()
     studio.sync();
     check(studio.qwerty.isEnabled() && !studio.areControllersShown() && !cs80::ui::circuitNotesInTooltips(), "opposite valid restore updates all flags again");
 
-    // Restored controller intent remains latent in PURE and returns afterward.
+    // Obsolete isolation requests cannot mask a restored controller preference.
     p.setParamValue(cs80::P_parityMode, 1);
     state.controllersShown = true;
-    const auto pureState = save(p);
+    const auto policyRequestState = save(p);
     studio.setControllersShown(false);
-    restore(p, pureState);
+    restore(p, policyRequestState);
     studio.sync();
-    check(studio.areControllersShown() && !studio.controllers.isVisible(), "PURE hides restored wanted controllers");
+    check(studio.areControllersShown() && studio.controllers.isVisible(), "obsolete isolation request preserves restored visible controllers");
     p.setParamValue(cs80::P_parityMode, 0);
     studio.sync();
-    check(studio.controllers.isVisible(), "leaving PURE reveals restored controller intent");
+    check(studio.controllers.isVisible(), "canonical policy write preserves restored controller visibility");
     studio.setControllersShown(false);
     p.setParamValue(cs80::P_parityMode, 1);
     studio.sync();
     p.setParamValue(cs80::P_parityMode, 0);
     studio.sync();
-    check(!studio.controllers.isVisible(), "PURE roundtrip preserves unwanted controllers");
+    check(!studio.controllers.isVisible(), "obsolete policy roundtrip preserves explicitly hidden controllers");
 
     // Tooltips remain global. Unchanged mounts must not fight each other's
     // most recent explicit preference application on every timer tick.

@@ -501,7 +501,7 @@ void ScopeDrawer::resized()
 ControllersStrip::ControllersStrip(Cs80AudioProcessor& p) : processor(p)
 {
     setTitle("Controllers strip");
-    setDescription("Pitch and modulation wheels. A modern addition: the CS-80 has a ribbon instead. Hidden in PURE CS-80.");
+    setDescription("Pitch and modulation wheels. A modern addition: the CS-80 has a ribbon instead.");
     pitch.setTitle("Pitch wheel");
     pitch.setDescription("Spring-loaded pitch wheel: MIDI-style pitch bend over the WHEEL BEND range. A modern addition. " + pitch.getDescription());
     mod.setTitle("Modulation wheel");

@@ -80,22 +80,30 @@ void buildStrings(Builder& add)
             .g(P_modWheelSub, 0.0f).eg(I, 0.08f, 0.8f, 0.90f, 0.5f).eg(II, 0.13f, 1.0f, 0.82f, 0.65f)
             .lpf(I, 3100.0f, 0.08f).lpf(II, 4600.0f, 0.05f).chorus(0.16f, 0.35f).detune(3.0f));
     add("Solo Violin", "Strings", { "aftertouch", "sub-mod", "init-bend", "velocity" },
-        "A single dry 8' saw rank with a small bow-noise component. Velocity shapes the onset; pressure introduces about 16 cents of vibrato. The wheel provides a separate gentle vibrato gesture.",
-        strings().mix(0.0f).wave(I, true, false, 0.025f, 0.006f).wave(II, false, false)
+        "A single dry 8' saw body with a separate, brief bow-friction onset. The noise rank dies away while the pitch remains; velocity shapes the bow and pressure introduces about 16 cents of vibrato.",
+        strings().mix(0.16f).wave(I, true, false, 0.025f, 0.002f).wave(II, false, false, 0.0f, 0.95f)
             .feet(I, f8).g(P_chorusOn, 0.0f).detune(0.0f).pan(Both, 0.0f)
             .hpf(I, 150.0f, 0.06f).lpf(I, 3800.0f, 0.12f)
             .feg(I, 0.08f, 0.16f, 0.10f, 0.55f, 0.28f).eg(I, 0.045f, 0.65f, 0.85f, 0.28f)
-            .level(I, 0.92f, 0.32f).level(II, 0.0f, 0.0f).touch(I, 0.18f, 0.52f, 0.18f, 0.24f)
+            .level(I, 0.92f, 0.38f).touch(I, 0.18f, 0.62f, 0.18f, 0.285f)
+            .hpf(II, 1700.0f, 0.0f).lpf(II, 6800.0f, 0.04f)
+            .feg(II, 0.0f, 0.08f, 0.006f, 0.14f, 0.06f)
+            .eg(II, 0.006f, 0.24f, 0.0f, 0.06f).level(II, 0.85f, 0.30f)
+            .touch(II, 0.0f, 0.90f, 0.0f, 0.0f)
             .sub(subSine, 5.7f, 0.0f).subAt(0.03f, 0.105f).g(P_modWheelSub, 0.065f).bend(0.045f)
             .contour(0.0f, -0.10f, 0.0f, -0.05f)
             .g(P_voiceDispersion, 0.08f).g(P_drift, 0.025f).g(P_analogNoise, 0.003f));
     add("Solo Cello", "Strings", { "aftertouch", "sub-mod", "velocity" },
-        "A single dry 16' bowed rank with a warm fundamental and a slower bow onset. Pressure adds weight and about 12 cents of vibrato; no octave layer or ensemble chorus is present.",
-        strings().mix(0.0f).wave(I, true, false, 0.07f, 0.004f).wave(II, false, false)
+        "A single dry 16' bowed body with a warm fundamental and a low bow-friction onset that fades independently. Pressure adds weight and about 12 cents of vibrato; no octave layer or ensemble chorus is present.",
+        strings().mix(0.14f).wave(I, true, false, 0.07f, 0.0015f).wave(II, false, false, 0.0f, 0.85f)
             .feet(I, f16).g(P_chorusOn, 0.0f).detune(0.0f).pan(Both, 0.0f)
             .hpf(I, 28.0f, 0.03f).lpf(I, 1500.0f, 0.14f)
             .feg(I, 0.12f, 0.18f, 0.12f, 0.8f, 0.4f).eg(I, 0.075f, 0.85f, 0.90f, 0.42f)
-            .level(I, 0.95f, 0.34f).level(II, 0.0f, 0.0f).touch(I, 0.14f, 0.48f, 0.16f, 0.28f)
+            .level(I, 0.95f, 0.395f).touch(I, 0.14f, 0.56f, 0.16f, 0.326f)
+            .hpf(II, 850.0f, 0.0f).lpf(II, 4200.0f, 0.04f)
+            .feg(II, 0.0f, 0.08f, 0.010f, 0.20f, 0.08f)
+            .eg(II, 0.010f, 0.32f, 0.0f, 0.08f).level(II, 0.85f, 0.30f)
+            .touch(II, 0.0f, 0.90f, 0.0f, 0.0f)
             .sub(subSine, 4.9f, 0.0f).subAt(0.03f, 0.08f).g(P_modWheelSub, 0.055f)
             .contour(0.05f, -0.12f, 0.0f, -0.04f)
             .g(P_voiceDispersion, 0.07f).g(P_drift, 0.025f).g(P_analogNoise, 0.003f));
@@ -207,14 +215,14 @@ void buildStrings(Builder& add)
             .touch(I, 0.14f, 0.25f, 0.16f, 0.10f).touch(II, 0.12f, 0.30f, 0.12f, 0.10f)
             .mix(0.44f).chorus(0.42f, 0.34f).detune(5.2f));
     add("Marcato Strings", "Strings", { "velocity", "dual-rank" },
-        "An accented upper bow burst settles into a sustained body. Velocity controls both the bite and its weight; the quieter sustained section remains after the accent.",
+        "A firm upper bow burst decays completely into a quieter sustained body. Velocity controls both the bite and its weight; the independent upper accent leaves the lower bow clear during the hold.",
         strings().wave(II, true, false, 0.0f, 0.01f).hpf(I, 160.0f).hpf(II, 650.0f)
             .lpf(I, 3200.0f, 0.12f).lpf(II, 7000.0f, 0.08f)
             .feg(I, 0.06f, 0.22f, 0.026f, 0.32f, 0.24f).feg(II, 0.05f, 0.30f, 0.008f, 0.18f, 0.10f)
-            .eg(I, 0.026f, 0.45f, 0.72f, 0.30f).eg(II, 0.008f, 0.30f, 0.12f, 0.14f)
-            .level(I, 0.95f, 0.23f).level(II, 0.85f, 0.14f)
-            .touch(I, 0.22f, 0.75f, 0.12f, 0.12f).touch(II, 0.32f, 0.70f, 0.06f, 0.06f)
-            .mix(0.30f).chorus(0.14f, 0.35f).detune(2.0f).subAt(0.02f, 0.03f));
+            .eg(I, 0.026f, 0.34f, 0.52f, 0.30f).eg(II, 0.006f, 0.25f, 0.0f, 0.10f)
+            .level(I, 0.95f, 0.32f).level(II, 0.85f, 0.20f)
+            .touch(I, 0.22f, 1.0f, 0.12f, 0.16f).touch(II, 0.32f, 0.95f, 0.06f, 0.08f)
+            .mix(0.34f).chorus(0.14f, 0.35f).detune(2.0f).subAt(0.02f, 0.03f));
     add("Air Strings", "Strings", { "noise", "dual-rank", "aftertouch" },
         "Quiet filtered bow air fades after the onset behind a sustained saw body. The separate noise envelope leaves only a soft breath during the hold; pressure supports the body.",
         strings().wave(I, true, false).wave(II, false, false, 0.0f, 0.55f)

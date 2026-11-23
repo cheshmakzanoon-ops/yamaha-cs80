@@ -122,10 +122,13 @@ int main()
         midi.addEvent(sysex.data(),int(sysex.size()),0);tick();
         check(host->getEngine().getMtsTuning(2).pitch[64]==64.25f,"same-block SysEx follows master polling");
         tick();tables(.5f);
-        host->setParamValue(cs80::P_mpeOn,1); tick(); tables(.5f,true);
+        host->setParamValue(cs80::P_mpeOn,1); channelQueries=0; tick(); tables(.5f,true);
+        check(channelQueries==0,"actual MPE mode uses channel-independent master polling");
         host->setParamValue(cs80::P_mpeOn,0); tick(); tables(.5f);
-        host->setPure(true); channelQueries=0; tick(); tables(.5f,true);
-        check(channelQueries==0,"PURE preserves channel-independent polling");
+        host->setPure(true); channelQueries=0; tick(); tables(.5f);
+        check(channelQueries==0xffffu,"obsolete isolation request preserves conventional channel-aware polling");
+        check(!host->isPure() && host->getEngineMode()==Cs80AudioProcessor::EngineMode::circuit,
+              "obsolete policy request cannot change the circuit instrument");
         host->setPure(false); tick(); tables(.5f);
         master = false; tick();
         check(!host->isMtsEspConnected(), "disconnect is observed"); tables(.5f);

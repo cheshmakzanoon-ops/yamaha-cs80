@@ -53,11 +53,11 @@ void buildOrgan(Builder& add)
                .level(I, 0.30f, 0.86f).level(II, 0.20f, 0.80f).mix(0.34f)
                .eg(I, 0.018f, 0.40f, 1.0f, 0.15f).eg(II, 0.023f, 0.40f, 1.0f, 0.12f)
                .tremolo(0.24f, 6.1f).detune(1.0f));
-    add("Tremolo Organ", "Organ", { "tremolo", "feet-layer" },
-        "A weighty 16' sine with a quieter 4' flute stop, moving under a relaxed tremolo. Stable pitches and restrained depth keep the bass line intelligible.",
+    add("Tremolo Organ", "Organ", { "tremolo", "sub-mod", "feet-layer" },
+        "A weighty 16' sine with a quieter 4' flute stop. Gentle 3.2 Hz SUB amplitude motion keeps the tremolo present in the bass, while the circuit tremolo adds restrained stereo movement without bending the stops.",
         organ().feet(I, f16).wave(II, false, false, 0.72f).mix(0.25f)
                .eg(I, 0.009f, 0.40f, 1.0f, 0.095f).eg(II, 0.012f, 0.30f, 1.0f, 0.075f)
-               .tremolo(0.28f, 3.2f));
+               .tremolo(0.28f, 3.2f).sub(subSine, 3.2f, 0.0f, 0.0f, 0.20f));
     add("Mellow Organ", "Organ", { "sine" },
         "One 8' sine rank with a soft gate and no upper registration. Straight pitch, no chorus and a short release give a clean, rounded accompaniment.",
         organ().mix(0.0f).feet(I, f8).level(I, 0.0f, 0.78f).eg(I, 0.012f, 0.40f, 1.0f, 0.11f));

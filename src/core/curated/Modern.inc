@@ -4,7 +4,8 @@
 // fixed 58% gate (45% in random mode). Rates are free-running, not host-synced.
 // Model 4 echo time is 0.06 * 20^A seconds; model 3 plate decay is 0.8 * 10^A
 // seconds before brightness-dependent damping. Conservative wet levels retain
-// the onset and register balance. PURE CS-80 makes this software layer inert.
+// the onset and register balance. The software layer remains available in the
+// single circuit instrument; individual routes and effects stay preset-specific.
 
 void buildModern(Builder& add)
 {

@@ -19,13 +19,13 @@ void testSourcePerformanceHost(Check&& check)
     check(source != nullptr && host.getParameters().size() >= 245
               && host.getParameters()[244] == source && host.getParameters()[243] == isolation,
           "source performance appends host244 without moving parity243");
-    // Plan 1.7 engine default flip (intentional): fresh instances and the host
-    // default select the circuit engine (ENGINE on). The core ParamDef default and
-    // every old-state rule below are unchanged.
-    check(source != nullptr && dynamic_cast<juce::AudioParameterBool*>(source) != nullptr
+    // The historical Bool slot remains addressable for old sessions, but its
+    // value is now fixed. The core diagnostic ParamDef default is independent.
+    check(source != nullptr && isolation != nullptr && dynamic_cast<juce::AudioParameterBool*>(source) != nullptr
               && source->getVersionHint() == 7 && source->getDefaultValue() == 1.0f
+              && !source->isAutomatable() && !isolation->isAutomatable()
               && host.getParamValue(P_sourcePerformance) == 1.0f,
-          "ENGINE (source performance) is a canonical Bool with AU hint7, Circuit by default");
+          "fixed Circuit Bool preserves AU hint7 while retired engine slots reject automation");
     auto restore = [&](const juce::ValueTree& tree)
     {
         const auto text = tree.createXml()->toString();
@@ -51,23 +51,26 @@ void testSourcePerformanceHost(Check&& check)
         host.getStateInformation(saved);
         host.setParamValue(P_sourcePerformance, 1 - enabled);
         host.setStateInformation(saved.getData(), (int) saved.getSize());
-        check(host.getParamValue(P_sourcePerformance) == enabled
+        check(host.getParamValue(P_sourcePerformance) == 1.0f && host.getParamValue(P_parityMode) == 0.0f
                   && host.getHardwareSource(0) == 1
                   && std::abs(host.getParamValue(P_macro1) - .87f) < 1e-6f,
-              "session state restores model choice, tone identity and stored overlays");
+              "session state restores tone identity and overlays on the fixed circuit engine");
         auto userState = host.getAPVTS().copyState();
-        userState.getChildWithProperty("id", "parity_mode").setProperty("value", 0, nullptr);
+        userState.getChildWithProperty("id", "parity_mode").setProperty("value", 1, nullptr);
+        userState.getChildWithProperty("id", "source_performance").setProperty("value", enabled, nullptr);
         host.setParamValue(P_parityMode, 1);
         host.setParamValue(P_sourcePerformance, 1 - enabled);
         juce::TemporaryFile preset(".cs80xml");
         check(userState.createXml()->writeTo(preset.getFile()), "source-performance temporary user state written");
         host.loadUserPreset(preset.getFile());
-        check(host.getParamValue(P_sourcePerformance) == enabled && host.getParamValue(P_parityMode) == 1,
-              "user preset recalls model choice while preserving independent isolation policy");
+        check(host.getParamValue(P_sourcePerformance) == 1.0f && host.getParamValue(P_parityMode) == 0.0f
+                  && host.getHardwareSource(0) == 1
+                  && std::abs(host.getParamValue(P_macro1) - .87f) < 1e-6f,
+              "old user mode requests normalize without losing the selected tone or stored overlay");
         host.loadFactoryPreset(22);
-        check(host.getParamValue(P_sourcePerformance) == 0 && host.getParamValue(P_parityMode) == 1
+        check(host.getParamValue(P_sourcePerformance) == 1 && host.getParamValue(P_parityMode) == 0
                   && host.getHardwareSource(0) == 13 && host.getHardwareSource(1) == 13,
-              "unchanged factory preset recalls legacy model/PANEL without weakening isolation");
+              "original factory address recalls its revoiced PANEL sound on the circuit engine");
     }
     host.setParamValue(P_parityMode, 0);
     host.prepareToPlay(48000, 64);
@@ -82,31 +85,33 @@ void testSourcePerformanceHost(Check&& check)
                   && source_factory::isSourceDriven(host.getEngine().getSourceToneInfo(0).route),
               "migration fixture starts with an accepted compiled source adapter");
     };
-    auto checkAcceptedLegacy = [&]
+    auto checkAcceptedCircuit = [&](int expectedSelector)
     {
         host.processBlock(stateBlock, stateMidi);
-        check(host.getEngine().getRenderPolicy() == RenderPolicy::legacy
-                  && !source_factory::isSourceDriven(host.getEngine().getSourceToneInfo(0).route),
-              "restored legacy model clears the accepted source adapter at the next callback");
+        check(host.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance
+                  && host.getHardwareSource(0) == expectedSelector
+                  && source_factory::isSourceDriven(host.getEngine().getSourceToneInfo(0).route)
+                         == (expectedSelector != 13),
+              "restored state replaces the source adapter from its own selector on the circuit engine");
     };
     auto missing = original.createCopy();
     missing.removeChild(missing.getChildWithProperty("id", "source_performance"), nullptr);
-    // An old preset may retain the same tab selector, but it means the legacy
-    // bridge, not permission to inherit the live instance's compiled model.
+    // A missing retired policy field does not erase the stored hardware tone.
+    // PANEL fixtures below must also clear the previous compiled source adapter.
     missing.getChildWithProperty("id", "hardware_source_1").setProperty("value", 1, nullptr);
     activateSource();
     restore(missing);
-    check(host.getParamValue(P_sourcePerformance) == 0,
-          "old session without model flag clears live source opt-in instead of inheriting it");
-    checkAcceptedLegacy();
+    check(host.getParamValue(P_sourcePerformance) == 1 && host.getParamValue(P_parityMode) == 0,
+          "old session without model flag normalizes to the fixed circuit engine");
+    checkAcceptedCircuit(1);
     {
         juce::TemporaryFile preset(".cs80xml");
-        check(missing.createXml()->writeTo(preset.getFile()), "legacy temporary user state written");
+        check(missing.createXml()->writeTo(preset.getFile()), "old-format temporary user state written");
         activateSource();
         host.loadUserPreset(preset.getFile());
-        check(host.getParamValue(P_sourcePerformance) == 0,
-              "old user preset without model flag restores its legacy sound policy");
-        checkAcceptedLegacy();
+        check(host.getParamValue(P_sourcePerformance) == 1 && host.getParamValue(P_parityMode) == 0,
+              "old user preset without model flag normalizes to the fixed circuit engine");
+        checkAcceptedCircuit(1);
     }
     for (const auto* malformed : {"nan", "inf", "-1", "2", "0.5", "garbage", "1oops", ""})
     {
@@ -114,16 +119,17 @@ void testSourcePerformanceHost(Check&& check)
         bad.getChildWithProperty("id", "source_performance").setProperty("value", malformed, nullptr);
         activateSource();
         restore(bad);
-        check(host.getParamValue(P_sourcePerformance) == 0,
-              "malformed/fractional source model opt-in restores off");
-        checkAcceptedLegacy();
+        check(host.getParamValue(P_sourcePerformance) == 1 && host.getParamValue(P_parityMode) == 0,
+              "malformed/fractional model requests normalize to the fixed circuit engine");
+        checkAcceptedCircuit(13);
     }
     auto missingValue = original.createCopy();
     missingValue.getChildWithProperty("id", "source_performance").removeProperty("value", nullptr);
     activateSource();
     restore(missingValue);
-    check(host.getParamValue(P_sourcePerformance) == 0, "missing source mode value restores off");
-    checkAcceptedLegacy();
+    check(host.getParamValue(P_sourcePerformance) == 1 && host.getParamValue(P_parityMode) == 0,
+          "missing source mode value normalizes to the fixed circuit engine");
+    checkAcceptedCircuit(13);
 
     auto setPolicy = [](Cs80AudioProcessor& processor, RenderPolicy policy)
     {
@@ -158,36 +164,43 @@ void testSourcePerformanceHost(Check&& check)
         };
         processor.getKeyboardState().noteOn(1, 60, .8f);
         tick();
-        check(held() == 1, "source transition fixture has accepted UI-held note");
+        check(held() == 1, "retired policy fixture has accepted UI-held note");
+        const auto beforeEnvelope = processor.getEngine().getRankEnvelopeState(0, 0).amplitude;
         setPolicy(processor, after);
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer emptyMidi;
+        processor.processBlock(empty, emptyMidi);
+        const auto afterEnvelope = processor.getEngine().getRankEnvelopeState(0, 0).amplitude;
+        check(processor.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance && held() == 1
+                  && beforeEnvelope.value == afterEnvelope.value
+                  && beforeEnvelope.stage == afterEnvelope.stage && beforeEnvelope.elapsed == afterEnvelope.elapsed,
+              "obsolete mode writes retain the UI voice and exact envelope state");
         juce::MidiBuffer replacement;
         replacement.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 110), 0);
         process(replacement);
-        check(processor.getEngine().getRenderPolicy() == after && held() == 1,
-              "effective policy transition clears old UI voice and accepts fresh host strike");
+        check(processor.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance && held() == 2,
+              "same-pitch host takeover adds its strike without a policy-induced voice reset");
         processor.getKeyboardState().noteOff(1, 60, 0);
         tick();
-        check(held() == 1 && processor.isHostKeyDown(60),
-              "stale UI release after model reset cannot release new host note with identical identity");
+        check(held() == 2 && processor.isHostKeyDown(60),
+              "stale UI release cannot release either circuit after host takeover");
         check(std::abs(processor.getExpressionValue() - .35f) < 1e-6f,
-              "policy reset retains UI/MIDI expression mailbox");
-        if (usesSourceModels(after))
+              "retired policy writes retain the UI/MIDI expression mailbox");
         {
             const double expected = std::exp(std::log(1000000.0) + .35f * (std::log(2000.0) - std::log(1000000.0)));
             check(std::abs(processor.getEngine().getPraWahState(0).targetOhms - expected) < 1e-6,
-                  "policy transition reapplies expression to source PRA after engine reset");
+                  "retired policy writes preserve the expression target of the circuit PRA");
         }
         processor.releaseResources();
         processor.prepareToPlay(48000, 64);
         processor.serviceKeyboardUI();
         tick();
-        check(held() == 0 && processor.getEngine().getRenderPolicy() == after,
-              "prepare/release retains chosen policy but clears held voices");
-        if (usesSourceModels(after))
-            check(processor.getEngine().getPraWahState(0).targetOhms > 100000.0,
-                  "prepareToPlay reapplies retained non-full expression in source policy");
+        check(held() == 0 && processor.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "prepare/release clears held voices while retaining the circuit engine");
+        check(processor.getEngine().getPraWahState(0).targetOhms > 100000.0,
+              "prepareToPlay reapplies retained non-full expression to the circuit engine");
     }
-    // The new flag is retained but inert while the existing isolation policy wins.
+    // Even contradictory retired flags leave ownership and envelope history intact.
     {
         Cs80AudioProcessor processor;
         setPolicy(processor, RenderPolicy::isolation);
@@ -201,14 +214,14 @@ void testSourcePerformanceHost(Check&& check)
         processor.setParamValue(P_sourcePerformance, 0);
         processor.processBlock(empty, midi);
         const auto after = processor.getEngine().getRankEnvelopeState(0, 0).amplitude;
-        check(processor.getEngine().getRenderPolicy() == RenderPolicy::isolation
+        check(processor.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance
                   && processor.getEngine().getVoiceInfo(0).held && before.value == after.value
                   && before.stage == after.stage && before.elapsed == after.elapsed,
-              "masked source flag change does not reset isolation notes or precise envelope state");
+              "retired source flag write preserves circuit notes and precise envelope state");
         processor.getKeyboardState().noteOff(1, 60, 0);
         processor.processBlock(empty, midi);
         check(!processor.getEngine().getVoiceInfo(0).held,
-              "masked flag change retains UI ownership so its real release still works");
+              "retired flag write retains UI ownership so its real release still works");
     }
 }
 } // namespace cs80::tests

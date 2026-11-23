@@ -152,7 +152,7 @@ void testVst3MpeTransport(Module& module)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
     {
         const auto p = mpeParameters(circuit, sixteen);
-        const std::string policy = std::string(circuit ? "circuit" : "legacy")
+        const std::string policy = std::string(circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8");
         context = policy + "/witness";
         // A separate positive witness prevents silent/unallocated ninth-note controls.
@@ -210,13 +210,21 @@ void testVst3MpeTransport(Module& module)
         for (int controller : {int(kPitchBend), int(kAfterTouch), 74})
         {
             context = policy + "/boundaries/" + std::to_string(controller);
-            auto pure = p; pure[cs80::P_parityMode] = 1;
+            auto retired = p;
+            retired[cs80::P_sourcePerformance] = 0;
+            retired[cs80::P_parityMode] = 1;
+            auto canonical = p;
+            canonical[cs80::P_sourcePerformance] = 1;
+            canonical[cs80::P_parityMode] = 0;
             const MpeControls control {{mpeChange, 2, controller, controller == kPitchBend ? 10240 : 100}};
-            const auto withMpe = renderNativeMpe(module, pure, 2, control);
-            pure[cs80::P_mpeOn] = 0;
-            isolated(withMpe, renderNativeMpe(module, pure, 2, control), "PURE masks MPE policy at the native wrapper boundary");
-            if (controller != kAfterTouch)
-                isolated(withMpe, renderNativeMpe(module, pure, 2, {}), "PURE retains pitch-bend and CC74 exclusion");
+            const auto withMpe = renderNativeMpe(module, retired, 2, control);
+            isolated(withMpe, renderNativeMpe(module, canonical, 2, control),
+                     "retired engine state preserves native circuit MPE audio byte-for-byte");
+            const auto neutral = renderNativeMpe(module, retired, 2, {});
+            positive(withMpe, neutral,
+                     "member bend, pressure and CC74 remain audible under retired engine state");
+            mpeCheck(std::equal(withMpe.begin(), withMpe.begin() + 2 * mpeChange, neutral.begin()),
+                     "retired engine state preserves the native MPE event's exact sample position");
             auto off = p; off[cs80::P_mpeOn] = 0;
             const auto noMpe = renderNativeMpe(module, off, 15, control);
             isolated(noMpe, renderNativeMpe(module, off, 15, control, 256, false, false),

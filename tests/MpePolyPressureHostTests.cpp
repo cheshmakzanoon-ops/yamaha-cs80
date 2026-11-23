@@ -67,6 +67,10 @@ struct Host
         processor->setParamValue(P_keyRelease, 5);
         processor->prepareToPlay(48000, 256);
         tick();
+        check(processor->getParamValue(P_sourcePerformance) == 1.0f
+                  && processor->getParamValue(P_parityMode) == 0.0f
+                  && processor->getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "both engine API requests resolve to the circuit pressure instrument");
     }
     void tick(int frames = 0)
     {
@@ -107,7 +111,7 @@ void testNativeRouting(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (int frames : {0, 32}) for (const auto& s : scenarios)
     {
-        context = std::string(s.name) + (circuit ? "/circuit" : "/legacy")
+        context = std::string(s.name) + (circuit ? "/circuit" : "/retired-engine-request")
             + (sixteen ? "/16" : "/8") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen); host.layout(s.lower, s.upper);
         host.processor->setParamValue(P_mpeOn, s.enabled ? 1 : 0); host.tick();
@@ -159,7 +163,7 @@ void testSameOffsetRoleChanges(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (int frames : {0, 32}) for (bool upper : {false, true}) for (bool entering : {false, true})
     {
-        context = std::string("same-offset/") + (circuit ? "circuit" : "legacy")
+        context = std::string("same-offset/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/upper" : "/lower")
             + (entering ? "/enter" : "/leave") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen);
@@ -179,20 +183,42 @@ void testSameOffsetRoleChanges(const juce::File& fixture)
               "same-offset poly pressure follows the new effective channel role");
     }
 }
-void testPurePressure(const juce::File& fixture)
+void testRetiredPolicyPressure(const juce::File& fixture)
 {
-    for (bool circuit : {false, true}) for (int frames : {0, 32})
+    for (bool circuit : {false, true}) for (bool sixteen : {false, true})
+        for (int frames : {0, 32}) for (int selector : {P_sourcePerformance, P_parityMode})
     {
-        context = std::string("PURE/") + (circuit ? "circuit" : "legacy")
-            + "/frames=" + std::to_string(frames);
-        Host host(fixture, circuit, false); host.layout(2, 2);
-        host.processor->setParamValue(P_parityMode, 1); host.tick();
-        check(!host.processor->getEngine().isMpeEnabled(), "PURE disables effective MPE despite stored MPE toggle");
-        on(host.midi, 2, 60); host.tick(256); // Allow PURE's physical scanner to allocate.
-        check(find(*host.processor, 60, 2).info.held, "PURE pressure witness is held");
+        context = std::string("retired-policy/") + (circuit ? "circuit" : "retired-engine-request")
+            + (sixteen ? "/16" : "/8") + "/frames=" + std::to_string(frames)
+            + "/selector=" + std::to_string(selector);
+        Host host(fixture, circuit, sixteen); host.layout(2, 2); host.fillPrimary(sixteen);
+        on(host.midi, 2, 60);
+        host.midi.addEvent(juce::MidiMessage::channelPressureChange(2, 31), 0);
+        host.tick(256);
+        const auto before = find(*host.processor, 60, 2);
+        check(before.info.held && near(before.info.pressure, 31.0f / 127),
+              "retired-policy witness is held with live member pressure");
+        if (sixteen) check(before.engine == &host.processor->getExtensionEngine(),
+                           "retired-policy pressure witness occupies the extension");
+        host.processor->setParamValue(selector, selector == P_sourcePerformance ? 0 : 1);
+        host.tick(frames);
+        const auto retained = find(*host.processor, 60, 2);
+        check(host.processor->getParamValue(P_sourcePerformance) == 1
+                  && host.processor->getParamValue(P_parityMode) == 0
+                  && host.processor->getEngine().isMpeEnabled(),
+              "obsolete engine fields cannot disable negotiated MPE");
+        check(retained.engine == before.engine && retained.index == before.index && retained.info.held
+                  && near(retained.info.pressure, 31.0f / 127),
+              "obsolete engine writes preserve held allocation and current member pressure");
         pressure(host.midi, 2, 60, 79); host.tick(frames);
-        check(near(find(*host.processor, 60, 2).info.pressure, 79.0f / 127),
-              "PURE preserves conventional native per-key pressure");
+        check(near(find(*host.processor, 60, 2).info.pressure, 31.0f / 127),
+              "native member poly pressure remains excluded after obsolete engine writes");
+        host.midi.addEvent(juce::MidiMessage::channelPressureChange(2, 99), 0); host.tick(frames);
+        check(near(find(*host.processor, 60, 2).info.pressure, 99.0f / 127),
+              "member channel pressure remains live after obsolete engine writes");
+        host.midi.addEvent(juce::MidiMessage::noteOff(2, 60), 0); host.tick(frames);
+        check(!find(*host.processor, 60, 2).info.held,
+              "retained member note still releases normally");
     }
 }
 void testInternalUiPressure(const juce::File& fixture)
@@ -200,7 +226,7 @@ void testInternalUiPressure(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (int frames : {0, 32}) for (bool upper : {false, true})
     {
-        context = std::string("internal-UI/") + (circuit ? "circuit" : "legacy")
+        context = std::string("internal-UI/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/upper" : "/lower")
             + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen); host.layout(2, 2);
@@ -237,7 +263,7 @@ int main()
     testNativeRouting(fixture.getFile());
     testSameOffsetRoleChanges(fixture.getFile());
     testInternalUiPressure(fixture.getFile());
-    testPurePressure(fixture.getFile());
+    testRetiredPolicyPressure(fixture.getFile());
     std::cout << "MPE poly pressure: " << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
 }

@@ -44,8 +44,8 @@ void testPluginPanic(Check check, Flush flush)
 {
     juce::TemporaryFile fixture("-cs80-panic-tests");
     constexpr int rate = 8000, blockSize = 32;
-    // Legacy/source-performance/isolation all share the existing global hard
-    // stop, even though isolation ignores incoming sustain/modern arp controls.
+    // Both retired policy requests retain the circuit instrument's global
+    // hard stop, including active MIDI sustain and arpeggiator controls.
     for (int mode = 0; mode < 3; ++mode)
     {
         Cs80AudioProcessor host(fixture.getFile());

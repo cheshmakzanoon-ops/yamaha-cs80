@@ -585,11 +585,14 @@ int main(int argc, char** argv)
               "empty queue and original no-queue path are byte-identical");
         check(difference(scalar, neutral) > 0.00001, "host automation changes audible output (positive control)");
         auto pure = parameters; pure[cs80::P_parityMode] = 1.0f;
-        check(render(module, pure, curves, 256) == render(module, pure, curves, 256, true, true),
-              "PURE CS-80 retains final-point-at-block-start behavior byte-for-byte");
+        const auto circuitAutomated = render(module, parameters, curves, 256);
+        check(render(module, pure, curves, 256) == circuitAutomated,
+              "retired isolation state preserves sample-accurate circuit automation byte-for-byte");
         auto legacy = parameters; legacy[cs80::P_sourcePerformance] = 0.0f;
-        check(render(module, legacy, curves, 256) == render(module, legacy, curves, 256, true, true),
-              "Legacy retains final-point-at-block-start behavior byte-for-byte");
+        check(render(module, legacy, curves, 256) == circuitAutomated,
+              "retired engine state preserves sample-accurate circuit automation byte-for-byte");
+        check(difference(circuitAutomated, render(module, parameters, curves, 256, true, true)) > 0.00001,
+              "circuit automation retains within-block timing instead of flattening queued points");
         Curves rankOnly = curves;
         for (size_t i = 0; i < rankOnly.size(); ++i)
         {

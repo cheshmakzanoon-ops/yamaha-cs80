@@ -89,7 +89,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = touchRender(protectedP, 256);
-                check(actual == touchRender(protectedP, 256, true, true), "touch Legacy/PURE preserve flattening");
+                check(actual == touchRender(p, 256), "touch retired mode requests preserve canonical circuit sample-accurate audio");
                 captureCombinedTouch(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

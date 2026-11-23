@@ -83,7 +83,8 @@ void testPresetFileHost(Check&& check)
             if (ranged == nullptr) continue;
             const bool session = ranged->paramID == "parity_mode" || ranged->paramID == "oversampling"
                               || ranged->paramID == "output_jack" || ranged->paramID == "tuning_mode";
-            const float expected = session ? 0.0f : ranged->convertFrom0to1(0.75f);
+            const float expected = ranged->paramID == "source_performance" ? 1.0f
+                                   : session ? 0.0f : ranged->convertFrom0to1(0.75f);
             const float actual = reader->getAPVTS().getRawParameterValue(ranged->paramID)->load();
             check(std::abs(actual - expected) <= std::max(1.0e-5f, std::abs(expected) * 1.0e-5f),
                   "duplicate import retains last sound value and live session settings");
@@ -131,21 +132,22 @@ void testPresetFileHost(Check&& check)
             reader->setParamValue(P_parityMode, 0.0f);
             if (session) restoreSession(malformed);
             else if (const auto file = write(malformed); file != juce::File()) reader->loadUserPreset(file);
-            check(reader->getParamValue(P_sourcePerformance) == (modern ? 1.0f : 0.0f),
-                  "final duplicate ENGINE policy is normalized by its writing schema");
+            check(reader->getParamValue(P_sourcePerformance) == 1.0f,
+                  "final duplicate engine policy resolves to circuit for every writing schema");
             check(reader->getParamValue(P_subOriginalMode) == 0.0f,
                   "final duplicate original SUB mode cannot bypass literal policy validation");
             check(reader->getParamValue(P_parityMode) == 0.0f,
-                  "final duplicate PURE policy cannot bypass validation or live preservation");
+                  "final duplicate isolation field cannot re-enable the retired policy");
         }
 
     // Host sessions still restore their stored setup, unlike user presets.
     restoreSession(duplicates);
-    check(reader->getParamValue(P_parityMode) == 1.0f
+    check(reader->getParamValue(P_parityMode) == 0.0f
+              && reader->getParamValue(P_sourcePerformance) == 1.0f
               && reader->getParamValue(P_oversampling) == 2.0f
               && reader->getParamValue(P_outputJack) == 2.0f
               && reader->getParamValue(P_tuningMode) == 1.5f,
-          "host session restores the final duplicate setup values");
+          "host session restores setup values while canonicalizing obsolete engine fields");
     const auto sessionState = reader->getAPVTS().copyState();
     check(count(sessionState, "source_performance") == 1 && count(sessionState, "macro1") == 1,
           "host session and user-preset restoration share canonical parameter identity");

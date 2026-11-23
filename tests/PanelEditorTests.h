@@ -578,10 +578,10 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         {
             juce::TemporaryFile presetRoot("-cs80-golden");
             Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-            // The layout golden has an explicit, frozen sound fixture: the
-            // startup patch recorded on 2026-10-31. Curated voicing changes must
-            // not silently turn a panel-layout test into a preset-data snapshot.
-            // ProgramLibraryHostTests separately checks the current startup sound.
+            // Display the first factory program with an explicit SUB setting.
+            // Intentional panel or factory-control changes require inspection of
+            // both captured sizes before updating these versioned golden images.
+            // ProgramLibraryHostTests separately checks startup sound identity.
             host.loadFactoryPreset(0);
             host.setParamValue(cs80::P_subOriginalMode, 1.0f);
             host.setParamValue(cs80::P_sourcePerformance, 1.0f);

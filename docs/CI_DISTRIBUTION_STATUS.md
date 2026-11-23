@@ -5,7 +5,23 @@ existing CI workflow already builds. They add no paid dependency, installer,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Current 2026.11.1 development candidates — release blocked
+## Current source revision — 2026.11.2 circuit library
+
+The current source provides one circuit instrument and revoices the existing
+523-program catalogue. It removes the Legacy/Pure choices and includes the
+original 222 addresses in **Library → Factory Library**. The
+[current revision report](CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes
+and the intentional playback change for older engine policies.
+
+For an installed package, its own `SOURCE.txt` and manifest identify the binary
+source, native target and workflow run. Consult that exact run and the
+[repository download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80#downloads)
+for its validation status. This document is embedded during packaging, before
+all dependent validation jobs finish; packaging alone does not establish a
+qualified release. The following sections preserve the status and download links
+of earlier revisions and do not describe a 2026.11.2 binary.
+
+## Historical 2026.11.1 development candidates — release blocked
 
 **All four native build/test/package jobs passed and the actual installation
 archives and 24-WAV audition were verified. The complete build failed because
@@ -73,14 +89,14 @@ the host process and keep each plug-in/application bundle intact.
 
 The [refinement report](PRESET_REFINEMENT_2026_11_1.md) preserves the predecessor
 failure, this unresolved Linux GUI failure and the pre-existing VST3 Program
-queue controller dependency. Use **Library → Circuit** to select the revised
-factory values; saved sessions retain serialized values. No queue-only Program
+queue controller dependency. That older binary used **Library → Circuit** to
+select its revised factory values; saved sessions retained serialized values. No queue-only Program
 automation, arbitrary DAW integration or acoustic/hardware equivalence is claimed.
 
 The original **2026.11** downloads and their separate Linux failure/retry history
 below remain intact; those older binaries do not contain the twelve later
 2026.11.1 refinements.
-The [current 60-agent assignment review](TEAM_REVIEW_2026_11_1.md) records this
+The [2026.11.1 60-agent assignment review](TEAM_REVIEW_2026_11_1.md) records this
 task separately from the earlier 2026.11 review. Completing an investigation
 does not turn its failed gate into a pass.
 

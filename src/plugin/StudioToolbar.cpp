@@ -51,8 +51,6 @@ public:
     }
 
     void setArmed(bool value) { if (value != armed) { armed = value; repaint(); } }
-    // A masked key (ENGINE while PURE CS-80 is on) keeps working but reads as overridden.
-    void setMasked(bool value) { if (value != masked) { masked = value; repaint(); } }
 
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
     {
@@ -81,25 +79,19 @@ public:
                        : armed ? juce::Colour(0xffffe6d6)
                        : on ? juce::Colour(0xff241703)
                        : juce::Colour(0xffeee6cc);
-        const float alpha = masked ? 0.74f : 1.0f;
         auto area = r.reduced(4.0f, 1.0f);
         if (glyph == Glyph::none || armed)
         {
             const auto shown = armed ? juce::String("?") : getButtonText();
             auto font = fitFontToWidth(toolFont(juce::jlimit(8.0f, 14.0f, r.getHeight() * 0.38f)), shown, area.getWidth(), 0.85f, 8.0f);
             g.setFont(font);
-            g.setColour((on ? juce::Colours::white.withAlpha(0.35f) : juce::Colours::black.withAlpha(0.6f)).withMultipliedAlpha(alpha));
+            g.setColour(on ? juce::Colours::white.withAlpha(0.35f) : juce::Colours::black.withAlpha(0.6f));
             g.drawFittedText(shown, area.translated(0.0f, 1.0f).toNearestInt(), juce::Justification::centred, 1, 0.85f);
-            g.setColour(ink.withMultipliedAlpha(alpha));
+            g.setColour(ink);
             g.drawFittedText(shown, area.toNearestInt(), juce::Justification::centred, 1, 0.85f);
         }
         else
-            paintGlyph(g, area, ink.withMultipliedAlpha(alpha));
-        if (masked)
-        {
-            g.setColour(juce::Colour(0xffcdb878).withAlpha(0.55f));
-            g.drawLine(r.getX() + 4.0f, r.getBottom() - 4.0f, r.getRight() - 4.0f, r.getBottom() - 4.0f, 1.0f);
-        }
+            paintGlyph(g, area, ink);
         if (hasKeyboardFocus(true))
             drawFocusRing(g, getLocalBounds().toFloat());
     }
@@ -152,7 +144,7 @@ private:
 
     Glyph glyph;
     Segment segment;
-    bool armed = false, masked = false;
+    bool armed = false;
 };
 
 // ---------------------------------------------------------------------------
@@ -246,9 +238,6 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB = std::make_unique<Key>("B", "Compare: sound B", Key::Glyph::none, Key::Segment::right);
     undoKey = std::make_unique<Key>("UNDO", "Undo", Key::Glyph::undo);
     redoKey = std::make_unique<Key>("REDO", "Redo", Key::Glyph::redo);
-    circuitKey = std::make_unique<Key>("CIRCUIT", "Engine: circuit", Key::Glyph::none, Key::Segment::left);
-    legacyKey = std::make_unique<Key>("LEGACY", "Engine: legacy compatibility", Key::Glyph::none, Key::Segment::right);
-    pureKey = std::make_unique<Key>("PURE CS-80", "PURE CS-80");
     studioKey = std::make_unique<Key>("STUDIO", "Show the Studio view");
     menuKey = std::make_unique<Key>("MENU", "Toolbar menu", Key::Glyph::menu);
     display = std::make_unique<Display>();
@@ -260,9 +249,6 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB->setComponentID("toolbar_compare_b");
     undoKey->setComponentID("toolbar_undo");
     redoKey->setComponentID("toolbar_redo");
-    circuitKey->setComponentID("toolbar_engine_circuit");
-    legacyKey->setComponentID("toolbar_engine_legacy");
-    pureKey->setComponentID("toolbar_pure_cs80");
     studioKey->setComponentID("toolbar_studio");
     menuKey->setComponentID("toolbar_menu");
     display->setComponentID("toolbar_program");
@@ -274,19 +260,13 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB->setTooltip("Compare B: switch to sound B. The first switch to B copies A, so you can edit B and compare.");
     undoKey->setTooltip("Undo the last edit (" + shortcut() + "+Z). Loading a program clears the history; host automation is never recorded.");
     redoKey->setTooltip("Redo (" + shortcut() + "+Shift+Z).");
-    circuitKey->setTooltip("ENGINE: CIRCUIT runs the circuit-informed models (the source_performance parameter). Not calibrated: no hardware "
-                           "match established. An engine change stops sounding notes.");
-    legacyKey->setTooltip("ENGINE: LEGACY keeps the older voicing so old sessions sound unchanged. An engine change stops sounding notes.");
-    pureKey->setTooltip("PURE CS-80 strips every software addition (LFOs, effects, macros, arpeggiator, MPE, MIDI CCs, MIDI learn) and runs the "
-                        "circuit models only (the parity_mode parameter). Not calibrated. Switching stops sounding notes.");
     studioKey->setTooltip("Studio view: modulation, keyboard and tuning, effects, arpeggiator and settings.");
     menuKey->setTooltip("Menu: save, init, voice monitor, controllers strip, computer keyboard, help and tour.");
 
     int order = 0;
     for (juce::Component* c : { (juce::Component*) prev.get(), (juce::Component*) display.get(), (juce::Component*) next.get(),
                                 (juce::Component*) library.get(), (juce::Component*) compareA.get(), (juce::Component*) compareB.get(),
-                                (juce::Component*) undoKey.get(), (juce::Component*) redoKey.get(), (juce::Component*) circuitKey.get(),
-                                (juce::Component*) legacyKey.get(), (juce::Component*) pureKey.get(), (juce::Component*) studioKey.get(),
+                                (juce::Component*) undoKey.get(), (juce::Component*) redoKey.get(), (juce::Component*) studioKey.get(),
                                 (juce::Component*) menuKey.get() })
     {
         c->setExplicitFocusOrder(++order);
@@ -303,21 +283,7 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     redoKey->onClick = [this] { if (actions.redo) actions.redo(); refresh(); };
     studioKey->onClick = [this] { if (actions.toggleStudio) actions.toggleStudio(); refresh(); };
     menuKey->onClick = [this] { showMenu(); };
-    circuitKey->onClick = [this] { setEngine(true); };
-    legacyKey->onClick = [this] { setEngine(false); };
-    pureKey->onClick = [this] { setPure(pureValue < 0.5f); };
 
-    auto& apvts = processor.getAPVTS();
-    if (auto* engine = apvts.getParameter(Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance)))
-    {
-        engineAttachment = std::make_unique<juce::ParameterAttachment>(*engine, [this](float v) { engineValue = v; refresh(); });
-        engineAttachment->sendInitialUpdate();
-    }
-    if (auto* pure = apvts.getParameter(Cs80AudioProcessor::parameterId(cs80::P_parityMode)))
-    {
-        pureAttachment = std::make_unique<juce::ParameterAttachment>(*pure, [this](float v) { pureValue = v; refresh(); });
-        pureAttachment->sendInitialUpdate();
-    }
     refresh();
     startTimerHz(8);
 }
@@ -331,19 +297,6 @@ void StudioToolbar::setActions(Actions newActions)
 {
     ++actionsGeneration;
     actions = std::move(newActions);
-    refresh();
-}
-
-// [integration] ws2's processor API over the unchanged host IDs (one host gesture each).
-void StudioToolbar::setEngine(bool circuit)
-{
-    processor.setEngineMode(circuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
-    refresh();
-}
-
-void StudioToolbar::setPure(bool pure)
-{
-    processor.setPure(pure);
     refresh();
 }
 
@@ -376,18 +329,6 @@ void StudioToolbar::refresh()
     const auto redoName = canRedo && actions.redoName ? actions.redoName() : juce::String();
     undoKey->setTitle(undoName.isNotEmpty() ? "Undo " + undoName : juce::String("Undo"));
     redoKey->setTitle(redoName.isNotEmpty() ? "Redo " + redoName : juce::String("Redo"));
-
-    const bool circuit = engineValue >= 0.5f, pure = pureValue >= 0.5f;
-    circuitKey->setToggleState(circuit, juce::dontSendNotification);
-    legacyKey->setToggleState(! circuit, juce::dontSendNotification);
-    circuitKey->setMasked(pure);
-    legacyKey->setMasked(pure);
-    pureKey->setToggleState(pure, juce::dontSendNotification);
-    const auto masked = pure ? juce::String(" Masked while PURE CS-80 is on: it always runs the circuit models; the stored choice applies again "
-                                            "when PURE CS-80 is switched off.") : juce::String();
-    circuitKey->setDescription(circuitKey->getTooltip() + masked);
-    legacyKey->setDescription(legacyKey->getTooltip() + masked);
-    pureKey->setDescription(pureKey->getTooltip());
 
     studioKey->setEnabled((bool) actions.toggleStudio);
     studioKey->setToggleState(actions.studioOpen && actions.studioOpen(), juce::dontSendNotification);
@@ -424,7 +365,6 @@ juce::PopupMenu StudioToolbar::buildMenu()
         entry.action = guarded(action);
         menu.addItem(entry);
     };
-    const bool pure = pureValue >= 0.5f;
     menu.addSectionHeader("PROGRAM");
     item(1, "Save preset...  (" + shortcut() + "+S)", true, false, actions.savePreset);
     item(2, "Init patch", true, false, actions.initPatch);
@@ -461,7 +401,7 @@ juce::PopupMenu StudioToolbar::buildMenu()
         menu.addSubMenu("Display size", sizes);
     }
     item(10, "Voice monitor (scope drawer)", true, actions.scopeOpen && actions.scopeOpen(), actions.toggleScope);
-    item(11, pure ? "Controllers strip (hidden in PURE CS-80)" : "Controllers strip: pitch and mod wheels", ! pure,
+    item(11, "Controllers strip: pitch and mod wheels", true,
          actions.controllersShown && actions.controllersShown(), actions.toggleControllers);
     item(12, "Computer keyboard plays notes", true, actions.qwertyEnabled && actions.qwertyEnabled(), actions.toggleQwerty);
     item(13, "Circuit notes in tooltips", true, actions.circuitNotesShown && actions.circuitNotesShown(), actions.toggleCircuitNotes);
@@ -502,7 +442,7 @@ void StudioToolbar::paint(juce::Graphics& g)
     // Etched dividers between the groups.
     const float sx = r.getWidth() / kDesignW;
     g.setColour(juce::Colour(0xffcdb878).withAlpha(0.28f));
-    for (float x : { 395.0f, 553.0f, 679.0f })
+    for (float x : { 565.0f, 742.0f })
         g.fillRect(x * sx, r.getHeight() * 0.22f, 1.0f, r.getHeight() * 0.56f);
 }
 
@@ -513,19 +453,15 @@ void StudioToolbar::resized()
     {
         c.setBounds(juce::roundToInt(x * sx), juce::roundToInt(4.0f * sy), juce::roundToInt(w * sx), juce::roundToInt(36.0f * sy));
     };
-    // Design layout, 864 x 44: program group | compare and history | engine | studio and menu. No key is narrower
-    // than 35 design px, so every key is at least 24 x 24 px at the 1120 x 700 minimum.
+    // Give program names room and keep all controls reachable at minimum zoom.
     place(*prev, 6.0f, 35.0f);
-    place(*display, 45.0f, 232.0f);
-    place(*next, 281.0f, 35.0f);
-    place(*library, 320.0f, 68.0f);
-    place(*compareA, 402.0f, 35.0f);
-    place(*compareB, 437.0f, 35.0f);
-    place(*undoKey, 476.0f, 35.0f);
-    place(*redoKey, 513.0f, 35.0f);
-    place(*circuitKey, 558.0f, 60.0f);
-    place(*legacyKey, 618.0f, 56.0f);
-    place(*pureKey, 684.0f, 64.0f);
+    place(*display, 45.0f, 398.0f);
+    place(*next, 447.0f, 35.0f);
+    place(*library, 486.0f, 72.0f);
+    place(*compareA, 572.0f, 35.0f);
+    place(*compareB, 607.0f, 35.0f);
+    place(*undoKey, 650.0f, 40.0f);
+    place(*redoKey, 694.0f, 40.0f);
     place(*studioKey, 752.0f, 68.0f);
     place(*menuKey, 824.0f, 35.0f);
 }

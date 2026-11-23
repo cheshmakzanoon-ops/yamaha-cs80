@@ -4,15 +4,15 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers Circuit preset library revision **2026.11.1**, the circuit
-engine as the fresh default, the toolbar (ENGINE, PURE CS-80, STUDIO), the
-523-program library, **PANIC** and the **SAMPLE PEAK** readout. Older artifacts
+This guide covers factory library revision **2026.11.2**: one circuit engine,
+the unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
+readout. Engine and isolation selectors have been removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
 repository README.
-The repository also retains pinned **2026.11** downloads of the full-bank
-redesign. Their bundled guides, manifest revision and `SOURCE.txt` identify
-that earlier bank; they do not contain the twelve later 2026.11.1 refinements.
+The repository retains earlier revision reports and download records. Their
+bundled guides, manifest revision and `SOURCE.txt` identify those earlier
+binaries; later source changes do not update an existing archive.
 
 The project version string alone is not a build identifier: development builds
 can share the same version while containing different source commits.
@@ -54,7 +54,7 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.1** and that the full source commit matches
+confirm that both identify **2026.11.2** and that the full source commit matches
 the selected verified download. The sound-library revision is separate from
 the application's version string.
 
@@ -138,29 +138,29 @@ distributions. No additional audio driver is bundled on any platform.
    measured performance guarantee for your computer. In a DAW, create an
    instrument track, load **CS-80 Reference**, enable monitoring and choose the
    MIDI input. Start with low monitoring volume.
-2. A fresh instance plays **Brass Swell I** on the circuit engine (toolbar
-   **ENGINE CIRCUIT** lit): velocity, pressure, pitch bend, CC1
-   modulation, CC11 expression and CC64 pedal hold work here. Step through
-   programs with **PREV / NEXT** or open the **LIBRARY**, or play the hardware
-   tone tabs. Eight simultaneously held voices are available; a ninth held note
-   is intentionally ignored. **ENGINE LEGACY (compat)** gives the older voicing;
-   Legacy Library programs select it themselves.
-3. For MPE, enable it in both host and instrument, use channel 1 as master and
-   member channels 2–16, and match pitch-bend ranges manually. Automatic RPN
-   zone/range negotiation is not implemented. Polyphonic pressure also works
-   without MPE; on screen, strike a key and drag farther down it for pressure.
-4. **PURE CS-80** in the toolbar plays the circuit models with every software
-   addition masked (modern FX, LFOs, macros, MSEG, matrix, arpeggiator, MPE,
-   microtuning, voice modes; MIDI bend and CC1/11/64/74 ignored; voice
-   dispersion and drift zeroed; rank pans centered). Ribbon, pressure, the
-   pedals and the on-screen controls stay. Source-model output uses a fixed -6 dB reference and an
-   inferred driver ceiling at full scale, so very dense loud chords can still
-   reach or slightly exceed 0 dBFS; keep normal monitoring headroom.
+2. A fresh instance plays **Brass Swell I** on the circuit engine. Velocity,
+   pressure, pitch bend, CC1 modulation, CC11 expression and CC64 pedal hold
+   remain available. Step through programs with **PREV / NEXT**, open **LIBRARY**,
+   or play the hardware tone tabs. The default voice mode has eight circuits;
+   an additional held key waits for an available circuit rather than stealing
+   a held note. Expanded voice modes are available in Studio.
+3. For MPE, enable it in the host/controller and instrument. Incoming MIDI
+   configuration and RPN messages can set lower/upper zones and bend ranges;
+   otherwise match the configured ranges manually. Studio's keyboard/tuning
+   page shows the zones and ranges applied in the last audio callback.
+   Polyphonic pressure also works without MPE; on screen, strike a key and
+   drag farther down it for pressure.
+4. Open **Studio** for effects, LFOs, macros, drawable envelopes, the modulation
+   matrix, arpeggiation, MPE, microtuning and voice modes. These optional software
+   features belong to the same circuit instrument. Each preset selects its
+   own settings. The original six SUB functions are the factory default;
+   **WAVEFORM SET** can select Extended functions independently. Keep normal
+   output headroom when editing levels or playing dense chords.
 5. Use **SAVE** (toolbar menu or Ctrl/Cmd+S) to name a user patch; an existing
-   filename requires confirmation. A user patch stores its ENGINE choice; library
-   programs carry their own (curated programs the circuit engine, Legacy Library
-   programs Legacy). PURE CS-80 is a session policy: program recall keeps it,
-   and a full DAW session restores it. Transient pedal gestures are not saved.
+   filename requires confirmation. User patches, factory programs, A/B comparisons
+   and browser Revert all use the circuit engine. Preset recall preserves the
+   live physical setup; a full DAW session also stores its session configuration.
+   Transient pedal gestures are not saved.
 
 **Pressure Lead requires aftertouch.** It is intentionally silent before pressure
 is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
@@ -187,26 +187,27 @@ Warnings hold briefly (one second / two seconds respectively), so they need not
 match the decaying number at that instant. This is a **read-only sample-peak
 indicator, not true peak, loudness measurement, a limiter or automatic gain
 control**. It does not mute or repair audio. Leave headroom and keep monitoring
-low; if NON-FINITE appears, report the patch, mode and steps rather than treating
+low; if NON-FINITE appears, report the patch, voice/quality settings and steps rather than treating
 the indicator as protection. See [output-meter details](OUTPUT_METER.md).
 
-### Choose the mode before playing
+### One circuit instrument
 
-| ENGINE | PURE CS-80 | Effective behavior |
-|---|---|---|
-| CIRCUIT | OFF | Circuit models plus normal MIDI, optional MPE and the modern layer (fresh default) |
-| LEGACY (compat) | OFF | The older voicing, byte-identical to earlier sessions |
-| Either | ON | Circuit models, strict: bend, CC1/11/64/74, MPE and the modern layer masked |
+There is one rendering engine for all 523 factory programs and user patches.
+**ALL PATCHES** shows the whole catalogue, including user patches;
+**FACTORY LIBRARY** shows the factory entries. Their existing names and program
+numbers are preserved. The first 222 addresses have new authored voicings,
+including the original keyboard, bass and tone-study programs.
 
-The host parameters keep their IDs: ENGINE is `source_performance`, PURE CS-80
-is `parity_mode` ([Isolation contract](PARITY_ISOLATION.md)). PURE CS-80 takes
-precedence over ENGINE; switching it off applies the stored ENGINE choice.
-Pressure, ribbon and the on-screen PEDAL remain active in all three policies. An
-effective mode change **stops sounding notes and clears controller/FX history**;
-the shared pedal position is reapplied.
+**Older sessions using Legacy or Pure intentionally change sound.** Stored
+controls remain, but schema 4 converts the obsolete engine fields to the circuit
+engine with normal MIDI and optional Studio features. A saved mode cannot disable
+MPE, effects, tuning or expression, and writing an obsolete mode field cannot cut
+held notes. The two host parameter identities are retained as fixed,
+non-automatable compatibility fields. See the [session contract](PARITY_ISOLATION.md)
+for the exact IDs and migration behavior.
 
-The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs share the
-circuit models on the circuit engine and in PURE CS-80. “Complete” describes the
+The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs use the
+circuit models. “Complete” describes the
 classified source column, not measured hardware equivalence. PANEL and memories
 retain their programmer identity; they do not become factory source columns.
 
@@ -231,8 +232,8 @@ glitch-free guarantee, nor a
 64-frame/high-rate qualification. Start host checks at 256 samples and test your
 intended patches; the older `932c6d4` dry-isolation audit remains separate.
 
-Default Circuit Standard mode reports **67 samples of plug-in latency**
-(**1.40 ms at 48 kHz**). Other engine/quality settings can report a different
+Standard quality reports **67 samples of plug-in latency**
+(**1.40 ms at 48 kHz**). Other quality settings can report a different
 value; this excludes the audio interface and host buffer delays. Tail metadata
 is unbounded because supported noise and retained effect histories have no
 universal finite silence deadline. Use an explicit export end/selection with sufficient audible
@@ -243,9 +244,11 @@ continue processing idle instances.
 
 - Back up sessions and user presets before changing builds. With the host closed,
   replace only this instrument's complete bundle/file; rescan afterward.
-- To hear the revised factory sounds, open **LIBRARY**, choose **Circuit** and
-  select the desired program again. Existing sessions and user presets restore
-  their saved parameter values; A/B and Revert use their stored snapshots. A
+- To hear the revised factory sounds, open **LIBRARY** and select the desired
+  program again. Sessions and user presets restore their saved controls, with
+  obsolete engine settings migrated as described above; A/B and Revert use their
+  stored snapshots within the same circuit engine. Keep the older binary and a
+  reference bounce when an old project's exact sound must be retained. A
   delivered factory selection by program number loads the current voicing at
   that address. VST3 host changes sent only through the Program processing queue
   retain a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification);
@@ -255,9 +258,9 @@ continue processing idle instances.
   you copied. Do not remove shared plug-in folders or user presets. Restoring a
   backup does not prove old/new session audio is identical.
 - Report commit/package SHA, OS, CPU architecture, DAW/version, format,
-  sample-rate/buffer, mode and exact steps/error. If the editor loads but is
+  sample-rate/buffer, voice/quality settings and exact steps/error. If the editor loads but is
   silent, check track/device routing, MIDI input, volume/expression, selected
-  rank/source and whether an unsupported controller is masked by isolation.
+  rank/source, and whether the selected program needs aftertouch to sound.
 - Automated validation is not a substitute for a real-device session. Record
   installation, MIDI/pedal, session recall and long-tail bounce results for the
   particular host before relying on the build in a performance.

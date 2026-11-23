@@ -142,17 +142,19 @@ void testVst3PanAutomation(Module& module, double audioTolerance)
                     const auto actual = render(module, protectedParameters, curves, 256, true, false, source);
                     const auto flattened = render(module, protectedParameters, curves, 256, true, true, source);
                     panPeak(actual);
-                    check(panBytesEqual(actual, flattened),
-                          "Legacy and PURE pan retain final-point-at-block-start PCM byte-for-byte");
+                    check(panBytesEqual(actual, render(module, parameters, curves, 256, true, false, source)),
+                          "retired engine fields preserve circuit pan timing byte-for-byte");
+                    check(difference(actual, flattened) > 0.00001,
+                          "retired engine fields cannot flatten the audible pan trajectory");
                     protectedHashes[static_cast<size_t>(policy)] = panPcmHash(actual);
                 }
-                // Exact hashes also permit comparing these unchanged paths
-                // against a preserved pre-pan module with this same executable.
+                // Both obsolete state requests must resolve to the same circuit PCM.
                 std::cout << "PAN voices=" << (sixteen ? 16 : 8) << " source=" << source << " rank=" << rank + 1
                     << " max_audio_error=" << maxError << " peak=" << peak << " positive_difference=" << changed
                     << " left_balance=" << leftBalance << " right_balance=" << rightBalance
                     << " silent_rank_error=" << silentRankError << " no_queue_fnv1a=" << panPcmHash(neutral)
-                    << " legacy_fnv1a=" << protectedHashes[0] << " pure_fnv1a=" << protectedHashes[1] << std::endl;
+                    << " retired_engine_fnv1a=" << protectedHashes[0]
+                    << " retired_isolation_fnv1a=" << protectedHashes[1] << std::endl;
             }
 }
 } // namespace

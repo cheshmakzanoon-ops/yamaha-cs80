@@ -122,11 +122,12 @@ struct PresetLoadAccess
                 check(browser.saveStatus.getText().startsWith("Loaded")
                           && ! browser.saveStatus.getText().contains("Not loaded"),
                       "successful retry replaces the stale failure status");
-                check(host->getParamValue(P_parityMode) == 1.0f
+                check(host->getParamValue(P_parityMode) == 0.0f
+                          && host->getParamValue(P_sourcePerformance) == 1.0f
                           && host->getParamValue(P_oversampling) == 2.0f
                           && host->getParamValue(P_outputJack) == 2.0f
                           && host->getParamValue(P_tuningMode) == 1.0f,
-                      "successful retry preserves existing live PURE and physical-setup recall policy");
+                      "successful retry preserves the circuit engine and live physical setup");
             }
 
         // Complete documents stay schema-permissive. XML syntax admission must

@@ -334,7 +334,7 @@ const TechniqueInfo kTechniques[techniqueCount] = {
     { "RING MOD", { "ring-mod", nullptr, nullptr }, "The ring modulator is part of the sound" },
     { "SUB MOD", { "sub-mod", nullptr, nullptr }, "The SUB oscillator modulates pitch, filter or level" },
     { "FOOTAGE", { "feet-layer", "dual-rank", nullptr }, "The two ranks are layered at different feet or waves" },
-    { "MODERN", { "modern", nullptr, nullptr }, "Uses the software FX, LFO or arpeggiator (off in PURE CS-80)" } };
+    { "MODERN", { "modern", nullptr, nullptr }, "Uses the optional software FX, LFO or arpeggiator" } };
 
 std::uint32_t techniqueBits(const std::vector<std::string>& tags)
 {
@@ -346,14 +346,14 @@ std::uint32_t techniqueBits(const std::vector<std::string>& tags)
     return bits;
 }
 
-constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY LIBRARY",
-                                        "LEGACY LIBRARY", "USER" };
+constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY LIBRARY", "USER" };
+constexpr int kScopeIds[] = { 0, 1, 2, 4 }; // Keep the existing user-scope identity.
 constexpr const char* kSortNames[] = { "BANK", "A-Z", "Z-A", "TYPE", "NEW" };
 constexpr const char* kSortTitles[] = { "Sort in bank order", "Sort A to Z", "Sort Z to A",
                                         "Sort by instrument type", "Sort newest user patches first" };
 // Arrow on the lit sort segment: +1 ascending (or oldest first), -1 descending.
 constexpr int kSortDirection[] = { 1, 1, -1, 1, -1 };
-constexpr int kScopeCount = 5;
+constexpr int kScopeCount = 4;
 constexpr int kSortCount = 5;
 
 // Favourites, shared by every library window of this process. Keys are "F:" +
@@ -1737,7 +1737,7 @@ private:
     static void paintOrigin(Graphics& g, Rectangle<float> r, const Entry& e)
     {
         const juce::String origin = e.isUser ? "USER FILE"
-            : (e.isLegacy ? (e.category == "Hardware Studies" ? "LEGACY STUDY" : "LEGACY PROGRAM") : "LIBRARY PROGRAM");
+            : (e.isLegacy ? (e.category == "Hardware Studies" ? "TONE STUDY" : "FACTORY PROGRAM") : "LIBRARY PROGRAM");
         juce::String thirdName = "LAYERS", thirdValue = "--";
         if (e.isUser && e.modified > 0)
         {
@@ -2531,14 +2531,11 @@ void PresetBrowser::buildFilterChips()
         chip->setStarGlyph(i == 1);
         chip->setTitle(juce::String("Show ") + kScopeNames[i]);
         if (i == 0)
-            chip->setTooltip("The factory library and your saved patches. The Legacy Library is listed on its own.");
+            chip->setTooltip("All factory programs and your saved patches.");
         else if (i == 2)
-            chip->setTooltip("The curated factory library, voiced for the circuit engine.");
-        else if (i == 3)
-            chip->setTooltip("Read-only: the 222 programs of earlier versions, including the provisional hardware-tab studies. "
-                             "Kept so old sessions recall them by name and number; they play on the legacy engine.");
-        chip->setToggleState(i == scopeFilter, juce::dontSendNotification);
-        chip->onClick = [this, i] { scopeFilter = i; rebuildFilter(); };
+            chip->setTooltip("All 523 factory programs, voiced for the circuit engine.");
+        chip->setToggleState(kScopeIds[i] == scopeFilter, juce::dontSendNotification);
+        chip->onClick = [this, i] { scopeFilter = kScopeIds[i]; rebuildFilter(); };
         addAndMakeVisible(*chip);
         scopeChips.push_back(std::move(chip));
     }
@@ -2905,7 +2902,7 @@ void PresetBrowser::refresh()
             if (e.techniques & (1u << (unsigned) t))
                 styleText << " " << kTechniques[t].label;
         e.haystack = (e.name + " " + e.category + " " + kTypes[e.type].label + styleText + " " + e.description
-                      + (e.isUser ? " user" : (e.isLegacy ? " legacy" : " factory library"))).toLowerCase();
+                      + (e.isUser ? " user" : " factory library")).toLowerCase();
     };
 
     for (int i = 0; i < (int) bank.size(); ++i)
@@ -2917,12 +2914,10 @@ void PresetBrowser::refresh()
         e.description = juce::String(preset.description);
         e.factoryIndex = i;
         e.key = "F:" + e.name;
-        // [ws6-library] Legacy Library slots keep their shipped numbers (L001..L222);
-        // the curated library is numbered on its own (001..).
-        e.isLegacy = preset.library == cs80::ProgramLibrary::legacy;
+        // Addresses remain stable; all entries now belong to one factory library.
+        e.isLegacy = false;
         e.techniques = techniqueBits(preset.tags);
-        e.slot = e.isLegacy ? "L" + juce::String(i + 1).paddedLeft('0', 3)
-                            : juce::String(cs80::curatedIndexForProgram(i) + 1).paddedLeft('0', 3);
+        e.slot = juce::String(i + 1).paddedLeft('0', 3);
         if ((size_t) i < factorySignatures.size())
             e.signature = factorySignatures[(size_t) i];
         finish(e);
@@ -3046,17 +3041,15 @@ void PresetBrowser::clearFilters()
 
 namespace
 {
-// [ws6-library] ALL PATCHES = factory library + user patches; the read-only
-// Legacy Library is its own section (and appears in FAVOURITES when starred).
-bool scopeAccepts(int scope, bool favourite, bool isUser, bool legacy)
+// Scope 3 from earlier in-memory clients aliases the unified factory scope.
+bool scopeAccepts(int scope, bool favourite, bool isUser, bool)
 {
     switch (scope)
     {
         case 1: return favourite;
-        case 2: return ! isUser && ! legacy;
-        case 3: return legacy;
+        case 2: case 3: return !isUser;
         case 4: return isUser;
-        default: return ! legacy;
+        default: return true;
     }
 }
 } // namespace
@@ -3144,10 +3137,10 @@ void PresetBrowser::rebuildFilter(const juce::String& previousKey)
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, i, typeFilter, styleFilter, techniqueFilter))
+            if (accepts(e, kScopeIds[i], typeFilter, styleFilter, techniqueFilter))
                 ++n;
         scopeChips[(size_t) i]->setCount(n);
-        scopeChips[(size_t) i]->setToggleState(i == scopeFilter, juce::dontSendNotification);
+        scopeChips[(size_t) i]->setToggleState(kScopeIds[i] == scopeFilter, juce::dontSendNotification);
     }
     for (int t = 0; t < typeCount; ++t)
     {
@@ -3265,7 +3258,7 @@ juce::String PresetBrowser::getNameForRow(int rowNumber)
         return {};
     const auto& e = entries[(size_t) index];
     return e.name + ", " + juce::String(kTypes[e.type].label).toLowerCase() + ", "
-           + (e.isUser ? "user" : (e.isLegacy ? "legacy library" : "factory library"))
+           + (e.isUser ? "user" : "factory library")
            + (isFavourite(e) ? ", favourite" : "") + (isLoaded(e) ? ", loaded" : "");
 }
 
@@ -4067,16 +4060,6 @@ void PresetBrowser::selectCurrentPreset()
     }
     if (target < 0)
     {
-        // [ws6-library] A legacy sound (an old session) opens the Legacy Library
-        // section once, so the loaded patch is always findable.
-        for (const auto& e : entries)
-            if (e.isLegacy && e.key == loadedKey && scopeFilter != 3 && scopeFilter != 1)
-            {
-                scopeFilter = 3;
-                rebuildFilter();
-                selectCurrentPreset();
-                break;
-            }
         return;
     }
 

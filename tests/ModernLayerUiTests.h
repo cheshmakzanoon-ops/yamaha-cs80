@@ -75,6 +75,17 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
         flush(120);
         check(stateBefore.isEquivalentTo(host.getAPVTS().copyState()), "constructing and painting the pages writes no state");
 
+        // Older sessions may still contain mode requests. They cannot mask the open pages or change their state.
+        host.setParamValue(P_sourcePerformance, 0.0f);
+        host.setParamValue(P_parityMode, 1.0f);
+        flush(120);
+        check(host.getParamValue(P_sourcePerformance) == 1.0f && host.getParamValue(P_parityMode) == 0.0f
+                  && stateBefore.isEquivalentTo(host.getAPVTS().copyState()),
+              "retired mode requests keep the circuit policy and leave modern page state unchanged");
+        check(modulation.isEnabled() && keyboard.isEnabled() && fxPage.isEnabled()
+                  && keyboard.curveSlider(0).isEnabled() && fxPage.modelBox(1).isEnabled(),
+              "modulation, keyboard and FX controls stay available after retired mode requests");
+
         // MSEG editor: drag a point, bend a segment, add and delete points, move the loop end.
         auto& editor = modulation.getMsegPage().getEditor();
         const auto before = layer.getShape(0);

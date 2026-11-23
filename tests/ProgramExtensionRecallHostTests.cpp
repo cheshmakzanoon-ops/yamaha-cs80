@@ -25,10 +25,6 @@ struct PresetSaveAccess
         if (p.extensionEngine->getRenderPolicy() != prior)
             p.extensionEngine->setExpression(p.getExpressionValue());
     }
-    static void freshNotes(Cs80AudioProcessor& p)
-    {
-        for (int i = 0; i < 16; ++i) p.routeNoteOn(60 + i, 0.75f, 1);
-    }
 };
 }
 namespace
@@ -91,7 +87,7 @@ struct Fixture
         values[cs80::P_drift] = values[cs80::P_voiceDispersion] = values[cs80::P_analogNoise] = 0.0f;
         p.applyParameterValues(values);
         for (int i = 0; i < cs80::P_numParams; ++i) p.setParamValue(i, values[i]);
-        p.setExpressionFromUI(0.63f); // Policy resets must restore the physical pedal.
+        p.setExpressionFromUI(0.63f); // Recall must retain the physical pedal.
         p.prepareToPlay(48000.0, 2048);
         juce::MidiBuffer notes;
         for (int i = 0; i < 16; ++i)
@@ -145,8 +141,11 @@ void checkRecall(const State& state, const State& expected, const std::string& l
     check(state.primary.v == expected.stored.v, label + " primary physical frame");
     check(state.extension.v == expected.stored.v, label + " extension physical frame");
     check(state.stored.v == expected.stored.v, label + " stored physical values");
-    check(state.primaryPolicy == expected.primaryPolicy && state.extensionPolicy == expected.extensionPolicy,
-          label + " both policies");
+    check(state.primaryPolicy == cs80::RenderPolicy::sourcePerformance
+              && state.extensionPolicy == cs80::RenderPolicy::sourcePerformance
+              && state.stored[cs80::P_sourcePerformance] == 1.0f
+              && state.stored[cs80::P_parityMode] == 0.0f,
+          label + " both instruments retain the fixed circuit policy");
     check(state.program == expected.program, label + " program identity");
     check(state.active, label + " extension remains active until next callback");
 }
@@ -175,12 +174,16 @@ void zeroFrameAudioWitness(int bank, bool tagged, const State& expected)
     // between this event and the tail: an eight-voice recall intentionally
     // retires the extension at the next callback boundary.
     Access::publishExpectedExtension(*reference.owned);
-    if (bank == 1)
+    // Both banks now use the circuit engine. No new notes are injected: this
+    // tail must come from the sixteen genuinely held notes before the recall.
+    for (auto* host : { actual.owned.get(), reference.owned.get() })
     {
-        // Cross-policy recalls reset voices. Inject identical fresh notes only
-        // AFTER the reference publication, so its reset cannot erase them.
-        Access::freshNotes(*actual.owned);
-        Access::freshNotes(*reference.owned);
+        int held = 0;
+        for (int i = 0; i < 8; ++i)
+            held += (host->getEngine().getVoiceInfo(i).held ? 1 : 0)
+                  + (Access::extension(*host).getVoiceInfo(i).held ? 1 : 0);
+        check(held == 16, label + " recall preserves all sixteen held voices");
+        check(host->getExpressionValue() == 0.63f, label + " recall preserves the physical expression pedal");
     }
     const auto audio = directTail(*actual.owned);
     const auto referenceAudio = directTail(*reference.owned);

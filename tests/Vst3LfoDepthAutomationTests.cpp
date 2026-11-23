@@ -172,14 +172,17 @@ int main(int argc, char** argv)
                 preceding.push_back({parameter, {{0, initial}, {1023, initial}, {1535, .4}, {4095, .6}}});
             }
             capture(out / (id + "-preceding83.pcm"), lfoRender(module, p, preceding, 127, source, 13));
+            // Historical capture suffixes identify old session requests, not
+            // alternate engines. Both requests must retain the same live curves.
             auto legacy = p; legacy[cs80::P_sourcePerformance] = 0;
             const auto legacyActual = lfoRender(module, legacy, curves, 256, source, 13);
-            check(exact(legacyActual, lfoRender(module, legacy, curves, 256, source, 13, true)),
-                  "Legacy depth offsets match block-start final-point flattening exactly");
+            check(exact(legacyActual, lfoRender(module, p, curves, 256, source, 13)),
+                  "retired engine request preserves canonical circuit sample-accurate modulation");
             capture(out / (id + "-legacy.pcm"), legacyActual);
             auto pure = p; pure[cs80::P_parityMode] = 1;
             const auto pureActual = lfoRender(module, pure, curves, 256, source, 13);
-            check(exact(pureActual, lfoRender(module, pure, constant, 256, source, 13)), "PURE depth automation inert");
+            check(exact(pureActual, lfoRender(module, p, curves, 256, source, 13)),
+                  "retired isolation request preserves canonical circuit sample-accurate modulation");
             capture(out / (id + "-pure.pcm"), pureActual);
             if (!compat) {
                 const auto scalar = lfoRender(module, p, curves, 1, source, 13);

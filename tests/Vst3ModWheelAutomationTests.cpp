@@ -189,13 +189,13 @@ int main(int argc, char** argv)
             capture(out / (id + "-preceding81.pcm"), wheelRender(module, p, preceding, 127, source, 13, 1));
             auto legacy = p; legacy[cs80::P_sourcePerformance] = 0;
             const auto legacyActual = wheelRender(module, legacy, curves, 256, source, 13, 1);
-            check(exact(legacyActual, wheelRender(module, legacy, curves, 256, source, 13, 1, true)),
-                  "Legacy amount offsets equal block-start final-point flattening byte-for-byte");
+            check(exact(legacyActual, wheelRender(module, p, curves, 256, source, 13, 1)),
+                  "retired source state preserves canonical sample-accurate wheel depths");
             capture(out / (id + "-legacy.pcm"), legacyActual);
             auto pure = p; pure[cs80::P_parityMode] = 1;
             const auto pureActual = wheelRender(module, pure, curves, 256, source, 13, 1);
-            check(exact(pureActual, wheelRender(module, pure, constant, 256, source, 13, 1)),
-                  "PURE effective wheel depths remain inert");
+            check(exact(pureActual, wheelRender(module, p, curves, 256, source, 13, 1)),
+                  "retired isolation state preserves canonical sample-accurate wheel depths");
             capture(out / (id + "-pure.pcm"), pureActual);
             if (!compat) {
                 const auto scalar = wheelRender(module, p, curves, 1, source, 13, 1);

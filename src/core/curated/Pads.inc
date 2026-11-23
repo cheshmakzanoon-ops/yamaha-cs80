@@ -138,11 +138,11 @@ void buildPads(Builder& add)
              .hpf(I, 40.0f).hpf(II, 120.0f).lpf(I, 2200.0f, 0.08f).lpf(II, 3700.0f, 0.12f)
              .eg(I, 0.4f, 3.0f, 0.89f, 2.3f).eg(II, 0.7f, 2.6f, 0.81f, 2.9f)
              .mix(0.43f).detune(3.0f).chorus(0.24f, 0.25f));
-    add("Tremolo Pad", "Pads", { "tremolo", "dual-rank" },
-        "A warm body and brighter pulse rank pass through the original tremolo section. The roughly 3.8 Hz level motion stays rounded rather than chopping the chord to silence.",
+    add("Tremolo Pad", "Pads", { "tremolo", "sub-mod", "dual-rank" },
+        "A warm body and brighter pulse rank share gentle 3.8 Hz SUB amplitude motion. The circuit tremolo adds stereo movement while the whole chord rises and falls smoothly without chopping to silence.",
         pad().lpf(I, 1650.0f, 0.08f).lpf(II, 2900.0f, 0.11f)
              .eg(I, 0.38f, 3.0f, 0.92f, 2.3f).eg(II, 0.65f, 2.8f, 0.85f, 2.7f)
-             .tremolo(0.43f, 3.8f).detune(3.6f).mix(0.39f));
+             .tremolo(0.43f, 3.8f).sub(subSine, 3.8f, 0.0f, 0.0f, 0.24f).detune(3.6f).mix(0.39f));
     add("Neo-Noir Pad", "Pads", { "chorus", "ring-mod", "dual-rank" },
         "A dark saw foundation supports a later pulse glow, a broad stereo field, chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
         pad().wave(I, true, false, 0.10f).lpf(I, 1100.0f, 0.10f).lpf(II, 2400.0f, 0.17f)
@@ -152,7 +152,7 @@ void buildPads(Builder& add)
              .chorus(0.58f, 0.25f).ring(0.3f, 0.06f, 3.0f, 5.0f, 0.08f).detune(8.5f).mix(0.39f)
              .pan(I, -0.18f).pan(II, 0.40f));
     add("Rain Pad", "Pads", { "modern", "lfo", "noise" },
-        "An 8 Hz modern sample-and-hold LFO flickers the filters over a soft pulse body and a little band-limited air. The stepped filter motion is inactive in Pure CS-80.",
+        "An 8 Hz sample-and-hold LFO flickers the filters over a soft pulse body and a little band-limited air. The independent upper envelope lets the airy layer emerge after the pitched body.",
         pad().wave(I, false, true, 0.04f).pw(I, 0.54f, 0.10f, 0.19f)
              .wave(II, false, true, 0.0f, 0.12f).pw(II, 0.62f, 0.16f, 0.25f)
              .hpf(I, 65.0f).lpf(I, 1800.0f, 0.24f).hpf(II, 500.0f).lpf(II, 3900.0f, 0.20f)

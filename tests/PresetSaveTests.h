@@ -80,7 +80,7 @@ struct PresetSaveAccess
         host.setParamValue(cs80::P_parityMode, 1.0f);
         host.loadUserPreset(saved.file);
         // Session settings keep their live values (oversampling quality,
-        // listening output, tuning source and isolation); all else is restored.
+        // listening output and tuning source); engine policy stays canonical.
         const auto* oversampling = host.getAPVTS().getParameter("oversampling");
         const auto* listening = host.getAPVTS().getParameter("output_jack");
         const auto* tuning = host.getAPVTS().getParameter("tuning_mode");
@@ -96,8 +96,9 @@ struct PresetSaveAccess
             check(std::abs(parameters[i]->getValue() - expected[(size_t) i]) < 1.0e-5f,
                   "saved user preset restores every sound and performance control");
         }
-        check(host.getParamValue(cs80::P_parityMode) == 1.0f,
-              "user preset save/load retains existing live isolation policy");
+        check(host.getParamValue(cs80::P_parityMode) == 0.0f
+                  && host.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+              "user preset save/load retains the fixed circuit engine");
 
         // All failure paths must leave both bytes and displayed metadata intact.
         const auto originalBytes = saved.file.loadFileAsString();

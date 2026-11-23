@@ -73,7 +73,7 @@ public:
     }
     ~StudioMount() override { stopTimer(); }
 
-    // Hidden in PURE CS-80 whatever the player chose; shown again when PURE CS-80 is switched off.
+    // The player controls this strip independently of the sound program.
     void setControllersShown(bool shown)
     {
         controllersWanted = shown;
@@ -109,8 +109,7 @@ public:
             // local preference every tick and fight another open instance's preference.
             setCircuitNotesInTooltips(notesWanted);
         }
-        const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
-        const bool visible = controllersWanted && ! pure;
+        const bool visible = controllersWanted;
         if (controllers.isVisible() != visible)
         {
             controllers.setVisible(visible);

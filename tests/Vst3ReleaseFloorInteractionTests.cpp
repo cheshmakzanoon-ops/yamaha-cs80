@@ -134,7 +134,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = release_floor_interactionRender(protectedP, 256);
-                check(actual == release_floor_interactionRender(protectedP, 256, true, true), "release_floor_interaction Legacy/PURE preserve flattening");
+                check(actual == release_floor_interactionRender(p, 256), "release_floor_interaction retired mode requests preserve canonical circuit sample-accurate audio");
                 captureReleaseFloorInteraction(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

@@ -69,7 +69,7 @@ void testControllerResetHost(Check check)
         for (int master : {1, 16}) { cc(master, 101, 0); cc(master, 100, 6); cc(master, 6, 2); }
         tick();
         const int channels[] {2, 3, 14, 15, 8};
-        const int count = sixteen && !pure ? 16 : 8;
+        const int count = sixteen ? 16 : 8;
         for (int i = 0; i < count; ++i)
             midi.addEvent(juce::MidiMessage::noteOn(channels[i % 5], 40+i, (juce::uint8) 100), 0);
         tick();
@@ -79,7 +79,7 @@ void testControllerResetHost(Check check)
         for (int i = 0; i < count; ++i)
         {
             const int channel = channels[i % 5];
-            const bool affected = channel == target || (enabled && !pure
+            const bool affected = channel == target || (enabled
                 && ((target == 1 && (channel == 2 || channel == 3))
                     || (target == 16 && (channel == 14 || channel == 15))));
             check(voice(*host,40+i).active != affected,
@@ -199,7 +199,7 @@ void testControllerResetHost(Check check)
     for (bool circuit : {false, true})
         for (int frames : {0, 32})
     {
-        auto host = make(circuit, true, true), reference = make(circuit, true, true);
+        auto host = make(circuit, true, true), reference = make(circuit, true, false);
         juce::AudioBuffer<float> audio(2, frames), otherAudio(2, frames);
         juce::MidiBuffer midi, otherMidi;
         for (auto* h : {host.get(), reference.get()}) h->setExpressionFromUI(0.3f);
@@ -209,19 +209,20 @@ void testControllerResetHost(Check check)
             m->addEvent(juce::MidiMessage::channelPressureChange(2, 83), 0);
             m->addEvent(juce::MidiMessage::controllerEvent(2, 88, 53), 0);
         }
-        midi.addEvent(juce::MidiMessage::controllerEvent(2, 121, 0), 11);
+        for (auto* m : {&midi, &otherMidi})
+            m->addEvent(juce::MidiMessage::controllerEvent(2, 121, 0), 11);
         for (auto* m : {&midi, &otherMidi}) m->addEvent(juce::MidiMessage::noteOn(2, 64, (juce::uint8) 80), 21);
         host->processBlock(audio, midi); reference->processBlock(otherAudio, otherMidi);
-        check(sameAudio(audio, otherAudio) && host->getExpressionValue() == 0.3f,
-              "PURE CC121 retains physical expression and exact audio");
-        check(voice(*host, 60).pressure == 83.0f / 127.0f
-                  && voice(*host, 64).velocity == ((80 << 7) | 53) / 16383.0f,
-              "PURE CC121 retains pressure and pending high-resolution strike");
+        check(sameAudio(audio, otherAudio) && host->getExpressionValue() == 1.0f,
+              "retired isolation write leaves normal CC121 expression reset and exact audio");
+        check(voice(*host, 60).pressure == 0.0f
+                  && voice(*host, 64).velocity == 80.0f / 127.0f,
+              "CC121 resets pressure and pending strike even after an obsolete isolation request");
         midi.clear(); otherMidi.clear();
         for (int i = 0; i < 8; ++i)
         {
             host->processBlock(audio, midi); reference->processBlock(otherAudio, otherMidi);
-            check(sameAudio(audio, otherAudio), "PURE reset leaves the continuing render byte-identical");
+            check(sameAudio(audio, otherAudio), "obsolete isolation request leaves the continuing circuit render byte-identical");
         }
     }
 }

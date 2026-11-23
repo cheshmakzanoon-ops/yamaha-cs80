@@ -12,9 +12,9 @@ int voice(const cs80::Engine& e,int note,int channel){for(int i=0;i<8;++i){auto 
 }
 int main(){
  juce::ScopedJuceInitialiser_GUI init;juce::TemporaryFile fixture("-controller-handoff");
- for(bool circuit:{false,true})for(int frames:{0,32})for(bool reactivate:{false,true})for(bool upper:{false,true}){
+ for(bool circuitRequest:{false,true})for(int frames:{0,32})for(bool reactivate:{false,true})for(bool upper:{false,true}){
   auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
-  host->setEngineMode(circuit?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
+  host->setEngineMode(circuitRequest?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
   for(auto [key,value]:std::array<std::pair<int,float>,10>{{{cs80::P_parityMode,0},{cs80::P_mpeOn,1},{cs80::P_voiceMode,0},{cs80::P_kasScanTiming,0},{cs80::P_arpOn,0},{cs80::P_voiceDispersion,0},{cs80::P_drift,0},{cs80::P_analogNoise,0},{cs80::P_pressureCurve,0},{cs80::P_pressureThreshold,0}}})host->setParamValue(key,value);
   // Isolate retained bend targets from the startup preset's pressure vibrato:
   // a newly activated instrument deliberately has its own oscillator history.
@@ -62,27 +62,35 @@ int main(){
   check(index>=0,"reactivation still routes the next note to extension");
   if(index>=0){auto v=ext.getVoiceInfo(index);check(v.bend==0&&v.pressure==0,"dormant CC121 replaces stale member targets");}
  }
- // Primary lifecycle invalidation wins over previously retained member state.
- for(bool circuit:{false,true})for(int resetKind:{0,1,2}){
+ // Real primary lifecycle invalidation supersedes retained member state;
+ // retired engine requests must preserve it for subsequent activation.
+ for(bool circuitRequest:{false,true})for(int resetKind:{0,1,2,3}){
   auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
-  host->setEngineMode(circuit?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
+  host->setEngineMode(circuitRequest?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
   host->setParamValue(cs80::P_parityMode,0);host->setParamValue(cs80::P_voiceMode,0);host->setParamValue(cs80::P_mpeOn,1);host->setParamValue(cs80::P_kasScanTiming,0);host->setParamValue(cs80::P_arpOn,0);
+  host->setParamValue(cs80::P_mpeBendRange,48);host->setParamValue(cs80::P_pressureCurve,0);host->setParamValue(cs80::P_pressureThreshold,0);
   host->prepareToPlay(48000,64);juce::AudioBuffer<float> audio(2,0);juce::MidiBuffer midi;
   auto tick=[&]{host->processBlock(audio,midi);midi.clear();};tick();
   midi.addEvent(juce::MidiMessage::pitchWheel(2,10240),0);midi.addEvent(juce::MidiMessage::channelPressureChange(2,80),0);tick();
   if(resetKind==0){host->setParamValue(cs80::P_mpeOn,0);tick();host->setParamValue(cs80::P_mpeOn,1);}
   if(resetKind==1)host->prepareToPlay(48000,64);
-  if(resetKind==2)host->setEngineMode(circuit?Cs80AudioProcessor::EngineMode::legacy:Cs80AudioProcessor::EngineMode::circuit);
+  if(resetKind==2)host->setEngineMode(circuitRequest?Cs80AudioProcessor::EngineMode::legacy:Cs80AudioProcessor::EngineMode::circuit);
+  if(resetKind==3)host->setParamValue(cs80::P_parityMode,1);
+  check(host->getParamValue(cs80::P_sourcePerformance)==1&&host->getParamValue(cs80::P_parityMode)==0,
+        "lifecycle and retired policy requests retain the circuit instrument");
   host->setParamValue(cs80::P_voiceMode,1);tick();
   for(int n=40;n<48;++n)midi.addEvent(juce::MidiMessage::noteOn(8,n,(juce::uint8)100),0);
   midi.addEvent(juce::MidiMessage::noteOn(2,60,(juce::uint8)100),0);tick();
   const auto& ext=host->getExtensionEngine();const int index=voice(ext,60,2);check(index>=0,"reset boundary witness uses extension");
-  if(index>=0){auto v=ext.getVoiceInfo(index);check(v.bend==0&&v.pressure==0,"activation cannot resurrect primary state invalidated by mode/prepare/policy reset");}
+  if(index>=0){auto v=ext.getVoiceInfo(index);
+   if(resetKind<2)check(v.bend==0&&v.pressure==0,"activation cannot resurrect primary state invalidated by MPE disable or prepare");
+   else check(v.bend==12&&v.pressure==80.0f/127,"retired policy requests preserve member bend and pressure across activation");
+  }
  }
  // All retained global controller targets also feed the new instrument.
- for(bool circuit:{false,true})for(bool mpe:{false,true}){
+ for(bool circuitRequest:{false,true})for(bool mpe:{false,true}){
   auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
-  host->setEngineMode(circuit?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
+  host->setEngineMode(circuitRequest?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
   host->setParamValue(cs80::P_parityMode,0);host->setParamValue(cs80::P_voiceMode,0);host->setParamValue(cs80::P_mpeOn,mpe?1:0);
   host->setParamValue(cs80::P_kasScanTiming,0);host->setParamValue(cs80::P_arpOn,0);
   host->setParamValue(cs80::P_pressureCurve,0);host->setParamValue(cs80::P_pressureThreshold,0);

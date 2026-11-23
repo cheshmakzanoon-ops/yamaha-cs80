@@ -193,11 +193,12 @@ int main(int argc,char**argv) {
       save("pure-prior",renderSession(module,pure,preceding,256));
       if(!compat){
         const auto old=renderSession(module,legacy,curves,256),oldFlat=renderSession(module,legacy,curves,256,true);
-        check(exactAudio(old,oldFlat),"Legacy final-point flattening");save("legacy",old);save("legacy-flat",oldFlat);
+        const auto canonical=renderSession(module,p,curves,256);
+        check(exactAudio(old,canonical),"retired source state preserves canonical circuit sample-accurate curves");save("legacy",old);save("legacy-flat",oldFlat);
         // Hold ONLY the new noise lane. Existing volume must still move in combined controls.
         auto noiseHeld=curves;noiseHeld[0]=constant[0];
         const auto pureAudio=renderSession(module,pure,curves,256),pureFixed=renderSession(module,pure,noiseHeld,256);
-        check(exactAudio(pureAudio,pureFixed),"PURE analog-noise amount inert with same prior controls");save("pure",pureAudio);save("pure-noise-held",pureFixed);
+        check(exactAudio(pureAudio,canonical),"retired isolation state preserves canonical circuit sample-accurate curves");save("pure",pureAudio);save("pure-noise-held",pureFixed);
         emitNotes=false;
         const auto quiet=renderSession(module,p,curves,256),quietHeld=renderSession(module,p,noiseHeld,256);
         emitNotes=true;

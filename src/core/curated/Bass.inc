@@ -100,11 +100,11 @@ void buildBass(Builder& add)
               .lpf(I, 580.0f, 0.12f).lpf(II, 1450.0f, 0.18f)
               .feg(II, 0.0f, 0.44f, 0.002f, 0.36f, 0.09f).eg(II, 0.002f, 0.78f, 0.18f, 0.09f).mix(0.24f));
     add("Rubber Bass", "Bass", { "init-bend", "percussive" },
-        "A small upward pitch scoop rises into each note, followed by a rounded resonant pluck. The short upper attack makes the springy onset clear without an ongoing pitch wobble.",
+        "A small upward pitch scoop rises into each note, followed by a rounded resonant pluck. Both ranks decay fully on a held key; the short upper attack makes the springy onset clear without an ongoing pitch wobble.",
         bass().bend(0.32f).wave(I, false, true, 0.28f).pw(I, 0.56f)
               .lpf(I, 580.0f, 0.28f).lpf(II, 1650.0f, 0.22f)
               .feg(I, 0.0f, 0.46f, 0.004f, 0.58f, 0.12f).feg(II, 0.0f, 0.55f, 0.002f, 0.25f, 0.08f)
-              .eg(I, 0.004f, 2.0f, 0.08f, 0.18f).eg(II, 0.002f, 0.30f, 0.0f, 0.07f)
+              .eg(I, 0.004f, 2.0f, 0.0f, 0.18f).eg(II, 0.002f, 0.30f, 0.0f, 0.07f)
               .touch(Both, 0.18f, 0.68f, 0.0f, 0.0f).res(0.21f).mix(0.20f));
     add("Dark Bass", "Bass", { "sine" },
         "A deep 16' foundation with a deliberately dark, same-register saw shadow. The bypass sine preserves the fundamental while the filtered harmonics stay restrained.",
@@ -120,11 +120,11 @@ void buildBass(Builder& add)
               .eg(II, 0.002f, 0.85f, 0.34f, 0.10f).level(II, 0.82f, 0.24f)
               .touch(II, 0.24f, 0.72f, 0.12f, 0.05f).mix(0.29f).res(0.09f));
     add("Picked Bass", "Bass", { "velocity", "percussive" },
-        "A short pulse-and-noise pick transient sits above a longer decaying 16' string body. Hard strikes sharpen the pick; the upper rank does not persist through the held note.",
+        "A short pulse-and-noise pick transient sits above a slowly damping 16' string body. Hard strikes sharpen the pick; the body keeps ringing after the upper transient has disappeared.",
         bass().wave(I, true, false, 0.30f).wave(II, false, true, 0.0f, 0.045f).pw(II, 0.74f)
               .hpf(II, 520.0f).lpf(I, 1050.0f, 0.14f).lpf(II, 4300.0f, 0.09f)
               .feg(I, 0.0f, 0.32f, 0.004f, 0.9f, 0.15f).feg(II, 0.0f, 0.55f, 0.001f, 0.13f, 0.055f)
-              .eg(I, 0.0035f, 3.1f, 0.0f, 0.23f).eg(II, 0.001f, 0.19f, 0.0f, 0.055f)
+              .eg(I, 0.0035f, 5.4f, 0.0f, 0.23f).eg(II, 0.001f, 0.19f, 0.0f, 0.055f)
               .level(I, 1.0f, 0.25f).level(II, 0.90f, 0.08f)
               .touch(I, 0.14f, 0.72f, 0.0f, 0.0f).touch(II, 0.28f, 0.94f, 0.0f, 0.0f).mix(0.20f));
     add("Upright Pluck", "Bass", { "sine", "percussive", "velocity" },

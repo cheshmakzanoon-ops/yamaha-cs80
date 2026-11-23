@@ -38,92 +38,95 @@ int main() {
     Cs80AudioProcessor host(fixture.getFile());
     auto studio=std::make_unique<cs80::ui::StudioView>(host);
     studio->setSize(1600,936);studio->setVisible(true);studio->showTab(cs80::ui::StudioTab::settings);
-    auto* source=dynamic_cast<cs80::ui::ParameterContextButton*>(find(*studio,"source_performance"));
-    auto* parity=dynamic_cast<cs80::ui::ParameterContextButton*>(find(*studio,"parity_mode"));
-    auto* legacy=dynamic_cast<cs80::ui::ParameterContextButton*>(find(*studio,"render_policy_legacy"));
-    check(source && parity && legacy,"actual policy controls use helper");
-    if(!source || !parity || !legacy)return 1;
-    check(legacy->getContextHostParameterIndex()==-1 && legacy->buildContextMenu().getNumItems()==0,"composite legacy has no misleading context");
-    check(source->getTooltip().contains("stored SOURCE PERFORMANCE") && parity->getTooltip().contains("source request is retained"),"tooltips explain stored/effective semantics");
-    std::function<void()> retained;
-    for(int i=0;i<2;++i) {
-        auto* button=i==0?source:parity;
-        const int core=i==0?cs80::P_sourcePerformance:cs80::P_parityMode;
-        const int other=i==0?cs80::P_parityMode:cs80::P_sourcePerformance;
+    for(const char* id:{"source_performance","parity_mode","render_policy_legacy"})
+        check(find(*studio,id)==nullptr,"retired engine policies have no selectable Studio control");
+    for(int core:{int(cs80::P_sourcePerformance),int(cs80::P_parityMode)}) {
         auto* parameter=host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(core));
-        check(button->getContextParameterId()==Cs80AudioProcessor::parameterId(core),"bound ID matches attachment");
-        check(button->getContextHostParameterIndex()==parameter->getParameterIndex(),"real host index");
-        host.setParamValue(other,0);host.setParamValue(core,0);
+        check(parameter && parameter->isBoolean() && !parameter->isAutomatable(),
+              "reserved engine field retains its Boolean host identity without automation");
+    }
+
+    // Exercise the same real context/click/undo/lifetime paths through the
+    // independent SUB waveform-set choice, which remains an editable control.
+    studio->showTab(cs80::ui::StudioTab::modulation,1);
+    auto* button=dynamic_cast<cs80::ui::ParameterContextButton*>(find(*studio,"sub_original_mode"));
+    check(button!=nullptr,"actual SUB waveform-set control uses the context helper");
+    if(!button)return 1;
+    constexpr int core=cs80::P_subOriginalMode;
+    auto* parameter=host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(core));
+    check(button->getContextParameterId()==Cs80AudioProcessor::parameterId(core),"bound ID matches attachment");
+    check(button->getContextHostParameterIndex()==parameter->getParameterIndex(),"real host index");
+    check(button->getTooltip().contains("original functions") && button->getTooltip().contains("extended waveform set"),
+          "waveform-set tooltip describes the actual independent choice");
+    const float nonDefault=parameter->convertFrom0to1(parameter->getDefaultValue())<.5f?1.f:0.f;
+    auto canonical=[&] {
+        return host.getParamValue(cs80::P_sourcePerformance)==1 && host.getParamValue(cs80::P_parityMode)==0
+            && host.getEngineMode()==Cs80AudioProcessor::EngineMode::circuit && !host.isPure();
+    };
+    for(int sourceState:{0,1}) for(int isolationState:{0,1}) {
+        host.setParamValue(core,0);
+        host.getUndoableState().syncNow();host.getUndoManager().clearUndoHistory();
+        Listener policyListener;host.addListener(&policyListener);
+        host.setParamValue(cs80::P_sourcePerformance,float(sourceState));
+        host.setParamValue(cs80::P_parityMode,float(isolationState));
+        host.getUndoableState().syncNow();
+        check(canonical() && host.getParamValue(core)==0,"obsolete requests leave the circuit policy and SUB choice unchanged");
+        check(policyListener.values==0 && policyListener.begins==0 && policyListener.ends==0,
+              "obsolete policy setters emit no parameter edit or gesture");
+        check(!host.getUndoManager().canUndo(),"obsolete policy writes create no undo step");
+        host.removeListener(&policyListener);
+
         click(*button);
-        check(host.getParamValue(core)==1 && host.getParamValue(other)==0,"ordinary click changes only bound stored request");
+        check(host.getParamValue(core)==1 && canonical(),"ordinary click changes only the editable SUB waveform set");
+        host.getUndoableState().syncNow();
+        check(host.getUndoManager().canUndo(),"real SUB click creates an undo step");
+        check(host.getUndoableState().undo() && host.getParamValue(core)==0 && canonical(),
+              "one undo restores the prior SUB choice without changing engine policy");
+        check(!host.getUndoManager().canUndo(),"real SUB click is one undo transaction");
+        check(host.getUndoableState().redo() && host.getParamValue(core)==1 && canonical(),
+              "redo restores the edited SUB choice on the same circuit engine");
         click(*button);
-        check(host.getParamValue(core)==0 && host.getParamValue(other)==0,"ordinary second click toggles request off");
+        check(host.getParamValue(core)==0 && canonical(),"ordinary second click toggles the waveform set off");
+
         int menus=0;
         const auto originalMenu=button->onContextMenu;
         button->onContextMenu=[&]{++menus;};
-        check(button->keyPressed(juce::KeyPress(juce::KeyPress::F10Key,juce::ModifierKeys::shiftModifier,0)),"Shift F10 opens policy request context");
+        check(button->keyPressed(juce::KeyPress(juce::KeyPress::F10Key,juce::ModifierKeys::shiftModifier,0)),
+              "Shift F10 opens the real waveform-set context");
         button->mouseDown(mouse(*button,juce::ModifierKeys::rightButtonModifier));
         button->mouseUp(mouse(*button,0));
-        check(menus==2 && host.getParamValue(core)==0 && host.getParamValue(other)==0,"context pointer and key do not select policy");
+        check(menus==2 && host.getParamValue(core)==0 && canonical(),"context pointer and key do not toggle the waveform set");
         button->onContextMenu=originalMenu;
-        for(float otherValue:{0.f,1.f}) {
-            host.setParamValue(other,otherValue);
-            host.setParamValue(core,parameter->convertFrom0to1(parameter->getDefaultValue())<.5f?1.f:0.f);
-            Listener listener;host.addListener(&listener);
-            auto reset=action(button->buildContextMenu(),"Reset to default");
-            check(bool(reset),"reset offered");if(reset)reset();
-            check(parameter->getValue()==parameter->getDefaultValue(),"reset actual default");
-            check(host.getParamValue(other)==otherValue,"reset retains other request");
-            check(listener.values==1 && listener.begins==1 && listener.ends==1,"one balanced reset gesture");
-            if(reset)reset();
-            check(listener.values==1 && listener.begins==1 && listener.ends==1,"repeated reset silent");
-            host.removeListener(&listener);
-        }
-        host.setParamValue(cs80::P_parityMode,0);
-        auto learn=action(button->buildContextMenu(),"MIDI learn");check(bool(learn),"learn offered outside PURE");if(learn)learn();
-        check(host.getMidiLearn().learningParameter()==parameter->getParameterIndex(),"learn binds actual request");
-        auto cancel=action(button->buildContextMenu(),"Cancel MIDI learn");check(bool(cancel),"cancel offered");if(cancel)cancel();
-        check(host.getMidiLearn().learningParameter()<0,"cancel clears request");
-        host.setParamValue(cs80::P_parityMode,1);
-        check(!action(button->buildContextMenu(),"MIDI learn"),"learn unavailable in PURE");
-        host.setParamValue(cs80::P_parityMode,0);
-        retained=action(button->buildContextMenu(),"Reset to default");
-        host.setParamValue(core,parameter->convertFrom0to1(parameter->getDefaultValue())<.5f?1.f:0.f);
-        const float beforeDisabled=host.getParamValue(core);
+
+        host.setParamValue(core,nonDefault);
+        Listener listener;host.addListener(&listener);
+        auto reset=action(button->buildContextMenu(),"Reset to default");
+        check(bool(reset),"reset offered");if(reset)reset();
+        check(parameter->getValue()==parameter->getDefaultValue() && canonical(),"reset changes only the actual waveform-set default");
+        check(listener.values==1 && listener.begins==1 && listener.ends==1,"one balanced reset gesture");
+        if(reset)reset();
+        check(listener.values==1 && listener.begins==1 && listener.ends==1,"repeated reset is silent");
+        host.removeListener(&listener);
+
+        auto learn=action(button->buildContextMenu(),"MIDI learn");
+        check(bool(learn),"MIDI learn remains available after obsolete policy requests");if(learn)learn();
+        check(host.getMidiLearn().learningParameter()==parameter->getParameterIndex(),"learn binds the actual waveform-set parameter");
+        auto cancel=action(button->buildContextMenu(),"Cancel MIDI learn");
+        check(bool(cancel),"cancel offered");if(cancel)cancel();
+        check(host.getMidiLearn().learningParameter()<0,"cancel clears the active request");
+
+        auto retained=action(button->buildContextMenu(),"Reset to default");
+        host.setParamValue(core,nonDefault);
         studio->setEnabled(false);if(retained)retained();
-        check(host.getParamValue(core)==beforeDisabled,"retained action cannot edit disabled ancestor");
+        check(host.getParamValue(core)==nonDefault,"retained action cannot edit a disabled ancestor");
         check(!action(button->buildContextMenu(),"Reset to default"),"disabled ancestor prevents reset");
         studio->setEnabled(true);
     }
-    for(int sourceState:{0,1}) for(int isolationState:{0,1}) {
-        juce::MessageManager::getInstance()->runDispatchLoopUntil(5);
-        host.setParamValue(cs80::P_sourcePerformance,float(sourceState));
-        host.setParamValue(cs80::P_parityMode,float(isolationState));
-        host.getUndoableState().syncNow();host.getUndoManager().clearUndoHistory();
-        Listener listener;host.addListener(&listener);
-        legacy->onClick();
-        check(host.getParamValue(cs80::P_sourcePerformance)==0 && host.getParamValue(cs80::P_parityMode)==0,"legacy clears both stored requests");
-        const int expected=sourceState+isolationState;
-        check(listener.begins==expected && listener.ends==expected,"legacy gestures only changed requests");
-        const int begins=listener.begins,ends=listener.ends;
-        legacy->onClick();
-        check(listener.begins==begins && listener.ends==ends,"already legacy repeated action emits no gestures");
-        host.removeListener(&listener);
-        check(host.getUndoManager().canUndo()==(expected!=0),"legacy no-op creates no undo step");
-        if(expected!=0) {
-            check(host.getUndoableState().undo(),"legacy effective action is undoable");
-            check(host.getParamValue(cs80::P_sourcePerformance)==sourceState && host.getParamValue(cs80::P_parityMode)==isolationState,"single undo restores both prior requests");
-            check(!host.getUndoManager().canUndo(),"composite legacy is only one undo step");
-            check(host.getUndoableState().redo(),"legacy action is redoable");
-            check(host.getParamValue(cs80::P_sourcePerformance)==0 && host.getParamValue(cs80::P_parityMode)==0,"single redo clears both requests");
-        }
-    }
-    auto oldReset=action(source->buildContextMenu(),"Reset to default");
+    auto oldReset=action(button->buildContextMenu(),"Reset to default");
+    check(bool(oldReset),"a real context reset exists before editor destruction");
     studio.reset();
-    auto* sourceParameter=host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance));
-    const float nonDefault=sourceParameter->convertFrom0to1(sourceParameter->getDefaultValue())<.5f?1.f:0.f;
-    host.setParamValue(cs80::P_sourcePerformance,nonDefault);
+    host.setParamValue(core,nonDefault);
     if(oldReset)oldReset();
-    check(host.getParamValue(cs80::P_sourcePerformance)==nonDefault,"destroyed editor leaves retained action inert");
+    check(host.getParamValue(core)==nonDefault && canonical(),"destroyed editor leaves its retained action inert");
     std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;
 }

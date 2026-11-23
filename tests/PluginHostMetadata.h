@@ -28,12 +28,15 @@ void testPluginHostMetadata(Check&& check)
               && processor.getParameters().size() == initialParameterCount,
           "metadata queries do not change parameters or defaults");
 
-    // Capability must remain true with the expressive feature switched off and
-    // in isolation, without turning it on or changing either mode's MIDI policy.
+    // Capability remains advertised with MPE switched off and after obsolete
+    // isolation requests, without changing the player's actual MPE setting.
     for (int mode = 0; mode < 3; ++mode)
     {
         ParamValues p;
         p[P_mpeOn] = mode == 0 ? 0.0f : 1.0f;
+        p[P_mpeBendRange] = 48.0f;
+        p[P_pitchBendRange] = 12.0f;
+        p[P_subVco] = p[P_subAtVco] = p[P_modWheelSub] = p[P_initBend] = 0.0f;
         p[P_drift] = p[P_voiceDispersion] = p[P_analogNoise] = 0.0f;
         processor.applyParameterValues(p);
         processor.setParamValue(P_parityMode, mode == 2 ? 1.0f : 0.0f);
@@ -49,28 +52,36 @@ void testPluginHostMetadata(Check&& check)
         expression.addEvent(juce::MidiMessage::pitchWheel(2, 12288), 0);
         expression.addEvent(juce::MidiMessage::channelPressureChange(2, 80), 0);
         processor.processBlock(block, expression);
+        const auto moving2 = processor.getEngine().getRankInfo(0, 0).oscillatorHz;
+        check(moving2 > before2 && moving2 < before2 * (mode == 0 ? std::sqrt(2.0f) : 4.0f),
+              "circuit bend moves toward its target during the first 64 samples");
+        // More than 30 declared 5 ms time constants lets the circuit's
+        // controller dezipper settle before checking the exact musical ratio.
+        juce::MidiBuffer noEvents;
+        for (int settle = 0; settle < 128; ++settle)
+            processor.processBlock(block, noEvents);
         const auto voice2 = processor.getEngine().getVoiceInfo(0);
         const auto voice3 = processor.getEngine().getVoiceInfo(1);
         check(voice2.channel == 2 && voice3.channel == 3,
               "MPE metadata fixture retains separate member-channel notes");
-        check(processor.supportsMPE(), "MPE capability is stable across MPE off/on and isolation");
+        check(processor.supportsMPE() && processor.getParamValue(P_mpeOn) == p[P_mpeOn]
+                  && processor.getParamValue(P_sourcePerformance) == 1.0f
+                  && processor.getParamValue(P_parityMode) == 0.0f,
+              "capability queries and obsolete mode requests preserve the actual MPE control and circuit policy");
         check(std::abs(voice2.pressure - 80.0f / 127.0f) < 1.0e-6f
                   && voice3.pressure == 0.0f,
               "member channel pressure remains independent");
         const auto after2 = processor.getEngine().getRankInfo(0, 0).oscillatorHz;
         const auto after3 = processor.getEngine().getRankInfo(1, 0).oscillatorHz;
-        if (mode == 1)
-            check(voice2.bend > 23.0f && voice3.bend == 0.0f
-                      && after2 > before2 * 3.9f && after3 == before3,
-                  "advertised MPE capability actually bends only the addressed member");
-        else if (mode == 0)
-            check(voice2.bend == 0.0f && voice3.bend == 0.0f
-                      && after2 > before2 && after3 > before3,
-                  "MPE-off legacy global pitch bend is unchanged");
+        if (mode != 0)
+            check(voice2.bend == 24.0f && voice3.bend == 0.0f
+                      && std::abs(after2 / before2 - 4.0f) < 1.0e-5f && after3 == before3,
+                  "MPE bends only the addressed member by two octaves, including after retired isolation requests");
         else
             check(voice2.bend == 0.0f && voice3.bend == 0.0f
-                      && after2 == before2 && after3 == before3,
-                  "isolation still ignores MIDI pitch bend despite host MPE capability");
+                      && std::abs(after2 / before2 - std::sqrt(2.0f)) < 1.0e-5f
+                      && std::abs(after3 / before3 - std::sqrt(2.0f)) < 1.0e-5f,
+                  "MPE-off global bend applies the independent six-semitone target to both notes");
         processor.releaseResources();
     }
 

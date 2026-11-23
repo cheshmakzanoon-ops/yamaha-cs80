@@ -27,13 +27,13 @@ struct PresetIdentityAccess
             const auto* selected = startup.selectedEntry();
             check(startup.scopeFilter == 0 && selected != nullptr && !selected->isLegacy
                       && selected->factoryIndex == cs80::programIndexForCurated(0),
-                  "fresh Library stays on Circuit programs and selects the authored showcase");
+                  "fresh Library includes every factory program and selects the authored showcase");
             host->loadFactoryPreset(0);
             startup.syncLoaded();
             startup.selectCurrentPreset();
-            check(startup.scopeFilter == 3 && startup.selectedEntry() != nullptr
-                      && startup.selectedEntry()->isLegacy,
-                  "explicit Legacy recall still opens its compatible library section");
+            check(startup.scopeFilter == 0 && startup.selectedEntry() != nullptr
+                      && !startup.selectedEntry()->isLegacy && startup.selectedEntry()->factoryIndex == 0,
+                  "original-address recall stays in the unified factory library");
             host->loadFactoryPreset(cs80::programIndexForCurated(0));
         }
         host->setParamValue(P_brilliance, 0.125f);

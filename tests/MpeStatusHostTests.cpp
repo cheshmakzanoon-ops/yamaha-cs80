@@ -65,6 +65,8 @@ int main()
         check(!host.getMpeStatus().ready, "processor initially waits for callback");
         host.setEngineMode(circuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
         host.setParamValue(cs80::P_parityMode, 0);
+        check(host.getParamValue(cs80::P_sourcePerformance) == 1 && host.getParamValue(cs80::P_parityMode) == 0,
+              "both historical engine requests resolve to the circuit instrument");
         host.setParamValue(cs80::P_voiceMode, sixteen ? 1 : 0);
         host.setParamValue(cs80::P_mpeOn, 0);
         host.setParamValue(cs80::P_pitchBendRange, 12);
@@ -106,6 +108,16 @@ int main()
         const auto label = page.mpeStatusText();
         check(label.contains("Lower: manager 1, members 2-8") && label.contains("Upper: manager 16, members 9-15")
               && label.contains("3.25 st") && label.contains("128.27 st"), "page formats applied channel spans and cent ranges");
+        for (int parameter : {cs80::P_sourcePerformance, cs80::P_parityMode}) for (float value : {0.0f, 1.0f})
+        {
+            host.setParamValue(parameter, value); tick();
+            check(host.getParamValue(cs80::P_sourcePerformance) == 1 && host.getParamValue(cs80::P_parityMode) == 0
+                      && host.getMpeStatus() == status,
+                  "obsolete mode writes preserve enabled MPE, both zones and every negotiated range");
+            page.clearTuning();
+            check(page.mpeStatusText() == label,
+                  "MPE page continues to describe the same applied zones after obsolete writes");
+        }
         host.setParamValue(cs80::P_pitchBendRange, 5);
         host.setParamValue(cs80::P_mpeBendRange, 6); tick();
         check(host.getMpeStatus() == status, "parameter edits cannot override negotiated ranges in telemetry");
@@ -117,9 +129,9 @@ int main()
         rpn(midi, 16, 6, 0); tick();
         check(host.getMpeStatus().enabled && host.getMpeStatus().lowerMembers == 0 && host.getMpeStatus().upperMembers == 0,
               "both disabled zones are distinct from disabled MPE");
-        host.setParamValue(cs80::P_parityMode, 1); tick();
-        check(host.getMpeStatus() == disabled, "PURE masks stored enable request");
-        page.clearTuning(); check(page.mpeStatusText().contains("MPE: off"), "page reports applied PURE masking");
+        host.setParamValue(cs80::P_mpeOn, 0); tick();
+        check(host.getMpeStatus() == disabled, "the actual MPE control still disables applied MPE");
+        page.clearTuning(); check(page.mpeStatusText().contains("MPE: off"), "page reports an actual MPE-off request");
         host.prepareToPlay(48000, 32);
         check(!host.getMpeStatus().ready, "prepare resets completed-block observation");
         tick(); check(host.getMpeStatus().ready, "next callback restores readiness");

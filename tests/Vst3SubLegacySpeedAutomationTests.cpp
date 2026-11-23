@@ -84,7 +84,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = speedRender(protectedP, 256);
-                check(actual == speedRender(protectedP, 256, true, true), "legacy speed Legacy/PURE preserve flattening");
+                check(actual == speedRender(p, 256), "legacy speed retired mode requests preserve canonical circuit sample-accurate audio");
                 captureLegacySpeed(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

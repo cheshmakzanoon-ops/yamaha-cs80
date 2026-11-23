@@ -103,6 +103,9 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-package-binary-identity.py)
     add_test(NAME cs80_packaging_notice_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-packaging-notices.py)
+    add_test(NAME cs80_factory_audition_artifact_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-capture-factory-auditions.py)
+    set_tests_properties(cs80_factory_audition_artifact_tests PROPERTIES TIMEOUT 30 LABELS "packaging")
     set_tests_properties(cs80_package_binary_identity_tests cs80_packaging_notice_tests
                          PROPERTIES TIMEOUT 60 LABELS "packaging")
     add_test(NAME cs80_ci_juce_provenance_tests
@@ -744,6 +747,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_preset_character_tests PRIVATE cs80_core)
     add_test(NAME cs80_preset_character_tests COMMAND cs80_preset_character_tests)
     set_tests_properties(cs80_preset_character_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_preset_precision_tests tests/PresetPrecisionTests.cpp)
+    target_link_libraries(cs80_preset_precision_tests PRIVATE cs80_core)
+    add_test(NAME cs80_preset_precision_tests COMMAND cs80_preset_precision_tests)
+    set_tests_properties(cs80_preset_precision_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_preset_capture_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_preset_capture.py
                      --capture $<TARGET_FILE:cs80_preset_capture>)
@@ -2464,6 +2471,10 @@ if (CS80_BUILD_PLUGIN)
     endif()
 
     # Opening sound recall through the real browser and processor, without a native peer.
+    add_test(NAME cs80_circuit_policy_host_tests COMMAND CS80Snapshots --circuit-policy-tests)
+    set_tests_properties(cs80_circuit_policy_host_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_circuit_source_host_tests COMMAND CS80Snapshots --circuit-source-host-tests)
+    set_tests_properties(cs80_circuit_source_host_tests PROPERTIES TIMEOUT 180)
     add_test(NAME cs80_preset_revert_tests COMMAND CS80Snapshots --preset-revert-tests)
     set_tests_properties(cs80_preset_revert_tests PROPERTIES TIMEOUT 120)
     # Existing modern state/recall and A/B suites, independently of the full UI smoke.

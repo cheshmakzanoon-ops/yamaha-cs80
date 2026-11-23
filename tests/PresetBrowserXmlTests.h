@@ -198,8 +198,11 @@ struct PresetBrowserXmlAccess
             std::printf("Browser dirty XML case %zu: brilliance=%g, used=%d, edited=%d\n", i,
                 browser.editFileValues[P_brilliance], (int) browser.editFileUsed[(size_t) P_brilliance],
                 (int) browser.patchEdited());
+            ParamValues circuitDefaults;
+            circuitDefaults[P_sourcePerformance] = 1.0f;
+            circuitDefaults[P_parityMode] = 0.0f;
             check(std::none_of(browser.editFileUsed.begin(), browser.editFileUsed.end(), [](char used) { return used != 0; })
-                      && browser.editFileValues.v == ParamValues{}.v && ! browser.patchEdited(),
+                      && browser.editFileValues.v == circuitDefaults.v && ! browser.patchEdited(),
                   "malformed replacement cannot seed dirty-reference values or fabricate a live edit");
             check(host->getAPVTS().copyState().isEquivalentTo(loadedSound)
                       && host->getPresetMetadata().origin == loadedMetadata.origin

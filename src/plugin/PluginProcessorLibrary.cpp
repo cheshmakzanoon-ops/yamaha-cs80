@@ -23,15 +23,14 @@ void Cs80AudioProcessor::initialiseLibrary()
 // MIDI Program Change (audio thread)
 // ---------------------------------------------------------------------------
 // Addressing (cs80::programIndexForMidi): bank MSB 0 = curated library, MSB 1 =
-// Legacy Library, bank LSB = page of 128, Program Change = program on the page.
+// original program addresses, bank LSB = page of 128, Program Change = program on the page.
 // MPE Program Change follows negotiated manager roles. Bank Select uses the
 // same shared-bank product policy; channel 1 without a zone keeps its existing
-// conventional fallback. PURE ignores both: the original has no MIDI.
+// conventional fallback. Both banks now play through the same circuit engine.
 namespace
 {
 bool acceptsMidiProgramChannel(const cs80::Engine& engine, int channel) noexcept
 {
-    if (cs80::isPureCs80(engine.getRenderPolicy())) return false;
     if (!engine.isMpeEnabled()) return true;
     const auto role = engine.getMpeZones().role(channel);
     return role == cs80::MpeZoneLayout::Role::lowerMaster
@@ -59,7 +58,7 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
         return false;
 
     // Same recall contract as loadFactoryPreset(): both selectors to PANEL,
-    // physical setup and isolation untouched. Resolved parameter objects and
+    // physical setup untouched. Resolved parameter objects and
     // the immutable library mean no allocation or ID construction here; JUCE
     // parameter writes from the audio thread are the same path as host
     // automation write-back.
@@ -73,18 +72,15 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // Seed only after a valid, permitted recall sees actual VST3 curves. Keep
     // it for later recalls even when this one cancels the borrowed queues.
     vst3CurveRecallInProcess = vst3CurveRecall;
-    // Finalize old endpoints before preset writes so they cannot overwrite a
-    // recalled Legacy program. Same-policy modern curves remain attached.
-    const auto recalledPolicy = cs80::renderPolicy(cachedFrame.effectiveValues[cs80::P_parityMode],
-                                                   values[cs80::P_sourcePerformance]);
-    if (hostAutomationVst3 && hostAutomationBlock && !cs80::usesSourceModels(recalledPolicy))
-        endHostAutomationBlock();
+    // Every program has the same circuit policy. Keep attached automation
+    // curves across recall instead of treating old bank addresses as an engine
+    // transition that discards their timing.
     for (auto* source : library->sources)
         if (source != nullptr)
             source->setValueNotifyingHost(source->convertTo0to1(13.0f));
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
-        if (isPhysicalSetupParameter(i) || i == cs80::P_parityMode)
+        if (isPhysicalSetupParameter(i) || i == cs80::P_parityMode || i == cs80::P_sourcePerformance)
             continue;
         if (auto* p = library->parameters[(size_t) i])
             p->setValueNotifyingHost(p->convertTo0to1(values[i]));
@@ -96,7 +92,6 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
 
     // The new sound starts at the Program Change's sample position.
     readParameters();
-    const auto previousPolicy = engine.getRenderPolicy();
     if (vst3CurveRecall)
     {
         // Keep main's physical-unit aggregate coordinate and active-extension
@@ -120,14 +115,9 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
                 extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
         }
     }
-    if (engine.getRenderPolicy() == previousPolicy)
-        return false;
-    // A program on the other engine is a policy transition, exactly as at a
-    // block boundary: the engine resets and the keyboard handoff is revoked.
-    if (!vst3CurveRecall)
-        engine.setExpression(expressionValue.load(std::memory_order_relaxed));
-    resetKeyboardHandoff();
-    return true;
+    // Every bank uses the same circuit engine. Recall changes its controls,
+    // while held keys, controller ownership and queued automation continue.
+    return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -271,7 +261,7 @@ void Cs80AudioProcessor::recallAbSnapshot(int slot)
     for (int channel = 0; channel < 2; ++channel)
         write(library->sources[(size_t) channel], (float) s.sources[(size_t) channel]);
     for (int i = 0; i < cs80::P_numParams; ++i)
-        if (! isPhysicalSetupParameter(i) && i != cs80::P_parityMode)
+        if (! isPhysicalSetupParameter(i) && i != cs80::P_parityMode && i != cs80::P_sourcePerformance)
             write(library->parameters[(size_t) i], s.values[i]);
     for (int bank = 0; bank < 4; ++bank)
         for (int local = 0; local < cs80::CP_count; ++local)
@@ -388,7 +378,8 @@ void Cs80AudioProcessor::writeLibraryState(juce::ValueTree& state) const
     for (int channel = 0; channel < 2; ++channel)
         slot.setProperty(hardwareSourceParameterId(channel), s.sources[(size_t) channel], nullptr);
     for (int i = 0; i < cs80::P_numParams; ++i)
-        slot.setProperty(parameterId(i), s.values[i], nullptr);
+        slot.setProperty(parameterId(i), i == cs80::P_sourcePerformance ? 1.0f
+                                        : i == cs80::P_parityMode ? 0.0f : s.values[i], nullptr);
     for (int bank = 0; bank < 4; ++bank)
         for (int local = 0; local < cs80::CP_count; ++local)
             if (isMemoryControl(local))
@@ -435,6 +426,8 @@ void Cs80AudioProcessor::readLibraryState(const juce::ValueTree& state)
                 read(hardwareSourceParameterId(channel), 13.0f, library->sources[(size_t) channel]));
         for (int i = 0; i < cs80::P_numParams; ++i)
             restored.values[i] = read(parameterId(i), cs80::paramDef(i).def, library->parameters[(size_t) i]);
+        restored.values[cs80::P_sourcePerformance] = 1.0f;
+        restored.values[cs80::P_parityMode] = 0.0f;
         for (int bank = 0; bank < 4; ++bank)
             for (int local = 0; local < cs80::CP_count; ++local)
                 if (isMemoryControl(local))
@@ -515,7 +508,7 @@ void Cs80AudioProcessor::randomiseWithinOriginalRanges(juce::uint32 seed)
         // MIDI recall. Register before parameter callbacks can flush history.
         library->recordMetadataChange(before, PresetMetadata { name, before.factoryIndex, before.origin });
     }
-    // A randomised patch is a PANEL sound; physical setup and isolation stay.
+    // A randomised patch is a PANEL sound; physical setup stays.
     applyValues(next);
     setPresetName(name);
 }

@@ -10,9 +10,9 @@ a DAW or a standalone app.
 [How it was modeled](#from-schematic-to-sound) · [CPU evidence](#how-we-reduced-cpu-work) ·
 [Build from source](#build-from-source)
 
-![CS-80 Reference editor showing the two synthesis layers, tone tabs, ribbon and keyboard](docs/screenshots/main-source-performance-1600x1000.png)
+![CS-80 Reference editor showing the two synthesis layers, tone tabs, ribbon and keyboard](tests/golden/main-1600x1000.png)
 
-*Captured from the actual plug-in editor. See [screenshot provenance](docs/screenshots/provenance.json) for the exact build.*
+*Rendered from the actual circuit-only editor. Versioned layout captures cover [1600 × 1000](tests/golden/main-1600x1000.png) and [1120 × 700](tests/golden/main-1120x700.png).*
 
 ## Downloads
 
@@ -75,7 +75,7 @@ VST3 Program queue limitation. The earlier **2026.11** downloads, original
 review and their separate failure/retry history remain in the
 [distribution history](docs/CI_DISTRIBUTION_STATUS.md) and
 [original revision report](docs/PRESET_REVISION_2026_11.md).
-The [current 60-agent review](docs/TEAM_REVIEW_2026_11_1.md) records this
+The [2026.11.1 60-agent review](docs/TEAM_REVIEW_2026_11_1.md) records this
 refinement's assignments and their qualification limits separately from the
 earlier review.
 
@@ -83,68 +83,63 @@ earlier review.
 
 Launch **Standalone** and select your audio output and MIDI input, or install
 VST3/AU and load **CS-80 Reference** on a software-instrument track. A fresh
-instance opens **Brass Swell I** from the Circuit library. Hold a chord, then
+instance opens **Brass Swell I**. Hold a chord, then
 open **Library** to explore the other voices. With polyphonic aftertouch,
 press just one note harder to brighten it; you can also drag down on a held
 on-screen key to try pressure.
 
-- **Circuit** is the default. The original-style panel exposes the two ranks,
-  22 tone tabs, four memory panels, ribbon and performance controls. The
-  separate software library has 301 Circuit and 222 Legacy programs.
-- **Pure CS-80** uses the Circuit engine and disables modern extensions.
-  **Legacy** keeps the older voicing for saved sessions and Legacy presets.
+- **One circuit instrument** plays every program. The panel exposes the two ranks,
+  22 tone tabs, four memory panels, ribbon and performance controls. There are
+  no Legacy or Pure engine choices.
+- **Library** contains all **523 existing programs** in one catalogue. The original
+  222 addresses now use authored circuit voicings; their names and program numbers
+  remain available alongside the later 301 programs.
 - **Studio** exposes controls for a modulation matrix, drawable envelopes, MPE, microtuning,
   arpeggiation, effects and expanded voice modes. These are software additions,
-  not features of the original hardware. See the [mode contract](docs/PARITY_ISOLATION.md)
+  not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Revoiced Circuit library — 2026.11.1
+## Revoiced factory library — 2026.11.2
 
-The **300 musical Circuit programs** were redesigned in 2026.11, with distinct
-rank roles, articulation, touch response and separately calibrated levels.
-**2026.11.1 refines twelve of those programs** after measuring their details in
-the finished mix. Init Circuit remains the 301st program.
+The existing **222 original-address programs** now use explicit instrument recipes
+and controlled variations in place of randomized voicings. The **24 keyboard
+programs** in the later collection have revised strike/body balance, velocity
+response, decay and key-release damping. Focused refinements also improve brass and bowed attacks, wind onsets, bass decay, plucked-string harmonics, vibraphone partials, centered leads and five tremolo voices. No presets were added or renamed.
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_2.md) explains the sound changes,
+program addressing and compatibility consequences.
 
-| Try | Latest refinement and playing suggestion |
+| Try | Revised character and playing suggestion |
 | --- | --- |
-| Flute / Breathy Flute | Stronger sustained air beneath the pitch; compare a gentle hold with added pressure. |
-| Harp / Kalimba | More distinct upper glint and ping; hold a note to hear that detail disappear before the body. |
-| Sine Bass / Upright Pluck | Clearer short click or finger attack while retaining the rounded low foundation. |
-| Ether Pad | A more present, late air texture above its sine body; allow the pad to develop. |
-| Noir Swell Brass / Brass Ensemble 16 | Gently separated ranks give the held ensemble a measured stereo spread. |
-| Neo-Noir Pad / Arctic Pad / Synthwave Chords | Broader stereo information with controlled channel balance and mono retention. |
-
-The new character regression suite passes **128 checks** on the final calibrated
-bank; the previous bank fails **16** of the same checks. The complete library
-audit and 136 voicing checks also pass. All four native suites, the four
-installation archives and the actual 24-WAV audition were checked. Windows and
-both Mac targets passed their validators; the Linux GUI validator failed after
-SUCCESS, so the full release remains blocked. The
-[refinement report](docs/PRESET_REFINEMENT_2026_11_1.md) records the exact passing
-and failing results. The [original revision report](docs/PRESET_REVISION_2026_11.md)
-covers the earlier 300-program redesign.
+| Electric Piano I / Electric Piano II | A more audible short strike above a separately decaying body. Compare soft and firm notes, then release early to hear damping. |
+| Tine Piano | A velocity-sensitive third-harmonic strike that follows the keyboard and fades before the body. Compare low, middle and high notes. |
+| Reed Piano / Stage Keys / Saw Pulse Piano | More defined bark or hammer-like onset followed by a falling body. Hold a key to hear the decay. |
+| Toy Piano / Celesta / Vibes Keys | Distinct upper strikes and ringing bodies with their own decay times and registers. Start with single notes. |
+| Analog Piano / Bright Keys / Slow Keys 106 | Existing original addresses now inherit specific keyboard recipes. Even the longer-decaying variation keeps a struck onset. |
+| Tone I: E. Piano / Tone II: Bass | The named rank now carries the dominant instrument instead of being outweighed by the unrelated opposite rank. |
 
 **Pressure Lead requires aftertouch** and is intentionally silent until pressure
 is applied. Use channel/polyphonic aftertouch or drag downward on a held
 on-screen key. For on-screen pressure, leave **KAS Scan Timing** off (the default);
-MIDI aftertouch also works with scan timing enabled. **Pure CS-80 centers rank pans**, so the added stereo spread is
-available in ordinary Circuit mode. Pure also disables the software additions
-identified by the **modern** tag. The [preset guide](docs/PRESET_GUIDE.md)
-explains these modes, registrations and playing techniques.
+MIDI aftertouch also works with scan timing enabled. The **modern** tag identifies
+programs using optional effects, modulation or arpeggiation; those features remain
+available in the same circuit instrument. The [preset guide](docs/PRESET_GUIDE.md)
+explains registrations and playing techniques.
 
-Existing saved sessions retain their serialized sound. Program names, order and
-host indexes are unchanged, and all **222 Legacy programs** retain their original
-data. Reload a Circuit factory program from **Library** to hear its revised
-voicing. VST3 host program automation has a [documented controller dependency](docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification);
-Library selection does not use that limited route. Instrument
-names describe synthesized interpretations; the measurements verify software
-behavior rather than an acoustic-instrument or physical-hardware match.
+**Older sessions using Legacy or Pure intentionally change sound.** Their saved
+controls and parameter identities are retained, but obsolete engine settings
+resolve to the circuit engine with normal MIDI and optional Studio features.
+There is no promise of identical old rendering. Reload a factory program from
+**Library** to hear its revised voicing; merely opening a saved session does not
+replace its stored patch with the current factory recipe. Keep the older binary
+and a rendered reference when an existing project's exact sound must be retained.
 
-Factory selection through Library and the VST3 controller, plus saved-state
-restore, passed the documented local checks. A pre-existing limitation remains
-for program changes sent only through the VST3 audio-processing queue; that
-route did not load the requested factory program in the tested native modules.
-See the [host-program qualification](docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification).
+Instrument names describe synthesized interpretations. This instrument does not
+contain sampled pianos or physical models of acoustic instruments, and the software checks do
+not establish an exact acoustic or physical CS-80 match. Build and validator
+results belong to the specific download and source commit listed above. The
+earlier [2026.11.1 report](docs/PRESET_REFINEMENT_2026_11_1.md) also records a native
+VST3 Program-queue controller dependency; **Library** selection is the direct
+way to audition a current factory sound.
 
 ## From schematic to sound
 
@@ -231,7 +226,7 @@ configure with `-DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON`.
 - [Distribution and checksums](docs/CI_DISTRIBUTION_STATUS.md) and
   [release qualification](docs/release/RELEASE_QUALIFICATION.md)
 - [Fidelity requirements and contribution standards](docs/ANALOG_FIDELITY_REQUIREMENT.md):
-  preserve tested Legacy behavior and document intentional changes to the Circuit engine.
+  preserve the documented circuit behavior, retain diagnostic references, and explain intentional sound changes.
 
 ## Licence
 

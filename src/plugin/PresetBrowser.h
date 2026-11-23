@@ -153,7 +153,7 @@ private:
         int factoryIndex = -1;
         juce::File userFile;
         bool isUser = false;
-        bool isLegacy = false;            // read-only Legacy Library program
+        bool isLegacy = false;            // Retired browser flag; factory entries are unified.
         std::uint32_t techniques = 0;     // technique tag bit set (curated library)
 
         // Derived for the library (see classify() in PresetBrowser.cpp).
@@ -254,7 +254,7 @@ private:
 
     // Filter state.
     juce::String filteredSearchText;     // exact text used by the current result list
-    int scopeFilter = 0;                 // all (library + user), favourites, library, legacy, user
+    int scopeFilter = 0;                 // all, favourites, factory, retired factory alias, user
     std::uint32_t typeFilter = 0;
     std::uint32_t styleFilter = 0;
     std::uint32_t techniqueFilter = 0;   // [ws6-library] technique tags (ALL OF)

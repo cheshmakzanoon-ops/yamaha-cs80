@@ -99,7 +99,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = master_sustainRender(protectedP, 256);
-                check(actual == master_sustainRender(protectedP, 256, true, true), "master_sustain Legacy/PURE preserve flattening");
+                check(actual == master_sustainRender(p, 256), "master_sustain retired mode requests preserve canonical circuit sample-accurate audio");
                 captureMasterSustain(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

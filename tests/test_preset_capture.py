@@ -126,6 +126,24 @@ class PresetCaptureTests(unittest.TestCase):
         self.assertEqual(row['rank'], '2')
         self.assertEqual(row['parameter_digest'], parameter_digest(isolated))
 
+    def test_complete_factory_inventory_keeps_existing_addresses(self):
+        for library, count, offset in [('all', 523, 0), ('original', 222, 0)]:
+            path = self.root / (library + '.json')
+            result = run('--inventory', path, '--library', library)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            programs = json.loads(path.read_text(encoding='utf-8'))['programs']
+            self.assertEqual(len(programs), count)
+            self.assertEqual([p['host_index'] for p in programs], list(range(offset, offset + count)))
+            self.assertEqual(programs[8]['name'], 'Tone I: E. Piano')
+            self.assertEqual(programs[9]['name'], 'Tone II: Bass')
+        result = run('--out', self.root / 'original-note', '--library', 'original',
+                     '--preset', 'Tone I: E. Piano', '--hold', '.15', '--tail', '.05')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        row = read_row(self.root / 'original-note' / 'metrics.csv')
+        self.assertEqual(row['name'], 'Tone I: E. Piano')
+        self.assertEqual(row['nonfinite'], '0')
+        self.assertEqual(row['samples_over_full_scale'], '0')
+
     def test_float_riff_frames_raw_metrics_and_determinism(self):
         self.assertEqual((self.rate, self.frames), (RATE, FRAMES))
         self.assertEqual(float(self.row['hold_seconds']), HOLD)

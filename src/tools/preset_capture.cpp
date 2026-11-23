@@ -45,6 +45,7 @@ struct Options
     fs::path inventory;
     std::vector<std::string> names;
     bool all = false, wav = false, list = false;
+    std::string library = "curated";
     int rate = 48000, note = -1, rank = -1;
     float velocity = 0.8f, pressure = 0.0f;
     double hold = 0.0, tail = 1.0;
@@ -97,6 +98,7 @@ double number(const std::string& text)
 void usage()
 {
     std::cout << "cs80_preset_capture --list | --inventory FILE | --out DIR (--all | --preset NAME ...)\n"
+                 "  [--library curated|original|all]\n"
                  "  [--wav] [--rate 44100|48000|96000] [--note 0..127]\n"
                  "  [--velocity 0..1] [--pressure 0..1] [--hold 0.05..30] [--tail 0..30]\n"
                  "  [--rank 1|2]  (isolated-rank causal diagnostic; default is the complete patch)\n"
@@ -121,6 +123,12 @@ Options parse(int argc, ArgumentChar** argv)
             else o.inventory = fs::path(argv[i]);
         }
         else if (key == "--preset") o.names.push_back(value);
+        else if (key == "--library")
+        {
+            if (value != "curated" && value != "original" && value != "all")
+                throw std::runtime_error("library must be curated, original, or all");
+            o.library = value;
+        }
         else if (key == "--rate" || key == "--note" || key == "--rank")
         {
             const double n = number(value);
@@ -153,7 +161,14 @@ Options parse(int argc, ArgumentChar** argv)
     return o;
 }
 
-void inventory(const fs::path& path)
+const std::vector<FactoryPreset>& selectedLibrary(const Options& o)
+{
+    if (o.library == "all") return programLibrary();
+    if (o.library == "original") return factoryPresets();
+    return curatedLibrary();
+}
+
+void inventory(const fs::path& path, const Options& o)
 {
     std::ofstream f(path);
     if (!f) throw std::runtime_error("cannot create inventory");
@@ -161,11 +176,11 @@ void inventory(const fs::path& path)
       << "{\"schema\":1,\"library_revision\":" << jsonString(curatedLibraryRevision) << ",\"parameter_ids\":[";
     for (int i = 0; i < P_numParams; ++i) f << (i ? "," : "") << jsonString(paramId(i));
     f << "],\"programs\":[";
-    const auto& bank = curatedLibrary();
+    const auto& bank = selectedLibrary(o);
     for (size_t i = 0; i < bank.size(); ++i)
     {
         const auto& p = bank[i];
-        f << (i ? "," : "") << "{\"index\":" << i << ",\"host_index\":" << programIndexForCurated(static_cast<int>(i))
+        f << (i ? "," : "") << "{\"index\":" << i << ",\"host_index\":" << (o.library == "curated" ? programIndexForCurated(static_cast<int>(i)) : static_cast<int>(i))
           << ",\"name\":" << jsonString(p.name) << ",\"category\":" << jsonString(p.category)
           << ",\"description\":" << jsonString(p.description) << ",\"tags\":[";
         for (size_t t = 0; t < p.tags.size(); ++t) f << (t ? "," : "") << jsonString(p.tags[t]);
@@ -379,20 +394,20 @@ int main(int argc, ArgumentChar** argv)
     {
         if (argc == 2 && argumentText(argv[1]) == "--help") { usage(); return 0; }
         const auto o = parse(argc, argv);
-        const auto& bank = curatedLibrary();
+        const auto& bank = selectedLibrary(o);
         if (o.list)
         {
             for (size_t i = 0; i < bank.size(); ++i) std::cout << i << '\t' << bank[i].category << '\t' << bank[i].name << '\n';
             return 0;
         }
-        if (!o.inventory.empty()) { inventory(o.inventory); return 0; }
+        if (!o.inventory.empty()) { inventory(o.inventory, o); return 0; }
         // Validate the entire selection before creating output files.
         std::vector<size_t> selected;
         if (o.all) { for (size_t i = 0; i < bank.size(); ++i) selected.push_back(i); }
         else for (const auto& name : o.names)
         {
             const auto it = std::find_if(bank.begin(), bank.end(), [&](const auto& p) { return p.name == name; });
-            if (it == bank.end()) throw std::runtime_error("unknown Circuit preset: " + name);
+            if (it == bank.end()) throw std::runtime_error("unknown factory preset: " + name);
             const auto index = static_cast<size_t>(it - bank.begin());
             if (std::find(selected.begin(), selected.end(), index) == selected.end()) selected.push_back(index);
         }

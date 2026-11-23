@@ -45,12 +45,14 @@ void testOutputMeterHost(Check&& check)
         // APVTS normalise/denormalise may round physical float values. Use the
         // actual stored controls, not pre-roundtrip literals, for the DSP oracle.
         frame.effectiveValues = host.currentValues();
+        check(frame.effectiveValues[P_sourcePerformance] == 1 && frame.effectiveValues[P_parityMode] == 0,
+              "meter oracle uses the same canonical circuit state for all obsolete mode requests");
         auto layout = host.getBusesLayout();
         layout.outputBuses.set(0, channels == 1 ? juce::AudioChannelSet::mono()
                                                : juce::AudioChannelSet::stereo());
         check(host.setBusesLayout(layout), "meter fixture accepts mono/stereo host layout");
-        // Match the processor's pre-prepare state too: legacy prepare preserves
-        // its existing volume-smoothing start before applying pending APVTS.
+        // Match the processor's pre-prepare control history before applying
+        // the canonical circuit frame; the oracle has no telemetry or editor.
         const auto initialEngineValues = host.getEngine().getParams();
         host.prepareToPlay(48000, 32); // Exercise blocks much larger than advertised.
         Engine oracle;
@@ -74,7 +76,7 @@ void testOutputMeterHost(Check&& check)
             expectedPeak = 0; expectedOver = false;
         };
         std::unique_ptr<juce::AudioProcessorEditor> editor;
-        const std::array<int, 6> sizes {257, 4097, 127, 8193, 0, 513};
+        const std::array<int, 6> sizes {48000, 4097, 127, 8193, 0, 513};
         for (size_t block = 0; block < sizes.size(); ++block)
         {
             const int frames = sizes[block];
@@ -91,9 +93,19 @@ void testOutputMeterHost(Check&& check)
                     midi.addEvent(juce::MidiMessage::noteOn(channel, 48 + note, (juce::uint8) 127), 0);
                     oracle.noteOn(48 + note, 1, channel);
                 }
+                // Exercise actual circuit headroom at full playing pressure.
+                // The old unpressed fixture crossed full scale only through
+                // the retired output path; no synthetic samples enter this test.
+                for (int channel : {2, 3})
+                {
+                    midi.addEvent(juce::MidiMessage::channelPressureChange(channel, 127), 0);
+                    oracle.channelPressure(channel, 1.0f);
+                }
             }
             else if (block == 1)
             {
+                host.setParamValue(P_sourcePerformance, 0.0f);
+                host.setParamValue(P_parityMode, 1.0f);
                 midi.addEvent(juce::MidiMessage::pitchWheel(2, 9011), 0);
                 midi.addEvent(juce::MidiMessage::channelPressureChange(2, 80), 0);
                 oracle.pitchBend(2, (9011 - 8192) / 8192.0f);
@@ -152,7 +164,7 @@ void testOutputMeterHost(Check&& check)
                     expectedOver = expectedOver || magnitude > 0x3f800000u;
                     observedAboveFullScale = observedAboveFullScale || magnitude > 0x3f800000u;
                 }
-            check(exact, "metered host output is bit-exact with unmetered core plus identical channel mapping");
+            check(exact, "metered host output remains bit-exact with the circuit oracle, including after obsolete mode writes");
             check(bytes(midi) == originalMidi && host.currentValues().v == originalParams,
                   "output metering leaves host MIDI and all parameters unchanged");
             if (block == 0 || block == 2 || block == 4 || block == 5) consume();

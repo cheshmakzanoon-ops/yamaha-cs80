@@ -166,9 +166,9 @@ void testModMatrixRouteActions(Check check, const juce::File& snapshot = {})
         check(layer.getConfig() == c && values() == v && undo.canUndo() == canUndo && undo.canRedo() == canRedo && probe.events.empty(), name);
     };
     // Both copy and clear reject stale metadata, amount ABA, empty gestures,
-    // session redirection, disabled/PURE states, newer menus and dead owners.
+    // session redirection, disabled states, newer menus and dead owners.
     for (bool clear : {false, true})
-      for (int scenario = 0; scenario < 13; ++scenario)
+      for (int scenario : {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11})
     {
         setup();
         const auto item = action(page.buildRouteActionsMenu(0), clear ? -1 : 1);
@@ -186,7 +186,6 @@ void testModMatrixRouteActions(Check check, const juce::File& snapshot = {})
         }
         else if (scenario == 4) { p->beginChangeGesture(); p->endChangeGesture(); }
         else if (scenario == 5) { page.setEnabled(false); page.setEnabled(true); }
-        else if (scenario == 6) { host->setPure(true); host->setPure(false); }
         else if (scenario == 7) { page.buildRouteActionsMenu(5); }
         else if (scenario == 8)
         {
@@ -200,23 +199,53 @@ void testModMatrixRouteActions(Check check, const juce::File& snapshot = {})
             automation.join();
         }
         else if (scenario == 11) { page.setEnabled(false); }
-        else { host->setPure(true); }
-        rejected(item, "copy and clear reject stale/ABA metadata, parameters, gestures, state restore, automation, PURE, disabled and newer menus");
+        rejected(item, "copy and clear reject stale/ABA metadata, parameters, gestures, state restore, automation, disabled and newer menus");
         if (scenario == 9) p->endChangeGesture();
     }
-    for (int mode = 0; mode < 4; ++mode)
+    for (int mode : {0, 2, 3})
     {
         setup();
         auto* p = parameter(P_mod1Amount);
         std::unique_ptr<Cs80AudioProcessor::ScopedUserEdit> scope;
         if (mode == 0) page.setEnabled(false);
-        if (mode == 1) host->setPure(true);
         if (mode == 2) p->beginChangeGesture();
         if (mode == 3) scope = std::make_unique<Cs80AudioProcessor::ScopedUserEdit>(host->getUndoableState(), "outer edit");
         const auto item = action(page.buildRouteActionsMenu(0), 1);
-        check(!item.isEnabled, "menu opened while disabled, PURE, gesturing or in another user edit is unavailable");
-        page.setEnabled(true); host->setPure(false); if (mode == 2) p->endChangeGesture(); scope.reset();
+        check(!item.isEnabled, "menu opened while disabled, gesturing or in another user edit is unavailable");
+        page.setEnabled(true); if (mode == 2) p->endChangeGesture(); scope.reset();
         rejected(item, "initially rejected menu cannot become authorized later");
+    }
+    // Old policy settings are inert. They must neither create edit history nor
+    // invalidate a legitimate route action that was already offered to the user.
+    for (bool clear : {false, true})
+      for (bool beforeOpen : {false, true})
+        for (int retired : {P_sourcePerformance, P_parityMode})
+    {
+        setup();
+        const auto before = layer.getConfig();
+        const auto beforeValues = values();
+        auto obsoleteWrite = [&]
+        {
+            host->setParamValue(retired, retired == P_sourcePerformance ? 0.0f : 1.0f);
+            host->setPure(true); host->setPure(false);
+        };
+        if (beforeOpen) obsoleteWrite();
+        const auto item = action(page.buildRouteActionsMenu(0), clear ? -1 : 1);
+        if (!beforeOpen) obsoleteWrite();
+        check(item.isEnabled && layer.getConfig() == before && values() == beforeValues
+                  && !undo.canUndo() && probe.events.empty(),
+              "obsolete policy requests preserve route menu availability, state and host silence");
+        auto expected = before;
+        expected.slots[clear ? 0 : 1] = clear ? ModSlot{} : before.slots[0];
+        auto expectedValues = beforeValues;
+        const int index = host->hostParameterIndex(P_mod1Amount + (clear ? 0 : 1));
+        expectedValues[(size_t) index] = clear ? parameter(P_mod1Amount)->convertTo0to1(0.f)
+            : beforeValues[(size_t) host->hostParameterIndex(P_mod1Amount)];
+        invoke(item);
+        check(layer.getConfig() == expected && values() == expectedValues && probe.matches(index, true),
+              "route copy and clear still execute with one amount gesture after obsolete policy requests");
+        check(host->undo() && layer.getConfig() == before && values() == beforeValues && !undo.canUndo(),
+              "route action after obsolete policy requests still undoes in one complete step");
     }
     setup();
     auto* p = parameter(P_mod1Amount);

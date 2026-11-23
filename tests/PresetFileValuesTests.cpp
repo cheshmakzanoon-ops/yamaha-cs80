@@ -31,15 +31,20 @@ int main()
         check(preview.v == values.v, "preview and edit-reference values agree");
         check(used.size() == (size_t) P_numParams, "used mask has every parameter");
     };
+    const auto policyValue = [](int i, float value)
+    {
+        return i == P_sourcePerformance ? 1.0f : i == P_parityMode ? 0.0f : value;
+    };
     const auto defaults = [&]
     {
         for (int i = 0; i < P_numParams; ++i)
-            {
-                if (values[i] != paramDef(i).def || used[(size_t) i] != 0)
-                    std::fprintf(stderr, "default mismatch id=%s value=%g def=%g used=%d\n", paramId(i).c_str(), values[i], paramDef(i).def, used[(size_t) i]);
-                check(values[i] == paramDef(i).def && used[(size_t) i] == 0,
-                      "absent or rejected document clears stale values and usage");
-            }
+        {
+            const float expected = policyValue(i, paramDef(i).def);
+            if (values[i] != expected || used[(size_t) i] != 0)
+                std::fprintf(stderr, "default mismatch id=%s value=%g expected=%g used=%d\n", paramId(i).c_str(), values[i], expected, used[(size_t) i]);
+            check(values[i] == expected && used[(size_t) i] == 0,
+                  "absent or rejected document clears stale values and usage");
+        }
     };
     const auto child = [](juce::XmlElement& xml, int index, const juce::String& value)
     {
@@ -60,7 +65,7 @@ int main()
             child(xml, i, token);
         read(&xml);
         for (int i = 0; i < P_numParams; ++i)
-            check(std::isfinite(values[i]) && values[i] == (i == P_subOriginalMode ? 0.0f : paramDef(i).def)
+            check(std::isfinite(values[i]) && values[i] == policyValue(i, i == P_subOriginalMode ? 0.0f : paramDef(i).def)
                       && used[(size_t) i] == 1,
                   "non-finite imported value uses finite preview fallback");
     }
@@ -77,7 +82,7 @@ int main()
             const double value = def.min + fraction * (double(def.max) - def.min);
             auto* p = child(xml, i, {});
             p->setAttribute("value", value);
-            expected[(size_t) i] = clampValue((float) p->getDoubleAttribute("value"), def.min, def.max);
+            expected[(size_t) i] = policyValue(i, clampValue((float) p->getDoubleAttribute("value"), def.min, def.max));
         }
         const auto parsed = juce::XmlDocument::parse(xml.toString());
         check(parsed != nullptr, "valid parameter document round trips as XML");
@@ -98,6 +103,22 @@ int main()
     read(malformed.get());
     defaults();
     read(nullptr);
+    defaults();
+
+    // Old engine-policy values must never make the browser describe a different
+    // sound from the migrated processor. Usage still records actual XML fields.
+    juce::XmlElement oldPolicy("CS80_PARAMS");
+    child(oldPolicy, P_sourcePerformance, "1");
+    child(oldPolicy, P_sourcePerformance, "0");
+    child(oldPolicy, P_parityMode, "0");
+    child(oldPolicy, P_parityMode, "1");
+    read(&oldPolicy);
+    check(values[P_sourcePerformance] == 1.0f && values[P_parityMode] == 0.0f,
+          "retired engine selections migrate to the single circuit instrument");
+    check(used[(size_t) P_sourcePerformance] == 1 && used[(size_t) P_parityMode] == 1,
+          "canonical policy retains document field usage");
+    juce::XmlElement missingPolicy("CS80_PARAMS");
+    read(&missingPolicy);
     defaults();
 
     juce::XmlElement duplicate("CS80_PARAMS");

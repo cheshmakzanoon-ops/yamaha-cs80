@@ -317,12 +317,23 @@ class DownloadTests(unittest.TestCase):
         self.assertNotIn("|| true", fetch.split("          unzip", 1)[0])
         self.assertIn("            pluginval-download.json", macos)
         self.assertIn("runner: [macos-15, macos-15-intel]", macos)
-        # Freeze both full platform regions after the 2026.11.1 audition expansion
-        # and failure-only headless diagnostic routing. The required validator
-        # commands and failure behavior remain unchanged.
+        # The 2026.11.2 audition exporter is a separately tested script. Freeze
+        # every other Linux byte, including validator commands, failure-only
+        # diagnostics and packaging, against the previous platform contract.
+        # Splitting at exact step names also prevents an extra unguarded step
+        # from being hidden inside the excluded audition body.
         linux = workflow.split("  macos:", 1)[0]
         windows = workflow.split("  windows:", 1)[1]
-        self.assertEqual(hashlib.sha256(linux.encode()).hexdigest(), "c72b9d5e34364eb77ff9a62d546e7b1c1a031d7f448f5e71b188a6cd95227caa")
+        before, audition = linux.split("      - name: Capture curated preset auditions\n", 1)
+        body, after = audition.split("      - name: Upload curated preset auditions\n", 1)
+        self.assertEqual(body,
+                         "        id: preset_audition\n"
+                         "        run: >\n"
+                         "          python3 scripts/capture-factory-auditions.py\n"
+                         "          --capture build/cs80_preset_capture --out preset-audition\n\n")
+        protected_linux = before + "      - name: Upload curated preset auditions\n" + after
+        self.assertEqual(hashlib.sha256(protected_linux.encode()).hexdigest(),
+                         "b15a8c5ceaa7cd928baae9bd648cc1c2ada211e0d05758783113fe51a74064e0")
         self.assertEqual(hashlib.sha256(windows.encode()).hexdigest(), "d87bb8d1e298aeb055efb83ef32d721366786511e087678a43341f8e9721d3f4")
 
 

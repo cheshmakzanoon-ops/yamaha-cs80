@@ -273,8 +273,8 @@ void vline(juce::Graphics& g, float x, float y0, float y1, float alpha, juce::Co
     g.drawLine(x, y0, x, y1, 1.0f);
 }
 
-// Shown over a display whose controls the isolation fixture masks.
-void inertOverlay(juce::Graphics& g, Rect r, const char* label = "ISOLATION  -  CONTROL INERT")
+// Shared inactive-control overlay for configuration displays.
+void inertOverlay(juce::Graphics& g, Rect r, const char* label = "CONTROL INACTIVE")
 {
     g.saveState();
     g.reduceClipRegion(r.toNearestInt());
@@ -417,11 +417,11 @@ protected:
     }
 
     float v(int index) const { return proc.getParamValue(index); }
-    bool isolated() const { return v(cs80::P_parityMode) >= 0.5f; }
-    // 0 legacy, 1 source performance, 2 isolation (isolation wins).
+    bool isolated() const { return false; }
+    // The playable instrument has one circuit policy.
     int policy() const
     {
-        return v(cs80::P_parityMode) >= 0.5f ? 2 : (v(cs80::P_sourcePerformance) >= 0.5f ? 1 : 0);
+        return 1;
     }
     juce::RangedAudioParameter* par(int index) const
     {
@@ -567,8 +567,7 @@ private:
         text(g, juce::String(rate, rate < 10.0f ? 2 : 1) + " Hz    T " + periodString(1.0f / juce::jmax(0.05f, rate)),
              { 14.0f, 5.0f, 230.0f, 18.0f }, 12.0f, true, routed ? colour.brighter(0.3f) : axisInk(), Just::centredLeft, 0.03f);
         juce::String right;
-        if (iso) right = "MASKED BY ISOLATION";
-        else if (dest == 0) right = "NO DIRECT ROUTE";
+        if (dest == 0) right = "NO DIRECT ROUTE";
         else if (depth <= 0.001f) right = kDestinations[dest] + "   DEPTH 0";
         else right = "TO " + kDestinations[dest];
         text(g, right, { 220.0f, 5.0f, 206.0f, 18.0f }, 12.0f, true, routed ? ivory : (iso ? amber : axisInk()), Just::centredRight, 0.06f);
@@ -646,7 +645,7 @@ private:
             text(g, k, { x, y, 180.0f, 20.0f }, 11.0f, true, ivoryDim, Just::centredLeft, 0.08f);
             text(g, val, { x + 150.0f, y, split2 - 24.0f - (x + 150.0f), 20.0f }, 13.0f, true, hot ? amberBright : ivory, Just::centredRight, 0.02f);
         };
-        row(356.0f, 10.0f, "A4 REFERENCE", iso ? "440.0 Hz (ISOLATION)" : juce::String(ref, 1) + " Hz", ref != 440.0f && ! iso);
+        row(356.0f, 10.0f, "A4 REFERENCE", juce::String(ref, 1) + " Hz", ref != 440.0f && ! iso);
         row(356.0f, 38.0f, "PITCH KNOB", signedString(mt, 2, " st") + " = " + signedString(mt * 100.0f, 0, " ct"), std::abs(mt) > 0.001f);
         row(356.0f, 66.0f, "CALCULATION", "12-TET REFERENCE", false);
         vline(g, split2, 14.0f, designH - 14.0f, 0.22f, gold);
@@ -777,7 +776,7 @@ private:
             g.strokePath(path, juce::PathStrokeType(1.6f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
         }
 
-        const juce::String mode = iso ? "ORIGINAL  (FORCED BY ISOLATION)" : (original ? "ORIGINAL" : "LEGACY");
+        const juce::String mode = original ? "ORIGINAL" : "EXTENDED";
         text(g, mode + "  -  " + name, { 14.0f, 5.0f, 420.0f, 18.0f }, 12.0f, true, amber, Just::centredLeft, 0.08f);
         juce::String right;
         if (ext)
@@ -802,8 +801,7 @@ public:
 private:
     bool circuitSpeedLaw() const
     {
-        // PURE forces Original even when the stored waveform-set switch is off.
-        return policy() != 0 && (isolated() || v(cs80::P_subOriginalMode) >= 0.5f);
+        return v(cs80::P_subOriginalMode) >= 0.5f;
     }
 
     void sample(Sig& s) const override
@@ -848,7 +846,7 @@ private:
             }
             // The bright figure is what the setting gives now; the dim one is what full amount would give.
             // At full key pressure, Original circuit mode adds converter octaves;
-            // Legacy policy and the legacy waveform set retain their linear law.
+            // The optional extended waveform set uses its separate rate law.
             const juce::String now = r.full > 0.0f ? (zero ? juce::String("0") + r.unit : "+" + juce::String(amount * r.full, 2) + r.unit)
                                                    : (zero ? juce::String("0") : "x" + juce::String(speedMultiplier(amount), 2));
             const juce::String top = r.full > 0.0f ? "max " + juce::String(r.full, 2)
@@ -1226,7 +1224,7 @@ private:
         // The extremes the trace reaches, so the vertical axis can close in on them.
         const float bbdBase = 1000.0f * 256.0f / 106904.5f;
         float vmin, vmax, step, minSpan;
-        juce::String unit = " ms", title = "LEGACY  -  GENERIC DELAY LINE";
+        juce::String unit = " ms", title = "OE2 BBD DELAY";
         if (trem) { vmin = 1.0f - depth * 0.45f; vmax = 1.0f; step = 0.05f; minSpan = 0.1f; unit = ""; title = "TREMOLO  -  GENERIC AMPLITUDE LAW  -  GAIN"; }
         else if (bbd) { vmin = bbdBase / std::exp2(depth * 0.5f); vmax = bbdBase * std::exp2(depth * 0.5f); step = 0.5f; minSpan = 1.0f;
                         title = "OE2 BBD DELAY  -  CLOCK RANGE INFERRED"; }
@@ -1623,25 +1621,22 @@ private:
 
     void draw(juce::Graphics& g) override
     {
-        const int pol = policy();
-        struct Node { juce::String name, detail; bool lit; bool masked; bool empty = false; };
+        struct Node { juce::String name, detail; bool lit; bool empty = false; };
         std::vector<Node> nodes;
-        nodes.push_back({ "VOICE MIXER", "8 VOICES x 2 RANKS", true, false });
+        nodes.push_back({ "VOICE MIXER", "8 VOICES x 2 RANKS", true });
         const bool chorusOn = v(cs80::P_chorusOn) >= 0.5f, trem = v(cs80::P_chorusMode) >= 0.5f;
-        nodes.push_back({ "CS-80 CHORUS", ! chorusOn ? "OFF" : (trem ? "TREMOLO" : (pol >= 1 ? "OE2 BBD" : "GENERIC DELAY")),
-                          chorusOn, false });
+        nodes.push_back({ "CS-80 CHORUS", ! chorusOn ? "OFF" : (trem ? "TREMOLO" : "OE2 BBD"),
+                          chorusOn });
         for (int i = 0; i < 3; ++i)
         {
             const int type = juce::jlimit(0, 5, juce::roundToInt(v(cs80::P_fx1Type + i * 2)));
             const float mix = v(cs80::P_fx1Mix + i * 2);
             const bool active = type > 0 && mix > 0.001f;
             juce::String detail = type == 0 ? "NONE" : kFxTypes[type] + "  " + juce::String(juce::roundToInt(mix * 100.0f)) + "%";
-            if (pol == 2)
-                detail = "MASKED";
-            nodes.push_back({ "FX " + juce::String(i + 1), detail, active && pol != 2, pol == 2, type == 0 && pol != 2 });
+            nodes.push_back({ "FX " + juce::String(i + 1), detail, active, type == 0 });
         }
-        nodes.push_back({ "OUTPUT", juce::String(v(cs80::P_outputMode) >= 0.5f ? "STEREO" : "MONO") + (pol == 0 ? "  SOFT LIMIT" : "  RAW"),
-                          true, false });
+        nodes.push_back({ "OUTPUT", juce::String(v(cs80::P_outputMode) >= 0.5f ? "STEREO" : "MONO") + "  RAW",
+                          true });
 
         for (size_t i = 0; i < nodes.size(); ++i)
         {
@@ -1737,8 +1732,7 @@ private:
             g.drawRoundedRectangle(plate.reduced(2.0f), 5.0f, 1.0f);
         }
         // Badge in the same plastic as the signal-order chips: lit in cap yellow only while the slot works.
-        const bool masked = policy() == 2;
-        const bool working = type > 0 && mix > 0.001f && ! masked;
+        const bool working = type > 0 && mix > 0.001f;
         const Rect badge(10.0f, 36.0f, 46.0f, 34.0f);
         capChip(g, badge, working ? capYellow : juce::Colour(0xff3a3731));
         text(g, "FX " + juce::String(slotIndex + 1), badge, 12.5f, true, working ? juce::Colour(0xff17120a) : ivoryDim, Just::centred, 0.05f);
@@ -1749,12 +1743,11 @@ private:
         if (type != 0)
         {
             static const char* const facts[] = { "", "0.62 Hz SWEEP", "6 STAGES, 0.32 Hz", "340 ms TAPS", "TAIL ABOUT 3 s (EST.)", "x3.2 SOFT CLIP" };
-            text(g, kFxTypes[type], { 368.0f, 28.0f, 172.0f, 22.0f }, 14.0f, true, masked ? ivoryDim : ivory, Just::centredLeft, 0.06f);
-            text(g, masked ? "MASKED BY ISOLATION"
-                           : "MIX " + juce::String(juce::roundToInt(mix * 100.0f)) + "%   WET "
+            text(g, kFxTypes[type], { 368.0f, 28.0f, 172.0f, 22.0f }, 14.0f, true, ivory, Just::centredLeft, 0.06f);
+            text(g, "MIX " + juce::String(juce::roundToInt(mix * 100.0f)) + "%   WET "
                                  + juce::String(juce::roundToInt(juce::jlimit(0.0f, 1.0f, mix * factor[type]) * 100.0f)) + "%",
-                 { 368.0f, 52.0f, 172.0f, 20.0f }, 12.5f, true, masked ? amber : (mix > 0.001f ? amberBright : axisInk()), Just::centredLeft, 0.02f);
-            text(g, mix <= 0.001f && ! masked ? juce::String("MIX 0: BYPASSED") : juce::String(facts[type]),
+                 { 368.0f, 52.0f, 172.0f, 20.0f }, 12.5f, true, mix > 0.001f ? amberBright : axisInk(), Just::centredLeft, 0.02f);
+            text(g, mix <= 0.001f ? juce::String("MIX 0: BYPASSED") : juce::String(facts[type]),
                  { 368.0f, 74.0f, 172.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft);
         }
         else
@@ -2683,142 +2676,7 @@ private:
     }
 };
 
-// ---- What each render policy changes: a table with the effective column lit ---------------------------
-class PolicyTable final : public LiveWidget
-{
-public:
-    explicit PolicyTable(Cs80AudioProcessor& p) : LiveWidget(p, 1440.0f, 184.0f) {}
-    void paintStatic(juce::Graphics&) override {}
-
-private:
-    static constexpr float labelW = 312.0f, rowH = 20.0f, pad = 20.0f;
-
-    void sample(Sig& s) const override
-    {
-        s[0] = (float) policy(); s[1] = v(cs80::P_sourcePerformance); s[2] = v(cs80::P_parityMode);
-    }
-
-    void draw(juce::Graphics& g) override
-    {
-        const int pol = policy();
-        const float colW = (designW - labelW) / 3.0f;
-        struct Row { const char* label; const char* cell[3]; int kind[3]; };   // kind: 0 text, 1 live, 2 off, 3 masked
-        static const Row rows[] = {
-            { "VOICE MODEL", { "STUDY TABLE", "SOURCE MODELS", "SOURCE MODELS, NOMINAL" }, { 0, 0, 0 } },
-            { "MIDI BEND, CC1 / 11 / 64 / 74", { "LIVE", "LIVE", "OFF" }, { 1, 1, 2 } },
-            { "MPE  (WHEN SWITCHED ON)", { "LIVE", "LIVE", "OFF" }, { 1, 1, 2 } },
-            { "MACROS, FX, PAN, BYPASS", { "LIVE", "LIVE", "MASKED" }, { 1, 1, 3 } },
-            { "PRESSURE, RIBBON, SCREEN PEDAL", { "LIVE", "LIVE", "LIVE" }, { 1, 1, 1 } },
-            { "SUB OSCILLATOR", { "STORED MODE", "STORED MODE", "ORIGINAL, FORCED" }, { 0, 0, 0 } },
-            { "CHORUS", { "GENERIC DELAY", "OE2 BBD", "OE2 BBD" }, { 0, 0, 0 } },
-            { "OUTPUT", { "DC BLOCK + SOFT LIMIT", "RAW, KEEP HEADROOM", "RAW, KEEP HEADROOM" }, { 0, 0, 0 } },
-            { "CALIBRATION", { "STUDY, NOT A MATCH", "NOT CALIBRATED", "NOT CALIBRATED" }, { 0, 0, 0 } },
-        };
-        // The column of the policy in force is banded; the switch above it is the column head.
-        const Rect band(labelW + colW * (float) pol, 0.0f, colW, designH);
-        g.setGradientFill(juce::ColourGradient(amber.withAlpha(0.16f), band.getX(), 0.0f, amber.withAlpha(0.06f), band.getX(), designH, false));
-        g.fillRoundedRectangle(band.reduced(2.0f, 0.0f), 4.0f);
-        g.setColour(amber.withAlpha(0.55f));
-        g.drawRoundedRectangle(band.reduced(2.0f, 0.5f), 4.0f, 1.0f);
-        for (size_t r = 0; r < std::size(rows); ++r)
-        {
-            const float y = 2.0f + (float) r * rowH;
-            if (r % 2 == 1)
-            {
-                g.setColour(juce::Colours::white.withAlpha(0.03f));
-                g.fillRect(0.0f, y, designW, rowH);
-            }
-            text(g, rows[r].label, { 8.0f, y, labelW - 12.0f, rowH }, 12.5f, true, ivory, Just::centredLeft, 0.02f);
-            for (int c = 0; c < 3; ++c)
-            {
-                const int kind = rows[r].kind[c];
-                const juce::Colour ink = kind == 1 ? amberBright : (kind == 2 ? panelInk() : (kind == 3 ? amberBright.withMultipliedBrightness(0.85f) : (c == pol ? ivory : panelInk())));
-                text(g, rows[r].cell[c], { labelW + colW * (float) c + pad, y, colW - pad - 6.0f, rowH }, 12.5f, kind != 0, ink, Just::centredLeft, 0.02f);
-            }
-        }
-    }
-};
-
 } // namespace
-
-// ---------------------------------------------------------------------------
-// Policy switch cell: one of three segments. The two stored requests are real parameter-bound
-// buttons; LEGACY clears both.
-// ---------------------------------------------------------------------------
-
-class AdvPolicyCell final : public ParameterContextButton
-{
-public:
-    AdvPolicyCell(Cs80AudioProcessor& p, int idx, const juce::String& name, const juce::String& caption)
-        : ParameterContextButton(name), proc(p), index(idx), sub(caption)
-    {
-        setWantsKeyboardFocus(true);
-        setMouseClickGrabsKeyboardFocus(false);
-        setClickingTogglesState(idx != 0);
-    }
-
-    void refreshState()
-    {
-        const int now = effective();
-        if (now != lastEffective)
-        {
-            lastEffective = now;
-            repaint();
-        }
-    }
-
-    void paintButton(juce::Graphics& g, bool hovered, bool down) override
-    {
-        constexpr float dw = 368.0f, dh = 54.0f;
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / dw, (float) getHeight() / dh));
-        const int pol = effective();
-        const bool lit = pol == index;
-        const bool masked = index == 1 && pol == 2 && proc.getParamValue(cs80::P_sourcePerformance) >= 0.5f;
-        const Rect r = Rect(2.0f, 2.0f, dw - 4.0f, dh - 6.0f).translated(0.0f, down ? 1.5f : 0.0f);
-        if (lit)
-        {
-            g.setColour(amber.withAlpha(0.13f));
-            g.fillRoundedRectangle(r.expanded(4.0f), 9.0f);
-        }
-        g.setColour(juce::Colours::black.withAlpha(0.7f));
-        g.fillRoundedRectangle(r.translated(0.0f, 2.2f), 5.0f);
-        g.setGradientFill(lit ? juce::ColourGradient(kGlow, r.getX(), r.getY(), kGlowDeep, r.getX(), r.getBottom(), false)
-                              : juce::ColourGradient(juce::Colour(hovered ? 0xff3a3733 : 0xff2b2926), r.getX(), r.getY(),
-                                                     juce::Colour(0xff151311), r.getX(), r.getBottom(), false));
-        g.fillRoundedRectangle(r, 5.0f);
-        g.setColour(juce::Colours::white.withAlpha(lit ? 0.5f : 0.1f));
-        g.drawLine(r.getX() + 5.0f, r.getY() + 1.1f, r.getRight() - 5.0f, r.getY() + 1.1f, 1.0f);
-        g.setColour(lit ? juce::Colour(0xff6b4510) : juce::Colours::black.withAlpha(0.9f));
-        g.drawRoundedRectangle(r, 5.0f, 1.0f);
-        const juce::Colour ink = lit ? juce::Colour(0xff2a1c07) : ivory;
-        jewel(g, { r.getX() + 22.0f, r.getCentreY() }, 5.5f, lit ? juce::Colour(0xff7a1d0a) : amber, lit);
-        if (masked)
-        {
-            g.setColour(amber);
-            g.drawEllipse(r.getX() + 22.0f - 8.0f, r.getCentreY() - 8.0f, 16.0f, 16.0f, 1.3f);
-        }
-        ui::text(g, getButtonText() + (masked ? "  (MASKED)" : ""), { r.getX() + 44.0f, r.getY() + 6.0f, r.getWidth() - 52.0f, 20.0f }, 13.5f, true,
-                 masked ? amberBright : ink, Just::centredLeft, 0.06f);
-        ui::text(g, sub, { r.getX() + 44.0f, r.getY() + 27.0f, r.getWidth() - 52.0f, 18.0f }, 12.5f, false,
-                 lit ? juce::Colour(0xff3c260a) : panelInk(), Just::centredLeft, 0.0f);
-        if (hasKeyboardFocus(true))
-        {
-            g.setColour(juce::Colour(0xfff6df91));
-            g.drawRoundedRectangle(r.expanded(1.5f), 6.0f, 1.6f);
-        }
-    }
-
-private:
-    int effective() const
-    {
-        return proc.getParamValue(cs80::P_parityMode) >= 0.5f ? 2 : (proc.getParamValue(cs80::P_sourcePerformance) >= 0.5f ? 1 : 0);
-    }
-
-    Cs80AudioProcessor& proc;
-    int index;
-    juce::String sub;
-    int lastEffective = -1;
-};
 
 // ---------------------------------------------------------------------------
 // Info button and the card it opens: explanatory prose lives here and in tooltips.
@@ -2896,7 +2754,7 @@ public:
     {
         const int dest = juce::jlimit(0, 5, juce::roundToInt(proc.getParamValue(cs80::P_lfo1Dest + lfoIndex * 3)));
         const float depth = proc.getParamValue(cs80::P_lfo1Depth + lfoIndex * 3);
-        const int sig = dest * 100000 + juce::roundToInt(depth * 1000.0f) * 2 + (proc.getParamValue(cs80::P_parityMode) >= 0.5f ? 1 : 0);
+        const int sig = dest * 100000 + juce::roundToInt(depth * 1000.0f) * 2;
         if (sig != lastSig)
         {
             lastSig = sig;
@@ -2911,7 +2769,7 @@ public:
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / dw, (float) getHeight() / dh));
         const int dest = juce::jlimit(0, 5, juce::roundToInt(proc.getParamValue(cs80::P_lfo1Dest + lfoIndex * 3)));
         const float depth = proc.getParamValue(cs80::P_lfo1Depth + lfoIndex * 3);
-        const bool iso = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
+        constexpr bool iso = false;
         const bool lit = dest == destination;
         const auto colour = lfoColour(lfoIndex);
         // OFF is not a route: lit, it is a pressed gunmetal key with ivory legend and no cap colour at all.
@@ -3232,7 +3090,7 @@ public:
 
 juce::String registerRowText(const evidence::ModelEntry& row)
 {
-    return juce::String(row.subsystem) + ": circuit engine " + row.circuit + "; legacy " + row.legacy + "; reference " + row.reference
+    return juce::String(row.subsystem) + ": circuit engine " + row.circuit + "; reference " + row.reference
          + "; evidence " + evidence::basisName(row.basis) + ", coverage " + row.coverage + ".";
 }
 
@@ -3284,17 +3142,10 @@ void basisChip(juce::Graphics& g, Rect r, evidence::Basis b, const juce::String&
     fitted(g, label, r.reduced(8.0f, 0.0f), 12.5f, true, c.brighter(0.25f), Just::centred);
 }
 
-// The circuit-engine column of the register: "same as legacy" rows say so instead of a bare "same".
+// Every model entry names its playable circuit implementation explicitly.
 juce::String circuitText(const evidence::ModelEntry& row)
 {
-    const juce::String circuit(row.circuit);
-    if (circuit == "same")
-        return "same as legacy";
-    if (circuit.startsWith("same "))
-        return "same as legacy " + circuit.substring(5);
-    if (circuit.startsWith("same;"))
-        return "same as legacy;" + circuit.substring(5);
-    return circuit;
+    return row.circuit;
 }
 
 const evidence::ModelEntry* modelEntry(const char* subsystem)
@@ -3457,7 +3308,7 @@ public:
                "Which model makes each part of the sound, and what it rests on. SOURCE: the law is taken from the Yamaha "
                "schematics or manuals. SOURCE ROUTE / INFERRED LAW: the circuit path is from the sources, how strongly it acts "
                "is a declared estimate. INFERRED: a declared engineering model where the public sources are silent. MODERN: a "
-               "software addition, switched off by PURE CS-80. The letters are the coverage ledger's status codes (IB "
+               "software addition. The letters are the coverage ledger's status codes (IB "
                "implemented behaviour, A approximate law, M missing, MR measurement required, PC physical controller "
                "required). Nothing here is a hardware measurement. Settings lists every subsystem.");
         juce::StringArray spoken;
@@ -3469,7 +3320,7 @@ public:
         {
             const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
             const float top = r.getY() + 46.0f;
-            // A narrow card stacks each row: the name and its chip, then the circuit and legacy lines at full width.
+            // A narrow card stacks the name, circuit model and source-document line.
             const bool stacked = w < 640.0f;
             const float chipW = stacked ? juce::jmin(190.0f, w * 0.44f) : juce::jmin(300.0f, w * 0.34f), nameW = juce::jmin(220.0f, w * 0.26f);
             const float rowH = juce::jmin(stacked ? 92.0f : 54.0f, (r.getBottom() - 18.0f - top) / (float) juce::jmax(1, (int) subsystems.size()));
@@ -3487,14 +3338,14 @@ public:
                     fitted(g, juce::String(row->subsystem).toUpperCase(), { x, y + 4.0f, w - chipW - 10.0f, line }, 13.0f, true, ivory);
                     basisChip(g, { x + w - chipW, y + 4.0f + (line - 24.0f) * 0.5f, chipW, 24.0f }, row->basis, row->coverage);
                     fitted(g, "CIRCUIT  " + circuitText(*row), { x, y + 4.0f + line, w, line }, 12.5f, false, ivory.withAlpha(0.92f));
-                    fitted(g, "LEGACY  " + juce::String(row->legacy), { x, y + 4.0f + line * 2.0f, w, line }, 12.5f, false, panelInk());
+                    fitted(g, "SOURCE  " + juce::String(row->doc), { x, y + 4.0f + line * 2.0f, w, line }, 12.5f, false, panelInk());
                     y += rowH;
                     continue;
                 }
                 const float textX = x + nameW, textW = w - nameW - chipW - 16.0f;
                 fitted(g, juce::String(row->subsystem).toUpperCase(), { x, y, nameW - 8.0f, rowH }, 13.0f, true, ivory);
                 fitted(g, "CIRCUIT  " + circuitText(*row), { textX, y + rowH * 0.06f, textW, rowH * 0.44f }, 12.5f, false, ivory.withAlpha(0.92f));
-                fitted(g, "LEGACY  " + juce::String(row->legacy) + "      SEE  " + juce::String(row->doc),
+                fitted(g, "SOURCE  " + juce::String(row->doc),
                        { textX, y + rowH * 0.5f, textW, rowH * 0.44f }, 12.5f, false, panelInk());
                 basisChip(g, { x + w - chipW, y + (rowH - 26.0f) * 0.5f, chipW, 26.0f }, row->basis, row->coverage);
                 y += rowH;
@@ -3506,8 +3357,7 @@ public:
     void evidenceRegister(Rect r)
     {
         module(r, "Evidence register", true, pageColour(4),
-               "The model register of docs/STATUS.md, compiled into the instrument. LEGACY is the compatibility engine kept for "
-               "old sessions; CIRCUIT is the circuit engine (ENGINE: CIRCUIT and PURE CS-80). REFERENCE names the offline truth "
+               "The model register names the circuits used by this instrument. REFERENCE names the offline truth "
                "or experimental model that holds the realtime model to account; it never makes sound. EVIDENCE says what the "
                "circuit engine's law rests on and gives the coverage ledger's status codes (IB implemented behaviour, A "
                "approximate law, M missing, MR measurement required, PC physical controller required). No row is a hardware "
@@ -3519,10 +3369,10 @@ public:
         custom([r](juce::Graphics& g)
         {
             const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
-            const float cols[] = { 0.0f, 0.15f, 0.36f, 0.66f, 0.83f, 1.0f };
-            const char* const heads[] = { "SUBSYSTEM", "LEGACY", "CIRCUIT ENGINE", "REFERENCE (NO SOUND)", "EVIDENCE" };
+            const float cols[] = { 0.0f, 0.18f, 0.60f, 0.83f, 1.0f };
+            const char* const heads[] = { "SUBSYSTEM", "CIRCUIT ENGINE", "REFERENCE (NO SOUND)", "EVIDENCE" };
             const float headY = r.getY() + 42.0f;
-            for (int c = 0; c < 5; ++c)
+            for (int c = 0; c < 4; ++c)
                 text(g, heads[c], { x + w * cols[c], headY, w * (cols[c + 1] - cols[c]) - 10.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
             etchLine(g, x, headY + 22.0f, x + w, headY + 22.0f, 0.55f);
             const int n = evidence::kModelRegisterSize;
@@ -3539,10 +3389,9 @@ public:
                 }
                 auto cell = [&](int c) { return Rect(x + w * cols[c], y, w * (cols[c + 1] - cols[c]) - 10.0f, rowH); };
                 fitted(g, row.subsystem, cell(0), 12.5f, true, ivory);
-                fitted(g, row.legacy, cell(1), 12.5f, false, panelInk());
-                fitted(g, circuitText(row), cell(2), 12.5f, false, ivory.withAlpha(0.92f));
-                fitted(g, row.reference, cell(3), 12.5f, false, panelInk());
-                basisChip(g, cell(4).withSizeKeepingCentre(cell(4).getWidth(), juce::jmin(rowH - 3.0f, 22.0f)), row.basis, row.coverage);
+                fitted(g, circuitText(row), cell(1), 12.5f, false, ivory.withAlpha(0.92f));
+                fitted(g, row.reference, cell(2), 12.5f, false, panelInk());
+                basisChip(g, cell(3).withSizeKeepingCentre(cell(3).getWidth(), juce::jmin(rowH - 3.0f, 22.0f)), row.basis, row.coverage);
             }
         });
     }
@@ -3672,22 +3521,6 @@ public:
         const Rect a = at(r);
         placed.push_back({ raw, a });
         artOps.push_back([a](juce::Graphics& g) { drawWell(g, a.expanded(2.5f), 4.0f); });
-        return raw;
-    }
-
-    // One segment of the three-way render-policy switch.
-    AdvPolicyCell* policyCell(Rect r, int index, const juce::String& name, const juce::String& caption)
-    {
-        auto control = std::make_unique<AdvPolicyCell>(proc, index, name, caption);
-        auto* raw = control.get();
-        raw->setExplicitFocusOrder(++focusCounter);
-        addAndMakeVisible(*raw);
-        if (index == 1 || index == 2)
-            buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-                proc.getAPVTS(), Cs80AudioProcessor::parameterId(index == 1 ? cs80::P_sourcePerformance : cs80::P_parityMode), *raw));
-        owned.push_back(std::move(control));
-        placed.push_back({ raw, at(r) });
-        tickers.push_back([raw] { raw->refreshState(); });
         return raw;
     }
 
@@ -4266,6 +4099,9 @@ public:
         const auto& parameters = proc.getParameters();
         for (int i = 0; i < cs80::P_numParams; ++i)
         {
+            // Reserved compatibility fields use their fixed host label and
+            // value text when an older session still maps a MIDI controller.
+            if (i == cs80::P_sourcePerformance || i == cs80::P_parityMode) continue;
             const int host = proc.hostParameterIndex(i);
             if (host >= 0 && host < parameters.size())
                 coreOf[host] = i;
@@ -4354,12 +4190,10 @@ public:
         const float s = (float) getWidth() / kDesignW;
         g.addTransform(juce::AffineTransform::scale(s));
         auto& learn = proc.getMidiLearn();
-        const bool pure = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
         const int armed = learn.learningParameter();
-        juce::String status = pure ? "PURE CS-80: MIDI LEARN IS OFF  -  MAPPINGS ARE KEPT"
-                            : armed >= 0 ? "LEARNING  " + nameOf(armed) + "  -  MOVE A CONTROLLER"
+        juce::String status = armed >= 0 ? "LEARNING  " + nameOf(armed) + "  -  MOVE A CONTROLLER"
                                          : juce::String(rows.size()) + (rows.size() == 1 ? " CONTROLLER LEARNED" : " CONTROLLERS LEARNED");
-        text(g, status, { 0.0f, 4.0f, kDesignW - 340.0f, 36.0f }, 13.5f, true, armed >= 0 && ! pure ? amberBright : ivory, Just::centredLeft, 0.05f);
+        text(g, status, { 0.0f, 4.0f, kDesignW - 340.0f, 36.0f }, 13.5f, true, armed >= 0 ? amberBright : ivory, Just::centredLeft, 0.05f);
         text(g, "CC", { 8.0f, 46.0f, 90.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
         text(g, "CONTROL", { 104.0f, 46.0f, 300.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
         text(g, "VALUE", { kDesignW - 230.0f, 46.0f, 110.0f, 20.0f }, 12.5f, true, gold, Just::centredRight, 0.08f);
@@ -4407,14 +4241,12 @@ private:
     {
         auto& learn = proc.getMidiLearn();
         const auto generation = learn.generation();
-        const bool pure = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
-        if (generation == lastGeneration && pure == lastPure)
+        if (generation == lastGeneration)
         {
             list.repaint();   // the VALUE column follows the controllers
             return;
         }
         lastGeneration = generation;
-        lastPure = pure;
         rows.clear();
         for (int cc = 0; cc < cs80::MidiLearnMap::kNumControllers; ++cc)
             if (const int host = learn.parameterFor(cc); host >= 0)
@@ -4432,7 +4264,6 @@ private:
     std::vector<std::pair<int, int>> rows;
     std::map<int, int> coreOf;
     std::uint32_t lastGeneration = ~0u;
-    bool lastPure = false;
 };
 } // namespace
 
@@ -4445,7 +4276,7 @@ namespace
 {
 bool lfoRouted(Cs80AudioProcessor& p, int lfo)
 {
-    return p.getParamValue(cs80::P_parityMode) < 0.5f && juce::roundToInt(p.getParamValue(cs80::P_lfo1Dest + lfo * 3)) > 0
+    return juce::roundToInt(p.getParamValue(cs80::P_lfo1Dest + lfo * 3)) > 0
         && p.getParamValue(cs80::P_lfo1Depth + lfo * 3) > 0.001f;
 }
 
@@ -4468,7 +4299,7 @@ void buildLfos(AdvancedPage& page)
                         + " Each LFO has one direct destination: click a chip to route it there, or click the lit chip to disable its direct route. "
                           "The scope previews the configured rate and direct-route depth, not the live signal or Motion macro; random waves show a repeatable four-second example. "
                           "The vertical axis of the scope is the swing the engine applies at full depth: PITCH 2 st, VCF 1.6 oct, VCA 0.25 level, "
-                          "PAN 0.7, PWM 0.18 pulse width. In PURE CS-80 the modern LFO routing is masked.",
+                          "PAN 0.7, PWM 0.18 pulse width.",
                     [i](Cs80AudioProcessor& p) { return lfoRouted(p, i); });
         page.widget<LfoScope>({ x + 20.0f, y + 42.0f, 440.0f, 196.0f }, i);
         auto* rate = page.knob({ x + 14.0f, y + 250.0f, 130.0f, 134.0f }, rateParams[i], "RATE");
@@ -4486,7 +4317,7 @@ void buildWheels(AdvancedPage& page)
     page.module({ 64.0f, 564.0f, 480.0f, 332.0f }, "Wheels", true, juce::Colours::transparentBlack,
                 "The CS-80's pressure and velocity are separate performance dimensions. Initial touch sets the attack brightness; aftertouch bends the "
                 "filter while held. The mod wheel adds sub-oscillator pitch and filter movement; the readouts below give each amount in the engine's "
-                "own units. PURE CS-80 masks the modern wheel routing.");
+                "own units.");
     page.knob({ 139.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelSub, "WHEEL > SUB");
     page.knob({ 319.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelVcf, "WHEEL > VCF");
     page.widget<WheelRouting>({ 80.0f, 764.0f, 448.0f, 112.0f });
@@ -4496,7 +4327,7 @@ void buildPitchTuning(AdvancedPage& page)
 {
     page.module({ 560.0f, 564.0f, 976.0f, 332.0f }, "Pitch, bend and tuning", true, juce::Colours::transparentBlack,
                 "PLAY RANGE: 61-key panel, MIDI notes 0-127. WHEEL BEND is the range of the spring-loaded pitch lever and MIDI pitch bend. With MPE on, "
-                "MPE BEND is the member-range fallback until negotiation overrides it; see Keyboard and Tuning for applied zones and ranges. PURE CS-80 disables MPE. A4 sets the reference frequency for twelve-tone equal "
+                "MPE BEND is the member-range fallback until negotiation overrides it; see Keyboard and Tuning for applied zones and ranges. A4 sets the reference frequency for twelve-tone equal "
                 "temperament. This display calculates an equal-tempered reference, not sounding pitch; inspect applied Scala/MTS table entries in Keyboard and Tuning. The ribbon is a separate continuous controller and "
                 "returns to centre. The main-panel PITCH knob adds a fine offset, included in the readout.");
     page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND")->setBipolar(true);
@@ -4505,7 +4336,7 @@ void buildPitchTuning(AdvancedPage& page)
     auto* mpeBend = page.knob({ 1018.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
     mpeBend->setBipolar(true);
     page.dimWhen([&proc = page.processor()]
-                 { return proc.getParamValue(cs80::P_mpeOn) < 0.5f || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
+                 { return proc.getParamValue(cs80::P_mpeOn) < 0.5f; },
                  { mpeBend });
     page.knob({ 1316.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING")->setBipolar(true);
     page.widget<TuningDisplay>({ 576.0f, 764.0f, 944.0f, 112.0f });
@@ -4515,8 +4346,8 @@ void buildSubOsc(AdvancedPage& page)
 {
     page.module({ 64.0f, 108.0f, 760.0f, 440.0f }, "Sub oscillator", true, pageColour(1),
                 "FUNCTION, SPEED, DEPTH and PRESSURE are set on the main panel; the panel's function and speed follow whichever waveform set is in use. "
-                "This page holds what the main panel does not: the switch between the original and legacy waveform sets, and the external level. "
-                "PURE CS-80 forces ORIGINAL; the stored switch and the legacy settings are retained but inert. Noise and EXT ignore SPEED. "
+                "This page holds what the main panel does not: the switch between original and extended waveform sets, and the external level. "
+                "The waveform choice is stored with the patch. Noise and EXT ignore SPEED. "
                 "EXT: optional mono input, disabled by default; host routing required. Six original functions; analog waveform, depth and touch laws "
                 "remain provisional. Full depth moves VCO 1.5 st, VCF 1.5 oct, VCA 0.45 level.",
                 [](Cs80AudioProcessor& p)
@@ -4525,24 +4356,24 @@ void buildSubOsc(AdvancedPage& page)
                     for (int index : depths)
                         if (p.getParamValue(index) > 0.001f)
                             return true;
-                    const bool original = p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+                    const bool original = p.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
                     return original && juce::roundToInt(p.getParamValue(cs80::P_subOriginalFunction)) == 5 && p.isExternalInputEnabled()
                         && p.getParamValue(cs80::P_subExtLevel) > 0.001f;
                 });
-    auto* originalMode = page.switchButton({ 88.0f, 192.0f, 236.0f, 40.0f }, cs80::P_subOriginalMode, "STORED ORIGINAL MODE", "ORIGINAL WAVEFORMS");
+    auto* originalMode = page.switchButton({ 88.0f, 192.0f, 236.0f, 40.0f }, cs80::P_subOriginalMode, "WAVEFORM SET", "ORIGINAL WAVEFORMS");
     originalMode->setComponentID("sub_original_mode");
-    originalMode->setTooltip("Original waveforms: on selects the six original functions and 0.7-60 Hz; off selects the legacy set. The choice is stored "
-                             "with the patch. PARITY ISOLATION forces original regardless of this stored setting; legacy controls are inert while isolated.");
+    originalMode->setTooltip("On selects the six original functions and their 0.7-60 Hz range; off selects the extended waveform set. "
+                             "Each set retains its own waveform and rate. The choice is stored with the patch.");
     page.note("ON    THE SIX ORIGINAL FUNCTIONS, 0.7 - 60 Hz", { 344.0f, 182.0f, 300.0f, 18.0f });
-    page.note("OFF   THE LEGACY FUNCTION SET", { 344.0f, 204.0f, 300.0f, 18.0f });
-    page.note("PURE CS-80 FORCES THE ORIGINAL SET", { 344.0f, 226.0f, 300.0f, 18.0f });
+    page.note("OFF   EXTENDED WAVEFORMS, 0.05 - 30 Hz", { 344.0f, 204.0f, 300.0f, 18.0f });
+    page.note("THE CHOICE IS SAVED WITH THE PATCH", { 344.0f, 226.0f, 300.0f, 18.0f });
     auto* extLevel = page.knob({ 656.0f, 146.0f, 140.0f, 134.0f }, cs80::P_subExtLevel, "EXT LEVEL");
     extLevel->getSlider().setDescription("External modulation input LEVEL. The optional mono bus is disabled by default and requires host routing. "
                                          "At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1, with 63.5 host samples "
                                          "of causal reconstruction delay. Software normalization, not physical voltage calibration.");
     page.dimWhen([&proc = page.processor()]
                  {
-                     const bool original = proc.getParamValue(cs80::P_parityMode) >= 0.5f || proc.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+                     const bool original = proc.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
                      return ! (original && juce::roundToInt(proc.getParamValue(cs80::P_subOriginalFunction)) == 5);
                  },
                  { extLevel });
@@ -4564,8 +4395,8 @@ void buildRing(AdvancedPage& page)
 void buildChorus(AdvancedPage& page)
 {
     page.module({ 64.0f, 564.0f, 760.0f, 332.0f }, "Chorus / tremolo", true, pageColour(1),
-                "SPEED, DEPTH and the CHORUS and TREMOLO switches are on the main panel. Legacy: provisional generic delay line. ENGINE CIRCUIT "
-                "and PURE CS-80: OE2 BBD delay path (256 clock periods, printed filters); clock range, wet level and polarity are inferred, not "
+                "SPEED, DEPTH and the CHORUS and TREMOLO switches are on the main panel. Chorus uses the OE2 BBD delay path "
+                "(256 clock periods, printed filters); clock range, wet level and polarity are inferred, not "
                 "validated against original hardware.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_chorusOn) >= 0.5f; });
     page.widget<ChorusSweep>({ 78.0f, 604.0f, 732.0f, 276.0f }, 732.0f);
@@ -4580,8 +4411,7 @@ void buildAnalogVoice(AdvancedPage& page)
                 "shows full dispersion.",
                 [](Cs80AudioProcessor& p)
                 {
-                    return p.getParamValue(cs80::P_parityMode) < 0.5f
-                        && (p.getParamValue(cs80::P_voiceDispersion) > 0.001f || p.getParamValue(cs80::P_drift) > 0.001f
+                    return (p.getParamValue(cs80::P_voiceDispersion) > 0.001f || p.getParamValue(cs80::P_drift) > 0.001f
                             || p.getParamValue(cs80::P_analogNoise) > 0.001f);
                 });
     page.knob({ 852.0f, 602.0f, 116.0f, 136.0f }, cs80::P_voiceDispersion, "DISPERSION");
@@ -4604,11 +4434,9 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
     page.module({ 64.0f, 190.0f, 596.0f, 370.0f }, "Insert effects", true, pageColour(2),
                 "Three insert slots, processed in series after the voice mixer and chorus. Tape Delay includes modulation and a filtered feedback "
                 "path. Plate Reverb is a dense, bright algorithmic plate. Effects are bypassed at 0% mix and an empty slot passes the signal through; "
-                "PURE CS-80 masks them. Pick a slot here or in the signal-order strip to see its response at right.",
+                "Pick a slot here or in the signal-order strip to see its response at right.",
                 [](Cs80AudioProcessor& p)
                 {
-                    if (p.getParamValue(cs80::P_parityMode) >= 0.5f)
-                        return false;
                     for (int i = 0; i < 3; ++i)
                         if (juce::roundToInt(p.getParamValue(cs80::P_fx1Type + i * 2)) > 0 && p.getParamValue(cs80::P_fx1Mix + i * 2) > 0.001f)
                             return true;
@@ -4621,9 +4449,9 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
         sel->peers.push_back(row);
         page.choice({ 90.0f + 70.0f, y0 + 30.0f, 170.0f, 34.0f }, typeParams[i], kFxTypes);
         auto* mix = page.knob({ 90.0f + 258.0f, y0 + 8.0f, 100.0f, 87.0f }, mixParams[i], "MIX");
-        // The mix does nothing while the slot is empty or PURE CS-80 masks the effects.
+        // The mix does nothing while the slot is empty.
         page.dimWhen([&proc, i]
-                     { return juce::roundToInt(proc.getParamValue(cs80::P_fx1Type + i * 2)) == 0 || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
+                     { return juce::roundToInt(proc.getParamValue(cs80::P_fx1Type + i * 2)) == 0; },
                      { mix });
     }
 
@@ -4631,7 +4459,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
                 [sel](Cs80AudioProcessor& p)
                 {
                     const int slot = sel->slot;
-                    return p.getParamValue(cs80::P_parityMode) < 0.5f && juce::roundToInt(p.getParamValue(cs80::P_fx1Type + slot * 2)) > 0
+                    return juce::roundToInt(p.getParamValue(cs80::P_fx1Type + slot * 2)) > 0
                         && p.getParamValue(cs80::P_fx1Mix + slot * 2) > 0.001f;
                 });
     auto* detail = page.widget<FxDiagram>({ 696.0f, 234.0f, 820.0f, 316.0f }, sel);
@@ -4656,8 +4484,6 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
                 "(centre = neutral); the rows below give the range each destination can reach, and the amount it has now once the macro is moved.",
                 [](Cs80AudioProcessor& p)
                 {
-                    if (p.getParamValue(cs80::P_parityMode) >= 0.5f)
-                        return false;
                     for (int i = 0; i < 4; ++i)
                         if (std::abs(p.getParamValue(cs80::P_macro1 + i) - 0.5f) > 0.005f)
                             return true;
@@ -4674,9 +4500,9 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
     }
 
     page.module({ 1248.0f, 576.0f, 288.0f, 320.0f }, "Output", true, juce::Colours::transparentBlack,
-                "Stereo retains the left and right outputs. Mono averages them after effects and limiting; phase cancellation can change the result. "
+                "Stereo retains the left and right outputs. Mono averages them after effects; phase cancellation can change the result. "
                 "VOLUME and the MIX I/II crossfade are on the main panel, and the toolbar meter shows the output level. The engine runs at 2x. "
-                "Legacy output is DC-blocked and soft-limited. Source modes keep raw source output, which can exceed digital full scale: leave "
+                "The circuit output can exceed digital full scale: leave "
                 "monitoring headroom.");
     page.outputSwitch({ 1274.0f, 622.0f, 236.0f, 40.0f }, cs80::P_outputMode);
     page.widget<OutputPanel>({ 1264.0f, 678.0f, 256.0f, 200.0f });
@@ -4687,8 +4513,8 @@ void buildArp(AdvancedPage& page, Cs80AudioProcessor& proc)
     page.module({ 64.0f, 108.0f, 760.0f, 448.0f }, "Arpeggiator", true, pageColour(3),
                 "The arpeggiator holds the chord and retriggers the CS-80 voice envelopes at the selected clock. Up/Down, random and played-order "
                 "modes cover the patterns used on the classic records. The pattern shows a demonstration chord, not a live readout of the notes "
-                "you hold; with the arpeggiator off it is drawn as a dashed preview. PURE CS-80 masks the arpeggiator.",
-                [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_arpOn) >= 0.5f && p.getParamValue(cs80::P_parityMode) < 0.5f; });
+                "you hold; with the arpeggiator off it is drawn as a dashed preview.",
+                [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_arpOn) >= 0.5f; });
     page.toggle({ 88.0f, 172.0f, 112.0f, 36.0f }, cs80::P_arpOn, "ARP");
     auto* modeCaption = page.captionLive("MODE", { 216.0f, 146.0f, 176.0f, 17.0f });
     auto* mode = page.choice({ 216.0f, 172.0f, 176.0f, 36.0f }, cs80::P_arpMode, kArpModes);
@@ -4705,7 +4531,7 @@ void buildPerformance(AdvancedPage& page)
                 "KEY RELEASE is a floor under every rank's own release: the longer of the two wins, scaled by the MOTION macro. PORTA (the glide "
                 "time), GLIDE (the glide mode), BEND (the initial bend) and SUS II are on the main panel. Portamento glides; Glissando steps in "
                 "semitones. Both sustain modes release notes. Sustain II also cuts previous release tails at a new key press. MIDI CC64 hold is a "
-                "separate extension, disabled by PURE CS-80. The glide plot shows the pitch path the main-panel settings give, with a dashed "
+                "separate extension. The glide plot shows the pitch path the main-panel settings give, with a dashed "
                 "preview while glide is off.",
                 [](Cs80AudioProcessor& p)
                 {
@@ -4717,82 +4543,19 @@ void buildPerformance(AdvancedPage& page)
     page.widget<GlideCurve>({ 864.0f, 326.0f, 648.0f, 208.0f });
 }
 
-// --- Render policy: one three-way switch and the table of what it changes ------------------------------
-void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
+// --- One circuit instrument: performance information, without mode switches.
+void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor&)
 {
-    page.module({ 64.0f, 572.0f, 1472.0f, 324.0f }, "Engine mode", true, pageColour(3),
-                "NOT CALIBRATED - no hardware match established. The toolbar's ENGINE switch selects CIRCUIT (SOURCE PERFORMANCE below) or LEGACY; "
-                "its PURE CS-80 switch is PARITY ISOLATION. SOURCE: current source models with MIDI, optional MPE and the modern overlays. "
-                "ISOLATION wins when both are on: bend, CC1/11/64/74 and MPE are off and the modern effects are masked; pressure, ribbon and the "
-                "on-screen pedal stay active. An effective mode change stops notes; keep headroom. The stored source request is retained but masked "
-                "while isolation is on. Library programs reset the source request off and return both rank selectors to PANEL."
-                "\n\nTERMS IN THE TABLE. The highlighted column is the policy in force. STUDY TABLE: the older hand-voiced table of tone studies. "
-                "SOURCE MODELS: the circuit-informed voice models; NOMINAL uses their nominal component values. STORED MODE: the Sub oscillator's "
-                "own ORIGINAL WAVEFORMS switch. GENERIC DELAY: the older stand-in chorus. OE2 BBD: a bucket-brigade delay chorus that follows the "
-                "printed OE2 circuit. DC BLOCK + SOFT LIMIT: the legacy output stage; RAW leaves the source output untouched."
-                "\n\nABOUT. A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
-                "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
-                "sub-oscillator. The primary panel exposes the controls a player touches; the Studio view exposes the modern layer (LFOs, MPE, effects, "
-                "dispersion). All controls are host-automatable and saved in plugin state, except transient performance gestures. The library has "
-                "22 legacy tone studies and 200 performance patches; loading one returns both ranks to PANEL and resets SOURCE PERFORMANCE off. "
-                "Touch the ribbon above the keyboard to bend pitch; double-click any control to reset it, right-click it for MIDI learn, typed "
-                "values and help.",
-                [](Cs80AudioProcessor& p)
-                { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_sourcePerformance) >= 0.5f; });
-    // The three switches are the column heads of the table below them.
-    page.label("WHAT EACH POLICY CHANGES", { 96.0f, 618.0f, 290.0f, 22.0f }, 12.5f, gold, Just::centredLeft, 0.1f);
-    page.custom([](juce::Graphics& g)
-    { text(g, "THE HIGHLIGHTED COLUMN IS IN FORCE", { 96.0f, 642.0f, 290.0f, 20.0f }, 12.5f, false, panelInk(), Just::centredLeft, 0.02f); });
-    auto* legacy = page.policyCell({ 396.0f, 612.0f, 368.0f, 54.0f }, 0, "LEGACY", "STUDY VOICING, OVERLAYS LIVE");
-    legacy->setComponentID("render_policy_legacy");
-    legacy->setTitle("Legacy render policy");
-    legacy->setTooltip("Legacy: the older voicing table with ordinary MIDI and the modern overlays. Selecting it clears both stored requests, "
-                       "SOURCE PERFORMANCE and PARITY ISOLATION.");
-    legacy->setDescription(legacy->getTooltip());
-    legacy->onClick = [&proc]
-    {
-        // Selecting an already-effective LEGACY policy is a no-op. Preserve
-        // one balanced host gesture for each stored request actually cleared.
-        if (proc.getParamValue(cs80::P_sourcePerformance) != 0.0f)
-            setParameterOnce(proc, cs80::P_sourcePerformance, 0.0f);
-        if (proc.getParamValue(cs80::P_parityMode) != 0.0f)
-            setParameterOnce(proc, cs80::P_parityMode, 0.0f);
-    };
-
-    auto* sourcePerformance = page.policyCell({ 772.0f, 612.0f, 368.0f, 54.0f }, 1, "SOURCE PERFORMANCE", "SOURCE MODELS, OVERLAYS LIVE");
-    sourcePerformance->setComponentID("source_performance");
-    sourcePerformance->setTitle("Source performance (uncalibrated)");
-    sourcePerformance->setTooltip("Opt-in source-performance policy: current source models with ordinary MIDI pitch bend, CC1/11/64/74, optional MPE and "
-                                  "modern software overlays (macros, FX, pan and bypass). Not calibrated; no hardware match established. Keep output "
-                                  "headroom. An effective mode change stops notes and clears controller/effect history. PARITY ISOLATION wins if both "
-                                  "switches are ON; changing this source request while isolation stays ON is masked and does not stop notes. The source "
-                                  "request is saved with sound presets; library programs reset it OFF and return both selectors to PANEL. Selected tones "
-                                  "and memories still own only the 26 programmer controls; footage and global controls remain live.");
-    sourcePerformance->setTooltip(sourcePerformance->getTooltip() + " Context reset and MIDI learn target only the stored SOURCE PERFORMANCE request. Effective policy follows both requests; the isolation request is retained.");
-    sourcePerformance->setDescription(sourcePerformance->getTooltip());
-    sourcePerformance->bindParameterContext(proc, Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance));
-
-    auto* parity = page.policyCell({ 1148.0f, 612.0f, 368.0f, 54.0f }, 2, "PARITY ISOLATION", "NOMINAL MODELS, OVERLAYS MASKED");
-    parity->setComponentID("parity_mode");
-    parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears "
-                       "controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal "
-                       "remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are "
-                       "retained but inert. Isolation takes priority over SOURCE PERFORMANCE; its stored source request is masked, not cleared. "
-                       "Output may exceed digital full scale.");
-    parity->setTooltip(parity->getTooltip() + " Context reset and MIDI learn affect only the stored PARITY ISOLATION request; the source request is retained. Learned MIDI is inactive while isolation is enabled, so turn isolation off manually before learning or using a controller.");
-    parity->setDescription(parity->getTooltip());
-    parity->bindParameterContext(proc, Cs80AudioProcessor::parameterId(cs80::P_parityMode));
-
-    page.widget<PolicyTable>({ 80.0f, 672.0f, 1440.0f, 184.0f });
-
-    // About: one line; the long text is in the module's info card.
-    page.custom([](juce::Graphics& g)
-    {
-        etchLine(g, 96.0f, 861.0f, 1504.0f, 861.0f, 0.4f);
-        engrave(g, "CS-80 REFERENCE", { 96.0f, 862.0f, 210.0f, 30.0f }, 14.0f, true, ivory, Just::centredLeft, 0.08f);
-        text(g, "ENGINE  2x OVERSAMPLED, 8 VOICES x 2 RANKS", { 320.0f, 862.0f, 420.0f, 30.0f }, 12.5f, true, amber, Just::centredLeft, 0.02f);
-        text(g, "NOT CALIBRATED  -  NO HARDWARE MATCH ESTABLISHED", { 760.0f, 862.0f, 640.0f, 30.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
-    });
+    page.module({ 64.0f, 572.0f, 1472.0f, 324.0f }, "The instrument", true, pageColour(3),
+                "Every factory program and saved patch uses the same circuit engine: two oscillator ranks, high-pass and low-pass filters, "
+                "touch-controlled amplifiers, the ring modulator and BBD chorus. Studio adds optional modulation, effects and performance controls. "
+                "The original 523 program names and MIDI addresses remain available. Circuit models include documented engineering estimates; "
+                "the preset library is synthesized, not a set of sampled acoustic instruments.");
+    page.label("CS-80 REFERENCE", { 96.0f, 618.0f, 550.0f, 36.0f }, 22.0f, ivory, Just::centredLeft, 0.08f);
+    page.label("TWO RANKS. ONE CIRCUIT ENGINE.", { 96.0f, 674.0f, 1320.0f, 26.0f }, 16.0f, gold, Just::centredLeft, 0.06f);
+    page.label("Play with velocity and pressure. Shape the sound on the panel.", { 96.0f, 720.0f, 1320.0f, 24.0f }, 15.0f, ivory, Just::centredLeft, 0.01f);
+    page.label("Use Studio for MIDI, tuning, modulation and effects.", { 96.0f, 760.0f, 1320.0f, 24.0f }, 15.0f, ivory, Just::centredLeft, 0.01f);
+    page.label("523 existing programs in one factory library.", { 96.0f, 820.0f, 1320.0f, 24.0f }, 15.0f, gold, Just::centredLeft, 0.01f);
 }
 
 // ---- The Studio tabs -------------------------------------------------------------------------------------
@@ -4826,9 +4589,8 @@ void buildKeyboardTab(AdvancedPage& page, Cs80AudioProcessor& proc, std::functio
                 "controller drives the control, and the host sees the moves as ordinary parameter changes. A controller drives one control and "
                 "a control follows one controller; learning again moves it. A learned controller no longer has its usual MIDI meaning (for "
                 "example CC 1 stops being the mod wheel). The map belongs to this session: it is saved with the host project, not with presets. "
-                "Bank select, data entry, RPN/NRPN and channel-mode controllers are never learned. PURE CS-80 switches MIDI learn off and keeps "
-                "the map for later.",
-                [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_parityMode) < 0.5f && p.getMidiLearn().count() > 0; });
+                "Bank select, data entry, RPN/NRPN and channel-mode controllers are never learned.",
+                [](Cs80AudioProcessor& p) { return p.getMidiLearn().count() > 0; });
     page.adopt(std::make_unique<MidiLearnPanel>(proc), { 664.0f, 150.0f, MidiLearnPanel::kDesignW, MidiLearnPanel::kDesignH });
     {
         AdvancedPage::Origin moved(page, -496.0f, 0.0f);

@@ -19,7 +19,7 @@ class Cs80AudioProcessor;
 // view's Modulation, Keyboard and FX tabs (ws8-studio mounts them). Each page takes the
 // processor and edits either APVTS parameters (through standard JUCE attachments) or the
 // MSEG/matrix session data (through Cs80AudioProcessor::getModernLayer()). None of them is
-// part of the original panel; PURE CS-80 makes everything they control inert.
+// part of the original panel; their settings are optional software extensions.
 namespace cs80::ui::modern_layer
 {
 

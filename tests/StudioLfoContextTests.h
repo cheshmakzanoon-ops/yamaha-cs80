@@ -179,18 +179,22 @@ void testStudioLfoContext(Check check)
         host->getMidiLearn().assign(75, target); if (staleForget) staleForget();
         check(host->getMidiLearn().controllerFor(target) == 75, "stale sibling forget preserves a newer group mapping");
         host->setParamValue(P_parityMode, 1.0f);
+        host->setParamValue(P_sourcePerformance, 0.0f);
         for (auto* chip : siblings)
-            check(chip->isEnabled() && chip->getTooltip().contains("inactive in PURE CS-80")
-                      && !action(chip->buildContextMenu(), "MIDI learn"),
-                  "PURE preserves editable chip policy and reports masked group mapping");
+            check(chip->isEnabled() && chip->getTooltip().contains("MIDI CC 75")
+                      && !chip->getTooltip().contains("inactive")
+                      && bool(action(chip->buildContextMenu(), "MIDI learn")),
+                  "obsolete policy writes retain editable chips and live group MIDI learning");
         midi.clear(); midi.addEvent(juce::MidiMessage::controllerEvent(1, 75, 0), 0); host->processBlock(audio, midi);
-        check(host->getParamValue(core) == 5.0f, "PURE leaves the mapped destination unchanged by incoming MIDI");
+        check(host->getParamValue(core) == 0.0f && pump([&] { return matchesLights(0); }),
+              "learned MIDI keeps changing the destination and all sibling lights after obsolete writes");
         click(*siblings[2]);
-        check(host->getParamValue(core) == 2.0f, "PURE keeps ordinary stored destination selection available");
-        auto pureReset = action(siblings[4]->buildContextMenu(), "Reset to default"); if (pureReset) pureReset();
-        check(parameter->getValue() == parameter->getDefaultValue(), "PURE still permits stored group reset");
+        check(host->getParamValue(core) == 2.0f, "ordinary destination selection remains available beside MIDI learning");
+        auto groupReset = action(siblings[4]->buildContextMenu(), "Reset to default"); if (groupReset) groupReset();
+        check(parameter->getValue() == parameter->getDefaultValue(), "group reset retains its ordinary parameter default");
         auto forget = action(siblings[5]->buildContextMenu(), "Forget MIDI CC 75"); if (forget) forget();
-        check(host->getMidiLearn().controllerFor(target) == -1, "a different sibling can forget the group mapping in PURE");
+        check(host->getMidiLearn().controllerFor(target) == -1,
+              "a different sibling can forget the group mapping after obsolete policy writes");
         for (auto* chip : siblings)
             check(!chip->getTooltip().contains("MIDI CC"), "forget is immediately reflected across all siblings");
         host->setParamValue(P_parityMode, 0.0f);

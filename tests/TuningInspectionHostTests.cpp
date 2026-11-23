@@ -62,6 +62,8 @@ int main()
         check(!host.getTuningInspection().ready, "processor starts not ready");
         host.setEngineMode(circuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
         host.setParamValue(cs80::P_parityMode,0);
+        check(host.getParamValue(cs80::P_sourcePerformance) == 1 && host.getParamValue(cs80::P_parityMode) == 0,
+              "both historical engine requests resolve to the circuit instrument");
         host.setParamValue(cs80::P_voiceMode,sixteen ? 1 : 0);
         host.setParamValue(cs80::P_tuningMode,0);
         host.prepareToPlay(48000,32);
@@ -131,11 +133,17 @@ int main()
         maskedMts(midi); tick();
         host.requestTuningInspection(60,1); tick();
         check(host.getTuningInspection().pitch == 60, "MTS unaddressed channel retains independent table");
-        host.requestTuningInspection(60,2); host.setParamValue(cs80::P_parityMode,1); tick();
-        r = host.getTuningInspection();
-        check(r.mode == 0 && r.pitch == 60 && r.mapped, "PURE reports effective equal temperament, not stored MTS mode");
-        host.setParamValue(cs80::P_parityMode,0); tick();
-        check(host.getTuningInspection().mode == 2 && near(host.getTuningInspection().pitch,60.25f), "leaving PURE restores applied MTS table");
+        host.requestTuningInspection(60,2); tick(); r = host.getTuningInspection();
+        for (int parameter : {cs80::P_sourcePerformance, cs80::P_parityMode}) for (float value : {0.0f, 1.0f})
+        {
+            host.setParamValue(parameter,value); tick();
+            check(host.getParamValue(cs80::P_sourcePerformance) == 1 && host.getParamValue(cs80::P_parityMode) == 0
+                      && host.getTuningInspection() == r && r.mode == 2 && r.mapped && near(r.pitch,60.25f),
+                  "obsolete mode writes preserve the applied channel-specific MTS table and inspection");
+        }
+        maskedMts(midi,true,114); tick();
+        check(host.getTuningInspection().mode == 2 && near(host.getTuningInspection().pitch,60.5f),
+              "new MTS messages remain live after obsolete mode writes");
         host.prepareToPlay(48000,32);
         check(!host.getTuningInspection().ready, "prepare invalidates previous observation");
         check(host.getTuningInspectionRequest().note == 60 && host.getTuningInspectionRequest().channel == 2, "prepare retains request");

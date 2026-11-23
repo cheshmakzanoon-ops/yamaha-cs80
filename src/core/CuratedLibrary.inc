@@ -6,8 +6,8 @@
 // oscillator functions with the aftertouch SUB routes, ring modulator, footage
 // layering of the two ranks, chorus/tremolo, keyboard contours, ribbon and
 // initial pitch bend). No value is random or generated. The "Modern" programs
-// add the software FX/LFO/arp layer and are tagged "modern"; PURE CS-80 makes
-// that layer inert. docs/workstreams/ws6-library.md lists the rules and the
+// add the optional software FX/LFO/arp layer and are tagged "modern".
+// docs/workstreams/ws6-library.md lists the original authoring rules and the
 // library audit (tests/LibraryAuditTests.cpp) checks level, silence, duplicates
 // and parameter ranges for every program.
 //
@@ -157,7 +157,7 @@ struct Program
         g(P_kbdLevelLow, levelLow); return g(P_kbdLevelHigh, levelHigh);
     }
     Program& release(float seconds) { return g(P_keyRelease, seconds); }
-    // Modern layer (inert in PURE CS-80).
+    // Optional performance modulation and effects.
     Program& lfo(int slot, float hz, float depth, LfoDestination dest)
     {
         const int base = slot == 0 ? P_lfo1Rate : slot == 1 ? P_lfo2Rate : P_lfo3Rate;

@@ -10,16 +10,18 @@
 namespace cs80::tests
 {
 // Sixteen-voice mode keeps the physical expression pedal on both engines
-// across resource/policy resets, before new MIDI at the transition boundary.
+// across real resource resets and inert retired-policy writes, before fresh MIDI.
 template <typename Check>
 void testExtensionExpressionLifecycleHost(Check&& check)
 {
     enum class Change { qualityUp, qualityDown, offlineOn, offlineOff,
-                        circuitToLegacy, legacyToCircuit, offlineOffQualityUp, prepare, releasePrepare };
+                        retiredSourceOff, retiredSourceOn, retiredIsolationOn, retiredIsolationOff, offlineOffQualityUp, prepare, releasePrepare };
     constexpr const char* changeNames[] = { "quality up", "quality down", "offline on", "offline off",
-        "Circuit to Legacy", "Legacy to Circuit", "offline off + quality up", "prepare", "release + prepare" };
+        "retired source off", "retired source on", "retired isolation on", "retired isolation off",
+        "offline off + quality up", "prepare", "release + prepare" };
     for (const auto change : { Change::qualityUp, Change::qualityDown, Change::offlineOn,
-                               Change::offlineOff, Change::circuitToLegacy, Change::legacyToCircuit,
+                               Change::offlineOff, Change::retiredSourceOff, Change::retiredSourceOn,
+                               Change::retiredIsolationOn, Change::retiredIsolationOff,
                                Change::offlineOffQualityUp, Change::prepare, Change::releasePrepare })
         for (const bool midiPedal : { false, true })
             for (const float requestedPedal : { 0.0f, 0.35f, 1.0f })
@@ -33,7 +35,7 @@ void testExtensionExpressionLifecycleHost(Check&& check)
                 };
                 Cs80AudioProcessor host;
                 host.setParamValue(P_voiceMode, 1.0f);
-                host.setParamValue(P_sourcePerformance, change == Change::legacyToCircuit ? 0.0f : 1.0f);
+                host.setParamValue(P_sourcePerformance, change == Change::retiredSourceOn ? 0.0f : 1.0f);
                 host.setParamValue(P_oversampling, change == Change::qualityDown ? 2.0f : 0.0f);
                 host.setParamValue(P_analogNoise, 0.0f);
                 host.setParamValue(P_drift, 0.0f);
@@ -63,26 +65,61 @@ void testExtensionExpressionLifecycleHost(Check&& check)
                     case Change::qualityDown: host.setParamValue(P_oversampling, 0.0f); break;
                     case Change::offlineOn: host.setNonRealtime(true); break;
                     case Change::offlineOff: host.setNonRealtime(false); break;
-                    case Change::circuitToLegacy: host.setParamValue(P_sourcePerformance, 0.0f); break;
-                    case Change::legacyToCircuit: host.setParamValue(P_sourcePerformance, 1.0f); break;
+                    case Change::retiredSourceOff: host.setParamValue(P_sourcePerformance, 0.0f); break;
+                    case Change::retiredSourceOn: host.setParamValue(P_sourcePerformance, 1.0f); break;
+                    case Change::retiredIsolationOn: host.setParamValue(P_parityMode, 1.0f); break;
+                    case Change::retiredIsolationOff: host.setParamValue(P_parityMode, 0.0f); break;
                     case Change::offlineOffQualityUp:
                         host.setNonRealtime(false); host.setParamValue(P_oversampling, 2.0f); break;
                     case Change::prepare: host.prepareToPlay(48000.0, 64); break;
                     case Change::releasePrepare:
                         host.releaseResources(); host.prepareToPlay(48000.0, 64); break;
                 }
-                // Fresh notes share the block containing the transition; no
-                // intervening pedal event is available to repair lost state.
-                for (int note = 60; note < 69; ++note)
+                const bool retiredWrite = change == Change::retiredSourceOff || change == Change::retiredSourceOn
+                    || change == Change::retiredIsolationOn || change == Change::retiredIsolationOff;
+                if (retiredWrite)
+                {
+                    // Obsolete automation is not a resource transition. Both
+                    // physical instruments must keep their original notes.
+                    host.processBlock(block, midi);
+                    bool retained = host.getEngine().activeVoices() == 8
+                        && host.getExtensionEngine().activeVoices() == 1;
+                    for (int voice = 0; voice < 8; ++voice)
+                        retained = retained && host.getEngine().getVoiceInfo(voice).held
+                            && host.getEngine().getVoiceInfo(voice).note == 48 + voice;
+                    retained = retained && host.getExtensionEngine().getVoiceInfo(0).held
+                        && host.getExtensionEngine().getVoiceInfo(0).note == 56;
+                    verify(retained, "retired policy writes preserve the notes on both physical instruments");
+                }
+                // Fresh notes share a real resource-transition block, or play
+                // alongside the preserved notes after an inert policy write.
+                // No intervening pedal event is available to repair lost state.
+                for (int note = 60; note < (retiredWrite ? 67 : 69); ++note)
                     midi.addEvent(juce::MidiMessage::noteOn(1, note, (juce::uint8) 100), 0);
                 host.processBlock(block, midi);
                 midi.clear();
                 const auto& main = host.getEngine();
                 const auto& extension = host.getExtensionEngine();
-                verify(main.activeVoices() == 8 && extension.activeVoices() == 1
-                          && main.getVoiceInfo(0).note == 60 && extension.getVoiceInfo(0).note == 68,
-                      "lifecycle transition clears old voices and accepts fresh MIDI on both engines");
-                verify(main.getRenderPolicy() == extension.getRenderPolicy()
+                if (retiredWrite)
+                {
+                    int freshHeld = 0, originalHeld = 0;
+                    for (const auto* engine : { &main, &extension })
+                        for (int voice = 0; voice < 8; ++voice)
+                        {
+                            const auto info = engine->getVoiceInfo(voice);
+                            if (info.held && info.note >= 60 && info.note < 67) ++freshHeld;
+                            if (info.held && info.note >= 48 && info.note < 57) ++originalHeld;
+                        }
+                    verify(main.activeVoices() == 8 && extension.activeVoices() == 8
+                              && freshHeld == 7 && originalHeld == 9,
+                          "seven fresh strikes fill the unused voices without replacing the nine preserved notes");
+                }
+                else
+                    verify(main.activeVoices() == 8 && extension.activeVoices() == 1
+                              && main.getVoiceInfo(0).note == 60 && extension.getVoiceInfo(0).note == 68,
+                          "resource transition clears old voices and accepts fresh MIDI on both engines");
+                verify(main.getRenderPolicy() == RenderPolicy::sourcePerformance
+                          && main.getRenderPolicy() == extension.getRenderPolicy()
                           && main.getOversamplingFactor() == extension.getOversamplingFactor(),
                       "both engines agree on the resulting render policy and sample rate");
                 verify(host.getExpressionValue() == pedal,
@@ -93,7 +130,7 @@ void testExtensionExpressionLifecycleHost(Check&& check)
                         + pedal * (std::log(2000.0) - std::log(1000000.0)));
                     for (const auto* engine : { &main, &extension })
                         verify(std::abs(engine->getPraWahState(0).targetOhms - target) < 1e-6,
-                              "both engines restore the expression optical target after a reset");
+                              "both engines retain the correct expression optical target through the lifecycle change");
                 }
                 const float peak = std::max(block.getMagnitude(0, 0, block.getNumSamples()),
                                             block.getMagnitude(1, 0, block.getNumSamples()));
@@ -167,7 +204,7 @@ void testOversamplingHost(Check&& check)
               "shipped host parameters keep their indexes before the new quality choice");
     }
 
-    // Latency is re-reported after every mode change and equals the engine's.
+    // Latency is re-reported after quality changes; obsolete source writes are inert.
     for (double rate : { 44100.0, 48000.0, 96000.0 })
         for (float mode : { 0.0f, 1.0f, 2.0f })
             for (float circuit : { 0.0f, 1.0f })
@@ -181,16 +218,16 @@ void testOversamplingHost(Check&& check)
                 host.processBlock(block, midi);
                 host.setParamValue(P_oversampling, mode);
                 host.processBlock(block, midi);
-                const int expected = oversamplingFactor(oversamplingMode(mode), circuit >= 0.5f, false, rate);
+                const int expected = oversamplingFactor(oversamplingMode(mode), true, false, rate);
                 check(host.getEngine().getOversamplingFactor() == expected,
-                      "host quality choice reaches the engine factor rule");
+                      "host quality choice uses the circuit factor rule despite retired source writes");
                 // ws1 merge: plus the circuit oscillator's 8 internal samples (8/N).
                 check(host.getLatencySamples() == host.getEngine().getLatencySamples()
-                          && host.getLatencySamples() == 63 + (circuit >= 0.5f ? 8 / expected : 0),
+                          && host.getLatencySamples() == 63 + 8 / expected,
                       "reported host latency equals the engine's in every mode");
             }
 
-    // Offline bounce: the circuit engine renders at HQ, legacy keeps its factor.
+    // Offline bounce always renders the circuit engine at HQ, regardless of retired writes.
     for (float circuit : { 0.0f, 1.0f })
     {
         Cs80AudioProcessor host;
@@ -202,17 +239,17 @@ void testOversamplingHost(Check&& check)
         juce::AudioBuffer<float> block(2, 64);
         juce::MidiBuffer midi;
         host.processBlock(block, midi);
-        check(host.getEngine().getOversamplingFactor() == (circuit >= 0.5f ? 8 : 2),
-              "offline prepare: circuit engine HQ, legacy unchanged");
+        check(host.getEngine().getOversamplingFactor() == 8,
+              "offline prepare always selects circuit HQ");
         host.setNonRealtime(false);
         host.processBlock(block, midi);
         check(host.getEngine().getOversamplingFactor() == 2
-                  && host.getLatencySamples() == 63 + (circuit >= 0.5f ? 4 : 0),
+                  && host.getLatencySamples() == 67,
               "realtime again without a new prepare restores the selected mode");
         host.setNonRealtime(true);
         midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
         host.processBlock(block, midi);
-        check(host.getEngine().getOversamplingFactor() == (circuit >= 0.5f ? 8 : 2)
+        check(host.getEngine().getOversamplingFactor() == 8
                   && host.getEngine().activeVoices() == 1,
               "offline switch inside processBlock precedes the block's MIDI");
     }
@@ -242,8 +279,7 @@ void testOversamplingHost(Check&& check)
         check(host.getParamValue(P_oversampling) == 1.0f, "a state without the quality mode restores Standard");
     }
 }
-// Plan 1.7 engine default flip at the plugin layer: fresh instances and new
-// presets use the circuit engine; old sessions keep the meaning of their schema.
+// One production circuit engine; archived core defaults remain diagnostic fixtures.
 template <typename Check>
 void testEngineDefaultHost(Check&& check)
 {
@@ -254,14 +290,16 @@ void testEngineDefaultHost(Check&& check)
         Cs80AudioProcessor host;
         auto* engine = host.getAPVTS().getParameter("source_performance");
         auto* pure = host.getAPVTS().getParameter("parity_mode");
-        check(engine != nullptr && pure != nullptr && engine->getName(64) == "Engine"
-                  && pure->getName(64) == "PURE CS-80", "host-visible ENGINE and PURE CS-80 names");
+        check(engine != nullptr && pure != nullptr && engine->getName(64) == "Circuit engine (fixed)"
+                  && pure->getName(64) == "Reserved engine policy"
+                  && !engine->isAutomatable() && !pure->isAutomatable(),
+              "retired host slots are fixed, clearly named and non-automatable");
         check(engine->getDefaultValue() == 1.0f && host.getEngineMode() == Mode::circuit
                   && host.getEffectiveEngineMode() == Mode::circuit && !host.isPure(),
               "fresh instance selects the circuit engine");
-        check(engine->getText(1.0f, 64) == "Circuit" && engine->getText(0.0f, 64) == "Legacy (compat)"
-                  && engine->getValueForText("Legacy (compat)") == 0.0f && engine->getValueForText("Circuit") == 1.0f,
-              "ENGINE value text round trips");
+        check(engine->getText(1.0f, 64) == "Circuit" && engine->getText(0.0f, 64) == "Circuit"
+                  && engine->getValueForText("Legacy (compat)") == 1.0f && engine->getValueForText("Circuit") == 1.0f,
+              "retired engine value/text entry cannot select the removed playback path");
         host.prepareToPlay(48000.0, 64);
         juce::AudioBuffer<float> block(2, 64);
         juce::MidiBuffer midi;
@@ -271,26 +309,27 @@ void testEngineDefaultHost(Check&& check)
         host.setPure(true);
         host.setEngineMode(Mode::legacy);
         host.processBlock(block, midi);
-        check(host.isPure() && host.getEngineMode() == Mode::legacy && host.getEffectiveEngineMode() == Mode::circuit
-                  && host.getEngine().getRenderPolicy() == RenderPolicy::isolation,
-              "PURE CS-80 renders the circuit engine whatever ENGINE says");
+        check(!host.isPure() && host.getEngineMode() == Mode::circuit && host.getEffectiveEngineMode() == Mode::circuit
+                  && host.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "retired mode APIs leave the playable circuit engine unchanged");
         host.setPure(false);
         host.processBlock(block, midi);
-        check(host.getEngine().getRenderPolicy() == RenderPolicy::legacy, "ENGINE Legacy (compat) renders legacy");
+        check(host.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "clearing a retired isolation request keeps the same circuit engine");
 
         // INIT stays a neutral programming patch; startup is the Circuit showcase.
         host.setPure(true);
         host.loadFactoryPreset(5);
-        check(host.getEngineMode() == Mode::legacy, "legacy factory bank programs keep the legacy engine");
+        check(host.getEngineMode() == Mode::circuit, "original factory addresses now use the same circuit engine");
         host.loadInitPatch();
         check(host.getEngineMode() == Mode::circuit && host.getParamValue(P_subOriginalMode) == 1.0f
-                  && host.getPresetName().startsWith("Init Patch") && host.isPure(),
-              "new preset: Init Patch on the circuit engine, PURE (a session policy) kept");
+                  && host.getPresetName().startsWith("Init Patch") && !host.isPure(),
+              "Init Patch uses the circuit engine with active performance controls");
     }
 
-    // Old sessions: a missing or malformed ENGINE value means the default of the
-    // schema that wrote the state, never the live value or a later default.
-    for (int schema : { 0, 1, 2, 3 })
+    // Every older schema migrates to the same production policy, including
+    // explicit obsolete requests and missing or malformed parameter children.
+    for (int schema : { 0, 1, 2, 3, 4 })
         for (const char* stored : { "missing", "garbage", "0", "1" })
         {
             Cs80AudioProcessor host;
@@ -302,10 +341,9 @@ void testEngineDefaultHost(Check&& check)
             host.setEngineMode(schema >= 3 ? Mode::legacy : Mode::circuit); // live value must not leak
             const auto text = state.createXml()->toString();
             host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
-            const bool literal = juce::String(stored) == "0" || juce::String(stored) == "1";
-            const float expected = literal ? juce::String(stored).getFloatValue() : (schema >= 3 ? 1.0f : 0.0f);
-            check(host.getParamValue(P_sourcePerformance) == expected,
-                  "ENGINE restores by schema: Legacy before schema 3, Circuit from schema 3");
+            check(host.getParamValue(P_sourcePerformance) == 1.0f
+                      && host.getParamValue(P_parityMode) == 0.0f,
+                  "all prior schemas migrate obsolete model requests to the circuit engine");
         }
     {
         Cs80AudioProcessor host;
@@ -313,11 +351,12 @@ void testEngineDefaultHost(Check&& check)
         juce::MemoryBlock saved;
         host.getStateInformation(saved);
         const auto xml = juce::parseXML(saved.toString());
-        check(xml != nullptr && xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey) == 3,
-              "states are written with schema 3");
+        check(xml != nullptr && xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey) == 4,
+              "states are written with the circuit-only schema 4");
         Cs80AudioProcessor other;
         other.setStateInformation(saved.getData(), (int) saved.getSize());
-        check(other.getEngineMode() == Mode::legacy, "a saved Legacy (compat) choice survives the flip");
+        check(other.getEngineMode() == Mode::circuit && !other.isPure(),
+              "a round trip cannot restore a removed engine choice");
     }
 }
 // Phase 3 listening output: an appended physical-setup choice the circuit

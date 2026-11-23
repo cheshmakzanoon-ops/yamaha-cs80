@@ -60,13 +60,13 @@ void buildBrass(Builder& add)
                .sub(subSine, 5.0f, 0.0f).subAt(0.06f, 0.105f).bend(0.08f).mix(0.46f)
                .pan(I, -0.24f).pan(II, 0.34f));
     add("Sforzando Brass", "Brass", { "brilliance-swell", "velocity" },
-        "A bright, hard-struck accent relaxes into a quieter sustained section. One rank carries the initial bite while the other holds the body.",
+        "A bright, hard-struck accent quickly relaxes into a quieter sustained section. The upper rank's bite decays completely while the lower rank holds the body; velocity controls the emphasis.",
         brass().lpf(I, 820.0f, 0.16f).lpf(II, 1280.0f, 0.24f)
-               .feg(I, 0.04f, 0.64f, 0.03f, 1.25f, 0.30f).feg(II, 0.0f, 0.76f, 0.018f, 0.65f, 0.24f)
-               .eg(I, 0.014f, 1.15f, 0.63f, 0.38f).eg(II, 0.008f, 0.72f, 0.27f, 0.28f)
-               .level(I, 1.0f, 0.38f).level(II, 1.0f, 0.24f)
-               .touch(I, 0.25f, 0.72f, 0.20f, 0.20f).touch(II, 0.38f, 0.90f, 0.22f, 0.12f)
-               .mix(0.44f).detune(2.8f));
+               .feg(I, 0.04f, 0.64f, 0.03f, 0.55f, 0.30f).feg(II, 0.0f, 0.76f, 0.006f, 0.36f, 0.14f)
+               .eg(I, 0.014f, 0.58f, 0.42f, 0.38f).eg(II, 0.003f, 0.65f, 0.0f, 0.16f)
+               .level(I, 1.0f, 0.38f).level(II, 1.0f, 0.12f)
+               .touch(I, 0.25f, 0.72f, 0.20f, 0.20f).touch(II, 0.38f, 0.98f, 0.22f, 0.12f)
+               .mix(0.42f).detune(2.8f));
     add("Brass Stab", "Brass", { "velocity", "percussive" },
         "A short, dry brass hit with a rounded low attack and a brighter upper bite. Both ranks decay away even while the key remains held; velocity controls the accent.",
         brass().lpf(I, 1040.0f, 0.16f).lpf(II, 1720.0f, 0.19f)
@@ -84,13 +84,14 @@ void buildBrass(Builder& add)
                .touch(I, 0.15f, 0.62f, 0.25f, 0.24f).touch(II, 0.22f, 0.65f, 0.34f, 0.18f)
                .mix(0.26f).detune(2.1f).res(0.10f));
     add("Covered Horn", "Brass", { "aftertouch" },
-        "Dark, rounded horn phrasing with a small sine foundation and a quiet covered edge. Pressure shapes level more strongly than brightness; use the middle and lower registers.",
+        "Dark, rounded horn phrasing with a small sine foundation and a quiet upper edge. The stable body reduces ensemble beating; pressure shapes level more strongly than brightness. Use the middle and lower registers.",
         brass().wave(I, true, false, 0.12f).wave(II, false, true).pw(II, 0.53f)
-               .hpf(I, 25.0f).hpf(II, 85.0f).lpf(I, 470.0f, 0.08f).lpf(II, 920.0f, 0.16f)
+               .hpf(I, 25.0f).hpf(II, 220.0f).lpf(I, 470.0f, 0.08f).lpf(II, 920.0f, 0.16f)
                .feg(I, 0.15f, 0.28f, 0.13f, 1.7f, 0.35f).feg(II, 0.22f, 0.35f, 0.16f, 1.2f, 0.30f)
                .eg(I, 0.085f, 1.8f, 0.90f, 0.46f).eg(II, 0.10f, 1.3f, 0.69f, 0.34f)
                .touch(I, 0.10f, 0.52f, 0.18f, 0.42f).touch(II, 0.14f, 0.56f, 0.26f, 0.26f)
-               .mix(0.22f).detune(0.8f).res(0.08f).subAt(0.03f, 0.055f));
+               .mix(0.15f).detune(0.0f).res(0.08f).subAt(0.03f, 0.055f)
+               .g(P_voiceDispersion, 0.06f).g(P_drift, 0.02f));
     add("Muted Trumpet", "Brass", { "aftertouch", "dual-rank" },
         "A dry, narrow brass body with a focused nasal pulse edge, voiced as a muted-trumpet interpretation. Firm strikes sharpen the attack; pressure gives a small expressive vibrato.",
         brass().wave(I, true, false).wave(II, false, true).pw(II, 0.78f)
@@ -242,12 +243,13 @@ void buildBrass(Builder& add)
                .eg(I, 0.022f, 1.5f, 0.88f, 0.35f).eg(II, 0.038f, 1.2f, 0.74f, 0.28f)
                .touch(I, 0.18f, 0.62f, 0.38f, 0.30f).touch(II, 0.23f, 0.65f, 0.46f, 0.24f)
                .glide(0.075f).bend(0.075f).subAt(0.045f, 0.10f).mix(0.25f).detune(1.3f));
-    add("Tremolo Brass", "Brass", { "tremolo" },
-        "A soft brass pad pulses through the original CHORUS/TREMOLO section. The slower second-rank entrance and sustained body keep the tremolo rounded rather than percussive.",
+    add("Tremolo Brass", "Brass", { "tremolo", "sub-mod" },
+        "A soft brass pad pulses gently at 4.6 Hz through the original SUB VCA route, with stereo color from the CHORUS/TREMOLO section. The slower second-rank entrance and sustained body keep the motion rounded rather than percussive.",
         brass().lpf(I, 690.0f, 0.11f).lpf(II, 1180.0f, 0.13f)
                .feg(I, 0.23f, 0.38f, 0.25f, 2.1f, 0.65f).feg(II, 0.30f, 0.44f, 0.39f, 1.7f, 0.52f)
                .eg(I, 0.16f, 2.0f, 0.91f, 1.0f).eg(II, 0.25f, 1.6f, 0.82f, 0.82f)
-               .tremolo(0.46f, 4.6f).subAt(0.0f, 0.035f).detune(3.7f).mix(0.39f));
+               .tremolo(0.46f, 4.6f).sub(subSine, 4.6f, 0.0f, 0.0f, 0.20f)
+               .subAt(0.0f, 0.035f).detune(3.7f).mix(0.39f));
     add("Contour Brass", "Brass", { "kbd-contour" },
         "A broad keyboard brass voice: a modest treble-brilliance contour and low-register level lift help wide voicings retain their shape. The upper rank stays lighter than the root.",
         brass().hpf(I, 32.0f).hpf(II, 62.0f).lpf(I, 700.0f, 0.15f).lpf(II, 1210.0f, 0.16f)

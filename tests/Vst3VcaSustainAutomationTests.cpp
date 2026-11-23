@@ -120,7 +120,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = vca_sustainRender(protectedP, 256);
-                check(actual == vca_sustainRender(protectedP, 256, true, true), "vca_sustain Legacy/PURE preserve flattening");
+                check(actual == vca_sustainRender(p, 256), "vca_sustain retired mode requests preserve canonical circuit sample-accurate audio");
                 captureVcaSustain(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

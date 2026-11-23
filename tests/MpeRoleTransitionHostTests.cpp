@@ -92,6 +92,10 @@ struct Host
                                                modern::ModDestination::pulseWidth, modern::ModTarget::both});
         processor->prepareToPlay(48000, 256);
         tick(); // Accept parameters and activate the extension before negotiation.
+        check(processor->getParamValue(P_sourcePerformance) == 1.0f
+                  && processor->getParamValue(P_parityMode) == 0.0f
+                  && processor->getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "both engine API requests resolve to the circuit role-transition policy");
     }
 
     void tick(int frames = 0)
@@ -136,7 +140,7 @@ void testSoundingRoleChanges(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (int frames : {0, 32}) for (const auto& transition : transitions)
     {
-        context = std::string("sound/") + (circuit ? "circuit" : "legacy")
+        context = std::string("sound/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16/" : "/8/") + transition.name + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen);
         host.layout(transition.lower, transition.upper);
@@ -205,7 +209,7 @@ void testPrefixAndOrdering(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (bool upper : {false, true}) for (bool prefixAfter : {false, true}) for (int frames : {0, 32})
     {
-        context = std::string("prefix/") + (circuit ? "circuit" : "legacy")
+        context = std::string("prefix/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/to-upper" : "/to-lower")
             + (prefixAfter ? "/after" : "/before") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen); host.layout(7, 7);
@@ -242,7 +246,7 @@ void testChannelState(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (bool upper : {false, true})
     {
-        context = std::string("channel-state/") + (circuit ? "circuit" : "legacy")
+        context = std::string("channel-state/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/to-upper" : "/to-lower");
         Host host(fixture, circuit, sixteen); host.layout(7, 7);
         const int manager = upper ? 16 : 1, changed = upper ? 3 : 14, survivor = upper ? 15 : 2;
@@ -299,7 +303,7 @@ void testChannelState(const juce::File& fixture)
     // but exchange manager/member roles. Their pedals and selectors are local.
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (bool upper : {false, true})
     {
-        context = std::string("manager-member-state/") + (circuit ? "circuit" : "legacy")
+        context = std::string("manager-member-state/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/to-upper" : "/to-lower");
         Host host(fixture, circuit, sixteen); host.layout(upper ? 15 : 0, upper ? 0 : 15);
         const int oldManager = upper ? 1 : 16, newManager = upper ? 16 : 1, newMember = upper ? 15 : 2;
@@ -326,7 +330,7 @@ void testSharedPitchOwnership(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (bool upper : {false, true})
     {
-        context = std::string("same-pitch/") + (circuit ? "circuit" : "legacy")
+        context = std::string("same-pitch/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/to-upper" : "/to-lower");
         Host host(fixture, circuit, sixteen); host.layout(7, 7);
         const int changed = upper ? 3 : 14, survivor = upper ? 15 : 2;
@@ -381,7 +385,7 @@ void testDeferredKeys(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
         for (bool upper : {false, true})
     {
-        context = std::string("arp/") + (circuit ? "circuit" : "legacy") + (sixteen ? "/16" : "/8")
+        context = std::string("arp/") + (circuit ? "circuit" : "retired-engine-request") + (sixteen ? "/16" : "/8")
             + (upper ? "/upper" : "/lower");
         Host host(fixture, circuit, sixteen);
         const int manager = upper ? 16 : 1, changed = upper ? 3 : 14, other = upper ? 15 : 2;
@@ -411,7 +415,7 @@ void testUiReleaseOwnership(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (int frames : {0, 32})
     {
-        context = std::string("UI-ownership/") + (circuit ? "circuit" : "legacy")
+        context = std::string("UI-ownership/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen); host.layout(7, 7);
         host.processor->serviceKeyboardUI(); // Acknowledge startup before real UI gestures.
@@ -488,7 +492,7 @@ void testSharedManagerBus(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (bool settled : {false, true})
     {
-        context = std::string("shared-manager-bus/") + (circuit ? "circuit" : "legacy")
+        context = std::string("shared-manager-bus/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (settled ? "/settled" : "/in-flight");
         Host actual(fixture, circuit, sixteen), reference(fixture, circuit, sixteen), neutral(fixture, circuit, sixteen);
         for (auto* host : {&actual, &reference, &neutral})
@@ -508,10 +512,10 @@ void testSharedManagerBus(const juce::File& fixture)
         if (before.index >= 0)
         {
             const float amount = before.engine->getModernRankOffsets(before.index, 0).pulseWidth;
-            check(amount > 0 && (circuit && !settled
+            check(amount > 0 && (!settled
                       ? amount < .5f * modern::kPulseWidthRange
                       : std::abs(amount - .5f * modern::kPulseWidthRange) < 1.0e-6f),
-                  "Circuit in-flight or Legacy/settled pitch-wheel matrix follows its existing policy");
+                  "circuit pitch-wheel matrix smooths in-flight values and reaches the independent settled target");
         }
         rpn(actual.midi, 1, 6, 0); actual.tick(); reference.tick(); neutral.tick();
         const auto after = find(*actual.processor, 60, 15);
@@ -560,7 +564,7 @@ void testOtherSharedBuses(const juce::File& fixture)
         for (auto source : {modern::ModSource::modWheel, modern::ModSource::expression,
                             modern::ModSource::channelPressure, modern::ModSource::ribbon})
     {
-        context = std::string("other-shared-buses/") + (circuit ? "circuit" : "legacy")
+        context = std::string("other-shared-buses/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16/" : "/8/") + std::to_string(static_cast<int>(source));
         Host actual(fixture, circuit, sixteen), reference(fixture, circuit, sixteen);
         for (auto* host : {&actual, &reference})

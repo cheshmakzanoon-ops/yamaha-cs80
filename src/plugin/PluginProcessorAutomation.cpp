@@ -37,10 +37,9 @@ void Cs80AudioProcessor::refreshAllHostAutomationParameters() noexcept
 
 bool Cs80AudioProcessor::usesHostAutomationTiming() const noexcept
 {
-    const auto policy = cs80::renderPolicy(
-        parameterValues[cs80::P_parityMode]->load(std::memory_order_relaxed),
-        parameterValues[cs80::P_sourcePerformance]->load(std::memory_order_relaxed));
-    return !cs80::isPureCs80(policy) && cs80::usesSourceModels(policy);
+    // There is one production engine; all of its attached curves keep their
+    // sample positions regardless of obsolete saved mode fields.
+    return true;
 }
 
 int Cs80AudioProcessor::sampleAccurateParameterIndex(const juce::AudioProcessorParameter& parameter) const noexcept

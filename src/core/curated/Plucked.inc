@@ -81,14 +81,14 @@ void buildPlucked(Builder& add)
                  .touch(I, 0.20f, 0.74f, 0.0f, 0.0f).touch(II, 0.26f, 0.94f, 0.0f, 0.0f)
                  .mix(0.19f).res(0.12f));
     add("Mandolin", "Plucked", { "sub-mod", "detune", "velocity", "dual-rank" },
-        "Two close 8' string courses with independent decays and a small 12 Hz level flutter. Play repeated notes for tremolo picking; the paired ranks keep the attacks bright and compact.",
+        "Two close 8' string courses with independent decays and a faint, smooth level flutter. Repeated strikes make the tremolo-picking pattern; the paired ranks supply the bright compact attacks.",
         plucked().wave(I, true, false, 0.08f).wave(II, false, true, 0.06f).pw(II, 0.72f)
                  .hpf(I, 100.0f).hpf(II, 140.0f).lpf(I, 2450.0f, 0.10f).lpf(II, 3200.0f, 0.12f)
                  .level(I, 0.92f, 0.34f).level(II, 0.78f, 0.28f)
                  .feg(I, 0.0f, 0.30f, 0.0018f, 0.76f, 0.12f).feg(II, 0.0f, 0.35f, 0.001f, 0.52f, 0.10f)
                  .eg(I, 0.0018f, 3.2f, 0.0f, 0.28f).eg(II, 0.0025f, 2.65f, 0.0f, 0.22f)
                  .touch(I, 0.20f, 0.72f, 0.0f, 0.0f).touch(II, 0.24f, 0.78f, 0.0f, 0.0f)
-                 .sub(subSquare, 12.0f, 0.0f, 0.0f, 0.18f).mix(0.43f).detune(3.4f));
+                 .sub(subSine, 12.0f, 0.0f, 0.0f, 0.025f).mix(0.43f).detune(3.4f));
     add("Drone Pluck", "Plucked", { "ring-mod", "resonance", "aftertouch" },
         "A resonant picked onset settles into a quiet held drone with a faint metallic ring. Pressure raises the remaining body after the short pick rank has disappeared.",
         plucked().wave(I, false, true, 0.22f).pw(I, 0.64f).wave(II, true, false)
@@ -98,10 +98,10 @@ void buildPlucked(Builder& add)
                  .level(I, 0.90f, 0.30f).touch(I, 0.16f, 0.68f, 0.20f, 0.36f)
                  .ring(110.0f, 0.0f, 0.001f, 1.0f, 0.09f).mix(0.21f).res(0.20f));
     add("Nylon Pluck", "Plucked", { "sine", "velocity", "noise" },
-        "A rounded sine-and-saw body with a separate soft finger transient. Its short, mellow edge and trace of air disappear rapidly; the warm string center rings without chorus or detuning.",
-        plucked().wave(I, true, false, 0.56f).wave(II, false, true, 0.0f, 0.06f).pw(II, 0.55f)
-                 .hpf(I, 35.0f).hpf(II, 350.0f).lpf(I, 920.0f, 0.035f).lpf(II, 2800.0f, 0.06f)
-                 .level(I, 0.34f, 0.34f).level(II, 0.82f, 0.10f)
+        "A warm string body balances a rounded fundamental with filtered saw harmonics. A separate soft finger transient and trace of air disappear rapidly while the clear body decays, without chorus or detuning.",
+        plucked().wave(I, true, false, 0.35f).wave(II, false, true, 0.0f, 0.06f).pw(II, 0.55f)
+                 .hpf(I, 35.0f).hpf(II, 350.0f).lpf(I, 1200.0f, 0.035f).lpf(II, 2800.0f, 0.06f)
+                 .level(I, 0.65f, 0.34f).level(II, 0.82f, 0.10f)
                  .feg(I, 0.0f, 0.21f, 0.0035f, 1.3f, 0.3f).feg(II, 0.0f, 0.12f, 0.001f, 0.12f, 0.04f)
                  .eg(I, 0.0035f, 4.1f, 0.0f, 0.75f).eg(II, 0.001f, 0.18f, 0.0f, 0.05f)
                  .touch(I, 0.12f, 0.72f, 0.0f, 0.0f).touch(II, 0.08f, 0.90f, 0.0f, 0.0f)

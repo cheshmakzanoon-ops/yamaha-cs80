@@ -31,7 +31,7 @@ int main() {
     juce::ScopedJuceInitialiser_GUI init;
     juce::TemporaryFile fixture("-state-mirror");
     auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
-    for(int key:std::array<int,4>{cs80::P_volume,cs80::chParam(0,cs80::CP_hpfCutoff),cs80::P_tuningMode,cs80::P_sourcePerformance})
+    for(int key:std::array<int,4>{cs80::P_volume,cs80::chParam(0,cs80::CP_hpfCutoff),cs80::P_tuningMode,cs80::P_subOriginalMode})
     for(bool treeEdit:{false,true}) for(bool recurse:{false,true}) {
         auto* parameter=host->getAPVTS().getParameter(cs80::paramId(key));
         auto& state=host->getUndoableState();

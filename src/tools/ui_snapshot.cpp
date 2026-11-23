@@ -35,6 +35,7 @@
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
+#include "../../tests/CircuitPolicyHostTests.h"
 #include "../../tests/EngineHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
@@ -245,7 +246,7 @@ void saveSnapshot(Cs80AudioProcessorEditor& editor, const juce::File& dir,
     }
 }
 
-// Keep documentation views independent of the long-lived legacy regression
+// Keep documentation views independent of the long-lived state regression
 // fixture. These are actual editors, APVTS selections and rendered host audio,
 // not injected status text or meter telemetry. Never inspect a user's presets.
 void captureSourcePerformanceViews(const juce::File& dir)
@@ -262,8 +263,8 @@ void captureSourcePerformanceViews(const juce::File& dir)
         values[cs80::P_volume] = headroom ? 1.0f : 0.25f;
         if (headroom)
         {
-            // The legal PANEL fixture used by OutputMeterHostTests, with
-            // Source Performance rather than isolation. No gain injection.
+            // The legal PANEL fixture used by OutputMeterHostTests on the
+            // production circuit engine. No gain injection.
             values[cs80::P_mpeOn] = 1.0f;
             for (int rank = 0; rank < 2; ++rank)
             {
@@ -297,11 +298,13 @@ void captureSourcePerformanceViews(const juce::File& dir)
         auto* rankI = dynamic_cast<juce::Label*>(findControl(editor, "source_route_status_1"));
         auto* rankII = dynamic_cast<juce::Label*>(findControl(editor, "source_route_status_2"));
         auto* meter = dynamic_cast<juce::Label*>(findControl(editor, "output_sample_peak"));
-        auto* source = dynamic_cast<juce::Button*>(findControl(editor, "source_performance"));
-        auto* isolation = dynamic_cast<juce::Button*>(findControl(editor, "parity_mode"));
-        check(mode && rankI && rankII && meter && source && isolation,
-              "source screenshot finds actual mode, route, meter and policy controls");
-        if (!mode || !rankI || !rankII || !meter || !source || !isolation) continue;
+        check(mode && rankI && rankII && meter,
+              "circuit screenshot finds actual instrument, route and meter readouts");
+        check(findControl(editor, "source_performance") == nullptr
+                  && findControl(editor, "parity_mode") == nullptr
+                  && findControl(editor, "render_policy_legacy") == nullptr,
+              "circuit screenshot has no retired engine-policy controls");
+        if (!mode || !rankI || !rankII || !meter) continue;
         const auto waitFor = [&](auto ready)
         {
             const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
@@ -310,11 +313,10 @@ void captureSourcePerformanceViews(const juce::File& dir)
         };
         check(waitFor([&]
         {
-            return mode->getText().startsWith("SOURCE PERFORMANCE / NOT CALIBRATED")
-                && source->getToggleState() && !isolation->getToggleState()
+            return mode->getText() == "Circuit engine"
                 && rankI->getText().contains(headroom ? "MAIN PANEL / PANEL" : "STRING 3 / SOURCE-COMPLETE")
                 && rankII->getText().contains(headroom ? "MAIN PANEL / PANEL" : "STRING 2 / SOURCE-INFERRED");
-        }), "source screenshots show opt-in performance policy and exact complete/inferred or PANEL routes");
+        }), "circuit screenshots show the single engine and exact complete/inferred or PANEL routes");
 
         juce::AudioBuffer<float> audio(2, 256);
         juce::MidiBuffer midi;
@@ -368,10 +370,12 @@ void captureSourcePerformanceViews(const juce::File& dir)
             editor.showAdvancedPanel(true);
             editor.showAdvancedPage(3);
             flushGui(100);
-            check(source->isShowing() && isolation->isShowing()
-                      && source->getToggleState() && !isolation->getToggleState()
-                      && !source->getBounds().intersects(isolation->getBounds()),
-                  "source About screenshot visibly distinguishes enabled source performance from isolation");
+            check(findControl(editor, "source_performance") == nullptr
+                      && findControl(editor, "parity_mode") == nullptr
+                      && findControl(editor, "render_policy_legacy") == nullptr
+                      && host.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                      && host.getParamValue(cs80::P_parityMode) == 0.0f,
+                  "About screenshot retains the circuit instrument without policy selectors");
             saveSnapshot(editor, dir, "advanced-source-performance-about");
         }
         check(unchanged.unchanged(), "source screenshot rendering and UI refresh preserve APVTS and host gestures");
@@ -526,7 +530,7 @@ void testExternalInputHost()
         if (scenario == 2) values[cs80::P_subExtLevel] = 0.0f;
         signal.applyParameterValues(values); zero.applyParameterValues(values);
         check(renderInput(signal, {10003}, true, 1) == renderInput(zero, {10003}, true, 0),
-              "input does not leak into non-EXT, legacy, or zero-LEVEL audio");
+              "input does not leak into non-EXT, alternate SUB, or zero-LEVEL audio");
     }
     {
         Cs80AudioProcessor slow, fast;
@@ -586,11 +590,10 @@ void testExpressionPersistence(Check check)
     auto fresh = [](float pedal)
     {
         auto target = std::make_unique<Cs80AudioProcessor>();
-        // Keep the original startup fixture independent of the current showcase:
-        // frozen Legacy program 0 with the original SUB panel, then Legacy (compat).
+        // Keep this fixture independent of the current startup showcase, using
+        // program zero and the original SUB panel on the circuit engine.
         target->loadFactoryPreset(0);
         target->setParamValue(cs80::P_subOriginalMode, 1.0f);
-        target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         target->setParamValue(cs80::P_voiceDispersion, 0.0f);
         target->setParamValue(cs80::P_drift, 0.0f);
         target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -626,19 +629,18 @@ void testExpressionPersistence(Check check)
     guarded->setExpressionFromUI(7.0f);
     check(guarded->getExpressionValue() == 1.0f, "an over-range pedal value clamps");
 
-    // In isolation the physical UI pedal still works in both foot modes, but
-    // CC11 neither moves the shared position nor changes the audio. The PRA
-    // dry X path is circuit-conditioned and pedal-dependent: comparing two
-    // different pedal positions cannot isolate the downstream expression gain.
+    // An old isolation request must neither reset the held pedal nor suppress
+    // MIDI expression. Both the physical UI pedal and CC11 remain live in EXP
+    // and EXP-WAH; the shared position also survives a transport restart.
     for (float footMode : { 0.0f, 1.0f })
     {
-        auto isolated = fresh(0.3f);
-        auto isolatedReference = fresh(0.3f);
-        for (auto* target : { isolated.get(), isolatedReference.get() })
+        auto requested = fresh(0.3f);
+        auto pedalReference = fresh(0.3f);
+        for (auto* target : { requested.get(), pedalReference.get() })
         {
             target->setParamValue(cs80::P_footMode, footMode);
-            // Consume the UI mailbox before changing mode: the transition must
-            // restore the held physical position, not rely on a pending UI update.
+            // Consume the UI mailbox before requesting the retired mode: pedal
+            // continuity must not rely on a pending UI update.
             // Identical note-free history keeps phase RNG and numerical state paired.
             juce::AudioBuffer<float> consume(2, 512);
             consume.clear();
@@ -646,35 +648,38 @@ void testExpressionPersistence(Check check)
             target->processBlock(consume, empty);
             target->setParamValue(cs80::P_parityMode, 1.0f);
         }
-        // Only the reference receives a new mailbox update. Omitting the
-        // processor's transition reapply must no longer pass as paired silence
-        // or identically wrong expression on both instances.
-        isolatedReference->setExpressionFromUI(0.3f);
-        const double isolatedQuiet = rmsOf(*isolated), pairedQuiet = rmsOf(*isolatedReference);
-        check(isolatedQuiet > 0.0 && isolatedQuiet == pairedQuiet,
-              "EXP and EXP-WAH isolation transitions restore consumed pedal exactly like a pending UI update");
-        juce::AudioBuffer<float> isolatedBlock(2, 256);
-        juce::MidiBuffer ignoredCc;
-        ignoredCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
-        isolated->processBlock(isolatedBlock, ignoredCc);
+        pedalReference->setExpressionFromUI(0.3f);
+        const double requestedQuiet = rmsOf(*requested), pairedQuiet = rmsOf(*pedalReference);
+        check(requestedQuiet > 0.0 && requestedQuiet == pairedQuiet
+                  && !requested->getEngine().isParityMode(),
+              "retired isolation writes preserve the consumed EXP and EXP-WAH pedal on the circuit engine");
+        juce::AudioBuffer<float> requestedBlock(2, 256);
+        juce::MidiBuffer activeCc;
+        activeCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
+        requested->processBlock(requestedBlock, activeCc);
         juce::AudioBuffer<float> referenceBlock(2, 256);
         juce::MidiBuffer noCc;
-        isolatedReference->processBlock(referenceBlock, noCc);
+        pedalReference->processBlock(referenceBlock, noCc);
         float ccResidual = 0.0f;
         for (int ch = 0; ch < 2; ++ch)
             for (int sample = 0; sample < 256; ++sample)
-                ccResidual = std::max(ccResidual, std::abs(isolatedBlock.getSample(ch, sample)
+                ccResidual = std::max(ccResidual, std::abs(requestedBlock.getSample(ch, sample)
                                                           - referenceBlock.getSample(ch, sample)));
-        check(ccResidual == 0.0f, "isolated MIDI CC11 is sample-inert in EXP and EXP-WAH");
-        check(isolated->getExpressionValue() == 0.3f, "isolated CC11 cannot overwrite physical UI pedal");
+        check(ccResidual > 0.0f, "MIDI CC11 remains audible in EXP and EXP-WAH after a retired isolation write");
+        check(requested->getExpressionValue() == 1.0f
+                  && pedalReference->getExpressionValue() == 0.3f,
+              "MIDI CC11 updates the shared physical pedal position");
+        // Both restarts begin with the same controller position and identical
+        // note history. prepare() clears the differing filter/audio histories.
+        pedalReference->setExpressionFromUI(1.0f);
         for (double restartRate : { 48000.0, 96000.0 })
         {
-            isolated->prepareToPlay(restartRate, 512);
-            isolatedReference->prepareToPlay(restartRate, 512);
-            isolatedReference->setExpressionFromUI(0.3f);
-            const double restarted = rmsOf(*isolated), unchanged = rmsOf(*isolatedReference);
+            requested->prepareToPlay(restartRate, 512);
+            pedalReference->prepareToPlay(restartRate, 512);
+            pedalReference->setExpressionFromUI(1.0f);
+            const double restarted = rmsOf(*requested), unchanged = rmsOf(*pedalReference);
             check(unchanged > 0.0 && restarted == unchanged,
-                  "same-rate and changed-rate prepare restore EXP/WAH pedal without leaking ignored CC11");
+                  "same-rate and changed-rate prepare retain the MIDI-updated EXP/WAH pedal exactly");
         }
     }
 
@@ -692,7 +697,7 @@ void testExpressionPersistence(Check check)
 }
 
 // Pointer-to-pressure mapping and its delivery through the real audio callback.
-void testKeyPressureGesture(bool isolated = false)
+void testKeyPressureGesture(bool retiredIsolationRequest = false)
 {
     cs80::ui::KeyPressureGesture gesture;
     gesture.begin(60, 50.0f);
@@ -708,9 +713,12 @@ void testKeyPressureGesture(bool isolated = false)
     check(std::isfinite(gesture.drag(60, 5.0f, 0.0f)), "a zero-height keyboard cannot divide by zero");
 
     Cs80AudioProcessor host;
-    host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+    host.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
     host.setParamValue(cs80::P_voiceDispersion, 0.0f);
     host.prepareToPlay(48000.0, 256);
+    check(!host.getEngine().isParityMode()
+              && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::sourcePerformance,
+          "UI pressure fixture retains circuit rendering after either retired isolation request");
     host.serviceKeyboardUI();
     auto block = [&](const juce::MidiBuffer& events = {})
     {
@@ -756,13 +764,13 @@ void testKeyPressureGesture(bool isolated = false)
 
 // Sequential host/message-thread handoff regressions. These are behavioral tests,
 // not an allocator instrumentation or thread-sanitizer result.
-void testKeyboardHandoffHost(bool isolated)
+void testKeyboardHandoffHost(bool retiredIsolationRequest)
 {
     Cs80AudioProcessor host;
-    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
-    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    // Exercise old client requests without permitting them to change the
+    // production circuit policy or revoke keyboard ownership.
     host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
-    host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+    host.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
     juce::AudioBuffer<float> audio(2, 32);
     auto process = [&](juce::MidiBuffer& midi) { host.processBlock(audio, midi); };
     auto tick = [&] { juce::MidiBuffer midi; process(midi); };
@@ -781,7 +789,7 @@ void testKeyboardHandoffHost(bool isolated)
         host.releaseResources();
         host.prepareToPlay(48000.0, 32);
         host.serviceKeyboardUI();
-        tick(); // Apply isolation before any test strike; that transition resets voices.
+        tick(); // Publish the circuit control frame before any test strike.
     };
     auto hostNote = [&](int note, bool on, int channel = 1)
     {
@@ -945,29 +953,36 @@ void testKeyboardHandoffHost(bool isolated)
     reset();
     keyboard.noteOn(1, 66, 0.8f);
     tick();
-    check(held(66) == 1, "parity transition fixture starts with an accepted UI-held note");
-    host.setParamValue(cs80::P_parityMode, isolated ? 0.0f : 1.0f);
+    check(held(66) == 1, "retired policy fixture starts with an accepted UI-held note");
+    host.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 0.0f : 1.0f);
+    host.setParamValue(cs80::P_sourcePerformance, 0.0f);
     tick();
-    check(held(66) == 0, "parity transition resets the previously sounding UI voice");
+    check(held(66) == 1 && !host.getEngine().isParityMode()
+              && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::sourcePerformance,
+          "retired policy writes preserve the sounding UI voice and circuit render path");
+    keyboard.noteOff(1, 66, 0.0f);
+    tick();
+    check(held(66) == 0, "retired policy writes retain ownership so the accepted UI note can release");
     hostNote(66, true);
     keyboard.noteOff(1, 66, 0.0f);
     tick();
     check(held(66) == 1 && host.isHostKeyDown(66),
-          "delayed old UI off cannot kill a new host note after parity transition");
+          "delayed old UI off cannot kill a subsequent host note after a retired policy write");
 }
 
-// Isolation is host/session policy: it survives presets, but missing or malformed
-// serialized values cannot inherit an already-enabled live instance.
-void testParityIsolationHost()
+// Old isolation data stays readable at its original host address, but every
+// state/preset path canonicalizes it without discarding unrelated sound data.
+void testRetiredPolicyStateHost()
 {
     Cs80AudioProcessor host;
     auto* parameter = host.getAPVTS().getParameter("parity_mode");
     check(parameter != nullptr && host.getParameters()[243] == parameter,
-          "parity isolation appended at host index 243");
+          "retired isolation host address remains at index 243");
     check(parameter != nullptr && dynamic_cast<juce::AudioParameterBool*>(parameter) != nullptr
-              && parameter->getVersionHint() == 6 && parameter->getDefaultValue() == 0.0f,
-          "parity isolation is canonical Bool with AU hint 6 and opt-in default");
-    check(host.getParamValue(cs80::P_parityMode) == 0.0f, "fresh instance isolation is off");
+              && parameter->getVersionHint() == 6 && parameter->getDefaultValue() == 0.0f
+              && !parameter->isAutomatable(),
+          "retired isolation retains its Bool address and AU hint 6 as a fixed nonautomatable value");
+    check(host.getParamValue(cs80::P_parityMode) == 0.0f, "fresh instance has no isolation policy");
     auto restore = [&](const juce::ValueTree& tree)
     {
         const auto xml = tree.createXml();
@@ -982,25 +997,25 @@ void testParityIsolationHost()
         host.getStateInformation(saved);
         host.setParamValue(cs80::P_parityMode, 1.0f - enabled);
         host.setStateInformation(saved.getData(), (int) saved.getSize());
-        check(host.getParamValue(cs80::P_parityMode) == enabled
+        check(host.getParamValue(cs80::P_parityMode) == 0.0f
                   && std::abs(host.getParamValue(cs80::P_macro1) - 0.87f) < 1e-6f,
-              "state round trip retains isolation and stored modern settings");
+              "state round trip canonicalizes retired policy while retaining stored modern settings");
         host.loadFactoryPreset(22);
-        check(host.getParamValue(cs80::P_parityMode) == enabled
+        check(host.getParamValue(cs80::P_parityMode) == 0.0f
                   && host.getCurrentPresetIndex() == 22,
-              "performance preset recall remains available and preserves isolation");
+              "performance preset recall remains available on the circuit engine");
         check(std::abs(host.getParamValue(cs80::P_macro1)
                        - host.getFactoryPresets()[22].values[cs80::P_macro1]) < 1e-6f,
-              "isolation does not destructively rewrite recalled modern APVTS values");
+              "retired policy writes do not destructively rewrite recalled modern APVTS values");
         auto userState = host.getAPVTS().copyState();
         userState.getChildWithProperty("id", "parity_mode").setProperty("value", 1.0f - enabled, nullptr);
         userState.getChildWithProperty("id", "macro1").setProperty("value", 0.23f, nullptr);
         juce::TemporaryFile preset(".cs80xml");
         check(userState.createXml()->writeTo(preset.getFile()), "temporary user preset written");
         host.loadUserPreset(preset.getFile());
-        check(host.getParamValue(cs80::P_parityMode) == enabled
+        check(host.getParamValue(cs80::P_parityMode) == 0.0f
                   && std::abs(host.getParamValue(cs80::P_macro1) - 0.23f) < 1e-6f,
-              "user preset recalls stored sound without changing current isolation policy");
+              "user preset recalls stored sound while discarding a retired isolation request");
     }
     const auto valid = host.getAPVTS().copyState();
     auto missing = valid.createCopy();
@@ -1095,15 +1110,19 @@ void testLiveEnvelopeTimingHost()
     constexpr int timingControls[] = { cs80::CP_vA, cs80::CP_vD, cs80::CP_vR,
                                       cs80::CP_fA, cs80::CP_fD, cs80::CP_fR };
     // Routing checks for an explicitly inferred live-target model, not hardware calibration.
-    for (bool isolated : { false, true })
+    for (bool retiredIsolationRequest : { false, true })
     for (int initialStage = 0; initialStage < 4; ++initialStage)
     {
         Cs80AudioProcessor host;
         auto panel = cs80::defaultValues();
-        panel[cs80::P_parityMode] = isolated ? 1.0f : 0.0f;
+        panel[cs80::P_parityMode] = retiredIsolationRequest ? 1.0f : 0.0f;
         panel[cs80::P_masterSustain] = 0.0f;
         panel[cs80::P_keyRelease] = 0.0f;
         panel[cs80::P_sustainMode] = 0.0f;
+        // The independent primitive oracle uses nominal timings. Component
+        // variation is separately covered; a production circuit no longer
+        // obtains nominal values by entering the retired isolation mode.
+        panel[cs80::P_voiceDispersion] = 0.0f;
         for (int macro = cs80::P_macro1; macro <= cs80::P_macro4; ++macro)
             panel[macro] = 0.5f;
         for (int rank = 0; rank < 2; ++rank)
@@ -1122,7 +1141,7 @@ void testLiveEnvelopeTimingHost()
             panel[cs80::chParam(rank, cs80::CP_fAl)] = 0.8f;
         }
         host.applyParameterValues(panel);
-        host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        host.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
         // ws2 1.6: the circuit engine defaults to Standard; this fixture's
         // primitive history ticks at the 2x rate, so pin Eco (a session setting).
         host.setParamValue(cs80::P_oversampling, 0.0f);
@@ -1145,8 +1164,9 @@ void testLiveEnvelopeTimingHost()
         juce::AudioBuffer<float> empty(2, 0);
         juce::MidiBuffer midi;
         host.processBlock(empty, midi);
-        check(host.getEngine().isParityMode() == isolated,
-              "live timing host fixture explicitly selects isolation or legacy mode");
+        check(!host.getEngine().isParityMode()
+                  && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::sourcePerformance,
+              "live timing always uses circuit rendering despite either retired isolation request");
         const auto onset = host.getEngine().getParams();
         cs80::Adsr expectedAmplitude[2];
         cs80::FilterEnv expectedFilter[2];
@@ -1189,8 +1209,8 @@ void testLiveEnvelopeTimingHost()
             for (int sample = 0; sample < frames * 2; ++sample)
                 for (int rank = 0; rank < 2; ++rank)
                 {
-                    expectedAmplitude[rank].tick(internalRate, true, isolated);
-                    expectedFilter[rank].tick(internalRate, true, isolated);
+                    expectedAmplitude[rank].tick(internalRate, true, true);
+                    expectedFilter[rank].tick(internalRate, true, true);
                 }
             compare();
         };
@@ -1254,29 +1274,26 @@ void testLiveEnvelopeTimingHost()
                       && afterAudio.lpf.ic1 == audio[rank].lpf.ic1
                       && afterAudio.lpf.ic2 == audio[rank].lpf.ic2,
                       "zero-frame source switch preserves oscillator and filter memories");
-                if (isolated)
+                if (host.getHardwareSource(rank) < 11)
                 {
-                    if (host.getHardwareSource(rank) < 11)
-                    {
-                        const int selector = host.getHardwareSource(rank);
-                        const auto source = selector == 3 ? completePairEnvelopeExpectation(rank)
-                                                          : sourceEnvelopeExpectation(rank, selector);
-                        expectedAmplitude[rank].setTimes(source.amplitudeAttack, source.amplitudeDecay,
-                                                        source.amplitudeRelease);
-                        expectedAmplitude[rank].setSustain(source.amplitudeSustain);
-                        expectedFilter[rank].setTimes(source.filterAttack, source.filterDecay, source.filterRelease);
-                        expectedFilter[rank].setLevels(source.filterInitial, source.filterTarget);
-                    }
-                    else
-                    {
-                        const auto effective = host.getEngine().getParams();
-                        auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
-                        expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
-                        expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
-                        expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
-                        expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
-                                                       cs80::filterAttackOffset(value(cs80::CP_fAl)));
-                    }
+                    const int selector = host.getHardwareSource(rank);
+                    const auto source = selector == 3 ? completePairEnvelopeExpectation(rank)
+                                                      : sourceEnvelopeExpectation(rank, selector);
+                    expectedAmplitude[rank].setTimes(source.amplitudeAttack, source.amplitudeDecay,
+                                                    source.amplitudeRelease);
+                    expectedAmplitude[rank].setSustain(source.amplitudeSustain);
+                    expectedFilter[rank].setTimes(source.filterAttack, source.filterDecay, source.filterRelease);
+                    expectedFilter[rank].setLevels(source.filterInitial, source.filterTarget);
+                }
+                else
+                {
+                    const auto effective = host.getEngine().getParams();
+                    auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
+                    expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
+                    expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
+                    expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
+                    expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
+                                                   cs80::filterAttackOffset(value(cs80::CP_fAl)));
                 }
             }
             compare();
@@ -1293,7 +1310,7 @@ void testLiveEnvelopeTimingHost()
                     const float expected = source == 13 ? host.getParamValue(index)
                         : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
                     check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
-                          "selected source preserves the legacy-effective A D R snapshot without putting source volts in Params");
+                          "selected source preserves the stored effective A D R snapshot without putting source volts in Params");
                     check(std::abs(host.getParamValue(index) - onset[index]) < 2e-5f,
                           "source selection preserves stored panel envelope timings");
                 }
@@ -1311,7 +1328,7 @@ void testLiveEnvelopeTimingHost()
                     const float expected = source == 13 ? host.getParamValue(index)
                         : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
                     check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
-                          "selected source preserves the legacy-effective S IL AL snapshot separately from source targets");
+                          "selected source preserves the stored effective S IL AL snapshot separately from source targets");
                     check(std::abs(host.getParamValue(index) - panel[index]) < 2e-5f,
                           "source selection preserves separately stored panel level targets");
                 }
@@ -1329,9 +1346,8 @@ void testLiveEnvelopeTimingHost()
                 const auto amplitude = host.getEngine().getRankEnvelopeState(0, rank).amplitude;
                 check(amplitude.stage == cs80::Adsr::Stage::Sustain,
                       "held sustain target change does not restart attack or decay");
-                check(isolated ? amplitude.value > 0.25f && amplitude.value < 0.65f
-                               : std::abs(amplitude.value - 0.25f) < 2e-5f,
-                      "isolated held sustain follows selected memory while legacy remains latched");
+                check(amplitude.value > 0.25f && amplitude.value < 0.65f,
+                      "circuit held sustain follows the selected memory continuously without retriggering");
             }
         // Memory banks 3/4 are not selected; their edits must not affect timing or targets.
         for (int bank : { 2, 3 })
@@ -1374,9 +1390,8 @@ void testLiveEnvelopeTimingHost()
         checkSourceLevels(3);
         for (int rank = 0; rank < 2; ++rank)
             check(host.getEngine().getSourceToneInfo(rank).route
-                      == (isolated ? cs80::source_factory::Route::source_complete
-                                   : cs80::source_factory::Route::legacy_bridge),
-                  "complete Flute and Brass 3 selectors reach source routing only with isolation on");
+                      == cs80::source_factory::Route::source_complete,
+                  "complete Flute and Brass 3 selectors always reach circuit source routing");
         render(16);
         // Complete -> inferred retains source ownership with new explicit targets,
         // without losing the existing attack/decay/release/sustain history.
@@ -1387,9 +1402,8 @@ void testLiveEnvelopeTimingHost()
         checkSourceLevels(2);
         for (int rank = 0; rank < 2; ++rank)
             check(host.getEngine().getSourceToneInfo(rank).route
-                      == (isolated ? cs80::source_factory::Route::source_inferred
-                                   : cs80::source_factory::Route::legacy_bridge),
-                  "previously incomplete Brass selectors use the versioned inferred source path only in isolation");
+                      == cs80::source_factory::Route::source_inferred,
+                  "Brass selectors always use the versioned inferred circuit source path");
         render(64);
         // T53/B/14 exercises the formerly excluded filter decay cell, rather
         // than testing only inferred sustain/touch controls.
@@ -1448,13 +1462,13 @@ void testSourceFactoryHost()
         if (p) p->setValueNotifyingHost(p->convertTo0to1((float) selector));
     };
     Cs80AudioProcessor routing;
-    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
-    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    // Old engine requests are deliberately exercised: they must leave every
+    // production selector on its circuit source route.
     routing.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     routing.prepareToPlay(48000.0, 64);
-    for (bool isolated : { false, true })
+    for (bool retiredIsolationRequest : { false, true })
     {
-        routing.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        routing.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
         int sourceCount = 0, inferredCount = 0, bridgeCount = 0;
         int knownCells = 0, unknownCells = 0, inferredCells = 0;
         for (int rank = 0; rank < 2; ++rank)
@@ -1466,7 +1480,6 @@ void testSourceFactoryHost()
                 apply(routing);
                 const auto info = routing.getEngine().getSourceToneInfo(rank);
                 const auto expected = selector >= 11 ? sf::Route::panel_or_memory
-                    : !isolated ? sf::Route::legacy_bridge
                     : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
                 check(info.selector == selector && info.route == expected,
                       "real host automation delivers the canonical rank-local selector and route");
@@ -1503,11 +1516,9 @@ void testSourceFactoryHost()
                 if (info.route == sf::Route::legacy_bridge) ++bridgeCount;
             }
         }
-        check(sourceCount == (isolated ? 7 : 0) && inferredCount == (isolated ? 15 : 0)
-                  && bridgeCount == (isolated ? 0 : 22),
-              "host enables seven complete plus fifteen inferred sources, retaining legacy bridges only when isolation is off");
-        check(knownCells == (isolated ? 547 : 0) && unknownCells == (isolated ? 25 : 0)
-                  && inferredCells == (isolated ? 25 : 0),
+        check(sourceCount == 7 && inferredCount == 15 && bridgeCount == 0,
+              "host always enables seven complete and fifteen inferred circuit sources without generic bridges");
+        check(knownCells == 547 && unknownCells == 25 && inferredCells == 25,
               "all 22 host source identities expose exactly 547 classified and 25 separately inferred original unknown cells");
     }
 
@@ -1522,6 +1533,7 @@ void testSourceFactoryHost()
         host.setParamValue(cs80::P_oversampling, 0.0f); // 2x primitive ticks below (ws2 1.6)
         host.setParamValue(cs80::P_masterSustain, 0.0f);
         host.setParamValue(cs80::P_keyRelease, 0.0f);
+        host.setParamValue(cs80::P_voiceDispersion, 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(host, rank, selector);
         host.prepareToPlay(48000.0, 64);
         cs80::Adsr amplitude[2];
@@ -1655,14 +1667,13 @@ void testSourceFactoryHost()
 
     // Full session restore, including restore over an already-active source.
     // Use T51/B and T54/E, not just selector 3, to catch fixture-order mixups.
-    for (bool isolated : { false, true })
+    for (bool retiredIsolationRequest : { false, true })
     for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{0, 1}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
     {
         Cs80AudioProcessor saved, restored;
-        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
-        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        // A saved request for an old engine cannot restore the retired path.
         saved.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
-        saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        saved.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(saved, rank, selectors[(size_t) rank]);
         saved.setParamValue(cs80::chParam(0, cs80::CP_fIl), 0.17f);
         saved.setMemoryValue(0, cs80::CP_fIl, 0.31f);
@@ -1679,17 +1690,16 @@ void testSourceFactoryHost()
         {
             const int selector = selectors[(size_t) rank];
             const auto expected = selector >= 11 ? sf::Route::panel_or_memory
-                : !isolated ? sf::Route::legacy_bridge
                     : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
             check(restored.getHardwareSource(rank) == selector
                       && restored.getEngine().getSourceToneInfo(rank).selector == selector
                       && restored.getEngine().getSourceToneInfo(rank).route == expected,
-                  "session restore reconstructs the saved rank identities and current isolation route at the real callback");
-            if (isolated && selector < 11)
+                  "session restore reconstructs the saved rank identities and circuit source routes at the real callback");
+            if (selector < 11)
                 check(restored.getEngine().getSourceToneInfo(rank).provenance.version == 2
                           && restored.getEngine().getSourceToneInfo(rank).provenance.inferredCells
                               == sourceFixtureUnknownMask(rank, selector),
-                      "existing isolated sessions rebuild model-two controls without adding a saved model parameter");
+                      "existing sessions rebuild model-two circuit controls without adding a saved model parameter");
         }
         check(std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_fIl)) - saved.getParamValue(cs80::chParam(0, cs80::CP_fIl))) < 1e-6f
                   && std::abs(restored.getMemoryValue(0, cs80::CP_fIl) - saved.getMemoryValue(0, cs80::CP_fIl)) < 1e-6f
@@ -1697,47 +1707,57 @@ void testSourceFactoryHost()
               "source session restores independent hidden PANEL and memory authorities");
     }
 
-    // Default-off must still use the exact historical setParams audio path,
-    // even for a newly available complete tone. This is not a source-to-source
-    // comparison that could share the same accidental activation bug.
+    // A retired engine request must still render exactly the public circuit
+    // ControlFrame contract, including the source identities. A plain Params
+    // snapshot would accidentally omit the matrix targets this oracle checks.
     for (int selector = 0; selector < 11; ++selector)
     {
-        Cs80AudioProcessor legacy;
-        legacy.setEngineMode(Cs80AudioProcessor::EngineMode::legacy); // plan 1.7: the fresh default is Circuit
-        legacy.selectHardwareSource(0, selector);
-        legacy.selectHardwareSource(1, selector);
-        legacy.prepareToPlay(48000.0, 64);
-        cs80::ParamValues effective;
-        for (int index = 0; index < cs80::P_numParams; ++index) effective[index] = legacy.getParamValue(index);
-        const auto stored = effective;
+        Cs80AudioProcessor host;
+        host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+        host.selectHardwareSource(0, selector);
+        host.selectHardwareSource(1, selector);
+        host.prepareToPlay(48000.0, 64);
+        cs80::ControlFrame frame;
+        for (int index = 0; index < cs80::P_numParams; ++index)
+            frame.effectiveValues[index] = host.getParamValue(index);
+        const auto stored = frame.effectiveValues;
         for (int rank = 0; rank < 2; ++rank)
         {
+            frame.hardwareSources[(size_t) rank] = selector;
             cs80::ParamValues factory;
             cs80::applyHardwareTone(factory, rank, selector);
             for (int control = 0; control < cs80::CP_count; ++control)
-                if (Cs80AudioProcessor::isMemoryControl(control)) effective[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
+                if (Cs80AudioProcessor::isMemoryControl(control))
+                    frame.effectiveValues[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
         }
-        cs80::Engine historical;
-        // Match the pre-render resource lifecycle too: the processor was prepared
-        // with its stored panel before applying its selected effective snapshot.
-        historical.setParams(stored);
-        historical.prepare(48000.0);
-        historical.setParams(effective);
-        historical.noteOn(60, 100.0f / 127.0f);
+        cs80::Engine circuitReference;
+        // Match the processor's pre-render resource lifecycle before publishing
+        // the selected circuit source frame.
+        circuitReference.setParams(stored);
+        circuitReference.prepare(48000.0);
+        circuitReference.setControlFrame(frame);
+        circuitReference.noteOn(60, 100.0f / 127.0f);
         bool identical = true;
+        double energy = 0.0;
         for (int block = 0; block < 8; ++block)
         {
             juce::AudioBuffer<float> audio(2, 64);
             juce::MidiBuffer midi;
             if (block == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
-            legacy.processBlock(audio, midi);
+            host.processBlock(audio, midi);
             float expected[128] {};
-            historical.render(expected, 64);
+            circuitReference.render(expected, 64);
             for (int sample = 0; sample < 64; ++sample)
                 for (int channel = 0; channel < 2; ++channel)
-                    identical = identical && audio.getSample(channel, sample) == expected[sample * 2 + channel];
+                {
+                    const float value = audio.getSample(channel, sample);
+                    identical = identical && std::isfinite(value) && value == expected[sample * 2 + channel];
+                    energy += (double) value * value;
+                }
         }
-        check(identical && !legacy.getEngine().isParityMode(), "all 22 default-off source selectors retain bit-identical historical host audio");
+        check(identical && energy > 0.0 && !host.getEngine().isParityMode()
+                  && host.getEngine().getRenderPolicy() == cs80::RenderPolicy::sourcePerformance,
+              "all 22 hardware source selectors retain exact circuit host audio after a retired engine request");
     }
 }
 
@@ -1797,8 +1817,8 @@ void testPerformanceControlsHost()
     restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
     bool neutral = true;
     for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
-        // Plan 1.7 (ws2): ENGINE is saved (Circuit for a fresh instance), not one
-        // of the removed controls, so it restores its saved value.
+        // The circuit address is fixed at one, independent of missing older
+        // controls. The remaining appended controls retain neutral defaults.
         neutral = neutral && (i == cs80::P_sourcePerformance
                                   ? restored.getParamValue(i) == host.getParamValue(i)
                                   : restored.getParamValue(i) == cs80::paramDef(i).def);
@@ -1811,12 +1831,14 @@ void testPerformanceControlsHost()
     check(host.getParamValue(cs80::P_footswitchPlugged) == 1.0f && host.getParamValue(cs80::P_footswitchPressed) == 1.0f
               && host.getParamValue(cs80::P_footMode) == 1.0f && host.getParamValue(cs80::P_outputLevel) == 0.0f,
           "factory preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
-    check(host.getParamValue(cs80::P_kbdLevelHigh) == 0.0f && host.getParamValue(cs80::P_sustainAssign) == 0.0f
-              && host.getParamValue(cs80::P_glideAssign) == 0.0f,
-          "factory preset recall does reset the contour levers and assigners with the patch");
+    const auto& recalled = host.getFactoryPresets()[5].values;
+    check(host.getParamValue(cs80::P_kbdLevelHigh) == recalled[cs80::P_kbdLevelHigh]
+              && host.getParamValue(cs80::P_sustainAssign) == recalled[cs80::P_sustainAssign]
+              && host.getParamValue(cs80::P_glideAssign) == recalled[cs80::P_glideAssign],
+          "factory preset recall restores its authored contour levers and assigners with the patch");
 
     // Unlike factory programs, user presets restore all ten performance controls,
-    // including wiring. Only parity isolation remains a live session policy.
+    // including wiring. Retired engine-policy data always canonicalizes.
     // Use the same serialized state for both paths and oppose every live value,
     // so neither a no-op nor preserving factory-only wiring can pass this test.
     for (float liveParity : { 0.0f, 1.0f })
@@ -1848,16 +1870,16 @@ void testPerformanceControlsHost()
         for (int i = 0; i < 10; ++i)
             check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
                   (juce::String("user preset restores performance control: ") + ids[i]).toRawUTF8());
-        check(presetHost.getParamValue(cs80::P_parityMode) == liveParity,
-              "user performance preset preserves live isolation policy in both directions");
+        check(presetHost.getParamValue(cs80::P_parityMode) == 0.0f,
+              "user performance presets cannot restore a retired isolation request");
 
         setOpposingLiveValues();
         presetHost.setStateInformation(presetState.getData(), (int) presetState.getSize());
         for (int i = 0; i < 10; ++i)
             check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
                   (juce::String("full session restores performance control: ") + ids[i]).toRawUTF8());
-        check(presetHost.getParamValue(cs80::P_parityMode) == storedParity,
-              "full session restores saved isolation policy in both directions");
+        check(presetHost.getParamValue(cs80::P_parityMode) == 0.0f,
+              "full sessions cannot restore a retired isolation request");
     }
 
     // The real audio callback: automation reaches the core, and the paths are audible.
@@ -1894,8 +1916,6 @@ void testPerformanceControlsHost()
         Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
         for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
         {
-            // Plan 1.7 (ws2): the scalar -20 dB LOW trim is the legacy output law.
-            target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
             target->setParamValue(cs80::P_voiceDispersion, 0.0f);
             target->setParamValue(cs80::P_drift, 0.0f);
             target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -1904,7 +1924,19 @@ void testPerformanceControlsHost()
         wah.setParamValue(cs80::P_footMode, 1.0f);
         const double base = render(reference, -1.0f);
         check(base > 1e-4, "host render fixture is audible");
-        check(std::abs(render(trimmed, -1.0f) / base - 0.1) < 0.002, "host output LOW is the -20 dB trim");
+        const double lowLevel = render(trimmed, -1.0f);
+        cs80::OutputTapCircuit highTap, lowTap;
+        const auto internalRate = reference.getEngine().getInternalSampleRate();
+        check(highTap.prepare(internalRate, cs80::OutputTapCircuit::Profile{}, cs80::OutputTapCircuit::Mode::high)
+                  && lowTap.prepare(internalRate, cs80::OutputTapCircuit::Profile{}, cs80::OutputTapCircuit::Mode::low),
+              "output tap reference accepts the circuit's internal sample rate");
+        const double expectedRatio = lowTap.selectedCoefficients().jackGain / highTap.selectedCoefficients().jackGain;
+        // At these musical frequencies the coupling capacitor's remaining
+        // effect is under 0.002. The ratio is derived from the loaded resistor
+        // network; it is not the retired engine's constant -20 dB multiplier.
+        check(std::abs(lowLevel / base - expectedRatio) < 0.002
+                  && trimmed.getEngine().getOutputTapState(0).mode == cs80::OutputTapCircuit::Mode::low,
+              "host output LOW follows the circuit's loaded output-tap network");
         const double wahLevel = render(wah, 0.1f);
         check(wahLevel > 1e-5 && std::abs(wahLevel - render(pedalDown, 0.1f)) > 1e-5,
               "host EXP-WAH changes the audible result");
@@ -1921,18 +1953,23 @@ void testPerformanceControlsHost()
     }
 }
 
-// Existing host controls must keep their event-time meaning as the isolation
-// PRA circuit replaces the legacy SVF. These compare complete audio streams;
-// they do not assume EXP is transparent or claim measured pedal calibration.
-void testIsolatedFootControllerHost()
+// Foot controllers keep their event-time meaning on the production PRA
+// circuit. Compare complete audio streams without assuming EXP is transparent
+// or claiming measured pedal calibration.
+void testCircuitFootControllerHost()
 {
     for (double rate : { 44100.0, 48000.0, 96000.0 })
     {
-        auto renderScript = [&](const std::vector<int>& partitions, bool automateFoot, bool ignoredCc)
+        auto renderScript = [&](const std::vector<int>& partitions, bool automateFoot, bool midiPedal)
         {
             Cs80AudioProcessor target;
             target.setParamValue(cs80::P_parityMode, 1.0f);
             target.setParamValue(cs80::P_chorusOn, 0.0f);
+            target.setParamValue(cs80::P_voiceDispersion, 0.0f);
+            target.setParamValue(cs80::P_drift, 0.0f);
+            target.setParamValue(cs80::P_analogNoise, 0.0f);
+            for (int rank = 0; rank < 2; ++rank)
+                target.setParamValue(cs80::chParam(rank, cs80::CP_pan), 0.0f);
             target.prepareToPlay(rate, 512);
             // ws1 merge: the circuit engine also reports its oscillator's 8
             // internal samples (8/N host samples at factor N).
@@ -1973,10 +2010,12 @@ void testIsolatedFootControllerHost()
                             midi.addEvent(juce::MidiMessage::noteOff(1, 45), 0);
                             midi.addEvent(juce::MidiMessage::noteOff(1, 52), 0);
                         }
-                        if (ignoredCc)
-                            midi.addEvent(juce::MidiMessage::controllerEvent(1, 11, (segment & 1) ? 0 : 127),
-                                          std::min(17, count - 1));
                     }
+                    // Schedule at the same absolute sample under every block
+                    // partition, including a one-frame initial callback.
+                    if (midiPedal && offset <= 17 && offset + count > 17)
+                        midi.addEvent(juce::MidiMessage::controllerEvent(1, 11, (segment & 1) ? 0 : 127),
+                                      17 - offset);
                     target.processBlock(buffer, midi);
                     for (int sample = 0; sample < count; ++sample)
                     {
@@ -1991,19 +2030,22 @@ void testIsolatedFootControllerHost()
                 }
                 check(target.getEngine().getParams()[cs80::P_footMode] == mode,
                       "host foot-mode automation reaches Engine during held notes and release");
-                check(target.getExpressionValue() == pedals[segment],
-                      "physical pedal wins over ignored isolated CC11 and nonfinite UI input");
+                const float expectedPedal = midiPedal ? ((segment & 1) ? 0.0f : 1.0f) : pedals[segment];
+                check(target.getExpressionValue() == expectedPedal,
+                      "the last valid UI or sample-timed CC11 event owns the shared pedal position");
             }
-            check(finite && energy > 1e-8, "repeated isolated EXP/WAH and pedal reversals produce finite audible audio");
-            check(stereoIdentical, "paired isolated PRA channels remain identical with chorus disabled");
+            check(finite && energy > 1e-8, "repeated circuit EXP/WAH and pedal reversals produce finite audible audio");
+            check(stereoIdentical, "paired PRA channels remain identical with centred ranks and stereo variation disabled");
             return rendered;
         };
         const auto regular = renderScript({ 512 }, true, false);
         const auto irregular = renderScript({ 1, 31, 509, 7, 257, 97 }, true, false);
         const auto withCc = renderScript({ 127, 1, 503, 17 }, true, true);
+        const auto regularCc = renderScript({ 512 }, true, true);
         const auto dryOnly = renderScript({ 512 }, false, false);
-        check(regular == irregular, "isolated pedal/foot event timeline is sample-exact across host block partitions");
-        check(regular == withCc, "ignored CC11 does not change isolated moving-pedal/foot-switch audio");
+        check(regular == irregular, "circuit pedal/foot event timeline is sample-exact across host block partitions");
+        check(withCc == regularCc, "active CC11 event timeline is sample-exact across host block partitions");
+        check(regular != withCc, "CC11 audibly changes the circuit moving-pedal/foot-switch audio");
         check(regular != dryOnly, "host EXP-WAH automation audibly differs from the same pedal timeline in EXP");
     }
 }
@@ -2017,6 +2059,40 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--circuit-policy-tests") == 0)
+    {
+        if (argc != 2)
+        {
+            std::fprintf(stderr, "Usage: CS80Snapshots --circuit-policy-tests\n");
+            return 64;
+        }
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testCircuitPolicyHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Circuit policy host tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--circuit-source-host-tests") == 0)
+    {
+        if (argc != 2)
+        {
+            std::fprintf(stderr, "Usage: CS80Snapshots --circuit-source-host-tests\n");
+            return 64;
+        }
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        testRetiredPolicyStateHost();
+        testPerformanceControlsHost();
+        testCircuitFootControllerHost();
+        testExpressionPersistence(check);
+        testKeyPressureGesture();
+        testKeyPressureGesture(true);
+        testKeyboardHandoffHost(false);
+        testKeyboardHandoffHost(true);
+        testLiveEnvelopeTimingHost();
+        testSourceFactoryHost();
+        std::printf("Circuit source/controller host tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--expression-persistence-tests") == 0)
     {
         if (argc != 2)
@@ -2443,6 +2519,7 @@ int main(int argc, char** argv)
     cs80::tests::testTypedValueUnits(check);
     phases.begin("source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    cs80::tests::testCircuitPolicyHost(check);
     phases.begin("ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
     cs80::tests::testKeyboardTuningUiState(check);
@@ -2471,10 +2548,10 @@ int main(int argc, char** argv)
 
     phases.begin("external input host");
     testExternalInputHost();
-    phases.begin("performance and isolation host");
+    phases.begin("circuit performance and retired policy host");
     testPerformanceControlsHost();
-    testIsolatedFootControllerHost();
-    testParityIsolationHost();
+    testCircuitFootControllerHost();
+    testRetiredPolicyStateHost();
     phases.begin("keyboard and expression host");
     testKeyPressureGesture();
     testKeyPressureGesture(true);
@@ -2541,8 +2618,9 @@ int main(int argc, char** argv)
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
                 || index == cs80::P_oversampling || index == cs80::P_outputJack
                 || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
-            const float expected = discrete
-                ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
+            const float expected = index == cs80::P_sourcePerformance ? 1.0f
+                : index == cs80::P_parityMode ? 0.0f
+                : discrete ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
                   "physical parameter round trips host skew");
         }
@@ -2957,7 +3035,8 @@ int main(int argc, char** argv)
             {
                 for (float hostValue : {0.0f, 0.170992f, 0.4999f, 0.5f, 0.829008f, 0.84027f, 1.0f})
                 {
-                    const float expected = hostValue >= 0.5f ? 1.0f : 0.0f;
+                    const float expected = id == "source_performance" ? 1.0f
+                        : id == "parity_mode" ? 0.0f : hostValue >= 0.5f ? 1.0f : 0.0f;
                     mode->setValueNotifyingHost(expected);
                     juce::MemoryBlock savedMode;
                     modeHost.getStateInformation(savedMode);
@@ -2972,7 +3051,7 @@ int main(int argc, char** argv)
                     mode->setValueNotifyingHost(hostValue);
                     check(mode->getValue() == expected
                               && raw->load() == expected,
-                          "fractional normalized Bool automation retains the existing half-range threshold");
+                          "fractional Bool writes retain the half-range threshold or the fixed retired policy value");
                     modeHost.getStateInformation(savedMode);
                     for (float changed : {expected == 1.0f ? 0.7f : 0.3f, 1.0f - expected})
                     {
@@ -2994,19 +3073,15 @@ int main(int argc, char** argv)
         Cs80AudioProcessor migration;
         check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "new processor starts in original SUB mode");
-        // ws6-library: the 222 shipped programs (Legacy Library, host 0..221)
-        // keep legacy SUB; the curated circuit-engine library appended at 222+
-        // intentionally uses the original six-function SUB.
+        // Every existing factory address now uses the original six-function
+        // SUB and the same circuit engine; no hidden old-bank policy remains.
         for (int program = 0; program < migration.getNumPrograms(); ++program)
         {
             migration.setCurrentProgram(program);
-            if (program < cs80::legacyProgramCount)
-                check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-                      "every shipped factory program explicitly retains legacy SUB behavior");
-            else
-                check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f
-                          && migration.getParamValue(cs80::P_sourcePerformance) == 1.0f,
-                      "curated library programs select the original SUB on the circuit engine");
+            check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                      && migration.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                      && migration.getParamValue(cs80::P_parityMode) == 0.0f,
+                  "every factory program selects the original SUB on the circuit engine");
         }
         migration.prepareToPlay(48000.0, 64);
         migration.setParamValue(cs80::P_subOriginalMode, 1.0f);
@@ -3502,27 +3577,18 @@ int main(int argc, char** argv)
     editor.setVisible(true);
     editor.showAdvancedPanel(true);
     editor.showAdvancedPage(3);
-    if (auto* parity = dynamic_cast<juce::Button*>(findControl(editor, "parity_mode")))
-    {
-        check(parity->getButtonText() == "PARITY ISOLATION", "isolation toggle is clearly labelled");
-        check(parity->getTooltip().contains("not calibrated")
-                  && parity->getTooltip().contains("No hardware match"),
-              "isolation toggle discloses uncalibrated status");
-        auto* parameter = processor.getAPVTS().getParameter("parity_mode");
-        parameter->setValueNotifyingHost(1.0f);
-        flushGui(30);
-        check(parity->getToggleState(), "host automation updates isolation toggle");
-        GestureProbe probe;
-        parameter->addListener(&probe);
-        parity->triggerClick();
-        flushGui(30);
-        parameter->removeListener(&probe);
-        check(processor.getParamValue(cs80::P_parityMode) == 0.0f
-                  && probe.begins == 1 && probe.ends == 1 && probe.unbracketedChanges == 0,
-              "isolation toggle updates host with balanced gesture");
-        processor.setParamValue(cs80::P_parityMode, 0.0f);
-    }
-    else check(false, "Advanced About isolation toggle exists");
+    for (const auto* id : { "parity_mode", "source_performance", "render_policy_legacy",
+                             "toolbar_engine_circuit", "toolbar_engine_legacy", "toolbar_pure_cs80" })
+        check(findControl(editor, id) == nullptr, "editor removes the retired engine and isolation selectors");
+    processor.getAPVTS().getParameter("parity_mode")->setValueNotifyingHost(1.0f);
+    processor.getAPVTS().getParameter("source_performance")->setValueNotifyingHost(0.0f);
+    flushGui(150);
+    check(processor.getParamValue(cs80::P_parityMode) == 0.0f
+              && processor.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+          "old host policy writes remain inert with the editor and About page open");
+    if (auto* status = dynamic_cast<juce::Label*>(findControl(editor, "performance_mode_status")))
+        check(status->getText() == "Circuit engine", "editor reports one circuit instrument after retired host writes");
+    else check(false, "circuit instrument status exists");
     editor.showAdvancedPanel(false);
     if (auto* atSlider=dynamic_cast<juce::Slider*>(findControl(editor,"sub_at_vcf")))
     {
@@ -3636,32 +3702,34 @@ int main(int argc, char** argv)
     };
     processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
     check(waitForGui([&] { return hasSubControls(false)
-        && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
-          "main SUB controls bind legacy parameters and report legacy status through editor timer");
+        && subStatusIs("SUB: EXTENDED FUNCTIONS"); }),
+          "main SUB binds the selected extended waveform set through the editor timer");
     processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
     processor.setParamValue(cs80::P_parityMode, 1.0f);
-    check(waitForGui([&] { return hasSubControls(true)
-        && subStatusIs("SUB: ORIGINAL / PARITY ISOLATION"); }),
-          "isolated main SUB binds original function and speed despite stored legacy preference");
-    check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-          "effective original SUB UI does not overwrite stored legacy mode");
-    if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))
+    check(waitForGui([&] { return hasSubControls(false)
+        && subStatusIs("SUB: EXTENDED FUNCTIONS"); }),
+          "retired isolation request cannot override the selected SUB waveform set");
+    check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f
+              && processor.getParamValue(cs80::P_parityMode) == 0.0f,
+          "retired isolation write preserves the selected SUB and fixed circuit policy");
+    if (auto* knob = findParameterControl(editor, cs80::P_subWave))
     {
-        const float legacyBefore = processor.getParamValue(cs80::P_subWave);
+        const float originalBefore = processor.getParamValue(cs80::P_subOriginalFunction);
+        const float extendedBefore = processor.getParamValue(cs80::P_subWave);
         knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
-        check(processor.getParamValue(cs80::P_subOriginalFunction) == 1.0f
-                  && processor.getParamValue(cs80::P_subWave) == legacyBefore,
-              "isolated main SUB edits the effective original function only");
+        check(processor.getParamValue(cs80::P_subWave) > extendedBefore
+                  && processor.getParamValue(cs80::P_subOriginalFunction) == originalBefore,
+              "main SUB continues editing the selected waveform parameter after a retired policy write");
     }
+    else check(false, "extended SUB waveform control exists");
     if (auto* storedMode = dynamic_cast<juce::Button*>(findControl(editor, "sub_original_mode")))
-        check(storedMode->getButtonText() == "STORED ORIGINAL MODE"
-                  && storedMode->getTooltip().contains("forces original"),
-              "Advanced SUB labels the stored preference and isolation override");
-    else check(false, "Advanced SUB stored preference toggle exists");
+        check(storedMode->getButtonText() == "ORIGINAL WAVEFORMS" && !storedMode->getToggleState(),
+              "Advanced SUB labels the waveform choice and reflects its stored value");
+    else check(false, "Advanced SUB waveform selector exists");
     processor.setParamValue(cs80::P_parityMode, 0.0f);
     check(waitForGui([&] { return hasSubControls(false)
-        && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
-          "leaving isolation restores main SUB legacy bindings without overwriting stored mode");
+        && subStatusIs("SUB: EXTENDED FUNCTIONS"); }),
+          "both retired isolation request values leave SUB bindings unchanged");
     processor.setParamValue(cs80::P_subWave, 0.0f);
     processor.setParamValue(cs80::P_subOriginalFunction, 4.0f);
     if (auto* knob = findParameterControl(editor, cs80::P_subWave))
@@ -3733,7 +3801,7 @@ int main(int argc, char** argv)
                   && heldProbe.malformedGestures == 0,
               "releasing deferred function drag balances original host gesture");
         check(waitForGui([&] { return hasSubControls(false)
-            && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
+            && subStatusIs("SUB: EXTENDED FUNCTIONS"); }),
               "timer completes deferred mode rebind only after drag release");
         check(knob->getParameterIndex() == cs80::P_subWave
                   && heldProbe.begins == 1 && heldProbe.ends == 1
@@ -3786,9 +3854,6 @@ int main(int argc, char** argv)
 
     validateKeyboardControls(editor);
     check(countHardwareSliders(editor) >= 40, "main instrument uses hardware slider banks");
-    processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
-    check(waitForGui([&] { return hasSubControls(false); }), "legacy screenshot controls ready");
-    save("main-legacy-1600x1000");
     processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
     processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
     check(waitForGui([&] { return hasSubControls(true)

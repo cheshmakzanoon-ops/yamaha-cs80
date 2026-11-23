@@ -36,6 +36,7 @@ int main(int argc,char**argv) {
     juce::TemporaryFile fixture("-voice-inspection");
     for(bool circuit:{false,true}) for(bool sixteen:{false,true}) {
         Cs80AudioProcessor p(fixture.getFile());p.setEngineMode(circuit?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
+        check(p.getParamValue(cs80::P_sourcePerformance)==1 && p.getParamValue(cs80::P_parityMode)==0,"both historical engine requests use circuit inspection");
         p.setParamValue(cs80::P_voiceMode,sixteen?1:0);p.prepareToPlay(48000,128);
         juce::MidiBuffer m;for(int i=0;i<(sixteen?16:8);++i)m.addEvent(juce::MidiMessage::noteOn(1,48+i,.7f),0);
         p.requestVoiceInspection(0,0,true);process(p,128,m);
@@ -49,8 +50,16 @@ int main(int argc,char**argv) {
         Cs80AudioProcessor p(fixture.getFile());p.setParamValue(cs80::P_voiceMode,1);p.prepareToPlay(48000,128);
         p.requestVoiceInspection(8,1,true);juce::MidiBuffer m;for(int i=0;i<9;++i)m.addEvent(juce::MidiMessage::noteOn(1,48+i,.7f),0);
         process(p,128,m);snapshot(p,8,1,true);
-        p.setParamValue(cs80::P_parityMode,1);m.clear();process(p,32,m);check(p.getVoiceInspection().capacity==8 && !p.getVoiceInspection().available,"PURE hides extension");
-        p.setParamValue(cs80::P_parityMode,0);process(p,32,m);check(p.getVoiceInspection().capacity==16,"stored sixteen restored after PURE");
+        m.clear();
+        for(int parameter:{cs80::P_sourcePerformance,cs80::P_parityMode})for(float value:{0.0f,1.0f}){
+            const auto before=p.getVoiceInspection();p.setParamValue(parameter,value);process(p,32,m);
+            const auto after=p.getVoiceInspection();
+            check(p.getParamValue(cs80::P_sourcePerformance)==1 && p.getParamValue(cs80::P_parityMode)==0
+                && after.capacity==16 && after.available && after.active && after.held
+                && after.note==before.note && after.channel==before.channel,
+                "obsolete mode writes preserve the same held extension voice and sixteen-slot inspection");
+            snapshot(p,8,1,true);
+        }
         p.setParamValue(cs80::P_voiceMode,0);process(p,32,m);check(!p.getVoiceInspection().available,"16 to 8 invalidates extension");
         p.requestVoiceInspection(0,0,true);m.clear();m.addEvent(juce::MidiMessage::noteOn(2,77,.7f),32);process(p,32,m);
         check(p.getVoiceInspection().ready && !p.getVoiceInspection().rendered,"event at final boundary suppresses cached rank values");
@@ -58,12 +67,18 @@ int main(int argc,char**argv) {
         p.requestVoiceInspection(1,1,true);check(!p.getVoiceInspection().ready,"processor selection pending");
         p.requestVoiceInspection(0,0,true);check(!p.getVoiceInspection().ready,"processor selection ABA pending");
         process(p,32,m);snapshot(p,0,0,true);
-        p.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);process(p,0,m);check(!p.getVoiceInspection().rendered,"policy no-render suppresses cache");
+        const auto held=p.getVoiceInspection();
+        p.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);process(p,0,m);
+        check(!p.getVoiceInspection().rendered && p.getVoiceInspection().active==held.active
+            && p.getVoiceInspection().held==held.held && p.getVoiceInspection().note==held.note,
+            "zero-frame callback suppresses cached rank values without resetting the retained voice");
     }
     // Same processor state, identical stimulus; inspection is read-only.
     Cs80AudioProcessor off(fixture.getFile()),on(fixture.getFile());juce::MemoryBlock state;off.getStateInformation(state);on.setStateInformation(state.getData(),int(state.getSize()));
     off.prepareToPlay(48000,128);on.prepareToPlay(48000,128);on.requestVoiceInspection(0,0,true);
-    for(int block=0;block<24;++block){on.requestVoiceInspection(block%16,block%2,true);(void)on.getVoiceInspection();juce::AudioBuffer<float> x(2,128),y(2,128);x.clear();y.clear();juce::MidiBuffer mx,my;if(block==0){mx.addEvent(juce::MidiMessage::noteOn(1,60,.8f),0);my=mx;}if(block==12){mx.addEvent(juce::MidiMessage::noteOff(1,60),32);my=mx;}off.processBlock(x,mx);on.processBlock(y,my);for(int c=0;c<2;++c)check(std::memcmp(x.getReadPointer(c),y.getReadPointer(c),128*sizeof(float))==0,"inspection PCM neutrality");}
+    for(int block=0;block<24;++block){on.requestVoiceInspection(block%16,block%2,true);(void)on.getVoiceInspection();
+        if(block==4){on.setParamValue(cs80::P_sourcePerformance,0);on.setParamValue(cs80::P_parityMode,1);}
+        juce::AudioBuffer<float> x(2,128),y(2,128);x.clear();y.clear();juce::MidiBuffer mx,my;if(block==0){mx.addEvent(juce::MidiMessage::noteOn(1,60,.8f),0);my=mx;}if(block==12){mx.addEvent(juce::MidiMessage::noteOff(1,60),32);my=mx;}off.processBlock(x,mx);on.processBlock(y,my);for(int c=0;c<2;++c)check(std::memcmp(x.getReadPointer(c),y.getReadPointer(c),128*sizeof(float))==0,"inspection and obsolete mode writes preserve exact PCM");}
     {
         cs80::ui::ScopeDrawer drawer(on);drawer.setVisible(true);drawer.setSize(420,470);drawer.setLiveInspection(true);drawer.setInspectedSlot(0);drawer.setChannel(0);
         juce::MidiBuffer m;m.addEvent(juce::MidiMessage::noteOn(1,67,.8f),0);process(on,128,m);juce::Thread::sleep(80);juce::Timer::callPendingTimersSynchronously();

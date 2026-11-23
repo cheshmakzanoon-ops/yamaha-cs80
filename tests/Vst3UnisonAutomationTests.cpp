@@ -194,11 +194,12 @@ int main(int argc,char**argv) {
       save("pure-prior",renderSession(module,pure,preceding,256));
       if(!compat){
         const auto old=renderSession(module,legacy,curves,256),oldFlat=renderSession(module,legacy,curves,256,true);
-        check(exactAudio(old,oldFlat),"Legacy final-point flattening");save("legacy",old);save("legacy-flat",oldFlat);
+        const auto canonical=renderSession(module,p,curves,256);
+        check(exactAudio(old,canonical),"retired source state preserves canonical circuit sample-accurate curves");save("legacy",old);save("legacy-flat",oldFlat);
         // Hold ONLY the new unison-detune lane. Existing volume must still move in combined controls.
         auto unisonHeld=curves;unisonHeld[0]=constant[0];
         const auto pureAudio=renderSession(module,pure,curves,256),pureFixed=renderSession(module,pure,unisonHeld,256);
-        check(exactAudio(pureAudio,pureFixed),"PURE unison amount inert with same prior controls");save("pure",pureAudio);save("pure-unison-held",pureFixed);
+        check(exactAudio(pureAudio,canonical),"retired isolation state preserves canonical circuit sample-accurate curves");save("pure",pureAudio);save("pure-unison-held",pureFixed);
         const auto scalar=renderSession(module,p,curves,1);save("scalar",scalar);double error=0;
         for(int block:{7,64,256,1024}){
           const auto forward=renderSession(module,p,curves,block);save("block"+std::to_string(block),forward);error=std::max(error,difference(scalar,forward));

@@ -98,7 +98,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = glissandoRender(protectedP, 256);
-                check(actual == glissandoRender(protectedP, 256, true, true), "glissando Legacy/PURE preserve flattening");
+                check(actual == glissandoRender(p, 256), "glissando retired mode requests preserve canonical circuit sample-accurate audio");
                 captureGlissando(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

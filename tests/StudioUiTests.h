@@ -100,13 +100,14 @@ inline void testStudioViewsPaint(const Check& check, const Flush& flush, const j
         check(toolbar->isVisible() && ! toolbar->getBounds().isEmpty(), "toolbar is visible at both sizes");
         check(editor.getLocalBounds().contains(toolbar->getBoundsInParent()), "toolbar lies inside the editor");
         for (const char* id : { "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library", "toolbar_compare_a",
-                                "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_engine_circuit", "toolbar_engine_legacy",
-                                "toolbar_pure_cs80", "toolbar_studio", "toolbar_menu" })
+                                "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_studio", "toolbar_menu" })
         {
             auto* key = findById(*toolbar, id);
             check(key != nullptr && key->isVisible() && toolbar->getLocalBounds().contains(key->getBounds()),
                   "every toolbar key exists and lies inside the toolbar");
         }
+        for (const char* id : { "toolbar_engine_circuit", "toolbar_engine_legacy", "toolbar_pure_cs80" })
+            check(findById(*toolbar, id) == nullptr, "the toolbar has no selectable engine or isolation controls");
         save(editor, dir, "studio-main" + suffix, check);
 
         editor.showAdvancedPanel(true);
@@ -158,13 +159,15 @@ inline void testStudioViewsPaint(const Check& check, const Flush& flush, const j
         save(editor, dir, "studio-drawers-" + juce::String(size.x) + "x" + juce::String(size.y), check);
     }
     processor.getKeyboardState().noteOff(1, 60, 0.0f);
-    // PURE CS-80 hides the controllers strip, whatever the player chose; switching it off brings it back.
+    // Old saved or automated mode requests cannot override the player's drawer choice.
     processor.setParamValue(cs80::P_parityMode, 1.0f);
+    processor.setParamValue(cs80::P_sourcePerformance, 0.0f);
     flush(300);
-    check(! controllers->isVisible(), "PURE CS-80 hides the controllers strip");
-    processor.setParamValue(cs80::P_parityMode, 0.0f);
-    flush(300);
-    check(controllers->isVisible(), "leaving PURE CS-80 restores the chosen controllers strip");
+    check(controllers->isVisible() && scope->isVisible(),
+          "retired mode requests leave the chosen controller strip and voice monitor visible");
+    check(processor.getParamValue(cs80::P_parityMode) == 0.0f
+              && processor.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+          "drawer refresh keeps the one circuit instrument policy");
     actions.toggleScope();
     actions.toggleControllers();
     flush(150);
@@ -501,14 +504,14 @@ inline void testInteractionPolish(const Check& check, const Flush& flush, const 
         }
     }
 
-    // PURE CS-80 has no MIDI learn.
+    // Retired mode requests cannot disable ordinary controller assignment.
     processor.setParamValue(cs80::P_parityMode, 1.0f);
+    processor.setParamValue(cs80::P_sourcePerformance, 0.0f);
     {
-        auto pureMenu = fader->buildContextMenu();
-        const auto* learn = menuItem(pureMenu, "MIDI learn");
-        check(learn != nullptr && ! learn->isEnabled, "MIDI learn is unavailable in PURE CS-80");
+        auto menu = fader->buildContextMenu();
+        const auto* learn = menuItem(menu, "MIDI learn");
+        check(learn != nullptr && learn->isEnabled, "MIDI learn stays available after retired mode requests");
     }
-    processor.setParamValue(cs80::P_parityMode, 0.0f);
 
     // Tooltips: owner's-manual words and page, Circuit notes with the evidence class on request.
     const auto plainTip = fader->buildTooltip(false);
@@ -539,7 +542,7 @@ inline void testInteractionPolish(const Check& check, const Flush& flush, const 
     // A modern control has no owner page.
     check(cs80::ui::controlHelpText(cs80::P_lfo1Rate).contains("Not on the original instrument"), "a modern control says it is not on the original");
 
-    // The ribbon: full range from any touch point; PURE CS-80 keeps the hardware's distance law.
+    // The ribbon offers full range from any touch point; the component also retains its distance-law math.
     {
         cs80::ui::RibbonStrip ribbon;
         ribbon.setSize(800, 36);
@@ -551,7 +554,7 @@ inline void testInteractionPolish(const Check& check, const Flush& flush, const 
                   && ribbon.valueForGesture(400.0f, 400.0f + (right - 400.0f) * 0.5f) < 0.51f,
               "half the travel is half the bend");
         ribbon.fullRangeFromTouch = [] { return false; };
-        check(std::abs(ribbon.valueForGesture(400.0f, 600.0f) - 0.25f) < 1.0e-6f, "PURE CS-80 ribbon: bend proportional to distance over the strip");
+        check(std::abs(ribbon.valueForGesture(400.0f, 600.0f) - 0.25f) < 1.0e-6f, "distance-law ribbon math: bend proportional to distance over the strip");
     }
 
     // QWERTY play through the on-screen keyboard's state, octave shift and text-entry focus.
@@ -682,18 +685,24 @@ inline void testMidiLearnRoundTrip(const Check& check, const Flush& flush, const
               "the map never lives in the parameter tree (so presets cannot carry it)");
         restored.loadFactoryPreset(3);
         check(restored.getMidiLearn().count() == 1, "loading a preset keeps the session's map");
-        // PURE CS-80: no MIDI learn at all, the map is kept.
+        // Old mode values neither suppress the restored map nor prevent new assignments.
         restored.setParamValue(cs80::P_parityMode, 1.0f);
-        const float held = restoredParameter->getValue();
+        restored.setParamValue(cs80::P_sourcePerformance, 0.0f);
         sendController(restored, 74, 0);
-        check(std::abs(restoredParameter->getValue() - held) < 1.0e-6f, "PURE CS-80 does not apply learned controllers");
-        restored.getMidiLearn().armLearn(restored.hostParameterIndex(cs80::P_volume));
+        check(restoredParameter->getValue() < 1.0e-4f,
+              "learned controllers remain active after retired mode requests");
+        const int volumeHost = restored.hostParameterIndex(cs80::P_volume);
+        restored.getMidiLearn().armLearn(volumeHost);
         sendController(restored, 20, 50);
-        check(restored.getMidiLearn().parameterFor(20) < 0, "PURE CS-80 does not learn");
-        restored.getMidiLearn().cancelLearn();
-        restored.setParamValue(cs80::P_parityMode, 0.0f);
-        sendController(restored, 74, 0);
-        check(restoredParameter->getValue() < 1.0e-4f, "leaving PURE CS-80 brings the map back");
+        auto* learnedVolume = restored.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_volume));
+        check(restored.getMidiLearn().parameterFor(20) == volumeHost
+                  && restored.getMidiLearn().learningParameter() < 0
+                  && std::abs(learnedVolume->getValue() - 50.0f / 127.0f) < 1.0e-4f,
+              "new MIDI learning and its first control move remain active after retired mode requests");
+        check(restored.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                  && restored.getParamValue(cs80::P_parityMode) == 0.0f,
+              "MIDI learn cannot restore a removed engine mode");
+        restored.getMidiLearn().clearController(20);
         // A learned controller gives up its usual MIDI meaning: CC 11 normally moves the foot controller.
         sendController(restored, 11, 127);
         check(std::abs(restored.getExpressionValue() - 1.0f) < 1.0e-4f, "CC 11 drives the foot controller while unlearned");
@@ -855,30 +864,21 @@ inline void testUndoRedo(const Check& check, const Flush& flush)
     processor.setStateInformation(state.getData(), (int) state.getSize());
     flush(60);
     check(! history.canUndo(), "a state restore clears the history");
-    // A switch that sets two parameters in one action is one step (the LEGACY render-policy cell).
-    processor.setParamValue(cs80::P_sourcePerformance, 1.0f);
-    processor.setParamValue(cs80::P_parityMode, 1.0f);
-    flush(250);
+    // There is no engine chooser in Settings, and old host mode writes are not undoable sound edits.
     editor.showAdvancedPanel(true);
     editor.showAdvancedPage(3);
     flush(60);
-    if (auto* legacyCell = dynamic_cast<juce::Button*>(findById(editor, "render_policy_legacy")))
-    {
-        const int before = steps();
-        legacyCell->triggerClick();
-        flush(60);
-        check(processor.getParamValue(cs80::P_sourcePerformance) == 0.0f && processor.getParamValue(cs80::P_parityMode) == 0.0f
-                  && steps() == before + 1,
-              "an action that sets two parameters is one undo step");
-        processor.undo();
-        flush(60);
-        check(processor.getParamValue(cs80::P_sourcePerformance) == 1.0f && processor.getParamValue(cs80::P_parityMode) == 1.0f,
-              "undoing it restores both");
-        processor.setParamValue(cs80::P_parityMode, 0.0f);
-        processor.setParamValue(cs80::P_sourcePerformance, 0.0f);
-    }
-    else
-        check(false, "the LEGACY render-policy cell exists");
+    for (const char* id : { "render_policy_legacy", "source_performance", "parity_mode" })
+        check(findById(editor, id) == nullptr, "Settings has no retired render-policy controls");
+    const auto beforePolicyWrites = processor.currentValues();
+    const int beforePolicySteps = steps();
+    for (const auto index : { cs80::P_sourcePerformance, cs80::P_parityMode })
+        if (auto* parameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index)))
+            parameter->setValueNotifyingHost(index == cs80::P_sourcePerformance ? 0.0f : 1.0f);
+    flush(250);
+    check(processor.currentValues().v == beforePolicyWrites.v && steps() == beforePolicySteps
+              && ! history.canUndo() && ! history.canRedo(),
+          "obsolete host mode writes leave sound settings and undo history unchanged");
     editor.showAdvancedPanel(false);
     flush(60);
 
@@ -1039,6 +1039,9 @@ inline void testLearningTools(const Check& check, const Flush& flush, const juce
             everyRow = everyRow && text->getDescription().contains(row.subsystem)
                     && text->getDescription().contains(cs80::evidence::basisName(row.basis));
         check(everyRow, "the evidence register is readable by screen readers, row by row");
+        check(text != nullptr && text->getDescription().contains("circuit engine")
+                  && ! text->getDescription().containsIgnoreCase("legacy"),
+              "the evidence register describes one circuit engine without a retired engine column");
         editor.showAdvancedPanel(false);
         flush(30);
     }
@@ -1076,8 +1079,7 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         return;
     const auto order = tabOrder(*panel);
     const char* const toolbarIds[] = { "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library", "toolbar_compare_a",
-                                       "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_engine_circuit", "toolbar_engine_legacy",
-                                       "toolbar_pure_cs80", "toolbar_studio", "toolbar_menu" };
+                                       "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_studio", "toolbar_menu" };
     // Disabled keys (undo/redo with an empty history) are skipped by the traverser, so compare the enabled ones.
     std::vector<juce::String> expected, actual;
     for (const char* id : toolbarIds)
@@ -1380,7 +1382,7 @@ inline void testContrast(const Check& check)
     const Pair pairs[] = {
         { "toolbar key legend", juce::Colour(0xffeee6cc), keyFace },
         { "lit toolbar key legend", juce::Colour(0xff241703), litFace },
-        { "masked ENGINE legend", keyFace.interpolatedWith(juce::Colour(0xffeee6cc), 0.74f), keyFace },
+        { "muted toolbar legend", keyFace.interpolatedWith(juce::Colour(0xffeee6cc), 0.74f), keyFace },
         { "program name", juce::Colour(0xffffcf70), juce::Colour(0xff160c05) },
         { "tooltip body", ivory, tipPlate },
         { "tooltip heading", gold, tipPlate },

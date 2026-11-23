@@ -169,7 +169,10 @@ int main(int argc,char**argv)
             const auto pureAudio=renderSession(module,pure,on,out/(id+"-pure"));
             const auto pureOff=renderSession(module,pure,off,out/(id+"-pure-off"));
             check(exactAudio(zeroAudio,offAudio),"zero amount equals no route");
-            check(exactAudio(pureAudio,pureOff),"PURE configured route inert");
+            // The old isolation bit cannot disable a configured route; the
+            // independent zero-amount and no-route controls remain above.
+            check(exactAudio(pureAudio,active),"retired isolation request preserves canonical circuit configured route");
+            check(exactAudio(pureOff,offAudio),"retired isolation request preserves canonical circuit no-route control");
             const double effect=difference({active.begin()+2048,active.begin()+28672},{zeroAudio.begin()+2048,zeroAudio.begin()+28672});
             check(effect>limits["minimum_held_effect"],"configured MSEG route audible");
             std::cout<<id<<" effect="<<effect<<"\n";

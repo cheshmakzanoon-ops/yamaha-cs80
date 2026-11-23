@@ -13,12 +13,15 @@ namespace cs80::ui
 // Read the browser's preview/edit-reference values without creating a
 // processor. Only accepted preset documents may supply parameter values.
 // Missing controls retain defaults; the last matching child is authoritative,
-// including a child whose value is missing or non-finite. This is a preview
-// reader, not a replacement for the processor's full schema/policy migration.
+// including a child whose value is missing or non-finite. Retired policy slots
+// always resolve to the circuit instrument, matching processor migration. This
+// preview reader does not replace the processor's full schema migration.
 inline void readPresetFileValues(const juce::XmlElement* xml, ParamValues& values,
                                  std::vector<char>* used = nullptr)
 {
     values = {};
+    values[P_sourcePerformance] = 1.0f;
+    values[P_parityMode] = 0.0f;
     if (used != nullptr)
         used->assign((size_t) P_numParams, 0);
     if (xml == nullptr || xml->getTagName() != "CS80_PARAMS")
@@ -47,5 +50,9 @@ inline void readPresetFileValues(const juce::XmlElement* xml, ParamValues& value
         if (used != nullptr)
             (*used)[(size_t) index] = 1;
     }
+    // These host addresses remain readable for older documents; they no longer
+    // select a different sound engine or suppress performance controls.
+    values[P_sourcePerformance] = 1.0f;
+    values[P_parityMode] = 0.0f;
 }
 } // namespace cs80::ui

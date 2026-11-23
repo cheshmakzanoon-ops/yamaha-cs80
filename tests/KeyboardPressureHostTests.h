@@ -36,11 +36,12 @@ template <class Check>
 void testKeyboardScannerReleaseOwnershipHost(Check check)
 {
     juce::TemporaryFile fixture("-cs80-pressure-scanner-host");
-    for (bool pure : { false, true })
+    for (bool retiredRequest : { false, true })
     {
         Cs80AudioProcessor host(fixture.getFile());
         host.setEngineMode(Cs80AudioProcessor::EngineMode::circuit);
-        host.setParamValue(P_parityMode, pure ? 1.0f : 0.0f);
+        host.setParamValue(P_parityMode, retiredRequest ? 1.0f : 0.0f);
+        host.setParamValue(P_sourcePerformance, retiredRequest ? 0.0f : 1.0f);
         host.setParamValue(P_kasScanTiming, 1.0f);
         host.setParamValue(P_oversampling, 0.0f);
         host.setParamValue(P_arpOn, 0.0f);
@@ -64,7 +65,7 @@ void testKeyboardScannerReleaseOwnershipHost(Check check)
         };
         auto require = [&](bool condition, const char* message)
         {
-            const auto label = juce::String(pure ? "PURE scanner: " : "Source scanner: ") + message;
+            const auto label = juce::String(retiredRequest ? "Retired policy request scanner: " : "Circuit scanner: ") + message;
             check(condition, label.toRawUTF8());
         };
         auto strike = [&](int note)
@@ -99,7 +100,9 @@ void testKeyboardScannerReleaseOwnershipHost(Check check)
             host.setParamValue(P_kasScanTiming, 1.0f);
             host.requestPanicFromUI(); tick(0); host.serviceKeyboardUI();
         };
-        tick(); // Settle the selected policy before any captured UI gesture.
+        tick(); // Apply the circuit frame before any captured UI gesture.
+        require(host.getParamValue(P_sourcePerformance) == 1.0f && host.getParamValue(P_parityMode) == 0.0f,
+                "scanner always uses the circuit engine after obsolete policy writes");
         host.serviceKeyboardUI();
 
         for (int frames : { 0, 128 })
@@ -329,9 +332,14 @@ void testKeyboardPressureOwnershipHost(Check check)
     for (int frames : { 0, 32 })
     {
         Cs80AudioProcessor host(fixture.getFile());
-        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
-        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        // A stale API request cannot leave the production circuit engine.
+        // This fixture tests immediate ownership; the scanner matrix above
+        // independently covers deferred allocation and pressure rejection.
         host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+        host.setParamValue(P_kasScanTiming, 0.0f);
+        host.setParamValue(P_arpOn, 0.0f);
+        host.setParamValue(P_pressureCurve, 0.0f);
+        host.setParamValue(P_pressureThreshold, 0.0f);
         host.setParamValue(P_analogNoise, 0.0f);
         host.setParamValue(P_mpeOn, 0.0f);
         host.setParamValue(P_masterSustain, 0.0f);
@@ -381,18 +389,27 @@ void testKeyboardPressureOwnershipHost(Check check)
             check(pressure_detail::pressure(host, 60) == 0.0f, "old UI gesture cannot pressure a fresh same-pitch host voice");
         }
         for (int mode : { P_sourcePerformance, P_parityMode })
+            for (float request : { 0.0f, 1.0f })
         {
             reset();
-            const auto token = strike(60); host.setKeyPressureFromUI(token, 0.8f);
-            host.setParamValue(mode, 1.0f); hostOn(64); tick();
-            check(pressure_detail::pressure(host, 60) < 0.0f && pressure_detail::pressure(host, 64) == 0.0f,
-                  "effective mode transition discards captured old UI onset/pressure but accepts fresh host MIDI");
+            const auto token = strike(60); host.setKeyPressureFromUI(token, 0.8f); tick();
+            host.setParamValue(mode, request); hostOn(64); tick();
+            check(host.getParamValue(P_sourcePerformance) == 1.0f && host.getParamValue(P_parityMode) == 0.0f
+                      && std::abs(pressure_detail::pressure(host, 60) - 0.8f) < 1e-6f
+                      && pressure_detail::pressure(host, 64) == 0.0f,
+                  "obsolete policy writes preserve held UI pressure and accept fresh host MIDI");
             host.serviceKeyboardUI();
-            check(!host.setKeyPressureFromUI(token, 1.0f), "effective mode transition revokes the old token after acknowledgment");
+            check(host.setKeyPressureFromUI(token, 1.0f),
+                  "obsolete policy writes keep the original pressure token valid after UI service");
+            tick();
+            check(pressure_detail::pressure(host, 60) == 1.0f,
+                  "the original UI gesture still updates pressure after obsolete policy writes");
             const auto next = strike(67); host.setKeyPressureFromUI(next, 0.4f); tick();
             check(std::abs(pressure_detail::pressure(host, 67) - 0.4f) < 1e-6f,
-                  "fresh post-mode-ack UI gesture retains pressure control");
-            host.setParamValue(mode, 0.0f); tick(); host.serviceKeyboardUI();
+                  "new UI gestures keep independent pressure ownership after obsolete policy writes");
+            host.getKeyboardState().noteOff(1, 60, 0.0f); tick();
+            check(pressure_detail::pressure(host, 60) < 0.0f && pressure_detail::pressure(host, 64) == 0.0f,
+                  "original UI release still works and leaves the new host note held");
         }
 
         reset();
@@ -405,8 +422,18 @@ void testKeyboardPressureOwnershipHost(Check check)
         for (int note = 60; note < 68; ++note) strike(note);
         tick(); hostOn(60); tick(); // All eight are held: host allocation is refused.
         host.getKeyboardState().noteOff(1, 60, 0.0f); tick();
+        bool reconsideredHost = false;
+        for (int i = 0; i < 8; ++i)
+        {
+            const auto voice = host.getEngine().getVoiceInfo(i);
+            reconsideredHost |= voice.active && voice.held && voice.note == 60
+                && voice.channel == 1 && voice.velocity == 0.0f && voice.pressure == 0.0f;
+        }
+        check(reconsideredHost,
+              "UI release frees its circuit for the waiting host key without false pressure ownership");
+        midi.addEvent(juce::MidiMessage::noteOff(1, 60), 0); tick();
         check(pressure_detail::pressure(host, 60) < 0.0f,
-              "refused ninth host onset cannot revoke the accepted UI key release and strand its voice");
+              "reconsidered host key releases normally without stranding the prior UI voice");
 
         for (bool released : { false, true })
         {

@@ -105,10 +105,10 @@ int main()
     p.setParamValue(cs80::P_parityMode, 1);
     flush();
     action([&] { studio.setControllersShown(true); }, 1);
-    check(studio.areControllersShown() && !studio.controllers.isVisible(), "PURE hides but saves desired controllers");
+    check(studio.areControllersShown() && studio.controllers.isVisible(), "obsolete isolation request preserves the visible controller preference");
     p.setParamValue(cs80::P_parityMode, 0);
     action([&] { studio.sync(); }, 0);
-    check(studio.controllers.isVisible(), "leaving PURE reveals saved preference without dirty update");
+    check(studio.controllers.isVisible(), "canonical policy write preserves the visible preference without a dirty update");
 
     // Only normal accepted self-generated state is used here.
     const auto ownState = save(p);

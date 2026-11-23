@@ -110,7 +110,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = after_touchRender(protectedP, 256);
-                check(actual == after_touchRender(protectedP, 256, true, true), "after_touch Legacy/PURE preserve flattening");
+                check(actual == after_touchRender(p, 256), "after_touch retired mode requests preserve canonical circuit sample-accurate audio");
                 captureAfterTouch(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

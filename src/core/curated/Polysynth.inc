@@ -168,12 +168,13 @@ void buildPolysynth(Builder& add)
               .feg(I, 0.08f, 0.24f, 0.055f, 1.4f, 0.36f).feg(II, 0.12f, 0.29f, 0.080f, 1.1f, 0.31f)
               .eg(I, 0.035f, 1.8f, 0.84f, 0.75f).eg(II, 0.050f, 1.5f, 0.72f, 0.68f)
               .glide(0.14f).mix(0.39f).detune(4.5f).chorus(0.23f, 0.33f));
-    add("Tremolo Poly", "Polysynth", { "tremolo", "dual-rank" },
-        "A sustained saw body and softer square rank pass through moderate 5.4 Hz tremolo. The opening accent settles quickly so the held chord's rhythmic level motion stays clear.",
+    add("Tremolo Poly", "Polysynth", { "tremolo", "sub-mod", "dual-rank" },
+        "A sustained saw body and softer square rank pulse at 5.4 Hz through the original SUB's VCA route, with a little stereo tremolo color. The opening accent settles quickly so the held chord's rhythmic level motion stays clear.",
         poly().wave(II, false, true).pw(II, 0.51f).lpf(I, 2000.0f, 0.10f).lpf(II, 2800.0f, 0.12f)
               .eg(I, 0.012f, 1.1f, 0.84f, 0.48f).eg(II, 0.018f, 0.8f, 0.71f, 0.39f)
               .feg(I, 0.0f, 0.21f, 0.014f, 0.70f, 0.25f).feg(II, 0.0f, 0.28f, 0.007f, 0.45f, 0.19f)
-              .tremolo(0.37f, 5.4f).mix(0.36f).detune(2.7f));
+              .tremolo(0.37f, 5.4f).sub(subSine, 5.4f, 0.0f, 0.0f, 0.20f)
+              .mix(0.36f).detune(2.7f));
     add("Poly Sub Pulse", "Polysynth", { "sub-mod", "resonance", "dual-rank" },
         "A 4 Hz square SUB switches between two filter colors on a sustained chord. The lower saw stays present while the resonant pulse emphasizes the rhythmic brightness change.",
         poly().wave(II, false, true).pw(II, 0.61f).lpf(I, 1200.0f, 0.16f).lpf(II, 1750.0f, 0.30f)

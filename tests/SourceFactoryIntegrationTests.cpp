@@ -553,16 +553,19 @@ void uniformReceiverHandoff(double rate)
 void defaultOff()
 {
     const auto& presets = factoryPresets();
-    check(presets.size() == 222, "legacy program inventory unchanged");
+    check(presets.size() == 222, "original program addresses remain available to the diagnostic corpus");
     for (double rate : {44100., 48000., 96000.}) for (const auto& preset : presets)
     {
         Engine legacy, framed; legacy.prepare(rate); framed.prepare(rate);
-        auto p = preset.values; p[P_parityMode] = 0;
+        // Deliberately enter the archival core diagnostic route. Production
+        // factory programs now all use circuit processing; the host cannot
+        // select this source-independent reference path.
+        auto p = preset.values; p[P_parityMode] = 0; p[P_sourcePerformance] = 0;
         ControlFrame f {p, {1, 3}};
         legacy.setParams(p); framed.setControlFrame(f);
         legacy.noteOn(48, .3f); framed.noteOn(48, .3f);
         legacy.noteOn(67, .9f, 2); framed.noteOn(67, .9f, 2);
-        check(render(legacy, 257) == render(framed, 257), "all 222 off programs retain raw float path through source-aware API");
+        check(render(legacy, 257) == render(framed, 257), "all 222 diagnostic inputs retain the source-independent raw float path");
         for (int selector : {9, 11, 0, 13, 3})
         {
             if (selector < 11) { applyHardwareTone(p, 0, selector); applyHardwareTone(p, 1, selector); }

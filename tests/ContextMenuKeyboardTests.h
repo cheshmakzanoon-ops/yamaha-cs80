@@ -192,8 +192,12 @@ void testContextMenuKeyboard(Check check)
     host->getMidiLearn().cancelLearn();
     auto learn = action(knob.buildContextMenu(), "MIDI learn");
     host->setParamValue(cs80::P_parityMode, 1.0f);
+    host->setParamValue(cs80::P_sourcePerformance, 0.0f);
     if (learn) learn();
-    check(host->getMidiLearn().learningParameter() == -1, "already-open knob learn rechecks PURE at action time");
+    check(host->getMidiLearn().learningParameter() == volumeHost
+              && host->getParamValue(cs80::P_parityMode) == 0.0f
+              && host->getParamValue(cs80::P_sourcePerformance) == 1.0f,
+          "obsolete policy writes preserve an already-open knob learn action and fixed circuit state");
     host->setParamValue(cs80::P_parityMode, 0.0f);
     host->getMidiLearn().armLearn(volumeHost);
     auto cancel = action(knob.buildContextMenu(), "Cancel MIDI learn");

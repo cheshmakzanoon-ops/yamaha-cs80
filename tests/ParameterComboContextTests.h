@@ -202,8 +202,11 @@ void testParameterComboContext(Check check)
     learn = action(combo.buildContextMenu(), "MIDI learn");
     host->setParamValue(P_parityMode, 1.0f);
     if (learn) learn();
-    check(host->getMidiLearn().learningParameter() == -1 && !action(combo.buildContextMenu(), "MIDI learn"),
-          "PURE disables fresh and previously opened learn actions");
+    check(host->getMidiLearn().learningParameter() == target && host->getParamValue(P_parityMode) == 0.0f,
+          "obsolete isolation write leaves a previously opened choice learn action available");
+    host->getMidiLearn().cancelLearn();
+    learn = action(combo.buildContextMenu(), "MIDI learn");
+    check(bool(learn), "fresh choice learn remains available after obsolete policy writes");
     host->setParamValue(P_parityMode, 0.0f);
     combo.setEnabled(false); if (learn) learn();
     check(host->getMidiLearn().learningParameter() == -1, "a disabled delayed learn is inert");
@@ -354,10 +357,13 @@ void testParameterComboContext(Check check)
         check(choice.getTooltip().contains("MIDI CC 74") && choice.getTooltip().contains(p->getCurrentValueAsText()),
               "actual choice tooltip reports current mapped CC and current discrete value");
         host->setParamValue(P_parityMode, 1.0f);
-        check(choice.getTooltip().contains("inactive in PURE CS-80"), "actual choice tooltip marks retained mapping inactive in PURE");
+        host->setParamValue(P_sourcePerformance, 0.0f);
+        check(choice.getTooltip().contains("MIDI CC 74") && !choice.getTooltip().contains("inactive"),
+              "actual choice tooltip keeps its live mapping after obsolete policy writes");
         midi.clear(); midi.addEvent(juce::MidiMessage::controllerEvent(1, 74, 0), 0);
         host->processBlock(audio, midi);
-        check(p->getValue() == 1.0f, "PURE processing keeps this actual choice's learned mapping inert");
+        check(p->getValue() == 0.0f,
+              "learned actual choice still responds to incoming MIDI after obsolete policy writes");
     }
 }
 }

@@ -83,7 +83,7 @@ constexpr std::string_view requestedSourceRouteTag(int rank, int source, cs80::R
     {
         case cs80::source_factory::Route::source_complete: return "SOURCE-COMPLETE";
         case cs80::source_factory::Route::source_inferred: return "SOURCE-INFERRED";
-        case cs80::source_factory::Route::legacy_bridge: return "LEGACY STUDY";
+        case cs80::source_factory::Route::legacy_bridge: return "TONE STUDY";
         case cs80::source_factory::Route::panel_or_memory: return source == 13 ? "PANEL" : "MEMORY";
         case cs80::source_factory::Route::invalid: return "INVALID";
     }
@@ -95,7 +95,7 @@ static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 1.0f)) == "
 static_assert(requestedSourceRouteTag(1, 0, cs80::renderPolicy(0.0f, 1.0f)) == "SOURCE-INFERRED");
 static_assert(cs80::renderPolicy(1.0f, 1.0f) == cs80::RenderPolicy::isolation);
 static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(1.0f, 1.0f)) == "SOURCE-COMPLETE");
-static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 0.0f)) == "LEGACY STUDY");
+static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 0.0f)) == "TONE STUDY");
 static_assert(requestedSourceRouteTag(1, 12, cs80::RenderPolicy::sourcePerformance) == "MEMORY");
 static_assert(requestedSourceRouteTag(0, 13, cs80::RenderPolicy::legacy) == "PANEL");
 static_assert(requestedSourceRouteTag(-1, 0, cs80::RenderPolicy::isolation) == "INVALID");
@@ -998,10 +998,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                   "Touch the ribbon anywhere and slide to bend the pitch; lift off to return. Drag down on a held key for pressure. The "
                   "computer keyboard plays too: A W S E D F T G Y H U J K, with Z and X for octaves.",
                   [this, bounds] { return bounds(deck.getRibbon()).getUnion(bounds(keybed)); } },
-                { "Engine and PURE CS-80",
-                  "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps old sessions sounding as they did. PURE CS-80 switches "
-                  "off every modern addition. Neither is a calibrated match to a particular instrument.",
-                  [keys] { return keys({ "toolbar_engine_circuit", "toolbar_engine_legacy", "toolbar_pure_cs80" }); } },
                 { "Compare and undo",
                   "A and B hold two versions of a sound to compare. UNDO and REDO step through your edits (Ctrl/Cmd+Z); host automation "
                   "is never recorded, and loading a program starts a fresh history.",
@@ -1023,7 +1019,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advanced.addPage(ui::StudioTab::keyboard, std::make_unique<ui::modern_layer::KeyboardTuningPage>(processor), "TUNING + VOICES");
         advanced.addPage(ui::StudioTab::keyboard, std::make_unique<ui::modern_layer::KeyboardModulationPage>(processor), "CURVES");
         advanced.addPage(ui::StudioTab::fx, std::make_unique<ui::modern_layer::ModernFxPage>(processor), "MODERN FX");
-        deck.getRibbon().fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
+        deck.getRibbon().fullRangeFromTouch = [] { return true; };
         // [ws8-studio] end
     }
 
@@ -1134,7 +1130,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
         voiceStatusLabel.setComponentID("voice_status");
         voiceStatusLabel.setTitle("Active voices");
-        voiceStatusLabel.setTooltip("Number of active voice slots, including release tails. Sixteen-voice mode shows both instruments; PURE CS-80 uses eight. The toolbar adds an extension row only after audio applies that mode.");
+        voiceStatusLabel.setTooltip("Number of active voice slots, including release tails. Sixteen-voice mode shows both instruments. The toolbar adds an extension row only after audio applies that mode.");
         midiStatusLabel.setComponentID("midi_status");
         midiStatusLabel.setTitle("MIDI input activity");
         midiStatusLabel.setTooltip("Lights while notes arrive from the host or a MIDI controller.");
@@ -1188,7 +1184,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         browseButton.setTooltip("Open the preset library: browse, search and load programs.");
         saveButton.setTooltip("Opens the library to save the current sound under a name.");
         initButton.setTooltip("Loads Init Patch and discards unsaved edits (press twice when the program is edited).");
-        advancedButton.setTooltip("Advanced pages: engine mode, effects, routing, tuning and the other software-only settings.");
+        advancedButton.setTooltip("Studio pages: effects, routing, tuning and performance settings.");
         browseButton.onClick = [this]
         {
             showBrowser(true, true);
@@ -1576,20 +1572,19 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         auto* subFunction = centreRow.getSubFunction();
         auto* subSpeed = centreRow.getSubSpeed();
         if (subFunction == nullptr || subSpeed == nullptr) return;
-        const bool isolated = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
-        const bool original = isolated || processor.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+        const bool original = processor.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
         const bool functionReady = subFunction->bindParameter(original ? (int) cs80::P_subOriginalFunction : (int) cs80::P_subWave);
         const bool speedReady = subSpeed->bindParameter(original ? (int) cs80::P_subOriginalSpeed : (int) cs80::P_subSpeed);
         juce::String status;
         if (!functionReady || !speedReady)
             status = "SUB MODE CHANGED / RELEASE CONTROL";
         else if (!original)
-            status = "SUB: LEGACY / ORIGINAL IN ADVANCED";
+            status = "SUB: EXTENDED FUNCTIONS";
         else if (std::lround(processor.getParamValue(cs80::P_subOriginalFunction)) == 5)
             status = processor.isExternalInputEnabled()
                 ? "SUB: EXT BUS ENABLED" : "SUB: EXT BUS DISABLED / SILENT";
         else
-            status = isolated ? "SUB: ORIGINAL / PARITY ISOLATION" : "SUB: ORIGINAL FUNCTIONS";
+            status = "SUB: ORIGINAL FUNCTIONS";
         // Printed ends of the six-position FUNCTION fader follow the function set it is bound to.
         {
             auto& props = subFunction->getSlider().getProperties();
@@ -1604,42 +1599,26 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (subModeLabel.getText() != status)
             subModeLabel.setText(status, juce::dontSendNotification);
         // Players read a short tag; the full engineering status stays in the text and tooltip.
-        // The strip is quiet in the ordinary case: plain ORIGINAL / CLASSIC are not printed at all.
+        // The strip stays quiet until the player needs to act on a routing condition.
         const juce::String subShown = status.startsWith("SUB MODE CHANGED") ? "SUB  MOVE CONTROL TO RESUME"
                                     : status.contains("EXT BUS") ? (status.contains("DISABLED") ? "SUB  EXT INPUT OFF" : "SUB  EXT INPUT ON")
-                                    : (isolated && original) ? "SUB  ORIGINAL (ISOLATED)" : juce::String();
+                                    : juce::String();
         subModeLabel.setDisplayText(subShown);
         subModeLabel.setInterceptsMouseClicks(subShown.isNotEmpty(), false);
-        subModeLabel.setTooltip((isolated
-            ? juce::String("Parity isolation forces original SUB controls; the stored mode and legacy settings are retained. Not calibrated. ")
-            : juce::String()) + (original
+        subModeLabel.setTooltip(original
             ? "Original six functions; analog response laws remain provisional. EXT uses an optional mono input bus, disabled by default. Host routing is required; bus enabled does not prove a signal is present. At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1. Reconstruction delay: 63.5 host samples. This is software normalization, not physical voltage calibration."
-            : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions."));
+            : "Extended waveform and rate controls. Select Original waveforms in Studio for the six hardware functions.");
     }
 
     void syncSourceStatus()
     {
         // These atomics are a UI snapshot, not a render-thread acceptance report.
         // Do not substitute getEngine().getSourceToneInfo() here.
-        const float parityRequest = processor.getParamValue(cs80::P_parityMode);
-        const float sourceRequest = processor.getParamValue(cs80::P_sourcePerformance);
-        const auto policy = cs80::renderPolicy(parityRequest, sourceRequest);
-        const juce::String mode = policy == cs80::RenderPolicy::isolation
-            ? "COMPARISON ISOLATION / NOT CALIBRATED  |  MIDI OFF: BEND, CC1/11/64/74, MPE  |  PRESSURE, RIBBON + UI PEDAL LIVE  |  MODE CHANGE STOPS NOTES"
-            : policy == cs80::RenderPolicy::sourcePerformance
-                ? "SOURCE PERFORMANCE / NOT CALIBRATED  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  MODERN OVERLAYS LIVE  |  MODE CHANGE STOPS NOTES"
-                : "LEGACY PERFORMANCE / SOURCE MODEL OFF  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  SOURCE MODE: ADVANCED > ABOUT";
-        if (modeStatusLabel.getText() != mode)
-            modeStatusLabel.setText(mode, juce::dontSendNotification);
-        const juce::String modeShown = policy == cs80::RenderPolicy::isolation ? "MODE  ISOLATED COMPARISON"
-                                       : policy == cs80::RenderPolicy::sourcePerformance ? "MODE  SOURCE PERFORMANCE"
-                                                                                         : juce::String();   // legacy is the default
-        modeStatusLabel.setDisplayText(modeShown);
-        modeStatusLabel.setInterceptsMouseClicks(modeShown.isNotEmpty(), false);
-        modeStatusLabel.setTooltip(juce::String("Requested mode from stored parameters; audio applies it on a control frame. Source performance uses current source models with MIDI, optional MPE and modern software overlays (macros, FX, pan and bypass). Neither source mode is calibrated or establishes a hardware match. Isolation wins when both switches are ON: it masks MIDI bend, CC1/11/64/74, MPE and modern features. Pressure, ribbon and the on-screen pedal remain live. An effective mode change resets sounding notes and controller/effect history. Changing the source switch while isolation stays ON is masked and does not stop notes. Library recall returns both ranks to PANEL and resets source performance OFF, while retaining isolation. Source output can exceed digital full scale: keep monitoring headroom.")
-            + (policy == cs80::RenderPolicy::isolation && sourceRequest >= 0.5f
-                ? " Source-performance request is ON but masked by isolation; turning isolation OFF applies that request."
-                : ""));
+        constexpr auto policy = cs80::RenderPolicy::sourcePerformance;
+        modeStatusLabel.setText("Circuit engine", juce::dontSendNotification);
+        modeStatusLabel.setDisplayText({});
+        modeStatusLabel.setInterceptsMouseClicks(false, false);
+        modeStatusLabel.setTooltip("Every program uses the circuit engine. Studio adds optional effects, modulation and performance controls.");
 
         for (int rank = 0; rank < 2; ++rank)
         {
@@ -1661,8 +1640,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             label.setDot(source < 11 ? juce::Colour(0xffe8ac3c) : source == 13 ? juce::Colour(0xffd9cfae) : juce::Colour(0xff58d6c0));
             label.setTooltip(text + ". Requested APVTS selection, not an audio-thread acknowledgment. "
                 "SOURCE-COMPLETE means the source-matrix column has no unresolved cells, not that the instrument is calibrated; device laws remain inferred. "
-                "SOURCE-INFERRED also uses explicit hypotheses for unresolved cells. LEGACY STUDY uses the older voicing table. "
-                "Source performance and isolation share source classifications but differ in MIDI and modern-overlay policy. "
+                "SOURCE-INFERRED also uses explicit hypotheses for unresolved cells. TONE STUDY identifies an authored panel voicing. "
                 "A selected tone or memory owns the 26 programmer controls; main-panel faders are retained for PANEL. Footage and global controls remain live. "
                 "Library programs reset both selectors to PANEL and do not select source tabs.");
         }

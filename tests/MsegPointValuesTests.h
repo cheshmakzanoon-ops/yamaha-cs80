@@ -208,7 +208,34 @@ template<class Check> void testMsegPointValues(Check check)
     { setup(); Form f(page); f.choose(endpoint); const auto before = layer.getConfig();
       if (endpoint == 0) f.time->setText(".01", false); else f.curve->setText(".123", false);
       f.apply->onClick(); check(layer.getConfig() == before && !undo.canUndo(), "even direct mutation cannot change locked endpoint fields"); }
-    for (int mode = 0; mode < 13; ++mode)
+    for (int retired : { P_sourcePerformance, P_parityMode })
+        for (bool beforeForm : { false, true })
+    {
+        setup();
+        const auto requestRetiredPolicy = [&] {
+            host->setParamValue(retired, retired == P_sourcePerformance ? 0.0f : 1.0f);
+            host->setPure(true);
+        };
+        if (beforeForm) requestRetiredPolicy();
+        page.showPointValues(); Form f(page); f.choose(1); f.level->setText(".9", false);
+        const auto before = layer.getConfig(); const auto revision = layer.getRevision();
+        const int changes = probe.changes, gestures = probe.gestures;
+        auto pending = f.apply->onClick;
+        if (!beforeForm) requestRetiredPolicy();
+        check(f.panel->isVisible() && !host->isPure()
+                  && host->getParamValue(P_sourcePerformance) == 1.0f
+                  && host->getParamValue(P_parityMode) == 0.0f
+                  && layer.getConfig() == before && layer.getRevision() == revision && !undo.canUndo(),
+              "retired policy writes preserve new and already-open precision forms without adding history");
+        auto expected = before; expected.msegs[0].points[1].level = .9f;
+        pending();
+        check(layer.getConfig() == expected && layer.getRevision() == revision + 1 && !f.panel->isVisible()
+                  && probe.changes == changes && probe.gestures == gestures,
+              "precision Apply remains effective after obsolete writes without host parameter notifications");
+        check(host->undo() && layer.getConfig() == before && !undo.canUndo(),
+              "precision editing after obsolete writes remains one complete undo step");
+    }
+    for (int mode = 0; mode < 12; ++mode)
     {
         setup(); Form f(page); f.level->setText(".9", false); auto pending = f.apply->onClick;
         juce::Component parent; parent.addAndMakeVisible(page);
@@ -225,14 +252,13 @@ template<class Check> void testMsegPointValues(Check check)
         else if (mode == 7) { parent.setEnabled(false); parent.setEnabled(true); }
         else if (mode == 8) page.showPointValues();
         else if (mode == 9) { auto& e = page.getEditor(); auto event = mouse(e, e.pointPosition(1)); e.mouseDown(event); e.mouseUp(event); }
-        else if (mode == 10) host->setPure(true);
-        else if (mode == 11) page.getEditor().setEnabled(false);
+        else if (mode == 10) page.getEditor().setEnabled(false);
         else { auto* rate = child<juce::Slider>(page, "MSEG rate"); juce::Slider::ScopedDragNotification gesture(*rate); }
         const auto before = layer.getConfig(); const auto revision = layer.getRevision();
-        pending(); check(layer.getConfig() == before && layer.getRevision() == revision, "rebind, ABA, state/unit/routing changes, disablement, supersession, gesture and PURE reject old fields");
+        pending(); check(layer.getConfig() == before && layer.getRevision() == revision, "rebind, ABA, state/unit/routing changes, disablement, supersession and gestures reject old fields");
         // A stale form can always be dismissed, even after rate-generation changes.
         Form current(page); current.cancel->onClick(); check(!current.panel->isVisible(), "Cancel closes stale as well as current point editor");
-        page.getEditor().setEnabled(true); host->setPure(false); parent.removeChildComponent(&page);
+        page.getEditor().setEnabled(true); parent.removeChildComponent(&page);
     }
     for (int kind = 0; kind < 4; ++kind)
     {

@@ -132,7 +132,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = sine_noiseRender(protectedP, 256);
-                check(actual == sine_noiseRender(protectedP, 256, true, true), "sine_noise Legacy/PURE preserve flattening");
+                check(actual == sine_noiseRender(p, 256), "sine_noise retired mode requests preserve canonical circuit sample-accurate audio");
                 captureSineNoise(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

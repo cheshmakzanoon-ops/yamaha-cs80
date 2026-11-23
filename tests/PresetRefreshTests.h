@@ -199,13 +199,13 @@ struct PresetRefreshAccess
               "ordinary user selection still auditions exactly once after refresh");
 
         host->loadFactoryPreset(22);
-        const auto legacyValues = host->currentValues();
+        const auto originalValues = host->currentValues();
         browser.refresh();
-        check(browser.scopeFilter == 3 && browser.selectedEntry() != nullptr
+        check(browser.scopeFilter == 0 && browser.selectedEntry() != nullptr
                   && browser.selectedEntry()->factoryIndex == 22
                   && browser.saveName.getText() == host->getPresetName()
-                  && host->currentValues().v == legacyValues.v && callbacks == 1,
-              "recursive Legacy selection keeps its save name and never auditions during refresh");
+                  && host->currentValues().v == originalValues.v && callbacks == 1,
+              "original-address selection keeps the unified scope, save name and sounding patch during refresh");
     }
 };
 } // namespace cs80::tests

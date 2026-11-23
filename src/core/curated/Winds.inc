@@ -51,16 +51,22 @@ void buildWinds(Builder& add)
         "An 8' sine reinforced by quiet odd harmonics, with a brief tongue transient. Clear, nearly straight tone and a quick release suit articulated lines.",
         winds().wave(I, false, true, 0.72f).pw(I, 0.5f).hpf(I, 40.0f).lpf(I, 2100.0f, 0.04f)
                .level(I, 0.22f, 0.32f).eg(I, 0.016f, 0.30f, 0.96f, 0.10f)
-               .wave(II, false, false, 0.0f, 0.18f).eg(II, 0.003f, 0.20f, 0.0f, 0.06f)
-               .touch(I, 0.06f, 0.48f, 0.06f, 0.20f).touch(II, 0.0f, 0.5f, 0.0f, 0.0f)
-               .mix(0.09f).subAt(0.025f, 0.035f).g(P_modWheelSub, 0.025f));
+               // A short tongue must survive the much louder bypass-sine body.
+               .wave(II, false, false, 0.0f, 0.72f).hpf(II, 900.0f).lpf(II, 6000.0f, 0.04f)
+               .level(II, 0.95f, 0.27f).eg(II, 0.002f, 0.14f, 0.0f, 0.045f)
+               .touch(I, 0.06f, 0.48f, 0.06f, 0.20f).touch(II, 0.04f, 0.75f, 0.0f, 0.0f)
+               .mix(0.14f).subAt(0.025f, 0.035f).g(P_modWheelSub, 0.025f));
     add("Clarinet", "Winds", { "aftertouch", "velocity" },
         "A centered 8' square supplies the hollow odd-harmonic body. A short tongue and restrained breath rank support the onset; pressure opens the reed without a broad pitch wobble.",
         winds().wave(I, false, true).pw(I, 0.5f).hpf(I, 50.0f).lpf(I, 1900.0f, 0.12f)
                .level(I, 0.95f, 0.27f).feg(I, 0.08f, 0.22f, 0.015f, 0.28f, 0.10f)
                .eg(I, 0.022f, 0.55f, 0.94f, 0.15f)
-               .wave(II, false, false, 0.0f, 0.22f).eg(II, 0.004f, 0.22f, 0.12f, 0.07f)
-               .touch(I, 0.12f, 0.58f, 0.16f, 0.36f).mix(0.12f).subAt(0.04f, 0.07f));
+               // Keep the reed body dominant while making its tongued onset present.
+               .wave(II, false, false, 0.0f, 0.65f).hpf(II, 850.0f).lpf(II, 5800.0f, 0.04f)
+               .level(II, 0.95f, 0.25f).eg(II, 0.003f, 0.18f, 0.12f, 0.06f)
+               .feg(II, 0.0f, 0.16f, 0.003f, 0.16f, 0.06f)
+               .touch(I, 0.12f, 0.58f, 0.16f, 0.36f).touch(II, 0.04f, 0.75f, 0.04f, 0.18f)
+               .mix(0.14f).subAt(0.04f, 0.07f));
     add("Bass Clarinet", "Winds", { "aftertouch", "velocity", "dual-rank" },
         "Both ranks follow the same 16' fundamental: a hollow square body and a quiet upper reed band. Slow breath onset and restrained pressure vibrato keep the low register clear.",
         winds().wave(I, false, true, 0.08f).wave(II, false, true, 0.0f, 0.018f)

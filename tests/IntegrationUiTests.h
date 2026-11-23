@@ -147,9 +147,16 @@ void testIntegrationUi(Check check, Flush flush)
     if (actions.initPatch)
     {
         processor.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+        processor.setPure(true);
+        processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
+        check(processor.getEngineMode() == Cs80AudioProcessor::EngineMode::circuit && ! processor.isPure()
+                  && processor.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+              "obsolete mode API requests are inert while the independent SUB setting remains editable");
         actions.initPatch();
         flush(20);
-        check(processor.getEngineMode() == Cs80AudioProcessor::EngineMode::circuit
+        check(processor.getEngineMode() == Cs80AudioProcessor::EngineMode::circuit && ! processor.isPure()
+                  && processor.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                  && processor.getParamValue(cs80::P_parityMode) == 0.0f
                   && processor.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "INIT loads the init patch on the circuit engine with the original SUB");
     }

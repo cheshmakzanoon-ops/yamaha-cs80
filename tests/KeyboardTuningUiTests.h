@@ -88,6 +88,15 @@ void testKeyboardTuningUiState(Check check)
               "KBM import without a scale reports an error without creating tuning state");
         check(page.loadScalaText(scale).isEmpty(), "the first editor loads the Scala source");
         check(page.loadKeyboardMappingText(mapping432).isEmpty(), "the first editor loads its KBM mapping");
+        const auto tuningBeforePolicyWrites = ScalaMappingAccess::capture(host);
+        host.setParamValue(cs80::P_sourcePerformance, 0.0f);
+        host.setParamValue(cs80::P_parityMode, 1.0f);
+        check(host.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                  && host.getParamValue(cs80::P_parityMode) == 0.0f
+                  && ScalaMappingAccess::retained(host, tuningBeforePolicyWrites),
+              "retired mode requests keep the circuit policy and loaded Scala mapping unchanged");
+        check(mappingButtonEnabled(page) && page.tuningModeBox().isEnabled() && page.voiceModeBox().isEnabled(),
+              "mapping import, tuning source and voice settings stay available after retired mode requests");
     }
 
     {

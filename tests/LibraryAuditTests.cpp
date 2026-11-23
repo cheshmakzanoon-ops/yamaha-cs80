@@ -1,5 +1,5 @@
-// Library audit for the curated circuit-engine library and the frozen Legacy
-// Library (docs/workstreams/ws6-library.md). Software checks of the shipped
+// Library audit for all shipped circuit programs, including the revoiced original
+// 222 addresses. Software checks of the shipped
 // program data and of rendered level on this engine; not hardware evidence.
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
@@ -38,11 +38,9 @@ constexpr double kMinWindowRmsDbfs = -42.0;
 // Distinct: the normalized L1 distance between any two curated programs must be
 // at least the equivalent of an 8 % change of one full parameter range.
 constexpr double kMinPairDistance = 0.08;
-// The legacy bank: 222 programs whose names, categories, descriptions and
-// values (indexes 0..P_sourcePerformance) hash to this FNV-1a digest, computed
-// from the bank as it shipped before the curated library (commit 6719ce4).
-constexpr std::uint64_t kLegacyDigest = 0x3628dd9acc109b2aull;
-constexpr int kLegacyDigestLastIndex = 138;
+// Names/categories/order of the original 222 programs at source 7e49ead.
+// Sound vectors and descriptions intentionally change in revision 2026.11.2.
+constexpr std::uint64_t kOriginalIdentityDigest = 0xa960b5a190e3b7b8ull;
 // Level matching: the loudest-window RMS of every program lies in this window.
 constexpr double kLevelWindowLowDbfs = -30.0, kLevelWindowHighDbfs = -12.0;
 // Calibration targets used by --calibrate (CuratedLibraryLevels.inc).
@@ -61,25 +59,13 @@ void check(bool ok, const std::string& message)
     }
 }
 
-std::uint64_t legacyDigest()
+std::uint64_t originalIdentityDigest()
 {
-    const auto& bank = legacyLibrary();
     std::uint64_t h = 14695981039346656037ull;
     auto byte = [&](unsigned char b) { h ^= b; h *= 1099511628211ull; };
     auto u64 = [&](std::uint64_t n) { for (int i = 0; i < 8; ++i) { byte((unsigned char) (n & 255u)); n >>= 8; } };
-    auto str = [&](const std::string& s) { u64(s.size()); for (char c : s) byte((unsigned char) c); };
-    u64(bank.size());
-    for (const auto& p : bank)
-    {
-        str(p.name); str(p.category); str(p.description);
-        for (int i = 0; i <= kLegacyDigestLastIndex; ++i)
-        {
-            std::uint32_t bits;
-            const float f = p.values[i];
-            std::memcpy(&bits, &f, 4);
-            u64(bits);
-        }
-    }
+    auto str = [&](const std::string& text) { u64(text.size()); for (char c : text) byte((unsigned char) c); };
+    for (const auto& p : originalLibrary()) { str(p.name); str(p.category); }
     return h;
 }
 
@@ -201,21 +187,48 @@ Level measure(const FactoryPreset& preset)
     return out;
 }
 
-void testLegacyLibrary()
+void testOriginalLibrary()
 {
-    const auto& legacy = legacyLibrary();
-    check((int) legacy.size() == legacyProgramCount, "legacy library keeps 222 programs");
-    check(&legacy == &factoryPresets(), "factoryPresets() is the frozen legacy bank");
-    check(legacyDigest() == kLegacyDigest, "legacy names, categories, descriptions and values are byte-identical");
-    const ParamValues defaults;
-    for (const auto& p : legacy)
+    const auto& bank = originalLibrary();
+    check((int) bank.size() == legacyProgramCount, "original 222 program addresses remain available");
+    check(&bank == &factoryPresets(), "factoryPresets() is the revised original bank");
+    check(originalIdentityDigest() == kOriginalIdentityDigest, "original names, categories and order are unchanged");
+    for (const auto& p : bank)
     {
-        check(p.library == ProgramLibrary::legacy && p.tags.empty(), "legacy entry marked legacy: " + p.name);
-        check(p.values[P_sourcePerformance] == 0.0f && p.values[P_subOriginalMode] == 0.0f,
-              "legacy program keeps the legacy engine and SUB: " + p.name);
-        for (int i = kLegacyDigestLastIndex + 1; i < P_numParams; ++i)
-            check(p.values[i] == defaults[i], "parameters appended after the bank stay neutral in legacy programs");
+        check(p.library == ProgramLibrary::legacy, "original program address provenance: " + p.name);
+        check(p.values[P_sourcePerformance] == 1.0f && p.values[P_parityMode] == 0.0f
+                  && p.values[P_subOriginalMode] == 1.0f, "original program uses the circuit instrument: " + p.name);
+        check(p.description.find("generated") == std::string::npos, "random factory voicing removed: " + p.name);
+        for (int i = 0; i < P_numParams; ++i)
+        {
+            const auto& def = paramDef(i);
+            check(std::isfinite(p.values[i]) && p.values[i] >= def.min && p.values[i] <= def.max,
+                  "original parameter in range: " + p.name + " " + paramId(i));
+        }
+        if (p.category == "Keys")
+        {
+            check(p.values[P_portamento] == 0.0f && p.values[P_initBend] == 0.0f,
+                  "keyboard pitch is stable: " + p.name);
+            check(p.values[chParam(0, CP_vA)] <= 0.02f && p.values[chParam(1, CP_vA)] <= 0.02f,
+                  "keyboard retains a struck onset: " + p.name);
+        }
     }
+    for (int t = 0; t < 11; ++t)
+    {
+        check(bank[(size_t) (2 * t)].values[P_mix] < 0.5f, "Tone I named body belongs to rank I");
+        check(bank[(size_t) (2 * t + 1)].values[P_mix] > 0.5f, "Tone II named body belongs to rank II");
+    }
+    // Compare actual sound controls, ignoring bookkeeping and output volume.
+    const auto& all = programLibrary();
+    for (size_t a = 0; a < bank.size(); ++a)
+        for (size_t b = a + 1; b < all.size(); ++b)
+        {
+            bool different = false;
+            for (int i = 0; i < P_numParams; ++i)
+                if (i != P_volume && i != P_sourcePerformance && i != P_parityMode)
+                    different = different || bank[a].values[i] != all[b].values[i];
+            check(different, "original program has a distinct voicing: " + bank[a].name + " / " + all[b].name);
+        }
 }
 
 void testProgramList()
@@ -342,9 +355,8 @@ void testDistinct()
     std::printf("closest curated pair: %s (normalized L1 %.3f)\n", closestPair.c_str(), closest);
 }
 
-std::vector<Level> measureAll()
+std::vector<Level> measureAll(const std::vector<FactoryPreset>& curated)
 {
-    const auto& curated = curatedLibrary();
     std::vector<Level> levels(curated.size());
     std::atomic<size_t> next { 0 };
     auto worker = [&] {
@@ -364,8 +376,8 @@ bool singleLine(const std::string& category)
 
 void testLevels()
 {
-    const auto& curated = curatedLibrary();
-    const auto levels = measureAll();
+    const auto& curated = programLibrary();
+    const auto levels = measureAll(curated);
     const bool verbose = std::getenv("CS80_LIBRARY_AUDIT_VERBOSE") != nullptr;
     double loudest = -1.0e9, quietest = 1.0e9, worstStress = -1.0e9, loudestRms = -1.0e9;
     for (size_t i = 0; i < curated.size(); ++i)
@@ -394,24 +406,22 @@ void testLevels()
 
 // Writes CuratedLibraryLevels.inc: VOLUME per program so the audit phrase's
 // loudest window meets the level target within the peak limits.
-int calibrate(const char* path)
+int calibrate(const char* path, bool original = false)
 {
-    const auto& curated = curatedLibrary();
-    const auto levels = measureAll();
+    const auto& curated = original ? originalLibrary() : curatedLibrary();
+    const auto levels = measureAll(curated);
     FILE* file = std::fopen(path, "w");
     if (file == nullptr) return 2;
     std::fprintf(file,
-        "// Calibrated VOLUME per curated program (generated; see below). Included by\n"
-        "// FactoryPresets.cpp inside the kCalibratedLevels initializer.\n"
-        "//\n"
-        "// Level matching, not voicing: each program's sound is authored in\n"
-        "// CuratedLibrary.inc; this table only sets its VOLUME so the library plays at\n"
-        "// a consistent level. Regenerate after any voicing or engine gain change with\n"
-        "//   build-core/cs80_library_audit_tests --calibrate src/core/CuratedLibraryLevels.inc\n"
-        "// and run it twice (the output driver is mildly nonlinear). Targets: loudest\n"
-        "// 50 ms RMS of the audit phrase %.0f dBFS (%.0f dBFS for single-line Leads/Winds/Bass/Sequences),\n"
-        "// limited so the phrase peak stays <= %.1f dBFS and the 8-voice stress peak\n"
-        "// <= %.1f dBFS, VOLUME %.2f..%.2f.\n",
+        "// Calibrated VOLUME per %s program. Included by FactoryPresets.cpp.\n"
+        "// These are measured level trims, not generated voicings.\n"
+        "// Regenerate twice after voicing changes (the output driver is mildly nonlinear):\n"
+        "//   cs80_library_audit_tests %s src/core/%s\n"
+        "// Loudest 50 ms RMS target %.0f dBFS (%.0f dBFS for Leads/Winds/Bass/Sequences).\n"
+        "// Phrase peak <= %.1f dBFS; 8-voice stress peak <= %.1f dBFS; VOLUME %.2f..%.2f.\n",
+        original ? "original-bank circuit" : "curated circuit",
+        original ? "--calibrate-original" : "--calibrate",
+        original ? "OriginalCircuitLevels.inc" : "CuratedLibraryLevels.inc",
         kTargetRmsDbfs, kTargetSingleLineRmsDbfs, kCalibratePhrasePeakDbfs, kCalibrateStressPeakDbfs,
         kMinVolume, kMaxVolume);
     for (size_t i = 0; i < curated.size(); ++i)
@@ -434,7 +444,9 @@ int main(int argc, char** argv)
 {
     if (argc == 3 && std::strcmp(argv[1], "--calibrate") == 0)
         return calibrate(argv[2]);
-    testLegacyLibrary();
+    if (argc == 3 && std::strcmp(argv[1], "--calibrate-original") == 0)
+        return calibrate(argv[2], true);
+    testOriginalLibrary();
     testProgramList();
     testCuratedData();
     testDistinct();
@@ -446,6 +458,6 @@ int main(int argc, char** argv)
         std::printf("%d library audit failures\n", failures);
         return 1;
     }
-    std::printf("library audit passed: %zu curated + %d legacy programs\n", curatedLibrary().size(), legacyProgramCount);
+    std::printf("library audit passed: %zu curated + %d original circuit programs\n", curatedLibrary().size(), legacyProgramCount);
     return 0;
 }

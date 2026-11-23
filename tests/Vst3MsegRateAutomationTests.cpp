@@ -201,13 +201,14 @@ int main(int argc,char**argv)
       for(int prior:{int(cs80::P_volume),int(cs80::P_masterTune),int(cs80::P_tuningRef),int(cs80::P_lfo1Rate)}){
         const double v=normalized(prior,p[prior]);preceding.push_back({prior,{{0,v},{1023,v},{4095,.4},{16383,.6}}});}
       capture(out/(id+"-preceding89.pcm"),renderSession(module,p,on,preceding,127));
+      // Historical capture suffixes identify old requests; their curves remain live.
       auto legacy=p;legacy[cs80::P_sourcePerformance]=0;
       const auto old=renderSession(module,legacy,on,curves,256);
-      check(exactAudio(old,renderSession(module,legacy,on,curves,256,true)),"Legacy final-point flattening");
+      check(exactAudio(old,renderSession(module,p,on,curves,256)),"retired engine request preserves canonical circuit sample-accurate modulation");
       capture(out/(id+"-legacy.pcm"),old);
       auto pure=p;pure[cs80::P_parityMode]=1;
       const auto pureAudio=renderSession(module,pure,on,curves,256);
-      check(exactAudio(pureAudio,renderSession(module,pure,on,constant,256)),"PURE rate inert");
+      check(exactAudio(pureAudio,renderSession(module,p,on,curves,256)),"retired isolation request preserves canonical circuit sample-accurate modulation");
       capture(out/(id+"-pure.pcm"),pureAudio);
       if(!compat){
         const auto scalar=renderSession(module,p,on,curves,1);double error=0;

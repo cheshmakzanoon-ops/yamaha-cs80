@@ -106,7 +106,7 @@ public:
             && hostKeyMasks[(size_t) note].load(std::memory_order_relaxed) != 0;
     }
 
-    // Host program list: Legacy Library 0..221 (shipped indexes unchanged), then
+    // Host program list: original program addresses 0..221 (indexes unchanged), then
     // the curated circuit-engine library (cs80::programLibrary()).
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
@@ -196,15 +196,11 @@ public:
     float getMemoryValue(int bank, int local) const noexcept;
     void setMemoryValue(int bank, int local, float value) noexcept;
 
-    // Saved-state schema. A state without the attribute is schema 1, written
-    // before this marker existed. Missing (or malformed) values restore with the
-    // semantics of the schema that wrote the state, never a later default:
-    //   1  pre-plan: ENGINE Legacy (SOURCE PERFORMANCE off), original SUB off.
-    //   2  plan 0.3 marker; fresh instances still started on Legacy.
-    //   3  plan 1.7 engine default flip: fresh instances start on the circuit
-    //      engine, so a schema-3 state without ENGINE means Circuit.
-    // See docs/IMPROVEMENT_PLAN.md 0.3 and 1.7.
-    static constexpr int stateSchemaVersion = 3;
+    // Schema 4 records the single circuit-engine instrument. Older sessions
+    // retain their patch/control data and stable parameter identities, while
+    // former engine/isolation fields are normalized to Circuit/on and off.
+    // This is an intentional sound migration, not bit-identical old rendering.
+    static constexpr int stateSchemaVersion = 4;
     static constexpr const char* stateSchemaKey = "stateSchemaVersion";
     static constexpr int memoryControlCount = 26;
     static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
@@ -224,20 +220,17 @@ public:
     cs80::PresetBrowserSound capturePresetBrowserSound() const;
     bool restorePresetBrowserSound(const cs80::PresetBrowserSound& sound);
 
-    // User-facing engine concepts (plan 1.7) over the unchanged host IDs.
-    // ENGINE is source_performance: on = Circuit, off = Legacy (compat), which
-    // stays only so old sessions and the legacy factory bank sound unchanged.
-    // PURE CS-80 is parity_mode, the isolation contract: original features
-    // only, rendered by the circuit engine whatever ENGINE says.
+    // Source compatibility for old internal callers. The shipped instrument
+    // always renders the circuit model; these setters cannot change policy.
     enum class EngineMode { circuit, legacy };
     void setEngineMode(EngineMode mode);
-    EngineMode getEngineMode() const;          // the ENGINE switch as stored
-    EngineMode getEffectiveEngineMode() const; // what renders: PURE implies Circuit
+    EngineMode getEngineMode() const;
+    EngineMode getEffectiveEngineMode() const;
     void setPure(bool pure);
     bool isPure() const;
     // New-preset creation (the INIT action's hook): the factory "Init Patch"
     // program with the original SUB panel on the circuit engine. Startup uses
-    // the curated showcase instead. The legacy bank program is unchanged.
+    // the authored showcase instead.
     void loadInitPatch();
 
     // ---- ws3-keyboard Phase 6 processor APIs (modern layer) ----------------
@@ -289,7 +282,7 @@ public:
     // ---- [ws8-studio] MIDI learn and editor state -------------------------------------------
     // Both live in the plugin state (MIDI_LEARN and UI_STATE children, each with a version), never
     // in host parameters or presets. The map is per session: restoring a state replaces it, and
-    // loading a preset leaves it alone. Mappings are neither learned nor applied in PURE CS-80.
+    // loading a preset leaves it alone. MIDI learning is available on the circuit instrument.
     cs80::MidiLearnMap& getMidiLearn() noexcept { return midiLearn; }
     // Host parameter index of a core parameter (extensions are appended after the 228 shipped ones).
     int hostParameterIndex(int coreIndex) const;
@@ -446,7 +439,7 @@ private:
     {
         static_cast<cs80::UndoableParameterState*>(context)->requestNonParameterStateUpdate();
     } };
-    bool midiLearnLive = false;   // audio thread: mappings apply in this block (not PURE CS-80)
+    bool midiLearnLive = false;   // audio thread: mappings apply in this block
     EditorState editorState;
 
     // Mirrors only queue attachment, not whether a pending knot remains. A queue

@@ -109,7 +109,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = kbd_contour_combinedRender(protectedP, 256);
-                check(actual == kbd_contour_combinedRender(protectedP, 256, true, true), "kbd_contour_combined Legacy/PURE preserve flattening");
+                check(actual == kbd_contour_combinedRender(p, 256), "kbd_contour_combined retired mode requests preserve canonical circuit sample-accurate audio");
                 captureKbdContourCombined(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

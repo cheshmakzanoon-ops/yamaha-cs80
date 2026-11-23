@@ -86,14 +86,14 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     styleLabel(tuningModeLabel, "Tuning source");
     styleCombo(tuningMode, "Tuning source");
     tuningMode.addItemList({ "Equal temperament (12-TET)", "Scala / KBM file", "MIDI Tuning Standard / MTS-ESP" }, 1);
-    tuningMode.setTooltip("Modern layer: PURE CS-80 always plays equal temperament.");
+    tuningMode.setTooltip("Choose equal temperament, a Scala keyboard mapping, or MIDI/MTS-ESP tuning.");
     if (auto* q = parameter(p, cs80::P_tuningMode))
         tuningModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, tuningMode);
 
     styleLabel(voiceModeLabel, "Voice mode");
     styleCombo(voiceMode, "Voice mode");
     voiceMode.addItemList({ "8 voices (original)", "16 voices (two instruments)", "Unison x2", "Unison x4", "Unison x8" }, 1);
-    voiceMode.setTooltip("Labelled extensions beyond the eight voice cards; PURE CS-80 always plays eight single voices.");
+    voiceMode.setTooltip("Use the original eight voices, two eight-voice instruments, or stacked unison voices.");
     if (auto* q = parameter(p, cs80::P_voiceMode))
         voiceModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, voiceMode);
 
@@ -131,10 +131,10 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     mpeStatus.setJustificationType(juce::Justification::topLeft);
     mpeStatus.setTitle("Applied MPE zones and bend ranges");
     mpeStatus.setInterceptsMouseClicks(true, false);
-    mpeStatus.setTooltip("Read-only state from the last completed audio callback, refreshed four times per second. Incoming MCM/RPN messages can override the stored bend knobs. Ranges are displayed rounded to 0.01 semitone; DSP values are unchanged. MPE is masked in PURE CS-80. Changes wait for an audio callback.");
+    mpeStatus.setTooltip("Read-only state from the last completed audio callback, refreshed four times per second. Incoming MCM/RPN messages can override the stored bend knobs. Ranges are displayed rounded to 0.01 semitone; DSP values are unchanged. Changes wait for an audio callback.");
 
     styleToggle(scanTiming, "Declared KAS scanner model: key events act at 1 ms scan instants, lowest key first. "
-                            "Adds at most 1 ms of note latency. Circuit engine only.");
+                            "Adds at most 1 ms of note latency.");
     styleToggle(ribbonCcEnable, "Lets a MIDI controller play the ribbon: 64 centre, 0 and 127 the ends. Off by default.");
     if (auto* q = parameter(p, cs80::P_kasScanTiming))
         scanTimingAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, scanTiming);
@@ -165,8 +165,8 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
         addAndMakeVisible(row.slider);
     }
 
-    styleLabel(note, "PURE CS-80 forces equal temperament and eight voices. The curves, the ribbon CC and the KAS scan "
-                     "stay available there: they adapt a MIDI controller or model an original circuit.", 12.5f, ivoryDim);
+    styleLabel(note, "The response curves and ribbon CC adapt your MIDI controller. KAS scan timing models the original keyboard scanner. "
+                     "Tuning and voice settings are available with every program.", 12.5f, ivoryDim);
     note.setJustificationType(juce::Justification::topLeft);
 
     for (auto* c : std::initializer_list<juce::Component*> { &tuningTitle, &keyboardTitle, &tuningModeLabel, &voiceModeLabel,
@@ -265,7 +265,7 @@ void KeyboardTuningPage::refreshStatus()
     const auto applied = processor.getMpeStatus();
     juce::String mpe;
     if (! applied.ready) mpe = "MPE: waiting for an audio callback.";
-    else if (! applied.enabled) mpe = "MPE: off in the last audio callback (including PURE masking).";
+    else if (! applied.enabled) mpe = "MPE: off in the last audio callback.";
     else
     {
         const auto zone = [](bool upper, int members, float managerRange, float memberRange)

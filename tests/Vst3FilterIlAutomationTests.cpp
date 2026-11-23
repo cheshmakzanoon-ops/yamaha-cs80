@@ -130,7 +130,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = filter_ilRender(protectedP, 256);
-                check(actual == filter_ilRender(protectedP, 256, true, true), "filter_il Legacy/PURE preserve flattening");
+                check(actual == filter_ilRender(p, 256), "filter_il retired mode requests preserve canonical circuit sample-accurate audio");
                 captureFilterIl(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

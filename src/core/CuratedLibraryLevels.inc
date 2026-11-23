@@ -1,14 +1,9 @@
-// Calibrated VOLUME per curated program (generated; see below). Included by
-// FactoryPresets.cpp inside the kCalibratedLevels initializer.
-//
-// Level matching, not voicing: each program's sound is authored in
-// CuratedLibrary.inc; this table only sets its VOLUME so the library plays at
-// a consistent level. Regenerate after any voicing or engine gain change with
-//   build-core/cs80_library_audit_tests --calibrate src/core/CuratedLibraryLevels.inc
-// and run it twice (the output driver is mildly nonlinear). Targets: loudest
-// 50 ms RMS of the audit phrase -18 dBFS (-22 dBFS for single-line Leads/Winds/Bass/Sequences),
-// limited so the phrase peak stays <= -3.0 dBFS and the 8-voice stress peak
-// <= -1.5 dBFS, VOLUME 0.05..1.00.
+// Calibrated VOLUME per curated circuit program. Included by FactoryPresets.cpp.
+// These are measured level trims, not generated voicings.
+// Regenerate twice after voicing changes (the output driver is mildly nonlinear):
+//   cs80_library_audit_tests --calibrate src/core/CuratedLibraryLevels.inc
+// Loudest 50 ms RMS target -18 dBFS (-22 dBFS for Leads/Winds/Bass/Sequences).
+// Phrase peak <= -3.0 dBFS; 8-voice stress peak <= -1.5 dBFS; VOLUME 0.05..1.00.
     { "Brass Swell I", 1.000f },
     { "Brass Swell II", 1.000f },
     { "Pressure Swell Brass", 1.000f },
@@ -38,7 +33,7 @@
     { "Swell And Fall", 1.000f },
     { "Reed Brass", 1.000f },
     { "Brass Glide Lead", 0.913f },
-    { "Tremolo Brass", 1.000f },
+    { "Tremolo Brass", 0.941f },
     { "Contour Brass", 1.000f },
     { "Ring Breath Brass", 1.000f },
     { "Ensemble Strings", 1.000f },
@@ -121,7 +116,7 @@
     { "Contour Poly", 1.000f },
     { "Ring Poly", 1.000f },
     { "Glide Poly", 0.844f },
-    { "Tremolo Poly", 0.924f },
+    { "Tremolo Poly", 0.894f },
     { "Poly Sub Pulse", 1.000f },
     { "Electric Piano I", 1.000f },
     { "Electric Piano II", 1.000f },
@@ -134,17 +129,17 @@
     { "Lute Harpsichord", 1.000f },
     { "Toy Piano", 1.000f },
     { "Honky Keys", 1.000f },
-    { "Vibes Keys", 0.775f },
-    { "Celesta", 0.907f },
+    { "Vibes Keys", 0.897f },
+    { "Celesta", 1.000f },
     { "Saw Pulse Piano", 1.000f },
-    { "Soft Keys", 0.923f },
+    { "Soft Keys", 0.978f },
     { "Chorus Keys", 1.000f },
     { "Stage Keys", 1.000f },
     { "Velocity Keys", 1.000f },
     { "Dulcimer", 1.000f },
     { "Reed Piano", 1.000f },
-    { "Glass Keys", 0.765f },
-    { "Tremolo Keys", 1.000f },
+    { "Glass Keys", 0.876f },
+    { "Tremolo Keys", 0.914f },
     { "Contour Keys", 1.000f },
     { "Pressure Keys", 1.000f },
     { "Flute Organ 8+4", 0.887f },
@@ -154,7 +149,7 @@
     { "Church Organ", 1.000f },
     { "Chapel Organ", 1.000f },
     { "Theatre Organ", 1.000f },
-    { "Tremolo Organ", 0.976f },
+    { "Tremolo Organ", 0.878f },
     { "Mellow Organ", 0.787f },
     { "Bright Organ", 1.000f },
     { "Pipe Organ", 1.000f },
@@ -165,7 +160,7 @@
     { "Breathy Flute", 1.000f },
     { "Pan Flute", 1.000f },
     { "Recorder", 1.000f },
-    { "Clarinet", 0.773f },
+    { "Clarinet", 0.791f },
     { "Bass Clarinet", 0.856f },
     { "Oboe", 1.000f },
     { "English Horn", 1.000f },
@@ -236,7 +231,7 @@
     { "Detuned Lead", 1.000f },
     { "Sub Vibrato Lead", 1.000f },
     { "Trill Lead", 0.749f },
-    { "Glissando Lead", 0.782f },
+    { "Glissando Lead", 0.779f },
     { "Brass Lead", 1.000f },
     { "Reed Lead", 0.943f },
     { "Wah Lead", 1.000f },

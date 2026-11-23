@@ -3,7 +3,7 @@
 // ws5-modern host self-test, run by CS80Snapshots --self-test (src/tools/ui_snapshot.cpp):
 // - modern layer session data: ValueTree round trip, old/future/malformed states, user presets;
 // - host parameters (AU version hint 12, ranges, named values);
-// - audio reaches the engine through processBlock, PURE CS-80 stays inert, host tempo sync.
+// - audio reaches the circuit engine through processBlock, retired mode writes stay inert, host tempo sync.
 
 #include "plugin/ModernLayerState.h"
 #include "plugin/PluginProcessor.h"
@@ -179,7 +179,7 @@ void testModernLayerHost(Check check)
         check(host.getModernLayer().getConfig() == routedConfig(), "user presets carry MSEG shapes and matrix routing");
     }
 
-    // Audio: routing + amount reaches the engine; PURE CS-80 leaves it inert.
+    // Audio: routing + amount reaches the circuit engine, including after obsolete mode writes.
     auto make = [&root](bool routed, bool pure)
     {
         auto p = std::make_unique<Cs80AudioProcessor>(root.getFile().getChildFile("presets"));
@@ -197,7 +197,7 @@ void testModernLayerHost(Check check)
         const auto a = renderBlocks(*plain, 40, true), b = renderBlocks(*routed, 40, true);
         const auto c = renderBlocks(*pure, 40, true), d = renderBlocks(*pureRouted, 40, true);
         check(a != b, "matrix routing in the session state reaches the audio");
-        check(c == d, "PURE CS-80 render is unchanged by modern layer routing and amounts");
+        check(c == a && d == b && c != d, "obsolete isolation request cannot mask modern routing or alter its audio");
     }
 
     // Host tempo drives synced MSEGs; no tempo falls back to 120 BPM.

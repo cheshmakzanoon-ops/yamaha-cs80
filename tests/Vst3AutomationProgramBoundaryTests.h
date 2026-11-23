@@ -33,9 +33,9 @@ void processProgram(Instance& instance,int start,int count,Changes* changes,std:
     require(instance.audio->process(data)==kResultOk,"native program audio process");
     for(int i=0;i<count;++i){output.push_back(left[i]);output.push_back(right[i]);}
 }
-struct ProgramRender{std::vector<float> audio;double policy,volume;};
+struct ProgramRender{std::vector<float> audio;double policy,parity,volume;};
 ProgramRender renderProgram(Module& module,cs80::ParamValues p,int pc,int bank,bool automation,bool split,
-                            bool stopAtProgram,bool sendProgram=true)
+                            bool sendProgram=true)
 {
     Instance instance(module,p);
     Curves curves;
@@ -48,7 +48,7 @@ ProgramRender renderProgram(Module& module,cs80::ParamValues p,int pc,int bank,b
     for(int start=0;start<1024;){
         const int count=split&&start<pc?pc-start:1024-start;
         Changes changes;
-        if(automation&&!(stopAtProgram&&start>=pc))for(size_t lane=0;lane<curves.size();++lane){
+        if(automation)for(size_t lane=0;lane<curves.size();++lane){
             const int key=cs80::kSampleAccurateParameters[lane];Curve points;
             // Explicit first values avoid interpreting a recalled preset as a
             // new implicit origin in the same-policy partition control.
@@ -62,7 +62,8 @@ ProgramRender renderProgram(Module& module,cs80::ParamValues p,int pc,int bank,b
     }
     processProgram(instance,1024,1024,nullptr,output,pc,bank,sendProgram);
     connectController(instance);
-    return{std::move(output),readSelector(instance,cs80::P_sourcePerformance),readSelector(instance,cs80::P_volume)};
+    return{std::move(output),readSelector(instance,cs80::P_sourcePerformance),
+           readSelector(instance,cs80::P_parityMode),readSelector(instance,cs80::P_volume)};
 }
 double regionDifference(const std::vector<float>& a,const std::vector<float>& b,int begin,int end){
     double maximum=0;for(int i=begin*2;i<end*2;++i)maximum=std::max(maximum,std::abs(double(a[i])-b[i]));return maximum;
@@ -72,57 +73,66 @@ double regionDifference(const std::vector<float>& a,const std::vector<float>& b,
 namespace {
 void testVst3ProgramBoundaries(Module& module,double audioTolerance,double normalizedTolerance)
 {
-        auto p=cs80::defaultValues();p[cs80::P_parityMode]=0;p[cs80::P_sourcePerformance]=1;p[cs80::P_volume]=.11f;
-        p[cs80::P_drift]=p[cs80::P_voiceDispersion]=p[cs80::P_analogNoise]=0;
-        for(int pc:{0,1,64,256,700}){
-            const auto actual=renderProgram(module,p,pc,1,true,false,false);
-            const auto reference=renderProgram(module,p,pc,1,true,true,true);
+    auto p=cs80::defaultValues();p[cs80::P_parityMode]=0;p[cs80::P_sourcePerformance]=1;p[cs80::P_volume]=.11f;
+    p[cs80::P_drift]=p[cs80::P_voiceDispersion]=p[cs80::P_analogNoise]=0;
+    for(int bank:{0,1}) {
+        for(int pc:{0,1,64,256,700}) {
+            const auto actual=renderProgram(module,p,pc,bank,true,false);
+            const auto reference=renderProgram(module,p,pc,bank,true,true);
             const auto before=regionDifference(actual.audio,reference.audio,0,pc);
             const auto error=difference(actual.audio,reference.audio);
-            std::cout<<"PROGRAM modern_to_legacy offset="<<pc<<" before_error="<<before<<" max_audio_error="<<error
-                     <<" actual_policy="<<actual.policy<<" reference_policy="<<reference.policy
-                     <<" actual_volume="<<actual.volume<<" reference_volume="<<reference.volume<<std::endl;
-            check(actual.policy==0&&reference.policy==0,"native bank/program selects Legacy in both renders");
-            check(error<=audioTolerance,"Legacy recall ends modern curves and preserves program precedence");
-            check(std::abs(actual.volume-reference.volume)<=normalizedTolerance,"program values survive block-end queue publication");
+            std::cout<<"PROGRAM circuit_recall bank="<<bank<<" offset="<<pc<<" before_error="<<before
+                     <<" max_audio_error="<<error<<" actual_policy="<<actual.policy
+                     <<" reference_policy="<<reference.policy<<" actual_volume="<<actual.volume
+                     <<" reference_volume="<<reference.volume<<std::endl;
+            check(actual.policy==1&&reference.policy==1&&actual.parity==0&&reference.parity==0,
+                  "both factory banks retain the fixed circuit engine at every program offset");
+            check(error<=audioTolerance,
+                  "recall in either bank preserves queued sample timing across the program boundary");
+            check(std::abs(actual.volume-double(.31f))<=normalizedTolerance
+                      &&std::abs(reference.volume-double(.31f))<=normalizedTolerance,
+                  "recall in either bank preserves the independently specified final host endpoint");
         }
-        for(int bank:{0,1}){
-            const auto full=renderProgram(module,p,64,bank,false,false,false);
-            const auto split=renderProgram(module,p,64,bank,false,true,false);
-            const auto error=difference(full.audio,split.audio);
-            std::cout<<"CONTROL no_queue bank="<<bank<<" error="<<error<<" policy="<<full.policy<<std::endl;
-            check(error<=audioTolerance,"native program-only rendering is partition-neutral");
-            const auto omitted=renderProgram(module,p,64,bank,false,false,false,false);
-            const auto positive=difference(full.audio,omitted.audio);
-            std::cout<<"CONTROL program_audible bank="<<bank<<" difference="<<positive<<std::endl;
-            check(positive>.00001,"native Program Change produces an audible change");
+        const auto full=renderProgram(module,p,64,bank,false,false);
+        const auto split=renderProgram(module,p,64,bank,false,true);
+        const auto error=difference(full.audio,split.audio);
+        std::cout<<"CONTROL no_queue bank="<<bank<<" error="<<error<<" policy="<<full.policy<<std::endl;
+        check(error<=audioTolerance,"native program-only rendering is partition-neutral");
+        check(full.policy==1&&full.parity==0&&split.policy==1&&split.parity==0,
+              "program-only recalls in both banks retain canonical circuit state");
+        const auto omitted=renderProgram(module,p,64,bank,false,false,false);
+        const auto positive=difference(full.audio,omitted.audio);
+        std::cout<<"CONTROL program_audible bank="<<bank<<" difference="<<positive<<std::endl;
+        check(positive>.00001,"native Program Change produces an audible change in each bank");
+
+        // The historical engine bits may still arrive in old host sessions.
+        // Their initial values must not suppress MIDI program handling, reset
+        // held notes, flatten automation, or change the recalled instrument.
+        const auto circuit=renderProgram(module,p,64,bank,true,false);
+        for(int retired:{cs80::P_sourcePerformance,cs80::P_parityMode}) {
+            auto stale=p;
+            stale[retired]=retired==cs80::P_sourcePerformance?0.0f:1.0f;
+            const auto restored=renderProgram(module,stale,64,bank,true,false);
+            // A queue on every sound control can completely override the
+            // recalled voicing. Keep that precedence check above, then use
+            // an unautomated positive control to hear Program Change itself.
+            const auto recalledSound=renderProgram(module,stale,64,bank,false,false);
+            const auto withoutProgram=renderProgram(module,stale,64,bank,false,false,false);
+            std::cout<<"CONTROL retired_initial_policy bank="<<bank<<" id="<<cs80::paramId(retired)
+                     <<" error="<<difference(restored.audio,circuit.audio)
+                     <<" program_difference="<<difference(recalledSound.audio,withoutProgram.audio)<<std::endl;
+            check(restored.policy==1&&restored.parity==0,
+                  "retired initial policy requests normalize through real VST3 program recall");
+            check(restored.audio==circuit.audio,
+                  "obsolete initial policy bits leave queued program playback byte-identical");
+            check(difference(recalledSound.audio,withoutProgram.audio)>.00001,
+                  "obsolete initial isolation request cannot suppress an audible Program Change");
         }
-        const auto modern=renderProgram(module,p,64,0,true,false,false);
-        const auto modernSplit=renderProgram(module,p,64,0,true,true,false);
-        const auto modernError=difference(modern.audio,modernSplit.audio);
-        std::cout<<"CONTROL modern_to_modern error="<<modernError<<" policy="<<modern.policy<<std::endl;
-        check(modern.policy==1&&modernSplit.policy==1&&modernError<=audioTolerance,"same-policy modern recall retains host curves");
-        std::cout<<"CONTROL modern_endpoint actual="<<modern.volume<<" split="<<modernSplit.volume<<" expected="<<double(.31f)<<std::endl;
-        check(std::abs(modern.volume-double(.31f))<=normalizedTolerance&&std::abs(modernSplit.volume-double(.31f))<=normalizedTolerance,
-              "same-policy modern recall preserves the independently specified final host endpoint");
-        const auto invalid=renderProgram(module,p,64,3,true,false,false);
-        const auto absent=renderProgram(module,p,64,3,true,false,false,false);
-        const auto ignoredError=difference(invalid.audio,absent.audio);
-        std::cout<<"CONTROL invalid_program error="<<ignoredError<<std::endl;
-        check(ignoredError==0,"invalid bank/program does not cancel host curves");
-        auto legacy=p;legacy[cs80::P_sourcePerformance]=0;
-        for(int bank:{0,1}) {
-            const auto render=renderProgram(module,legacy,64,bank,true,false,false);
-            std::uint64_t hash=14695981039346656037ull;
-            const auto* bytes=reinterpret_cast<const unsigned char*>(render.audio.data());
-            for(size_t i=0;i<render.audio.size()*sizeof(float);++i)hash=(hash^bytes[i])*1099511628211ull;
-            std::cout<<"LEGACY_ENTRY bank="<<bank<<" pcm_fnv1a="<<hash<<" policy="<<render.policy<<" volume="<<render.volume<<std::endl;
-        }
-        auto pure=p;pure[cs80::P_parityMode]=1;
-        const auto ignoredPure=renderProgram(module,pure,64,1,true,false,false);
-        const auto absentPure=renderProgram(module,pure,64,1,true,false,false,false);
-        const auto pureError=difference(ignoredPure.audio,absentPure.audio);
-        std::cout<<"CONTROL pure_ignores_program error="<<pureError<<std::endl;
-        check(pureError==0,"PURE still ignores native MIDI Program Change");
+    }
+    const auto invalid=renderProgram(module,p,64,3,true,false);
+    const auto absent=renderProgram(module,p,64,3,true,false,false);
+    const auto ignoredError=difference(invalid.audio,absent.audio);
+    std::cout<<"CONTROL invalid_program error="<<ignoredError<<std::endl;
+    check(ignoredError==0,"invalid bank/program does not cancel host curves");
 }
 }

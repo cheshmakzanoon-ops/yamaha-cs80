@@ -207,14 +207,17 @@ int main(int argc, char** argv)
             const auto neutral = lfoRender(module, p, {}, 256, source, 13);
             check(exact(neutral, lfoRender(module, p, {}, 256, source, 13, false, true)), "empty/null noqueue byte-identical");
             capture(out / (id + "-noqueue.pcm"), neutral);
+            // Historical capture suffixes identify old session requests, not
+            // alternate engines. Both requests must retain the same live curves.
             auto legacy = p; legacy[cs80::P_sourcePerformance] = 0;
             const auto legacyActual = lfoRender(module, legacy, curves, 256, source, 13);
-            check(exact(legacyActual, lfoRender(module, legacy, curves, 256, source, 13, true)),
-                  "Legacy rate offsets match block-start final-point flattening exactly");
+            check(exact(legacyActual, lfoRender(module, p, curves, 256, source, 13)),
+                  "retired engine request preserves canonical circuit sample-accurate modulation");
             capture(out / (id + "-legacy.pcm"), legacyActual);
             auto pure = p; pure[cs80::P_parityMode] = 1;
             const auto pureActual = lfoRender(module, pure, curves, 256, source, 13);
-            check(exact(pureActual, lfoRender(module, pure, constant, 256, source, 13)), "PURE rate automation inert");
+            check(exact(pureActual, lfoRender(module, p, curves, 256, source, 13)),
+                  "retired isolation request preserves canonical circuit sample-accurate modulation");
             capture(out / (id + "-pure.pcm"), pureActual);
             if (!compat) {
                 const auto scalar = scalarReference(module, p, curves, source);

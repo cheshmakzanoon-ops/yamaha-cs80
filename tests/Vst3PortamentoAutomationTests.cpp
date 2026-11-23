@@ -98,7 +98,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = portamentoRender(protectedP, 256);
-                check(actual == portamentoRender(protectedP, 256, true, true), "portamento Legacy/PURE preserve flattening");
+                check(actual == portamentoRender(p, 256), "portamento retired mode requests preserve canonical circuit sample-accurate audio");
                 capturePortamento(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

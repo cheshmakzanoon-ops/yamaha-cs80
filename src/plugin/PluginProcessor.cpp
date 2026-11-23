@@ -6,6 +6,7 @@
 #include "core/VoiceModes.h"
 #include "PluginProcessorLibrary.h"
 #include "ParameterStateChildIndex.h"
+#include "CircuitPolicyParameter.h"
 
 #include <algorithm>
 #include <cmath>
@@ -31,6 +32,29 @@ public:
     using juce::AudioParameterBool::AudioParameterBool;
     float getValue() const override { return get() ? 1.0f : 0.0f; }
 };
+
+constexpr bool reservedEngineParameter(int index) noexcept
+{
+    return index == cs80::P_parityMode || index == cs80::P_sourcePerformance;
+}
+
+void useCircuitEngine(cs80::ParamValues& values) noexcept
+{
+    values[cs80::P_parityMode] = 0.0f;
+    values[cs80::P_sourcePerformance] = 1.0f;
+}
+
+void useCircuitEngine(juce::ValueTree& state)
+{
+    for (const int index : { cs80::P_parityMode, cs80::P_sourcePerformance })
+    {
+        const auto id = Cs80AudioProcessor::parameterId(index);
+        const float value = index == cs80::P_sourcePerformance ? 1.0f : 0.0f;
+        for (auto child : state)
+            if (child.getProperty("id").toString() == id)
+                child.setProperty("value", value, nullptr);
+    }
+}
 
 juce::File makeUserPresetDirectory()
 {
@@ -65,8 +89,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
             for (int local = 0; local < cs80::CP_count; ++local)
                 hardwareFactoryValues[(size_t) channel][(size_t) tone][(size_t) local] = values[cs80::chParam(channel, local)];
         }
-    // Start with a program actually voiced for Circuit, including its library
-    // identity. A Legacy identity would also open the browser in Legacy scope.
+    // Start with the authored showcase and its stable factory identity.
     applyFreshInstancePatch();
     cachedFrame.effectiveValues = currentValues();
     resetHostAutomationState();
@@ -308,24 +331,15 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     }
     {
         auto engine = group("engine", cs80::paramDef(cs80::P_parityMode).group);
-        // PURE CS-80 (plan 1.7): the W0 isolation contract, opt-in, appended after
-        // all 243 shipped host IDs. ID, index and AU hint are unchanged.
-        engine->addChild(std::make_unique<CanonicalBoolParameter>(
-            juce::ParameterID { parameterId(cs80::P_parityMode), 6 }, "PURE CS-80", false));
-        // ENGINE (plan 1.7): on = Circuit, off = Legacy (compat); a sound-model
-        // choice, not a change to isolation. Host244/AU hint 7 unchanged. Fresh
-        // instances use the circuit engine; the CORE default stays Legacy so
-        // default-ParamValues renders, the legacy factory bank and old sessions keep
-        // their sound (normaliseRestoredState restores missing values by schema).
-        engine->addChild(std::make_unique<CanonicalBoolParameter>(
-            juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 }, "Engine", true,
-            juce::AudioParameterBoolAttributes()
-                .withStringFromValueFunction([](bool circuit, int) { return juce::String(circuit ? "Circuit" : "Legacy (compat)"); })
-                .withValueFromStringFunction([](const juce::String& text)
-                {
-                    const auto t = text.trim();
-                    return t.startsWithIgnoreCase("c") || t.equalsIgnoreCase("on") || t == "1";
-                })));
+        // Published host slots 243/244 and AU hints 6/7 must not move. Old
+        // projects can still identify them, but no write can select another
+        // sound engine or mask the playable controls.
+        engine->addChild(std::make_unique<cs80::CircuitPolicyParameter>(
+            juce::ParameterID { parameterId(cs80::P_parityMode), 6 },
+            "Reserved engine policy", false, "Off (reserved)"));
+        engine->addChild(std::make_unique<cs80::CircuitPolicyParameter>(
+            juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 },
+            "Circuit engine (fixed)", true, "Circuit"));
         layout.add(std::move(engine));
     }
 
@@ -487,6 +501,8 @@ void Cs80AudioProcessor::readParameters()
         }
     }
     syncHostAutomationParameters();
+    // Policy is a product invariant, including old state and queued host writes.
+    useCircuitEngine(cachedFrame.effectiveValues);
 }
 
 cs80::ParamValues Cs80AudioProcessor::currentValues() const
@@ -500,6 +516,7 @@ cs80::ParamValues Cs80AudioProcessor::currentValues() const
         else
             values.v[(size_t) i] = cs80::paramDef(i).def;
     }
+    useCircuitEngine(values);
     return values;
 }
 
@@ -507,6 +524,8 @@ float Cs80AudioProcessor::getParamValue(int index) const
 {
     if (index < 0 || index >= cs80::P_numParams)
         return 0.0f;
+    if (reservedEngineParameter(index))
+        return index == cs80::P_sourcePerformance ? 1.0f : 0.0f;
     if (auto* p = apvts.getRawParameterValue(parameterId(index)))
         return p->load();
     return cs80::paramDef(index).def;
@@ -515,7 +534,8 @@ float Cs80AudioProcessor::getParamValue(int index) const
 void Cs80AudioProcessor::setParamValue(int index, float physicalValue)
 {
     // Reject malformed control input before normalisation or host notification.
-    if (index < 0 || index >= cs80::P_numParams || !std::isfinite(physicalValue))
+    if (index < 0 || index >= cs80::P_numParams || reservedEngineParameter(index)
+        || !std::isfinite(physicalValue))
         return;
     if (auto* p = apvts.getParameter(parameterId(index)))
     {
@@ -561,7 +581,7 @@ bool Cs80AudioProcessor::restorePresetBrowserSound(const cs80::PresetBrowserSoun
         if (source < 0 || source > 13)
             return false;
     for (int i = 0; i < cs80::P_numParams; ++i)
-        if (!isPhysicalSetupParameter(i) && i != cs80::P_parityMode
+        if (!isPhysicalSetupParameter(i) && !reservedEngineParameter(i)
             && !valid(sound.values[i], cs80::paramDef(i)))
             return false;
     for (int bank = 0; bank < 4; ++bank)
@@ -636,7 +656,7 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values, bool reset
     // Validate the recalled sound before changing sources or publishing any
     // parameters. Setup/policy fields are deliberately outside preset recall.
     for (int i = 0; i < cs80::P_numParams; ++i)
-        if (!isPhysicalSetupParameter(i) && i != cs80::P_parityMode && !std::isfinite(values[i]))
+        if (!isPhysicalSetupParameter(i) && !reservedEngineParameter(i) && !std::isfinite(values[i]))
             return;
     if (resetSources)
         resetHardwareSources();
@@ -644,8 +664,8 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values, bool reset
     {
         // A preset recalls the sound, not what is plugged into the jack, the
         // pedal contact, the EXP/WAH selector or the rear output switch.
-        // Isolation is a session policy, not a sound: presets cannot disengage it.
-        if (isPhysicalSetupParameter(i) || i == cs80::P_parityMode)
+        // The reserved engine slots are not part of a sound.
+        if (isPhysicalSetupParameter(i) || reservedEngineParameter(i))
             continue;
         if (auto* p = apvts.getParameter(parameterId(i)))
             p->setValueNotifyingHost(p->convertTo0to1(values[i]));
@@ -693,6 +713,7 @@ void Cs80AudioProcessor::setPresetName(const juce::String& name)
 
 void Cs80AudioProcessor::setParameterGesture(int index, float physicalValue)
 {
+    if (reservedEngineParameter(index)) return;
     if (auto* p = apvts.getParameter(parameterId(index)))
     {
         p->beginChangeGesture();
@@ -701,31 +722,29 @@ void Cs80AudioProcessor::setParameterGesture(int index, float physicalValue)
     }
 }
 
-void Cs80AudioProcessor::setEngineMode(EngineMode mode)
+void Cs80AudioProcessor::setEngineMode(EngineMode)
 {
-    setParameterGesture(cs80::P_sourcePerformance, mode == EngineMode::circuit ? 1.0f : 0.0f);
+    // Source compatibility for callers built against the former mode API.
 }
 
 Cs80AudioProcessor::EngineMode Cs80AudioProcessor::getEngineMode() const
 {
-    return getParamValue(cs80::P_sourcePerformance) >= 0.5f ? EngineMode::circuit : EngineMode::legacy;
+    return EngineMode::circuit;
 }
 
 Cs80AudioProcessor::EngineMode Cs80AudioProcessor::getEffectiveEngineMode() const
 {
-    return cs80::usesSourceModels(cs80::renderPolicy(getParamValue(cs80::P_parityMode),
-                                                     getParamValue(cs80::P_sourcePerformance)))
-        ? EngineMode::circuit : EngineMode::legacy;
+    return EngineMode::circuit;
 }
 
-void Cs80AudioProcessor::setPure(bool pure)
+void Cs80AudioProcessor::setPure(bool)
 {
-    setParameterGesture(cs80::P_parityMode, pure ? 1.0f : 0.0f);
+    // The circuit instrument has no separate isolation mode.
 }
 
 bool Cs80AudioProcessor::isPure() const
 {
-    return getParamValue(cs80::P_parityMode) >= 0.5f;
+    return false;
 }
 
 void Cs80AudioProcessor::applyFreshInstancePatch()
@@ -739,7 +758,7 @@ void Cs80AudioProcessor::applyFreshInstancePatch()
         setPresetMetadata(juce::String(preset.name), index, cs80::PresetOrigin::factory());
         return;
     }
-    // Defensive empty-library fallback; never relabel a Legacy sound as curated.
+    // Defensive empty-library fallback on the same circuit engine.
     applyValues(cs80::ParamValues {});
     setParamValue(cs80::P_subOriginalMode, 1.0f);
     setParamValue(cs80::P_sourcePerformance, 1.0f);
@@ -758,7 +777,7 @@ void Cs80AudioProcessor::loadInitPatch()
         }
     loadFactoryPreset(index);
     // INIT remains the neutral programming starting point on Circuit. Fresh
-    // instances instead open the curated showcase; the Legacy bank is frozen.
+    // instances instead open the authored showcase.
     setParamValue(cs80::P_subOriginalMode, 1.0f);
     setParamValue(cs80::P_sourcePerformance, 1.0f);
     if (!bank.empty())
@@ -1430,25 +1449,7 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     auto result = state.createCopy();
     cs80::detail::ParameterStateChildIndex index(result);
     auto hardware = state.getChildWithName("HARDWARE");
-    // Malformed or missing schema markers are treated as the oldest schema.
-    // XML attributes arrive as strings (ValueTree::fromXml), so a complete
-    // decimal integer string is a valid marker too; before schema 3 the string
-    // form was always read as schema 1, which no earlier rule could observe.
-    const auto schemaValue = state.getProperty(stateSchemaKey, 1);
-    int schema = 1;
-    if (schemaValue.isInt() || schemaValue.isInt64() || schemaValue.isDouble())
-        schema = (int) schemaValue;
-    else if (schemaValue.isString())
-    {
-        const auto text = schemaValue.toString().trim();
-        if (text.isNotEmpty() && text.containsOnly("0123456789") && text.length() < 9)
-            schema = text.getIntValue();
-    }
-    schema = juce::jlimit(1, stateSchemaVersion, schema);
     const bool legacy = hardware.isValid() && (int) hardware.getProperty("version", 1) == 1;
-    // ENGINE that a state of this schema means when its value is missing or
-    // malformed: Legacy before the plan 1.7 default flip, Circuit after it.
-    const float engineFallback = schema >= 3 ? 1.0f : 0.0f;
     auto ensure = [&](const juce::String& id, float fallback)
     {
         auto* p = apvts.getParameter(id);
@@ -1484,15 +1485,16 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         }
         float value = (float) child.getProperty("value", fallback);
         if (!std::isfinite(value)) value = fallback;
-        if (id == parameterId(cs80::P_subOriginalMode)
-            || id == parameterId(cs80::P_parityMode)
-            || id == parameterId(cs80::P_sourcePerformance))
+        if (id == parameterId(cs80::P_parityMode))
+            value = 0.0f;
+        else if (id == parameterId(cs80::P_sourcePerformance))
+            value = 1.0f;
+        else if (id == parameterId(cs80::P_subOriginalMode))
         {
             // Only complete finite numeric 0/1 values are taken literally.
             // Fractional, out-of-range, partially parsed or missing values
-            // restore the writing schema's meaning (the fallback): original
-            // SUB/PURE off, ENGINE Legacy before schema 3 and Circuit from 3. A
-            // missing value never inherits the live instance's policy.
+            // restore the SUB's historical fallback. This is a control setting,
+            // not an alternative synthesis engine.
             const auto encoded = child.getProperty("value", juce::var()).toString().trim();
             const auto* begin = encoded.toRawUTF8();
             char* end = nullptr;
@@ -1508,10 +1510,10 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     };
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
-        // Missing/invalid mode means old session, NOT the fresh-instance default.
-        // Schema-1 states always predate any change of the render-policy default.
+        // Schema 4 migrates every project onto the circuit engine. Musical
+        // parameters, programmer sources and old SUB control data still import.
         const bool oldSessionOff = i == cs80::P_subOriginalMode;
-        ensure(parameterId(i), i == cs80::P_sourcePerformance ? engineFallback
+        ensure(parameterId(i), i == cs80::P_sourcePerformance ? 1.0f
                                : oldSessionOff ? 0.0f : cs80::paramDef(i).def);
     }
     // The marker describes serialized data only; savers write the current one.
@@ -1574,6 +1576,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio] the undo flush and the host never touch the tree at once
     apvts.syncNow();
     auto state = apvts.copyStateForSave();
+    useCircuitEngine(state);
     {
         // ws3 Phase 6: the session keeps its Scala/KBM texts (not presets).
         const juce::SpinLock::ScopedLockType lock(scalaLock);
@@ -1680,6 +1683,7 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
         apvts.syncNow();
         return apvts.copyStateForSave();
     }();
+    useCircuitEngine(state);
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
@@ -1773,7 +1777,7 @@ juce::Result Cs80AudioProcessor::loadUserPreset(const juce::File& file)
     // Session settings, not sounds: a user preset keeps the live values.
     // Scala/KBM and MTS data are not recalled here, so their source must
     // stay with the live session rather than the preset writer's setup.
-    for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling,
+    for (int index : { (int) cs80::P_oversampling,
                        (int) cs80::P_outputJack, (int) cs80::P_tuningMode })
         restored.getChildWithProperty("id", parameterId(index))
             .setProperty("value", getParamValue(index), nullptr);
@@ -1799,10 +1803,10 @@ int Cs80AudioProcessor::hostParameterIndex(int coreIndex) const
 void Cs80AudioProcessor::applyMidiLearn(const juce::MidiBuffer& midi) noexcept
 {
     // Lock-free on this side: the map is atomics only. setValueNotifyingHost is the path JUCE's own
-    // wrappers use for host automation on the audio thread. PURE CS-80 has no MIDI learn.
-    const auto* parity = parameterValues[(size_t) cs80::P_parityMode];
-    midiLearnLive = parity == nullptr || parity->load(std::memory_order_relaxed) < 0.5f;
-    if (! midiLearnLive || midi.isEmpty())
+    // wrappers use for host automation on the audio thread. Retired policy
+    // lanes cannot disable the instrument's MIDI control surface.
+    midiLearnLive = true;
+    if (midi.isEmpty())
         return;
     const auto& parameters = getParameters();
     for (const auto metadata : midi)
@@ -1823,11 +1827,9 @@ void Cs80AudioProcessor::applyVst3MidiLearn(const juce::MidiBuffer& midi) noexce
         applyMidiLearn(midi);
         return;
     }
-    // PURE gating belongs to block entry, as in applyMidiLearn. A learned
-    // transition to PURE must not suppress later CCs from this same buffer.
-    const auto* parity = parameterValues[(size_t) cs80::P_parityMode];
-    midiLearnLive = parity == nullptr || parity->load(std::memory_order_relaxed) < 0.5f;
-    if (!midiLearnLive || midi.isEmpty())
+    // Old learned policy lanes are inert; other learned controls remain live.
+    midiLearnLive = true;
+    if (midi.isEmpty())
     {
         prepareHostAutomation();
         return;

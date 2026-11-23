@@ -1705,7 +1705,9 @@ void testFactoryBank()
     std::set<std::string> names;
     for (const auto& preset : bank)
     {
-        check(preset.values[P_subOriginalMode] == 0, "shipped factory programs retain legacy SUB");
+        check(preset.values[P_subOriginalMode] == 1
+                  && preset.values[P_sourcePerformance] == 1 && preset.values[P_parityMode] == 0,
+              "every original-address factory program uses the circuit engine and original SUB");
         check(! preset.name.empty(), "preset has a name");
         check(! preset.category.empty(), "preset has a category");
         check(names.insert(preset.name).second, "preset name unique: " + preset.name);

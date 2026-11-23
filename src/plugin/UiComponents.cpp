@@ -86,7 +86,7 @@ juce::String formatParamValue(int parameterIndex, float value)
         : -1;
 
     if (parameterIndex == cs80::P_subAtVcf || parameterIndex == cs80::P_subExtLevel) return percent(value);
-    if (parameterIndex == cs80::P_subOriginalMode) return value >= 0.5f ? "ORIGINAL" : "LEGACY";
+    if (parameterIndex == cs80::P_subOriginalMode) return value >= 0.5f ? "ORIGINAL" : "EXTENDED";
     if (parameterIndex == cs80::P_subOriginalFunction) return enumName(kOriginalSubWaves, 6, value);
     if (parameterIndex == cs80::P_subOriginalSpeed) return rate(value);
     if (parameterIndex >= cs80::P_kbdBrillianceLow && parameterIndex <= cs80::P_kbdLevelHigh)
@@ -1146,6 +1146,8 @@ juce::String formatParamValueFit(int parameterIndex, float value, const juce::Fo
 
 juce::String parameterLongName(int parameterIndex)
 {
+    if (parameterIndex == cs80::P_sourcePerformance) return "Circuit engine (fixed)";
+    if (parameterIndex == cs80::P_parityMode) return "Reserved engine policy";
     const auto& def = cs80::paramDef(parameterIndex);
     if (parameterIndex >= cs80::P_numGlobals && parameterIndex < cs80::P_legacyNumParams)
     {
@@ -3923,7 +3925,7 @@ juce::String ParamKnob::buildTooltip(bool withCircuitNotes) const
         text << "\n" << help->plain << "\n" << pagesText(*help);
     const int cc = processor.getMidiLearn().controllerFor(getHostParameterIndex());
     if (cc >= 0)
-        text << "\nMIDI CC " << cc << (processor.getParamValue(cs80::P_parityMode) >= 0.5f ? " (inactive in PURE CS-80)" : "");
+        text << "\nMIDI CC " << cc;
     text << "\nDouble-click resets.  Right-click or Shift+F10: MIDI learn, type, copy, help."
          << (withCircuitNotes || help == nullptr ? juce::String() : juce::String("  Shift: circuit notes."));
     if (withCircuitNotes && help != nullptr)
@@ -3940,7 +3942,6 @@ juce::PopupMenu ParamKnob::buildContextMenu()
                           + formatParamValue(parameterIndex, value));
     auto& learn = processor.getMidiLearn();
     const int host = getHostParameterIndex();
-    const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
     const int cc = learn.controllerFor(host);
     juce::Component::SafePointer<ParamKnob> safe(this);
     const auto valid = [safe, parameter = parameterIndex, host, generation = contextBindingGeneration] {
@@ -3956,13 +3957,11 @@ juce::PopupMenu ParamKnob::buildContextMenu()
         item.action = [valid, action = std::move(action)] { if (action && valid()) action(); };
         menu.addItem(item);
     };
-    if (pure)
-        add("MIDI learn (off in PURE CS-80)", false, nullptr);
-    else if (learn.learningParameter() == host && host >= 0)
+    if (learn.learningParameter() == host && host >= 0)
         add("Cancel MIDI learn (waiting for a controller)", true, [safe, host] { if (safe != nullptr && safe->processor.getMidiLearn().learningParameter() == host) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
     else
         add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
-            [safe, host] { if (safe != nullptr && safe->processor.getParamValue(cs80::P_parityMode) < 0.5f) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
+            [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
     if (cc >= 0)
         add("Forget MIDI CC " + juce::String(cc), true, [safe, host, cc] { if (safe != nullptr && safe->processor.getMidiLearn().controllerFor(host) == cc) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
     menu.addSeparator();
@@ -4182,11 +4181,10 @@ juce::String LedButton::getTooltip()
     if (host >= 0)
     {
         const auto& learn = contextProcessor->getMidiLearn();
-        const bool pure = contextProcessor->getParamValue(cs80::P_parityMode) >= 0.5f;
-        if (learn.learningParameter() == host && !pure)
+        if (learn.learningParameter() == host)
             text << "\nWaiting for a MIDI controller. Shift+F10 to cancel.";
         const int cc = learn.controllerFor(host);
-        if (cc >= 0) text << "\nMIDI CC " << cc << (pure ? " (inactive in PURE CS-80)" : "");
+        if (cc >= 0) text << "\nMIDI CC " << cc;
     }
     return text;
 }
@@ -4243,28 +4241,25 @@ juce::PopupMenu LedButton::buildContextMenu()
     menu.addSectionHeader(parameter->getName(64) + "   " + parameter->getCurrentValueAsText());
     const int host = parameter->getParameterIndex();
     const bool enabled = isEnabled() && !isDown();
-    const bool pure = contextProcessor->getParamValue(cs80::P_parityMode) >= 0.5f;
     auto& learn = contextProcessor->getMidiLearn();
     const int cc = learn.controllerFor(host);
     juce::Component::SafePointer<LedButton> safe(this);
     // Menus are asynchronous. Neither deletion, rebinding, a new learn target,
-    // nor a later disabled/PURE state may redirect an old action.
+    // nor a later disabled state may redirect an old action.
     auto current = [safe, processor = contextProcessor, id = contextParameterId, host, generation = contextBindingGeneration] {
         return safe != nullptr && safe->contextMatches(processor, id, host, generation);
     };
     auto add = [&menu](const juce::String& title, bool available, std::function<void()> action) {
         juce::PopupMenu::Item item(title); item.isEnabled = available; item.action = std::move(action); menu.addItem(item);
     };
-    if (pure)
-        add("MIDI learn (off in PURE CS-80)", false, nullptr);
-    else if (learn.learningParameter() == host)
+    if (learn.learningParameter() == host)
         add("Cancel MIDI learn (waiting for a controller)", enabled, [safe, current, host] {
             if (current() && safe->contextProcessor->getMidiLearn().learningParameter() == host)
                 safe->contextProcessor->getMidiLearn().cancelLearn();
         });
     else
         add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", enabled, [safe, current, host] {
-            if (current() && safe->contextProcessor->getParamValue(cs80::P_parityMode) < 0.5f)
+            if (current())
                 safe->contextProcessor->getMidiLearn().armLearn(host);
         });
     if (cc >= 0)

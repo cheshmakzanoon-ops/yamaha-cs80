@@ -14,14 +14,9 @@ class Cs80AudioProcessor;
 namespace cs80::ui
 {
 
-// The slim toolbar of the modern layer: preset display with prev/next and LIBRARY, A/B compare,
-// undo/redo, the ENGINE (CIRCUIT | LEGACY) and PURE CS-80 switches, the STUDIO key and a menu.
-//
-// ENGINE and PURE CS-80 are bound to the existing host parameters source_performance and
-// parity_mode (IDs unchanged). Everything else goes through the Actions callbacks, so the
-// integrator can connect the library's prev/next and A/B compare and the processor's undo
-// history without this component knowing about them. A key whose action is not connected is
-// disabled; a menu entry whose action is not connected is left out.
+// Program browsing, A/B compare, undo/redo, Studio and the menu.
+// The instrument always uses its circuit engine; there is no mode selector.
+// Actions are supplied by the editor, keeping ownership and lifetimes explicit.
 //
 // The toolbar paints its own recessed console rail, so it can sit over the editor's toolbar
 // row. It polls the display callbacks on its own 8 Hz timer.
@@ -99,18 +94,14 @@ private:
     class Key;
     class Display;
     void timerCallback() override;
-    void setEngine(bool circuit);
-    void setPure(bool pure);
     void showMenu();
 
     Cs80AudioProcessor& processor;
     Actions actions;
     std::uint64_t actionsGeneration = 0;
     std::unique_ptr<Key> prev, next, library, compareA, compareB, undoKey, redoKey,
-        circuitKey, legacyKey, pureKey, studioKey, menuKey;
+        studioKey, menuKey;
     std::unique_ptr<Display> display;
-    std::unique_ptr<juce::ParameterAttachment> engineAttachment, pureAttachment;
-    float engineValue = 0.0f, pureValue = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StudioToolbar)
 };

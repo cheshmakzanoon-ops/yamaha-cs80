@@ -34,7 +34,7 @@ void testSessionSchemaHost(Check&& check)
         { nullptr, 0.0f }, // Present PARAM with no value property.
         { "missing-child", 0.0f }
     }};
-    for (int schema : { 0, 1, 2, Cs80AudioProcessor::stateSchemaVersion })
+    for (int schema : { 0, 1, 2, 3, Cs80AudioProcessor::stateSchemaVersion })
         for (bool session : { false, true })
             for (float live : { 0.0f, 1.0f })
                 for (const auto& item : cases)
@@ -70,8 +70,11 @@ void testSessionSchemaHost(Check&& check)
                         if (!written) return;
                         host->loadUserPreset(file);
                     }
+                    checkCase(host->getParamValue(P_sourcePerformance) == 1.0f
+                                  && host->getParamValue(P_parityMode) == 0.0f,
+                          "SUB parsing never reactivates a retired engine policy");
                     checkCase(host->getParamValue(P_subOriginalMode) == item.expected,
-                          "session/preset SUB mode requires complete numeric 0/1, otherwise legacy off");
+                          "session/preset SUB mode requires complete numeric 0/1, otherwise Original SUB off");
                     const auto* parameter = host->getAPVTS().getParameter("sub_original_mode");
                     checkCase(parameter != nullptr && parameter->getValue() == item.expected,
                           "restored SUB mode agrees between host-facing value and APVTS");
@@ -107,7 +110,7 @@ void testSessionSchemaHost(Check&& check)
             host->loadUserPreset(file);
         }
         check(host->getParamValue(P_subOriginalMode) == 0.0f,
-              "malformed final SUB value restores legacy despite an earlier valid duplicate");
+              "malformed final SUB value restores Original SUB off despite an earlier valid duplicate");
     }
 }
 } // namespace cs80::tests

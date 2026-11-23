@@ -75,8 +75,8 @@ void buildBells(Builder& add)
               .eg(I, 0.003f, 2.7f, 0.0f, 1.5f).eg(II, 0.001f, 0.22f, 0.0f, 0.14f)
               .ring(307.0f, 0.0f, 0.001f, 0.8f, 0.0f).mix(0.29f));
     add("Vibraphone", "Bells", { "sub-mod", "sine", "dual-rank" },
-        "A long sine bar and shorter octave overtone share smooth 5.2 Hz SUB tremolo. The amplitude motion leaves a continuous ringing body between its crests.",
-        bell().wave(II, false, false, 0.68f).level(II, 0.0f, 0.11f)
+        "A long sine bar and shorter fourth-harmonic overtone share smooth 5.2 Hz SUB tremolo. The amplitude motion leaves a continuous ringing body between its crests.",
+        bell().feet(II, f2).wave(II, false, false, 0.68f).level(II, 0.0f, 0.11f)
               .touch(II, 0.0f, 0.78f, 0.0f, 0.0f)
               .eg(I, 0.003f, 4.8f, 0.0f, 3.2f).eg(II, 0.001f, 1.15f, 0.0f, 0.72f)
               .ring(307.0f, 0.0f, 0.001f, 0.8f, 0.0f).sub(subSine, 5.2f, 0.0f, 0.0f, 0.43f).mix(0.27f));

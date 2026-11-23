@@ -223,15 +223,34 @@ void testMsegShapeCopy(Check check)
             check(layer.getConfig() == fixture() && !undo.canUndo(), "a menu created disabled never becomes live after enabling");
             parent.removeChildComponent(&page);
         }
-        setup(page);
-        auto pendingPure = itemFor(page.buildShapeCopyMenu(), 1).action;
-        host->setPure(true);
-        if (pendingPure) pendingPure();
-        const auto pureItem = itemFor(page.buildShapeCopyMenu(), 1);
-        check(!pureItem.isEnabled && layer.getConfig() == fixture(), "PURE rejects pending copies and disables menu entries");
-        host->setPure(false);
-        if (pureItem.action) pureItem.action();
-        check(layer.getConfig() == fixture(), "PURE-created context cannot become live after leaving PURE");
+        for (int retired : { P_sourcePerformance, P_parityMode })
+            for (bool beforeMenu : { false, true })
+        {
+            setup(page);
+            const auto before = layer.getConfig();
+            const auto revision = layer.getRevision();
+            const int changes = probe.changes, gestures = probe.gestures;
+            const auto requestRetiredPolicy = [&] {
+                host->setParamValue(retired, retired == P_sourcePerformance ? 0.0f : 1.0f);
+                host->setPure(true); // The retired helper is equally inert.
+            };
+            if (beforeMenu) requestRetiredPolicy();
+            const auto item = itemFor(page.buildShapeCopyMenu(), 1);
+            if (!beforeMenu) requestRetiredPolicy();
+            check(item.isEnabled && bool(item.action) && !host->isPure()
+                      && host->getParamValue(P_sourcePerformance) == 1.0f
+                      && host->getParamValue(P_parityMode) == 0.0f
+                      && layer.getConfig() == before && layer.getRevision() == revision && !undo.canUndo(),
+                  "obsolete policy writes preserve new and already-open shape copy actions without changing state");
+            auto expected = before;
+            expected.msegs[1] = before.msegs[0];
+            if (item.action) item.action();
+            check(layer.getConfig() == expected && layer.getRevision() == revision + 1
+                      && unchangedParameters() && probe.changes == changes && probe.gestures == gestures,
+                  "shape copy remains effective after retired writes and leaves host parameters untouched");
+            check(host->undo() && layer.getConfig() == before && !undo.canUndo(),
+                  "a copy after obsolete policy writes remains one complete undo step");
+        }
 
         // All editor drag kinds plus the attached rate slider. A drag owns its transaction.
         for (int kind = 0; kind < 4; ++kind)

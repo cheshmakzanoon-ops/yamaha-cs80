@@ -135,8 +135,12 @@ void testSwitchContext(Check check)
     check(host->getMidiLearn().learningParameter() == -1, "current target cancellation works");
     host->setParamValue(P_parityMode, 1.0f);
     if (learn) learn();
-    check(host->getMidiLearn().learningParameter() == -1 && !action(button.buildContextMenu(), "MIDI learn"),
-          "PURE blocks both fresh and previously opened learn actions");
+    check(host->getMidiLearn().learningParameter() == parameter->getParameterIndex()
+              && host->getParamValue(P_parityMode) == 0.0f,
+          "obsolete isolation write leaves the previously opened switch learn action available");
+    host->getMidiLearn().cancelLearn();
+    check(bool(action(button.buildContextMenu(), "MIDI learn")),
+          "fresh switch learn remains available after an obsolete policy request");
     host->setParamValue(P_parityMode, 0.0f);
     button.setEnabled(false); if (learn) learn();
     check(host->getMidiLearn().learningParameter() == -1, "a disabled delayed learn action is inert");
@@ -245,10 +249,16 @@ void testSwitchContext(Check check)
               "a real learned MIDI event changes only the bound core/memory switch");
         check(current.button->getTooltip().contains("MIDI CC 74"), "tooltip reports the current switch mapping");
         processor->setParamValue(P_parityMode, 1.0f);
-        check(current.button->getTooltip().contains("inactive in PURE CS-80"), "retained switch mapping is labelled inactive in PURE");
+        processor->setParamValue(P_sourcePerformance, 0.0f);
+        check(current.button->getTooltip().contains("MIDI CC 74")
+                  && !current.button->getTooltip().contains("inactive")
+                  && processor->getParamValue(P_parityMode) == 0.0f
+                  && processor->getParamValue(P_sourcePerformance) == 1.0f,
+              "retired policy writes leave the switch mapping active and the circuit engine fixed");
         midi.clear(); midi.addEvent(juce::MidiMessage::controllerEvent(1, 74, opposite > 0.5f ? 0 : 127), 0);
         processor->processBlock(audio, midi);
-        check(target->getValue() == opposite, "PURE processing leaves the stored switch mapping inert");
+        check(target->getValue() == 1.0f - opposite,
+              "learned MIDI still changes the bound core or memory switch after retired policy writes");
     }
 
     // Actual editor factories, not only hand-built fixtures. No native peer or

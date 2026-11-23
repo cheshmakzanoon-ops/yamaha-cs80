@@ -1,11 +1,72 @@
-# W0: opt-in parity isolation
+# Circuit instrument and saved-session contract
+
+## Current behavior — 2026.11.2
+
+The shipped plugin has **one circuit engine**. Legacy and Pure/Parity Isolation
+are no longer selectable in the toolbar, Studio or preset browser. All 523
+factory programs, user patches, A/B slots and browser Revert use circuit
+processing with normal MIDI and optional Studio features. The original six SUB
+functions remain the factory default; the independently stored **WAVEFORM SET**
+control can still select Extended functions.
+
+Two published Boolean parameter identities remain reserved so older host
+automation lanes cannot bind to unrelated controls:
+
+| Parameter ID | Existing host index | AU version hint | Fixed value | Host display name |
+| --- | ---: | ---: | ---: | --- |
+| `parity_mode` | 243 | 6 | 0 | Reserved engine policy |
+| `source_performance` | 244 | 7 | 1 | Circuit engine (fixed) |
+
+They retain their Boolean type and host order, but are **not advertised as
+automatable**. Numeric or text writes cannot change their effective values.
+Obsolete writes leave sounding notes, controller ownership, MIDI learn, MPE,
+tuning, effects and sample-accurate automation active. Factory Program Change
+also retains the same engine in both existing address ranges. This is a fixed
+instrument policy, not an extra playback option.
+[Parameter implementation](../src/plugin/CircuitPolicyParameter.h) ·
+[Processor automation](../src/plugin/PluginProcessorAutomation.cpp)
+
+Saved-state **schema 4** records this policy. Earlier sessions and user presets
+retain their ordinary controls and stable parameter identities while their
+engine fields normalize to `source_performance=1`, `parity_mode=0`, including
+missing, malformed or contradictory fields. A/B snapshots and Revert cannot
+bring back a retired engine. The separate Original SUB field remains independently
+validated and editable. [State declaration](../src/plugin/PluginProcessor.h) ·
+[State normalization](../src/plugin/PluginProcessor.cpp) ·
+[Recall paths](../src/plugin/PluginProcessorLibrary.cpp)
+
+**This intentionally changes the sound of old Legacy or Pure sessions.** An old
+Legacy patch now uses the circuit models. An old Pure patch can again apply
+stored effects, modulation, tuning, panning and other previously masked settings.
+Preserving parameter data and program numbers does not promise identical audio.
+Keep the earlier binary and a rendered reference when a project's previous sound
+must be retained. Reloading a factory program separately selects its new voicing.
+[Preset revision](CIRCUIT_LIBRARY_2026_11_2.md)
+
+The regression coverage includes fixed host metadata, hostile parameter writes,
+state schemas, held-note continuity, A/B, Revert and MIDI program recall in
+[CircuitPolicyHostTests](../tests/CircuitPolicyHostTests.h), plus native VST3
+[policy](../tests/Vst3AutomationPolicyBoundaryTests.h) and
+[program](../tests/Vst3AutomationProgramBoundaryTests.h) boundaries. The local
+snapshot harness exposes `--circuit-policy-tests` and
+`--circuit-source-host-tests`; exact-commit CI determines whether the current
+native builds pass. These software checks do not establish calibrated hardware
+equivalence.
+
+## Archival isolation notes — before 2026.11.2
+
+The remainder of this document records the former opt-in isolation experiment
+and its historical checkpoints. **It does not describe an available plugin
+mode.** Core-only comparison tools retain diagnostic reference paths so their
+historical numerical checks remain reproducible. Those paths are not reachable
+through the production plugin's controls, saved sessions or program recall.
 
 Implemented after baseline `d56911a7c5f6953cd244457226b126cc567a538b`.
 This is a comparison fixture, **not calibrated hardware parity**. It removes modern
 signal-path extensions while retaining the current provisional circuit models.
 The [roadmap](PARITY_ROADMAP.md) remains the acceptance authority.
 
-## Contract
+### Historical contract
 
 `parity_mode` is appended at host index 243 (244 total), AU version hint 6,
 core index 137. Default off. Existing IDs/order/hints are unchanged. Absent,
@@ -25,7 +86,7 @@ carrying modern modulation into a comparison. Change mode before playing or
 capturing; it is not a seamless performance switch. The plugin reapplies its
 physical pedal position after the reset. New notes must be triggered afterward.
 
-## Effective masks
+### Historical effective masks
 
 - Three modern FX slots bypassed; LFOs 1–3 depth/destination disabled; four macros
   held at their neutral 0.5 values before derived settings are computed.
@@ -42,7 +103,7 @@ physical pedal position after the reset. New notes must be triggered afterward.
   digital full scale: capture floating-point data and monitor at a safe level.
   Filter saturation and other provisional internal laws are not thereby calibrated.
 
-## Explicit transport/numerical exceptions
+### Historical transport/numerical exceptions
 
 The 2x numerical rate and 255-tap output decimator remain, with the same reported
 63-host-sample latency. They are numerical implementation choices, not physical
@@ -57,7 +118,7 @@ CC11. Ribbon, polyphonic/channel pressure and on-screen pressure/foot controls
 remain as software transports for original performance inputs. The on-screen
 footswitch is still a latching stand-in, not a claim about contact mechanics.
 
-## Verification
+### Historical verification
 
 `cs80_parity_mode_tests` checks masks individually and together, original controls,
 controller isolation, ring limit, mode transitions, retained stored values and
@@ -73,7 +134,7 @@ establishes whether plugin/platform checks passed.
 The separate [comparison harness](PARITY_HARNESS.md) uses synthetic stand-ins only.
 No calibrated captures or hardware acceptance thresholds have been supplied.
 
-### Default-off compatibility checkpoint
+#### Default-off compatibility checkpoint
 
 On the same GCC 14.2 Release build, `src/tools/compatibility_probe.cpp` rendered
 all 222 factory presets at 44.1/48/96 kHz with a fixed note/controller sequence,
@@ -85,6 +146,6 @@ sequence or platform. Compile the probe separately against each revision's
 headers and `cs80_core` library, run with an output-file argument, then compare
 raw files. Do not use one revision's headers with the other's binary library.
 
-### Active-tail continuity
+#### Active-tail continuity
 
 An isolated, still-active unheld release tail retains both ranks’ oscillator phases and HP/LP numerical memories when reused; envelopes/touch still retrigger. Legacy RNG draws are retained to avoid shifting unrelated noise. Cold/inactive assignments, mode/reset policies and default-off behavior are unchanged. See [ACTIVE_TAIL_CONTINUITY.md](ACTIVE_TAIL_CONTINUITY.md); this is not a full inactive free-running or calibrated capacitor-state model.

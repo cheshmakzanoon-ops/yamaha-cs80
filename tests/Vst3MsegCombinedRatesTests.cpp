@@ -193,8 +193,10 @@ int main(int argc,char**argv)
     saveBytes(out/"all-on.state",readback);save("scalar",scalar);
     auto reversed=curves;std::reverse(reversed.begin(),reversed.end());
     double maxError=0;
+    std::vector<float> canonical256;
     for(int block:{7,64,256,1024}){
       const auto forward=renderSession(module,p,on,curves,block);
+      if(block==256)canonical256=forward;
       const auto reverse=renderSession(module,p,on,reversed,block);
       const double error=difference(scalar,forward);maxError=std::max(maxError,error);
       check(error<=host["audio_max_abs_error"],"combined queues match scalar");
@@ -218,7 +220,9 @@ int main(int argc,char**argv)
     check(exactAudio(zeroAudio,zeroFixed),"zero-amount rates inert");save("zero",zeroAudio);save("zero-fixed",zeroFixed);
     auto pure=p;pure[cs80::P_parityMode]=1;
     const auto pureAudio=renderSession(module,pure,on,curves,256),pureFixed=renderSession(module,pure,on,constant,256);
-    check(exactAudio(pureAudio,pureFixed),"PURE rates inert");save("pure",pureAudio);save("pure-fixed",pureFixed);
+    // Keep the historical capture names and the held-curve negative control.
+    check(exactAudio(pureAudio,canonical256),"retired isolation request preserves canonical circuit sample-accurate modulation");
+    save("pure",pureAudio);save("pure-fixed",pureFixed);
     std::cout<<"max_error="<<maxError<<"\n";
     std::cout<<"cases=1 renders="<<renderCount<<" captures="<<captures<<" readbacks=2 failures="<<failures<<"\n";
     return failures?1:0;

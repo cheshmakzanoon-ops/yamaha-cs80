@@ -66,7 +66,7 @@ private:
 };
 
 // The modern controllers strip: the pitch and mod wheels the CS-80 itself does not have, kept off
-// the instrument panel. The editor hides it in PURE CS-80.
+// the instrument panel. The player can show or hide it from the toolbar menu.
 class ControllersStrip final : public juce::Component
 {
 public:

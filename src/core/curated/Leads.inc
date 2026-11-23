@@ -23,14 +23,14 @@ void buildLeads(Builder& add)
     add("Touch Lead", "Leads", { "aftertouch", "init-bend", "velocity" },
         "A firm saw body with a lighter pulse edge. Velocity shapes the onset; pressure adds level, brilliance and gentle vibrato. The wheel supplies additional controlled vibrato.",
         lead().feg(I, 0.08f, 0.28f, 0.022f, 1.0f, 0.24f)
-              .touch(II, 0.24f, 0.60f, 0.38f, 0.26f).bend(0.065f));
+              .touch(II, 0.24f, 0.60f, 0.38f, 0.26f).bend(0.065f).mix(0.22f));
     add("Aftertouch Vibrato Lead", "Leads", { "aftertouch", "sub-mod" },
         "A centered, singing lead whose vibrato grows with pressure to roughly a quarter-tone peak-to-peak. The dry tone remains stable until pressure or wheel is applied.",
         lead().lpf(I, 1650.0f, 0.13f).lpf(II, 2650.0f, 0.12f)
               .eg(I, 0.022f, 1.4f, 0.92f, 0.32f).eg(II, 0.030f, 1.0f, 0.76f, 0.24f)
               .sub(subSine, 5.0f, 0.0f).subAt(0.055f, 0.16f).g(P_modWheelSub, 0.04f)
               .touch(I, 0.12f, 0.54f, 0.20f, 0.30f).touch(II, 0.18f, 0.55f, 0.26f, 0.22f)
-              .detune(0.6f).bend(0.0f).mix(0.26f));
+              .detune(0.6f).bend(0.0f).mix(0.18f));
     add("Ribbon Glide Lead", "Leads", { "ribbon", "glide", "aftertouch" },
         "A smooth, centered lead for ribbon gestures. Short portamento and a small upward onset scoop connect phrases; a restrained upper edge keeps large slides readable.",
         lead().wave(I, true, false, 0.14f).pw(II, 0.55f).lpf(I, 1450.0f, 0.12f).lpf(II, 2400.0f, 0.14f)
@@ -58,7 +58,7 @@ void buildLeads(Builder& add)
         "A steady saw-and-pulse tone with long, smooth portamento between notes. Gentle envelope motion keeps the glide audible without adding an onset pitch scoop.",
         lead().glide(0.24f).bend(0.0f).detune(0.8f).lpf(I, 1700.0f, 0.14f).lpf(II, 2600.0f, 0.10f)
               .feg(I, 0.02f, 0.14f, 0.035f, 1.0f, 0.28f).feg(II, 0.0f, 0.16f, 0.025f, 0.8f, 0.20f)
-              .eg(I, 0.018f, 1.4f, 0.95f, 0.32f).eg(II, 0.022f, 1.1f, 0.82f, 0.24f).mix(0.28f));
+              .eg(I, 0.018f, 1.4f, 0.95f, 0.32f).eg(II, 0.022f, 1.1f, 0.82f, 0.24f).mix(0.18f));
     add("Sine Lead", "Leads", { "sine", "aftertouch" },
         "One pure 8' sine with a rounded onset. Pressure controls level and a gentle vibrato; filter brilliance is intentionally inactive on this bypass-sine voice.",
         lead().wave(I, false, false, 1.0f).wave(II, false, false).mix(0.0f).detune(0.0f)

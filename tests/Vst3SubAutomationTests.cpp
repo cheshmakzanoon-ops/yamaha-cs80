@@ -89,7 +89,7 @@ int main(int argc,char**argv) {
             for(int policy:{0,2}) {
                 auto protectedP=p;protectedP[cs80::P_sourcePerformance]=policy==0?0.f:1.f;protectedP[cs80::P_parityMode]=policy==2?1.f:0.f;
                 const auto actual=render(module,protectedP,curves,256,true,false,source);
-                check(actual==render(module,protectedP,curves,256,true,true,source),"Legacy/PURE retain flattened native queues");
+                check(actual==render(module,p,curves,256,true,false,source),"retired mode requests preserve canonical circuit sample-accurate queues");
                 capture(out/(id+"-policy"+std::to_string(policy)+".pcm"),actual);
             }
             ++scenarios;
@@ -122,8 +122,8 @@ int main(int argc,char**argv) {
             check(neutral==mixedRender(p,256,false,false,true),"combined SUB mixed-source empty/no queue unchanged");
             for(int policy:{0,2}) {
                 auto protectedP=p;protectedP[cs80::P_sourcePerformance]=policy==0?0.f:1.f;protectedP[cs80::P_parityMode]=policy==2?1.f:0.f;
-                check(mixedRender(protectedP,256)==mixedRender(protectedP,256,true,true),
-                      "combined SUB mixed-source Legacy/PURE retain flattened native queues");
+                check(mixedRender(protectedP,256)==mixedRender(p,256),
+                      "combined SUB mixed-source retired mode requests preserve canonical circuit sample-accurate queues");
             }
             ++scenarios;
             std::cout<<"combined="<<voices<<'-'<<sources[0]<<'-'<<sources[1]

@@ -96,7 +96,7 @@ int main(int argc, char** argv)
                 protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                 protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
                 const auto actual = tremoloRender(protectedP, 256);
-                check(actual == tremoloRender(protectedP, 256, true, true), "tremolo Legacy/PURE preserve flattening");
+                check(actual == tremoloRender(p, 256), "tremolo retired mode requests preserve canonical circuit sample-accurate audio");
                 captureTremolo(out / (id + "-policy" + std::to_string(policy) + ".pcm"), actual);
             }
             if (!compatibilityOnly)

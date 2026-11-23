@@ -1,6 +1,7 @@
 #pragma once
-// Native regression for learned render-policy boundaries. Included only by
+// Native regression for retired render-policy writes. Included only by
 // Vst3AutomationTests.cpp, using its actual SDK host and registered audio bound.
+// Parameter IDs remain addressable, while every playback path stays circuit.
 namespace {
 void connectController(Instance& instance)
 {
@@ -61,9 +62,11 @@ double readSelector(Instance& instance, int parameter)
     require(instance.controller->setComponentState(&state) == kResultOk, "controller policy state update");
     return instance.controller->getParamNormalized(parameterId(cs80::paramId(parameter)));
 }
-struct RenderResult { std::vector<float> audio; double selector, volume; };
+struct RenderResult { std::vector<float> audio; double source, parity, volume; };
 RenderResult renderTransition(Module& module, cs80::ParamValues p, int parameter,
-                              double target, bool reference, bool targetModern, bool directPolicy = false, bool keyCC = false, bool mixedPolicy = false, bool hasCurves = true)
+                              double target, bool reference, bool directPolicy = false,
+                              bool keyCC = false, bool mixedPolicy = false,
+                              bool hasCurves = true, bool submitPolicy = true)
 {
     Instance instance(module, p);
     installMap(instance, parameter, keyCC, mixedPolicy);
@@ -74,85 +77,116 @@ RenderResult renderTransition(Module& module, cs80::ParamValues p, int parameter
         const int key = cs80::kSampleAccurateParameters[lane];
         curves[lane] = {{0, normalized(key, p[key])}, {255, validGeneratedNormalized(0.67 - double(lane) * 0.013)}};
     }
-    for(const auto& curve:curves)checkGeneratedCurve(curve);
+    for (const auto& curve : curves) checkGeneratedCurve(curve);
     std::vector<float> audio;
-    const int step = reference && targetModern ? 1 : 256;
+    // Put the notes on before the obsolete write. Equality with the omitted
+    // write therefore catches voice/envelope/controller resets, not just a
+    // selector that happens to serialize its fixed value after a reset.
+    instance.process(0, 256, nullptr, audio);
+    const int step = reference ? 1 : 256;
     for (int sample = 0; sample < 256; sample += step) {
         Changes changes;
         if (hasCurves) for (size_t lane = 0; lane < curves.size(); ++lane) {
             const int key = cs80::kSampleAccurateParameters[lane];
             Curve points = curves[lane];
-            if (reference) points = {{0, targetModern
-                ? absoluteValue(curves[lane], normalized(key, p[key]), sample) : curves[lane].back().second}};
+            if (reference) points = {{0, absoluteValue(curves[lane], normalized(key, p[key]), sample)}};
             changes.add(parameterId(cs80::paramId(key)), std::move(points));
         }
-        if (sample == 0) changes.add(directPolicy ? parameterId(cs80::paramId(parameter)) : cc, {{0, target}});
+        if (sample == 0 && submitPolicy)
+            changes.add(directPolicy ? parameterId(cs80::paramId(parameter)) : cc, {{0, target}});
         if (sample == 0 && keyCC) changes.add(midiParameter(instance, 21), {{0, 0.25}, {0, 0.75}});
-        if (sample == 0 && mixedPolicy) {
+        if (sample == 0 && mixedPolicy && submitPolicy) {
             const int other = parameter == cs80::P_parityMode ? cs80::P_sourcePerformance : cs80::P_parityMode;
             const double last = normalized(other, p[other]);
             changes.add(midiParameter(instance, 22), {{0, 1.0 - last}, {0, last}});
         }
-        instance.process(sample, step, &changes, audio);
+        instance.process(256 + sample, step, &changes, audio);
     }
-    instance.process(256, 1024, nullptr, audio);
-    return {std::move(audio), readSelector(instance, parameter), readSelector(instance, cs80::P_volume)};
+    instance.process(512, 1024, nullptr, audio);
+    return {std::move(audio), readSelector(instance, cs80::P_sourcePerformance),
+            readSelector(instance, cs80::P_parityMode), readSelector(instance, cs80::P_volume)};
+}
+bool hasCircuitPolicy(const RenderResult& render)
+{
+    return render.source == 1.0 && render.parity == 0.0;
 }
 }
 
 namespace {
 void testVst3PolicyBoundaries(Module& module, double audioTolerance)
 {
-        auto p = cs80::defaultValues();
-        p[cs80::P_parityMode] = 0.0f; p[cs80::P_sourcePerformance] = 1.0f;
-        p[cs80::P_drift] = p[cs80::P_voiceDispersion] = p[cs80::P_analogNoise] = 0.0f;
-        for (int mode = 0; mode < 3; ++mode) {
-            auto q = p;
-            const int selector = mode == 0 ? cs80::P_parityMode : cs80::P_sourcePerformance;
-            const double target = mode == 1 ? 0.0 : 1.0;
-            if (mode == 2) q[cs80::P_sourcePerformance] = 0.0f;
-            const auto unqueued = renderTransition(module, q, selector, target, false, mode == 2, false, true, true, false);
-            std::uint64_t unqueuedHash = 14695981039346656037ull;
-            const auto* bytes = reinterpret_cast<const unsigned char*>(unqueued.audio.data());
-            for (size_t i = 0; i < unqueued.audio.size() * sizeof(float); ++i)
-                unqueuedHash = (unqueuedHash ^ bytes[i]) * 1099511628211ull;
-            std::cout << "NO_CURVES mode=" << mode << " pcm_fnv1a=" << unqueuedHash
-                << " selector=" << unqueued.selector << " volume=" << unqueued.volume << std::endl;
-            const auto actual = renderTransition(module, q, selector, target, false, mode == 2);
-            const auto reference = renderTransition(module, q, selector, target, true, mode == 2);
-            const auto error = difference(actual.audio, reference.audio);
-            std::cout << "POLICY transition=" << (mode == 0 ? "modern_to_pure" : mode == 1 ? "modern_to_legacy" : "legacy_to_modern")
-                << " actual_selector=" << actual.selector << " reference_selector=" << reference.selector
-                << " target=" << target << " max_audio_error=" << error << std::endl;
-            check(actual.selector == target && reference.selector == target, "learned native CC performs the requested policy transition");
-            check(error <= audioTolerance, "policy transition preserves protected flattening or modern sample timing");
-            const auto mixedActual = renderTransition(module, q, selector, target, false, mode == 2, false, true, true);
-            const auto mixedReference = renderTransition(module, q, selector, target, true, mode == 2, false, true, true);
-            const auto mixedError = difference(mixedActual.audio, mixedReference.audio);
-            std::cout << "MIXED transition=" << (mode == 0 ? "modern_to_pure" : mode == 1 ? "modern_to_legacy" : "legacy_to_modern")
-                << " actual_selector=" << mixedActual.selector << " reference_selector=" << mixedReference.selector
-                << " actual_volume=" << mixedActual.volume << " reference_volume=" << mixedReference.volume
-                << " max_audio_error=" << mixedError << std::endl;
-            check(mixedActual.selector == target && mixedReference.selector == target, "mixed policy CCs reach final target");
-            check(mixedError <= audioTolerance, "mixed policies and repeated learned keys preserve audio timing");
-            if (mode != 2)
-                check(std::abs(mixedActual.volume - double(96.0f / 127.0f)) <= 0.000001
-                    && std::abs(mixedReference.volume - double(96.0f / 127.0f)) <= 0.000001,
-                    "protected repeated learned key wins over host endpoint, including after entering PURE");
-            for (bool direct : {true, false}) {
-                auto stable = q;
-                if (!direct) stable[selector] = static_cast<float>(target);
-                const auto controlActual = renderTransition(module, stable, selector, target, false, mode == 2, direct);
-                const auto controlReference = renderTransition(module, stable, selector, target, true, mode == 2, direct);
-                const auto controlError = difference(controlActual.audio, controlReference.audio);
-                std::cout << "CONTROL transition=" << (mode == 0 ? "modern_to_pure" : mode == 1 ? "modern_to_legacy" : "legacy_to_modern")
-                    << " kind=" << (direct ? "native_selector" : "same_policy_CC")
-                    << " actual_selector=" << controlActual.selector << " reference_selector=" << controlReference.selector
-                    << " max_audio_error=" << controlError << std::endl;
-                check(controlActual.selector == target && controlReference.selector == target,
-                    "control selector reaches the requested policy");
-                check(controlError <= audioTolerance, "direct selector and same-policy controls obey timing contract");
+    auto p = cs80::defaultValues();
+    p[cs80::P_parityMode] = 0.0f; p[cs80::P_sourcePerformance] = 1.0f;
+    p[cs80::P_drift] = p[cs80::P_voiceDispersion] = p[cs80::P_analogNoise] = 0.0f;
+    {
+        Instance instance(module, p);
+        connectController(instance);
+        for (const int selector : {cs80::P_parityMode, cs80::P_sourcePerformance}) {
+            bool found = false;
+            for (int32 index = 0; index < instance.controller->getParameterCount(); ++index) {
+                ParameterInfo info {};
+                require(instance.controller->getParameterInfo(index, info) == kResultOk, "native circuit-policy parameter metadata");
+                if (info.id != parameterId(cs80::paramId(selector))) continue;
+                found = true;
+                check((info.flags & ParameterInfo::kCanAutomate) == 0,
+                      "retired policy ID remains present but is not advertised as automatable");
             }
+            check(found, "retired circuit-policy parameter ID remains in the native host table");
         }
+    }
+    for (const int selector : {cs80::P_parityMode, cs80::P_sourcePerformance}) {
+        for (const double target : {0.0, 1.0}) {
+            auto stale = p;
+            stale[cs80::P_sourcePerformance] = 0.0f;
+            stale[cs80::P_parityMode] = 1.0f;
+            const auto actual = renderTransition(module, stale, selector, target, false);
+            const auto reference = renderTransition(module, stale, selector, target, true);
+            const auto omitted = renderTransition(module, p, selector, target, false, false, false, false, true, false);
+            const auto error = difference(actual.audio, reference.audio);
+            std::cout << "CIRCUIT_POLICY id=" << cs80::paramId(selector) << " requested=" << target
+                      << " source=" << actual.source << " parity=" << actual.parity
+                      << " max_audio_error=" << error << std::endl;
+            check(hasCircuitPolicy(actual) && hasCircuitPolicy(reference),
+                  "obsolete learned policy writes retain canonical circuit state");
+            check(actual.audio == omitted.audio,
+                  "old initial policy and learned policy writes preserve held audio byte-for-byte");
+            check(error <= audioTolerance,
+                  "obsolete learned policy writes preserve independent per-sample automation timing");
+
+            const auto mixedActual = renderTransition(module, stale, selector, target, false, false, true, true);
+            const auto mixedReference = renderTransition(module, stale, selector, target, true, false, true, true);
+            const auto mixedOmitted = renderTransition(module, p, selector, target, false, false, true, true, true, false);
+            const auto mixedError = difference(mixedActual.audio, mixedReference.audio);
+            std::cout << "CIRCUIT_MIXED id=" << cs80::paramId(selector) << " requested=" << target
+                      << " volume=" << mixedActual.volume << " max_audio_error=" << mixedError << std::endl;
+            check(hasCircuitPolicy(mixedActual) && hasCircuitPolicy(mixedReference),
+                  "mixed repeated policy CCs cannot restore either retired render path");
+            check(mixedActual.audio == mixedOmitted.audio,
+                  "mixed obsolete policy CCs leave ordinary learned controls and held audio unchanged");
+            check(mixedError <= audioTolerance,
+                  "mixed policies and repeated learned keys preserve sample-accurate audio timing");
+            check(std::abs(mixedActual.volume - double(0.67f)) <= 0.000001
+                      && std::abs(mixedReference.volume - double(0.67f)) <= 0.000001,
+                  "active host curve retains its independently specified endpoint after learned key writes");
+
+            const auto unqueued = renderTransition(module, stale, selector, target, false, false, true, true, false);
+            const auto unqueuedOmitted = renderTransition(module, p, selector, target, false, false, true, true, false, false);
+            check(hasCircuitPolicy(unqueued) && unqueued.audio == unqueuedOmitted.audio,
+                  "obsolete policy writes preserve no-queue held audio and learned controls byte-for-byte");
+            check(std::abs(unqueued.volume - double(96.0f / 127.0f)) <= 0.000001,
+                  "without a host curve the last repeated ordinary learned CC remains live");
+            check(difference(mixedActual.audio, unqueued.audio) > 0.00001,
+                  "host curves remain audibly active after rejected policy writes");
+
+            const auto direct = renderTransition(module, stale, selector, target, false, true);
+            const auto directReference = renderTransition(module, stale, selector, target, true, true);
+            check(hasCircuitPolicy(direct) && hasCircuitPolicy(directReference),
+                  "direct native policy writes retain the same fixed circuit values");
+            check(direct.audio == omitted.audio,
+                  "direct native policy writes preserve held voices and audio byte-for-byte");
+            check(difference(direct.audio, directReference.audio) <= audioTolerance,
+                  "direct native policy writes cannot flatten sample-accurate host curves");
+        }
+    }
 }
 }

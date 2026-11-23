@@ -5,9 +5,9 @@
 // per-control help (owner's-manual wording, manual page and the evidence class of each law).
 //
 // Sources, and where to update them:
-//   * kModelRegister rows marked Origin::status mirror the "Model register" table in
-//     docs/STATUS.md. Rows marked Origin::coverage are taken from docs/HARDWARE_COVERAGE.md.
-//     When either document changes, change this table in the same commit.
+//   * kModelRegister rows marked Origin::status track the subsystems in the "Model register"
+//     table of docs/STATUS.md. Rows marked Origin::coverage track docs/HARDWARE_COVERAGE.md.
+//     Implementation names follow Engine.cpp; the cited documents retain their audit context.
 //   * kControlHelp follows the owner-index rows of docs/HARDWARE_COVERAGE.md: owner index,
 //     printed owner-manual pages ("O" in that ledger) or service-manual sheets ("S"), and the
 //     ledger status codes (IB, A, M, MR, PC).
@@ -32,7 +32,7 @@ enum class Basis
     sourceDerived,        // the law itself is read from a schematic, manual or adjustment page
     sourceTopologyInferredLaw, // topology/route from the sources; quantitative law declared inference
     engineeringInferred,  // declared engineering model; the sources leave the behaviour open
-    modernExtension       // not on the original instrument; inert in PURE CS-80
+    modernExtension       // optional software feature not on the original instrument
 };
 
 inline constexpr const char* basisName(Basis b) noexcept
@@ -59,7 +59,7 @@ inline constexpr const char* basisExplanation(Basis b) noexcept
         case Basis::engineeringInferred:
             return "A declared engineering estimate: the public sources do not give this behaviour.";
         case Basis::modernExtension:
-            return "A software addition that the original instrument does not have. PURE CS-80 switches it off.";
+            return "An optional software addition that the original instrument does not have.";
     }
     return "";
 }
@@ -81,8 +81,8 @@ enum class Origin { status, coverage };
 struct ModelEntry
 {
     const char* subsystem;
-    const char* legacy;      // what the Legacy (compatibility) engine runs
-    const char* circuit;     // what the circuit engine (Source Performance / PURE CS-80) runs
+    const char* legacy;      // historical implementation, retained for source comparison only
+    const char* circuit;     // what the playable circuit engine runs
     const char* reference;   // offline truth or experimental model, not in audio ("-" if none)
     Basis basis;             // what the circuit engine's law rests on
     const char* coverage;    // HARDWARE_COVERAGE status codes
@@ -91,21 +91,21 @@ struct ModelEntry
 };
 
 inline constexpr ModelEntry kModelRegister[] = {
-    { "Oscillator", "PolyBLEP oscillator", "same PolyBLEP oscillator",
-      "ReconstructedOscillator (experimental)", Basis::engineeringInferred, "A",
-      "OSCILLATOR_CIRCUIT_EVIDENCE.md", Origin::status },
+    { "Oscillator", "PolyBLEP oscillator", "IG00153/IG00158 charge/reset oscillator and waveshapers",
+      "-", Basis::engineeringInferred, "A",
+      "OSCILLATOR_PROMOTION.md", Origin::status },
     { "HP / LP filters", "TPT state-variable filter, input soft clip",
-      "IG00156 stage: in-loop OTA saturation, 22.6 Hz feedforward floor",
+      "IG00156 nodal stages, input networks and OTA saturation",
       "IG00156Linear reference", Basis::sourceTopologyInferredLaw, "A",
-      "IG00156_REALTIME_MODEL.md", Origin::status },
+      "IG00156_NODAL_MODEL.md", Origin::status },
     { "Envelopes", "float ADSR and filter envelope", "double-precision single-RC law",
       "-", Basis::engineeringInferred, "A", "ENVELOPE_RC_MODEL.md", Origin::status },
-    { "VCA", "linear multiply", "loaded LC network gain", "LevelControl reference",
-      Basis::sourceTopologyInferredLaw, "A", "LEVEL_CONTROL_REFERENCE_DESIGN.md", Origin::status },
+    { "VCA", "linear multiply", "IG00151 nonlinear gain and output coupling", "Independent ODE reference",
+      Basis::sourceTopologyInferredLaw, "A", "IG00151_VCA_MODEL.md", Origin::status },
     { "Tone tabs", "legacy bridge voicings", "source-factory tones: 7 complete, 15 inferred",
       "HardwareControl resistor matrix", Basis::sourceTopologyInferredLaw, "IB/A",
       "PRESET_CIRCUIT_LEDGER.md", Origin::status },
-    { "Sub oscillator", "legacy LFO or original six functions", "same",
+    { "Sub oscillator", "historical LFO", "Original six functions or optional extended waveforms",
       "-", Basis::sourceTopologyInferredLaw, "IB/A", "ORIGINAL_SUB_OSCILLATOR.md", Origin::status },
     { "Chorus", "generic modulated delay", "OE2 BBD chorus (tremolo generic)",
       "Mn3001Packet, Oe2Filters references", Basis::sourceTopologyInferredLaw, "A",
@@ -115,20 +115,20 @@ inline constexpr ModelEntry kModelRegister[] = {
     { "Output", "LOW trim and soft clip", "-6 dB reference, inferred driver ceiling, output taps",
       "OutputTaps reference", Basis::sourceTopologyInferredLaw, "A/MR",
       "OUTPUT_REALTIME_PROPOSAL.md", Origin::status },
-    { "Idle voice evolution", "frozen while idle", "active-tail continuity only",
-      "ContinuousVoiceCircuit (experimental)", Basis::engineeringInferred, "A",
+    { "Idle voice evolution", "frozen while idle", "free-running oscillator, filter and VCA states",
+      "-", Basis::engineeringInferred, "A",
       "VOICE_CIRCUIT_CONTINUITY.md", Origin::status },
-    { "Keyboard scan and assignment", "MIDI events, cyclic assignment", "same",
+    { "Keyboard scan and assignment", "MIDI events, cyclic assignment", "KAS scan and voice assignment with MIDI input",
       "-", Basis::engineeringInferred, "IB/M/MR", "KEYBOARD_CODE_PATH_EVIDENCE.md", Origin::coverage },
     { "Initial touch and aftertouch", "velocity and pressure proxies",
       "held TWS b path for brilliance and level, separate pitch transient", "-",
       Basis::sourceTopologyInferredLaw, "A/PC", "INITIAL_TOUCH_CIRCUIT_EVIDENCE.md", Origin::coverage },
-    { "Ring modulator", "ideal multiplier, provisional sweep", "same", "-",
+    { "Ring modulator", "ideal multiplier, provisional sweep", "Exponential carrier converter and offset multiplier", "-",
       Basis::engineeringInferred, "A", "HARDWARE_COVERAGE.md", Origin::coverage },
-    { "Ribbon", "relative first contact", "same", "-",
+    { "Ribbon", "relative first contact", "Relative first-contact pitch gesture", "-",
       Basis::sourceTopologyInferredLaw, "IB/A/PC", "HARDWARE_COVERAGE.md", Origin::coverage },
     { "Modern layer", "LFOs, insert FX, macros, arpeggiator, MPE, MIDI learn",
-      "same; all inert in PURE CS-80", "-", Basis::modernExtension, "EXT",
+      "Optional LFOs, effects, macros, arpeggiator, MPE and MIDI learn", "-", Basis::modernExtension, "EXT",
       "IMPROVEMENT_PLAN.md", Origin::coverage },
 };
 
@@ -186,13 +186,13 @@ inline constexpr ControlHelp kControlHelp[] = {
       "Same route as the LOW lever; symmetry with LOW is an assumption." },
     { "sub_wave", 11, "O8, O37, O49", "IB/A", Basis::sourceTopologyInferredLaw,
       "Chooses the sub oscillator waveform that modulates pitch, filter or level.",
-      "Legacy waveform set. The original six functions are selected with ORIGINAL WAVEFORMS in the Studio view." },
+      "Extended waveform set. The original six functions are selected with ORIGINAL WAVEFORMS in Studio." },
     { "sub_original_function", 11, "O8, O37, O49", "IB/A", Basis::sourceTopologyInferredLaw,
       "Chooses the sub oscillator function: sine, falling saw, rising saw, square, noise or the external input.",
       "SUB29/30 and PN2 switch routing. Ideal waveforms, not a nonlinear IG00150 model; EXT voltage is not calibrated." },
     { "sub_speed", 11, "O49", "IB/A", Basis::engineeringInferred,
       "Sets how fast the sub oscillator runs.",
-      "Legacy rate range 0.05-30 Hz, kept separate from the original range." },
+      "Extended rate range 0.05-30 Hz, kept separate from the original range." },
     { "sub_original_speed", 11, "O49", "IB/A", Basis::sourceTopologyInferredLaw,
       "Sets how fast the sub oscillator runs, from 0.7 to 60 Hz.",
       "End points from the owner's manual (p49). The intermediate taper and the 10 ms rate smoothing are provisional." },
@@ -288,8 +288,8 @@ inline constexpr ControlHelp kControlHelp[] = {
       "Optional mono input, disabled by default. Software normalisation, not physical voltage calibration "
       "(EXTERNAL_MODULATION.md); 10k schematic vs 50k manual conflict preserved." },
     { "sub_original_mode", 0, "-", "EXT", Basis::modernExtension,
-      "Switches the sub oscillator between the original six functions and the legacy set.",
-      "Stored with the patch. PURE CS-80 forces the original functions." },
+      "Switches the sub oscillator between the original six functions and the extended waveform set.",
+      "The selected waveform set and its controls are stored with the patch." },
 
     // ---- Both programmable synthesis rows (owner index 20-45) ---------------------------------
     { "pwm_speed", 20, "O15, O32", "A", Basis::engineeringInferred,
@@ -346,7 +346,7 @@ inline constexpr ControlHelp kControlHelp[] = {
       "Bypass mix; the fixed third harmonic is a placeholder, not a measured IG00158 characterisation." },
     { "v_a", 37, "O21, O34", "A", Basis::engineeringInferred,
       "Amplitude envelope attack time.",
-      "Circuit engine: inferred single-RC attack; legacy: ADSR heuristic." },
+      "Circuit engine: inferred single-RC attack law." },
     { "v_d", 38, "O21, O34", "A", Basis::engineeringInferred,
       "Amplitude envelope decay time.",
       "Circuit engine: single-RC decay with no x5 time-window bend; not a recovered IG00159 law." },
@@ -391,7 +391,7 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "voice_dispersion", 0, "-", "A", Basis::engineeringInferred,
       "Spreads the eight voice cards in tuning, filter, level and envelope time, as no two analog voices match.",
       "Circuit engine: declared 5 % R / 10 % C draws mapped into cutoff, Q, level and envelope time, plus a 1 cent "
-      "alignment residual; the default is the declared distribution. Legacy: the old uniform trims. Not measured." },
+      "alignment residual; the default is the declared distribution. Not measured." },
     { "drift", 0, "-", "A", Basis::engineeringInferred,
       "Slowly moves each voice card's tuning, like warming analog circuits.",
       "Circuit engine: declared 1/f thermal drift, 2 cents RMS at the default, with a two-minute warm-up (or the worn-unit "
@@ -418,23 +418,23 @@ inline constexpr ControlHelp kControlHelp[] = {
       "How much the mod wheel moves the filters.",
       "MIDI convenience." },
     { "parity_mode", 0, "-", "EXT", Basis::modernExtension,
-      "PURE CS-80: strips every software addition and runs the circuit models only.",
-      "Comparison isolation. Not calibrated; no hardware match established." },
+      "Reserved parameter retained so older host projects keep their parameter addresses.",
+      "Fixed off. It does not alter the circuit instrument or its performance controls." },
     { "source_performance", 0, "-", "EXT", Basis::modernExtension,
-      "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps the older voicing for old sessions.",
-      "Source performance policy. Not calibrated; no hardware match established." },
+      "The instrument always runs the circuit-informed models.",
+      "Fixed on. Circuit laws include documented estimates; no hardware match is established." },
 
     // ---- ws1-voice (plan step 2.5) ---------------------------------------------------------------
     { "drift_model", 0, "-", "A", Basis::engineeringInferred,
       "How the circuit engine's voices wander in pitch: slow thermal drift, or the large slow wobble of a worn unit.",
       "Thermal: declared 1/f drift, 2 cents RMS at the default amount, with a two-minute warm-up. Worn unit: the "
-      "historical +/-22 cent 0.031 Hz sine. Not a measured unit; Legacy keeps the sine." },
+      "declared +/-22 cent 0.031 Hz sine. Neither model is a measured unit." },
 
     // ---- ws2-engine (Phase 1.6 and 3) -----------------------------------------------------------
     { "oversampling", 0, "-", "EXT", Basis::modernExtension,
       "Numerical quality: Eco, Standard or HQ internal rate. Offline bounces always render at HQ.",
       "Software numerics, not an instrument control; Standard is the lowest factor that meets the "
-      "alias target. Legacy keeps its historical 2x." },
+      "alias target." },
     { "output_jack", 0, "-", "A", Basis::sourceTopologyInferredLaw,
       "Which original output you hear: the LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier.",
       "GENERAL and PHONES nodes follow the PRA/SUB29 drawings; the active-stage gains, headphone load and "
@@ -461,13 +461,13 @@ inline constexpr ControlHelp kControlHelp[] = {
       "Interface layer; the ribbon's own coupling to Sustain I/II is unchanged." },
     { "tuning_mode", 0, "-", "EXT", Basis::modernExtension,
       "Equal temperament, a loaded Scala/KBM tuning, or MIDI Tuning Standard / MTS-ESP.",
-      "Microtuning; the original has one tuning control. PURE CS-80 forces equal temperament." },
+      "Optional microtuning; the original has one tuning control." },
     { "voice_mode", 0, "-", "EXT", Basis::modernExtension,
       "Eight voices like the original, or sixteen, or stacked unison voices per key.",
-      "Labelled extensions beyond the eight voice cards. PURE CS-80 forces eight voices." },
+      "Optional extensions beyond the original eight voice cards." },
     { "unison_detune", 0, "-", "EXT", Basis::modernExtension,
       "How far apart the stacked unison voices are tuned, in cents.",
-      "Software extension; masked in PURE CS-80." },
+      "Optional software extension." },
 };
 
 inline constexpr int kControlHelpSize = (int) (sizeof(kControlHelp) / sizeof(kControlHelp[0]));
@@ -486,27 +486,27 @@ inline const ControlHelp* findControlHelp(const char* id) noexcept
 inline constexpr ControlHelp kModernFamilyHelp[] = {
     { "lfo", 0, "-", "EXT", Basis::modernExtension,
       "A free-running global LFO. Route it to one destination with its chips.",
-      "Software modulation source; masked in PURE CS-80." },
+      "Optional software modulation source." },
     { "fx", 0, "-", "EXT", Basis::modernExtension,
       "One of three insert effects after the voices and chorus.",
-      "Software effects; masked in PURE CS-80." },
+      "Optional software effects." },
     { "arp", 0, "-", "EXT", Basis::modernExtension,
       "The arpeggiator: holds a chord and plays it as a pattern.",
-      "Software arpeggiator; masked in PURE CS-80." },
+      "Optional software arpeggiator." },
     { "macro", 0, "-", "EXT", Basis::modernExtension,
       "A performance macro: a patch-level offset that is neutral at centre.",
-      "Software macro; masked in PURE CS-80." },
+      "Optional software macro." },
     // Phase 6 (ws5-modern): mseg1_rate..mseg3_rate.
     { "mseg", 0, "-", "EXT", Basis::modernExtension,
       "A drawable multi-segment envelope; this sets how fast it runs or its tempo division.",
-      "Software modulation source routed through the matrix; masked in PURE CS-80." },
+      "Software modulation source routed through the matrix." },
     // Phase 6 (ws5-modern): mod1_amount..mod16_amount and the keyboard curves
     // (mod_velocity_curve, mod_pressure_curve, mod_wheel_curve, mod_key_curve).
     { "mod", 0, "-", "EXT", Basis::modernExtension,
       "The modulation matrix: how strongly a slot's source moves its destination, or the "
       "response curve a keyboard source passes through before it reaches the matrix.",
       "Software routing; matrix curves shape matrix sources only, never the original "
-      "touch circuits. Masked in PURE CS-80." },
+      "touch circuits." },
 };
 
 // Help for a core parameter id, falling back to its modern family ("lfo2_depth" -> lfo).

@@ -74,8 +74,8 @@ int main(int argc, char** argv)
                         auto protectedP = p;
                         protectedP[cs80::P_sourcePerformance] = policy == 0 ? 0.f : 1.f;
                         protectedP[cs80::P_parityMode] = policy == 2 ? 1.f : 0.f;
-                        check(waveformRender(protectedP, 256) == waveformRender(protectedP, 256, true, true),
-                              "static SUB waveform Legacy/PURE retain flattened native queues");
+                        check(waveformRender(protectedP, 256) == waveformRender(p, 256),
+                              "static SUB waveform retired mode requests preserve canonical circuit sample-accurate queues");
                     }
                     ++scenarios;
                     std::cout << "waveform=" << function << " voices=" << voices

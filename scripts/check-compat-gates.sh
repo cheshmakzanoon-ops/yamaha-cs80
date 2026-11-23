@@ -60,11 +60,16 @@ legacy_dir="$(checkout "$legacy")"
 [ -f "$cache/$legacy-build/libcs80_core.a" ] || build_core "$legacy_dir" "$cache/$legacy-build"
 "$cxx" -O2 -std=c++20 -I"$legacy_dir/src" "$root/src/tools/compatibility_probe.cpp" "$cache/$legacy-build/libcs80_core.a" -o "$work/legacy-probe"
 "$cxx" -O2 -std=c++20 -I"$root/src" "$root/src/tools/compatibility_probe.cpp" "$work/current/libcs80_core.a" -o "$work/current-legacy-probe"
+legacy_corpus="$work/legacy-corpus.txt"
+"$work/legacy-probe" --export-corpus "$legacy_corpus"
+legacy_corpus_sha256="$(sha256sum "$legacy_corpus" | cut -d ' ' -f 1)"
+printf '{"corpus_source":"%s","corpus_sha256":"%s","programs":222,"parameters":137}\n' "$legacy" "$legacy_corpus_sha256" > "$work/legacy-corpus-report.json"
+echo "legacy corpus: $legacy_corpus_sha256 from $legacy"
 for scenario in default tails; do
     args=()
     [ "$scenario" = tails ] && args=(--tails)
-    "$work/legacy-probe" "$work/legacy-$scenario.f32" "${args[@]}"
-    "$work/current-legacy-probe" "$work/current-$scenario.f32" "${args[@]}"
+    "$work/legacy-probe" "$work/legacy-$scenario.f32" --corpus "$legacy_corpus" "${args[@]}"
+    "$work/current-legacy-probe" "$work/current-$scenario.f32" --corpus "$legacy_corpus" "${args[@]}"
     if cmp -s "$work/legacy-$scenario.f32" "$work/current-$scenario.f32"; then
         echo "legacy $scenario: byte-identical to ${legacy:0:7}"
     else

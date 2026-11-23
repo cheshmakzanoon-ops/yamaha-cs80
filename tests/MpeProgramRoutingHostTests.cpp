@@ -29,10 +29,10 @@ struct Host
     std::unique_ptr<Cs80AudioProcessor> processor;
     juce::AudioBuffer<float> audio {2, 0};
     juce::MidiBuffer midi;
-    Host(const juce::File& fixture, bool circuit, bool sixteen)
+    Host(const juce::File& fixture, bool curated, bool sixteen)
     {
         processor = std::make_unique<Cs80AudioProcessor>(fixture);
-        processor->setCurrentProgram(circuit ? legacyProgramCount : 0);
+        processor->setCurrentProgram(curated ? legacyProgramCount : 0);
         processor->setParamValue(P_parityMode, 0);
         processor->setParamValue(P_mpeOn, 1);
         processor->setParamValue(P_voiceMode, sixteen ? 1 : 0);
@@ -42,9 +42,10 @@ struct Host
         check(processor->getEngine().isMpeEnabled(), "fixture has effective MPE before recall");
         check(processor->getParamValue(P_voiceMode) == (sixteen ? 1 : 0),
               "fixture starts with the requested voice count");
-        check(processor->getEngine().getRenderPolicy()
-                  == (circuit ? RenderPolicy::sourcePerformance : RenderPolicy::legacy),
-              "fixture starts with the requested render policy");
+        check(processor->getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance
+                  && processor->getParamValue(P_sourcePerformance) == 1.0f
+                  && processor->getParamValue(P_parityMode) == 0.0f,
+              "both original and curated starting programs use the circuit instrument");
     }
     void tick(int frames = 0)
     {
@@ -77,7 +78,7 @@ struct Host
         const auto& values = index < legacyProgramCount ? legacyLibrary()[(size_t) index].values
             : curatedLibrary()[(size_t) (index - legacyProgramCount)].values;
         // Check actual sound controls as well as the displayed index. Recall can
-        // change engine, MPE enable and voice count; subsequent tests use new hosts.
+        // change MPE enable and voice count; subsequent tests use new hosts.
         for (int p : std::array<int, 4>{P_detune, P_sourcePerformance, chParam(0, CP_lpfCutoff), chParam(1, CP_fA)})
             check(std::abs(processor->getParamValue(p) - values[p])
                       <= std::max(1.0e-4f, (paramDef(p).max - paramDef(p).min) * 1.0e-5f),
@@ -99,14 +100,14 @@ constexpr std::array<Scenario, 12> scenarios {{
     {"zero-zone-other", 8, 0, 0, true, false},
     {"MPE-off-member", 15, 2, 2, false, true}
 }};
-void testRouting(const juce::File& fixture, bool circuit, bool sixteen, int frames)
+void testRouting(const juce::File& fixture, bool curated, bool sixteen, int frames)
 {
     const auto suffix = context;
     for (const auto& s : scenarios)
     {
         context = s.name + suffix;
         // Isolate Program Change admission from bank admission.
-        Host host(fixture, circuit, sixteen); host.layout(s.lower, s.upper);
+        Host host(fixture, curated, sixteen); host.layout(s.lower, s.upper);
         host.processor->setParamValue(P_mpeOn, s.enabled ? 1 : 0); host.tick();
         const int before = host.processor->getCurrentProgram();
         host.processor->setParamValue(P_detune, 17); host.tick();
@@ -123,13 +124,13 @@ void testRouting(const juce::File& fixture, bool circuit, bool sixteen, int fram
         // accidentally latched. Recall through the allowed manager afterwards.
         for (int controller : {0, 32})
         {
-            Host bankHost(fixture, circuit, sixteen); bankHost.layout(s.lower, s.upper);
+            Host bankHost(fixture, curated, sixteen); bankHost.layout(s.lower, s.upper);
             bankHost.processor->setParamValue(P_mpeOn, s.enabled ? 1 : 0); bankHost.tick();
             const int manager = s.lower ? 1 : (s.upper ? 16 : 1);
             bankHost.bank(manager, 0, 0); bankHost.tick();
             bankHost.midi.addEvent(juce::MidiMessage::controllerEvent(s.channel, controller, 1), 11);
             bankHost.tick(frames);
-            check(bankHost.processor->getCurrentProgram() == (circuit ? legacyProgramCount : 0),
+            check(bankHost.processor->getCurrentProgram() == (curated ? legacyProgramCount : 0),
                   "bank selection alone does not recall a program");
             bankHost.program(manager, 7, 11); bankHost.tick(frames);
             bankHost.expect(!s.allowed ? legacyProgramCount + 7
@@ -138,13 +139,13 @@ void testRouting(const juce::File& fixture, bool circuit, bool sixteen, int fram
     }
     context = suffix;
 }
-void testSharedBankAndOrdering(const juce::File& fixture, bool circuit, bool sixteen, int frames)
+void testSharedBankAndOrdering(const juce::File& fixture, bool curated, bool sixteen, int frames)
 {
     const auto suffix = context;
     for (int bankManager : {1, 16})
     {
         context = "shared-bank/manager=" + std::to_string(bankManager) + suffix;
-        Host host(fixture, circuit, sixteen); host.layout(2, 2);
+        Host host(fixture, curated, sixteen); host.layout(2, 2);
         host.bank(bankManager, 1, 1, 11);
         host.program(17 - bankManager, 5, 11); host.tick(frames);
         host.expect(133);
@@ -158,7 +159,7 @@ void testSharedBankAndOrdering(const juce::File& fixture, bool circuit, bool six
         const int channel = upper ? 16 : 1;
         const int beforeMembers = upper ? (entering ? 0 : 2) : (entering ? 15 : 0);
         const int afterMembers = upper ? (entering ? 2 : 0) : (entering ? 0 : 15);
-        Host host(fixture, circuit, sixteen); host.layout(0, beforeMembers);
+        Host host(fixture, curated, sixteen); host.layout(0, beforeMembers);
         const int before = host.processor->getCurrentProgram();
         mcm(host.midi, 16, afterMembers, 11);
         host.program(channel, 7, 11); host.tick(frames);
@@ -168,32 +169,45 @@ void testSharedBankAndOrdering(const juce::File& fixture, bool circuit, bool six
 
         // Bank selection also uses event-time roles, and only the manager's
         // later Program Change exposes whether the bank event was accepted.
-        Host bankHost(fixture, circuit, sixteen); bankHost.layout(0, beforeMembers);
+        Host bankHost(fixture, curated, sixteen); bankHost.layout(0, beforeMembers);
         mcm(bankHost.midi, 16, afterMembers, 11);
         bankHost.bank(channel, 1, 1, 11);
         bankHost.program(afterMembers ? 16 : 1, 5, 11); bankHost.tick(frames);
         bankHost.expect(entering ? 133 : legacyProgramCount + 5);
 
-        Host reverse(fixture, circuit, sixteen); reverse.layout(0, beforeMembers);
+        Host reverse(fixture, curated, sixteen); reverse.layout(0, beforeMembers);
         reverse.bank(channel, 1, 1, 11);
         mcm(reverse.midi, 16, afterMembers, 11);
         reverse.program(afterMembers ? 16 : 1, 5, 11); reverse.tick(frames);
         reverse.expect(entering ? legacyProgramCount + 5 : 133);
     }
-    context = "PURE" + suffix;
-    Host pure(fixture, circuit, sixteen); pure.layout(2, 2);
-    pure.processor->setParamValue(P_parityMode, 1); pure.tick();
-    const int before = pure.processor->getCurrentProgram();
+    // An obsolete isolation request cannot bypass MPE channel admission or
+    // suppress a valid manager's Program Change. Use a fresh host for each
+    // role, because a successful recall may itself disable the stored MPE flag.
     for (int channel : {1, 2, 8, 15, 16})
     {
-        pure.bank(channel, 1, 1, 11); pure.program(channel, 7, 11);
+        context = "retired-policy/channel=" + std::to_string(channel) + suffix;
+        Host retained(fixture, curated, sixteen); retained.layout(2, 2);
+        retained.processor->setParamValue(P_parityMode, 1);
+        retained.processor->setParamValue(P_sourcePerformance, 0);
+        retained.tick();
+        const int before = retained.processor->getCurrentProgram();
+        check(retained.processor->getParamValue(P_parityMode) == 0
+                  && retained.processor->getParamValue(P_sourcePerformance) == 1
+                  && retained.processor->getEngine().isMpeEnabled(),
+              "retired requests preserve the active circuit MPE instrument");
+        retained.bank(channel, 1, 1, 11); retained.program(channel, 7, 11);
+        retained.tick(frames);
+        if (channel == 1 || channel == 16) retained.expect(135);
+        else
+        {
+            check(retained.processor->getCurrentProgram() == before,
+                  "retired requests preserve rejection of member and conventional-gap programs");
+            retained.processor->setParamValue(P_mpeOn, 0); retained.tick();
+            retained.program(8, 7, 11); retained.tick(frames);
+            retained.expect(legacyProgramCount + 7);
+        }
     }
-    pure.tick(frames);
-    check(pure.processor->getCurrentProgram() == before && pure.processor->getParamValue(P_parityMode) == 1,
-          "PURE rejects bank and program messages on all channel roles");
-    pure.processor->setParamValue(P_parityMode, 0);
-    pure.processor->setParamValue(P_mpeOn, 0); pure.tick();
-    pure.program(8, 7, 11); pure.tick(frames); pure.expect(legacyProgramCount + 7);
     context = suffix;
 }
 } // namespace
@@ -201,12 +215,12 @@ int main()
 {
     juce::ScopedJuceInitialiser_GUI init;
     juce::TemporaryFile fixture("-mpe-program-routing");
-    for (bool circuit : {false, true}) for (bool sixteen : {false, true}) for (int frames : {0, 32})
+    for (bool curated : {false, true}) for (bool sixteen : {false, true}) for (int frames : {0, 32})
     {
-        context = std::string(circuit ? "/circuit" : "/legacy")
+        context = std::string(curated ? "/curated" : "/original")
             + (sixteen ? "/16" : "/8") + "/frames=" + std::to_string(frames);
-        testRouting(fixture.getFile(), circuit, sixteen, frames);
-        testSharedBankAndOrdering(fixture.getFile(), circuit, sixteen, frames);
+        testRouting(fixture.getFile(), curated, sixteen, frames);
+        testSharedBankAndOrdering(fixture.getFile(), curated, sixteen, frames);
     }
     std::cout << "MPE program routing: " << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;

@@ -130,9 +130,17 @@ void testToolbarMenuLifetime(Check check)
     host->setPure(true);
     toolbar->refresh();
     menu = toolbar->buildMenu();
-    for (int id : { 4, 5, 11, 20 })
+    for (int id : { 4, 5, 20 })
         check(bool(item(menu, id).action) && ! item(menu, id).isEnabled,
-              "undo, redo, controllers and MIDI clear retain their existing disabled menu flags");
+              "undo, redo and MIDI clear retain their actual disabled menu predicates");
+    const auto controllers = item(menu, 11);
+    check(controllers.isEnabled && bool(controllers.action) && !host->isPure(),
+          "obsolete isolation request cannot disable the connected controllers menu");
+    auto expectedControllers = first;
+    ++expectedControllers[7];
+    if (controllers.action) controllers.action();
+    check(first == expectedControllers,
+          "controllers menu after an obsolete policy request invokes only its connected callback");
     check(! item(menu, 3).action, "copy compare is omitted without a compare selector");
     for (size_t i = 13; i < ids.size(); ++i)
         check(! item(menu, ids[i]).action, "zoom actions are omitted without zoom presets");

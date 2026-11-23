@@ -93,15 +93,18 @@ jobs:
       - name: Require byte-identical default and noisy-reassignment traces
         run: |
           mkdir -p artifacts/compatibility
+          corpus=artifacts/compatibility/baseline-corpus.txt
+          ./baseline-probe --export-corpus "$corpus"
+          corpus_sha256="$(sha256sum "$corpus" | cut -d ' ' -f 1)"
           for scenario in default tails; do
             args=()
             if [ "$scenario" = tails ]; then args=(--tails); fi
-            ./baseline-probe "artifacts/compatibility/baseline-$scenario.f32" "${args[@]}"
-            ./current-probe "artifacts/compatibility/current-$scenario.f32" "${args[@]}"
+            ./baseline-probe "artifacts/compatibility/baseline-$scenario.f32" --corpus "$corpus" "${args[@]}"
+            ./current-probe "artifacts/compatibility/current-$scenario.f32" --corpus "$corpus" "${args[@]}"
             cmp "artifacts/compatibility/baseline-$scenario.f32" "artifacts/compatibility/current-$scenario.f32"
           done
-          sha256sum artifacts/compatibility/*.f32 > artifacts/compatibility/SHA256SUMS
-          printf '{"baseline":"%s","candidate":"%s","default_off_byte_identical":true,"legacy_programs":222,"sample_rates":[44100,48000,96000],"analog_evidence":false}\n' "$BASELINE" "$GITHUB_SHA" > artifacts/compatibility/report.json
+          sha256sum "$corpus" artifacts/compatibility/*.f32 > artifacts/compatibility/SHA256SUMS
+          printf '{"baseline":"%s","candidate":"%s","corpus_source":"%s","corpus_sha256":"%s","corpus_parameters":137,"default_off_byte_identical":true,"legacy_programs":222,"sample_rates":[44100,48000,96000],"analog_evidence":false}\n' "$BASELINE" "$GITHUB_SHA" "$BASELINE" "$corpus_sha256" > artifacts/compatibility/report.json
           c++ --version > artifacts/compatibility/compiler.txt
       - uses: actions/upload-artifact@v5
         with:
@@ -110,6 +113,7 @@ jobs:
             artifacts/compatibility/report.json
             artifacts/compatibility/SHA256SUMS
             artifacts/compatibility/compiler.txt
+            artifacts/compatibility/baseline-corpus.txt
           if-no-files-found: error
 
 

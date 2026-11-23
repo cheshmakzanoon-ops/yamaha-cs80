@@ -198,8 +198,11 @@ void testStudioSwitchContext(Check check)
     cancel = action(b.buildContextMenu(), "Cancel MIDI learn"); if (cancel) cancel();
     check(host->getMidiLearn().learningParameter() == -1, "fresh cancel clears its current learn");
     learn = action(b.buildContextMenu(), "MIDI learn"); host->setParamValue(P_parityMode, 1.0f); if (learn) learn();
-    check(host->getMidiLearn().learningParameter() == -1 && !action(b.buildContextMenu(), "MIDI learn"),
-          "PURE blocks both newly built and delayed learn actions");
+    check(host->getMidiLearn().learningParameter() == target && host->getParamValue(P_parityMode) == 0.0f,
+          "obsolete isolation write leaves the delayed switch learn action available");
+    host->getMidiLearn().cancelLearn();
+    check(bool(action(b.buildContextMenu(), "MIDI learn")),
+          "fresh switch learn remains available after obsolete policy writes");
     host->setParamValue(P_parityMode, 0.0f);
     host->getMidiLearn().assign(42, target);
     auto forget = action(b.buildContextMenu(), "Forget MIDI CC 42");
@@ -263,7 +266,7 @@ void testStudioSwitchContext(Check check)
         for (auto* child : parent.getChildren())
         {
             if (auto* control = dynamic_cast<ui::ParameterContextButton*>(child))
-                if (control->getName() == "Output mode" || control->getName() == "STORED ORIGINAL MODE")
+                if (control->getName() == "Output mode" || control->getComponentID() == "sub_original_mode")
                     actual.push_back(control);
             collect(*child);
         }
@@ -388,9 +391,12 @@ void testStudioSwitchContext(Check check)
         check(control.getTooltip().contains("MIDI CC 74") && control.getTooltip().contains(parameter->getCurrentValueAsText()),
               "actual tooltip reports live mapping and parameter value");
         host->setParamValue(P_parityMode, 1.0f);
-        check(control.getTooltip().contains("inactive in PURE CS-80"), "actual tooltip reports retained mapping's PURE inactivity");
+        host->setParamValue(P_sourcePerformance, 0.0f);
+        check(control.getTooltip().contains("MIDI CC 74") && !control.getTooltip().contains("inactive"),
+              "actual switch tooltip keeps its live MIDI mapping after obsolete policy writes");
         midi.clear(); midi.addEvent(juce::MidiMessage::controllerEvent(1, 74, 127 - ccValue), 0); host->processBlock(audio, midi);
-        check(parameter->getValue() == beforeReset, "PURE keeps learned actual switch mapping inert");
+        check(parameter->getValue() == defaultValue,
+              "learned actual switch still responds to incoming MIDI after obsolete policy writes");
         editorCallbacks.push_back(action(control.buildContextMenu(), "Reset to default"));
         control.onContextMenu = {};
     }

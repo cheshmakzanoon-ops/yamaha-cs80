@@ -66,11 +66,10 @@ juce::String ParameterContextButton::getTooltip()
              << "\nRight-click or Shift+F10: MIDI learn, reset.";
         const auto& learn = processor->getMidiLearn();
         const int host = target->getParameterIndex();
-        const bool pure = processor->getParamValue(P_parityMode) >= 0.5f;
-        if (!pure && learn.learningParameter() == host)
+        if (learn.learningParameter() == host)
             text << "\nWaiting for a MIDI controller. Shift+F10 to cancel.";
         const int cc = learn.controllerFor(host);
-        if (cc >= 0) text << "\nMIDI CC " << cc << (pure ? " (inactive in PURE CS-80)" : "");
+        if (cc >= 0) text << "\nMIDI CC " << cc;
     }
     return text;
 }
@@ -159,7 +158,6 @@ juce::PopupMenu ParameterContextButton::buildContextMenu()
     menu.addSectionHeader(target->getName(64) + "   " + target->getCurrentValueAsText());
     const int host = target->getParameterIndex();
     const bool enabled = canOpenContext();
-    const bool pure = processor->getParamValue(P_parityMode) >= 0.5f;
     const auto& learn = processor->getMidiLearn();
     const auto mapGeneration = learn.generation();
     const int cc = learn.controllerFor(host);
@@ -176,16 +174,14 @@ juce::PopupMenu ParameterContextButton::buildContextMenu()
     auto add = [&menu](const juce::String& title, bool available, std::function<void()> action) {
         juce::PopupMenu::Item item(title); item.isEnabled = available; item.action = std::move(action); menu.addItem(item);
     };
-    if (pure)
-        add("MIDI learn (off in PURE CS-80)", false, nullptr);
-    else if (learn.learningParameter() == host)
+    if (learn.learningParameter() == host)
         add("Cancel MIDI learn (waiting for a controller)", enabled, [safe, currentMap, host] {
             if (currentMap() && safe->processor->getMidiLearn().learningParameter() == host)
                 safe->processor->getMidiLearn().cancelLearn();
         });
     else
         add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", enabled, [safe, currentMap, host] {
-            if (currentMap() && safe->processor->getParamValue(P_parityMode) < 0.5f)
+            if (currentMap())
                 safe->processor->getMidiLearn().armLearn(host);
         });
     if (cc >= 0)

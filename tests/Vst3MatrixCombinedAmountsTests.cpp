@@ -191,8 +191,10 @@ int main(int argc,char**argv)
     auto reversed=curves;std::reverse(reversed.begin(),reversed.end());
     auto rotated=curves;std::rotate(rotated.begin(),rotated.begin()+5,rotated.end());
     double maxError=0;
+    std::vector<float> canonical256;
     for(int block:{7,64,256,1024}){
       const auto forward=renderSession(module,p,on,curves,block);
+      if(block==256)canonical256=forward;
       const auto reverse=renderSession(module,p,on,reversed,block);
       const auto rotate=renderSession(module,p,on,rotated,block);
       const double error=difference(scalar,forward);maxError=std::max(maxError,error);
@@ -221,7 +223,9 @@ int main(int argc,char**argv)
     check(exactAudio(zeroAudio,zeroOff),"zero-static routed amounts equal no routes");save("zero-routed",zeroAudio);save("zero-off",zeroOff);
     auto pure=p;pure[cs80::P_parityMode]=1;
     const auto pureAudio=renderSession(module,pure,on,curves,256),pureFixed=renderSession(module,pure,on,constant,256);
-    check(exactAudio(pureAudio,pureFixed),"PURE amounts inert");save("pure",pureAudio);save("pure-fixed",pureFixed);
+    // Keep the historical capture names and the held-curve negative control.
+    check(exactAudio(pureAudio,canonical256),"retired isolation request preserves canonical circuit sample-accurate modulation");
+    save("pure",pureAudio);save("pure-fixed",pureFixed);
     std::cout<<"max_error="<<maxError<<"\n";
     std::cout<<"cases=1 renders="<<renderCount<<" captures="<<captures<<" readbacks=2 failures="<<failures<<"\n";
     return failures?1:0;

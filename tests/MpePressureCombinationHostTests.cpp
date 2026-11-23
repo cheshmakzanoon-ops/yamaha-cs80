@@ -59,6 +59,10 @@ struct Host {
         tick();
         mcm(midi, 1, 0); mcm(midi, 16, 0);
         mcm(midi, 1, 2); mcm(midi, 16, 2); tick();
+        check(processor->getParamValue(P_sourcePerformance) == 1.0f
+                  && processor->getParamValue(P_parityMode) == 0.0f
+                  && processor->getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "both engine API requests resolve to circuit pressure combination");
     }
     void tick(int frames = 0)
     {
@@ -81,7 +85,7 @@ void testCombination(const juce::File& fixture)
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
     for (int frames : {0, 32}) for (bool upper : {false, true}) for (bool managerFirst : {false, true})
     for (bool curved : {false, true}) {
-        context = std::string("combination/") + (circuit ? "circuit" : "legacy")
+        context = std::string("combination/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + (upper ? "/upper" : "/lower")
             + (managerFirst ? "/manager-first" : "/member-first")
             + (curved ? "/curved" : "/linear") + "/frames=" + std::to_string(frames);
@@ -124,7 +128,7 @@ void testDormantActivation(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (int frames : {0, 32})
     for (bool upper : {false, true}) for (bool managerFirst : {false, true}) {
-        context = std::string("activation/") + (circuit ? "circuit" : "legacy")
+        context = std::string("activation/") + (circuit ? "circuit" : "retired-engine-request")
             + (upper ? "/upper" : "/lower") + (managerFirst ? "/manager-first" : "/member-first")
             + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, false);
@@ -144,7 +148,7 @@ void testUiPressure(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
     for (int frames : {0, 32}) for (bool upper : {false, true}) {
-        context = std::string("UI/") + (circuit ? "circuit" : "legacy") + (sixteen ? "/16" : "/8")
+        context = std::string("UI/") + (circuit ? "circuit" : "retired-engine-request") + (sixteen ? "/16" : "/8")
             + (upper ? "/upper" : "/lower") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen); host.processor->serviceKeyboardUI(); host.fillPrimary(sixteen);
         const int member = upper ? 15 : 2, manager = upper ? 16 : 1;
@@ -167,7 +171,7 @@ void testCapturedManager(const juce::File& fixture)
 {
     for (bool circuit : {false, true}) for (bool sixteen : {false, true})
     for (int frames : {0, 32}) {
-        context = std::string("captured-manager/") + (circuit ? "circuit" : "legacy")
+        context = std::string("captured-manager/") + (circuit ? "circuit" : "retired-engine-request")
             + (sixteen ? "/16" : "/8") + "/frames=" + std::to_string(frames);
         Host host(fixture, circuit, sixteen);
         const auto& zones = host.processor->getEngine().getMpeZones();
@@ -200,20 +204,38 @@ void testCapturedManager(const juce::File& fixture)
 }
 void testControls(const juce::File& fixture)
 {
-    for (bool circuit : {false, true}) for (bool pure : {false, true}) {
-        context = std::string(pure ? "PURE" : "MPE-off") + (circuit ? "/circuit" : "/legacy");
+    for (bool circuit : {false, true}) for (bool retiredIsolation : {false, true}) {
+        context = std::string(retiredIsolation ? "retired-isolation" : "MPE-off")
+            + (circuit ? "/circuit" : "/retired-engine-request");
         Host host(fixture, circuit, false);
-        host.processor->setParamValue(pure ? int(P_parityMode) : int(P_mpeOn), pure ? 1 : 0); host.tick();
-        check(!host.processor->getEngine().isMpeEnabled(), "control disables effective MPE");
+        if (!retiredIsolation) host.processor->setParamValue(P_mpeOn, 0);
+        host.tick();
         on(host.midi, 2, 60); host.tick(256);
-        check(find(*host.processor, 60, 2).info.held, "conventional control witness is held");
+        const auto before = find(*host.processor, 60, 2);
+        check(before.info.held, "pressure control witness is held");
+        if (retiredIsolation) {
+            host.processor->setParamValue(P_parityMode, 1);
+            host.processor->setParamValue(P_sourcePerformance, 0); host.tick();
+        }
+        const auto retained = find(*host.processor, 60, 2);
+        check(host.processor->getEngine().isMpeEnabled() == retiredIsolation,
+              "only the actual MPE control disables negotiated member/manager pressure");
+        check(retained.engine == before.engine && retained.index == before.index && retained.info.held,
+              "obsolete engine writes preserve pressure witness allocation");
         pressure(host.midi, 1, 100); host.tick(32);
-        host.expect(60, 2, 100.0f / 127, "conventional channel 1 pressure retains global broadcast");
+        host.expect(60, 2, 100.0f / 127,
+                    "channel 1 pressure reaches its member or conventional global target");
         pressure(host.midi, 2, 40); host.tick(32);
-        host.expect(60, 2, 40.0f / 127, "conventional own-channel pressure replaces broadcast without manager floor");
+        host.expect(60, 2, (retiredIsolation ? 100.0f : 40.0f) / 127,
+                    retiredIsolation ? "retired isolation request preserves the independent manager floor"
+                                     : "MPE-off own-channel pressure replaces broadcast without manager floor");
+        pressure(host.midi, 1, 0); host.tick(32);
+        host.expect(60, 2, retiredIsolation ? 40.0f / 127 : 0,
+                    retiredIsolation ? "manager zero reveals retained local input after obsolete policy writes"
+                                     : "MPE-off channel 1 zero retains conventional global broadcast");
     }
     for (bool circuit : {false, true}) for (bool sixteen : {false, true}) {
-        context = std::string("matrix/") + (circuit ? "circuit" : "legacy") + (sixteen ? "/16" : "/8");
+        context = std::string("matrix/") + (circuit ? "circuit" : "retired-engine-request") + (sixteen ? "/16" : "/8");
         Host host(fixture, circuit, sixteen); host.fillPrimary(sixteen);
         host.processor->setParamValue(P_mod1Amount, 1);
         host.processor->getModernLayer().setSlot(0, {modern::ModSource::channelPressure,

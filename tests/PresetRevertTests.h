@@ -431,8 +431,12 @@ struct PresetRevertAccess
                 const int slot = m == 0 ? 0 : m == 1 ? 7 : 15;
                 const auto configure = [&](Cs80AudioProcessor& p)
                 {
-                    p.loadInitPatch();
-                    p.setPure(false);
+                    // Freeze a two-rank test voice independently of factory
+                    // programming. Init Circuit deliberately has a silent second
+                    // rank, which cannot witness a rank-II-only route change.
+                    p.applyParameterValues(ParamValues {});
+                    p.selectHardwareSource(0, 13);
+                    p.selectHardwareSource(1, 13);
                     p.setParamValue(P_drift, 0.0f);
                     p.setParamValue(P_voiceDispersion, 0.0f);
                     p.setParamValue(P_analogNoise, 0.0f);

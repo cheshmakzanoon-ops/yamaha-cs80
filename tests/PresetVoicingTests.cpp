@@ -348,6 +348,59 @@ void highWindRegistration()
     }
 }
 
+
+// A struck keyboard needs audible changing partials, not just a sine with an
+// amplitude envelope. These gates use the actual mixed presets at three pitches
+// and two velocities; they are timbre regressions, not acoustic-match scores.
+void struckKeyboardCharacter()
+{
+    const auto& tine = preset("Tine Piano");
+    for (const int note : { 48, 60, 84 })
+    {
+        const double fundamental = noteHz(note);
+        const auto hard = render(tine, note, 0.90f, 1.5);
+        const auto soft = render(tine, note, 0.25f, 1.5);
+        const double hardRoot = toneNear(hard, 0.025, 0.15, fundamental);
+        const double hardStrike = toneNear(hard, 0.025, 0.15, 3.0 * fundamental);
+        const double softRoot = toneNear(soft, 0.025, 0.15, fundamental);
+        const double softStrike = toneNear(soft, 0.025, 0.15, 3.0 * fundamental);
+        const double lateRoot = toneNear(hard, 0.9, 1.35, fundamental);
+        const double lateStrike = toneNear(hard, 0.9, 1.35, 3.0 * fundamental);
+        const double hardColour = ratio(hardStrike, hardRoot);
+        const double softColour = ratio(softStrike, softRoot);
+        const double lateColour = ratio(lateStrike, lateRoot);
+        check(hardRoot > audibleRms && hardStrike > 0.25 * hardRoot,
+              "Tine Piano: key-following third harmonic is present at note " + std::to_string(note));
+        check(hardColour > 1.30 * softColour,
+              "Tine Piano: velocity changes harmonic balance, not only loudness, at note " + std::to_string(note));
+        check(lateRoot > diagnosticRms && lateColour < 0.35 * hardColour,
+              "Tine Piano: upper strike fades before the body at note " + std::to_string(note));
+        std::printf("TINE      note %d: hard H3/root %6.1f dB; hard/soft colour %+5.1f dB; late/early colour %6.1f dB\n",
+                    note, db(hardColour), db(ratio(hardColour, softColour)),
+                    db(ratio(lateColour, hardColour)));
+    }
+
+    for (const char* name : { "Electric Piano I", "Electric Piano II", "Reed Piano", "Saw Pulse Piano", "Stage Keys" })
+    {
+        const auto& voice = preset(name);
+        const auto audio = render(voice, 60, 0.9f, 4.0);
+        const double root = toneNear(audio, 0.025, 0.15, noteHz(60));
+        double overtonePower = 0.0;
+        for (int partial = 2; partial <= 6; ++partial)
+        {
+            const double overtone = toneNear(audio, 0.025, 0.15, partial * noteHz(60));
+            overtonePower += overtone * overtone;
+        }
+        const double overtones = std::sqrt(overtonePower);
+        check(root > audibleRms && overtones > 0.20 * root,
+              voice.name + ": struck onset contains audible upper partials");
+        check(audio.rms(3.5, 3.95) < 0.06 * audio.onsetRms(),
+              voice.name + ": held keyboard note decays rather than turning into an organ");
+        std::printf("KEYS      %-19s onset overtones/root %6.1f dB; held late/onset %6.1f dB\n",
+                    name, db(ratio(overtones, root)), db(ratio(audio.rms(3.5, 3.95), audio.onsetRms())));
+    }
+}
+
 void velocityResponse()
 {
     for (const char* name : { "Velocity Keys", "Velocity Lead" })
@@ -439,6 +492,7 @@ int main()
         octavePercussion();
         highWindRegistration();
         velocityResponse();
+        struckKeyboardCharacter();
         pressureRequiredLead();
         heldArticulation();
         longSwells();
