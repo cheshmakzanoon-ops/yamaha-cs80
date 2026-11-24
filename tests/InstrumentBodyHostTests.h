@@ -217,15 +217,15 @@ void testInstrumentBodyHost(Check&& check)
                       && choice->getVersionHint() == 18 && choice->isAutomatable(),
                   "variant automation appends with AU hint 18 after the complete published host prefix");
             check(choice->choices.joinIntoString("|") == "Standard|Xylophone bar|Steelpan shell|Choir ah|Choir oo"
-                      && choice->getNumSteps() == 5 && range.start == 0.0f && range.end == 4.0f
-                      && choice->convertFrom0to1(choice->getDefaultValue()) == 0.0f
+                      && parameter->getNumSteps() == 5 && range.start == 0.0f && range.end == 4.0f
+                      && choice->convertFrom0to1(parameter->getDefaultValue()) == 0.0f
                       && !Cs80AudioProcessor::isPhysicalSetupParameter(index),
                   "variant names, neutral default and five discrete saved choices are stable");
             for (int variant = 0; variant <= 4; ++variant)
             {
                 host->setParamValue(index, static_cast<float>(variant));
                 check(host->getParamValue(index) == static_cast<float>(variant)
-                          && choice->getValue() == static_cast<float>(variant) * 0.25f,
+                          && parameter->getValue() == static_cast<float>(variant) * 0.25f,
                       "all variant choices round trip through their independent normalized automation");
             }
         }

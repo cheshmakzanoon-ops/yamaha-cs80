@@ -407,6 +407,16 @@ void testLevels()
                 loudest, quietest, loudestRms, worstStress);
 }
 
+// These two slow layered voices need a lower ceiling after their full bloom.
+// Independent 12-second dense chords and 20-second pressure phrases exposed
+// peaks missed by the normal one-second stress window. Keep that measured
+// headroom when the short-phrase level tables are regenerated.
+double calibrationVolumeCeiling(const FactoryPreset& preset)
+{
+    return preset.name == "Cathedral Pad" || preset.name == "Golden Pads 66"
+        ? 0.650 : kMaxVolume;
+}
+
 // Writes CuratedLibraryLevels.inc: VOLUME per program so the audit phrase's
 // loudest window meets the level target within the peak limits.
 int calibrate(const char* path, bool original = false)
@@ -421,7 +431,8 @@ int calibrate(const char* path, bool original = false)
         "// Regenerate twice after voicing changes (the output driver is mildly nonlinear):\n"
         "//   cs80_library_audit_tests %s src/core/%s\n"
         "// Loudest 50 ms RMS target %.0f dBFS (%.0f dBFS for Leads/Winds/Bass/Sequences).\n"
-        "// Phrase peak <= %.1f dBFS; 8-voice stress peak <= %.1f dBFS; VOLUME %.2f..%.2f.\n",
+        "// Phrase peak <= %.1f dBFS; 8-voice stress peak <= %.1f dBFS; VOLUME %.2f..%.2f.\n"
+        "// Additional measured long-held chord ceilings are applied by the calibrator.\n",
         original ? "original-bank circuit" : "curated circuit",
         original ? "--calibrate-original" : "--calibrate",
         original ? "OriginalCircuitLevels.inc" : "CuratedLibraryLevels.inc",
@@ -439,7 +450,7 @@ int calibrate(const char* path, bool original = false)
         // Initialization patches are stable programming starting points, not
         // performance voicings. Recalibration must preserve their stored trim.
         const double next = p.category == "Init" ? volume
-            : std::clamp(volume * std::pow(10.0, gainDb / 20.0), kMinVolume, kMaxVolume);
+            : std::clamp(volume * std::pow(10.0, gainDb / 20.0), kMinVolume, calibrationVolumeCeiling(p));
         std::fprintf(file, "    { \"%s\", %.3ff },\n", p.name.c_str(), next);
     }
     return std::fclose(file) == 0 ? 0 : 3;

@@ -4,6 +4,7 @@
 //   cs80_library_audit_tests --calibrate src/core/CuratedLibraryLevels.inc
 // Loudest 50 ms RMS target -18 dBFS (-22 dBFS for Leads/Winds/Bass/Sequences).
 // Phrase peak <= -3.0 dBFS; 8-voice stress peak <= -1.5 dBFS; VOLUME 0.05..1.00.
+// Additional measured long-held chord ceilings are applied by the calibrator.
     { "Brass Swell I", 1.000f },
     { "Brass Swell II", 1.000f },
     { "Pressure Swell Brass", 1.000f },
@@ -85,7 +86,7 @@
     { "Tremolo Pad", 0.830f },
     { "Neo-Noir Pad", 0.983f },
     { "Rain Pad", 0.638f },
-    { "Cathedral Pad", 0.863f },
+    { "Cathedral Pad", 0.650f },
     { "Shimmer Pad", 0.742f },
     { "Low Drone", 0.983f },
     { "Ether Pad", 0.526f },

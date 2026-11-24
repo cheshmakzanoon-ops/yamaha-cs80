@@ -4,6 +4,7 @@
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstdio>
 #include <memory>
@@ -106,6 +107,41 @@ void pressureLed()
         std::printf("PRESSURE,%s,%.6f\n", name, range);
     }
 }
+void longHeldPadHeadroom()
+{
+    // Slow footage layers can reach their largest combined peak after the
+    // one-second calibration stress window. Exercise the complete held chord.
+    constexpr int stressRate = 48000, frames = 12 * stressRate;
+    constexpr std::array<int, 8> notes {60, 62, 64, 65, 67, 69, 71, 72};
+    for (const char* name : { "Cathedral Pad", "Golden Pads 66" })
+    {
+        const auto& bank = programLibrary();
+        const auto it = std::find_if(bank.begin(), bank.end(),
+                                    [name](const auto& p) { return p.name == name; });
+        check(it != bank.end(), std::string(name) + ": existing long-bloom voice is present");
+        if (it == bank.end()) continue;
+        auto engine = std::make_unique<Engine>();
+        engine->prepare(stressRate);
+        engine->setParams(it->values);
+        for (int note : notes) engine->noteOn(note, 1.0f, 1);
+        engine->channelPressure(1, 1.0f);
+        std::array<float, 512> block {};
+        bool finite = true;
+        double peak = 0.0;
+        for (int at = 0; at < frames; at += 256)
+        {
+            engine->render(block.data(), 256);
+            for (float value : block)
+            {
+                finite = finite && std::isfinite(value);
+                peak = std::max(peak, std::abs(static_cast<double>(value)));
+            }
+        }
+        check(finite && db(peak) < -1.5,
+              std::string(name) + ": complete twelve-second dense chord retains measured headroom");
+        std::printf("LONG_CHORD,%s,%.6f dBFS\n", name, db(peak));
+    }
+}
 void compingRelease()
 {
     // Compare the released signal with the same independently rendered held
@@ -134,6 +170,7 @@ int main()
         }
         pressureLed();
         compingRelease();
+        longHeldPadHeadroom();
     }
     catch (const std::exception& e) { check(false, e.what()); }
     std::printf("Pad/poly refinement: %d checks, %d failures\n", checks, failures);

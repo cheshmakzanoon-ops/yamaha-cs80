@@ -4,6 +4,7 @@
 //   cs80_library_audit_tests --calibrate-original src/core/OriginalCircuitLevels.inc
 // Loudest 50 ms RMS target -18 dBFS (-22 dBFS for Leads/Winds/Bass/Sequences).
 // Phrase peak <= -3.0 dBFS; 8-voice stress peak <= -1.5 dBFS; VOLUME 0.05..1.00.
+// Additional measured long-held chord ceilings are applied by the calibrator.
     { "Tone I: String 1", 1.000f },
     { "Tone II: String 2", 1.000f },
     { "Tone I: String 3", 1.000f },
@@ -113,7 +114,7 @@
     { "Distant Pads 63", 0.521f },
     { "Neon Pads 64", 0.933f },
     { "Hollow Pads 65", 0.825f },
-    { "Golden Pads 66", 0.854f },
+    { "Golden Pads 66", 0.650f },
     { "Frozen Pads 67", 0.774f },
     { "Electric Pads 68", 0.918f },
     { "Midnight Pads 69", 1.000f },
