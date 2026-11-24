@@ -120,7 +120,7 @@ public:
         damperStrength = damperSmoothing = 0.0;
         damperSeconds = -1.0;
         pickupReleaseLoss = pickupReleaseTarget = 1.0;
-        released = damperMoving = false;
+        released = damperMoving = damperRetarget = damperGeometryReady = false;
         liveEffort = motionTarget = motionLow = motionSmooth = 0.0;
         motionCountdown = 0;
         expressive = false;
@@ -267,18 +267,10 @@ public:
         const double seconds = damperReleaseSeconds(releaseSeconds);
         if (seconds == damperSeconds) return;
         damperSeconds = seconds;
-        if (model == piano)
-        {
-            for (int i = 0; i < count; ++i)
-            {
-                auto& mode = modes[static_cast<std::size_t>(i)];
-                mode.dampedLoss = mode.naturalLoss
-                    * damperLoss(damperStrength * pianoDamperWeight(mode.ratio), seconds, 1.0 / sampleRate);
-            }
-        }
-        else
-            pickupReleaseTarget = damperLoss(damperStrength, seconds, controlPeriod / sampleRate);
-        damperMoving = true;
+        // Targets are consumed only at the next body control boundary.
+        // Keep the latest unquantized timing value, avoiding work for targets
+        // superseded by sample-rate dispersion smoothing before that boundary.
+        damperRetarget = damperMoving = true;
     }
 
     float tick(float frequency, float brightness, float pressure = 0.0f) noexcept
@@ -371,6 +363,9 @@ private:
 
     std::array<Mode, maximumModes> modes {};
     PianoHammer pianoHammer;
+    // Keep immutable damper geometry outside Mode so the audio oscillator
+    // loop retains its existing storage stride. Filled on first release.
+    std::array<double, maximumModes> pianoDamperWeights {};
     // Fixed-formant history covers the full bank: low choir notes can use
     // 48 modes. Keep it outside Mode rather than enlarging every oscillator.
     std::array<double, maximumModes> bowedResponseInverse {}, bowedResponseGain {};
@@ -402,6 +397,7 @@ private:
     bool expressive = false;
     bool transientControls = false, gainRamping = false;
     bool released = false, damperMoving = false;
+    bool damperRetarget = false, damperGeometryReady = false;
 
     bool vocal() const noexcept { return variant == choirAh || variant == choirOo; }
 
@@ -1338,6 +1334,26 @@ private:
     void advanceDamper() noexcept
     {
         if (!damperMoving) return;
+        if (damperRetarget)
+        {
+            if (model == piano)
+            {
+                for (int i = 0; i < count; ++i)
+                {
+                    auto& mode = modes[static_cast<std::size_t>(i)];
+                    // Ratios are captured at note-on; pitch bends and live
+                    // dispersion/release timing never change this geometry.
+                    auto& weight = pianoDamperWeights[static_cast<std::size_t>(i)];
+                    if (!damperGeometryReady) weight = pianoDamperWeight(mode.ratio);
+                    mode.dampedLoss = mode.naturalLoss
+                        * damperLoss(damperStrength * weight, damperSeconds, 1.0 / sampleRate);
+                }
+                damperGeometryReady = true;
+            }
+            else
+                pickupReleaseTarget = damperLoss(damperStrength, damperSeconds, controlPeriod / sampleRate);
+            damperRetarget = false;
+        }
         damperMoving = false;
         const auto approach = [this](double& current, double target)
         {
