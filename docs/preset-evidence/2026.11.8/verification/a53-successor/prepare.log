@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "prepared_pending_actual_archive",
+  "accepted_archive_content": false,
+  "release_qualified": false,
+  "source_commit": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "source_tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "library_revision": "2026.11.8",
+  "recovery_edition": "a53-final-source-successor-2",
+  "expected_ci_run_id": "45457535944",
+  "expected_ci_run_attempt": "1",
+  "source_files": {
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 23560,
+      "sha256": "8341afe2ca3e87c448db97e0db6e64addc6c0a4b1a2307dfb9a90fcc40065b8f"
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "11e320ac972e9d7be17d996eb8debc3c627dedc41430ca613b52d4025ae4b911"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35439,
+      "sha256": "0598c603f4295d7df0a325c55eec8762f2d94964f85439c7a1e7875a673561a3"
+    }
+  },
+  "expected_inventory_sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+  "expected_inventory_source_path": null,
+  "roster_sha256": "09e60ba3a5756d2403d56109413a37b51744d0809dfc2a9e7153e99f00627714",
+  "preserved_roster": {
+    "wav_count": 238,
+    "folder_count": 54,
+    "sha256": "889f32cc511e7ae693803a4aec8118b2ac09f147cf2886a56af966e16115871a"
+  },
+  "appended_roster": {
+    "wav_count": 18,
+    "folder_count": 6,
+    "sha256": "8fd4f3e91593dbb5ed4c09b75b7c72fed770d88db8b3e8126f0c0189a4c84bcc"
+  },
+  "expected": {
+    "wav_count": 256,
+    "selected_program_count": 95,
+    "audio_seconds": 1487.2,
+    "folder_count": 60,
+    "regular_files": 321,
+    "checksums": 320,
+    "parameters": 204,
+    "programs": 523,
+    "stereo_frames": 71385600,
+    "raw_audio_bytes": 571084800
+  },
+  "independent_inventory_binding": {
+    "receipt_sha256": "6e2929072752477ef8a3321065dc568a323e13b85bd30d2e93ca5d8e8057dcd0",
+    "inventory_sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "source_commit": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "source_tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "execution": {
+      "kind": "local_recovery",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python_version": "3.12.14",
+      "recorded_at_utc": "2026-11-24T18:22:36.654090+00:00"
+    },
+    "independently_observed_capture_sha256": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1",
+    "inventory_normal_exit_code": 0,
+    "original_build": {
+      "run_id": 45457535944,
+      "run_attempt": 1,
+      "producer_job_id": 138670916222
+    },
+    "native_capture_binary_hash_equality_expected": false,
+    "producer_sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+    "verifier_sha256": "be945b0fef0a9798ead380ddbe4b757add018c41809e85e988b639eb31350ebb"
+  }
+}

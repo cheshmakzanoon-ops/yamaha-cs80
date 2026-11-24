@@ -1,0 +1,11 @@
+{
+  "retained_failure": {
+    "path": "history/attempt-1-ninja-unavailable/clean-build-receipt.json",
+    "original_configure_exit": 1,
+    "cause_observed": "CMake could not find Ninja; clean and build did not execute"
+  },
+  "correction": "Select installed Unix Makefiles generator; source, Release scope and parallel1 unchanged",
+  "make_path": "/usr/bin/make",
+  "retry_count_for_local_configure": 1,
+  "native_validation_retry_claimed": false
+}

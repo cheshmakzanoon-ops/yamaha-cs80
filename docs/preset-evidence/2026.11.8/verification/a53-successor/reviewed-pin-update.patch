@@ -1,0 +1,21 @@
+--- ef1c472/verify-audition-archive.py
++++ 1b5b3c7/verify-audition-archive.py
+@@ -27,13 +27,13 @@
+ import types
+ import zipfile
+ 
+-SOURCE = "ef1c472b161c37c490945f7c469086508aae6aef"
+-TREE = "f4e00753cde135a36172d9ea549223dfdce5cc82"
+-RUN = "45439302351"
++SOURCE = "1b5b3c70471e369481b1f813880a6bcc762a2f57"
++TREE = "b235b67a801d33e9572076b8dfcfbb89e71fac29"
++RUN = "45457535944"
+ ATTEMPT = "1"
+-PRODUCER_JOB = 138605634881
++PRODUCER_JOB = 138670916222
+ INVENTORY_SHA256 = "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621"
+-RECOVERY_EDITION = "a53-independent-capture-successor-1"
++RECOVERY_EDITION = "a53-final-source-successor-2"
+ REVISION = "2026.11.8"
+ RATE = 48000
+ PARAMETERS = 204

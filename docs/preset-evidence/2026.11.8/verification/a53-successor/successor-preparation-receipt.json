@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "original_native_build_run_id": 45457535944,
+  "original_native_build_attempt": 1,
+  "original_linux_job_id": 138670916222,
+  "execution_kind": "local_recovery",
+  "clean_build": {
+    "receipt": "clean-build-receipt.json",
+    "sha256": "e346afaae62cf233a1217aab378c7681ca50d41c21a5eb1ece2e095c361ca8a3",
+    "successful_configure_clean_build_original_exits": [
+      0,
+      0,
+      0
+    ],
+    "post_clean_core_capture_object_product_count": 0,
+    "parallel_workers": 1
+  },
+  "prior_local_configure_failures": {
+    "count": 2,
+    "original_exits": [
+      1,
+      1
+    ],
+    "retained_under": "history/",
+    "causes_observed": [
+      "Ninja unavailable",
+      "Three committed reference documents absent in sparse checkout"
+    ],
+    "native_failures_claimed": false
+  },
+  "independent_inventory": {
+    "bytes": 710475,
+    "sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "normal_exit": 0,
+    "byte_identical_to_ef1_recovery": true,
+    "receipt_sha256": "6e2929072752477ef8a3321065dc568a323e13b85bd30d2e93ca5d8e8057dcd0"
+  },
+  "bounded_tests": {
+    "content_methods": 20,
+    "ci_binding_methods": 7,
+    "all_passed": true,
+    "command_receipts": "bounded-test-command-receipts.json"
+  },
+  "prior_ef1_packet_files_rechecked_unchanged": 16,
+  "missing_archive_refusal_original_exit": 1,
+  "actual_archive_accepted": false,
+  "release_qualified": false,
+  "a46_contract_crosscheck": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a46-successor/source-contract.json",
+    "sha256": "52fee4f4df3bd2de93116df62e18eb3c74620f8dfb82e1c7f4d67d9f9f19211f",
+    "source_tree_run_attempt_roster_counts_agree": true
+  }
+}

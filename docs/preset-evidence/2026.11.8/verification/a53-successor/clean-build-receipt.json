@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "execution_kind": "local_recovery",
+  "original_native_build_run_id": 45457535944,
+  "original_native_build_attempt": 1,
+  "source_before": {
+    "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "tracked_status": ""
+  },
+  "started_at_utc": "2026-11-24T18:21:29.524243+00:00",
+  "steps": [
+    {
+      "name": "cmake-version",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--version"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:21:29.524319+00:00",
+      "completed_at_utc": "2026-11-24T18:21:29.528265+00:00",
+      "elapsed_seconds": 0.00381678400299279,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/cmake-version.log",
+      "log_bytes": 91,
+      "log_sha256": "f6e81c2559f3ce00c5fdad01d7b226c301f5d6b07ee04f65db6dbfdc1cc5970b"
+    },
+    {
+      "name": "compiler-version",
+      "command": [
+        "/usr/bin/g++",
+        "--version"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:21:29.528469+00:00",
+      "completed_at_utc": "2026-11-24T18:21:29.530902+00:00",
+      "elapsed_seconds": 0.0023846779949963093,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/compiler-version.log",
+      "log_bytes": 232,
+      "log_sha256": "5f6798e87440f1e8b88bf6822c33bebe434f83374640a7f8ba967902ee1ea098"
+    },
+    {
+      "name": "configure",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--fresh",
+        "-S",
+        "/tmp/cs80-614c8ce056b7",
+        "-B",
+        "/tmp/cs80-614c8ce056b7-build",
+        "-G",
+        "Unix Makefiles",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCS80_BUILD_PLUGIN=OFF",
+        "-DCS80_BUILD_TESTS=OFF"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:21:29.531054+00:00",
+      "completed_at_utc": "2026-11-24T18:21:29.867191+00:00",
+      "elapsed_seconds": 0.33608596099657007,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/configure.log",
+      "log_bytes": 624,
+      "log_sha256": "b672a424514c6eae2e9a83ded615b0673c75c0e1c25feec10f073f38838391c9"
+    },
+    {
+      "name": "clean",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--build",
+        "/tmp/cs80-614c8ce056b7-build",
+        "--target",
+        "clean"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:21:29.867505+00:00",
+      "completed_at_utc": "2026-11-24T18:21:29.921455+00:00",
+      "elapsed_seconds": 0.05389528199884808,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/clean.log",
+      "log_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--build",
+        "/tmp/cs80-614c8ce056b7-build",
+        "--target",
+        "cs80_preset_capture",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:21:29.922714+00:00",
+      "completed_at_utc": "2026-11-24T18:21:59.931307+00:00",
+      "elapsed_seconds": 30.00845010500052,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/build.log",
+      "log_bytes": 579,
+      "log_sha256": "d95f44b52689fc77e50691e8a181d05e6f5cec93f9f0ba3b76751fcccc3a4bd8"
+    }
+  ],
+  "scope": "Clean Release core/capture rebuild only; no native plugin or CTest qualification.",
+  "after_clean": {
+    "remaining_core_or_capture_objects_and_products": [],
+    "observed_at_utc": "2026-11-24T18:21:29.922504+00:00"
+  },
+  "source_after": {
+    "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "tracked_status": ""
+  },
+  "outputs": {
+    "libcs80_core.a": {
+      "path": "/tmp/cs80-614c8ce056b7-build/libcs80_core.a",
+      "bytes": 1772812,
+      "sha256": "8da3440047756f0adac54a9f92cbe9af452aefbee31bafc585d23adccd26f353"
+    },
+    "cs80_preset_capture": {
+      "path": "/tmp/cs80-614c8ce056b7-build/cs80_preset_capture",
+      "bytes": 1180544,
+      "sha256": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1"
+    }
+  },
+  "completed_at_utc": "2026-11-24T18:21:59.969814+00:00",
+  "all_original_step_exits_zero": true
+}

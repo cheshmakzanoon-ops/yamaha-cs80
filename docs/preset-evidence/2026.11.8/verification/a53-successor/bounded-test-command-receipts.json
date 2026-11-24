@@ -1,0 +1,26 @@
+[
+  {
+    "name": "content",
+    "command": [
+      "python3",
+      "/tmp/cs80-614c8ce056b7-notes/a53-successor/test-audition-archive.py"
+    ],
+    "cwd": "/tmp/cs80-614c8ce056b7-notes/a53-successor",
+    "original_returncode": 0,
+    "elapsed_seconds": 4.641052762002801,
+    "log": "content-tests.log",
+    "log_sha256": "8930a823fe29dd7a55b68f201dd9223bfe009d9cb95522e038e2a8f74c45b1ad"
+  },
+  {
+    "name": "ci-binding",
+    "command": [
+      "python3",
+      "/tmp/cs80-614c8ce056b7-notes/a53-successor/test-audition-ci.py"
+    ],
+    "cwd": "/tmp/cs80-614c8ce056b7-notes/a53-successor",
+    "original_returncode": 0,
+    "elapsed_seconds": 0.10103735099983169,
+    "log": "ci-binding-tests.log",
+    "log_sha256": "8aa27f4094e6a734ff06c227d9e47aeecffdd0d94961c965b37fba281475991d"
+  }
+]

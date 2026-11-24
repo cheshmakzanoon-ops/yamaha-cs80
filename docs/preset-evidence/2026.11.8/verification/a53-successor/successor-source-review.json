@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "previous_source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "original_build_run_id": 45457535944,
+  "run_attempt": 1,
+  "original_linux_producer": 138670916222,
+  "src_tree": "5462494f03daa9841be51000c6b5708570f5b8e8",
+  "src_tree_unchanged": true,
+  "protected_files": {
+    "CMakeLists.txt": {
+      "bytes": 223026,
+      "sha256": "c35a4babd601e73cfb8416bac9ee2c2128be66f0adce4a141a7ee2b84edad69a",
+      "unchanged_from_ef1": true
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35439,
+      "sha256": "0598c603f4295d7df0a325c55eec8762f2d94964f85439c7a1e7875a673561a3",
+      "unchanged_from_ef1": true
+    },
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 23560,
+      "sha256": "8341afe2ca3e87c448db97e0db6e64addc6c0a4b1a2307dfb9a90fcc40065b8f",
+      "unchanged_from_ef1": true
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "unchanged_from_ef1": true
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "11e320ac972e9d7be17d996eb8debc3c627dedc41430ca613b52d4025ae4b911",
+      "unchanged_from_ef1": true
+    },
+    "src/core/FactoryPresets.cpp": {
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "unchanged_from_ef1": true
+    },
+    "src/core/InstrumentBody.h": {
+      "bytes": 80593,
+      "sha256": "d1b18fe21d47f7e5fc32df19e7372d9adf6b1fe4dc019171bcfa021030147c48",
+      "unchanged_from_ef1": true
+    }
+  },
+  "changed_nondocumentation_paths": [
+    ".github/workflows/dsp-measurements.yml",
+    "scripts/ci-sanitizer-shards.py",
+    "scripts/test-ci-sanitizer-shards.py",
+    "tests/SixteenVoiceReleaseTests.cpp"
+  ],
+  "helper_derivation": [
+    {
+      "path": "verify-audition-archive.py",
+      "predecessor_sha256": "45969f31bbf4b8b8144e8798fb8d9fad8df410be7a9508e6b7a80d70f6e20a6e",
+      "successor_sha256": "be945b0fef0a9798ead380ddbe4b757add018c41809e85e988b639eb31350ebb",
+      "unchanged": false
+    },
+    {
+      "path": "produce-independent-inventory.py",
+      "predecessor_sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+      "successor_sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+      "unchanged": true
+    },
+    {
+      "path": "bind-audition-ci.py",
+      "predecessor_sha256": "03139f06de5729d4475f5d537a1173c1c9be26a919751e904bb50e53c78fd32b",
+      "successor_sha256": "03139f06de5729d4475f5d537a1173c1c9be26a919751e904bb50e53c78fd32b",
+      "unchanged": true
+    },
+    {
+      "path": "test-audition-archive.py",
+      "predecessor_sha256": "7cedc82c79c87f39d863aff29f0aff762a04058756f24a6b784e926eebfed53f",
+      "successor_sha256": "7cedc82c79c87f39d863aff29f0aff762a04058756f24a6b784e926eebfed53f",
+      "unchanged": true
+    },
+    {
+      "path": "test-audition-ci.py",
+      "predecessor_sha256": "9f9b2798d87bc2a7ff58081add9836c4ad9adff43284f5ac82c49fb1401bb12a",
+      "successor_sha256": "9f9b2798d87bc2a7ff58081add9836c4ad9adff43284f5ac82c49fb1401bb12a",
+      "unchanged": true
+    }
+  ],
+  "prior_packet_preserved": true,
+  "actual_inventory_executed": false,
+  "actual_archive_accepted": false
+}

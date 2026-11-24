@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "status": "failed",
+  "execution_kind": "local_recovery",
+  "original_native_build_run_id": 45457535944,
+  "original_native_build_attempt": 1,
+  "source_before": {
+    "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "tracked_status": ""
+  },
+  "started_at_utc": "2026-11-24T18:20:46.277204+00:00",
+  "steps": [
+    {
+      "name": "cmake-version",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--version"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:20:46.277308+00:00",
+      "completed_at_utc": "2026-11-24T18:20:46.280490+00:00",
+      "elapsed_seconds": 0.0029790170010528527,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/cmake-version.log",
+      "log_bytes": 91,
+      "log_sha256": "f6e81c2559f3ce00c5fdad01d7b226c301f5d6b07ee04f65db6dbfdc1cc5970b"
+    },
+    {
+      "name": "compiler-version",
+      "command": [
+        "/usr/bin/g++",
+        "--version"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:20:46.280776+00:00",
+      "completed_at_utc": "2026-11-24T18:20:46.282493+00:00",
+      "elapsed_seconds": 0.0015850299969315529,
+      "original_returncode": 0,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/compiler-version.log",
+      "log_bytes": 232,
+      "log_sha256": "5f6798e87440f1e8b88bf6822c33bebe434f83374640a7f8ba967902ee1ea098"
+    },
+    {
+      "name": "configure",
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--fresh",
+        "-S",
+        "/tmp/cs80-614c8ce056b7",
+        "-B",
+        "/tmp/cs80-614c8ce056b7-build",
+        "-G",
+        "Unix Makefiles",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCS80_BUILD_PLUGIN=OFF",
+        "-DCS80_BUILD_TESTS=OFF"
+      ],
+      "cwd": "/tmp/cs80-614c8ce056b7",
+      "started_at_utc": "2026-11-24T18:20:46.282666+00:00",
+      "completed_at_utc": "2026-11-24T18:20:46.620205+00:00",
+      "elapsed_seconds": 0.33746013500058325,
+      "original_returncode": 1,
+      "log": "/tmp/cs80-614c8ce056b7-notes/a53-successor/configure.log",
+      "log_bytes": 1028,
+      "log_sha256": "8485f50ea85906e5833ffddcf67a33144566aca133934867d631173ac5cd76fe"
+    }
+  ],
+  "scope": "Clean Release core/capture rebuild only; no native plugin or CTest qualification.",
+  "completed_at_utc": "2026-11-24T18:20:46.620453+00:00",
+  "error": "configure failed with original return code 1"
+}
