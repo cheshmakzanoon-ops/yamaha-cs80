@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-24T14:21:38.430271+00:00",
+  "binary_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "binary_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "sound_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "documentation_head": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "local_main": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "tracked_frozen_paths": 11439,
+  "tracked_main_paths": 11846,
+  "all_tracked_worktree_paths_hashed": 11846,
+  "all_tracked_worktree_bytes_hashed": 230425307,
+  "protected_path_count_beyond_publication_and_current_evidence": 10944,
+  "a40_manifest": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/source-inputs-ee0dabca.json",
+    "bytes": 148012,
+    "sha256": "368b7bc55a65b2a9a5836e41464919e4d78efda4467a06c43c7c566ec174acb1"
+  },
+  "a40_inputs_verified": 945,
+  "non_documentation_protected_count": 1500,
+  "non_documentation_root_counts": {
+    "tools": 502,
+    "tests": 588,
+    "src": 233,
+    ".github": 29,
+    "artifacts": 40,
+    "installer": 4,
+    "scripts": 90,
+    "cmake": 4,
+    "assets": 4,
+    "CMakeLists.txt": 1,
+    ".gitignore": 1,
+    "CMakePresets.json": 1,
+    "LICENSE": 1,
+    "scripts-env.sh": 1,
+    ".gitattributes": 1
+  },
+  "source_critical_document_count": 20,
+  "source_freeze_document_reference_count": 17,
+  "protected_tree_paths_modes_and_blobs_equal": true,
+  "protected_worktree_bytes_and_modes_equal": true,
+  "protected_index_paths_modes_and_blobs_equal": true,
+  "protected_additions_deletions": [],
+  "all_tree_change_count": 413,
+  "all_tree_changes_by_class": {
+    "authorized_later_online_document": 5,
+    "current_revision_evidence_or_review": 408
+  },
+  "worktree_changes_from_main": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a52.md",
+      "classification": "current_revision_evidence_or_review",
+      "tracked_main": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9aea89c316f2e4d633ac09ea7f0bee3e6340aca0"
+      },
+      "worktree": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1d07ddb5c6e00a06f61e94aaf59a57dd8f22a8c4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/work-log.json",
+      "classification": "current_revision_evidence_or_review",
+      "tracked_main": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "083f8b8fe37d3f62619e6ca176a38155c3e91ef7"
+      },
+      "worktree": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "00390740572db2b4102df41be41af8a9ab20a14d"
+      }
+    }
+  ],
+  "missing_tracked_worktree_paths": [],
+  "staged_paths_at_checkpoint": [],
+  "untracked_nonignored_path_count": 43,
+  "untracked_nonignored_protected_paths": [],
+  "physical_extra_files_in_non_documentation_roots": [
+    {
+      "path": "scripts/__pycache__/compare-preset-response-2026-11-6.cpython-312.pyc",
+      "ignored_by_git": true,
+      "python_bytecode_cache": true,
+      "mode": "100644",
+      "type": "blob",
+      "oid": "88983e384fa3f2d3ce952ce04e888e10aae3e3fc",
+      "bytes": 25255,
+      "sha256": "0878dbb91671192c4f21df323c9e6131fa4d6223db8c94349a205b1698507324"
+    },
+    {
+      "path": "scripts/__pycache__/capture-factory-auditions.cpython-312.pyc",
+      "ignored_by_git": true,
+      "python_bytecode_cache": true,
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4d296bc51b9f7cffab49caca59a0ae96bd5f3a5c",
+      "bytes": 24973,
+      "sha256": "fccd9cb2d485597e36914b1f3bfec897e8cab5d633eb6a65976397f1d77d43b8"
+    }
+  ],
+  "cache_scope": "Observed ignored Python bytecode is inventoried, not deleted or relabeled as tracked source; clean CI checkout does not include these caches.",
+  "protected_tree_canonical_sha256": "a75b48325b089b1e08800a8ae8bb2c2646863e7d63efe1893ecf0b5d532d9403",
+  "all_tracked_worktree_canonical_sha256": "d66adc345aa63231de056071f3ebcf7ecf9fc26f757dcb845bf5ab77bd4378db",
+  "inventory": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "bytes": 710464,
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+    "programs": 523,
+    "parameters": 204,
+    "values": 106692,
+    "binary32_values_sha256": "aedb533d123874448b4df31f3c25aa7cb109d4109c6dc22ee9548ebcdeb42273"
+  },
+  "source_continuity_verified": true,
+  "native_or_binary_execution_performed": false,
+  "whole_main_tree_identity_claimed": false,
+  "release_qualified": false
+}

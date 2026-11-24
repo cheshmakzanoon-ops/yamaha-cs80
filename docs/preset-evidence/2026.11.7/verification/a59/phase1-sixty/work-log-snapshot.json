@@ -1,0 +1,457 @@
+{
+  "revision": "2026.11.7",
+  "baseline_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "requested_assignments": 60,
+  "maximum_parallel_workers": 3,
+  "constraint": "Improve existing 521 musical programs; preserve 523 program identities including two Init entries; no added presets.",
+  "assignments": [
+    {
+      "id": "a01",
+      "role": "Keyboard synthesis defect audit",
+      "status": "completed",
+      "report": "reviews/a01.md",
+      "agent": "/root/a01_keyboard_audit"
+    },
+    {
+      "id": "a02",
+      "role": "Whole-engine playability defect audit",
+      "status": "completed",
+      "report": "reviews/a02.md",
+      "agent": "/root/a02_playability_audit"
+    },
+    {
+      "id": "a03",
+      "role": "Native build and delivery audit",
+      "status": "completed",
+      "report": "reviews/a03.md",
+      "agent": "/root/a03_release_audit"
+    },
+    {
+      "id": "a04",
+      "role": "Piano tail-spectrum correction and PCM regression",
+      "status": "completed",
+      "report": "reviews/a04.md",
+      "agent": "/root/a04_piano_decay_fix"
+    },
+    {
+      "id": "a05",
+      "role": "Internal-rate invariant breath/contact excitation",
+      "status": "completed",
+      "report": "reviews/a05.md",
+      "agent": "/root/a05_body_noise_rate_fix"
+    },
+    {
+      "id": "a06",
+      "role": "Fixed body resonances for string bends",
+      "status": "completed",
+      "report": "reviews/a06.md",
+      "agent": "/root/a06_string_body_bends"
+    },
+    {
+      "id": "a07",
+      "role": "Restore low choir upper formant coverage",
+      "status": "completed",
+      "report": "reviews/a07.md",
+      "agent": "/root/a07_low_choir_spectrum"
+    },
+    {
+      "id": "a08",
+      "role": "Source-time revision, preset and installation guides",
+      "status": "completed",
+      "report": "reviews/a08.md",
+      "agent": "/root/a08_revision_docs"
+    },
+    {
+      "id": "a09",
+      "role": "Audition archive register and tail coverage",
+      "status": "completed",
+      "report": "reviews/a09.md",
+      "agent": "/root/a09_release_audio_roster"
+    },
+    {
+      "id": "a10",
+      "role": "Full Engine realtime/offline texture verification",
+      "status": "completed",
+      "report": "verification/a10/reporta10.md",
+      "agent": "/root/a10_engine_texture_verification"
+    },
+    {
+      "id": "a11",
+      "role": "Independent paired combined CPU review",
+      "status": "completed",
+      "report": "reviews/a11.md",
+      "agent": "/root/a11_combined_cpu_review"
+    },
+    {
+      "id": "a12",
+      "role": "Authenticated whole-bank identity and cumulative coverage",
+      "status": "completed",
+      "report": "reviews/a12.md",
+      "agent": "/root/a12_bank_identity"
+    },
+    {
+      "id": "a13",
+      "role": "Complete Keys family and piano integration review",
+      "status": "completed",
+      "report": "reviews/a13.md",
+      "agent": "/root/a13_keyboard_family"
+    },
+    {
+      "id": "a14",
+      "role": "Complete Bass family and live gesture review",
+      "status": "completed",
+      "report": "reviews/a14.md",
+      "agent": "/root/a14_bass_family"
+    },
+    {
+      "id": "a15",
+      "role": "Complete Plucked family and material gesture review",
+      "status": "completed",
+      "report": "reviews/a15.md",
+      "agent": "/root/a15_plucked_family"
+    },
+    {
+      "id": "a16",
+      "role": "Complete Brass family, quality modes and live formants",
+      "status": "completed",
+      "report": "reviews/a16.md",
+      "agent": "/root/a16_brass_family"
+    },
+    {
+      "id": "a17",
+      "role": "Complete Bells family, struck materials and headroom",
+      "status": "completed",
+      "report": "reviews/a17.md",
+      "agent": "/root/a17_bell_family"
+    },
+    {
+      "id": "a18",
+      "role": "Complete Strings family, touch and release",
+      "status": "completed",
+      "report": "reviews/a18.md",
+      "agent": "/root/a18_strings_family"
+    },
+    {
+      "id": "a19",
+      "role": "Complete Winds family and breath integration",
+      "status": "completed",
+      "report": "reviews/a19.md",
+      "agent": "/root/a19_winds_family"
+    },
+    {
+      "id": "a20",
+      "role": "Complete Organ family, registration and percussion",
+      "status": "completed",
+      "report": "reviews/a20.md",
+      "agent": "/root/a20_organ_family"
+    },
+    {
+      "id": "a21",
+      "role": "Complete Pads family, low choir and slow envelope integration",
+      "status": "completed",
+      "report": "reviews/a21.md",
+      "agent": "/root/a21_pads_family"
+    },
+    {
+      "id": "a22",
+      "role": "Complete Polysynth family and pressured chord response",
+      "status": "completed",
+      "report": "reviews/a22.md",
+      "agent": "/root/a22_poly_family"
+    },
+    {
+      "id": "a23",
+      "role": "Complete Leads family and polyphonic performance gestures",
+      "status": "completed",
+      "report": "reviews/a23.md",
+      "agent": "/root/a23_lead_family"
+    },
+    {
+      "id": "a24",
+      "role": "Complete Sequences family and actual motion/timing",
+      "status": "completed",
+      "report": "reviews/a24.md",
+      "agent": "/root/a24_sequences_family"
+    },
+    {
+      "id": "a25",
+      "role": "Complete FX family and intentional residual/source behavior",
+      "status": "completed",
+      "report": "reviews/a25.md",
+      "agent": "/root/a25_fx_family"
+    },
+    {
+      "id": "a26",
+      "role": "All Hardware Studies and original electrical tone behavior",
+      "status": "completed",
+      "report": "reviews/a26.md",
+      "agent": "/root/a26_hardware_studies"
+    },
+    {
+      "id": "a27",
+      "role": "Two Init programs and historical core-state defaults",
+      "status": "completed",
+      "agent": "/root/a27_init_legacy_state",
+      "report": "reviews/a27.md"
+    },
+    {
+      "id": "a28",
+      "role": "Exact expanded audition archive and CI binding contract",
+      "status": "completed",
+      "agent": "/root/a28_audition_acceptance",
+      "report": "reviews/a28.md"
+    },
+    {
+      "id": "a29",
+      "role": "Full native test roster and source-bound acceptance contract",
+      "status": "completed",
+      "agent": "/root/a29_native_contract",
+      "report": "reviews/a29.md"
+    },
+    {
+      "id": "a30",
+      "role": "Generic installation acceptance and source-specific guide/notice contract",
+      "status": "completed",
+      "agent": "/root/a30_install_contract",
+      "report": "reviews/a30.md"
+    },
+    {
+      "id": "a31",
+      "role": "Independent five-lane macOS validation and payload-binding review",
+      "status": "completed",
+      "agent": "/root/a31_mac_binding_review",
+      "report": "reviews/a31.md"
+    },
+    {
+      "id": "a32",
+      "role": "Windows/Linux validator consumer and checkout-byte contract",
+      "status": "completed",
+      "agent": "/root/a32_vst3_consumer_contract",
+      "report": "reviews/a32.md"
+    },
+    {
+      "id": "a33",
+      "role": "Cumulative all-bank metrics and active touch-baseline causality",
+      "status": "completed",
+      "agent": "/root/a33_cumulative_metrics",
+      "report": "reviews/a33.md"
+    },
+    {
+      "id": "a34",
+      "role": "Long entrances and sustained chord audit coverage",
+      "status": "completed",
+      "agent": "/root/a34_long_envelopes",
+      "report": "reviews/a34.md"
+    },
+    {
+      "id": "a35",
+      "role": "All seven vocal recipes across Pads and FX",
+      "status": "completed",
+      "agent": "/root/a35_vocal_recipe_review",
+      "report": "reviews/a35.md"
+    },
+    {
+      "id": "a36",
+      "role": "Hammered keyboard specificity and concrete defect review",
+      "status": "completed",
+      "report": "reviews/a36.md",
+      "agent": "/root/a36_hammered_keys_review"
+    },
+    {
+      "id": "a37",
+      "role": "Full Engine runtime, allocation and lifecycle review",
+      "status": "completed",
+      "agent": "/root/a37_engine_runtime_review",
+      "report": "reviews/a37.md"
+    },
+    {
+      "id": "a38",
+      "role": "Combined modal-array bounds, reset and ordinary sanitizer review",
+      "status": "completed",
+      "agent": "/root/a38_combined_boundary_review",
+      "report": "reviews/a38.md"
+    },
+    {
+      "id": "a39",
+      "role": "Windows capture-tool stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a39_windows_capture_repair",
+      "report": "reviews/a39.md"
+    },
+    {
+      "id": "a40",
+      "role": "Final-source input identity and unchanged acceptance-gate successors",
+      "status": "completed",
+      "agent": "/root/a40_final_source_contract",
+      "report": "reviews/a40.md"
+    },
+    {
+      "id": "a41",
+      "role": "Nine materials and four variants: exact recipe and physical-claim review",
+      "status": "completed",
+      "agent": "/root/a41_material_identity_review",
+      "report": "reviews/a41.md"
+    },
+    {
+      "id": "a42",
+      "role": "Host parameter, program and saved-session compatibility",
+      "status": "completed",
+      "agent": "/root/a42_host_state_compatibility",
+      "report": "reviews/a42.md"
+    },
+    {
+      "id": "a43",
+      "role": "Installation and exact factory-reload user flow",
+      "status": "completed",
+      "agent": "/root/a43_install_loading_flow",
+      "report": "reviews/a43.md"
+    },
+    {
+      "id": "a44",
+      "role": "Actual Apple Silicon platform qualification",
+      "status": "completed",
+      "agent": "/root/a44_arm_platform",
+      "report": "reviews/a44.md"
+    },
+    {
+      "id": "a45",
+      "role": "Intel native audit stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a45_intel_diagnosis",
+      "report": "reviews/a45.md"
+    },
+    {
+      "id": "a46",
+      "role": "Actual final-source Windows platform and consumer qualification",
+      "status": "completed",
+      "agent": "/root/a46_windows_qualification",
+      "report": "ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+      "phase1_complete": true,
+      "preparation_report": "reviews/a46.md",
+      "actual_handoff": "verification/a46/actual-handoff.json"
+    },
+    {
+      "id": "a47",
+      "role": "Actual final-source Linux platform and original retry-history qualification",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a47_linux_qualification",
+      "report": "reviews/a47.md",
+      "phase1_complete": true
+    },
+    {
+      "id": "a48",
+      "role": "Actual final-source ARM and Intel Mac platform/validator qualification",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a48_macos_qualification",
+      "report": "reviews/a48.md",
+      "phase1_complete": true,
+      "phase1_scope": "Fresh ee0 Apple Silicon qualified; Intel actual qualification pending."
+    },
+    {
+      "id": "a49",
+      "role": "Intel native GUI meter failure diagnosis and bounded remediation",
+      "status": "completed",
+      "agent": "/root/a49_intel_meter_diagnosis",
+      "report": "reviews/a49.md"
+    },
+    {
+      "id": "a50",
+      "role": "Actual expanded audition archive content and original CI acceptance",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a50_actual_audition_acceptance",
+      "report": "reviews/a50.md",
+      "phase1_complete": true,
+      "phase1_scope": "Exact frozen audition roster/inventory and actual acceptance commands independently prepared; actual Linux archive pending."
+    },
+    {
+      "id": "a51",
+      "role": "Actual five public artifact downloads and expiry mapping",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a51_public_downloads",
+      "report": "reviews/a51.md",
+      "phase1_complete": true,
+      "phase1_scope": "Apple Silicon actual public full GET accepted; four public routes pending.",
+      "phase2_complete": true,
+      "phase2_scope": "Actual ARM and Windows complete public GET and upload binding accepted; Intel/Linux/audition pending."
+    },
+    {
+      "id": "a52",
+      "role": "Independent four-platform build and dependency provenance",
+      "status": "in_progress",
+      "agent": "/root/a52_build_provenance",
+      "report": "reviews/a52.md",
+      "phase1_complete": true
+    },
+    {
+      "id": "a53",
+      "role": "Independent exact native rosters, skip reasons and host-boundary coverage",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a53_native_skip_reconciliation",
+      "report": "reviews/a53.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending."
+    },
+    {
+      "id": "a54",
+      "role": "Final sound-claim, evidence and realism-limit review",
+      "status": "completed",
+      "agent": "/root/a54_sound_claims_review",
+      "report": "reviews/a54.md"
+    },
+    {
+      "id": "a55",
+      "role": "Complete per-address family and gesture coverage matrix",
+      "status": "completed",
+      "agent": "/root/a55_family_coverage_matrix",
+      "report": "reviews/a55.md"
+    },
+    {
+      "id": "a56",
+      "role": "Final online guides, download publication and consistency",
+      "status": "awaiting_release_inputs",
+      "agent": "/root/a56_publication_docs",
+      "report": "reviews/a56.md",
+      "phase1_complete": true,
+      "phase2": "Await accepted native platforms, validators, installers, audition and public routes before final download publication."
+    },
+    {
+      "id": "a57",
+      "role": "Independent four-platform installation and payload cross-check",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a57_installation_crosscheck",
+      "report": "reviews/a57.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending."
+    },
+    {
+      "id": "a58",
+      "role": "Independent actual release and original-attempt reconciliation",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a58_release_reconciliation",
+      "report": "reviews/a58.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual three native observations including Intel failure, two packages/platform receipts, seven validator lanes independently reconciled; no release acceptance."
+    },
+    {
+      "id": "a59",
+      "role": "Exact current 60-agent ledger and completion review",
+      "status": "in_progress",
+      "agent": "/root/a59_team_ledger_review",
+      "report": "reviews/a59.md"
+    },
+    {
+      "id": "a60",
+      "role": "Independent final source, binary, release and publication signoff",
+      "status": "in_progress",
+      "agent": "/root/a60_final_source_release_signoff",
+      "report": "reviews/a60.md"
+    }
+  ],
+  "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "candidate_build_run": 45397189410,
+  "documentation_head_observed": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "assigned_count": 60,
+  "completed_count": 49,
+  "candidate_build_note": "ARM and Windows attempt1 platforms qualified. Both public installer full GETs pass. Intel original attempt1 has one preserved GUI meter screenshot failure; all523LibraryAudit passed. Independent A49 finds no justified source/test change and recommends one unchanged full Intel job rerun after Linux workflow completes. Immediate retry refused by active-workflow state; no retry started. Separate DSP workflow45397189426 all5jobs succeeded. No cross-platform/release qualification yet.",
+  "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
+}

@@ -1,0 +1,203 @@
+﻿2026-11-24T12:58:43.2683572Z Current runner version: '2.338.2'
+2026-11-24T12:58:43.2720295Z ##[group]Runner Image Provisioner
+2026-11-24T12:58:43.2721990Z Hosted Compute Agent
+2026-11-24T12:58:43.2723105Z Version: 20261111.635
+2026-11-24T12:58:43.2724365Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-24T12:58:43.2725799Z Build Date: 2026-11-11T01:49:01Z
+2026-11-24T12:58:43.2727120Z Worker ID: {833a3d76-cf79-4c78-a009-789476bbe674}
+2026-11-24T12:58:43.2729164Z Region: northcentralus
+2026-11-24T12:58:43.2730315Z Cloud: Azure
+2026-11-24T12:58:43.2731328Z ##[endgroup]
+2026-11-24T12:58:43.2734267Z ##[group]Operating System
+2026-11-24T12:58:43.2735396Z Ubuntu
+2026-11-24T12:58:43.2736484Z 24.04.5
+2026-11-24T12:58:43.2737438Z LTS
+2026-11-24T12:58:43.2738671Z ##[endgroup]
+2026-11-24T12:58:43.2739875Z ##[group]Runner Image
+2026-11-24T12:58:43.2741038Z Image: ubuntu-24.04
+2026-11-24T12:58:43.2742233Z Version: 20261116.376.1
+2026-11-24T12:58:43.2744543Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-24T12:58:43.2747627Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-24T12:58:43.2749725Z ##[endgroup]
+2026-11-24T12:58:43.2752564Z ##[group]GITHUB_TOKEN Permissions
+2026-11-24T12:58:43.2755589Z Contents: read
+2026-11-24T12:58:43.2756793Z Metadata: read
+2026-11-24T12:58:43.2757846Z ##[endgroup]
+2026-11-24T12:58:43.2761220Z Secret source: Actions
+2026-11-24T12:58:43.2763003Z Cache mode: write
+2026-11-24T12:58:43.2764794Z Prepare workflow directory
+2026-11-24T12:58:43.3203515Z Prepare all required actions
+2026-11-24T12:58:43.3276299Z Getting action download info
+2026-11-24T12:58:43.6549098Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-24T12:58:43.8270759Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-24T12:58:43.9389976Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-24T12:58:44.3147603Z Complete job name: Synthetic reference comparison (not hardware evidence)
+2026-11-24T12:58:44.4182329Z ##[group]Run actions/checkout@v5
+2026-11-24T12:58:44.4183774Z with:
+2026-11-24T12:58:44.4184693Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T12:58:44.4193454Z   token: ***
+2026-11-24T12:58:44.4194330Z   ssh-strict: true
+2026-11-24T12:58:44.4195248Z   ssh-user: git
+2026-11-24T12:58:44.4196127Z   persist-credentials: true
+2026-11-24T12:58:44.4197130Z   clean: true
+2026-11-24T12:58:44.4198009Z   sparse-checkout-cone-mode: true
+2026-11-24T12:58:44.4199358Z   fetch-depth: 1
+2026-11-24T12:58:44.4200246Z   fetch-tags: false
+2026-11-24T12:58:44.4202050Z   show-progress: true
+2026-11-24T12:58:44.4203501Z   lfs: false
+2026-11-24T12:58:44.4204950Z   submodules: false
+2026-11-24T12:58:44.4206466Z   set-safe-directory: true
+2026-11-24T12:58:44.4208183Z   allow-unsafe-pr-checkout: false
+2026-11-24T12:58:44.4210682Z ##[endgroup]
+2026-11-24T12:58:44.7531045Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T12:58:44.7535295Z ##[group]Getting Git version info
+2026-11-24T12:58:44.7537530Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T12:58:44.7540211Z [command]/usr/bin/git version
+2026-11-24T12:58:44.7667091Z git version 2.56.1
+2026-11-24T12:58:44.7690948Z ##[endgroup]
+2026-11-24T12:58:44.7706586Z Temporarily overriding HOME='/home/runner/work/_temp/aa1ee8a3-5884-40c9-9f08-7f131cc9aa69' before making global git config changes
+2026-11-24T12:58:44.7711648Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T12:58:44.7715616Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T12:58:44.7786597Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T12:58:44.7797971Z ##[group]Initializing the repository
+2026-11-24T12:58:44.7800831Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T12:58:44.7960873Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-24T12:58:44.7963249Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-24T12:58:44.7965206Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-24T12:58:44.7966753Z hint: call:
+2026-11-24T12:58:44.7967551Z hint:
+2026-11-24T12:58:44.7968892Z hint: 	git config --global init.defaultBranch <name>
+2026-11-24T12:58:44.7970187Z hint:
+2026-11-24T12:58:44.7971361Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-24T12:58:44.7973319Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-24T12:58:44.7974850Z hint:
+2026-11-24T12:58:44.7975666Z hint: 	git branch -m <name>
+2026-11-24T12:58:44.7976614Z hint:
+2026-11-24T12:58:44.7977895Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-24T12:58:44.7991017Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-24T12:58:44.8006261Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T12:58:44.8072172Z ##[endgroup]
+2026-11-24T12:58:44.8073769Z ##[group]Disabling automatic garbage collection
+2026-11-24T12:58:44.8076610Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-24T12:58:44.8114330Z ##[endgroup]
+2026-11-24T12:58:44.8115786Z ##[group]Setting up auth
+2026-11-24T12:58:44.8122648Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T12:58:44.8190646Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T12:58:44.9716324Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T12:58:44.9768570Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T12:58:45.0026306Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T12:58:45.0077632Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T12:58:45.0336406Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-24T12:58:45.0393061Z ##[endgroup]
+2026-11-24T12:58:45.0394681Z ##[group]Fetching the repository
+2026-11-24T12:58:45.0407830Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ee0dabcacb4cdff93f8803844f60348e0ceda6ed:refs/remotes/origin/main
+2026-11-24T12:58:48.4479559Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T12:58:48.4480705Z  * [new ref]         ee0dabcacb4cdff93f8803844f60348e0ceda6ed -> origin/main
+2026-11-24T12:58:48.4484442Z ##[endgroup]
+2026-11-24T12:58:48.4485852Z ##[group]Determining the checkout info
+2026-11-24T12:58:48.4487722Z ##[endgroup]
+2026-11-24T12:58:48.4494386Z [command]/usr/bin/git sparse-checkout disable
+2026-11-24T12:58:48.4570819Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-24T12:58:48.4619583Z ##[group]Checking out the ref
+2026-11-24T12:58:48.4623704Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-24T12:58:49.4885371Z Updating files:  97% (11103/11439)
+2026-11-24T12:58:49.4965815Z Updating files:  98% (11211/11439)
+2026-11-24T12:58:49.5094962Z Updating files:  99% (11325/11439)
+2026-11-24T12:58:49.5095924Z Updating files: 100% (11439/11439)
+2026-11-24T12:58:49.5096885Z Updating files: 100% (11439/11439), done.
+2026-11-24T12:58:49.5240480Z Switched to a new branch 'main'
+2026-11-24T12:58:49.5246213Z branch 'main' set up to track 'origin/main'.
+2026-11-24T12:58:49.5307717Z ##[endgroup]
+2026-11-24T12:58:49.5369080Z [command]/usr/bin/git log -1 --format=%H
+2026-11-24T12:58:49.5406264Z ee0dabcacb4cdff93f8803844f60348e0ceda6ed
+2026-11-24T12:58:49.5711993Z ##[group]Run actions/setup-python@v5
+2026-11-24T12:58:49.5712335Z with:
+2026-11-24T12:58:49.5712553Z   python-version: 3.12
+2026-11-24T12:58:49.5712796Z   check-latest: false
+2026-11-24T12:58:49.5715121Z   token: ***
+2026-11-24T12:58:49.5715351Z   update-environment: true
+2026-11-24T12:58:49.5715623Z   allow-prereleases: false
+2026-11-24T12:58:49.5715872Z   freethreaded: false
+2026-11-24T12:58:49.5716103Z ##[endgroup]
+2026-11-24T12:58:49.7249271Z ##[group]Installed versions
+2026-11-24T12:58:49.7848022Z (node:2278) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T12:58:49.7849376Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T12:58:49.7850243Z Successfully set up CPython (3.12.16)
+2026-11-24T12:58:49.7851167Z ##[endgroup]
+2026-11-24T12:58:49.8066315Z ##[group]Run python tests/test_parity_harness.py
+2026-11-24T12:58:49.8067014Z [36;1mpython tests/test_parity_harness.py[0m
+2026-11-24T12:58:49.8168025Z shell: /usr/bin/bash -e {0}
+2026-11-24T12:58:49.8168780Z env:
+2026-11-24T12:58:49.8169243Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:49.8170009Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-24T12:58:49.8170838Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:49.8171506Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:49.8172196Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:49.8172918Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-24T12:58:49.8173548Z ##[endgroup]
+2026-11-24T12:58:53.5056691Z ......................
+2026-11-24T12:58:53.5057405Z ----------------------------------------------------------------------
+2026-11-24T12:58:53.5058227Z Ran 22 tests in 2.752s
+2026-11-24T12:58:53.5058820Z 
+2026-11-24T12:58:53.5058986Z OK
+2026-11-24T12:58:53.5217851Z ##[group]Run python scripts/parity_harness.py synthetic --out artifacts/parity-harness
+2026-11-24T12:58:53.5218900Z [36;1mpython scripts/parity_harness.py synthetic --out artifacts/parity-harness[0m
+2026-11-24T12:58:53.5240505Z shell: /usr/bin/bash -e {0}
+2026-11-24T12:58:53.5240761Z env:
+2026-11-24T12:58:53.5241041Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.5241488Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-24T12:58:53.5241928Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.5242316Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.5242710Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.5243102Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-24T12:58:53.5243428Z ##[endgroup]
+2026-11-24T12:58:53.6938045Z Synthetic plumbing PASS: artifacts/parity-harness/report.json; no analog evidence
+2026-11-24T12:58:53.7104659Z ##[group]Run actions/upload-artifact@v5
+2026-11-24T12:58:53.7105075Z with:
+2026-11-24T12:58:53.7105414Z   name: cs80-synthetic-comparison-ee0dabcacb4cdff93f8803844f60348e0ceda6ed
+2026-11-24T12:58:53.7105859Z   path: artifacts/parity-harness
+2026-11-24T12:58:53.7106137Z   if-no-files-found: error
+2026-11-24T12:58:53.7106379Z   compression-level: 6
+2026-11-24T12:58:53.7106600Z   overwrite: false
+2026-11-24T12:58:53.7106819Z   include-hidden-files: false
+2026-11-24T12:58:53.7107054Z env:
+2026-11-24T12:58:53.7107313Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.7107751Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-24T12:58:53.7108199Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.7108906Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.7109314Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-24T12:58:53.7109966Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-24T12:58:53.7110313Z ##[endgroup]
+2026-11-24T12:58:53.9085266Z (node:2824) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T12:58:53.9086252Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T12:58:53.9193434Z With the provided path, there will be 10 files uploaded
+2026-11-24T12:58:53.9209111Z Artifact name is valid!
+2026-11-24T12:58:53.9219940Z Root directory input is valid!
+2026-11-24T12:58:54.1713870Z Beginning upload of artifact content to blob storage
+2026-11-24T12:58:54.2408123Z (node:2824) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-24T12:58:54.4018957Z Uploaded bytes 198612
+2026-11-24T12:58:54.4337183Z Finished uploading artifact content to blob storage!
+2026-11-24T12:58:54.4339101Z SHA256 digest of uploaded artifact zip is ad17c764747b2fd35d67226aeb73237f47da00bf48c6ce4dadee096319e7e350
+2026-11-24T12:58:54.4340256Z Finalizing artifact upload
+2026-11-24T12:58:54.7994356Z Artifact cs80-synthetic-comparison-ee0dabcacb4cdff93f8803844f60348e0ceda6ed.zip successfully finalized. Artifact ID 14921987990
+2026-11-24T12:58:54.7996668Z Artifact cs80-synthetic-comparison-ee0dabcacb4cdff93f8803844f60348e0ceda6ed has been successfully uploaded! Final size is 198612 bytes. Artifact ID is 14921987990
+2026-11-24T12:58:54.8002498Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/artifacts/14921987990
+2026-11-24T12:58:54.8201333Z Post job cleanup.
+2026-11-24T12:58:54.9453320Z (node:2836) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T12:58:54.9454306Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T12:58:54.9629510Z Post job cleanup.
+2026-11-24T12:58:55.0608589Z [command]/usr/bin/git version
+2026-11-24T12:58:55.0723344Z git version 2.56.1
+2026-11-24T12:58:55.0753922Z Temporarily overriding HOME='/home/runner/work/_temp/bc64f03f-263a-4e0c-9ab6-6787b227cef6' before making global git config changes
+2026-11-24T12:58:55.0755406Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T12:58:55.0761160Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T12:58:55.0830078Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T12:58:55.0875542Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T12:58:55.1187467Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T12:58:55.1242697Z http.https://github.com/.extraheader
+2026-11-24T12:58:55.1275137Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-24T12:58:55.1293351Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T12:58:55.1605848Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T12:58:55.1657639Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T12:58:55.2087532Z Cleaning up orphan processes
+2026-11-24T12:58:55.2474340Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-python@v5, actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

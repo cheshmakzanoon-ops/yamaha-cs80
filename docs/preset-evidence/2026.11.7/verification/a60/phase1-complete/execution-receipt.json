@@ -1,0 +1,19 @@
+{
+  "observed_at_utc": "2026-11-24T14:21:38.430271+00:00",
+  "finished_at_utc": "2026-11-24T14:21:41.677989+00:00",
+  "script": "docs/preset-evidence/2026.11.7/verification/a60/review-phase1.py",
+  "bytes": 19440,
+  "sha256": "d6fa9d056eb3b53beb3e14af385ed3bbf302a8ba579aebe42860d766c1f75bf5",
+  "argv": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a60/review-phase1.py",
+    "--repo",
+    ".",
+    "--out-dir",
+    "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a60/phase1-complete"
+  ],
+  "result": "read_only_phase_one_source_and_partial_receipt_reconciliation_completed",
+  "source_continuity_verified": true,
+  "release_qualified": false
+}

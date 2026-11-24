@@ -1,0 +1,1159 @@
+{
+  "schema": 1,
+  "inspected_at_utc": "2026-11-24T14:17:05.106756+00:00",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "platforms": {
+    "macos-arm64": {
+      "target": "macos-arm64",
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "producer_job_id": 138455976227,
+      "original_job_conclusion": "success",
+      "original_job_api": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job-api.json",
+        "bytes": 5977,
+        "sha256": "6b3c08d29f6e23f00405d608c5b538b905a2612e2f691458c1eac56e8903f062"
+      },
+      "original_log": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log",
+        "bytes": 256051,
+        "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+      },
+      "exact_checkout_verified": true,
+      "exact_configure_juce_build_test_commands": [
+        {
+          "name": "Configure",
+          "api_step": {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-24T12:50:51Z",
+            "completed_at": "2026-11-24T12:52:01Z"
+          },
+          "original_log_lines": [
+            154,
+            157
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+          "command_sha256": "0c0f263030d708dd581e78d8d360fdf7e93d0a47b4f092e4385d46ef4489742d"
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "api_step": {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T12:52:01Z",
+            "completed_at": "2026-11-24T12:52:02Z"
+          },
+          "original_log_lines": [
+            195,
+            198
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake",
+          "command_sha256": "dfae86ae16304d1c215d2cee7f33e8e8148f04ae678ff93c8081840a857e8b4f"
+        },
+        {
+          "name": "Build",
+          "api_step": {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T12:52:02Z",
+            "completed_at": "2026-11-24T12:58:18Z"
+          },
+          "original_log_lines": [
+            200,
+            203
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake --build build --parallel",
+          "command_sha256": "7c1f3b6c55fc1b701e2649786c83374f18b027355f908239db715378d8b8d435"
+        },
+        {
+          "name": "Test",
+          "api_step": {
+            "name": "Test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-24T12:58:18Z",
+            "completed_at": "2026-11-24T13:25:45Z"
+          },
+          "original_log_lines": [
+            1085,
+            1088
+          ],
+          "exact_frozen_command_match": true,
+          "command": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"/Users/runner/work/yamaha-cs80/yamaha-cs80/build/ctest-results.xml\"",
+          "command_sha256": "1eb05463234999cd422439cbf5218b0fa7466e311f17f307dc6e5038c5787b96"
+        },
+        {
+          "name": "Package native macOS VST3, AU and Standalone",
+          "api_step": {
+            "name": "Package native macOS VST3, AU and Standalone",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-24T13:30:21Z",
+            "completed_at": "2026-11-24T13:30:24Z"
+          },
+          "original_log_lines": [
+            2493,
+            2505
+          ],
+          "exact_frozen_command_match": true,
+          "command": "set -euo pipefail\nAU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\nAU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\n# Fail if validation or registration changed the copied AU's bytes\n# or resources relative to the bundle that will be packaged.\ndiff -qr \"$AU_SOURCE\" \"$AU_DEST\"\nshasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n  \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-after-validation.sha256\npython scripts/package-ci-artifacts.py --self-test\npython scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages",
+          "command_sha256": "eacf41d7677fbd855e8a473640c2516f22fb0e9d4027364434fa86f2cea9b136"
+        }
+      ],
+      "actual_environment_evidence": [
+        {
+          "line": 4,
+          "text": "Version: 20261111.635"
+        },
+        {
+          "line": 17,
+          "text": "Image: macos-15-arm64"
+        },
+        {
+          "line": 18,
+          "text": "Version: 20261118.0550.1"
+        },
+        {
+          "line": 148,
+          "text": "arm64"
+        },
+        {
+          "line": 149,
+          "text": "ProductName:\t\tmacOS"
+        },
+        {
+          "line": 150,
+          "text": "ProductVersion:\t\t15.8.2"
+        },
+        {
+          "line": 151,
+          "text": "BuildVersion:\t\t24H232"
+        },
+        {
+          "line": 152,
+          "text": "Xcode 16.4"
+        },
+        {
+          "line": 153,
+          "text": "Build version 16F6"
+        },
+        {
+          "line": 158,
+          "text": "-- The C compiler identification is AppleClang 17.0.0.17000013"
+        },
+        {
+          "line": 159,
+          "text": "-- The CXX compiler identification is AppleClang 17.0.0.17000013"
+        }
+      ],
+      "native": {
+        "fields": {
+          "checked_at": "2026-11-24T12:52:01Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+          "workflow_run": "45397189410",
+          "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "bytes": 612,
+        "sha256": "7716bf3a6df312a717b460c086ba24fe60e38bb166f6e0053c49d55cba4abfbe",
+        "junit": {
+          "name": "(empty)",
+          "tests": "277",
+          "failures": "0",
+          "disabled": "0",
+          "skipped": "2",
+          "hostname": "",
+          "time": "1646",
+          "timestamp": "2026-11-24T12:58:19",
+          "member_sha256": "7f87e5be2180df1ca56d64134703eae38ff67bb18f842a09757dbaedda01ee22"
+        },
+        "test_status_counts": {
+          "run": 275,
+          "notrun": 2
+        },
+        "selected_cases": [
+          {
+            "name": "cs80_library_audit_tests",
+            "classname": "cs80_library_audit_tests",
+            "time": "309.396",
+            "status": "run",
+            "output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f",
+            "output_evidence": [
+              "library audit passed: 301 curated + 222 original circuit programs"
+            ]
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "classname": "cs80_ui_smoke",
+            "time": "114.802",
+            "status": "run",
+            "output_sha256": "fc2d43e54adc325a41bdb0296ea2856f50d8f4db19089e25a7630ff0575aff3a",
+            "output_evidence": []
+          }
+        ],
+        "formal_skips": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "full_compilation_database_retained": false,
+      "full_cmake_cache_retained": false,
+      "complete_compiler_flags_observed": false,
+      "complete_reproducible_build_established": false,
+      "package": {
+        "outer": {
+          "path": "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip",
+          "bytes": 14989471,
+          "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6"
+        },
+        "inner": {
+          "name": "cs80-reference-macos-arm64-ee0dabcacb4c.tar.gz",
+          "bytes": 14980721,
+          "sha256": "7e5a28002ebb68bc6b767dcd1cea5de8a40d07381c36631fd7a05ee512996532"
+        },
+        "manifest": {
+          "architecture": "arm64",
+          "commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+          "formats": [
+            "VST3",
+            "Standalone",
+            "AU"
+          ],
+          "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "juce_version": "8.0.11",
+          "package_kind": "development CI artifact; not a release-qualification certificate",
+          "platform": "macos",
+          "preset_library_revision": "2026.11.7",
+          "product": "CS-80 Reference",
+          "runner_os": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+          "schema_version": 1,
+          "signature_status": "not inspected; no release signing/notarization performed by this helper",
+          "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+          "workflow_run_id": "45397189410"
+        },
+        "regular_members_rehashed": 26,
+        "all_regular_members_match_manifest": true,
+        "embedded_and_sidecar_manifest_bytes_equal": true,
+        "printed_original_inner_hash_matches": true,
+        "native_and_packaged_juce_provenance_bytes_equal": true,
+        "juce_provenance": {
+          "bytes": 612,
+          "sha256": "7716bf3a6df312a717b460c086ba24fe60e38bb166f6e0053c49d55cba4abfbe"
+        },
+        "juce_license": {
+          "bytes": 4971,
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146"
+        },
+        "source_txt": {
+          "text": "Source commit: ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nPreset library revision: 2026.11.7\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+          "bytes": 404,
+          "sha256": "bfddfe3ddfff5e92fd5880cdc83b86817021cd8ae288c3265c5c9359de533b9e"
+        },
+        "binary_headers": [
+          {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "magic": "0xfeedfacf",
+            "cpu": "0x100000c",
+            "image_type": 8,
+            "bytes": 14329184,
+            "sha256": "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4"
+          },
+          {
+            "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+            "magic": "0xfeedfacf",
+            "cpu": "0x100000c",
+            "image_type": 2,
+            "bytes": 14161776,
+            "sha256": "0ef8235abc1b9ffbb4953904684d62816a1b646c32e691d759bf987d9d22662c"
+          },
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+            "magic": "0xfeedfacf",
+            "cpu": "0x100000c",
+            "image_type": 8,
+            "bytes": 14606928,
+            "sha256": "f481d957677d117d29541d7ae95e6188d965d04c2e64d76beffc918601058554"
+          }
+        ],
+        "license_connection": "Original successful clean configured JUCE verification followed by successful frozen-source packager; packager reads configured_source/LICENSE.md directly.",
+        "independent_fresh_dependency_license_checkout_comparison": false,
+        "post_build_dependency_git_status_recheck": false
+      },
+      "tracked_product_source_clean_at_package": true,
+      "tracked_source_clean_basis": "Successful original frozen-source packager enforces git diff --quiet HEAD -- and GITHUB_SHA equality.",
+      "build_dependency_package_provenance_accepted": true,
+      "decision": "accepted_available_original_build_to_package_provenance",
+      "platform_qualifier": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+        "bytes": 24530,
+        "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+      },
+      "qualifier_report_input_hashes_checked": [
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+          "bytes": 22205,
+          "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/verification/a51/verify-macos-binding.py",
+          "bytes": 24265,
+          "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+          "bytes": 18241,
+          "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+          "bytes": 10910,
+          "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+          "bytes": 13517,
+          "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py",
+          "bytes": 9655,
+          "sha256": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/retrieval-receipt.json",
+          "bytes": 2665,
+          "sha256": "1c8999da31d092f9bdb435eb3f76790e1f7314f040a397cd3676776d26a5ea6c"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-acceptance.json",
+          "bytes": 14209,
+          "sha256": "24ac1d60ac214fe0ba76e2f13e64b97186ddf08b6a2cb1064b5dbaea04d24549"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/archive-payload-binding.json",
+          "bytes": 17509,
+          "sha256": "5d4470627917cd47b9cbaf9493568f2327a3695fa6ae632a69d72dbf76eb6f57"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/native-contract.json",
+          "bytes": 4863,
+          "sha256": "342a00c271d95f0ed53b6dde684869b1a541419d3a61f0b15fda3499a7d8d95c"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/observations.json",
+          "bytes": 107203,
+          "sha256": "3d8163916dabc11c52efc45e92626e42df3a04d17be0b84ada0ff353c5369186"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/parser-archive-binding.json",
+          "bytes": 6539,
+          "sha256": "0034e472eb625d3042d780b2b28c77c3cad7a8b29b6e671eefacba68285c5358"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/skip-review.json",
+          "bytes": 8706,
+          "sha256": "de1aca2f99da1ef1513a85a5e917d4afa68ea8c02b192bd158ad3f62aea61d66"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/attempt1-api-at-platform-completion.json",
+          "bytes": 14806,
+          "sha256": "9545ea767022d43cbb0857759018001e9f85ddefa07307b6c962e93893273470"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/run-api-at-platform-completion.json",
+          "bytes": 14784,
+          "sha256": "39279467ce21a9acee15d945898b60d39760bfebd5e9c90d8e7b4ce3f33ca1c9"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log",
+          "bytes": 256051,
+          "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job-api.json",
+          "bytes": 5977,
+          "sha256": "6b3c08d29f6e23f00405d608c5b538b905a2612e2f691458c1eac56e8903f062"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/validator-api.json",
+          "bytes": 744,
+          "sha256": "14f8cad1902288325a8fba8eff42adbdeadba9ad4de7c58fd291c50a1fd83e8f"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-api.json",
+          "bytes": 752,
+          "sha256": "605a2893b66809f4a95e4c1f1b113d704db320a9eadc0969be416a00c01b87f8"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/native-api.json",
+          "bytes": 748,
+          "sha256": "38a89e56acea7becba0f5f21c671c94ace36b8f9bcfb32db463ab64c03045f7d"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/artifact-collection-api.json",
+          "bytes": 2499,
+          "sha256": "1f641add913896bd69fd472d5d4e5a1e2cc078983934459cd991258c1b002921"
+        }
+      ],
+      "pluginval_download": {
+        "receipt": {
+          "repository": "Tracktion/pluginval",
+          "version": "1.0.4",
+          "release_id": 188928656,
+          "asset_id": 210999197,
+          "asset_name": "pluginval_macOS.zip",
+          "expected_size": 9202795,
+          "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+          "attempts": [
+            {
+              "number": 1,
+              "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+              "reason": "downloaded",
+              "bytes": 9202795,
+              "final_host": "release-assets.githubusercontent.com",
+              "transfer_exit": 0
+            }
+          ],
+          "verified": true,
+          "actual_size": 9202795,
+          "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+        },
+        "bytes": 694,
+        "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+        "original_success_output_bound": true
+      },
+      "au_before_after_packaged_executable_equal": {
+        "au-payload-before-validation.sha256": {
+          "hashes": [
+            "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4",
+            "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4"
+          ],
+          "bytes": 378,
+          "sha256": "248ef65f0b94094e165e3bbc2758bb1d4ccd447ae990f644a38e7f6443555dbd"
+        },
+        "au-payload-after-validation.sha256": {
+          "hashes": [
+            "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4",
+            "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4"
+          ],
+          "bytes": 378,
+          "sha256": "248ef65f0b94094e165e3bbc2758bb1d4ccd447ae990f644a38e7f6443555dbd"
+        }
+      },
+      "signing_scope": "Observed original ad-hoc AU signing; no publisher Developer ID or notarization claim."
+    },
+    "windows-x86_64": {
+      "target": "windows-x86_64",
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "producer_job_id": 138455976256,
+      "original_job_conclusion": "success",
+      "original_job_api": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json",
+        "bytes": 3895,
+        "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+      },
+      "original_log": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+        "bytes": 152673,
+        "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+      },
+      "exact_checkout_verified": true,
+      "exact_configure_juce_build_test_commands": [
+        {
+          "name": "Configure",
+          "api_step": {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-24T12:49:40Z",
+            "completed_at": "2026-11-24T12:52:07Z"
+          },
+          "original_log_lines": [
+            145,
+            151
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64 `\n  -DCS80_BUILD_PLUGIN=ON `\n  -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }",
+          "command_sha256": "f9927520e9dd111b34ca299033dfa28850f747f7f8716e02c2e4d8462ba2b546"
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "api_step": {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T12:52:07Z",
+            "completed_at": "2026-11-24T12:52:08Z"
+          },
+          "original_log_lines": [
+            194,
+            197
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake \"-DBUILD_DIR=build\" \"-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641\" \"-DEXPECTED_JUCE_VERSION=8.0.11\" -P scripts/verify-ci-juce-source.cmake",
+          "command_sha256": "7f0166d1247ceeabd69618af0c7833eec74ab2a9f9ab63c940cdea89b22ff12c"
+        },
+        {
+          "name": "Build",
+          "api_step": {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T12:52:08Z",
+            "completed_at": "2026-11-24T13:03:39Z"
+          },
+          "original_log_lines": [
+            199,
+            202
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake --build build --config Release --parallel",
+          "command_sha256": "74c641e9741538f58705dc905822cf99b7717e8fe08d71d5504d4e351fbd309c"
+        },
+        {
+          "name": "Test",
+          "api_step": {
+            "name": "Test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-24T13:03:39Z",
+            "completed_at": "2026-11-24T13:36:10Z"
+          },
+          "original_log_lines": [
+            1000,
+            1003
+          ],
+          "exact_frozen_command_match": true,
+          "command": "ctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit \"D:\\a\\yamaha-cs80\\yamaha-cs80/build/ctest-results.xml\"",
+          "command_sha256": "b566405aa4b987ecc420bf144200fbfea3c809f82d2f200c73adb2be4eb002e2"
+        },
+        {
+          "name": "Package Windows VST3 and Standalone",
+          "api_step": {
+            "name": "Package Windows VST3 and Standalone",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-24T13:36:12Z",
+            "completed_at": "2026-11-24T13:36:17Z"
+          },
+          "original_log_lines": [
+            1550,
+            1554
+          ],
+          "exact_frozen_command_match": true,
+          "command": "python scripts/package-ci-artifacts.py --self-test\npython scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages",
+          "command_sha256": "212dc8951f39cfb00f2aa7c285d32ad809f01e61d95905d3bd9f108609841fb0"
+        }
+      ],
+      "actual_environment_evidence": [
+        {
+          "line": 4,
+          "text": "Version: 20261111.635"
+        },
+        {
+          "line": 12,
+          "text": "Microsoft Windows Server 2022"
+        },
+        {
+          "line": 13,
+          "text": "10.0.20348"
+        },
+        {
+          "line": 14,
+          "text": "Datacenter"
+        },
+        {
+          "line": 17,
+          "text": "Image: windows-2022"
+        },
+        {
+          "line": 18,
+          "text": "Version: 20261116.370.1"
+        },
+        {
+          "line": 152,
+          "text": "-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348."
+        },
+        {
+          "line": 153,
+          "text": "-- The C compiler identification is MSVC 19.44.35230.0"
+        },
+        {
+          "line": 154,
+          "text": "-- The CXX compiler identification is MSVC 19.44.35230.0"
+        },
+        {
+          "line": 203,
+          "text": "MSBuild version 17.14.60+43b635718 for .NET Framework"
+        }
+      ],
+      "native": {
+        "fields": {
+          "checked_at": "2026-11-24T12:52:07Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+          "workflow_run": "45397189410",
+          "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "bytes": 585,
+        "sha256": "d32b6f7ed4ec57b0bf102f03563fd13653a3921adf1577d1dcb1df427baa44fa",
+        "junit": {
+          "name": "(empty)",
+          "tests": "255",
+          "failures": "0",
+          "disabled": "0",
+          "skipped": "2",
+          "hostname": "",
+          "time": "1949",
+          "timestamp": "2026-11-24T13:03:41",
+          "member_sha256": "b9b128e8795b75cb38fa9797ef11e52f0ff7d5be739b32ceebc78a3375418991"
+        },
+        "test_status_counts": {
+          "run": 253,
+          "notrun": 2
+        },
+        "selected_cases": [
+          {
+            "name": "cs80_library_audit_tests",
+            "classname": "cs80_library_audit_tests",
+            "time": "402.774",
+            "status": "run",
+            "output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f",
+            "output_evidence": [
+              "library audit passed: 301 curated + 222 original circuit programs"
+            ]
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "classname": "cs80_ui_smoke",
+            "time": "115.648",
+            "status": "run",
+            "output_sha256": "44452a7198d044c6a4199692336d2362b8cbccd0c7da597781b3804e327f0064",
+            "output_evidence": []
+          }
+        ],
+        "formal_skips": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "full_compilation_database_retained": false,
+      "full_cmake_cache_retained": false,
+      "complete_compiler_flags_observed": false,
+      "complete_reproducible_build_established": false,
+      "package": {
+        "outer": {
+          "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+          "bytes": 6409200,
+          "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb"
+        },
+        "inner": {
+          "name": "cs80-reference-windows-x86_64-ee0dabcacb4c.zip",
+          "bytes": 6403884,
+          "sha256": "e8afc12ce60a000b7f62d5478a098b0e6baaf6a5a99484339f34c6eb3f1a04ac"
+        },
+        "manifest": {
+          "architecture": "x86_64",
+          "commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+          "formats": [
+            "VST3",
+            "Standalone"
+          ],
+          "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "juce_version": "8.0.11",
+          "package_kind": "development CI artifact; not a release-qualification certificate",
+          "platform": "windows",
+          "preset_library_revision": "2026.11.7",
+          "product": "CS-80 Reference",
+          "runner_os": "Windows-2022Server-10.0.20348-SP0",
+          "schema_version": 1,
+          "signature_status": "not inspected; no release signing/notarization performed by this helper",
+          "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+          "workflow_run_id": "45397189410"
+        },
+        "regular_members_rehashed": 16,
+        "all_regular_members_match_manifest": true,
+        "embedded_and_sidecar_manifest_bytes_equal": true,
+        "printed_original_inner_hash_matches": true,
+        "native_and_packaged_juce_provenance_bytes_equal": true,
+        "juce_provenance": {
+          "bytes": 585,
+          "sha256": "d32b6f7ed4ec57b0bf102f03563fd13653a3921adf1577d1dcb1df427baa44fa"
+        },
+        "juce_license": {
+          "bytes": 5038,
+          "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616"
+        },
+        "source_txt": {
+          "text": "Source commit: ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nPreset library revision: 2026.11.7\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+          "bytes": 404,
+          "sha256": "bfddfe3ddfff5e92fd5880cdc83b86817021cd8ae288c3265c5c9359de533b9e"
+        },
+        "binary_headers": [
+          {
+            "path": "Standalone/CS-80 Reference.exe",
+            "machine": "0x8664",
+            "bytes": 7594496,
+            "sha256": "82a9e0c1232e98f8e367e46469aa1697a31ab8195cc6629980b9b5d5836fb5d8"
+          },
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+            "machine": "0x8664",
+            "bytes": 7393792,
+            "sha256": "7b99ca04decb3a325a019eca5c4e7daa52300e2a2aa3c678b216736c8ae161c5"
+          }
+        ],
+        "license_connection": "Original successful clean configured JUCE verification followed by successful frozen-source packager; packager reads configured_source/LICENSE.md directly.",
+        "independent_fresh_dependency_license_checkout_comparison": false,
+        "post_build_dependency_git_status_recheck": false
+      },
+      "tracked_product_source_clean_at_package": true,
+      "tracked_source_clean_basis": "Successful original frozen-source packager enforces git diff --quiet HEAD -- and GITHUB_SHA equality.",
+      "build_dependency_package_provenance_accepted": true,
+      "decision": "accepted_available_original_build_to_package_provenance",
+      "platform_qualifier": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+        "bytes": 160850,
+        "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+      },
+      "qualifier_report_input_hashes_checked": [
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-input-integrity.json",
+          "bytes": 6720,
+          "sha256": "518eb07e7ac4d672930af09623ae107dcf2fa58ddf6451501c085d4947d6db06"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+          "bytes": 745,
+          "sha256": "8667fa0a288393d0706f16f9045c33b55fbb63c5f1b0953ab9fdb06e9139755a"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+          "bytes": 2356,
+          "sha256": "cb0488842888f3163c879962cedc6ca41e4e3db1408a7a178f2c1ff7fbb8f3fd"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+          "bytes": 95570,
+          "sha256": "cc832020ece046ad62e8da5df6ad925e22c2064b4eba3490bf2dcf3fa73962c9"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+          "bytes": 10227,
+          "sha256": "f88fbfa775013b97697ac20c2eab363c4208b0749a9c48979edfc1d7036eb4f5"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/payload-binding.json",
+          "bytes": 6574,
+          "sha256": "616d33cc7655558d26c60171cf3fe7bd92b3654b5e491f95a97886744aa94a77"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+          "bytes": 30463,
+          "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-initial-command-receipts.json",
+          "bytes": 5823,
+          "sha256": "c3e893ef53a1d21b60e5d524897b3c6678a140641fa0ebcb4c2d9095b8336956"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/skip-review.json",
+          "bytes": 22602,
+          "sha256": "2a52a2a1be1b05f442ca95c47679c11f68866c28ad27f2fc7825e6b0ae6fc760"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-native-detail-review.json",
+          "bytes": 6768,
+          "sha256": "2a3b77c395aed8e676de5d632b393c9df41aa58bf81ecf4d4d6ad15fc57bf513"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/parser-archive-binding.json",
+          "bytes": 5252,
+          "sha256": "ccdce6e8ab2487eb6961738612a83b7c64873da49f05202e02a9d1ddb653bf2b"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-content-contract.json",
+          "bytes": 6822,
+          "sha256": "a6229481837e4dbfc0a30fcd2619770603efc059bab58a9bb3b4408ffc9f2404"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/docs-and-notices.json",
+          "bytes": 46091,
+          "sha256": "74e5ec8a08c9415cd9ddc4fd9dd320e18cf03a3ecce1c7d1179215d9d54f9917"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-command-receipts.json",
+          "bytes": 4220,
+          "sha256": "fdd3010a4baf96ddb95e61a6a05ee3f4e09bf540cccecc0babf1d9c7d1f58881"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-validator-review.json",
+          "bytes": 4483,
+          "sha256": "de2c47af108ba21070dbe5536876fa277db03d5406ed9ce5c90d70a10a33b9ad"
+        },
+        {
+          "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-package-producer-proof.json",
+          "bytes": 4549,
+          "sha256": "2fba0103085af85b1959a3e94f06fe022da0d215bcd47cb7248b0f8477fb1476"
+        }
+      ],
+      "consumer_job_id": 138483772246,
+      "consumer_artifact_selection_evidence": [
+        {
+          "line": 162,
+          "text": "  name: cs80-windows-vst3"
+        },
+        {
+          "line": 174,
+          "text": "- cs80-windows-vst3 (ID: 14924634293, Size: 3205643, Expected Digest: sha256:d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9)"
+        },
+        {
+          "line": 194,
+          "text": "Verified official pluginval 1.0.4 Windows asset 210999198: 2408590 bytes, SHA256 c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+        },
+        {
+          "line": 216,
+          "text": "Started validating: D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3"
+        },
+        {
+          "line": 376,
+          "text": "Started validating: D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3"
+        }
+      ],
+      "complete_selected_vst3_regular_bytes_equal": true,
+      "recorded_top_level_compiler_sidecars": [
+        "CS-80 Reference.lib",
+        "CS-80 Reference.exp"
+      ],
+      "pluginval_download": {
+        "receipt": {
+          "repository": "Tracktion/pluginval",
+          "version": "1.0.4",
+          "release_id": 188928656,
+          "asset_id": 210999198,
+          "asset_name": "pluginval_Windows.zip",
+          "expected_size": 2408590,
+          "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+          "attempts": [
+            {
+              "number": 1,
+              "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+              "reason": "downloaded",
+              "bytes": 2408590,
+              "final_host": "release-assets.githubusercontent.com",
+              "transfer_exit": 0
+            }
+          ],
+          "verified": true,
+          "actual_size": 2408590,
+          "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+        },
+        "bytes": 718,
+        "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c",
+        "original_success_output_bound": true
+      }
+    },
+    "macos-x86_64": {
+      "target": "macos-x86_64",
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "producer_job_id": 138455976307,
+      "original_job_conclusion": "failure",
+      "original_job_api": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-x86_64/attempt-1-failed/producer-job-api.json",
+        "bytes": 5989,
+        "sha256": "5a149434f5d85cb08f028cd0093395561f645c63395a5b7e07322e6cebff639c"
+      },
+      "original_log": {
+        "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-x86_64/attempt-1-failed/producer-job.log",
+        "bytes": 220409,
+        "sha256": "a0cbecb2b5fced07e3cd6563e2d6666448d6c0443a3fafea1136549a77dd970a"
+      },
+      "exact_checkout_verified": true,
+      "exact_configure_juce_build_test_commands": [
+        {
+          "name": "Configure",
+          "api_step": {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-24T12:51:12Z",
+            "completed_at": "2026-11-24T12:53:56Z"
+          },
+          "original_log_lines": [
+            198,
+            201
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+          "command_sha256": "0c0f263030d708dd581e78d8d360fdf7e93d0a47b4f092e4385d46ef4489742d"
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "api_step": {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T12:53:56Z",
+            "completed_at": "2026-11-24T12:53:56Z"
+          },
+          "original_log_lines": [
+            239,
+            242
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake",
+          "command_sha256": "dfae86ae16304d1c215d2cee7f33e8e8148f04ae678ff93c8081840a857e8b4f"
+        },
+        {
+          "name": "Build",
+          "api_step": {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T12:53:56Z",
+            "completed_at": "2026-11-24T13:04:54Z"
+          },
+          "original_log_lines": [
+            244,
+            247
+          ],
+          "exact_frozen_command_match": true,
+          "command": "cmake --build build --parallel",
+          "command_sha256": "7c1f3b6c55fc1b701e2649786c83374f18b027355f908239db715378d8b8d435"
+        },
+        {
+          "name": "Test",
+          "api_step": {
+            "name": "Test",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 7,
+            "started_at": "2026-11-24T13:04:54Z",
+            "completed_at": "2026-11-24T13:47:21Z"
+          },
+          "original_log_lines": [
+            1135,
+            1138
+          ],
+          "exact_frozen_command_match": true,
+          "command": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"/Users/runner/work/yamaha-cs80/yamaha-cs80/build/ctest-results.xml\"",
+          "command_sha256": "1eb05463234999cd422439cbf5218b0fa7466e311f17f307dc6e5038c5787b96"
+        }
+      ],
+      "actual_environment_evidence": [
+        {
+          "line": 4,
+          "text": "Version: 20260819.586"
+        },
+        {
+          "line": 16,
+          "text": "Image: macos-15"
+        },
+        {
+          "line": 17,
+          "text": "Version: 20260824.0482.1"
+        },
+        {
+          "line": 192,
+          "text": "x86_64"
+        },
+        {
+          "line": 193,
+          "text": "ProductName:\t\tmacOS"
+        },
+        {
+          "line": 194,
+          "text": "ProductVersion:\t\t15.7.9"
+        },
+        {
+          "line": 195,
+          "text": "BuildVersion:\t\t24G830"
+        },
+        {
+          "line": 196,
+          "text": "Xcode 16.4"
+        },
+        {
+          "line": 197,
+          "text": "Build version 16F6"
+        },
+        {
+          "line": 202,
+          "text": "-- The C compiler identification is AppleClang 17.0.0.17000013"
+        },
+        {
+          "line": 203,
+          "text": "-- The CXX compiler identification is AppleClang 17.0.0.17000013"
+        }
+      ],
+      "native": {
+        "fields": {
+          "checked_at": "2026-11-24T12:53:56Z",
+          "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "expected_version": "8.0.11",
+          "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "workflow_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+          "workflow_run": "45397189410",
+          "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+          "source_override": "",
+          "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+          "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+          "origin": "https://github.com/juce-framework/JUCE.git",
+          "git_description": "8.0.11",
+          "source_clean": "true",
+          "actual_version": "8.0.11",
+          "verification": "PASS"
+        },
+        "bytes": 612,
+        "sha256": "6844042a1bcc8d91644c17bc0a413194c292bc71846a0d2471c6638ceba32ffd",
+        "junit": {
+          "name": "(empty)",
+          "tests": "277",
+          "failures": "1",
+          "disabled": "0",
+          "skipped": "2",
+          "hostname": "",
+          "time": "2546",
+          "timestamp": "2026-11-24T13:04:54",
+          "member_sha256": "c792b9540bfba3c24866fab78a834f13a6ca37f538d3351fb2da02e11272a49e"
+        },
+        "test_status_counts": {
+          "run": 274,
+          "notrun": 2,
+          "fail": 1
+        },
+        "selected_cases": [
+          {
+            "name": "cs80_library_audit_tests",
+            "classname": "cs80_library_audit_tests",
+            "time": "472.967",
+            "status": "run",
+            "output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f",
+            "output_evidence": [
+              "library audit passed: 301 curated + 222 original circuit programs"
+            ]
+          },
+          {
+            "name": "cs80_ui_smoke",
+            "classname": "cs80_ui_smoke",
+            "time": "140.283",
+            "status": "fail",
+            "output_sha256": "8b29f762fcbe2a846d04b9c9d10e71e5de4d8da80f1105f8a71f80af678b9e44",
+            "output_evidence": [
+              "FAIL: source screenshot meter reflects real rendered audio through its normal GUI timer",
+              "UI SMOKE TEST: 1 FAILURE(S)"
+            ]
+          }
+        ],
+        "formal_skips": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "full_compilation_database_retained": false,
+      "full_cmake_cache_retained": false,
+      "complete_compiler_flags_observed": false,
+      "complete_reproducible_build_established": false,
+      "package": null,
+      "tracked_product_source_clean_at_package": null,
+      "build_dependency_package_provenance_accepted": false,
+      "decision": "original_checkout_configuration_juce_and_build_verified_test_failed_no_package_acceptance",
+      "retry_request": {
+        "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "run_id": 45397189410,
+        "requested_job_id": 138455976307,
+        "request_purpose": "Repeat the complete unchanged Intel native/validator job to investigate the original GUI meter failure; no gate or source change.",
+        "tool_result": {
+          "error": "GitHub API error 403: {\"message\":\"The workflow run containing this job is already running\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run\",\"status\":\"403\"}",
+          "error_code": "FORBIDDEN",
+          "error_data": {
+            "message": "The workflow run containing this job is already running",
+            "documentation_url": "https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run",
+            "status": "403"
+          }
+        },
+        "retry_started": false,
+        "original_failure_preserved": true,
+        "platform_qualified": false,
+        "release_qualified": false,
+        "recorded_at_utc": "2026-11-24T13:56:53.970843+00:00"
+      }
+    },
+    "linux-x86_64": {
+      "target": "linux-x86_64",
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "producer_job_id": 138455975798,
+      "original_producer_log_inspected": false,
+      "native_archive_inspected": false,
+      "install_archive_inspected": false,
+      "actual_toolchain": null,
+      "actual_juce_report": null,
+      "build_dependency_package_provenance_accepted": false,
+      "decision": "pending_original_native_linux_receipts; supporting_DSP_is_separate"
+    }
+  },
+  "cross_platform_juce_license_observation": {
+    "arm_bytes": 4971,
+    "windows_bytes": 5038,
+    "windows_is_exact_LF_to_CRLF_transform_of_ARM": true,
+    "basis": "Actual package bytes compared; each license is accepted through its own original clean dependency/read path, not by substituting the other platform."
+  },
+  "actual_native_archives_inspected": 3,
+  "actual_install_archives_inspected": 2,
+  "all_four_platforms_qualified": false,
+  "release_qualified": false
+}

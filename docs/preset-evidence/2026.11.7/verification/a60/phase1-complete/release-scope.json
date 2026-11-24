@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-24T14:21:38.430271+00:00",
+  "status": "phase_one_only_final_release_not_signed_off",
+  "binary_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "binary_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "documentation_head": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "externally_qualified_platforms": [
+    "macos-arm64",
+    "windows-x86_64"
+  ],
+  "arm_native_counts": {
+    "registered": 277,
+    "passed": 275,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "windows_native_counts": {
+    "registered": 255,
+    "passed": 253,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "qualified_validator_lanes": 7,
+  "required_validator_lanes": 15,
+  "qualified_packages": 2,
+  "required_packages": 4,
+  "public_downloads": [
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14923244833,
+      "bytes": 14989471,
+      "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+      "producing_attempt": 1,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14923244833.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14925251949,
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+      "producing_attempt": 1,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14925251949.zip"
+    }
+  ],
+  "verified_public_routes": 2,
+  "required_public_routes": 5,
+  "actual_linux_and_audition_acceptance_supplied_to_a60": false,
+  "intel_original_failure_retained": true,
+  "rerun_refusal": {
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "requested_job_id": 138455976307,
+    "request_purpose": "Repeat the complete unchanged Intel native/validator job to investigate the original GUI meter failure; no gate or source change.",
+    "tool_result": {
+      "error": "GitHub API error 403: {\"message\":\"The workflow run containing this job is already running\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run\",\"status\":\"403\"}",
+      "error_code": "FORBIDDEN",
+      "error_data": {
+        "message": "The workflow run containing this job is already running",
+        "documentation_url": "https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run",
+        "status": "403"
+      }
+    },
+    "retry_started": false,
+    "original_failure_preserved": true,
+    "platform_qualified": false,
+    "release_qualified": false,
+    "recorded_at_utc": "2026-11-24T13:56:53.970843+00:00"
+  },
+  "intel_failure_receipt": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/intel-original-failure.json",
+    "bytes": 5262,
+    "sha256": "a802b54b5d77ebca91c7e6503a235042f6da682c841465c9ee2f39b2141ddb4c"
+  },
+  "team": {
+    "assignments": 60,
+    "unique_tasks": 60,
+    "unique_roles": 60,
+    "completed": 49,
+    "open": [
+      {
+        "id": "a47",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a48",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a50",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a51",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a52",
+        "status": "in_progress"
+      },
+      {
+        "id": "a53",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a56",
+        "status": "awaiting_release_inputs"
+      },
+      {
+        "id": "a57",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a58",
+        "status": "awaiting_actual_artifacts"
+      },
+      {
+        "id": "a59",
+        "status": "in_progress"
+      },
+      {
+        "id": "a60",
+        "status": "in_progress"
+      }
+    ],
+    "all_sixty_completed": false,
+    "a59_checkpoint": "2026-11-24T14:18:09.056208+00:00",
+    "disclosed_historical_citation_gap": [
+      {
+        "assignment": "a03",
+        "report": "docs/preset-evidence/2026.11.7/reviews/a03.md",
+        "target": "../../2026.11.6/reviews/a60.md",
+        "kind": "local",
+        "exists": false,
+        "path": "docs/preset-evidence/2026.11.6/reviews/a60.md"
+      }
+    ],
+    "self_reference_rule": "A60 phase-one report is an output; final audit must explicitly order prior stable readsets and final completion rather than require cyclic hashes."
+  },
+  "original_attempt_1_all_platform_pass": false,
+  "all_ci_green_claimed": false,
+  "human_listening_approval_claimed": false,
+  "exact_acoustic_equivalence_claimed": false,
+  "new_product_tests_or_archive_reverification_run": false,
+  "final_publication_review_complete": false,
+  "final_remote_push_and_protected_source_check_complete": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "a60_assignment_complete": false
+}

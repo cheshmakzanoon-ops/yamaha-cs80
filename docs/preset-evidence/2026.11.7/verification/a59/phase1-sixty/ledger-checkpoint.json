@@ -1,0 +1,1441 @@
+{
+  "schema": 1,
+  "scope": "Current 2026.11.7 assignment ledger, report and local-citation integrity checkpoint; no product execution, listening or native acceptance",
+  "recorded_at_utc": "2026-11-24T14:18:09.056208+00:00",
+  "revision": "2026.11.7",
+  "binary_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "binary_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "documentation_head_observed": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "work_log_identity": {
+    "bytes": 15534,
+    "sha256": "77ecdbbcab2606444fa994eab87eee989cd3262e09493cca5cb16a5c6d4ef6d9"
+  },
+  "requested_assignments": 60,
+  "actual_recorded_assignment_count": 60,
+  "unique_ids": 60,
+  "unique_canonical_task_names": 60,
+  "unique_role_strings": 60,
+  "duplicate_ids": [],
+  "duplicate_canonical_task_names": [],
+  "duplicate_role_strings": [],
+  "invalid_or_out_of_range_ids": [],
+  "invalid_canonical_task_names": [],
+  "id_to_canonical_name_mismatches": [],
+  "not_yet_recorded_assignments": [],
+  "coordinator_or_prior_revision_assignments_added": 0,
+  "followup_turns_or_fixture_helpers_added": 0,
+  "ledger_declared_assigned_count": 60,
+  "ledger_declared_completed_count": 49,
+  "computed_completed_count": 49,
+  "status_counts": {
+    "completed": 49,
+    "awaiting_actual_artifacts": 7,
+    "in_progress": 3,
+    "awaiting_release_inputs": 1
+  },
+  "declared_counts_agree": true,
+  "missing_report_ids_at_input_checkpoint": [
+    "a60"
+  ],
+  "missing_completed_report_ids": [],
+  "external_report_count": 58,
+  "local_markdown_citation_count": 603,
+  "external_markdown_citation_count": 30,
+  "missing_local_markdown_citations": [
+    {
+      "assignment": "a03",
+      "report": "docs/preset-evidence/2026.11.7/reviews/a03.md",
+      "target": "../../2026.11.6/reviews/a60.md",
+      "kind": "local",
+      "exists": false,
+      "path": "docs/preset-evidence/2026.11.6/reviews/a60.md"
+    }
+  ],
+  "readset_file_count": 449,
+  "readset_changed_at_close": [],
+  "work_log_unchanged_at_close": true,
+  "protected_working_source_changes": [],
+  "protected_working_source_untracked": [],
+  "exactly_sixty_distinct_assignments_recorded": true,
+  "all_sixty_assignments_completed": false,
+  "a59_phase1_review_complete": true,
+  "a59_assignment_complete": false,
+  "native_or_platform_qualification_claimed": false,
+  "release_qualified": false,
+  "human_listening_approval_claimed": false,
+  "assignments": [
+    {
+      "id": "a01",
+      "role": "Keyboard synthesis defect audit",
+      "status": "completed",
+      "report": "reviews/a01.md",
+      "agent": "/root/a01_keyboard_audit",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a01.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 5909,
+        "sha256": "aff9c42ee42f16ff19df521edf4209dd5856ef3ddfc6acefcdc9089c2906159e"
+      },
+      "title": "# A01 — keyboard mechanism audit",
+      "headings": [
+        "A01 — keyboard mechanism audit",
+        "Recommended bounded fix",
+        "Source evidence",
+        "Causal PCM result",
+        "Verification and implementation test plan",
+        "Other keyboard mechanisms reviewed"
+      ]
+    },
+    {
+      "id": "a02",
+      "role": "Whole-engine playability defect audit",
+      "status": "completed",
+      "report": "reviews/a02.md",
+      "agent": "/root/a02_playability_audit",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a02.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8967,
+        "sha256": "c958051a5ae10989451b59b2361d4be439a582ddc93d4edc368b454e7dce0263"
+      },
+      "title": "# A02 — shared playability and body integration audit",
+      "headings": [
+        "A02 — shared playability and body integration audit",
+        "Recommended bounded fix: preserve body excitation noise across render quality",
+        "Full Engine evidence",
+        "Isolated causal evidence and rate matrix",
+        "Proposed implementation",
+        "Secondary observation: late sustain pedal cannot catch release",
+        "Retained reproduction files"
+      ]
+    },
+    {
+      "id": "a03",
+      "role": "Native build and delivery audit",
+      "status": "completed",
+      "report": "reviews/a03.md",
+      "agent": "/root/a03_release_audit",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a03.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 16289,
+        "sha256": "ba39b39efe7fb169bb409adff7d3b1237e6deadc05675aa809b2049141d5e1a7"
+      },
+      "title": "# A03 — native qualification and download publication audit",
+      "headings": [
+        "A03 — native qualification and download publication audit",
+        "Decision for the next candidate",
+        "Actual run outcomes",
+        "fcc3c8e: completed failure",
+        "195fb62: active successor, no completed packages yet",
+        "Protecting a running source build",
+        "Realistic native build time",
+        "Exact gates and reusable acceptance path",
+        "Download-name mapping to use after acceptance",
+        "Why the old publisher cannot be reused unchanged",
+        "Retained audit records"
+      ]
+    },
+    {
+      "id": "a04",
+      "role": "Piano tail-spectrum correction and PCM regression",
+      "status": "completed",
+      "report": "reviews/a04.md",
+      "agent": "/root/a04_piano_decay_fix",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a04.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 7353,
+        "sha256": "0ec55b52ca4602b0978dfdc4a662f99805cf17770fcc4eab9f474f8ca2b8b695"
+      },
+      "title": "# A04 — piano principal partial-tail repair",
+      "headings": [
+        "A04 — piano principal partial-tail repair",
+        "Mechanism and scope",
+        "PCM regression",
+        "Measured normalized tail change",
+        "Negative control and preserved behavior",
+        "Reproduction and integration",
+        "Limits"
+      ]
+    },
+    {
+      "id": "a05",
+      "role": "Internal-rate invariant breath/contact excitation",
+      "status": "completed",
+      "report": "reviews/a05.md",
+      "agent": "/root/a05_body_noise_rate_fix",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a05.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8414,
+        "sha256": "a19e05fc836655eed7deaae11eee6b31be64b380d0d027944e40a010d3d59627"
+      },
+      "title": "# A05 — rate-consistent body breath, contact and flutter",
+      "headings": [
+        "A05 — rate-consistent body breath, contact and flutter",
+        "Result and scope",
+        "Exact compensation",
+        "Behavioral PCM evidence",
+        "Reference-stream preservation and negative control",
+        "Runtime cost and limits",
+        "Retained evidence and reproduction"
+      ]
+    },
+    {
+      "id": "a06",
+      "role": "Fixed body resonances for string bends",
+      "status": "completed",
+      "report": "reviews/a06.md",
+      "agent": "/root/a06_string_body_bends",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a06.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9298,
+        "sha256": "63ff321aa229300752466470906243d8eff6b0f8fc7fef79e33947227818707d"
+      },
+      "title": "# A06 — fixed body response during standard string bends",
+      "headings": [
+        "A06 — fixed body response during standard string bends",
+        "Finding and repair",
+        "Independent rendered regression",
+        "Exact unbent PCM preservation",
+        "Shared-path regression and reproduction",
+        "Limits"
+      ]
+    },
+    {
+      "id": "a07",
+      "role": "Restore low choir upper formant coverage",
+      "status": "completed",
+      "report": "reviews/a07.md",
+      "agent": "/root/a07_low_choir_spectrum",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a07.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4751,
+        "sha256": "faa98885f9f6bd46c6fb7bd63e96e67965e055b5fd9eea3071e680b5ba5db6d9"
+      },
+      "title": "# A07 — low-register choir harmonic coverage",
+      "headings": [
+        "A07 — low-register choir harmonic coverage",
+        "Change and acoustic boundary",
+        "PCM evidence",
+        "Cost and reproduction"
+      ]
+    },
+    {
+      "id": "a08",
+      "role": "Source-time revision, preset and installation guides",
+      "status": "completed",
+      "report": "reviews/a08.md",
+      "agent": "/root/a08_revision_docs",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a08.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 1955,
+        "sha256": "6d857dde90ec28e663775c5f641910ca83e23c90c7de24c1ab68374e273663f3"
+      },
+      "title": "# A08 — source-time revision and playing documentation",
+      "headings": [
+        "A08 — source-time revision and playing documentation"
+      ]
+    },
+    {
+      "id": "a09",
+      "role": "Audition archive register and tail coverage",
+      "status": "completed",
+      "report": "reviews/a09.md",
+      "agent": "/root/a09_release_audio_roster",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a09.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 3997,
+        "sha256": "ab9dc2f9193a74745411a78c9ab0ca9332112854e1002d6150cc9825ef6d88e2"
+      },
+      "title": "# A09 — low-register audition coverage",
+      "headings": [
+        "A09 — low-register audition coverage",
+        "Result",
+        "What the added clips cover",
+        "Verification"
+      ]
+    },
+    {
+      "id": "a10",
+      "role": "Full Engine realtime/offline texture verification",
+      "status": "completed",
+      "report": "verification/a10/reporta10.md",
+      "agent": "/root/a10_engine_texture_verification",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/verification/a10/reporta10.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 3648,
+        "sha256": "e9bb1aa9fa1914ca68451ae99b70b319943aff0def32908f11dbb07fc3c5f397"
+      },
+      "title": "# A10 — actual Engine texture integration",
+      "headings": [
+        "A10 — actual Engine texture integration",
+        "Method and source binding",
+        "Results",
+        "Reproduction and limits"
+      ]
+    },
+    {
+      "id": "a11",
+      "role": "Independent paired combined CPU review",
+      "status": "completed",
+      "report": "reviews/a11.md",
+      "agent": "/root/a11_combined_cpu_review",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a11.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4676,
+        "sha256": "c4c50735a58f200d5d4bda6cd200ce5caeb5976f97c6f272914521ce435739bd"
+      },
+      "title": "# A11 — combined body CPU review",
+      "headings": [
+        "A11 — combined body CPU review",
+        "Verdict",
+        "Scope and method",
+        "Results",
+        "Limits and retained evidence"
+      ]
+    },
+    {
+      "id": "a12",
+      "role": "Authenticated whole-bank identity and cumulative coverage",
+      "status": "completed",
+      "report": "reviews/a12.md",
+      "agent": "/root/a12_bank_identity",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a12.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4996,
+        "sha256": "ac4b583d8d34a0e7e36a5e0555d8722cedb68a8bdf4ff255dd2d7ccaaf83fdc3"
+      },
+      "title": "# A12 — catalogue, parameter identity and cumulative coverage",
+      "headings": [
+        "A12 — catalogue, parameter identity and cumulative coverage",
+        "Input authentication and reproducibility",
+        "Parameter and host contract",
+        "Retained cumulative work versus new `.7` mechanisms"
+      ]
+    },
+    {
+      "id": "a13",
+      "role": "Complete Keys family and piano integration review",
+      "status": "completed",
+      "report": "reviews/a13.md",
+      "agent": "/root/a13_keyboard_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a13.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 5298,
+        "sha256": "9bbb81252daa59efe36eadccc4440e9b08173b9d57218580b78a1773f7ef02e7"
+      },
+      "title": "# A13 — complete Keys inventory and piano/EP integration",
+      "headings": [
+        "A13 — complete Keys inventory and piano/EP integration",
+        "All 45 identities and intended roles",
+        "Actual patch renders",
+        "Relative tail clarity and retained signal",
+        "Touch, release, identity, and peaks"
+      ]
+    },
+    {
+      "id": "a14",
+      "role": "Complete Bass family and live gesture review",
+      "status": "completed",
+      "report": "reviews/a14.md",
+      "agent": "/root/a14_bass_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a14.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4525,
+        "sha256": "520762d0c92bf4ca7071fe2053ff2a1b36c0ba9e4fe1dba82f1c16a211cb6087"
+      },
+      "title": "# A14 — Bass family and live string-body correction",
+      "headings": [
+        "A14 — Bass family and live string-body correction",
+        "All-program structural coverage",
+        "Fresh complete-Engine PCM comparison",
+        "Fresh regressions and limits"
+      ]
+    },
+    {
+      "id": "a15",
+      "role": "Complete Plucked family and material gesture review",
+      "status": "completed",
+      "report": "reviews/a15.md",
+      "agent": "/root/a15_plucked_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a15.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4823,
+        "sha256": "a1f5205ad0cad8305b11cb347fa000f06088e56a0d598e9e28dc6ae7c0c2ccba"
+      },
+      "title": "# A15 — Plucked family integration review",
+      "headings": [
+        "A15 — Plucked family integration review",
+        "Recipe and integration review",
+        "Actual-program PCM measurements",
+        "Evidence limits"
+      ]
+    },
+    {
+      "id": "a16",
+      "role": "Complete Brass family, quality modes and live formants",
+      "status": "completed",
+      "report": "reviews/a16.md",
+      "agent": "/root/a16_brass_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a16.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4932,
+        "sha256": "17a0326553e8aa46bca906398bf4695f2c8db561f5528321571e06bf0657fe4c"
+      },
+      "title": "# A16 — Brass family, 2026.11.7",
+      "headings": [
+        "A16 — Brass family, 2026.11.7",
+        "Finding and coverage",
+        "Recipe distinctions",
+        "Rendered evidence"
+      ]
+    },
+    {
+      "id": "a17",
+      "role": "Complete Bells family, struck materials and headroom",
+      "status": "completed",
+      "report": "reviews/a17.md",
+      "agent": "/root/a17_bell_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a17.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4909,
+        "sha256": "9e06b726a0b5b3e94a5c8029a821891cdfe5d92b87188cdb008508255ee6be29"
+      },
+      "title": "# A17 — Bells family review",
+      "headings": [
+        "A17 — Bells family review",
+        "All 23 programs",
+        "Focused material/onset/aftersound matrix",
+        "HQ contact and headroom"
+      ]
+    },
+    {
+      "id": "a18",
+      "role": "Complete Strings family, touch and release",
+      "status": "completed",
+      "report": "reviews/a18.md",
+      "agent": "/root/a18_strings_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a18.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4728,
+        "sha256": "784f97094e15d2cd50ddec47e8b93fbfc30a33a576c27a8a1dd1d95668e0f359"
+      },
+      "title": "# A18 — Strings family, complete-preset texture review",
+      "headings": [
+        "A18 — Strings family, complete-preset texture review",
+        "Structural coverage: all 59 identities",
+        "Actual rendered coverage",
+        "Texture, articulation and headroom"
+      ]
+    },
+    {
+      "id": "a19",
+      "role": "Complete Winds family and breath integration",
+      "status": "completed",
+      "report": "reviews/a19.md",
+      "agent": "/root/a19_winds_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a19.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9460,
+        "sha256": "d0762a2b7670ebde743b8a10b8d9523c9288130950859c62790f1b97339865f6"
+      },
+      "title": "# A19 — Winds recipes and actual-patch behavior",
+      "headings": [
+        "A19 — Winds recipes and actual-patch behavior",
+        "Source and coverage",
+        "All 14 authored recipes",
+        "Actual-patch results",
+        "Realtime versus HQ texture",
+        "Method, reproducibility, and limits"
+      ]
+    },
+    {
+      "id": "a20",
+      "role": "Complete Organ family, registration and percussion",
+      "status": "completed",
+      "report": "reviews/a20.md",
+      "agent": "/root/a20_organ_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a20.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9304,
+        "sha256": "94cc68b435024b4b18db9ce53da2fba553df14850efcf24279021ba32bfbc9c1"
+      },
+      "title": "# A20 — Organ registration, keying and chord preservation",
+      "headings": [
+        "A20 — Organ registration, keying and chord preservation",
+        "All-program source audit",
+        "Fresh representative measurements",
+        "Existing evidence reused and unresolved questions"
+      ]
+    },
+    {
+      "id": "a21",
+      "role": "Complete Pads family, low choir and slow envelope integration",
+      "status": "completed",
+      "report": "reviews/a21.md",
+      "agent": "/root/a21_pads_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a21.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8880,
+        "sha256": "bfa7b30d8499b2b5d1d5dc51f25dcbcd0249ef9b46e2b46c5792b8ecff35e827"
+      },
+      "title": "# A21 — Pads family, low-choir integration and long swell",
+      "headings": [
+        "A21 — Pads family, low-choir integration and long swell",
+        "Structural coverage: all 63 Pads recipes",
+        "Fresh rendered coverage and provenance",
+        "Low-register choir effects in the actual patches",
+        "Expression, slow envelope completion and stacked headroom",
+        "Existing coverage reused and limits"
+      ]
+    },
+    {
+      "id": "a22",
+      "role": "Complete Polysynth family and pressured chord response",
+      "status": "completed",
+      "report": "reviews/a22.md",
+      "agent": "/root/a22_poly_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a22.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9314,
+        "sha256": "d80db63e47ef28b93bbdb1d92b202fbb28948fc3af01aac1c514a16da6d953f7"
+      },
+      "title": "# A22 — complete Polysynth-family preservation review",
+      "headings": [
+        "A22 — complete Polysynth-family preservation review",
+        "All-family source and routing review",
+        "Existing frozen-source evidence reused",
+        "Fresh representative chord and release measurements",
+        "Limits and disposition"
+      ]
+    },
+    {
+      "id": "a23",
+      "role": "Complete Leads family and polyphonic performance gestures",
+      "status": "completed",
+      "report": "reviews/a23.md",
+      "agent": "/root/a23_lead_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a23.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 6599,
+        "sha256": "327a70408ed05dfce1782912e4f2992e6067e854dad761848aa96ef19aa94077"
+      },
+      "title": "# A23 — all 56 Leads and representative performance gestures",
+      "headings": [
+        "A23 — all 56 Leads and representative performance gestures",
+        "Complete family and character review",
+        "Reused evidence and new subset",
+        "Closing the two zero-pressure published-bank gaps"
+      ]
+    },
+    {
+      "id": "a24",
+      "role": "Complete Sequences family and actual motion/timing",
+      "status": "completed",
+      "report": "reviews/a24.md",
+      "agent": "/root/a24_sequences_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a24.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 11863,
+        "sha256": "bf42b1d6ba2b9293e2563ef7f093e11063dd25f1e3017b1eb76c981b09396868"
+      },
+      "title": "# A24 — Sequences: complete inventory, actual phrases and motion controls",
+      "headings": [
+        "A24 — Sequences: complete inventory, actual phrases and motion controls",
+        "Source and complete-family coverage",
+        "Intended articulation, ring and tempo behavior",
+        "Fresh complete-patch evidence",
+        "New `.7` mechanism exposure and retained tests",
+        "Limits and reproduction"
+      ]
+    },
+    {
+      "id": "a25",
+      "role": "Complete FX family and intentional residual/source behavior",
+      "status": "completed",
+      "report": "reviews/a25.md",
+      "agent": "/root/a25_fx_family",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a25.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8906,
+        "sha256": "92e2abfa83557fa77e19845e851422611c87a8e733cd1139ab842132d3310dcd"
+      },
+      "title": "# A25 — FX family, transient and long-release review",
+      "headings": [
+        "A25 — FX family, transient and long-release review",
+        "Coverage and retained identity",
+        "Intended electronic roles",
+        "Reused current gate and narrowly added captures",
+        "Release interpretation and reproducibility"
+      ]
+    },
+    {
+      "id": "a26",
+      "role": "All Hardware Studies and original electrical tone behavior",
+      "status": "completed",
+      "report": "reviews/a26.md",
+      "agent": "/root/a26_hardware_studies",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a26.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 11590,
+        "sha256": "6e692dab1a7b652ab34722b452f9b2210685a8ae01c356428bf5b52803d04124"
+      },
+      "title": "# A26 — Hardware Studies, original tabs and memory boundaries",
+      "headings": [
+        "A26 — Hardware Studies, original tabs and memory boundaries",
+        "Two different routes share the tone names",
+        "Every Hardware Study and its `.7` exposure",
+        "Body suppression in the actual paths",
+        "Touch and stacked performance evidence",
+        "Reproduction and limits"
+      ]
+    },
+    {
+      "id": "a27",
+      "role": "Two Init programs and historical core-state defaults",
+      "status": "completed",
+      "agent": "/root/a27_init_legacy_state",
+      "report": "reviews/a27.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a27.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 7757,
+        "sha256": "0eb9d5505fddb79434bc1a6bfe28a87087b4c971f02bbc35ac173bb58bc72b16"
+      },
+      "title": "# A27 — Init entries and older saved controls",
+      "headings": [
+        "A27 — Init entries and older saved controls",
+        "Source and evidence",
+        "Catalogue and complete control coverage",
+        "Saved controls and defaults",
+        "Narrow verification and limits"
+      ]
+    },
+    {
+      "id": "a28",
+      "role": "Exact expanded audition archive and CI binding contract",
+      "status": "completed",
+      "agent": "/root/a28_audition_acceptance",
+      "report": "reviews/a28.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a28.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 6399,
+        "sha256": "87432c653b1b6450da9e3a42e5209c8b9a189101ca28fe6939bcd774dd085d85"
+      },
+      "title": "# A28 — prepared audition archive acceptance successors",
+      "headings": [
+        "A28 — prepared audition archive acceptance successors",
+        "Exact source and expected artifact",
+        "Review decisions and retained gates",
+        "Verification",
+        "Handoff"
+      ]
+    },
+    {
+      "id": "a29",
+      "role": "Full native test roster and source-bound acceptance contract",
+      "status": "completed",
+      "agent": "/root/a29_native_contract",
+      "report": "reviews/a29.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a29.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 12171,
+        "sha256": "cf38beb21a52d8505aae7ff192ee8bda358d05ee3b31c207232d725e415ce1a4"
+      },
+      "title": "# A29 — .7 native acceptance contract and actual ARM exercise",
+      "headings": [
+        "A29 — .7 native acceptance contract and actual ARM exercise",
+        "Exact native roster",
+        "Actual Apple Silicon result",
+        "Reused helpers and the necessary missing gate",
+        "Acceptance gates still independent",
+        "Verification and scope"
+      ]
+    },
+    {
+      "id": "a30",
+      "role": "Generic installation acceptance and source-specific guide/notice contract",
+      "status": "completed",
+      "agent": "/root/a30_install_contract",
+      "report": "reviews/a30.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a30.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 5427,
+        "sha256": "982dd4e8df40691abe24b51c1eb24356e28762bcc12e5a2d0b011ce63b942f24"
+      },
+      "title": "# A30 — Installation acceptance helper and `.7` contract",
+      "headings": [
+        "A30 — Installation acceptance helper and `.7` contract",
+        "Decision",
+        "Explicit identity and mapping",
+        "Actual ARM archive result",
+        "Reused focused checks",
+        "Remaining responsibilities"
+      ]
+    },
+    {
+      "id": "a31",
+      "role": "Independent five-lane macOS validation and payload-binding review",
+      "status": "completed",
+      "agent": "/root/a31_mac_binding_review",
+      "report": "reviews/a31.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a31.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 10891,
+        "sha256": "a2c95795b514b4d27019f156cbac0839b55711e0acf834c0b971de6ec9c88323"
+      },
+      "title": "# A31 — independent macOS validator and payload challenge",
+      "headings": [
+        "A31 — independent macOS validator and payload challenge",
+        "Five distinct lanes on each Mac",
+        "Original ARM evidence independently compared",
+        "Why complete AU resources require the original comparisons",
+        "VST3 and architecture boundaries",
+        "Gaps, disposition and verification"
+      ]
+    },
+    {
+      "id": "a32",
+      "role": "Windows/Linux validator consumer and checkout-byte contract",
+      "status": "completed",
+      "agent": "/root/a32_vst3_consumer_contract",
+      "report": "reviews/a32.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a32.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8481,
+        "sha256": "3688928945d959845bbcc49712feaa2925cb3ab7fc808a9f18bf069b42485f43"
+      },
+      "title": "# A32 — Windows/Linux validator consumer and installed payload contract",
+      "headings": [
+        "A32 — Windows/Linux validator consumer and installed payload contract",
+        "Decision and current boundary",
+        "The essential distinction",
+        "Concrete limits that remain external gates",
+        "Windows notice checkout transform",
+        "Reused verification and source pins"
+      ]
+    },
+    {
+      "id": "a33",
+      "role": "Cumulative all-bank metrics and active touch-baseline causality",
+      "status": "completed",
+      "agent": "/root/a33_cumulative_metrics",
+      "report": "reviews/a33.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a33.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 11293,
+        "sha256": "6e69835f199a4a1e0ca6f519396e02a54dd2d5c886c23e7674bd649861398719"
+      },
+      "title": "# A33 — cumulative published `.4` → `.7` signal and parameter accounting",
+      "headings": [
+        "A33 — cumulative published `.4` → `.7` signal and parameter accounting",
+        "Exact comparator and measurement scope",
+        "Category accounting",
+        "Level, spectrum and tail interpretation",
+        "Closing the two pressure-only cases",
+        "Why the 28 baseline-only cases still change touch response",
+        "Probe bounds and reproduction"
+      ]
+    },
+    {
+      "id": "a34",
+      "role": "Long entrances and sustained chord audit coverage",
+      "status": "completed",
+      "agent": "/root/a34_long_envelopes",
+      "report": "reviews/a34.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a34.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 14023,
+        "sha256": "fdcc321cf98b3b4f3ff5461c54cae77b36a4c1a3bd0ab781614977320cedef22"
+      },
+      "title": "# A34 — slow entrances and sustained headroom",
+      "headings": [
+        "A34 — slow entrances and sustained headroom",
+        "What the three-second bank measurement establishes",
+        "Actual source timing, including the borderline programs",
+        "Existing longer evidence reused",
+        "Five new complete-patch scenes",
+        "Limits and reproduction"
+      ]
+    },
+    {
+      "id": "a35",
+      "role": "All seven vocal recipes across Pads and FX",
+      "status": "completed",
+      "agent": "/root/a35_vocal_recipe_review",
+      "report": "reviews/a35.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a35.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 16263,
+        "sha256": "20c6d3015222dd5c60e39110540ababd851c6ce26ef71f4bd6dcd3e4d4a29948"
+      },
+      "title": "# A35 — all seven vocal recipes, register and live expression",
+      "headings": [
+        "A35 — all seven vocal recipes, register and live expression",
+        "Exact inventory: seven programs, twelve vocal ranks",
+        "What changes, and what the register limits mean",
+        "Brightness, touch, breath and pitch routes",
+        "Existing evidence reused, with its actual scope",
+        "One bounded added gesture: Golden Pads 52",
+        "Remaining boundaries"
+      ]
+    },
+    {
+      "id": "a36",
+      "role": "Hammered keyboard specificity and concrete defect review",
+      "status": "completed",
+      "report": "reviews/a36.md",
+      "agent": "/root/a36_hammered_keys_review",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a36.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9542,
+        "sha256": "92a5e86e6ca9b7e04dff5dabe00bffe675fe4903787ce1d79a70ef760333b792"
+      },
+      "title": "# A36 — hammered steel Keys mechanism review",
+      "headings": [
+        "A36 — hammered steel Keys mechanism review",
+        "The actual two recipes",
+        "What the shared implementation actually does",
+        "Physical distinction and the inherited wording",
+        "Fresh rendered evidence",
+        "Recommended action"
+      ]
+    },
+    {
+      "id": "a37",
+      "role": "Full Engine runtime, allocation and lifecycle review",
+      "status": "completed",
+      "agent": "/root/a37_engine_runtime_review",
+      "report": "reviews/a37.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a37.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 13316,
+        "sha256": "aac737618f4b4caea0b370f051421b43f981128f3edc2c583589bf92c20c0577"
+      },
+      "title": "# A37 — Engine ownership, allocations and complete-Engine choir cost",
+      "headings": [
+        "A37 — Engine ownership, allocations and complete-Engine choir cost",
+        "Ownership and the increased object size",
+        "Preparation, onset and rendering are distinct boundaries",
+        "Observed C++ allocations",
+        "Bounded paired complete-Engine comparison",
+        "Existing qualification reused and release boundary"
+      ]
+    },
+    {
+      "id": "a38",
+      "role": "Combined modal-array bounds, reset and ordinary sanitizer review",
+      "status": "completed",
+      "agent": "/root/a38_combined_boundary_review",
+      "report": "reviews/a38.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a38.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 12381,
+        "sha256": "f221dc43941530672d89818c4c03ee33900620aa3260ae741a7854e42866edd4"
+      },
+      "title": "# A38 — combined body bounds and lifecycle review",
+      "headings": [
+        "A38 — combined body bounds and lifecycle review",
+        "Result and source binding",
+        "Capacity and fractional boundaries",
+        "State initialization, reuse and existing histories",
+        "Engine lifecycle boundary",
+        "Ordinary sanitizer execution",
+        "Reproduction and limits"
+      ]
+    },
+    {
+      "id": "a39",
+      "role": "Windows capture-tool stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a39_windows_capture_repair",
+      "report": "reviews/a39.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a39.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 9621,
+        "sha256": "4453e2ca471ad4bcc6f6537866b8a66813c1713c53eeca76006537172eb14650"
+      },
+      "title": "# A39 — Windows parity-capture stack ownership repair",
+      "headings": [
+        "A39 — Windows parity-capture stack ownership repair",
+        "Original observed failure",
+        "Storage diagnosis and its limits",
+        "Exact repair and audio preservation",
+        "Ordinary regression and delivery boundary"
+      ]
+    },
+    {
+      "id": "a40",
+      "role": "Final-source input identity and unchanged acceptance-gate successors",
+      "status": "completed",
+      "agent": "/root/a40_final_source_contract",
+      "report": "reviews/a40.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a40.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 10158,
+        "sha256": "6b393ca570aa7adc250487d7991d00a7251c84dc791a8e23423381d3bb2fa417"
+      },
+      "title": "# A40 — ee0dabca source continuity and separate acceptance successors",
+      "headings": [
+        "A40 — ee0dabca source continuity and separate acceptance successors",
+        "Frozen context",
+        "Independently derived source continuity",
+        "Preserved bank and retained review scope",
+        "Context-only helper successors",
+        "Verification, preservation and handoff"
+      ]
+    },
+    {
+      "id": "a41",
+      "role": "Nine materials and four variants: exact recipe and physical-claim review",
+      "status": "completed",
+      "agent": "/root/a41_material_identity_review",
+      "report": "reviews/a41.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a41.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 24615,
+        "sha256": "b45a70f88e60bbefaf31fcfe08a96fd639dde69889a0dd90254827830aa0f08b"
+      },
+      "title": "# A41 — exact material, variant and instrument identity",
+      "headings": [
+        "A41 — exact material, variant and instrument identity",
+        "Source and inventory binding",
+        "Exact nine-Material and two struck-Variant recipes",
+        "Exact Ah and Oo recipes",
+        "What each material name is supported by",
+        "Articulation, courses, partial decay and pedal",
+        "Independent amplitude owners",
+        "“Courses” and the hammered dulcimer boundary",
+        "What pedal sustain does",
+        "Exact interaction with the four `.7` changes",
+        "Reused tests and the limit of the verdict"
+      ]
+    },
+    {
+      "id": "a42",
+      "role": "Host parameter, program and saved-session compatibility",
+      "status": "completed",
+      "agent": "/root/a42_host_state_compatibility",
+      "report": "reviews/a42.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a42.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 16255,
+        "sha256": "287f13049f64585fd7fc80d03f37a7a635b33043b0da75519e5803e0a4ad2b6a"
+      },
+      "title": "# A42 — host parameters, programs and saved-state compatibility",
+      "headings": [
+        "A42 — host parameters, programs and saved-state compatibility",
+        "Exact inputs and independent execution",
+        "Host layout and automation meaning",
+        "Saved controls, missing data and undo",
+        "Programs and the distinction between stored controls and current audio",
+        "Actual host coverage and execution limits",
+        "Retained VST3 Program limitation"
+      ]
+    },
+    {
+      "id": "a43",
+      "role": "Installation and exact factory-reload user flow",
+      "status": "completed",
+      "agent": "/root/a43_install_loading_flow",
+      "report": "reviews/a43.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a43.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 18460,
+        "sha256": "87597c087ce0a9127f3173a225d1e4289d229d4f6dab05f7d9f90cb2f7ef682d"
+      },
+      "title": "# A43 — Installation and factory-reload user flow",
+      "headings": [
+        "A43 — Installation and factory-reload user flow",
+        "Decision and scope",
+        "Corrections and recommendations for final publication",
+        "Exact Library behavior",
+        "Installation paths, extraction and architecture",
+        "Body controls and sound-selection pitfalls",
+        "Link and claim review",
+        "Retained artifacts"
+      ]
+    },
+    {
+      "id": "a44",
+      "role": "Actual Apple Silicon platform qualification",
+      "status": "completed",
+      "agent": "/root/a44_arm_platform",
+      "report": "reviews/a44.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a44.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 14496,
+        "sha256": "11e1204a0ebdb436fd7e1305c3fa654bc78b735308f07d714db6b213949812d6"
+      },
+      "title": "# A44 — actual Apple Silicon platform qualification",
+      "headings": [
+        "A44 — actual Apple Silicon platform qualification",
+        "Exact accepted context",
+        "Original artifact and attempt bindings",
+        "Native execution and source provenance",
+        "Five original validator lanes and normal exits",
+        "Complete validated payload and installation",
+        "Verification, delivery checkpoint and remaining work"
+      ]
+    },
+    {
+      "id": "a45",
+      "role": "Intel native audit stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a45_intel_diagnosis",
+      "report": "reviews/a45.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a45.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 10438,
+        "sha256": "5950042393b31ff9d4b62160e46a8bda2d0084cb69bce0fe5296586df2ff0aab"
+      },
+      "title": "# A45 — original Intel bus error and audit stack repair",
+      "headings": [
+        "A45 — original Intel bus error and audit stack repair",
+        "Exact original failure",
+        "Static diagnosis and its limit",
+        "Authorized repair",
+        "Ordinary verification",
+        "Required next action"
+      ]
+    },
+    {
+      "id": "a46",
+      "role": "Actual final-source Windows platform and consumer qualification",
+      "status": "completed",
+      "agent": "/root/a46_windows_qualification",
+      "report": "ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+      "phase1_complete": true,
+      "preparation_report": "reviews/a46.md",
+      "actual_handoff": "verification/a46/actual-handoff.json",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 14621,
+        "sha256": "62e44c0b03b79ac58f5bd4679cb05912ba4f055c9f37f5a5eb91eb6685f61037"
+      },
+      "title": "# A46 actual Windows platform qualification — original attempt 1",
+      "headings": [
+        "A46 actual Windows platform qualification — original attempt 1",
+        "Outcome and immutable scope",
+        "Original acquisition, commands and artifact identities",
+        "Complete native evidence and reviewed skips",
+        "Both original pluginval lanes",
+        "Validate VST3 headless",
+        "Validate state regression seed 0x5037a0c",
+        "Consumer download and complete installed payload",
+        "Source documentation, notices and JUCE",
+        "Preservation and limits"
+      ]
+    },
+    {
+      "id": "a47",
+      "role": "Actual final-source Linux platform and original retry-history qualification",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a47_linux_qualification",
+      "report": "reviews/a47.md",
+      "phase1_complete": true,
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a47.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4741,
+        "sha256": "1c03e9b74aa364d3eefee2b891b5e9d536aa03655f542f5817d2cb3e2cab184d"
+      },
+      "title": "# A47 — final Linux platform qualification, prepared phase",
+      "headings": [
+        "A47 — final Linux platform qualification, prepared phase",
+        "Prepared deliverables",
+        "Verification completed",
+        "Pending actual phase"
+      ]
+    },
+    {
+      "id": "a48",
+      "role": "Actual final-source ARM and Intel Mac platform/validator qualification",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a48_macos_qualification",
+      "report": "reviews/a48.md",
+      "phase1_complete": true,
+      "phase1_scope": "Fresh ee0 Apple Silicon qualified; Intel actual qualification pending.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a48.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 12286,
+        "sha256": "9ae16069d4545579b6749d4f3b5be6c17f9b12ef5b06fad2b8d95b1a6a2303ba"
+      },
+      "title": "# A48 — fresh-source qualification of both Macs",
+      "headings": [
+        "A48 — fresh-source qualification of both Macs",
+        "Actual Apple Silicon acceptance",
+        "Native suite and original exits",
+        "Five original ARM validator lanes",
+        "Actual ARM package and content binding",
+        "Common successor and remaining Intel work"
+      ]
+    },
+    {
+      "id": "a49",
+      "role": "Intel native GUI meter failure diagnosis and bounded remediation",
+      "status": "completed",
+      "agent": "/root/a49_intel_meter_diagnosis",
+      "report": "reviews/a49.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a49.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 12532,
+        "sha256": "73e44a74627a243a6420229ce708e0c9bbe4cd7566734fa45ab32a042d60c96e"
+      },
+      "title": "# A49 — Intel native source-capture meter diagnosis",
+      "headings": [
+        "A49 — Intel native source-capture meter diagnosis",
+        "Decision",
+        "Exact failed input",
+        "What the original run establishes",
+        "Source reasoning",
+        "The decay explanation is quantitatively excluded",
+        "Bounded mechanism probe",
+        "Prior native Intel counterexample",
+        "Concrete next step and boundary"
+      ]
+    },
+    {
+      "id": "a50",
+      "role": "Actual expanded audition archive content and original CI acceptance",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a50_actual_audition_acceptance",
+      "report": "reviews/a50.md",
+      "phase1_complete": true,
+      "phase1_scope": "Exact frozen audition roster/inventory and actual acceptance commands independently prepared; actual Linux archive pending.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a50.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 4040,
+        "sha256": "70bbe0224eebc57232f82797852cebcf6d7159d590f06eb9278fa52764deadd1"
+      },
+      "title": "# A50 — actual audition archive acceptance",
+      "headings": [
+        "A50 — actual audition archive acceptance",
+        "Frozen identity and independent expected checks",
+        "Exact acceptance plan"
+      ]
+    },
+    {
+      "id": "a51",
+      "role": "Actual five public artifact downloads and expiry mapping",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a51_public_downloads",
+      "report": "reviews/a51.md",
+      "phase1_complete": true,
+      "phase1_scope": "Apple Silicon actual public full GET accepted; four public routes pending.",
+      "phase2_complete": true,
+      "phase2_scope": "Actual ARM and Windows complete public GET and upload binding accepted; Intel/Linux/audition pending.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a51.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 8170,
+        "sha256": "724cd12566d3352f47c8b2a10daae0b9e6f73c5b2e85abc3333934a12eca1920"
+      },
+      "title": "# A51 — actual public download integrity and expiry mapping",
+      "headings": [
+        "A51 — actual public download integrity and expiry mapping",
+        "Latest phase 2: Windows passed; two of five public routes verified",
+        "Phase 1: Apple Silicon public route passed; four targets pending",
+        "Source, attempt, and artifact binding",
+        "Retention and fallback",
+        "Retained evidence and next handoff"
+      ]
+    },
+    {
+      "id": "a52",
+      "role": "Independent four-platform build and dependency provenance",
+      "status": "in_progress",
+      "agent": "/root/a52_build_provenance",
+      "report": "reviews/a52.md",
+      "phase1_complete": true,
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a52.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 11318,
+        "sha256": "43c0c3027acbd578dcc1df74e2a4040af50fb01c3e6a98dd3b908b8ecb2a0739"
+      },
+      "title": "# A52 — final-source build and dependency provenance",
+      "headings": [
+        "A52 — final-source build and dependency provenance",
+        "Phase 1 decision",
+        "Actual rows inspected",
+        "Frozen-source findings",
+        "Checkout, configuration, dependency verification, build, and package chain",
+        "JUCE provenance and license connection",
+        "Validator download provenance",
+        "Architecture, toolchain, reproducibility, and signatures",
+        "Source continuity and pending completion",
+        "Reproduction and retained output"
+      ]
+    },
+    {
+      "id": "a53",
+      "role": "Independent exact native rosters, skip reasons and host-boundary coverage",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a53_native_skip_reconciliation",
+      "report": "reviews/a53.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a53.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 13417,
+        "sha256": "dccb60ccab39a0e16189c85995899b8c06cf4ec2bc473642395175e01b8ae0a7"
+      },
+      "title": "# A53 — exact native rosters, capability skips and host-state mapping",
+      "headings": [
+        "A53 — exact native rosters, capability skips and host-state mapping",
+        "Phase 1 result",
+        "Original evidence and independent checks",
+        "Formal capability skips",
+        "Nested Python skips",
+        "A42 host-state map joined to actual execution",
+        "Warnings and peer reconciliation",
+        "Reproduction and boundaries"
+      ]
+    },
+    {
+      "id": "a54",
+      "role": "Final sound-claim, evidence and realism-limit review",
+      "status": "completed",
+      "agent": "/root/a54_sound_claims_review",
+      "report": "reviews/a54.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a54.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 16593,
+        "sha256": "9adb28616a2f83530927df67f75d865d1312ae9228ef682ea7f88331e1ede6cb"
+      },
+      "title": "# A54 — final sound-claim and evidence review",
+      "headings": [
+        "A54 — final sound-claim and evidence review",
+        "The counts that must stay separate",
+        "Factual claims matrix",
+        "Every family is accounted for; fresh focused captures are a separate scope",
+        "Publication wording changes for the owner"
+      ]
+    },
+    {
+      "id": "a55",
+      "role": "Complete per-address family and gesture coverage matrix",
+      "status": "completed",
+      "agent": "/root/a55_family_coverage_matrix",
+      "report": "reviews/a55.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a55.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 18971,
+        "sha256": "62219ef5637ae144cd833883b236d1ce644a571391d12185a246ded4026fe9b7"
+      },
+      "title": "# A55 — complete family and address evidence coverage",
+      "headings": [
+        "A55 — complete family and address evidence coverage",
+        "Inputs, preservation and what was independently reconciled",
+        "Complete category coverage",
+        "The default bank scene and cumulative change accounting",
+        "Performance evidence has several distinct scopes",
+        "Fourteen slow entrances and seven explicit individual gaps",
+        "Instrument specificity, raw evidence and final qualification"
+      ]
+    },
+    {
+      "id": "a56",
+      "role": "Final online guides, download publication and consistency",
+      "status": "awaiting_release_inputs",
+      "agent": "/root/a56_publication_docs",
+      "report": "reviews/a56.md",
+      "phase1_complete": true,
+      "phase2": "Await accepted native platforms, validators, installers, audition and public routes before final download publication.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a56.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 7613,
+        "sha256": "27d6e5a177cc21c7b7786ca77d85540b7f61741384bdbc81ca463c066dd66963"
+      },
+      "title": "# A56 — online publication documentation, phase 1",
+      "headings": [
+        "A56 — online publication documentation, phase 1",
+        "Immutable source versus later online documents",
+        "Applied changes",
+        "Verification and boundaries",
+        "Phase 2 awaits actual qualification"
+      ]
+    },
+    {
+      "id": "a57",
+      "role": "Independent four-platform installation and payload cross-check",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a57_installation_crosscheck",
+      "report": "reviews/a57.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a57.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 12124,
+        "sha256": "0b896b66fe42b5405435f9a3a36e968af10d11e09ce85cd0c1eef8083a760735"
+      },
+      "title": "# A57 — independent inspection of the four installation packages",
+      "headings": [
+        "A57 — independent inspection of the four installation packages",
+        "Phase 1 checkpoint: two actual packages checked; final reconciliation open",
+        "Exact actual archive identities",
+        "Native headers, modes and metadata",
+        "Original source, upload and public-download binding",
+        "Preserved limits and final handoff requirements",
+        "Reproducibility and preservation"
+      ]
+    },
+    {
+      "id": "a58",
+      "role": "Independent actual release and original-attempt reconciliation",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a58_release_reconciliation",
+      "report": "reviews/a58.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual three native observations including Intel failure, two packages/platform receipts, seven validator lanes independently reconciled; no release acceptance.",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "report_exists": true,
+      "is_audit_output": false,
+      "report_identity": {
+        "bytes": 13122,
+        "sha256": "468d4a330191c03b3341a585b6e5fa6b52baa44e70c999f5a82b14cd9e483c39"
+      },
+      "title": "# A58 — independent aggregate release reconciliation",
+      "headings": [
+        "A58 — independent aggregate release reconciliation",
+        "Checkpoint decision",
+        "Actual native observations",
+        "Intel attempt 1 remains a failure",
+        "Validators, packages and public delivery",
+        "Final contract, claims and remaining handoff",
+        "Reproduction and preservation"
+      ]
+    },
+    {
+      "id": "a59",
+      "role": "Exact current 60-agent ledger and completion review",
+      "status": "in_progress",
+      "agent": "/root/a59_team_ledger_review",
+      "report": "reviews/a59.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a59.md",
+      "report_exists": true,
+      "is_audit_output": true,
+      "report_identity": null,
+      "hash_exclusion_reason": "This audit's own report and team document are generated after the input checkpoint; no self-referential hash cycle."
+    },
+    {
+      "id": "a60",
+      "role": "Independent final source, binary, release and publication signoff",
+      "status": "in_progress",
+      "agent": "/root/a60_final_source_release_signoff",
+      "report": "reviews/a60.md",
+      "report_repo_path": "docs/preset-evidence/2026.11.7/reviews/a60.md",
+      "report_exists": false,
+      "is_audit_output": false,
+      "report_identity": null
+    }
+  ]
+}

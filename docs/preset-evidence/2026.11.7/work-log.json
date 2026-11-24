@@ -341,7 +341,7 @@
     {
       "id": "a48",
       "role": "Actual final-source ARM and Intel Mac platform/validator qualification",
-      "status": "awaiting_actual_artifacts",
+      "status": "in_progress",
       "agent": "/root/a48_macos_qualification",
       "report": "reviews/a48.md",
       "phase1_complete": true,
@@ -357,9 +357,11 @@
     {
       "id": "a50",
       "role": "Actual expanded audition archive content and original CI acceptance",
-      "status": "in_progress",
+      "status": "awaiting_actual_artifacts",
       "agent": "/root/a50_actual_audition_acceptance",
-      "report": "reviews/a50.md"
+      "report": "reviews/a50.md",
+      "phase1_complete": true,
+      "phase1_scope": "Exact frozen audition roster/inventory and actual acceptance commands independently prepared; actual Linux archive pending."
     },
     {
       "id": "a51",
@@ -375,10 +377,12 @@
     {
       "id": "a52",
       "role": "Independent four-platform build and dependency provenance",
-      "status": "in_progress",
+      "status": "awaiting_actual_artifacts",
       "agent": "/root/a52_build_provenance",
       "report": "reviews/a52.md",
-      "phase1_complete": true
+      "phase1_complete": true,
+      "phase2_complete": true,
+      "phase2_scope": "ARM/Windows and failed Intel original build provenance plus all5 same-source supporting DSP jobs reviewed; native Linux and any Intel retry pending."
     },
     {
       "id": "a53",
@@ -406,7 +410,7 @@
     {
       "id": "a56",
       "role": "Final online guides, download publication and consistency",
-      "status": "awaiting_release_inputs",
+      "status": "in_progress",
       "agent": "/root/a56_publication_docs",
       "report": "reviews/a56.md",
       "phase1_complete": true,
@@ -433,15 +437,26 @@
     {
       "id": "a59",
       "role": "Exact current 60-agent ledger and completion review",
-      "status": "in_progress",
+      "status": "awaiting_final_closure",
       "agent": "/root/a59_team_ledger_review",
-      "report": "reviews/a59.md"
+      "report": "reviews/a59.md",
+      "phase1_complete": true,
+      "phase1_scope": "Exactly60 distinct assignments independently confirmed,49 completed11open; final closure pending all actual release roles."
+    },
+    {
+      "id": "a60",
+      "role": "Independent final source, binary, release and publication signoff",
+      "status": "awaiting_final_closure",
+      "agent": "/root/a60_final_source_release_signoff",
+      "report": "reviews/a60.md",
+      "phase1_complete": true,
+      "phase1_scope": "Independent complete protected source/main/index/worktree continuity passes; actual final release and publication signoff pending."
     }
   ],
   "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
   "candidate_build_run": 45397189410,
-  "documentation_head_observed": "01a8f60a15a6323b0fd3ffea3c9db84ddf8fc435",
-  "assigned_count": 59,
+  "documentation_head_observed": "38d7f8d7ce79500606a06e6dae13851409f85be9",
+  "assigned_count": 60,
   "completed_count": 49,
   "candidate_build_note": "ARM and Windows attempt1 platforms qualified. Both public installer full GETs pass. Intel original attempt1 has one preserved GUI meter screenshot failure; all523LibraryAudit passed. Independent A49 finds no justified source/test change and recommends one unchanged full Intel job rerun after Linux workflow completes. Immediate retry refused by active-workflow state; no retry started. Separate DSP workflow45397189426 all5jobs succeeded. No cross-platform/release qualification yet.",
   "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "attempts": [
+    {
+      "command": "python3 -B docs/preset-evidence/2026.11.7/verification/a60/review-phase1.py --repo . --out-dir docs/preset-evidence/2026.11.7/verification/a60/phase1",
+      "exit_code": 1,
+      "failure": "The fail-closed untracked-path classification found the newly authorized A59 output docs/TEAM_REVIEW_2026_11_7.md outside the five online guides and current evidence directory.",
+      "resolution": "Added only that exact current-revision team-review document as an evidence output. Protected production, workflow, test, tool, license and technical fixture scopes remain unchanged.",
+      "output_files_created": [],
+      "product_tests_executed": false,
+      "release_qualified": false
+    }
+  ]
+}

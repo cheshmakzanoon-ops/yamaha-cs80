@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "status": "phase1_commands_prepared_actual_inputs_pending",
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "human_listening_approved": false,
+  "exact_acoustic_fidelity_established": false,
+  "working_directory": "repository root",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "producer_job_id": 138455975798,
+  "artifact_name": "cs80-curated-preset-audition-ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "download_directory": "/tmp/cs80-ci-1cee5a/ee0dabca",
+  "actual_inputs": {
+    "original_archive": null,
+    "original_artifact_api": null,
+    "attempt_1_run_api": null,
+    "completed_linux_job_api": null,
+    "original_linux_job_log": null,
+    "authenticated_retrieval_receipts": null
+  },
+  "substitution_rule": "Replace only angle-bracket input values with authenticated original paths/API values; retain every fixed argument.",
+  "commands": [
+    {
+      "order": 1,
+      "purpose": "actual content acceptance",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-audition-archive.py",
+        "--repo",
+        ".",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--expected-inventory",
+        "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+        "--inventory-source-path",
+        "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+        "--expected-inventory-sha256",
+        "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+        "--archive",
+        "<original_archive.path>",
+        "--expected-zip-sha256",
+        "<authenticated_artifact_api.digest_without_sha256_prefix>",
+        "--expected-zip-bytes",
+        "<authenticated_artifact_api.size_in_bytes>",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/audition/content-acceptance.json"
+      ],
+      "expected_exit_code": 0,
+      "log": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/audition/a50-content-verifier.log"
+    },
+    {
+      "order": 2,
+      "purpose": "original CI binding",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/bind-audition-ci.py",
+        "--content-report",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/audition/content-acceptance.json",
+        "--artifact-api",
+        "<original_artifact_api.path>",
+        "--run-api",
+        "<attempt_1_run_api.path>",
+        "--job-api",
+        "<completed_linux_job_api.path>",
+        "--job-log",
+        "<original_linux_job_log.path>",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/audition/ci-binding.json"
+      ],
+      "expected_exit_code": 0,
+      "log": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/audition/a50-ci-binder.log"
+    }
+  ],
+  "required_input_rules": [
+    "Require original artifact ID, exact name, authenticated size and SHA-256, source, run, and creation time; never infer missing values.",
+    "Run API must retain attempt 1; a later Intel attempt 2 run object cannot replace the audition producer's attempt-1 record.",
+    "Linux job must be the complete original job 138455975798, source ee0dabca, run 45397189410, attempt 1.",
+    "Retain full timestamped original Linux log and authenticated receipt mapping each API/log/archive path and digest to its retrieval.",
+    "Snapshot/hash the supplied receipts and all actual evidence; preserve older receipts and record each new command's actual exit status.",
+    "Recheck frozen helper/reference hashes before and after both commands; use fresh output paths and preserve failed results."
+  ],
+  "supplemental_producer_review": [
+    "Reconcile original checkout, Build, Test, Capture curated preset auditions, and Upload curated preset auditions step numbers, times, and conclusions.",
+    "Verify the actual source checkout and direct unsuppressed capture command in the original log against the frozen workflow.",
+    "Record capture process exit zero from original process evidence; when successful GitHub steps omit a literal exit line, explain the inference from the original successful step, direct bash -e invocation, and absence of suppression.",
+    "The capture producer uses subprocess.run(..., check=True), validates complete schema 3, and raises on failed child/source/safety checks; upload success alone cannot qualify capture.",
+    "Bind unique upload digest/success/download-URL records inside the original upload step to the authenticated artifact ID, size, SHA-256, and times.",
+    "Do not relabel old c554 or Intel attempt-1 failure evidence; overall release/platform qualification remains separate."
+  ],
+  "resource_policy": {
+    "archive_stays_compressed": true,
+    "extraction": false,
+    "full_pcm_duplicate": false,
+    "immutable_zip_snapshot_limit_exclusive": 536870912,
+    "total_expanded_limit_exclusive": 536870912,
+    "member_limit_exclusive": 16777216,
+    "binder_input_limit_exclusive": 33554432,
+    "maximum_original_downloads": 1
+  },
+  "content_gate_summary": [
+    "Exact safe ZIP path/type/name set, all 297 regular files, and all 296 checksums.",
+    "All 238 WAVs with exact resolved roster settings and parameter digests; all 13 appended requests remain required.",
+    "Every ordered inventory identity, metadata field, parameter ID, and binary32 value matches independent A12.",
+    "Complete source/run/attempt/cleanliness/executable-digest provenance, commands, and README match frozen source.",
+    "Every actual PCM sample is finite and within full scale; independently recompute and compare all 12 metrics using unchanged tolerances.",
+    "Exact 65,337,600 stereo frames, 522,700,800 raw audio bytes, 54 folders, 92 selected existing programs, and active model/variant/material coverage."
+  ],
+  "scope": "Technical content/provenance only; no human listening, exact acoustic fidelity, executable-byte possession, live-gesture, platform, or release approval."
+}

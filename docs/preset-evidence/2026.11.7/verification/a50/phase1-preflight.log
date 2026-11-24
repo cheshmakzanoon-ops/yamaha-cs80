@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "status": "phase1_preflight_passed_pending_actual_archive",
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "human_listening_approved": false,
+  "exact_acoustic_fidelity_established": false,
+  "completed_utc": "2026-11-24T14:15:09.628109+00:00",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "producer_job_id": 138455975798,
+  "preflight_passed": true,
+  "expected_contract": {
+    "wav_count": 238,
+    "selected_program_count": 92,
+    "audio_seconds": 1361.2,
+    "folder_count": 54,
+    "regular_files": 297,
+    "checksums": 296,
+    "parameters": 204,
+    "programs": 523,
+    "stereo_frames": 65337600,
+    "raw_audio_bytes": 522700800
+  },
+  "actual_archive_supplied": false,
+  "actual_archive_inspected": false,
+  "audio_rendered": false,
+  "synthetic_archive_created": false,
+  "frozen_helper_tests_repeated": false,
+  "frozen_helpers_modified": false,
+  "all_retained_inputs_unchanged": true,
+  "preflight_script": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a50/preflight.py",
+    "bytes": 20698,
+    "sha256": "c57077b3f5afba948849dc2649fc970058ff99c40a11271d9a9ce02ab1d733e1"
+  },
+  "remaining": "Wait for root's original ZIP/API/log/attempt/authenticated retrieval evidence, then execute the frozen helpers and supplemental producer review."
+}
