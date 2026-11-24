@@ -174,16 +174,22 @@ partials follow the key; a firm strike brings the upper partial forward.
 Piano** use piano-string excitation with separately softening upper partials;
 **Saw Pulse Piano** retains more of its deliberately synthetic circuit edge.
 All decay while the key is held. Repeated piano strikes now keep the same
-string-course tuning while retaining varied hammer phase and contact. In this
-revision, higher piano partials also receive the prompt damping already applied
+string-course tuning while retaining varied hammer phase and contact. The retained
+2026.11.7 correction gives higher piano partials the prompt damping already applied
 to the lower ones. Try Stage Keys or Soft Keys around MIDI 24–36 and let the
 tail settle: upper ringing should no longer persist because of the former
 sixth-to-seventh-partial damping boundary. This listening expectation follows
 from the rendered spectral checks. The bodies
 have physically motivated features, but they are not samples or complete measured
 acoustic-piano models.
+
+Revision 2026.11.8 adds finite piano contact and treble excitation shaping,
+distinct tine/reed pickup responses, and release damping governed by the existing
+pedal policy. Compare soft and firm notes around MIDI 60–84, then compare an
+early key release with a pedal-held note.
 [Key source](../src/core/curated/Keys.inc) ·
-[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_7.md)
+[Current keyboard mechanisms](CIRCUIT_LIBRARY_2026_11_8.md#integrated-mechanisms) ·
+[Earlier instrument-body corrections](CIRCUIT_LIBRARY_2026_11_7.md)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -499,7 +505,7 @@ include all fourteen body controls.
 
 Revision 2026.11.8 adds no parameters and changes no parameter ranges, defaults
 or automation positions; the 2026.11.6 totals and material choices remain in place.
-[Current host and saved-state compatibility review](preset-evidence/2026.11.7/reviews/a42.md)
+[Retained host and saved-state compatibility review](preset-evidence/2026.11.7/reviews/a42.md)
 
 Existing body-enabled saved sounds use the revised excitation, tuning and
 articulation code, so retaining their parameter values does not freeze their

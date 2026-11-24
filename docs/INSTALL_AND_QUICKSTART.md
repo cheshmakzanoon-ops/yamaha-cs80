@@ -74,7 +74,7 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. To identify this candidate's
-sounds, both must identify **2026.11.7**. Before treating a package as qualified,
+sounds, both must identify **2026.11.8**. Before treating a package as qualified,
 also match its full source commit to the exact source SHA in the selected verified
 download and its completed workflow qualification. Revision metadata alone does
 not establish that qualification. The sound-library revision is separate from

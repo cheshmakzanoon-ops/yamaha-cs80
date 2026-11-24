@@ -71,6 +71,24 @@ The added piano damper contribution fades out smoothly in the highest register;
 the authored software amplitude release remains available there. Non-keyboard
 bodies, disabled bodies and Kalimba keep their existing release behavior.
 
+### Release work during live control edits
+
+Live voice-dispersion smoothing can change release timing on every internal
+sample. Release targets are now calculated only when the body consumes them
+at its existing 16-sample control boundary, using the exact latest timing value.
+Fixed piano damper geometry is cached on first consumption. This discards no
+applied target and introduces no timing quantization or new envelope law.
+
+Nine body traces and eighteen complete Engine comparisons were sample-identical
+before and after the change, including live dispersion, release edits, pressure,
+pitch bends and voice reuse at 64/128-frame blocks. In a continuously retimed
+8,192-tick piano test, expensive exp/log/pow calls fell from 770,048 to 24,576;
+repeated sin/cos work was removed after the geometry cache was populated.
+Tine/reed release calculations fell from 8,192 to 512. These are bounded
+coefficient-work comparisons, not a claim that the whole plugin is that much
+faster or meets every real-time callback deadline. The fixed cache adds 12 KiB
+per Engine across its current and outgoing bodies; all consumers are rebuilt.
+
 ## Initial verification and independent review
 
 The starting 523-program audit passed: maximum musical phrase peak -6.2 dBFS,

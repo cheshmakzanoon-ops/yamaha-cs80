@@ -103,7 +103,9 @@ on-screen key to try pressure.
 
 The continuation adds velocity- and register-dependent piano contact, separate
 magnetic and capacitive electric-piano pickup responses, and instrument-specific
-release damping that follows the existing pedal and release controls. All 523
+release damping that follows the existing pedal and release controls. Piano
+treble excitation is also refined, and 31 existing preset vectors receive
+electric-piano, organ, Ocarina or Crystal Strings corrections. All 523
 program identities and 204 parameter IDs remain intact. The new catalogue guard
 also freezes the curated names, categories and order. Programming and independent
 recorded-reference review are continuing; the installation links above will move
@@ -155,7 +157,7 @@ either the Model or Variant range. Standard profiles remain available.
 Deliberately synthetic sounds keep their ring modulation, PWM, interval, motion or pressure-led identities.
 
 The [revision report](docs/CIRCUIT_LIBRARY_2026_11_7.md) explains the implementation,
-measurements and limits. The current
+measurements and limits. Its
 [catalogue and parameter audit](docs/preset-evidence/2026.11.7/reviews/a12.md)
 checks every address and all **106,692 preset values**. The cumulative
 [signal accounting](docs/preset-evidence/2026.11.7/reviews/a33.md) records changed
@@ -167,10 +169,9 @@ These measurements establish changes and scoped preservation, not a listening
 preference. The three-second bank holds are supplemented by selected
 [long-note and chord checks](docs/preset-evidence/2026.11.7/reviews/a34.md).
 The [preceding complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
-passes the existing level and headroom limits. The combined 2026.11.7 bank,
-native builds and expanded audition archive are being qualified against their
-own source. The Downloads table above continues to identify the published
-2026.11.4 packages until those installation archives pass.
+passes the existing level and headroom limits. That 2026.11.7 source snapshot
+recorded native-build and expanded audition-archive qualification as pending.
+See the current candidate above and the Downloads table for accepted packages.
 
 | Try | Revised character and playing suggestion |
 | --- | --- |
