@@ -1,0 +1,45 @@
+{
+  "status": "bounded_independent_review_passed",
+  "scope": "Review approval for the small CI sharding change, not actual sanitizer/native/release qualification.",
+  "source_before_change": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "reviewed_inputs": {
+    "candidate/.github/workflows/dsp-measurements.yml": {
+      "bytes": 13815,
+      "sha256": "cfcc4ed3f2ed566d7d157bd3816c648c417182540663be6fe06a2b9ae6043cc9",
+      "git_blob": "dff5d94bbd212e7484c6232a064141abd4f5c2cf"
+    },
+    "candidate/scripts/ci-sanitizer-shards.py": {
+      "bytes": 13555,
+      "sha256": "b9dfbaefe08c80470c0d49845bfb0103223bf545385dd04c8fe562e2a7e2bbfb",
+      "git_blob": "3e9098ffe65a4aec63ed3649028888f0e36e8d5c"
+    },
+    "candidate/scripts/test-ci-sanitizer-shards.py": {
+      "bytes": 11409,
+      "sha256": "b98f0abe699adc42217bffc1870bf014ed1c710392e2f626f6e9ea87ddd3d9b6",
+      "git_blob": "dcb861c684e052c2c60dbb2464dc06818f6a40d9"
+    },
+    "sanitizer-shards.patch": {
+      "bytes": 29737,
+      "sha256": "2aae609a8c3441ebe263dbf779048554ecb8ba0ce40ad195ba96480353f10994",
+      "git_blob": "82907b175fae341817dd76e7f013f92faec5ecd4"
+    }
+  },
+  "controls": 29,
+  "all_expected_outcomes": true,
+  "original_failed_run": 45439302238,
+  "original_failed_job": 138605852686,
+  "original_log": {
+    "bytes": 118682,
+    "sha256": "719c0b2fb6d340cde9a3ba1ca066119ea7af78e4a9f679978c0b5bfd3a5a9170",
+    "git_blob": "bf57f4ee42a866fa0c16fba3849e9bd951d92cc3"
+  },
+  "original_failure_summary": "173 complete cases (172 passed and one declared skip), case174 running when the75-minute job was cancelled; no normal completion.",
+  "expected_source_roster": 232,
+  "partition_sizes": [
+    78,
+    77,
+    77
+  ],
+  "followup": "Require the three actual original source-bound shards and aggregate success on fresh CI, plus all four original native targets for the new source.",
+  "release_qualified": false
+}

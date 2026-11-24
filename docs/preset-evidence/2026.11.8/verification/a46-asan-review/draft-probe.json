@@ -1,0 +1,206 @@
+{
+  "scope": "Synthetic CTest helper review only; no product or sanitizer qualification.",
+  "helper_sha256": "a788fe58af3ac8c9d7d7c53b7f9c22faab91a7f83d43ed85303d36c82fa0e20d",
+  "helper_bytes": 13212,
+  "cases": [
+    {
+      "case": "real_ctest_232_inert_cases_with_declared_skip",
+      "expected_accept": true,
+      "accepted": true,
+      "summary": {
+        "identity": {
+          "GITHUB_SHA": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "GITHUB_RUN_ID": "1",
+          "GITHUB_RUN_ATTEMPT": "1"
+        },
+        "accepted": true,
+        "jobs_result": "success",
+        "tests": 232,
+        "passed": 231,
+        "skipped": [
+          "a46_080"
+        ],
+        "shards": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "case": "junit_missing_run_status",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit test did not run"
+    },
+    {
+      "case": "junit_unknown_status",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit test did not run"
+    },
+    {
+      "case": "junit_declared_skip_status_None",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Undeclared skip: a46_080"
+    },
+    {
+      "case": "junit_declared_skip_status_run",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Undeclared skip: a46_080"
+    },
+    {
+      "case": "junit_declared_skip_status_disabled",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Undeclared skip: a46_080"
+    },
+    {
+      "case": "junit_wrong_total",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit suite counts or status changed"
+    },
+    {
+      "case": "junit_failure",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit failure: a46_001"
+    },
+    {
+      "case": "junit_missing_case",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit contains duplicate, missing or unexpected tests"
+    },
+    {
+      "case": "junit_duplicate_case",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "JUnit contains duplicate, missing or unexpected tests"
+    },
+    {
+      "case": "junit_cases_nested_in_unknown_wrapper",
+      "expected_accept": false,
+      "accepted": true,
+      "returncode": 0,
+      "error": null
+    },
+    {
+      "case": "lasttest_names_and_footer_only",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Incomplete LastTest.log"
+    },
+    {
+      "case": "lasttest_wrong_global_ordinals",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "LastTest.log test index differs"
+    },
+    {
+      "case": "lasttest_duplicate_start",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Incomplete LastTest.log"
+    },
+    {
+      "case": "lasttest_end_before_output",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Incomplete LastTest.log"
+    },
+    {
+      "case": "lasttest_missing_last_output_terminator",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Incomplete original test log: a46_232"
+    },
+    {
+      "case": "lasttest_reported_failure",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "Incomplete original test log: a46_001"
+    },
+    {
+      "case": "original_ctest_exit8",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "CTest did not return normally with zero"
+    },
+    {
+      "case": "original_ctest_signal",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "CTest did not return normally with zero"
+    },
+    {
+      "case": "missing_junit",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "error": "'ctest-results.xml'"
+    },
+    {
+      "case": "out_of_range_0",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 2
+    },
+    {
+      "case": "out_of_range_4",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 2
+    },
+    {
+      "case": "out_of_range_-1",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 2
+    },
+    {
+      "case": "real_ctest_failed_test_propagation",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "original_ctest_returncode": 8,
+      "completed": true
+    },
+    {
+      "case": "actual_fixture_setup_cleanup_cross_shard",
+      "expected_accept": false,
+      "accepted": false,
+      "returncode": 1,
+      "planned_count": 77,
+      "actual_ctest_selected_count": 79,
+      "auto_added": [
+        "a46_001",
+        "a46_003"
+      ],
+      "error": "Sanitizer shard gate failed: Shard dependency needs review: a46_001: FIXTURES_SETUP"
+    }
+  ],
+  "unexpected_acceptances": [
+    "junit_cases_nested_in_unknown_wrapper"
+  ]
+}
