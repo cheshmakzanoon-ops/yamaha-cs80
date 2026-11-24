@@ -30,8 +30,8 @@ A fresh instance opens **Brass Swell I**. Hold a three-note chord around MIDI
 48–67, wait for the brighter layer to arrive, then gradually add pressure.
 Release the pressure before releasing the keys to hear the chord settle back.
 Open **Library** to choose the following programs.
-When reopening an older project, explicitly **RELOAD** the factory entry to
-apply its revised settings; the displayed name alone does not confirm that
+When reopening an older project, press **LOAD** (or **RELOAD**, if shown) for
+the factory entry to apply its revised settings; the displayed name alone does not confirm that
 they are loaded. See [Recalling a revised sound](#recalling-a-revised-sound).
 
 Try each sound in three ways: strike softly and firmly; hold long enough to hear
@@ -132,7 +132,7 @@ Piano** use piano-string excitation with separately softening upper partials;
 All decay while the key is held. The bodies have physically motivated features,
 but they are not samples or complete measured acoustic-piano models.
 [Key source](../src/core/curated/Keys.inc) ·
-[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_4.md#struck-strings-electric-pianos-and-bars)
+[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_5.md#struck-excitation-and-aftersound)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -326,7 +326,7 @@ Their twelve saved controls are exposed in the DAW's parameter list and automati
 editor. The custom Studio editor and standalone interface do not yet provide
 dedicated body-control widgets.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
-selector. [Revision details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
+selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
 
 ## Recalling a revised sound
 
@@ -337,13 +337,13 @@ preset restores its stored controls, so an older project can show a factory
 name while still using its earlier recipe. Save a user copy to retain edits.
 
 To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
-factory entry and explicitly press **LOAD / RELOAD**. Enter or double-click
-also loads it. Play fresh notes afterward: body model, decay, size and variant take
+factory entry and explicitly press **LOAD** (or **RELOAD**, if shown). Enter or
+double-click also loads it. Play fresh notes afterward: body model, decay, size and variant take
 effect at note onset. Save the project if you want it to retain the new recipe.
 
 With **Audition** enabled, clicking a row already marked loaded can leave the
-current settings in place. Use **RELOAD** even if the desired factory name is
-already displayed. A saved user patch with the same name remains a separate
+current settings in place. Press **LOAD** (or **RELOAD**, if shown) even if the
+desired factory name is already displayed. A saved user patch with the same name remains a separate
 entry. **REVERT** restores the sound that was active when Library opened;
 it can restore the older recipe and does not mean “load the latest factory
 settings.”

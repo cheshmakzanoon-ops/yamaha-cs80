@@ -4,10 +4,13 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library revision **2026.11.4**: revoiced existing
+This guide covers factory library revision **2026.11.5**: revoiced existing
 programs and optional instrument bodies within one circuit instrument, the
 unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
-readout. Engine and isolation selectors remain removed. Older artifacts
+readout. All **521 existing musical programs** have revised sound controls;
+**Init Patch** and **Init Circuit** remain starting points, with all names and
+program addresses preserved. See the [2026.11.5 sound revision](CIRCUIT_LIBRARY_2026_11_5.md).
+Engine and isolation selectors remain removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
 repository README.
@@ -55,7 +58,7 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.4** and that their full source commit matches
+confirm that both identify **2026.11.5** and that their full source commit matches
 the exact source SHA listed for the selected verified download and its completed
 workflow qualification. The sound-library revision is separate from
 the application's version string.
@@ -247,8 +250,9 @@ continue processing idle instances.
 - Back up sessions and user presets before changing builds. With the host closed,
   replace only this instrument's complete bundle/file; rescan afterward.
 - To hear the revised factory sounds, open **LIBRARY → FACTORY LIBRARY**, choose
-  the desired factory entry, then explicitly press **LOAD / RELOAD**. Enter or
-  double-click also loads it. Play fresh notes afterward, and save the project
+  the desired factory entry, then explicitly press **LOAD** (or **RELOAD**, if
+  that is the label shown). Enter or double-click also loads it. Play fresh notes
+  afterward, and save the project
   if you want it to retain that recipe. An older project can show the same
   factory name while restoring its older settings; clicking an already-loaded
   row with **Audition** enabled may leave those settings in place.
