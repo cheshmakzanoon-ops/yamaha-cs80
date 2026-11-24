@@ -293,11 +293,11 @@ void buildStrings(Builder& add)
             .mix(0.19f).level(II, 0.65f, 0.55f).touch(II, 0.04f, 0.22f, 0.12f, 0.12f)
             .eg(II, 0.45f, 1.6f, 0.45f, 1.4f).chorus(0.22f, 0.32f).detune(2.5f)
                .body(I, body::Model::bowed, 0.53f, 0.59f, 1.00f).pw(II, 0.66f, 0.065f, 0.21f).eg(II, 0.56f, 1.4f, 0.36f, 1.2f).mix(0.15f)
-               .body(I, body::Model::bowed, 0.64f, 0.62f, 1.00f).bodySize(I, 1.0f)
-               .lpf(I, 6200.0f, 0.06f).lpf(II, 12000.0f, 0.035f).level(II, 0.65f, 0.32f).mix(0.13f)
+               .body(I, body::Model::bowed, 0.90f, 0.93f, 1.00f).bodySize(I, 1.0f)
+               .hpf(I, 165.0f).lpf(I, 14000.0f, 0.06f).lpf(II, 12000.0f, 0.035f).level(II, 0.65f, 0.32f).mix(0.13f)
                .contour(0.12f, -0.25f, 0.0f, -0.12f)
-               .level(I, 0.950f, 0.180f).level(II, 0.650f, 0.120f)
-               .touch(I, 0.100f, 0.700f, 0.180f, 0.260f)
+               .level(I, 0.950f, 0.225f).level(II, 0.650f, 0.120f)
+               .touch(I, 0.100f, 0.875f, 0.180f, 0.325f)
                .touch(II, 0.040f, 0.550f, 0.120f, 0.180f));
     add("Fifth Strings", "Strings", { "feet-layer" },
         "A softly entering harmonic fifth joins an 8' modeled bowed body. The fifth has a lighter spectral weight and remains subordinate through the release; sparse voicings reveal the open interval clearly.",
