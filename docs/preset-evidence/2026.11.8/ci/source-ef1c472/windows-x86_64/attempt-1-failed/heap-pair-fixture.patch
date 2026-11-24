@@ -1,0 +1,25 @@
+--- a/tests/SixteenVoiceReleaseTests.cpp
++++ b/tests/SixteenVoiceReleaseTests.cpp
+@@ -11,6 +11,7 @@
+ #include <cstdio>
+ #include <cstring>
+ #include <limits>
++#include <memory>
+ #include <string>
+ 
+ using namespace cs80;
+@@ -43,7 +44,13 @@
+     // The source must precede (and outlive) both instruments. Every oracle
+     // constructs independent engines and source: never copy a linked pair.
+     ReleaseOrderClock clock;
+-    Engine first, second;
++    // Several independent pairs coexist in these offline oracle fixtures.
++    // Keep their large Engine states off the process stack; the aliases and
++    // clock-before-engine construction/lifetime order remain unchanged.
++    std::unique_ptr<Engine> firstOwner = std::make_unique<Engine>();
++    std::unique_ptr<Engine> secondOwner = std::make_unique<Engine>();
++    Engine& first = *firstOwner;
++    Engine& second = *secondOwner;
+     ParamValues params;
+     explicit Pair(bool circuit, bool linked = true, std::uint64_t initial = 0)
+         : clock(initial), params(patch(circuit))

@@ -1,0 +1,155 @@
+--- qualify-arm.py@10e77601b612d251df5466d3af70551c90ab37c0
++++ qualify-intel.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Bind this one actual ef1c472 ARM execution; no product execution or publication.
++"""Bind this one actual ef1c472 Intel execution; no product execution or publication.
+ 
+ Recovered source: final commit plus original Actions artifacts and authenticated
+ API/log inputs acquired after the transient workspace reset. Historical helper
+@@ -24,14 +24,14 @@
+ 
+ SOURCE = 'ef1c472b161c37c490945f7c469086508aae6aef'
+ TREE = 'f4e00753cde135a36172d9ea549223dfdce5cc82'
+-RUN, ATTEMPT, JOB, REPO_ID = 45439302351, 1, 138605635263, 1436742091
+-REPOSITORY, REVISION, TARGET = 'cheshmakzanoon-ops/yamaha-cs80', '2026.11.8', 'macos-arm64'
++RUN, ATTEMPT, JOB, REPO_ID = 45439302351, 1, 138605635495, 1436742091
++REPOSITORY, REVISION, TARGET = 'cheshmakzanoon-ops/yamaha-cs80', '2026.11.8', 'macos-x86_64'
+ JUCE = 'c352e2489000ffeb9e397051377d75eef2efe641'
+ COUNTS = dict(registered=283, passed=281, failed=0, formal_skipped=2, disabled=0, unknown=0)
+ ARTIFACTS = {
+-    'native': (14947505348, 'cs80-macos-15-test-evidence', 89899, 'eeeb8fd43c3fcf0422152b0953f53b47da4c3cb2f86000a6dc84e7247fe5839f', 'Upload test and JUCE source evidence'),
+-    'validator': (14947445386, 'cs80-pluginval-macos-15', 12771, '66cf6de35348b91592d138823afb71b99cac3233bcb9b9af073b31884b4942a9', 'Upload pluginval reports'),
+-    'install': (14947300509, 'cs80-macos-15-install-bundle', 15004302, 'ed406c8cd6095ae8c7645604f55ea8d798a989b279da6ef27b14dc9c55442472', 'Upload native macOS install bundle'),
++    'native': (14947404390, 'cs80-macos-15-intel-test-evidence', 89932, '5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8', 'Upload test and JUCE source evidence'),
++    'validator': (14946709999, 'cs80-pluginval-macos-15-intel', 12719, '41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c', 'Upload pluginval reports'),
++    'install': (14946874694, 'cs80-macos-15-intel-install-bundle', 16286380, 'a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015', 'Upload native macOS install bundle'),
+ }
+ HELPERS = {
+     'parser': ('parse-native-evidence.py', 'f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846'),
+@@ -107,9 +107,9 @@
+     for relative, expected in pins['inputs'].items():
+         need(sha(raw_file(base / relative)) == expected, 'Reviewed receipt changed: ' + relative)
+     need(sha(raw_file(args.a46 / 'source-contract.json')) == pins['a46_source_contract_sha256'], 'Source roster contract changed')
+-    parser = module(args.a46 / 'helpers' / HELPERS['parser'][0], HELPERS['parser'][1], 'a48_parser')
+-    binder = module(args.a46 / 'helpers' / HELPERS['binder'][0], HELPERS['binder'][1], 'a48_binder')
+-    old = module(base / 'helpers' / HELPERS['log_parser'][0], HELPERS['log_parser'][1], 'a48_old_log_utilities')
++    parser = module(args.a46 / 'helpers' / HELPERS['parser'][0], HELPERS['parser'][1], 'a49_parser')
++    binder = module(args.a46 / 'helpers' / HELPERS['binder'][0], HELPERS['binder'][1], 'a49_binder')
++    old = module(base / 'helpers' / HELPERS['log_parser'][0], HELPERS['log_parser'][1], 'a49_old_log_utilities')
+     need(subprocess.check_output(['git', '-C', str(args.repo), 'rev-parse', SOURCE + '^{tree}'], text=True).strip() == TREE, 'Frozen tree differs')
+     workflow = source('.github/workflows/build.yml').decode()
+     need(b'curatedLibraryRevision = "2026.11.8"' in source('src/core/FactoryPresets.h'), 'Source revision differs')
+@@ -120,11 +120,11 @@
+         need(all(run[k]['id'] == REPO_ID and run[k]['full_name'] == REPOSITORY for k in ('repository', 'head_repository')), 'Run repository differs')
+     jobs = load('jobs-api.json')['jobs']
+     matches = [j for j in jobs if j['id'] == JOB]
+-    need(len(matches) == 1, 'Original ARM job absent/duplicate')
++    need(len(matches) == 1, 'Original Intel job absent/duplicate')
+     job = matches[0]
+     need((job['run_id'], job['run_attempt'], job['head_sha']) == (RUN, ATTEMPT, SOURCE), 'Job binding differs')
+     need(job['status'] == 'completed' and job['conclusion'] == 'success' and job['runner_id'] > 0 and job['runner_name'], 'Original job did not succeed on a runner')
+-    need(job['labels'] == ['macos-15'] and job['name'] == 'macOS / macos-15 / VST3 + AU + Standalone', 'Job target differs')
++    need(job['labels'] == ['macos-15-intel'] and job['name'] == 'macOS / macos-15-intel / VST3 + AU + Standalone', 'Job target differs')
+     steps = {s['name']: s for s in job['steps']}
+     need(len(steps) == len(job['steps']), 'Duplicate step')
+     for name in old.REQUIRED:
+@@ -135,13 +135,14 @@
+         need(steps[previous]['number'] < steps[following]['number'] and old.dt(steps[previous]['completed_at']) <= old.dt(steps[following]['started_at']), 'Step order differs')
+     need(all(steps[n]['conclusion'] == 'skipped' for n in ('AU registration diagnostics', 'Report pluginval failure')), 'Unexpected failure diagnostic')
+ 
+-    log_raw = raw_file(original / 'macos-arm64-job.log')
+-    need(len(log_raw) == 258791 and sha(log_raw) == '7393725dd452ba05c957db205fb980cd7232b1feaf0be7fbaa3c403cc494ed64', 'Original job log changed')
+-    need(hashlib.sha1(b'blob ' + str(len(log_raw)).encode() + b'\0' + log_raw).hexdigest() == '09d5d5480d124f0d5cc22873a9fe3aebc5e13b09', 'Original recovered log blob differs')
++    log_raw = raw_file(original / 'macos-x86_64-job.log')
++    need(len(log_raw) == 263197 and sha(log_raw) == '89fc20bca65f21c543c240fde390e65a6d25ff6b9354b8ffbe01a5f4fe24ec46', 'Original job log changed')
++    need(hashlib.sha1(b'blob ' + str(len(log_raw)).encode() + b'\0' + log_raw).hexdigest() == 'e0400e4f53657fe61efa90cc6fde29703388167b', 'Original recovered log blob differs')
+     lines, groups = old.parse_log(log_raw)
+     text = '\n'.join(r['text'] for r in lines) + '\n'
+-    need('\n' + SOURCE + '\n' in text and '\narm64\n' in text, 'Original checkout/architecture absent')
++    need('\n' + SOURCE + '\n' in text and '\nx86_64\n' in text, 'Original checkout/architecture absent')
+     need('##[error]' not in text and 'Process completed with exit code' not in text, 'Original process failure')
++    need('-- The CXX compiler identification is AppleClang 17.0.0.17000013' in text, 'Original native compiler differs')
+     expected = [(n, b) for n, b in old.source_commands(workflow) if n in old.REQUIRED]
+     command_groups = [g for g in groups if g['command']]
+     need(len(expected) == len(command_groups) == 13 and len(groups) == 17, 'Unexpected/missing command or action group')
+@@ -197,7 +198,7 @@
+     rows = re.findall(r'^\s*(\d+)/283 Test\s+#(\d+): (\w+) \.+\s*(Passed|\*\*\*Skipped)\s+[0-9.]+ sec$', runtime, re.M)
+     need(len(rows) == 283 and [int(x[0]) for x in rows] == list(range(1, 284)) and [int(x[1]) for x in rows] == list(range(1, 284)), 'Original complete serial roster absent')
+     need([(r[2], 'passed' if r[3] == 'Passed' else 'formal_skipped') for r in rows] == [(c['name'], c['result']) for c in native['testcases']], 'Original results differ from JUnit/LastTest')
+-    need('100% tests passed out of 283' in runtime and 'Total Test time (real) = 1670.38 sec' in runtime, 'Native terminal incomplete')
++    need('100% tests passed out of 283' in runtime and 'Total Test time (real) = 2584.11 sec' in runtime, 'Native terminal incomplete')
+     with zipfile.ZipFile(io.BytesIO(archives['native'])) as z:
+         last_raw, juce_raw = z.read('Testing/Temporary/LastTest.log'), z.read('ci-juce-provenance.txt')
+     cases = parser.lasttest_cases(parser.decode(last_raw))
+@@ -219,12 +220,16 @@
+     need(results['cs80_ui_smoke']['result'] == 'passed' and cases['cs80_ui_smoke']['lasttest_status'] == 'Passed' and 'FAIL:' not in ui, 'UI smoke failed')
+     need('UI SMOKE PHASE: instrument body host identity and recall' in ui and 'UI SMOKE TIMING: phase=instrument body host identity and recall' in ui, 'UI body phase incomplete')
+     ui_fixtures = re.findall(r'^source screenshot fixture: (.+), finite=(\d), actual host sample peak=([\d.]+), meter=(.+)$', ui, re.M)
+-    need(ui_fixtures == [('STRING 3 complete / STRING 2 inferred', '1', '0.0834435672', 'SAMPLE PEAK -21.6 dBFS READ-ONLY'), ('PANEL headroom', '1', '0.980465114', 'SAMPLE PEAK -0.2 dBFS READ-ONLY')], 'Actual source screenshot meter witnesses differ')
++    need(ui_fixtures == [('STRING 3 complete / STRING 2 inferred', '1', '0.0834435672', 'SAMPLE PEAK -21.6 dBFS READ-ONLY'), ('PANEL headroom', '1', '0.980465114', 'SAMPLE PEAK -2.5 dBFS READ-ONLY')], 'Actual source screenshot meter witnesses differ')
+     for name in ['cs80_output_meter_tests', 'cs80_output_meter_display_tests', 'cs80_output_meter_audit_tests']:
+         need(results[name]['result'] == 'passed', 'Meter test failed')
+     excerpts['cs80_ui_smoke'] = dict(seconds=results['cs80_ui_smoke']['seconds'], output_sha256=sha(ui.encode()), fixtures=ui_fixtures, selected_lines=[s for s in ui.splitlines() if 'source screenshot fixture:' in s or 'phase=source performance captures ' in s or 'phase=instrument body host identity and recall ' in s], limitation='This original native normal-timer pass does not explain earlier Intel failure or establish broad DAW compatibility.')
+     need(b'damper' in source('tests/InstrumentDamperTests.cpp').lower(), 'Final damper source absent')
+-    source('src/tools/ui_snapshot.cpp')
++    ui_source = source('src/tools/ui_snapshot.cpp')
++    need(ui.count('UI SMOKE TEST PASSED') == 1 and 'UI SMOKE TEST:' not in ui, 'Original UI success terminal absent or failure terminal present')
++    need(b'source screenshot meter reflects real rendered audio through its normal GUI timer' in ui_source, 'Original meter assertion changed')
++    damper_source = source('tests/InstrumentDamperTests.cpp')
++    need(b'void damperBoundaryRetimingAndReuse()' in damper_source and b'    damperBoundaryRetimingAndReuse();' in damper_source, 'Final portable damper regression missing or uninvoked')
+     skip_review = review_skips(native, cases, source, last_raw)
+ 
+     validator = observations['validators'][0]
+@@ -266,7 +271,7 @@
+     install, payload, docs = load('install-acceptance.json'), load('archive-payload-binding.json'), load('docs-and-notices.json')
+     need(install['status'] == 'artifact_bytes_verified' and (install['source'], install['source_tree'], install['preset_library_revision'], install['run_id'], install['run_attempt'], install['target']) == (SOURCE, TREE, REVISION, RUN, ATTEMPT, TARGET), 'Install context differs')
+     need(install['inventory_entries'] == 39 and set(install['formats']) == {'VST3', 'AU', 'Standalone'}, 'Install products/inventory differ')
+-    need(payload['status'] == 'archive_consistency_and_au_executable_binding_verified' and payload['expected'] == dict(architecture='arm64', attempt=ATTEMPT, repository=REPOSITORY, revision=REVISION, run=RUN, source=SOURCE), 'Payload context differs')
++    need(payload['status'] == 'archive_consistency_and_au_executable_binding_verified' and payload['expected'] == dict(architecture='x86_64', attempt=ATTEMPT, repository=REPOSITORY, revision=REVISION, run=RUN, source=SOURCE), 'Payload context differs')
+     need(docs['status'] == 'source_specific_docs_and_notices_verified' and (docs['source'], docs['revision'], docs['target'], docs['artifact_id']) == (SOURCE, REVISION, TARGET, ARTIFACTS['install'][0]), 'Document context differs')
+     need(docs['outer_bytes'] == len(archives['install']) and docs['outer_sha256'] == sha(archives['install']) and docs['inventory_counts'] == {'directory': 13, 'file': 26} and docs['symlink_count'] == 0, 'Document archive binding differs')
+     need(len(docs['required_metadata']) == 13 and len(docs['source_comparisons']) == 10 and all(r['result'] == 'PASS' for r in docs['source_comparisons']), 'Document/notice inspection incomplete')
+@@ -285,17 +290,17 @@
+                 raw = stream.read()
+             need(sha(raw) == bundle['executable_sha256'], 'Executable identity differs')
+             old_header = next(h for h in install['binary_headers'] if h['path'] == bundle['executable'])
+-            need(old_header['sha256'] == sha(raw) and old_header['header_check'] == 'PASS' and old_header['architecture'] == 'arm64' and old_header['mode'] == '0o755', 'Binary inspections disagree')
++            need(old_header['sha256'] == sha(raw) and old_header['header_check'] == 'PASS' and old_header['architecture'] == 'x86_64' and old_header['mode'] == '0o755', 'Binary inspections disagree')
+             need(raw[:4] == b'\xcf\xfa\xed\xfe' and len(raw) >= 32, 'Not thin 64-bit Mach-O')
+             cpu, subtype, role = struct.unpack_from('<III', raw, 4)
+-            need(cpu == 0x0100000c and role == (2 if format_name == 'Standalone' else 8), 'Actual native CPU/role differs')
+-            headers.append(dict(format=format_name, path=bundle['executable'], bytes=len(raw), sha256=sha(raw), cpu_type=hex(cpu), cpu_subtype=hex(subtype), mach_o_filetype=role, mode='0o755', thin_native_arm64=True))
++            need(cpu == 0x01000007 and role == (2 if format_name == 'Standalone' else 8), 'Actual native CPU/role differs')
++            headers.append(dict(format=format_name, path=bundle['executable'], bytes=len(raw), sha256=sha(raw), cpu_type=hex(cpu), cpu_subtype=hex(subtype), mach_o_filetype=role, mode='0o755', thin_native_x86_64=True))
+     need(len(headers) == len(install['binary_headers']) == 3, 'Missing product binary')
+     au_digest = payload['packaged_bundles']['AU']['executable_sha256']
+     need(len(payload['au_before']) == len(payload['au_after']) == 2 and all(r['sha256'] == au_digest for r in payload['au_before'] + payload['au_after']), 'Packaged AU differs from four original hashes')
+     need(au_files['before'].decode().split()[0] == au_digest, 'Original AU/package binding differs')
+     package_output = '\n'.join(r['text'] for r in package['runtime'])
+-    need('Packaging self-test passed: 46 fixture/rejection checks; synthetic artifacts only.' in package_output and '"sha256": "' + sha(inner_raw) + '"' in package_output and '"archive": "packages/' + install['inner_archive']['file'] + '"' in package_output and '"architecture": "arm64"' in package_output, 'Original package identity/self-test differs')
++    need('Packaging self-test passed: 46 fixture/rejection checks; synthetic artifacts only.' in package_output and '"sha256": "' + sha(inner_raw) + '"' in package_output and '"archive": "packages/' + install['inner_archive']['file'] + '"' in package_output and '"architecture": "x86_64"' in package_output, 'Original package identity/self-test differs')
+     for path, expected in payload['source_contract_files'].items():
+         raw = source(path)
+         need((len(raw), sha(raw)) == (expected['bytes'], expected['sha256']), 'Payload source contract drift')
+@@ -307,9 +312,9 @@
+         source(path)
+ 
+     verified_at = datetime.now(timezone.utc).isoformat()
+-    proof = dict(schema=1, status='original_platform_execution_bound', recovery_source='Fresh actual final-source artifacts and authenticated original Actions records; no old local result reused.', source_commit=SOURCE, source_tree=TREE, factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET, verified_at_utc=verified_at, original_job=job, run_snapshot_status=runs[0]['status'], run_snapshot_conclusion=runs[0]['conclusion'], original_job_log=record(log_raw, original / 'macos-arm64-job.log'), original_job_log_git_blob='09d5d5480d124f0d5cc22873a9fe3aebc5e13b09', original_run_attempt_bound=True, artifact_producing_attempts_bound=True, uploads=uploads, original_commands=command_proof, original_ctest_normal_exit=0, ctest_exit_basis='Original successful unsuppressed serial Test; all 283 ordered console results match bound JUnit/LastTest; normal terminal completion.', native_counts=COUNTS, ctest_seconds=1670.38, native_excerpts=excerpts, native_capability_skip_review=skip_review, juce=juce, validator_invocations=5, validator_retries=0, original_validator_exit_basis='Each successful original API step executes exact source set -euo pipefail/in-process/tee/terminal-SUCCESS-grep command; the complete original output equals the archived console and report body.', validator_outcomes=outcomes, pluginval_download=download, pluginval_transport_attempts=len(download['attempts']), pluginval_transport_scope='Two downloader transport attempts are distinct from five validator invocations and zero validation retries.', whole_au_comparisons_passed=True, au_signing_before_copy_and_registration_verified=True, all_four_au_hashes_match_packaged_executable=True, au_packaged_executable_sha256=au_digest, au_hash_member=record(au_files['before'], 'au-payload-before/after-validation.sha256'), au_binding_limit='Complete original diff -qr checks ordinary-file content and membership. It does not prove ACL/xattr/ownership/signature validity; packaged modes are checked separately.', vst3_validated_bundle_identity_established=True, vst3_binding_basis='Exact original validated build-tree VST3 path is the source-pinned packaging input. All intervening original commands are accounted for; no VST3 rebuild/mutation/retry. No independent VST3 before/after tree hash is claimed.', actual_native_binary_headers=headers, docs_notice_metadata_count=13, docs_exact_source_comparisons=10, source_contract_files=source_records, input_files=input_records, platform_qualified=False, cross_platform_qualified=False, release_qualified=False)
++    proof = dict(schema=1, status='original_platform_execution_bound', recovery_source='Fresh actual final-source artifacts and authenticated original Actions records; no old local result reused.', source_commit=SOURCE, source_tree=TREE, factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET, verified_at_utc=verified_at, original_job=job, run_snapshot_status=runs[0]['status'], run_snapshot_conclusion=runs[0]['conclusion'], original_job_log=record(log_raw, original / 'macos-x86_64-job.log'), original_job_log_git_blob='e0400e4f53657fe61efa90cc6fde29703388167b', original_run_attempt_bound=True, artifact_producing_attempts_bound=True, uploads=uploads, original_commands=command_proof, original_ctest_normal_exit=0, ctest_exit_basis='Original successful unsuppressed serial Test; all 283 ordered console results match bound JUnit/LastTest; normal terminal completion.', native_counts=COUNTS, ctest_seconds=2584.11, native_excerpts=excerpts, native_capability_skip_review=skip_review, juce=juce, validator_invocations=5, validator_retries=0, original_validator_exit_basis='Each successful original API step executes exact source set -euo pipefail/in-process/tee/terminal-SUCCESS-grep command; the complete original output equals the archived console and report body.', validator_outcomes=outcomes, pluginval_download=download, pluginval_transport_attempts=len(download['attempts']), pluginval_transport_scope='One downloader transport attempt is distinct from five validator invocations and zero validation retries.', whole_au_comparisons_passed=True, au_signing_before_copy_and_registration_verified=True, all_four_au_hashes_match_packaged_executable=True, au_packaged_executable_sha256=au_digest, au_hash_member=record(au_files['before'], 'au-payload-before/after-validation.sha256'), au_binding_limit='Complete original diff -qr checks ordinary-file content and membership. It does not prove ACL/xattr/ownership/signature validity; packaged modes are checked separately.', vst3_validated_bundle_identity_established=True, vst3_binding_basis='Exact original validated build-tree VST3 path is the source-pinned packaging input. All intervening original commands are accounted for; no VST3 rebuild/mutation/retry. No independent VST3 before/after tree hash is claimed.', actual_native_binary_headers=headers, docs_notice_metadata_count=13, docs_exact_source_comparisons=10, source_contract_files=source_records, input_files=input_records, platform_qualified=False, cross_platform_qualified=False, release_qualified=False)
+     proof_raw = (json.dumps(proof, indent=2) + '\n').encode()
+-    receipt = dict(schema=1, status='platform_qualified', platform_qualified=True, source_commit=SOURCE, source_tree=TREE, factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET, verified_at_utc=verified_at, recovery_source=proof['recovery_source'], original_run_attempt_bound=True, artifact_producing_attempts_bound=True, native_results_accepted=True, native_counts=COUNTS, exact_283_native_names_verified=True, all_six_new_tests_passed=True, damper_checks=231, damper_failures=0, nested_python_skips=5, formal_skips=skip_review['formal_skips'], skip_review_completed=True, ctest_seconds=1670.38, validator_lanes_accepted=5, original_validator_normal_zero_exits=5, validator_retries=0, whole_au_bundle_binding_established=True, vst3_validated_bundle_identity_established=True, packaged_au_sha256=au_digest, install_artifact_id=ARTIFACTS['install'][0], artifacts=uploads, original_execution_binding=record(proof_raw, 'original-execution-binding.json'), actual_native_binary_headers=headers, docs_and_notices=record(raw_file(base / 'docs-and-notices.json'), 'docs-and-notices.json'), verifier=record(raw_file(Path(__file__)), Path(__file__).name), cross_platform_qualified=False, release_qualified=False, public_delivery_verified=False, limitations=['Other platforms, audition acceptance and all-five-route public GET verification are separate root gates.', 'Four AU current-program -1 warnings remain retained; separate optional Steinberg validator is unconfigured.', 'The render bounded-buffer skip has no exact runtime reason in nonverbose original output; source/method mapping and that absence are retained.', 'No product was executed here. Native header checks do not establish a separate Standalone launch, publisher signing/notarization, listening quality, hardware equivalence or a broad DAW matrix.', 'Previous failed/superseded source histories remain unchanged.'])
++    receipt = dict(schema=1, status='platform_qualified', platform_qualified=True, source_commit=SOURCE, source_tree=TREE, factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET, verified_at_utc=verified_at, recovery_source=proof['recovery_source'], original_run_attempt_bound=True, artifact_producing_attempts_bound=True, native_results_accepted=True, native_counts=COUNTS, exact_283_native_names_verified=True, all_six_new_tests_passed=True, damper_checks=231, damper_failures=0, nested_python_skips=5, formal_skips=skip_review['formal_skips'], skip_review_completed=True, ctest_seconds=2584.11, validator_lanes_accepted=5, original_validator_normal_zero_exits=5, validator_retries=0, whole_au_bundle_binding_established=True, vst3_validated_bundle_identity_established=True, packaged_au_sha256=au_digest, install_artifact_id=ARTIFACTS['install'][0], artifacts=uploads, original_execution_binding=record(proof_raw, 'original-execution-binding.json'), actual_native_binary_headers=headers, docs_and_notices=record(raw_file(base / 'docs-and-notices.json'), 'docs-and-notices.json'), verifier=record(raw_file(Path(__file__)), Path(__file__).name), cross_platform_qualified=False, release_qualified=False, public_delivery_verified=False, limitations=['Other platforms, audition acceptance and all-five-route public GET verification are separate root gates.', 'Four AU current-program -1 warnings remain retained; separate optional Steinberg validator is unconfigured.', 'The render bounded-buffer skip has no exact runtime reason in nonverbose original output; source/method mapping and that absence are retained.', 'No product was executed here. Native header checks do not establish a separate Standalone launch, publisher signing/notarization, listening quality, hardware equivalence or a broad DAW matrix.', 'Previous failed/superseded source histories remain unchanged.'])
+     args.out_dir.mkdir(parents=True)
+     for name, value in [('original-execution-binding.json', proof), ('platform-qualification.json', receipt), ('skip-review.json', skip_review), ('native-reviewed-excerpts.json', excerpts)]:
+         with (args.out_dir / name).open('x') as stream:
+@@ -342,7 +347,7 @@
+     notice = source('scripts/test-packaging-notices.py')
+     need('test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped \'Native Linux amd64, Debian packaging tools and cc required\'' in cases['cs80_packaging_notice_tests']['output'], 'Explicit DEB skip differs')
+     need(b'Native Linux amd64, Debian packaging tools and cc required' in notice, 'DEB source guard differs')
+-    return dict(status='actual_skips_reviewed', reviewed=True, source=SOURCE, run_id=RUN, attempt=ATTEMPT, job_id=JOB, target=TARGET, formal_skips=expected, nested_python_skips=native['nested_python_skips'], individual_review=[dict(test='cs80_filter_batch_cap_tests', kind='formal', count=1, basis='Actual AVX2 unavailable/disabled message; final source excludes arm64 AppleClang from the GNU x86_64 backend. No SIMD qualification.'), dict(test='cs80_stereo_pra_exact_tests', kind='formal', count=1, basis='Actual JUnit return-77 skip with empty stdout. Final source only runs the Linux x86_64 GNU14.2 ISA/FP specialization. No specialization qualification.'), dict(test='cs80_package_binary_identity_tests', kind='nested', count=1, basis='Actual ...s......... maps to the native Windows junction fixture, guarded by os.name == nt.'), dict(test='cs80_packaging_notice_tests', kind='nested', count=1, basis='Actual explicit skip for the native Linux amd64 Debian tools fixture.'), dict(test='cs80_windows_installer_preflight_tests', kind='nested', count=2, basis='Actual ...ss....... maps to the native Windows directory-junction and ISCC fixtures; both excluded on macOS.'), dict(test='cs80_render_cli_tests', kind='nested', count=1, basis='Actual ..s.... maps to bounded-buffer resource-limit coverage. The frozen source admits unavailable RLIMIT_AS or an incompatible ASan cap; exact dynamic runtime reason is absent. The uncapped long-render write-failure case passed.', exact_runtime_skip_reason_retained=False)], nonverbose_method_mapping=mapping, actual_lasttest=record(last_raw, 'Testing/Temporary/LastTest.log'), counting='Five nested Python skips remain separate from two formal CTest skips and 283 registered CTest executions.', platform_qualified=False, release_qualified=False)
++    return dict(status='actual_skips_reviewed', reviewed=True, source=SOURCE, run_id=RUN, attempt=ATTEMPT, job_id=JOB, target=TARGET, formal_skips=expected, nested_python_skips=native['nested_python_skips'], individual_review=[dict(test='cs80_filter_batch_cap_tests', kind='formal', count=1, basis='Actual AVX2 unavailable/disabled message; final source excludes native x86_64 AppleClang from the GNU-only backend; the original configure log identifies AppleClang. No CPU AVX2 availability claim is inferred. No SIMD qualification.'), dict(test='cs80_stereo_pra_exact_tests', kind='formal', count=1, basis='Actual JUnit return-77 skip with empty stdout. Final source only runs the Linux x86_64 GNU14.2 ISA/FP specialization. No specialization qualification.'), dict(test='cs80_package_binary_identity_tests', kind='nested', count=1, basis='Actual ...s......... maps to the native Windows junction fixture, guarded by os.name == nt.'), dict(test='cs80_packaging_notice_tests', kind='nested', count=1, basis='Actual explicit skip for the native Linux amd64 Debian tools fixture.'), dict(test='cs80_windows_installer_preflight_tests', kind='nested', count=2, basis='Actual ...ss....... maps to the native Windows directory-junction and ISCC fixtures; both excluded on macOS.'), dict(test='cs80_render_cli_tests', kind='nested', count=1, basis='Actual ..s.... maps to bounded-buffer resource-limit coverage. The frozen source admits unavailable RLIMIT_AS or an incompatible ASan cap; exact dynamic runtime reason is absent. The uncapped long-render write-failure case passed.', exact_runtime_skip_reason_retained=False)], nonverbose_method_mapping=mapping, actual_lasttest=record(last_raw, 'Testing/Temporary/LastTest.log'), counting='Five nested Python skips remain separate from two formal CTest skips and 283 registered CTest executions.', platform_qualified=False, release_qualified=False)
+ 
+ 
+ if __name__ == '__main__':

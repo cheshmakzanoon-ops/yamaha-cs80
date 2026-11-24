@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "status": "test_fixture_stack_risk_demonstrated_original_windows_root_cause_not_conclusively_observed",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "producer_job_id": 138605635333,
+  "original_report_blob": "612f1bc247c58c6adfa7dd212a52bb79bd3c897b",
+  "original_failure": {
+    "ctest": "cs80_sixteen_voice_release_tests",
+    "label": "SEGFAULT",
+    "seconds": 1.60477,
+    "lasttest_output_empty": true,
+    "numeric_ntstatus_observed": false,
+    "raw_test_exit_observed": false,
+    "counts": {
+      "registered": 261,
+      "passed": 258,
+      "failed": 1,
+      "formal_skipped": 2
+    },
+    "test_step_runner_exit": 1
+  },
+  "layout_local_gcc14_2": {
+    "Engine": 552392,
+    "InstrumentBody": 7984,
+    "ParamValues": 816,
+    "ReleaseOrderClock": 16
+  },
+  "existing_windows_stack_bytes_source_declared": 8388608,
+  "native_PE_or_dump_available": false,
+  "stack_measurements": {
+    "heap-no-reuse-SixteenVoiceReleaseTests.su": [
+      {
+        "function": "testInvalidBindingResetAndExhaustion()",
+        "frame_bytes": 3320960
+      },
+      {
+        "function": "testWaitersAndPromotion()",
+        "frame_bytes": 8288
+      },
+      {
+        "function": "testDeferredAndArpFallback()",
+        "frame_bytes": 7280
+      },
+      {
+        "function": "testKeyboardOwnership()",
+        "frame_bytes": 5088
+      },
+      {
+        "function": "testChannelsPedalAndGroups()",
+        "frame_bytes": 4704
+      },
+      {
+        "function": "testStandaloneSourceIsInert()",
+        "frame_bytes": 3632
+      },
+      {
+        "function": "testCounterSkewAndReuse()",
+        "frame_bytes": 2864
+      },
+      {
+        "function": "testAdmissionDoesNotInventOrder()",
+        "frame_bytes": 2144
+      }
+    ],
+    "heap-test-SixteenVoiceReleaseTests.su": [
+      {
+        "function": "testInvalidBindingResetAndExhaustion()",
+        "frame_bytes": 2764784
+      },
+      {
+        "function": "testDeferredAndArpFallback()",
+        "frame_bytes": 5536
+      },
+      {
+        "function": "testWaitersAndPromotion()",
+        "frame_bytes": 5456
+      },
+      {
+        "function": "testChannelsPedalAndGroups()",
+        "frame_bytes": 4016
+      },
+      {
+        "function": "testKeyboardOwnership()",
+        "frame_bytes": 3696
+      },
+      {
+        "function": "testStandaloneSourceIsInert()",
+        "frame_bytes": 3184
+      },
+      {
+        "function": "testCounterSkewAndReuse()",
+        "frame_bytes": 2048
+      },
+      {
+        "function": "testAdmissionDoesNotInventOrder()",
+        "frame_bytes": 1968
+      }
+    ],
+    "original-no-reuse.su": [
+      {
+        "function": "testWaitersAndPromotion()",
+        "frame_bytes": 8846384
+      },
+      {
+        "function": "testInvalidBindingResetAndExhaustion()",
+        "frame_bytes": 7739952
+      },
+      {
+        "function": "testDeferredAndArpFallback()",
+        "frame_bytes": 6635824
+      },
+      {
+        "function": "testKeyboardOwnership()",
+        "frame_bytes": 4424288
+      },
+      {
+        "function": "testChannelsPedalAndGroups()",
+        "frame_bytes": 4423696
+      },
+      {
+        "function": "testStandaloneSourceIsInert()",
+        "frame_bytes": 2213152
+      },
+      {
+        "function": "testCounterSkewAndReuse()",
+        "frame_bytes": 2212448
+      },
+      {
+        "function": "testAdmissionDoesNotInventOrder()",
+        "frame_bytes": 2211696
+      }
+    ],
+    "original-test.su": [
+      {
+        "function": "testDeferredAndArpFallback()",
+        "frame_bytes": 6634096
+      },
+      {
+        "function": "testWaitersAndPromotion()",
+        "frame_bytes": 6634064
+      },
+      {
+        "function": "testInvalidBindingResetAndExhaustion()",
+        "frame_bytes": 4974304
+      },
+      {
+        "function": "testChannelsPedalAndGroups()",
+        "frame_bytes": 4423072
+      },
+      {
+        "function": "testKeyboardOwnership()",
+        "frame_bytes": 4422768
+      },
+      {
+        "function": "testStandaloneSourceIsInert()",
+        "frame_bytes": 2212704
+      },
+      {
+        "function": "testCounterSkewAndReuse()",
+        "frame_bytes": 2211584
+      },
+      {
+        "function": "testAdmissionDoesNotInventOrder()",
+        "frame_bytes": 2211504
+      }
+    ]
+  },
+  "behavior_runs": [
+    {
+      "executable": "original-test",
+      "stack_soft_and_hard_bytes": 8388608,
+      "returncode": 0,
+      "seconds": 4.285814,
+      "stdout": "Immediate sixteen-voice release: 1418 checks, 0 failures\n",
+      "stderr": "",
+      "native_windows_evidence": false
+    },
+    {
+      "executable": "heap-test",
+      "stack_soft_and_hard_bytes": 8388608,
+      "returncode": 0,
+      "seconds": 3.735715,
+      "stdout": "Immediate sixteen-voice release: 1418 checks, 0 failures\n",
+      "stderr": "",
+      "native_windows_evidence": false
+    },
+    {
+      "executable": "original-test",
+      "stack_soft_and_hard_bytes": 4194304,
+      "returncode": -11,
+      "seconds": 0.304052,
+      "stdout": "",
+      "stderr": "",
+      "native_windows_evidence": false
+    },
+    {
+      "executable": "heap-test",
+      "stack_soft_and_hard_bytes": 4194304,
+      "returncode": 0,
+      "seconds": 3.663902,
+      "stdout": "Immediate sixteen-voice release: 1418 checks, 0 failures\n",
+      "stderr": "",
+      "native_windows_evidence": false
+    }
+  ],
+  "compiler_allocation_control_runs": [
+    {
+      "executable": "original-no-reuse",
+      "compiler_condition": "GCC -O3 -DNDEBUG -fstack-reuse=none; intentionally varied local compiler allocation, not an MSVC reconstruction",
+      "stack_soft_and_hard_bytes": 8388608,
+      "returncode": -11,
+      "seconds": 1.499915,
+      "stdout": "",
+      "stderr": "",
+      "native_windows_evidence": false
+    },
+    {
+      "executable": "heap-no-reuse",
+      "compiler_condition": "GCC -O3 -DNDEBUG -fstack-reuse=none; intentionally varied local compiler allocation, not an MSVC reconstruction",
+      "stack_soft_and_hard_bytes": 8388608,
+      "returncode": 0,
+      "seconds": 3.929269,
+      "stdout": "Immediate sixteen-voice release: 1418 checks, 0 failures\n",
+      "stderr": "",
+      "native_windows_evidence": false
+    }
+  ],
+  "proposed_patch": {
+    "path": "tests/SixteenVoiceReleaseTests.cpp",
+    "blob": "597882f83cd0adbf2ef7e3412b84c1cdc08a8752",
+    "changes": "Include memory; two unique_ptr-owned Engine fixtures with unchanged first/second reference aliases; ReleaseOrderClock declared first, constructors/destructors retain ordering.",
+    "assertions_changed": false,
+    "event_or_render_sequence_changed": false,
+    "production_or_preset_source_changed": false,
+    "timeout_changed": false,
+    "stack_budget_changed": false,
+    "exception_suppression_added": false
+  },
+  "conclusion": "Adopt only the small test-fixture ownership correction. It removes a measured compiler-dependent >8 MiB frame possibility without reducing behavioral coverage. The actual Windows crash is consistent with this risk but not established as stack overflow because native PE/frame/NTSTATUS/backtrace were not uploaded. A fresh source-bound full native run and both validator lanes are still mandatory.",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "remote_rerun_requested": false,
+  "immutable_evidence_blobs": {
+    "original-failure-uploaded.json": "612f1bc247c58c6adfa7dd212a52bb79bd3c897b",
+    "windows-native.zip": "567239c362b92db26e0bc56c18b6590097b5d202",
+    "original-job.log": "23a0ef177408a0d4421c218af84f640d69420d5b",
+    "heap-pair-fixture.patch": "597882f83cd0adbf2ef7e3412b84c1cdc08a8752"
+  }
+}

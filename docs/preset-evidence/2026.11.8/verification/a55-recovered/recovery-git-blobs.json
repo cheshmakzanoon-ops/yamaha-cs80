@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "kind": "a55_recovered_sound_claim_corrections",
+  "agent": "/root/a55_final_sound_claim_review",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "reviewed_sound_source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "reviewed_sound_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "base_document_git_blob": "17add2779daba7181f1f3c593003ecd956de103e",
+  "original_local_dot8_evidence_claimed": false,
+  "recovery_report_is_newly_authored": true,
+  "new_audio_or_native_execution": false,
+  "release_qualified": false,
+  "refs_changed": false,
+  "validation": "git apply --check --cached passed against immutable ef1 document; repository remains clean",
+  "files": [
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_8.md",
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a55-recovered/CIRCUIT_LIBRARY_2026_11_8.md",
+      "bytes": 17157,
+      "sha256": "bb8bb1d2aaeeec9ca598890a00505bbc08a234d53d5f3122c989ec79372f42f4",
+      "expected_git_blob_sha1": "7e413ffdf86a1afc97f2008029c2015a9311cdde",
+      "git_blob_sha1": "7e413ffdf86a1afc97f2008029c2015a9311cdde"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a55-recovered/sound-claim-recovery.patch",
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a55-recovered/sound-claim-recovery.patch",
+      "bytes": 14789,
+      "sha256": "7070f3950b960c72e29b7d5792502c59d5765ca22abdadd223c302be789f0392",
+      "expected_git_blob_sha1": "94b427dd31b7ffb822f10121ad58f9b2044cc874",
+      "git_blob_sha1": "94b427dd31b7ffb822f10121ad58f9b2044cc874"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/reviews/a55.md",
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a55-recovered/a55.md",
+      "bytes": 3833,
+      "sha256": "c3901e64344214b345ca90c63a4125087ec4b7c649de9d6236d1ffe0bf42e0e8",
+      "expected_git_blob_sha1": "ef0b13bf8d116ac18012559ef6a8e3946b8c8d3b",
+      "git_blob_sha1": "ef0b13bf8d116ac18012559ef6a8e3946b8c8d3b"
+    }
+  ],
+  "blob_retrieval_template": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/git/blobs/{git_blob_sha1}"
+}

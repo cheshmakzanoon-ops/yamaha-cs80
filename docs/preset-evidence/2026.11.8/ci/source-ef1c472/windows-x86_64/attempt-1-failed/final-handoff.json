@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "status": "original_failure_preserved_root_accepted_fixture_only_correction_native_requalification_required",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "producer_job_id": 138605635333,
+  "full_native_source_roster_match": true,
+  "registered": 261,
+  "counts": {
+    "registered": 261,
+    "passed": 258,
+    "failed": 1,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "files": [
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/original-failure-uploaded.json",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/original-failure.json",
+      "git_blob": "612f1bc247c58c6adfa7dd212a52bb79bd3c897b",
+      "bytes": 4563,
+      "sha256": "166bf7fc8eb5df31b8f54319b4bd7aa628bd51b523e528528b45f48b06b514dc"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/windows-native.zip",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/windows-native.zip",
+      "git_blob": "567239c362b92db26e0bc56c18b6590097b5d202",
+      "bytes": 87218,
+      "sha256": "6b7944de9feb18b054d96f7a33af49e7acedd51a21e9b7e4fb744342b283ff0f"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/original-job.log",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/original-job.log",
+      "git_blob": "23a0ef177408a0d4421c218af84f640d69420d5b",
+      "bytes": 150709,
+      "sha256": "7e5a02b5479a48c27ed1ce1275dec81b67b2a2446e60dc7f2e95d9d64457790b"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/heap-pair-fixture.patch",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/heap-pair-fixture.patch",
+      "git_blob": "597882f83cd0adbf2ef7e3412b84c1cdc08a8752",
+      "bytes": 1045,
+      "sha256": "9f23a640e950c57b702f4e5ec05eeb2ba70a98ce85656a1105d2319c52dbf246"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/SixteenVoiceReleaseTests.cpp",
+      "suggested_repository_path": "tests/SixteenVoiceReleaseTests.cpp",
+      "git_blob": "779c3a87d785d797e9b9a8fd3031bb227dfee704",
+      "bytes": 33902,
+      "sha256": "12c90c51a0460355ec5676e0e06559c3027702c7c00c286a0238045935b3bd40"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/diagnosis.json",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/diagnosis.json",
+      "git_blob": "4e348bbe28c8ce5d2ce188cfdbd3fdb8e876c54d",
+      "bytes": 7665,
+      "sha256": "e3e8265fb72628bb983eb5a110ac2198024588cb5bac30f4fe8838a8f319b6b4"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47-failure/proof-packet.json",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/proof-packet.json",
+      "git_blob": "220d327641ec7c57eeefe9026410328bda1a60bb",
+      "bytes": 147899,
+      "sha256": "0e46dc96c307c61f1fb018045c090523f131e405b36c1602de18b1c684847433"
+    },
+    {
+      "local_path": "/tmp/cs80-614c8ce056b7-notes/a47.md",
+      "suggested_repository_path": "docs/preset-evidence/2026.11.8/ci/source-ef1c472/windows-x86_64/attempt-1-failed/a47-report.md",
+      "git_blob": "c949d73fdd858f7efc0cd36806fb432ee4b1dc1b",
+      "bytes": 2560,
+      "sha256": "b5a440858546628f147b162eef8839926f7c6b9f7d00510dac029ab206f8fe11"
+    }
+  ],
+  "all_eight_remote_git_blob_ids_recomputed_locally": true,
+  "root_acceptance": "Root accepted the minimal Pair fixture ownership correction after paired compiler-allocation controls; main publication and fresh source CI remain root work.",
+  "main_modified_by_a47": false,
+  "rerun_requested_by_a47": false,
+  "windows_qualified": false,
+  "release_qualified": false
+}

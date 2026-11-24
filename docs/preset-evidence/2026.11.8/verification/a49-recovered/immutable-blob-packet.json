@@ -1,0 +1,357 @@
+{
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "job_id": 138605635495,
+  "target": "macos-x86_64",
+  "status": "ef1c472_predecessor_platform_qualified",
+  "platform_qualified": true,
+  "successor_source_qualified": false,
+  "release_qualified": false,
+  "refs_changed": false,
+  "files": [
+    {
+      "relative_path": "README.md",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/README.md",
+      "bytes": 12376,
+      "sha256": "692553e1f330f26e78303d579ca5c01b5bb8930b577a6af3d00c2f56225266a4",
+      "git_blob": "c56f1fd14ae1ca7d43e4084a9ecdf0a4783a0495",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "a46-dependencies.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/a46-dependencies.json",
+      "bytes": 1795,
+      "sha256": "ad132a7d8a4f160ae628b449659c0408f89edef594209a70b45735d3de9e7fdc",
+      "git_blob": "4493e14624c745f02db17afb6dbbd6e5dd57459a",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "archive-payload-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/archive-payload-binding.json",
+      "bytes": 17446,
+      "sha256": "8a84a27955d19f740c2cd3df24933270f2e90ea1488ff2d4ae7abc9295bca01a",
+      "git_blob": "0e6ef1a83a596ef1d89225eb8cd6c8aed1b43815",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "artifacts-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/artifacts-api.json",
+      "bytes": 5054,
+      "sha256": "8ac3818a365c655f8e4a9c114fd9a2fa570efaa14cc3ee1c351f279e0be70eef",
+      "git_blob": "0467b93725cda367e7885609b933f9d14caafa4c",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "attempt-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/attempt-api.json",
+      "bytes": 13496,
+      "sha256": "7fac02b73c24c2912c362a3d73aef5c25a3254f425573a857f83f2fa014a8824",
+      "git_blob": "199db46756290e991772c6fadb5d257d8c967bf6",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "content-command-receipts.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/content-command-receipts.json",
+      "bytes": 9951,
+      "sha256": "5ebe28ea51eb2eb45658d6c40f3ec753995a9dfd2f450e432419c8e0ef98472b",
+      "git_blob": "6619767e009a2e5c1bb6a6135b01acff3e4159cf",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "docs-and-notices.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/docs-and-notices.json",
+      "bytes": 35331,
+      "sha256": "18a65c704f758cdfbf8986de72beec44a638b9bff9fa624c82bf1e4f7f035a9e",
+      "git_blob": "9e66230f5175258b0af1362c2d9bf05140a9203a",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "helper-source-records.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/helper-source-records.json",
+      "bytes": 1146,
+      "sha256": "b9ea116a178dc117bba28480f28dbfb0c07aa827afad6bb5d7b8178ca4be79cf",
+      "git_blob": "973dcd0825e93ef93b787b4fc605a4dcbeef55dc",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "helpers/generic/verify-macos-binding.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/helpers/generic/verify-macos-binding.py",
+      "bytes": 24265,
+      "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9",
+      "git_blob": "19dd646499df46f0f872cabf75c53b28cb1e5832",
+      "preserved": true,
+      "creation": "existing immutable blob"
+    },
+    {
+      "relative_path": "helpers/historical-macos-qualification.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/helpers/historical-macos-qualification.py",
+      "bytes": 43186,
+      "sha256": "0b881f00d480ef32d31f6866eb03a3aa31a5ae809de05bafa9ad0d816f3b4fb1",
+      "git_blob": "28cf682b5ef91d94688aa797d9642cd13301592e",
+      "preserved": true,
+      "creation": "existing immutable blob"
+    },
+    {
+      "relative_path": "helpers/inspect-packaged-docs.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/helpers/inspect-packaged-docs.py",
+      "bytes": 9655,
+      "sha256": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d",
+      "git_blob": "8da728115cbeaf47d47e026a313d636db13f0e9d",
+      "preserved": true,
+      "creation": "existing immutable blob"
+    },
+    {
+      "relative_path": "inputs.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/inputs.json",
+      "bytes": 616,
+      "sha256": "dea6636671823b4e2a40b41fc27ef15270d3a4f27deaae145e572e2f08cf19b5",
+      "git_blob": "c1fb03e1146210239d5df762fe5a17e34b2ce809",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "install-acceptance.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/install-acceptance.json",
+      "bytes": 14212,
+      "sha256": "64afae97427aef127730a1a4933d541895afc2232264e3d3388d47ed19f5a013",
+      "git_blob": "558f5438ba2d6058a52c8a7c3f479c93fdc1fe65",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "intel-qualifier-review.patch",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/intel-qualifier-review.patch",
+      "bytes": 28341,
+      "sha256": "db2495c775dc95072a2c3da323164f6130b62a852247dca2e2154f6fae0848ae",
+      "git_blob": "2fb8a17aac936d9c422a878745c714d832a8af67",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "jobs-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/jobs-api.json",
+      "bytes": 16320,
+      "sha256": "48bb900c393a08c7e24da8adbd268caf55c9fb6f405d165ffbd890dc057fd29e",
+      "git_blob": "e8de8898f96c817924e861ca7ed2e7bbfddee050",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "native-contract.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/native-contract.json",
+      "bytes": 94279,
+      "sha256": "eb4826467c0204e74399e8dcfb279a3457cf1d7a573b4cdb023340fd7bbbea1c",
+      "git_blob": "33b9e79177e722b17d53845292f02c5b20572a68",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "observations.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/observations.json",
+      "bytes": 109177,
+      "sha256": "5ff5c2f3492436f04410a0f9faf6219c58b0b3a3e17c7468293e85547f64e8c1",
+      "git_blob": "01e482e81f3955c0f31e043ebbbce70fd60e9dd0",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "original-join-command-receipt.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/original-join-command-receipt.json",
+      "bytes": 747,
+      "sha256": "fa6d512fd835b27777172ed3cc2ac7c0ef8c84af582e290c9da012bd4982ec8a",
+      "git_blob": "7decccebd48d2c295b4c1e6a6eaafe9a0c729a78",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "parser-archive-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/parser-archive-binding.json",
+      "bytes": 6506,
+      "sha256": "6685b2bb8664db080e947a3506efe44822620a0803fd23b092b3ed47c1b4e5ca",
+      "git_blob": "32142ef4e89cc6dfbcf1e747bb8ec2e4293e2f87",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualification/native-reviewed-excerpts.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualification/native-reviewed-excerpts.json",
+      "bytes": 3337,
+      "sha256": "202471a8329e6bd24dd13818e51639f4b7ef3cc50bbc717e4055e1e9915b6651",
+      "git_blob": "96a9209b7e5bbbd3a860063ebe39934f62aa0579",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualification/original-execution-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualification/original-execution-binding.json",
+      "bytes": 45244,
+      "sha256": "a37dc61f02905862745fd6d6ace63708faec538748da7d55952a82c87bc041e3",
+      "git_blob": "420d7c692f64ccfa210299d0394bc2801efdb23b",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualification/platform-qualification.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualification/platform-qualification.json",
+      "bytes": 6072,
+      "sha256": "2a29b7c948874ffe2f53f5ba8e69f9ade3d5a0bd4f45fbef6a9eb41fd8c6650b",
+      "git_blob": "bfa7e1f8a80abc20011a5db35bcea9197e0a9372",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualification/skip-review.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualification/skip-review.json",
+      "bytes": 7803,
+      "sha256": "b40e7d774934100668d0194b70c452d96b5de1e4090ef0d4387086bcd6547c09",
+      "git_blob": "5d84a3d12077e181b7a734d914f13bfe56cbf1da",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualifier-derivation.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualifier-derivation.json",
+      "bytes": 4775,
+      "sha256": "470fe610d16a47a03bbdd7ab466b5966c670ac3fb2eed169d2f264ce83658145",
+      "git_blob": "ee15b9da12c3ec62fe71f7f09f813c784422c492",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "qualify-intel.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/qualify-intel.py",
+      "bytes": 37998,
+      "sha256": "cd43b41510ad6e592d9a2980673a772f0e79fa226026b0f64f294e7693ed9202",
+      "git_blob": "2a450fbad9e95128a7a753b5cb8522df6387c9e6",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "reviewed-input-pins.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/reviewed-input-pins.json",
+      "bytes": 1245,
+      "sha256": "e7593c38f45626dc03e55aac3c0fdb3826694e971f4a480a17427801e5123b23",
+      "git_blob": "558c575048c7477d96e337d65b98caf47d56ac05",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "run-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/run-api.json",
+      "bytes": 13474,
+      "sha256": "414875887471b2cedd789db62f5f530b297bdd568f7b966075b857b82640a035",
+      "git_blob": "79f7e27ed6f3e8934dba28ede2a80eaa8aef5991",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/artifact-14947404390.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/artifact-14947404390.json",
+      "bytes": 803,
+      "sha256": "758071a7737b022e69c31da95ead31c1be99122de5b5249f053e0d8aa1f9cacd",
+      "git_blob": "9f39c5b69d004a475f6ae0ff58c39c3250fe64ec",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/artifact-14946709999.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/artifact-14946709999.json",
+      "bytes": 799,
+      "sha256": "71f9814e4e0af0e5d89f3a99c3304879b68906a32add2738b31de4680ed2cb2e",
+      "git_blob": "32aa09348818f2cd6f0cb47c0b6d6a05b9f4fec7",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/artifact-14946874694.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/artifact-14946874694.json",
+      "bytes": 807,
+      "sha256": "b8efc81269e14ab5d139c2919489f7627f7e963e90e6a8fc177008b258939e79",
+      "git_blob": "078f3ada21157d8488226e409c65ab8d18883cdd",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/receipt-14947404390.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/receipt-14947404390.json",
+      "bytes": 401,
+      "sha256": "e2974fb4ec1fdaef9799500c8498fdbaf0bed4014ad9e20819d4dc209d7ecfd1",
+      "git_blob": "1de676e372bf2328ec0a7dd6f132d7973c200637",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/receipt-14946709999.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/receipt-14946709999.json",
+      "bytes": 401,
+      "sha256": "85a6a572387a136ab3cc20774e14db45d441dcdb0f8ba2b87dc8fe18ef1608de",
+      "git_blob": "52fba30a5c1732b52fdff13cac4f9409ed970e81",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/receipt-14946874694.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/receipt-14946874694.json",
+      "bytes": 404,
+      "sha256": "31113c17d12479f61801acb53fc1cc301b89b139b20c99b795c16ad824fa3c9f",
+      "git_blob": "15d2712ff5211d51b87ad5c7714e66e89290c876",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/public-14946874694.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/public-14946874694.json",
+      "bytes": 2681,
+      "sha256": "974a3d78b63f929a58c99c9add55aba1b1ab524c5b83bb061ca1c345853a164d",
+      "git_blob": "654c79cfe6cd241091651e0d2594707c8da05470",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/macos-x86_64-job.log",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/macos-x86_64-job.log",
+      "bytes": 263197,
+      "sha256": "89fc20bca65f21c543c240fde390e65a6d25ff6b9354b8ffbe01a5f4fe24ec46",
+      "git_blob": "e0400e4f53657fe61efa90cc6fde29703388167b",
+      "preserved": true,
+      "creation": "existing immutable blob"
+    },
+    {
+      "relative_path": "originals/artifact-14947404390.zip",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/artifact-14947404390.zip",
+      "bytes": 89932,
+      "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8",
+      "git_blob": "62138f9bca358420e3674188742e29952221889d",
+      "preserved": true,
+      "creation": "created immutable blob"
+    },
+    {
+      "relative_path": "originals/artifact-14946709999.zip",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a49-recovered/originals/artifact-14946709999.zip",
+      "bytes": 12719,
+      "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c",
+      "git_blob": "1e0ebf2e86c2b0d8766f33edfeea60bcc568f5a8",
+      "preserved": true,
+      "creation": "created immutable blob"
+    }
+  ],
+  "public_install_receipt_scope": "Root-owned full public GET receipt is retained separately at originals/public-14946874694.json; no all-platform delivery or successor-source acceptance is inferred.",
+  "install_zip": {
+    "local_path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.zip",
+    "artifact_id": 14946874694,
+    "bytes": 16286380,
+    "sha256": "a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015",
+    "included_as_git_blob": false
+  },
+  "shared_helpers": "a46-dependencies.json records unchanged shared recovery helper/source-contract blobs."
+}

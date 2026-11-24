@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "status": "platform_qualified",
+  "platform_qualified": true,
+  "source_commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "factory_revision": "2026.11.8",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "job_id": 138605635495,
+  "target": "macos-x86_64",
+  "verified_at_utc": "2026-11-24T17:55:01.381204+00:00",
+  "recovery_source": "Fresh actual final-source artifacts and authenticated original Actions records; no old local result reused.",
+  "original_run_attempt_bound": true,
+  "artifact_producing_attempts_bound": true,
+  "native_results_accepted": true,
+  "native_counts": {
+    "registered": 283,
+    "passed": 281,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "exact_283_native_names_verified": true,
+  "all_six_new_tests_passed": true,
+  "damper_checks": 231,
+  "damper_failures": 0,
+  "nested_python_skips": 5,
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "skip_review_completed": true,
+  "ctest_seconds": 2584.11,
+  "validator_lanes_accepted": 5,
+  "original_validator_normal_zero_exits": 5,
+  "validator_retries": 0,
+  "whole_au_bundle_binding_established": true,
+  "vst3_validated_bundle_identity_established": true,
+  "packaged_au_sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+  "install_artifact_id": 14946874694,
+  "artifacts": [
+    {
+      "kind": "native",
+      "id": 14947404390,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "bytes": 89932,
+      "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8",
+      "original_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-24T17:43:43Z",
+        "completed_at": "2026-11-24T17:43:44Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:44.8584650Z",
+      "created_at": "2026-11-24T17:43:44Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    },
+    {
+      "kind": "validator",
+      "id": 14946709999,
+      "name": "cs80-pluginval-macos-15-intel",
+      "bytes": 12719,
+      "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c",
+      "original_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T17:43:41Z",
+        "completed_at": "2026-11-24T17:43:43Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:43.2264530Z",
+      "created_at": "2026-11-24T17:43:43Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    },
+    {
+      "kind": "install",
+      "id": 14946874694,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "bytes": 16286380,
+      "sha256": "a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015",
+      "original_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-24T17:43:33Z",
+        "completed_at": "2026-11-24T17:43:41Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:41.7412930Z",
+      "created_at": "2026-11-24T17:43:41Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    }
+  ],
+  "original_execution_binding": {
+    "path": "original-execution-binding.json",
+    "bytes": 45244,
+    "sha256": "a37dc61f02905862745fd6d6ace63708faec538748da7d55952a82c87bc041e3"
+  },
+  "actual_native_binary_headers": [
+    {
+      "format": "AU",
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 15277632,
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 8,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    },
+    {
+      "format": "Standalone",
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14989824,
+      "sha256": "7e49454a74ed0a759b0ff76b94d0856f99f90de89a898dcd6c4e13576c030ee8",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 2,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    },
+    {
+      "format": "VST3",
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 15582128,
+      "sha256": "3f249eae318e82bf26036ca1aee612783d0025aa221eb868ba7c96791269d017",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 8,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    }
+  ],
+  "docs_and_notices": {
+    "path": "docs-and-notices.json",
+    "bytes": 35331,
+    "sha256": "18a65c704f758cdfbf8986de72beec44a638b9bff9fa624c82bf1e4f7f035a9e"
+  },
+  "verifier": {
+    "path": "qualify-intel.py",
+    "bytes": 37998,
+    "sha256": "cd43b41510ad6e592d9a2980673a772f0e79fa226026b0f64f294e7693ed9202"
+  },
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "public_delivery_verified": false,
+  "limitations": [
+    "Other platforms, audition acceptance and all-five-route public GET verification are separate root gates.",
+    "Four AU current-program -1 warnings remain retained; separate optional Steinberg validator is unconfigured.",
+    "The render bounded-buffer skip has no exact runtime reason in nonverbose original output; source/method mapping and that absence are retained.",
+    "No product was executed here. Native header checks do not establish a separate Standalone launch, publisher signing/notarization, listening quality, hardware equivalence or a broad DAW matrix.",
+    "Previous failed/superseded source histories remain unchanged."
+  ]
+}

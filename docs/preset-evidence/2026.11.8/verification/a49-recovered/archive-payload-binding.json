@@ -1,0 +1,391 @@
+{
+  "artifact_receipts": [
+    {
+      "api_snapshot": {
+        "bytes": 807,
+        "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.json",
+        "sha256": "b8efc81269e14ab5d139c2919489f7627f7e963e90e6a8fc177008b258939e79"
+      },
+      "attempt_binding": "Not established by an artifact receipt; original run/job API required.",
+      "created_at": "2026-11-24T17:43:41Z",
+      "digest": "sha256:a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015",
+      "expired_at_snapshot": false,
+      "expires_at": "2027-02-22T16:37:33Z",
+      "id": 14946874694,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "repository_id": 1436742091,
+      "size_in_bytes": 16286380
+    },
+    {
+      "api_snapshot": {
+        "bytes": 799,
+        "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json",
+        "sha256": "71f9814e4e0af0e5d89f3a99c3304879b68906a32add2738b31de4680ed2cb2e"
+      },
+      "attempt_binding": "Not established by an artifact receipt; original run/job API required.",
+      "created_at": "2026-11-24T17:43:43Z",
+      "digest": "sha256:41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c",
+      "expired_at_snapshot": false,
+      "expires_at": "2027-02-22T16:37:33Z",
+      "id": 14946709999,
+      "name": "cs80-pluginval-macos-15-intel",
+      "repository_id": 1436742091,
+      "size_in_bytes": 12719
+    }
+  ],
+  "au_after": [
+    {
+      "path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb"
+    },
+    {
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb"
+    }
+  ],
+  "au_before": [
+    {
+      "path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb"
+    },
+    {
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb"
+    }
+  ],
+  "downloads": {
+    "install": {
+      "bytes": 16286380,
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.zip",
+      "sha256": "a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015"
+    },
+    "pluginval": {
+      "bytes": 12719,
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip",
+      "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c"
+    }
+  },
+  "expected": {
+    "architecture": "x86_64",
+    "attempt": 1,
+    "repository": "cheshmakzanoon-ops/yamaha-cs80",
+    "revision": "2026.11.8",
+    "run": 45439302351,
+    "source": "ef1c472b161c37c490945f7c469086508aae6aef"
+  },
+  "inner_archive": {
+    "name": "cs80-reference-macos-x86_64-ef1c472b161c.tar.gz",
+    "sha256": "1219dee5b3a6db9b1c7d8166361d75cdbb0c171afee6bd3cef679c9a922b413b"
+  },
+  "installation_verifier": {
+    "architecture": "x86_64",
+    "commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+    "files": 39,
+    "platform": "macos",
+    "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification.",
+    "result": "integrity and declared source consistency verified"
+  },
+  "limitations": [
+    "API receipts are caller supplied; this tool does not authenticate them.",
+    "Mach-O headers prove advertised slice/role presence, not executable validity or exclusive single-architecture content.",
+    "Complete bundle inventories identify packaged bytes, types, paths, modes and link targets; they do not prove those bytes were validated.",
+    "No successful release, validator run, native runtime test or acoustic equivalence is inferred."
+  ],
+  "manifest": {
+    "name": "cs80-reference-macos-x86_64-ef1c472b161c.manifest.json",
+    "revision": "2026.11.8",
+    "sha256": "5c8cc3287559964ec6aa3b86adf1f7c3ae7f8515e96ba45e3fecc811eb6fb737",
+    "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+    "workflow_run_id": "45439302351"
+  },
+  "packaged_bundles": {
+    "AU": {
+      "advertised_architecture_present": "x86_64",
+      "binary_header_role": "bundle/dylib",
+      "executable": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "executable_sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+      "inventory": [
+        {
+          "mode": "0o755",
+          "path": "AU/CS-80 Reference.component",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "AU/CS-80 Reference.component/Contents",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "AU/CS-80 Reference.component/Contents/Info.plist",
+          "sha256": "d5dcba1e1347128de59a73624f9449b8d9fb394e87669ea028c3c02c64a906c6",
+          "size": 1645,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "AU/CS-80 Reference.component/Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+          "size": 15277632,
+          "type": "file"
+        },
+        {
+          "mode": "0o644",
+          "path": "AU/CS-80 Reference.component/Contents/PkgInfo",
+          "sha256": "d06a80ba92de0833d0ed03de1b02b7c8913f126d9e8c8931b190765dd5d83b11",
+          "size": 8,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "AU/CS-80 Reference.component/Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "AU/CS-80 Reference.component/Contents/_CodeSignature/CodeResources",
+          "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b",
+          "size": 2200,
+          "type": "file"
+        }
+      ],
+      "inventory_entries": 8,
+      "inventory_sha256": "1dac0e067796ecc264267f878acce2b56732cdd66e864b08a62fd94e87304852",
+      "root": "AU/CS-80 Reference.component"
+    },
+    "Standalone": {
+      "advertised_architecture_present": "x86_64",
+      "binary_header_role": "executable",
+      "executable": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "executable_sha256": "7e49454a74ed0a759b0ff76b94d0856f99f90de89a898dcd6c4e13576c030ee8",
+      "inventory": [
+        {
+          "mode": "0o755",
+          "path": "Standalone/CS-80 Reference.app",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "Standalone/CS-80 Reference.app/Contents",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "Standalone/CS-80 Reference.app/Contents/Info.plist",
+          "sha256": "2caa37038ba2449e0a381f1990ea05cb4218146bd893fd720ad5ed22bd27b66a",
+          "size": 886,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "sha256": "7e49454a74ed0a759b0ff76b94d0856f99f90de89a898dcd6c4e13576c030ee8",
+          "size": 14989824,
+          "type": "file"
+        },
+        {
+          "mode": "0o644",
+          "path": "Standalone/CS-80 Reference.app/Contents/PkgInfo",
+          "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+          "size": 8,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "Standalone/CS-80 Reference.app/Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "Standalone/CS-80 Reference.app/Contents/Resources/RecentFilesMenuTemplate.nib",
+          "sha256": "718eb4c5a3a5564dd832ae9a36cf649f3ef257ce896dd921693eeb6101bd008a",
+          "size": 2842,
+          "type": "file"
+        }
+      ],
+      "inventory_entries": 8,
+      "inventory_sha256": "a80d1191e9dc5d0994e6f97572a5c0e79b483beae95dba8d22fa8aa812ee627e",
+      "root": "Standalone/CS-80 Reference.app"
+    },
+    "VST3": {
+      "advertised_architecture_present": "x86_64",
+      "binary_header_role": "bundle/dylib",
+      "executable": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "executable_sha256": "3f249eae318e82bf26036ca1aee612783d0025aa221eb868ba7c96791269d017",
+      "inventory": [
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3/Contents",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "VST3/CS-80 Reference.vst3/Contents/Info.plist",
+          "sha256": "191dfa28e6c7e688bf4cdcb8f59ee9a9c381c0b40ed45e707e569dd3456082b3",
+          "size": 886,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "sha256": "3f249eae318e82bf26036ca1aee612783d0025aa221eb868ba7c96791269d017",
+          "size": 15582128,
+          "type": "file"
+        },
+        {
+          "mode": "0o644",
+          "path": "VST3/CS-80 Reference.vst3/Contents/PkgInfo",
+          "sha256": "d06a80ba92de0833d0ed03de1b02b7c8913f126d9e8c8931b190765dd5d83b11",
+          "size": 8,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+          "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+          "size": 1095,
+          "type": "file"
+        },
+        {
+          "mode": "0o755",
+          "path": "VST3/CS-80 Reference.vst3/Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "mode": "0o644",
+          "path": "VST3/CS-80 Reference.vst3/Contents/_CodeSignature/CodeResources",
+          "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b",
+          "size": 2200,
+          "type": "file"
+        }
+      ],
+      "inventory_entries": 10,
+      "inventory_sha256": "65f0d1ac25c64c6514fc4aa76fa8d05cec276686d759abf5cc1e0283a0863514",
+      "root": "VST3/CS-80 Reference.vst3"
+    }
+  },
+  "release_qualified": false,
+  "remaining_gates": [
+    {
+      "id": "original-run-and-attempt",
+      "required": "Authenticated run and job API records must identify source ef1c472b161c37c490945f7c469086508aae6aef, run 45439302351, attempt 1, job macOS / macos-15-intel / VST3 + AU + Standalone; require completed/success. Artifact receipts and manifests do not bind the attempt."
+    },
+    {
+      "id": "original-artifact-upload",
+      "required": "Bind both artifact IDs, byte counts and SHA-256 digests above to the original successful Upload native macOS install bundle and Upload pluginval reports steps. Check creation/upload timestamps within those exact steps and authenticated repository identity."
+    },
+    {
+      "id": "native-source-and-tests",
+      "required": "Bind checkout, uname -m, clean JUCE source verification, configure, build, full native CTest/JUnit case inventory and test-evidence artifact to that exact job/attempt. A packaged PASS text does not establish its original execution."
+    },
+    {
+      "id": "all-five-validator-lanes",
+      "required": "Parse original reports and consoles for all five pluginval 1.0.4 lanes: strictness 10, 523 programs, zero failures, explicit SUCCESS, expected headless/GUI flags and fixed seeds 0x2b4eef5 and 0x3c99748 for the two separate AU GUI seed regressions; bind each original command, console/report identity and zero propagated exit to its successful API step. Verify the fetched pluginval asset receipt against the source-pinned downloader."
+    },
+    {
+      "id": "whole-installed-au-bundle",
+      "required": "The AU pre/post files bind only the executable. Bind successful, unsuppressed diff -qr \"$AU_SOURCE\" \"$AU_DEST\" before and after validation in the original Register built AU and Package native macOS VST3, AU and Standalone steps; require exact source/copy paths, signing before copying, original hash-output lines matching these files, and no intervening bundle mutation/rebuild. Only those original full-directory comparisons bind installed resources/signatures to the complete packaged AU inventory."
+    },
+    {
+      "id": "validated-vst3-to-package-path",
+      "required": "Bind the original VST3 command/Started validating path above to the source-pinned packager input build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3 in the same job checkout. Prove ordered successful validation then packaging with no intervening mutation/rebuild. macOS does not upload an independent validated VST3 bundle; inventory consistency alone cannot establish validated-input equality."
+    },
+    {
+      "id": "workflow-exit-and-order",
+      "required": "Review the exact source-pinned macOS workflow and original timestamped command groups for set -euo pipefail, unsuppressed validation/grep/diff failures, no continue-on-error, no retries or substituted diagnostic runs, and the required register/validate/package/upload ordering. Source file hashes below identify review inputs, not proof that those commands ran."
+    },
+    {
+      "id": "release-and-audition",
+      "required": "Require every other native CI job and platform gate for this source separately. This helper does not establish signing/notarization, DAW runtime behavior, listening quality, instrument realism, or release qualification."
+    }
+  ],
+  "run_attempt_bound": false,
+  "schema_version": 1,
+  "source_contract_files": {
+    ".github/workflows/build.yml": {
+      "bytes": 35439,
+      "sha256": "0598c603f4295d7df0a325c55eec8762f2d94964f85439c7a1e7875a673561a3"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/verify-ci-bundle.py": {
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "11e320ac972e9d7be17d996eb8debc3c627dedc41430ca613b52d4025ae4b911"
+    }
+  },
+  "source_contract_scope": "Exact committed files loaded/hashed; original workflow execution and shell semantics still require the gates below.",
+  "status": "archive_consistency_and_au_executable_binding_verified",
+  "validated_bundle_identity_established": false,
+  "validator_input_paths": {
+    "au": {
+      "console": "pluginval-au.log",
+      "expected_fixed_seed": null,
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+      "scope": "Input-path and fixed-seed consistency only; lane success parsed separately.",
+      "sha256": "eec50cad9e0c0ff2d6f8230eb0f634f645659c37aa80b496665a3b75f9e3cc34"
+    },
+    "au-gui": {
+      "console": "pluginval-au-gui.log",
+      "expected_fixed_seed": null,
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+      "scope": "Input-path and fixed-seed consistency only; lane success parsed separately.",
+      "sha256": "4e0fa1df007a7c3b1f5f3e7ab7f6f9d854ec82c8d698fe7efca94669f05e5a54"
+    },
+    "au-seed-c76-regression": {
+      "console": "pluginval-au-seed-c76-regression.log",
+      "expected_fixed_seed": "0x3c99748",
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+      "scope": "Input-path and fixed-seed consistency only; lane success parsed separately.",
+      "sha256": "42687c66e799c189ebb2f419f7be5f64e7ea9340bf79ec2ff4629af54e1a7591"
+    },
+    "au-seed-regression": {
+      "console": "pluginval-au-seed-regression.log",
+      "expected_fixed_seed": "0x2b4eef5",
+      "path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+      "scope": "Input-path and fixed-seed consistency only; lane success parsed separately.",
+      "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+    },
+    "vst3": {
+      "console": "pluginval-vst3.log",
+      "expected_fixed_seed": null,
+      "path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3",
+      "scope": "Input-path and fixed-seed consistency only; lane success parsed separately.",
+      "sha256": "c6649d32f44c5e0e67371bd093507bec7503638f936c7077e8aa9c9283abe210"
+    }
+  }
+}

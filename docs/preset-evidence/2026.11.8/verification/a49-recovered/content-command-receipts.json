@@ -1,0 +1,69 @@
+{
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "target": "macos-x86_64",
+  "commands": [
+    {
+      "name": "native",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a46-recovered/check_native.py --target macos-x86_64 --archive /mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.zip --artifact-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.json --artifact-id 14947404390 --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/native-contract.json",
+      "chunk_id": "c3233d",
+      "wall_time_seconds": 0.05135604,
+      "exit_code": 0,
+      "original_token_count": 49,
+      "output": "{\"content_checks_conform\": true, \"counts\": {\"registered\": 283, \"passed\": 281, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips\": 5, \"release_qualified\": false}\n"
+    },
+    {
+      "name": "parser",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/parse-native-evidence.py --inputs /tmp/cs80-614c8ce056b7-notes/a49-recovered/inputs.json --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/observations.json",
+      "chunk_id": "374855",
+      "wall_time_seconds": 0.000034561,
+      "exit_code": 0,
+      "original_token_count": 85,
+      "output": "{\"status\": \"parsed_evidence_not_release_qualified\", \"native_totals\": {\"registered\": 283, \"passed\": 281, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips_total\": 5, \"validator_totals\": {\"required_lanes\": 5, \"validation_invocations\": 5, \"validation_retries\": 0}, \"all_requested_observations_green\": true}\n"
+    },
+    {
+      "name": "install",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/a41-verify-install-artifact.py --repo /tmp/cs80-614c8ce056b7 --source ef1c472b161c37c490945f7c469086508aae6aef --revision 2026.11.8 --run-id 45439302351 --attempt 1 --platform macos --architecture x86_64 --archive /mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.zip --artifact-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.json --run-api /tmp/cs80-614c8ce056b7-notes/a49-recovered/attempt-api.json --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/install-acceptance.json",
+      "chunk_id": "b71a6d",
+      "wall_time_seconds": 1.000913608,
+      "original_token_count": 43,
+      "output": "{\"status\": \"artifact_bytes_verified\", \"target\": \"macos-x86_64\", \"release_qualified\": false, \"out\": \"/tmp/cs80-614c8ce056b7-notes/a49-recovered/install-acceptance.json\"}\n",
+      "exit_code": 0
+    },
+    {
+      "name": "payload",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a49-recovered/helpers/generic/verify-macos-binding.py --repo /tmp/cs80-614c8ce056b7 --expected-source ef1c472b161c37c490945f7c469086508aae6aef --expected-run 45439302351 --expected-attempt 1 --expected-architecture x86_64 --expected-revision 2026.11.8 --install-zip /mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.zip --install-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.json --pluginval-zip /mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip --pluginval-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/archive-payload-binding.json",
+      "chunk_id": "8e7c2f",
+      "wall_time_seconds": 0.687199074,
+      "exit_code": 0,
+      "original_token_count": 107,
+      "output": "{\"status\": \"archive_consistency_and_au_executable_binding_verified\", \"release_qualified\": false, \"remaining_gates\": [\"original-run-and-attempt\", \"original-artifact-upload\", \"native-source-and-tests\", \"all-five-validator-lanes\", \"whole-installed-au-bundle\", \"validated-vst3-to-package-path\", \"workflow-exit-and-order\", \"release-and-audition\"], \"out\": \"/tmp/cs80-614c8ce056b7-notes/a49-recovered/archive-payload-binding.json\"}\n"
+    },
+    {
+      "name": "binding",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/bind-parser-archives.py --repo /tmp/cs80-614c8ce056b7 --source ef1c472b161c37c490945f7c469086508aae6aef --run-id 45439302351 --attempt 1 --target macos-x86_64 --observations /tmp/cs80-614c8ce056b7-notes/a49-recovered/observations.json --native-zip /mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.zip --native-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.json --validator-zip /mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip --validator-api /mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/parser-archive-binding.json",
+      "chunk_id": "333f6d",
+      "wall_time_seconds": 0.000036997,
+      "exit_code": 0,
+      "original_token_count": 35,
+      "output": "{\"status\": \"parser_archive_and_member_input_binding_verified\", \"target\": \"macos-x86_64\", \"archives_bound\": 2, \"release_qualified\": false}\n"
+    },
+    {
+      "name": "documents",
+      "cmd": "python3 /tmp/cs80-614c8ce056b7-notes/a49-recovered/helpers/inspect-packaged-docs.py --repo /tmp/cs80-614c8ce056b7 --source ef1c472b161c37c490945f7c469086508aae6aef --archive /mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.zip --acceptance /tmp/cs80-614c8ce056b7-notes/a49-recovered/install-acceptance.json --out /tmp/cs80-614c8ce056b7-notes/a49-recovered/docs-and-notices.json",
+      "chunk_id": "516e50",
+      "wall_time_seconds": 0.890584963,
+      "exit_code": 0,
+      "original_token_count": 53,
+      "output": "{\"status\": \"source_specific_docs_and_notices_verified\", \"target\": \"macos-x86_64\", \"metadata_files\": 13, \"exact_source_comparisons\": 10, \"out\": \"/tmp/cs80-614c8ce056b7-notes/a49-recovered/docs-and-notices.json\"}\n"
+    },
+    {
+      "name": "native-excerpts",
+      "cmd": "python3 - <<'PY'\nfrom pathlib import Path\nimport importlib.util,json,zipfile,re,sys\nsys.dont_write_bytecode=True\np=Path('/tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/parse-native-evidence.py');s=importlib.util.spec_from_file_location('native_parser',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m)\nbase=Path('/tmp/cs80-614c8ce056b7-notes/a49-recovered');obs=json.loads((base/'observations.json').read_text());n=obs['native'][0]\nwith zipfile.ZipFile('/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.zip') as z:cases=m.lasttest_cases(m.decode(z.read('Testing/Temporary/LastTest.log')))\nfor name in ['cs80_instrument_damper_tests','cs80_body_articulation_engine_tests','cs80_preset_voicing_tests','cs80_ui_smoke','cs80_packaging_notice_tests','cs80_package_binary_identity_tests','cs80_windows_installer_preflight_tests','cs80_render_cli_tests']:\n txt=cases[name]['output'];selected=[x for x in txt.splitlines() if re.search(r'^source screenshot fixture:|^UI SMOKE TEST|phase=source performance captures |^Instrument damper|^Body articulation|^Preset voicing|^TINE|^KEYS|^Ran |^OK|^[.s]+$',x)]\n print(json.dumps({'name':name,'seconds':next(x['seconds'] for x in n['testcases'] if x['name']==name),'lines':selected}))\nprint(json.dumps({'validator_seeds':[(x['lane'],x['console']['summary']['seeds']) for x in obs['validators'][0]['lanes']]}))\nwith zipfile.ZipFile('/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip') as z:\n d=json.loads(z.read('pluginval-download.json'));print(json.dumps({'downloader_attempt_count':len(d['attempts'])}))\nPY",
+      "chunk_id": "fc18c1",
+      "wall_time_seconds": 0.000055385,
+      "exit_code": 0,
+      "original_token_count": 584,
+      "output": "{\"name\": \"cs80_instrument_damper_tests\", \"seconds\": 2.79227, \"lines\": [\"Instrument damper: 231 checks, 0 failures\"]}\n{\"name\": \"cs80_body_articulation_engine_tests\", \"seconds\": 5.14247, \"lines\": [\"Body articulation integration: 284 checks, 0 failures\"]}\n{\"name\": \"cs80_preset_voicing_tests\", \"seconds\": 15.2822, \"lines\": [\"TINE      note 48: hard H3/root  -10.9 dB; hard/soft colour +18.1 dB; late/early colour   -9.9 dB\", \"TINE      note 60: hard H3/root  -11.3 dB; hard/soft colour +19.3 dB; late/early colour  -12.4 dB\", \"TINE      note 84: hard H3/root  -11.6 dB; hard/soft colour +19.2 dB; late/early colour  -19.8 dB\", \"KEYS      Electric Piano I    onset overtones/root  -13.5 dB; held late/onset  -27.2 dB\", \"KEYS      Electric Piano II   onset overtones/root  -13.6 dB; held late/onset  -27.0 dB\", \"KEYS      Reed Piano          onset overtones/root   -4.4 dB; held late/onset  -29.2 dB\", \"KEYS      Saw Pulse Piano     onset overtones/root   10.0 dB; held late/onset  -28.7 dB\", \"KEYS      Stage Keys          onset overtones/root    0.5 dB; held late/onset  -30.8 dB\", \"Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated.\"]}\n{\"name\": \"cs80_ui_smoke\", \"seconds\": 147.856, \"lines\": [\"source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0834435672, meter=SAMPLE PEAK -21.6 dBFS READ-ONLY\", \"source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -2.5 dBFS READ-ONLY\", \"UI SMOKE TIMING: phase=source performance captures seconds=4.883518 total_seconds=89.323623\", \"UI SMOKE TEST PASSED\"]}\n{\"name\": \"cs80_packaging_notice_tests\", \"seconds\": 3.18799, \"lines\": [\"Ran 7 tests in 3.018s\", \"OK (skipped=1)\"]}\n{\"name\": \"cs80_package_binary_identity_tests\", \"seconds\": 0.539174, \"lines\": [\"...s.........\", \"Ran 13 tests in 0.188s\", \"OK (skipped=1)\"]}\n{\"name\": \"cs80_windows_installer_preflight_tests\", \"seconds\": 2.30495, \"lines\": [\"...ss.......\", \"Ran 12 tests in 2.131s\", \"OK (skipped=2)\"]}\n{\"name\": \"cs80_render_cli_tests\", \"seconds\": 0.55064, \"lines\": [\"..s....\", \"Ran 7 tests in 0.428s\", \"OK (skipped=1)\"]}\n{\"validator_seeds\": [[\"vst3\", [\"0x2e130f5\"]], [\"au\", [\"0x51f28da\"]], [\"au-gui\", [\"0x2cf9cfa\"]], [\"au-gui-seed\", [\"0x2b4eef5\"]], [\"au-gui-seed-c76\", [\"0x3c99748\"]]]}\n{\"downloader_attempt_count\": 1}\n"
+    }
+  ]
+}

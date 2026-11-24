@@ -1,0 +1,140 @@
+{
+  "status": "reviewed_intel_successor_not_yet_executed",
+  "parent_git_blob": "10e77601b612d251df5466d3af70551c90ab37c0",
+  "parent_sha256": "ce4eb272bab6bea5cddbb93a53f75dd5296dbe3407d1408ebdbd9b05388d05ea",
+  "new_sha256": "cd43b41510ad6e592d9a2980673a772f0e79fa226026b0f64f294e7693ed9202",
+  "reviewed_replacements": [
+    {
+      "before": "ef1c472 ARM execution",
+      "after": "ef1c472 Intel execution",
+      "occurrences": 1
+    },
+    {
+      "before": "138605635263",
+      "after": "138605635495",
+      "occurrences": 1
+    },
+    {
+      "before": "'macos-arm64'",
+      "after": "'macos-x86_64'",
+      "occurrences": 1
+    },
+    {
+      "before": "(14947505348, 'cs80-macos-15-test-evidence', 89899, 'eeeb8fd43c3fcf0422152b0953f53b47da4c3cb2f86000a6dc84e7247fe5839f'",
+      "after": "(14947404390, 'cs80-macos-15-intel-test-evidence', 89932, '5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8'",
+      "occurrences": 1
+    },
+    {
+      "before": "(14947445386, 'cs80-pluginval-macos-15', 12771, '66cf6de35348b91592d138823afb71b99cac3233bcb9b9af073b31884b4942a9'",
+      "after": "(14946709999, 'cs80-pluginval-macos-15-intel', 12719, '41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c'",
+      "occurrences": 1
+    },
+    {
+      "before": "(14947300509, 'cs80-macos-15-install-bundle', 15004302, 'ed406c8cd6095ae8c7645604f55ea8d798a989b279da6ef27b14dc9c55442472'",
+      "after": "(14946874694, 'cs80-macos-15-intel-install-bundle', 16286380, 'a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015'",
+      "occurrences": 1
+    },
+    {
+      "before": "a48_parser",
+      "after": "a49_parser",
+      "occurrences": 1
+    },
+    {
+      "before": "a48_binder",
+      "after": "a49_binder",
+      "occurrences": 1
+    },
+    {
+      "before": "a48_old_log_utilities",
+      "after": "a49_old_log_utilities",
+      "occurrences": 1
+    },
+    {
+      "before": "Original ARM job absent/duplicate",
+      "after": "Original Intel job absent/duplicate",
+      "occurrences": 1
+    },
+    {
+      "before": "job['labels'] == ['macos-15'] and job['name'] == 'macOS / macos-15 / VST3 + AU + Standalone'",
+      "after": "job['labels'] == ['macos-15-intel'] and job['name'] == 'macOS / macos-15-intel / VST3 + AU + Standalone'",
+      "occurrences": 1
+    },
+    {
+      "before": "macos-arm64-job.log",
+      "after": "macos-x86_64-job.log",
+      "occurrences": 2
+    },
+    {
+      "before": "len(log_raw) == 258791",
+      "after": "len(log_raw) == 263197",
+      "occurrences": 1
+    },
+    {
+      "before": "7393725dd452ba05c957db205fb980cd7232b1feaf0be7fbaa3c403cc494ed64",
+      "after": "89fc20bca65f21c543c240fde390e65a6d25ff6b9354b8ffbe01a5f4fe24ec46",
+      "occurrences": 1
+    },
+    {
+      "before": "09d5d5480d124f0d5cc22873a9fe3aebc5e13b09",
+      "after": "e0400e4f53657fe61efa90cc6fde29703388167b",
+      "occurrences": 2
+    },
+    {
+      "before": "'\\narm64\\n'",
+      "after": "'\\nx86_64\\n'",
+      "occurrences": 1
+    },
+    {
+      "before": "1670.38",
+      "after": "2584.11",
+      "occurrences": 3
+    },
+    {
+      "before": "SAMPLE PEAK -0.2 dBFS READ-ONLY",
+      "after": "SAMPLE PEAK -2.5 dBFS READ-ONLY",
+      "occurrences": 1
+    },
+    {
+      "before": "architecture='arm64'",
+      "after": "architecture='x86_64'",
+      "occurrences": 1
+    },
+    {
+      "before": "old_header['architecture'] == 'arm64'",
+      "after": "old_header['architecture'] == 'x86_64'",
+      "occurrences": 1
+    },
+    {
+      "before": "cpu == 0x0100000c",
+      "after": "cpu == 0x01000007",
+      "occurrences": 1
+    },
+    {
+      "before": "thin_native_arm64=True",
+      "after": "thin_native_x86_64=True",
+      "occurrences": 1
+    },
+    {
+      "before": "'\"architecture\": \"arm64\"'",
+      "after": "'\"architecture\": \"x86_64\"'",
+      "occurrences": 1
+    },
+    {
+      "before": "Two downloader transport attempts are distinct from five validator invocations and zero validation retries.",
+      "after": "One downloader transport attempt is distinct from five validator invocations and zero validation retries.",
+      "occurrences": 1
+    },
+    {
+      "before": "final source excludes arm64 AppleClang from the GNU x86_64 backend.",
+      "after": "final source excludes native x86_64 AppleClang from the GNU-only backend; the original configure log identifies AppleClang. No CPU AVX2 availability claim is inferred.",
+      "occurrences": 1
+    }
+  ],
+  "strengthened_checks": [
+    "Original AppleClang identity",
+    "Exactly one original UI smoke success terminal and no failure terminal",
+    "Unchanged real normal-timer source assertion",
+    "Committed/invoked portable damperBoundaryRetimingAndReuse regression"
+  ],
+  "generic_helpers_unchanged": true
+}

@@ -1,0 +1,1087 @@
+{
+  "schema": 1,
+  "status": "original_platform_execution_bound",
+  "recovery_source": "Fresh actual final-source artifacts and authenticated original Actions records; no old local result reused.",
+  "source_commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "factory_revision": "2026.11.8",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "job_id": 138605635495,
+  "target": "macos-x86_64",
+  "verified_at_utc": "2026-11-24T17:55:01.381204+00:00",
+  "original_job": {
+    "id": 138605635495,
+    "run_id": 45439302351,
+    "workflow_name": "build",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45439302351",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVaLxy88AAAAgRYonpw",
+    "head_sha": "ef1c472b161c37c490945f7c469086508aae6aef",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138605635495",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45439302351/job/138605635495",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-24T16:37:33Z",
+    "started_at": "2026-11-24T16:40:55Z",
+    "completed_at": "2026-11-24T17:43:48Z",
+    "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-24T16:40:56Z",
+        "completed_at": "2026-11-24T16:40:57Z"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-24T16:40:57Z",
+        "completed_at": "2026-11-24T16:41:13Z"
+      },
+      {
+        "name": "Record native platform",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-24T16:41:13Z",
+        "completed_at": "2026-11-24T16:41:13Z"
+      },
+      {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-24T16:41:13Z",
+        "completed_at": "2026-11-24T16:43:33Z"
+      },
+      {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T16:43:33Z",
+        "completed_at": "2026-11-24T16:43:34Z"
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T16:43:34Z",
+        "completed_at": "2026-11-24T16:54:37Z"
+      },
+      {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-24T16:54:37Z",
+        "completed_at": "2026-11-24T17:37:42Z"
+      },
+      {
+        "name": "Fetch pluginval 1.0.4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-24T17:37:42Z",
+        "completed_at": "2026-11-24T17:37:44Z"
+      },
+      {
+        "name": "Register built AU",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-24T17:37:44Z",
+        "completed_at": "2026-11-24T17:37:47Z"
+      },
+      {
+        "name": "Validate VST3 with pluginval",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-24T17:37:47Z",
+        "completed_at": "2026-11-24T17:37:53Z"
+      },
+      {
+        "name": "Validate AU with pluginval",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-24T17:37:53Z",
+        "completed_at": "2026-11-24T17:38:25Z"
+      },
+      {
+        "name": "Validate AU with pluginval GUI",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-11-24T17:38:25Z",
+        "completed_at": "2026-11-24T17:40:28Z"
+      },
+      {
+        "name": "Validate AU GUI fixed-seed regression",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-11-24T17:40:28Z",
+        "completed_at": "2026-11-24T17:41:58Z"
+      },
+      {
+        "name": "Validate AU GUI regression seed 0x3c99748",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-24T17:41:58Z",
+        "completed_at": "2026-11-24T17:43:26Z"
+      },
+      {
+        "name": "Package native macOS VST3, AU and Standalone",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-24T17:43:26Z",
+        "completed_at": "2026-11-24T17:43:33Z"
+      },
+      {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-24T17:43:33Z",
+        "completed_at": "2026-11-24T17:43:41Z"
+      },
+      {
+        "name": "AU registration diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 17,
+        "started_at": "2026-11-24T17:43:41Z",
+        "completed_at": "2026-11-24T17:43:41Z"
+      },
+      {
+        "name": "Report pluginval failure",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 18,
+        "started_at": "2026-11-24T17:43:41Z",
+        "completed_at": "2026-11-24T17:43:41Z"
+      },
+      {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T17:43:41Z",
+        "completed_at": "2026-11-24T17:43:43Z"
+      },
+      {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-24T17:43:43Z",
+        "completed_at": "2026-11-24T17:43:44Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 40,
+        "started_at": "2026-11-24T17:43:44Z",
+        "completed_at": "2026-11-24T17:43:45Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 41,
+        "started_at": "2026-11-24T17:43:45Z",
+        "completed_at": "2026-11-24T17:43:45Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138605635495",
+    "labels": [
+      "macos-15-intel"
+    ],
+    "runner_id": 1000045697,
+    "runner_name": "GitHub Actions 1000045697",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "run_snapshot_status": "in_progress",
+  "run_snapshot_conclusion": null,
+  "original_job_log": {
+    "path": "/mnt/data/cs80-614c8ce056b7-a49/macos-x86_64-job.log",
+    "bytes": 263197,
+    "sha256": "89fc20bca65f21c543c240fde390e65a6d25ff6b9354b8ffbe01a5f4fe24ec46"
+  },
+  "original_job_log_git_blob": "e0400e4f53657fe61efa90cc6fde29703388167b",
+  "original_run_attempt_bound": true,
+  "artifact_producing_attempts_bound": true,
+  "uploads": [
+    {
+      "kind": "native",
+      "id": 14947404390,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "bytes": 89932,
+      "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8",
+      "original_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-24T17:43:43Z",
+        "completed_at": "2026-11-24T17:43:44Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:44.8584650Z",
+      "created_at": "2026-11-24T17:43:44Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    },
+    {
+      "kind": "validator",
+      "id": 14946709999,
+      "name": "cs80-pluginval-macos-15-intel",
+      "bytes": 12719,
+      "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c",
+      "original_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T17:43:41Z",
+        "completed_at": "2026-11-24T17:43:43Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:43.2264530Z",
+      "created_at": "2026-11-24T17:43:43Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    },
+    {
+      "kind": "install",
+      "id": 14946874694,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "bytes": 16286380,
+      "sha256": "a8784577d2c04ea41df7dc2dd4f819338566953cb22469315e865ec446888015",
+      "original_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-24T17:43:33Z",
+        "completed_at": "2026-11-24T17:43:41Z"
+      },
+      "upload_timestamp": "2026-11-24T17:43:41.7412930Z",
+      "created_at": "2026-11-24T17:43:41Z",
+      "expires_at": "2027-02-22T16:37:33Z",
+      "producing_attempt_verified": true
+    }
+  ],
+  "original_commands": [
+    {
+      "step": "Record native platform",
+      "number": 3,
+      "command": "uname -m\nsw_vers\nxcodebuild -version",
+      "command_sha256": "577eb7d5ba15f20696227659f1132b260e201695edf82d3b5af3683a16746cfd",
+      "exact_source_match": true,
+      "log_first_line": 197,
+      "log_last_line": 208
+    },
+    {
+      "step": "Configure",
+      "number": 4,
+      "command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+      "command_sha256": "0c0f263030d708dd581e78d8d360fdf7e93d0a47b4f092e4385d46ef4489742d",
+      "exact_source_match": true,
+      "log_first_line": 209,
+      "log_last_line": 249
+    },
+    {
+      "step": "Verify configured JUCE source",
+      "number": 5,
+      "command": "cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake",
+      "command_sha256": "dfae86ae16304d1c215d2cee7f33e8e8148f04ae678ff93c8081840a857e8b4f",
+      "exact_source_match": true,
+      "log_first_line": 250,
+      "log_last_line": 254
+    },
+    {
+      "step": "Build",
+      "number": 6,
+      "command": "cmake --build build --parallel",
+      "command_sha256": "7c1f3b6c55fc1b701e2649786c83374f18b027355f908239db715378d8b8d435",
+      "exact_source_match": true,
+      "log_first_line": 255,
+      "log_last_line": 1157
+    },
+    {
+      "step": "Test",
+      "number": 7,
+      "command": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"/Users/runner/work/yamaha-cs80/yamaha-cs80/build/ctest-results.xml\"",
+      "command_sha256": "1eb05463234999cd422439cbf5218b0fa7466e311f17f307dc6e5038c5787b96",
+      "exact_source_match": true,
+      "log_first_line": 1158,
+      "log_last_line": 1739
+    },
+    {
+      "step": "Fetch pluginval 1.0.4",
+      "number": 8,
+      "command": "set -euo pipefail\npython3 scripts/download-pluginval-macos.py --output pluginval.zip --evidence pluginval-download.json\nunzip -q pluginval.zip -d pluginval\nxattr -dr com.apple.quarantine pluginval/pluginval.app || true\n./pluginval/pluginval.app/Contents/MacOS/pluginval --version",
+      "command_sha256": "12e45dade114401045006e06a31ad98bcb206f567e2fc4b24a27e5eb9166a0d9",
+      "exact_source_match": true,
+      "log_first_line": 1740,
+      "log_last_line": 1751
+    },
+    {
+      "step": "Register built AU",
+      "number": 9,
+      "command": "set -euo pipefail\nAU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\nAU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\ntest -d \"$AU_SOURCE\"\ncodesign --force --sign - \"$AU_SOURCE\"\nmkdir -p \"$HOME/Library/Audio/Plug-Ins/Components\"\nrm -rf \"$AU_DEST\"\ncp -R \"$AU_SOURCE\" \"$AU_DEST\"\ndiff -qr \"$AU_SOURCE\" \"$AU_DEST\"\nshasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n  \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-before-validation.sha256\nkillall -9 AudioComponentRegistrar || true\nsleep 2\nls -ld \"$AU_DEST\"",
+      "command_sha256": "95e60c3e7374c9f35fde87289c8c339e149960a61e2798d99fd867cdddcd280f",
+      "exact_source_match": true,
+      "log_first_line": 1752,
+      "log_last_line": 1771
+    },
+    {
+      "step": "Validate VST3 with pluginval",
+      "number": 10,
+      "command": "set -euo pipefail\nmkdir -p pluginval-reports\n./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n  --strictness-level 10 \\\n  --validate-in-process \\\n  --skip-gui-tests \\\n  --timeout-ms 120000 \\\n  --output-dir pluginval-reports \\\n  --output-filename cs80-vst3 \\\n  \"$PWD/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3\" \\\n  2>&1 | tee pluginval-vst3.log\ngrep -qx 'SUCCESS' pluginval-vst3.log",
+      "command_sha256": "3c5c46633fc766386d89ed781198493e935bf931423fda491dba9a1bb5352dd3",
+      "exact_source_match": true,
+      "log_first_line": 1772,
+      "log_last_line": 1925
+    },
+    {
+      "step": "Validate AU with pluginval",
+      "number": 11,
+      "command": "set -euo pipefail\n./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n  --strictness-level 10 \\\n  --validate-in-process \\\n  --skip-gui-tests \\\n  --timeout-ms 120000 \\\n  --output-dir pluginval-reports \\\n  --output-filename cs80-au \\\n  \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n  2>&1 | tee pluginval-au.log\ngrep -qx 'SUCCESS' pluginval-au.log",
+      "command_sha256": "cc39d19526a2ab9ac4aed32ef6587d3bbe11eb8e08326de7ecfeead8f3d607aa",
+      "exact_source_match": true,
+      "log_first_line": 1926,
+      "log_last_line": 2079
+    },
+    {
+      "step": "Validate AU with pluginval GUI",
+      "number": 12,
+      "command": "set -euo pipefail\n./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n  --strictness-level 10 \\\n  --validate-in-process \\\n  --timeout-ms 120000 \\\n  --output-dir pluginval-reports \\\n  --output-filename cs80-au-gui \\\n  \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n  2>&1 | tee pluginval-au-gui.log\ngrep -qx 'SUCCESS' pluginval-au-gui.log",
+      "command_sha256": "a2697f73e61e323fe454a80f88fb980ce36cc556f516d91ccc7160ecf032508d",
+      "exact_source_match": true,
+      "log_first_line": 2080,
+      "log_last_line": 2244
+    },
+    {
+      "step": "Validate AU GUI fixed-seed regression",
+      "number": 13,
+      "command": "set -euo pipefail\n./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n  --strictness-level 10 \\\n  --validate-in-process \\\n  --random-seed 0x2b4eef5 \\\n  --timeout-ms 120000 \\\n  --output-dir pluginval-reports \\\n  --output-filename cs80-au-seed-regression \\\n  \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n  2>&1 | tee pluginval-au-seed-regression.log\ngrep -qx 'SUCCESS' pluginval-au-seed-regression.log",
+      "command_sha256": "18ca5c5fc41166ee9008cb5a9bc5d8a6c9e63e8ee81d60a3bab9951e732898b2",
+      "exact_source_match": true,
+      "log_first_line": 2245,
+      "log_last_line": 2410
+    },
+    {
+      "step": "Validate AU GUI regression seed 0x3c99748",
+      "number": 14,
+      "command": "set -euo pipefail\n./pluginval/pluginval.app/Contents/MacOS/pluginval \\\n  --strictness-level 10 \\\n  --validate-in-process \\\n  --random-seed 0x3c99748 \\\n  --timeout-ms 120000 \\\n  --output-dir pluginval-reports \\\n  --output-filename cs80-au-seed-c76-regression \\\n  \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n  2>&1 | tee pluginval-au-seed-c76-regression.log\ngrep -qx 'SUCCESS' pluginval-au-seed-c76-regression.log",
+      "command_sha256": "1ebe852d620673ca2c8298ec648bda5091757688e8c861abfa6bad8e7fa335ee",
+      "exact_source_match": true,
+      "log_first_line": 2411,
+      "log_last_line": 2576
+    },
+    {
+      "step": "Package native macOS VST3, AU and Standalone",
+      "number": 15,
+      "command": "set -euo pipefail\nAU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\nAU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\n# Fail if validation or registration changed the copied AU's bytes\n# or resources relative to the bundle that will be packaged.\ndiff -qr \"$AU_SOURCE\" \"$AU_DEST\"\nshasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n  \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-after-validation.sha256\npython scripts/package-ci-artifacts.py --self-test\npython scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages",
+      "command_sha256": "eacf41d7677fbd855e8a473640c2516f22fb0e9d4027364434fa86f2cea9b136",
+      "exact_source_match": true,
+      "log_first_line": 2577,
+      "log_last_line": 2602
+    }
+  ],
+  "original_ctest_normal_exit": 0,
+  "ctest_exit_basis": "Original successful unsuppressed serial Test; all 283 ordered console results match bound JUnit/LastTest; normal terminal completion.",
+  "native_counts": {
+    "registered": 283,
+    "passed": 281,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "ctest_seconds": 2584.11,
+  "native_excerpts": {
+    "cs80_instrument_damper_tests": {
+      "seconds": 2.79227,
+      "terminal": "Instrument damper: 231 checks, 0 failures",
+      "output_sha256": "e70b242a8b4151da63eac237c0b8ae839513cc5e899dcf267b8ce85936ae1df9",
+      "selected_lines": [
+        "Instrument damper: 231 checks, 0 failures"
+      ]
+    },
+    "cs80_body_articulation_engine_tests": {
+      "seconds": 5.14247,
+      "terminal": "Body articulation integration: 284 checks, 0 failures",
+      "output_sha256": "1c0ac2dbe09c9b6fd8e1bbcca6b71bb78fb4924ab005e99efa3baac6a4646bd4",
+      "selected_lines": [
+        "Body articulation integration: 284 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_voicing_tests": {
+      "seconds": 15.2822,
+      "terminal": "Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated.",
+      "output_sha256": "d34dd2e90a2271ee7b24008db7f5f0f382c32ca10bc7a08bff5228191f5736be",
+      "selected_lines": [
+        "TINE      note 48: hard H3/root  -10.9 dB; hard/soft colour +18.1 dB; late/early colour   -9.9 dB",
+        "TINE      note 60: hard H3/root  -11.3 dB; hard/soft colour +19.3 dB; late/early colour  -12.4 dB",
+        "TINE      note 84: hard H3/root  -11.6 dB; hard/soft colour +19.2 dB; late/early colour  -19.8 dB",
+        "KEYS      Electric Piano I    onset overtones/root  -13.5 dB; held late/onset  -27.2 dB",
+        "KEYS      Electric Piano II   onset overtones/root  -13.6 dB; held late/onset  -27.0 dB",
+        "KEYS      Reed Piano          onset overtones/root   -4.4 dB; held late/onset  -29.2 dB",
+        "KEYS      Saw Pulse Piano     onset overtones/root   10.0 dB; held late/onset  -28.7 dB",
+        "KEYS      Stage Keys          onset overtones/root    0.5 dB; held late/onset  -30.8 dB",
+        "Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated."
+      ]
+    },
+    "cs80_library_audit_tests": {
+      "seconds": 407.167,
+      "terminal": "library audit passed: 301 curated + 222 original circuit programs",
+      "output_sha256": "92d497d25a67b77f88002e5375b05d33da59f042888b0866ee578c7de61b0b1b",
+      "selected_lines": [
+        "phrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS",
+        "library audit passed: 301 curated + 222 original circuit programs"
+      ]
+    },
+    "cs80_ui_smoke": {
+      "seconds": 147.856,
+      "output_sha256": "d84b1aa66421bd22ea68950c9ff71b1e952d4887b4a2ccbc74f500f23f705ceb",
+      "fixtures": [
+        [
+          "STRING 3 complete / STRING 2 inferred",
+          "1",
+          "0.0834435672",
+          "SAMPLE PEAK -21.6 dBFS READ-ONLY"
+        ],
+        [
+          "PANEL headroom",
+          "1",
+          "0.980465114",
+          "SAMPLE PEAK -2.5 dBFS READ-ONLY"
+        ]
+      ],
+      "selected_lines": [
+        "UI SMOKE TIMING: phase=instrument body host identity and recall seconds=7.088334 total_seconds=29.484681",
+        "source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0834435672, meter=SAMPLE PEAK -21.6 dBFS READ-ONLY",
+        "source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -2.5 dBFS READ-ONLY",
+        "UI SMOKE TIMING: phase=source performance captures seconds=4.883518 total_seconds=89.323623"
+      ],
+      "limitation": "This original native normal-timer pass does not explain earlier Intel failure or establish broad DAW compatibility."
+    }
+  },
+  "native_capability_skip_review": {
+    "status": "actual_skips_reviewed",
+    "reviewed": true,
+    "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+    "run_id": 45439302351,
+    "attempt": 1,
+    "job_id": 138605635495,
+    "target": "macos-x86_64",
+    "formal_skips": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      }
+    ],
+    "nested_python_skips": {
+      "total": 5,
+      "suites": [
+        {
+          "ctest_test": "cs80_package_binary_identity_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 13,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 13 tests in 0.188s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_packaging_notice_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 7,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 7 tests in 3.018s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [
+            "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+          ],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_windows_installer_preflight_tests",
+          "total": 2,
+          "summaries": [
+            {
+              "tests_run": 12,
+              "result": "OK",
+              "skipped": 2,
+              "summary": "Ran 12 tests in 2.131s\n\nOK (skipped=2)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_render_cli_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 7,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 7 tests in 0.428s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        }
+      ]
+    },
+    "individual_review": [
+      {
+        "test": "cs80_filter_batch_cap_tests",
+        "kind": "formal",
+        "count": 1,
+        "basis": "Actual AVX2 unavailable/disabled message; final source excludes native x86_64 AppleClang from the GNU-only backend; the original configure log identifies AppleClang. No CPU AVX2 availability claim is inferred. No SIMD qualification."
+      },
+      {
+        "test": "cs80_stereo_pra_exact_tests",
+        "kind": "formal",
+        "count": 1,
+        "basis": "Actual JUnit return-77 skip with empty stdout. Final source only runs the Linux x86_64 GNU14.2 ISA/FP specialization. No specialization qualification."
+      },
+      {
+        "test": "cs80_package_binary_identity_tests",
+        "kind": "nested",
+        "count": 1,
+        "basis": "Actual ...s......... maps to the native Windows junction fixture, guarded by os.name == nt."
+      },
+      {
+        "test": "cs80_packaging_notice_tests",
+        "kind": "nested",
+        "count": 1,
+        "basis": "Actual explicit skip for the native Linux amd64 Debian tools fixture."
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "kind": "nested",
+        "count": 2,
+        "basis": "Actual ...ss....... maps to the native Windows directory-junction and ISCC fixtures; both excluded on macOS."
+      },
+      {
+        "test": "cs80_render_cli_tests",
+        "kind": "nested",
+        "count": 1,
+        "basis": "Actual ..s.... maps to bounded-buffer resource-limit coverage. The frozen source admits unavailable RLIMIT_AS or an incompatible ASan cap; exact dynamic runtime reason is absent. The uncapped long-render write-failure case passed.",
+        "exact_runtime_skip_reason_retained": false
+      }
+    ],
+    "nonverbose_method_mapping": {
+      "cs80_package_binary_identity_tests": {
+        "source": "scripts/test-package-binary-identity.py",
+        "source_record": {
+          "path": "scripts/test-package-binary-identity.py",
+          "bytes": 11758,
+          "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480"
+        },
+        "method_order": [
+          "test_elf_pie_standalone",
+          "test_invalid_headers",
+          "test_malformed_fat_slices",
+          "test_native_windows_junction_is_rejected",
+          "test_other_elf_class_endian",
+          "test_pe_bad_offset_and_32bit",
+          "test_pe_optional_header_size",
+          "test_rejected_before_output",
+          "test_supported_targets",
+          "test_universal_macho",
+          "test_windows_reparse_rejected_before_walk_or_binary_read",
+          "test_wrong_image_kind",
+          "test_wrong_target_each_product"
+        ],
+        "actual_pattern": "...s.........",
+        "inferred_skipped_methods": [
+          "test_native_windows_junction_is_rejected"
+        ],
+        "inference": "Default unittest alphabetical method order plus exact original dot/skip pattern. Terminal summaries determine counts."
+      },
+      "cs80_windows_installer_preflight_tests": {
+        "source": "scripts/test-windows-installer-preflight.py",
+        "source_record": {
+          "path": "scripts/test-windows-installer-preflight.py",
+          "bytes": 10817,
+          "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4"
+        },
+        "method_order": [
+          "test_compile_guard_contract",
+          "test_linked_payload_rejected",
+          "test_missing_standalone",
+          "test_native_directory_junction_rejected",
+          "test_native_inno_accepts_valid_and_rejects_bad_payloads",
+          "test_non_pe_empty_and_truncated",
+          "test_pe32_optional_header",
+          "test_reparse_points_rejected_before_descent",
+          "test_resources_only_bundle",
+          "test_valid_pair_and_spaces",
+          "test_wrong_architecture_each_product",
+          "test_wrong_role_each_product"
+        ],
+        "actual_pattern": "...ss.......",
+        "inferred_skipped_methods": [
+          "test_native_directory_junction_rejected",
+          "test_native_inno_accepts_valid_and_rejects_bad_payloads"
+        ],
+        "inference": "Default unittest alphabetical method order plus exact original dot/skip pattern. Terminal summaries determine counts."
+      },
+      "cs80_render_cli_tests": {
+        "source": "tests/test_render_cli.py",
+        "source_record": {
+          "path": "tests/test_render_cli.py",
+          "bytes": 8752,
+          "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868"
+        },
+        "method_order": [
+          "test_buffered_write_failure_is_reported",
+          "test_help",
+          "test_long_render_has_bounded_buffers",
+          "test_long_render_stops_on_write_failure",
+          "test_only_shadow_reservation_is_recognized",
+          "test_rejected_before_output",
+          "test_supported_rates_match_wav"
+        ],
+        "actual_pattern": "..s....",
+        "inferred_skipped_methods": [
+          "test_long_render_has_bounded_buffers"
+        ],
+        "inference": "Default unittest alphabetical method order plus exact original dot/skip pattern. Terminal summaries determine counts."
+      }
+    },
+    "actual_lasttest": {
+      "path": "Testing/Temporary/LastTest.log",
+      "bytes": 403510,
+      "sha256": "dec2455c0e3ad4821b60aad4096194b63d5f5611e1696bef95657a802eef1ae0"
+    },
+    "counting": "Five nested Python skips remain separate from two formal CTest skips and 283 registered CTest executions.",
+    "platform_qualified": false,
+    "release_qualified": false
+  },
+  "juce": {
+    "checked_at": "2026-11-24T16:43:33Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+    "workflow_run": "45439302351",
+    "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "validator_invocations": 5,
+  "validator_retries": 0,
+  "original_validator_exit_basis": "Each successful original API step executes exact source set -euo pipefail/in-process/tee/terminal-SUCCESS-grep command; the complete original output equals the archived console and report body.",
+  "validator_outcomes": [
+    {
+      "lane": "vst3",
+      "step": "Validate VST3 with pluginval",
+      "strictness": 10,
+      "programs": 523,
+      "seed": "0x2e130f5",
+      "gui": false,
+      "original_normal_exit": 0,
+      "full_original_console_equals_archive": true,
+      "report_equals_console_body": true,
+      "console": {
+        "path": "pluginval-vst3.log",
+        "bytes": 7399,
+        "sha256": "c6649d32f44c5e0e67371bd093507bec7503638f936c7077e8aa9c9283abe210"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-vst3",
+        "bytes": 7272,
+        "sha256": "788c94df2065e4ef4059307a3876280c2f152f28bfff2d81aa76515e6d3035e1"
+      },
+      "retained_warnings": [],
+      "retained_optional_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "lane": "au",
+      "step": "Validate AU with pluginval",
+      "strictness": 10,
+      "programs": 523,
+      "seed": "0x51f28da",
+      "gui": false,
+      "original_normal_exit": 0,
+      "full_original_console_equals_archive": true,
+      "report_equals_console_body": true,
+      "console": {
+        "path": "pluginval-au.log",
+        "bytes": 7308,
+        "sha256": "eec50cad9e0c0ff2d6f8230eb0f634f645659c37aa80b496665a3b75f9e3cc34"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au",
+        "bytes": 7214,
+        "sha256": "78c0062ab19daf76da96ef2adda5f7afdf5c21019d7f948d682315aa09409b6a"
+      },
+      "retained_warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "retained_optional_skips": []
+    },
+    {
+      "lane": "au-gui",
+      "step": "Validate AU with pluginval GUI",
+      "strictness": 10,
+      "programs": 523,
+      "seed": "0x2cf9cfa",
+      "gui": true,
+      "original_normal_exit": 0,
+      "full_original_console_equals_archive": true,
+      "report_equals_console_body": true,
+      "console": {
+        "path": "pluginval-au-gui.log",
+        "bytes": 7990,
+        "sha256": "4e0fa1df007a7c3b1f5f3e7ab7f6f9d854ec82c8d698fe7efca94669f05e5a54"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au-gui",
+        "bytes": 7896,
+        "sha256": "ec895ab36dae25746d0432b4ba6e5e4bd43eb3cb13751d12fd800aa497e02e44"
+      },
+      "retained_warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "retained_optional_skips": []
+    },
+    {
+      "lane": "au-gui-seed",
+      "step": "Validate AU GUI fixed-seed regression",
+      "strictness": 10,
+      "programs": 523,
+      "seed": "0x2b4eef5",
+      "gui": true,
+      "original_normal_exit": 0,
+      "full_original_console_equals_archive": true,
+      "report_equals_console_body": true,
+      "console": {
+        "path": "pluginval-au-seed-regression.log",
+        "bytes": 7990,
+        "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au-seed-regression",
+        "bytes": 7896,
+        "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+      },
+      "retained_warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "retained_optional_skips": []
+    },
+    {
+      "lane": "au-gui-seed-c76",
+      "step": "Validate AU GUI regression seed 0x3c99748",
+      "strictness": 10,
+      "programs": 523,
+      "seed": "0x3c99748",
+      "gui": true,
+      "original_normal_exit": 0,
+      "full_original_console_equals_archive": true,
+      "report_equals_console_body": true,
+      "console": {
+        "path": "pluginval-au-seed-c76-regression.log",
+        "bytes": 7990,
+        "sha256": "42687c66e799c189ebb2f419f7be5f64e7ea9340bf79ec2ff4629af54e1a7591"
+      },
+      "report": {
+        "path": "pluginval-reports/cs80-au-seed-c76-regression",
+        "bytes": 7896,
+        "sha256": "fd738180a0eeb84e22b2df5a4790256e80eb7d3d59819968eddd13b05a76575f"
+      },
+      "retained_warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "retained_optional_skips": []
+    }
+  ],
+  "pluginval_download": {
+    "repository": "Tracktion/pluginval",
+    "version": "1.0.4",
+    "release_id": 188928656,
+    "asset_id": 210999197,
+    "asset_name": "pluginval_macOS.zip",
+    "expected_size": 9202795,
+    "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+    "attempts": [
+      {
+        "number": 1,
+        "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+        "reason": "downloaded",
+        "bytes": 9202795,
+        "final_host": "release-assets.githubusercontent.com",
+        "transfer_exit": 0
+      }
+    ],
+    "verified": true,
+    "actual_size": 9202795,
+    "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+  },
+  "pluginval_transport_attempts": 1,
+  "pluginval_transport_scope": "One downloader transport attempt is distinct from five validator invocations and zero validation retries.",
+  "whole_au_comparisons_passed": true,
+  "au_signing_before_copy_and_registration_verified": true,
+  "all_four_au_hashes_match_packaged_executable": true,
+  "au_packaged_executable_sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+  "au_hash_member": {
+    "path": "au-payload-before/after-validation.sha256",
+    "bytes": 378,
+    "sha256": "447b874249478fa8b79938bd567953ee750a66495e3afb7ca8c956c6103771db"
+  },
+  "au_binding_limit": "Complete original diff -qr checks ordinary-file content and membership. It does not prove ACL/xattr/ownership/signature validity; packaged modes are checked separately.",
+  "vst3_validated_bundle_identity_established": true,
+  "vst3_binding_basis": "Exact original validated build-tree VST3 path is the source-pinned packaging input. All intervening original commands are accounted for; no VST3 rebuild/mutation/retry. No independent VST3 before/after tree hash is claimed.",
+  "actual_native_binary_headers": [
+    {
+      "format": "AU",
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 15277632,
+      "sha256": "6d3a9d94d4b30257155ba7403f6a8178394e758a62bc1c73b5ebd57fdecf77cb",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 8,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    },
+    {
+      "format": "Standalone",
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14989824,
+      "sha256": "7e49454a74ed0a759b0ff76b94d0856f99f90de89a898dcd6c4e13576c030ee8",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 2,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    },
+    {
+      "format": "VST3",
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 15582128,
+      "sha256": "3f249eae318e82bf26036ca1aee612783d0025aa221eb868ba7c96791269d017",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "mach_o_filetype": 8,
+      "mode": "0o755",
+      "thin_native_x86_64": true
+    }
+  ],
+  "docs_notice_metadata_count": 13,
+  "docs_exact_source_comparisons": 10,
+  "source_contract_files": {
+    ".github/workflows/build.yml": {
+      "path": ".github/workflows/build.yml",
+      "bytes": 35439,
+      "sha256": "0598c603f4295d7df0a325c55eec8762f2d94964f85439c7a1e7875a673561a3"
+    },
+    "src/core/FactoryPresets.h": {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "11e320ac972e9d7be17d996eb8debc3c627dedc41430ca613b52d4025ae4b911"
+    },
+    "tests/InstrumentDamperTests.cpp": {
+      "path": "tests/InstrumentDamperTests.cpp",
+      "bytes": 20747,
+      "sha256": "238f492a2b1506c380be10a99777460f6b8176893efcbad48593d1c09a564b42"
+    },
+    "src/tools/ui_snapshot.cpp": {
+      "path": "src/tools/ui_snapshot.cpp",
+      "bytes": 219971,
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e"
+    },
+    "tests/FilterBatchCapTests.cpp": {
+      "path": "tests/FilterBatchCapTests.cpp",
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729"
+    },
+    "src/core/Ig00156Batch.h": {
+      "path": "src/core/Ig00156Batch.h",
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985"
+    },
+    "tests/StereoPraExactTests.cpp": {
+      "path": "tests/StereoPraExactTests.cpp",
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0"
+    },
+    "scripts/test-package-binary-identity.py": {
+      "path": "scripts/test-package-binary-identity.py",
+      "bytes": 11758,
+      "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480"
+    },
+    "scripts/test-windows-installer-preflight.py": {
+      "path": "scripts/test-windows-installer-preflight.py",
+      "bytes": 10817,
+      "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4"
+    },
+    "tests/test_render_cli.py": {
+      "path": "tests/test_render_cli.py",
+      "bytes": 8752,
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868"
+    },
+    "scripts/test-packaging-notices.py": {
+      "path": "scripts/test-packaging-notices.py",
+      "bytes": 15791,
+      "sha256": "6e1d98a57923108ebf72b1c9cc18d0f67c73793278119266bd84d5581263beea"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "path": "scripts/download-pluginval-macos.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/verify-ci-bundle.py": {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    "CMakeLists.txt": {
+      "path": "CMakeLists.txt",
+      "bytes": 223026,
+      "sha256": "c35a4babd601e73cfb8416bac9ee2c2128be66f0adce4a141a7ee2b84edad69a"
+    },
+    "tests/LibraryAuditTests.cpp": {
+      "path": "tests/LibraryAuditTests.cpp",
+      "bytes": 24006,
+      "sha256": "dcc551a97d0ba56ff84b51612585fc72c7ddbc50df87874a034708bd7d667d66"
+    },
+    "tests/PresetVoicingTests.cpp": {
+      "path": "tests/PresetVoicingTests.cpp",
+      "bytes": 26398,
+      "sha256": "c41457b6b490ec261eea69e2356e246da1e66ea8a1e69d10900e4d1bec1a6f4e"
+    },
+    "tests/BodyArticulationEngineTests.cpp": {
+      "path": "tests/BodyArticulationEngineTests.cpp",
+      "bytes": 14607,
+      "sha256": "918520b06a4a9a6c61f669a737bcb4e22121a46f2aae6be922957e05fd320db3"
+    }
+  },
+  "input_files": {
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/reviewed-input-pins.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/reviewed-input-pins.json",
+      "bytes": 1245,
+      "sha256": "e7593c38f45626dc03e55aac3c0fdb3826694e971f4a480a17427801e5123b23"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/run-api.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/run-api.json",
+      "bytes": 13474,
+      "sha256": "414875887471b2cedd789db62f5f530b297bdd568f7b966075b857b82640a035"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/attempt-api.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/attempt-api.json",
+      "bytes": 13496,
+      "sha256": "7fac02b73c24c2912c362a3d73aef5c25a3254f425573a857f83f2fa014a8824"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/jobs-api.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/jobs-api.json",
+      "bytes": 16320,
+      "sha256": "48bb900c393a08c7e24da8adbd268caf55c9fb6f405d165ffbd890dc057fd29e"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/artifacts-api.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/artifacts-api.json",
+      "bytes": 5054,
+      "sha256": "8ac3818a365c655f8e4a9c114fd9a2fa570efaa14cc3ee1c351f279e0be70eef"
+    },
+    "/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.json": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.json",
+      "bytes": 803,
+      "sha256": "758071a7737b022e69c31da95ead31c1be99122de5b5249f053e0d8aa1f9cacd"
+    },
+    "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json",
+      "bytes": 799,
+      "sha256": "71f9814e4e0af0e5d89f3a99c3304879b68906a32add2738b31de4680ed2cb2e"
+    },
+    "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.json": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946874694.json",
+      "bytes": 807,
+      "sha256": "b8efc81269e14ab5d139c2919489f7627f7e963e90e6a8fc177008b258939e79"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/observations.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/observations.json",
+      "bytes": 109177,
+      "sha256": "5ff5c2f3492436f04410a0f9faf6219c58b0b3a3e17c7468293e85547f64e8c1"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/native-contract.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/native-contract.json",
+      "bytes": 94279,
+      "sha256": "eb4826467c0204e74399e8dcfb279a3457cf1d7a573b4cdb023340fd7bbbea1c"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/parser-archive-binding.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/parser-archive-binding.json",
+      "bytes": 6506,
+      "sha256": "6685b2bb8664db080e947a3506efe44822620a0803fd23b092b3ed47c1b4e5ca"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a46-recovered/source-contract.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a46-recovered/source-contract.json",
+      "bytes": 96659,
+      "sha256": "1d656437f70edc4e889a7da31921ef0e5a64d095f170576d4eae77da752eb074"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/install-acceptance.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/install-acceptance.json",
+      "bytes": 14212,
+      "sha256": "64afae97427aef127730a1a4933d541895afc2232264e3d3388d47ed19f5a013"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/archive-payload-binding.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/archive-payload-binding.json",
+      "bytes": 17446,
+      "sha256": "8a84a27955d19f740c2cd3df24933270f2e90ea1488ff2d4ae7abc9295bca01a"
+    },
+    "/tmp/cs80-614c8ce056b7-notes/a49-recovered/docs-and-notices.json": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/docs-and-notices.json",
+      "bytes": 35331,
+      "sha256": "18a65c704f758cdfbf8986de72beec44a638b9bff9fa624c82bf1e4f7f035a9e"
+    }
+  },
+  "platform_qualified": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false
+}

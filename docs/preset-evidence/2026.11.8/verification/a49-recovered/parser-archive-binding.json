@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "status": "parser_archive_and_member_input_binding_verified",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "run_id": 45439302351,
+  "attempt_context": 1,
+  "target": "macos-x86_64",
+  "parser_archive_binding_verified": true,
+  "native_results_accepted": false,
+  "original_attempt_binding_verified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "parser_source_path": "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+  "parser_sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+  "historical_source_parser_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+  "historical_source_parser_sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+  "checker_sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11",
+  "bindings": [
+    {
+      "kind": "native",
+      "parser_archive_record": {
+        "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.zip",
+        "bytes": 89932,
+        "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14947404390,
+        "name": "cs80-macos-15-intel-test-evidence",
+        "bytes": 89932,
+        "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "junit",
+          "path": "ctest-results.xml",
+          "bytes": 144552,
+          "sha256": "8d8479530f41ab34fbc8544aa515c35a59e0e8a5a56d91122081d2393d1c64b7"
+        },
+        {
+          "role": "lasttest",
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 403510,
+          "sha256": "dec2455c0e3ad4821b60aad4096194b63d5f5611e1696bef95657a802eef1ae0"
+        },
+        {
+          "role": "juce_provenance",
+          "path": "ci-juce-provenance.txt",
+          "bytes": 612,
+          "sha256": "3a7f9b63b1ac212baed0a1904e94169d0c1195750a817de58522657709ea2a43"
+        }
+      ]
+    },
+    {
+      "kind": "validator",
+      "parser_archive_record": {
+        "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip",
+        "bytes": 12719,
+        "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14946709999,
+        "name": "cs80-pluginval-macos-15-intel",
+        "bytes": 12719,
+        "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "validator_version",
+          "path": "pluginval-download.json",
+          "bytes": 694,
+          "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c"
+        },
+        {
+          "role": "vst3/console",
+          "path": "pluginval-vst3.log",
+          "bytes": 7399,
+          "sha256": "c6649d32f44c5e0e67371bd093507bec7503638f936c7077e8aa9c9283abe210"
+        },
+        {
+          "role": "vst3/report",
+          "path": "pluginval-reports/cs80-vst3",
+          "bytes": 7272,
+          "sha256": "788c94df2065e4ef4059307a3876280c2f152f28bfff2d81aa76515e6d3035e1"
+        },
+        {
+          "role": "au/console",
+          "path": "pluginval-au.log",
+          "bytes": 7308,
+          "sha256": "eec50cad9e0c0ff2d6f8230eb0f634f645659c37aa80b496665a3b75f9e3cc34"
+        },
+        {
+          "role": "au/report",
+          "path": "pluginval-reports/cs80-au",
+          "bytes": 7214,
+          "sha256": "78c0062ab19daf76da96ef2adda5f7afdf5c21019d7f948d682315aa09409b6a"
+        },
+        {
+          "role": "au-gui/console",
+          "path": "pluginval-au-gui.log",
+          "bytes": 7990,
+          "sha256": "4e0fa1df007a7c3b1f5f3e7ab7f6f9d854ec82c8d698fe7efca94669f05e5a54"
+        },
+        {
+          "role": "au-gui/report",
+          "path": "pluginval-reports/cs80-au-gui",
+          "bytes": 7896,
+          "sha256": "ec895ab36dae25746d0432b4ba6e5e4bd43eb3cb13751d12fd800aa497e02e44"
+        },
+        {
+          "role": "au-gui-seed/console",
+          "path": "pluginval-au-seed-regression.log",
+          "bytes": 7990,
+          "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+        },
+        {
+          "role": "au-gui-seed/report",
+          "path": "pluginval-reports/cs80-au-seed-regression",
+          "bytes": 7896,
+          "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+        },
+        {
+          "role": "au-gui-seed-c76/console",
+          "path": "pluginval-au-seed-c76-regression.log",
+          "bytes": 7990,
+          "sha256": "42687c66e799c189ebb2f419f7be5f64e7ea9340bf79ec2ff4629af54e1a7591"
+        },
+        {
+          "role": "au-gui-seed-c76/report",
+          "path": "pluginval-reports/cs80-au-seed-c76-regression",
+          "bytes": 7896,
+          "sha256": "fd738180a0eeb84e22b2df5a4790256e80eb7d3d59819968eddd13b05a76575f"
+        }
+      ]
+    }
+  ],
+  "inputs": {
+    "observations": {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a49-recovered/observations.json",
+      "bytes": 109177,
+      "sha256": "5ff5c2f3492436f04410a0f9faf6219c58b0b3a3e17c7468293e85547f64e8c1"
+    },
+    "native_zip": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.zip",
+      "bytes": 89932,
+      "sha256": "5d4dc86a704d09d4921e84061ed5e6ae90315700565c1a19b1c35fcceffffbe8"
+    },
+    "native_api": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14947404390.json",
+      "bytes": 803,
+      "sha256": "758071a7737b022e69c31da95ead31c1be99122de5b5249f053e0d8aa1f9cacd"
+    },
+    "validator_zip": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.zip",
+      "bytes": 12719,
+      "sha256": "41b9577b65b5c093361fdf190732d224fc579c1467df8213f6a00852cb30562c"
+    },
+    "validator_api": {
+      "path": "/mnt/data/cs80-614c8ce056b7-a49/artifact-14946709999.json",
+      "bytes": 799,
+      "sha256": "71f9814e4e0af0e5d89f3a99c3304879b68906a32add2738b31de4680ed2cb2e"
+    }
+  },
+  "limits": [
+    "Supplied API authenticity and exact producing attempt require the original external acquisition/job/upload gates.",
+    "This checks actual input identities, including parsed member bytes; it does not accept test counts, skips, lane results, exits, retries or payload equivalence.",
+    "Retain the raw parser release_qualified:false field unchanged."
+  ]
+}

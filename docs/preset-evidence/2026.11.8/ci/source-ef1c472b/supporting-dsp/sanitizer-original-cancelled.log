@@ -1,0 +1,1192 @@
+﻿2026-11-24T16:39:33.0940143Z Current runner version: '2.338.2'
+2026-11-24T16:39:33.0965816Z ##[group]Runner Image Provisioner
+2026-11-24T16:39:33.0966700Z Hosted Compute Agent
+2026-11-24T16:39:33.0967410Z Version: 20261111.635
+2026-11-24T16:39:33.0968071Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-24T16:39:33.0968844Z Build Date: 2026-11-11T01:49:01Z
+2026-11-24T16:39:33.0969605Z Worker ID: {39a0dfc9-0749-4bf6-985a-c13655227943}
+2026-11-24T16:39:33.0970333Z Region: chilecentral
+2026-11-24T16:39:33.0971006Z Cloud: Azure
+2026-11-24T16:39:33.0971928Z ##[endgroup]
+2026-11-24T16:39:33.0973540Z ##[group]Operating System
+2026-11-24T16:39:33.0974392Z Ubuntu
+2026-11-24T16:39:33.0974944Z 24.04.5
+2026-11-24T16:39:33.0975525Z LTS
+2026-11-24T16:39:33.0976059Z ##[endgroup]
+2026-11-24T16:39:33.0976601Z ##[group]Runner Image
+2026-11-24T16:39:33.0977314Z Image: ubuntu-24.04
+2026-11-24T16:39:33.0977898Z Version: 20261116.376.1
+2026-11-24T16:39:33.0979237Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-24T16:39:33.0980833Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-24T16:39:33.0982426Z ##[endgroup]
+2026-11-24T16:39:33.0983592Z ##[group]GITHUB_TOKEN Permissions
+2026-11-24T16:39:33.0985845Z Contents: read
+2026-11-24T16:39:33.0986474Z Metadata: read
+2026-11-24T16:39:33.0987487Z ##[endgroup]
+2026-11-24T16:39:33.0989673Z Secret source: Actions
+2026-11-24T16:39:33.0990701Z Cache mode: write
+2026-11-24T16:39:33.0991819Z Prepare workflow directory
+2026-11-24T16:39:33.1323215Z Prepare all required actions
+2026-11-24T16:39:33.1373306Z Getting action download info
+2026-11-24T16:39:33.6382983Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-24T16:39:33.8300811Z Complete job name: sanitizers
+2026-11-24T16:39:33.9262972Z ##[group]Run actions/checkout@v5
+2026-11-24T16:39:33.9263901Z with:
+2026-11-24T16:39:33.9264407Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T16:39:33.9268352Z   token: ***
+2026-11-24T16:39:33.9268841Z   ssh-strict: true
+2026-11-24T16:39:33.9269307Z   ssh-user: git
+2026-11-24T16:39:33.9269785Z   persist-credentials: true
+2026-11-24T16:39:33.9270288Z   clean: true
+2026-11-24T16:39:33.9270767Z   sparse-checkout-cone-mode: true
+2026-11-24T16:39:33.9271609Z   fetch-depth: 1
+2026-11-24T16:39:33.9272146Z   fetch-tags: false
+2026-11-24T16:39:33.9272620Z   show-progress: true
+2026-11-24T16:39:33.9273086Z   lfs: false
+2026-11-24T16:39:33.9273559Z   submodules: false
+2026-11-24T16:39:33.9274025Z   set-safe-directory: true
+2026-11-24T16:39:33.9274561Z   allow-unsafe-pr-checkout: false
+2026-11-24T16:39:33.9275393Z ##[endgroup]
+2026-11-24T16:39:34.1952939Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T16:39:34.1955415Z ##[group]Getting Git version info
+2026-11-24T16:39:34.1956389Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T16:39:34.1958065Z [command]/usr/bin/git version
+2026-11-24T16:39:34.2049514Z git version 2.56.1
+2026-11-24T16:39:34.2072693Z ##[endgroup]
+2026-11-24T16:39:34.2090267Z Temporarily overriding HOME='/home/runner/work/_temp/98aaee30-e431-4538-8502-21c00f2d726e' before making global git config changes
+2026-11-24T16:39:34.2092947Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T16:39:34.2104258Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T16:39:34.2159004Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T16:39:34.2170967Z ##[group]Initializing the repository
+2026-11-24T16:39:34.2172868Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T16:39:34.2269276Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-24T16:39:34.2270939Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-24T16:39:34.2275211Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-24T16:39:34.2276500Z hint: call:
+2026-11-24T16:39:34.2277522Z hint:
+2026-11-24T16:39:34.2278714Z hint: 	git config --global init.defaultBranch <name>
+2026-11-24T16:39:34.2279934Z hint:
+2026-11-24T16:39:34.2281177Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-24T16:39:34.2283068Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-24T16:39:34.2284739Z hint:
+2026-11-24T16:39:34.2285647Z hint: 	git branch -m <name>
+2026-11-24T16:39:34.2286318Z hint:
+2026-11-24T16:39:34.2287205Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-24T16:39:34.2288490Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-24T16:39:34.2292450Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T16:39:34.2361983Z ##[endgroup]
+2026-11-24T16:39:34.2363420Z ##[group]Disabling automatic garbage collection
+2026-11-24T16:39:34.2367554Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-24T16:39:34.2437196Z ##[endgroup]
+2026-11-24T16:39:34.2439124Z ##[group]Setting up auth
+2026-11-24T16:39:34.2450218Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T16:39:34.2486560Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T16:39:34.2954310Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T16:39:34.3013557Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T16:39:34.3277352Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T16:39:34.3322038Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T16:39:34.3562436Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-24T16:39:34.3610489Z ##[endgroup]
+2026-11-24T16:39:34.3611740Z ##[group]Fetching the repository
+2026-11-24T16:39:34.3623667Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ef1c472b161c37c490945f7c469086508aae6aef:refs/remotes/origin/main
+2026-11-24T16:39:42.4092092Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T16:39:42.4094046Z  * [new ref]         ef1c472b161c37c490945f7c469086508aae6aef -> origin/main
+2026-11-24T16:39:42.4097839Z ##[endgroup]
+2026-11-24T16:39:42.4098770Z ##[group]Determining the checkout info
+2026-11-24T16:39:42.4102370Z ##[endgroup]
+2026-11-24T16:39:42.4109280Z [command]/usr/bin/git sparse-checkout disable
+2026-11-24T16:39:42.4183489Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-24T16:39:42.4223324Z ##[group]Checking out the ref
+2026-11-24T16:39:42.4237087Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-24T16:39:43.4451814Z Updating files:  94% (11247/11912)
+2026-11-24T16:39:43.4521923Z Updating files:  95% (11317/11912)
+2026-11-24T16:39:43.4581566Z Updating files:  96% (11436/11912)
+2026-11-24T16:39:43.4749966Z Updating files:  97% (11555/11912)
+2026-11-24T16:39:43.4820927Z Updating files:  98% (11674/11912)
+2026-11-24T16:39:43.4916503Z Updating files:  99% (11793/11912)
+2026-11-24T16:39:43.4917146Z Updating files: 100% (11912/11912)
+2026-11-24T16:39:43.4917777Z Updating files: 100% (11912/11912), done.
+2026-11-24T16:39:43.5048558Z Switched to a new branch 'main'
+2026-11-24T16:39:43.5056766Z branch 'main' set up to track 'origin/main'.
+2026-11-24T16:39:43.5117805Z ##[endgroup]
+2026-11-24T16:39:43.5173713Z [command]/usr/bin/git log -1 --format=%H
+2026-11-24T16:39:43.5207041Z ef1c472b161c37c490945f7c469086508aae6aef
+2026-11-24T16:39:43.5440094Z ##[group]Run cmake -S . -B build-sanitizers -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCS80_BUILD_PLUGIN=OFF -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" -DCS80_TEST_TIMEOUT_SCALE=4
+2026-11-24T16:39:43.5442465Z [36;1mcmake -S . -B build-sanitizers -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCS80_BUILD_PLUGIN=OFF -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" -DCS80_TEST_TIMEOUT_SCALE=4[0m
+2026-11-24T16:39:43.5467214Z shell: /usr/bin/bash -e {0}
+2026-11-24T16:39:43.5467539Z ##[endgroup]
+2026-11-24T16:39:43.7294903Z -- The C compiler identification is GNU 13.3.0
+2026-11-24T16:39:43.9905632Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-24T16:39:44.0051186Z -- Detecting C compiler ABI info
+2026-11-24T16:39:44.1096216Z -- Detecting C compiler ABI info - done
+2026-11-24T16:39:44.1283862Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-24T16:39:44.1289741Z -- Detecting C compile features
+2026-11-24T16:39:44.1297357Z -- Detecting C compile features - done
+2026-11-24T16:39:44.1427811Z -- Detecting CXX compiler ABI info
+2026-11-24T16:39:44.2353370Z -- Detecting CXX compiler ABI info - done
+2026-11-24T16:39:44.2545680Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-24T16:39:44.2549704Z -- Detecting CXX compile features
+2026-11-24T16:39:44.2556945Z -- Detecting CXX compile features - done
+2026-11-24T16:39:44.4072301Z -- Found Python3: /usr/bin/python3.12 (found suitable version "3.12.3", minimum required is "3.10") found components: Interpreter
+2026-11-24T16:39:44.4102237Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-24T16:39:44.5117974Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-11-24T16:39:44.5128528Z -- Found Threads: TRUE
+2026-11-24T16:39:44.5340728Z -- Configuring done (0.9s)
+2026-11-24T16:39:44.8008689Z -- Generating done (0.3s)
+2026-11-24T16:39:44.8012219Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build-sanitizers
+2026-11-24T16:39:44.8148677Z ##[group]Run cmake --build build-sanitizers --parallel 4
+2026-11-24T16:39:44.8149132Z [36;1mcmake --build build-sanitizers --parallel 4[0m
+2026-11-24T16:39:44.8169877Z shell: /usr/bin/bash -e {0}
+2026-11-24T16:39:44.8170139Z ##[endgroup]
+2026-11-24T16:39:44.8570060Z [  0%] Building CXX object CMakeFiles/cs80_event_timeline_tests.dir/tests/EventTimelineTests.cpp.o
+2026-11-24T16:39:44.8574322Z [  2%] Building CXX object CMakeFiles/cs80_ig00151_zero_ei_tests.dir/tests/Ig00151ZeroEiTests.cpp.o
+2026-11-24T16:39:44.8576050Z [  2%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-24T16:39:44.8577935Z [  2%] Building CXX object CMakeFiles/cs80_pump_until_tests.dir/tests/PumpUntilTests.cpp.o
+2026-11-24T16:39:45.6362865Z [  2%] Linking CXX executable cs80_ig00151_zero_ei_tests
+2026-11-24T16:39:45.7262875Z [  2%] Built target cs80_ig00151_zero_ei_tests
+2026-11-24T16:39:45.7362914Z [  3%] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o
+2026-11-24T16:39:46.6262907Z [  3%] Linking CXX executable cs80_event_timeline_tests
+2026-11-24T16:39:46.7152908Z [  3%] Built target cs80_event_timeline_tests
+2026-11-24T16:39:46.7252828Z [  3%] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o
+2026-11-24T16:39:46.8896771Z [  4%] Linking CXX executable cs80_pump_until_tests
+2026-11-24T16:39:46.9778832Z [  4%] Built target cs80_pump_until_tests
+2026-11-24T16:39:46.9889760Z [  4%] Building CXX object CMakeFiles/cs80_lfo_scope_preview_tests.dir/tests/LfoScopePreviewTests.cpp.o
+2026-11-24T16:39:48.5722838Z [  4%] Linking CXX executable cs80_lfo_scope_preview_tests
+2026-11-24T16:39:48.6544524Z [  4%] Built target cs80_lfo_scope_preview_tests
+2026-11-24T16:39:48.6653013Z [  4%] Building CXX object CMakeFiles/cs80_preset_preview_math_tests.dir/tests/PresetPreviewMathTests.cpp.o
+2026-11-24T16:39:49.1602936Z [  5%] Linking CXX executable cs80_preset_preview_math_tests
+2026-11-24T16:39:49.2512480Z [  5%] Built target cs80_preset_preview_math_tests
+2026-11-24T16:39:49.2602822Z [  5%] Building CXX object CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o
+2026-11-24T16:39:50.0082658Z [  5%] Linking CXX executable cs80_output_meter_display_tests
+2026-11-24T16:39:50.0892416Z [  5%] Built target cs80_output_meter_display_tests
+2026-11-24T16:39:50.0982894Z [  5%] Building CXX object CMakeFiles/cs80_voice_activity_tests.dir/tests/VoiceActivityTests.cpp.o
+2026-11-24T16:39:51.1662790Z [  5%] Linking CXX executable cs80_continuous_voice_circuit_tests
+2026-11-24T16:39:51.2922635Z [  5%] Linking CXX executable cs80_voice_activity_tests
+2026-11-24T16:39:51.3532688Z [  5%] Built target cs80_continuous_voice_circuit_tests
+2026-11-24T16:39:51.3702728Z [  5%] Building CXX object CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o
+2026-11-24T16:39:51.3862176Z [  5%] Built target cs80_voice_activity_tests
+2026-11-24T16:39:51.3892208Z [  5%] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-24T16:39:51.4212702Z [  5%] Building CXX object CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o
+2026-11-24T16:39:52.7012586Z [  6%] Linking CXX executable cs80_output_meter_tests
+2026-11-24T16:39:52.8512403Z [  6%] Built target cs80_output_meter_tests
+2026-11-24T16:39:52.8692809Z [  7%] Building CXX object CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o
+2026-11-24T16:39:53.9660115Z [  7%] Linking CXX executable cs80_continuous_voice_circuit_audit_tests
+2026-11-24T16:39:54.0722585Z [  7%] Built target cs80_continuous_voice_circuit_audit_tests
+2026-11-24T16:39:54.0812778Z [  8%] Building CXX object CMakeFiles/cs80_captured_keyboard_events_tests.dir/tests/CapturedKeyboardEventsTests.cpp.o
+2026-11-24T16:39:54.5182720Z [  9%] Linking CXX executable cs80_output_meter_audit_tests
+2026-11-24T16:39:54.6032734Z [  9%] Built target cs80_output_meter_audit_tests
+2026-11-24T16:39:54.6060766Z [  9%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-24T16:39:55.6503123Z [  9%] Linking CXX executable cs80_captured_keyboard_events_tests
+2026-11-24T16:39:55.7362672Z [  9%] Built target cs80_captured_keyboard_events_tests
+2026-11-24T16:39:55.7472706Z [  9%] Building CXX object CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o
+2026-11-24T16:39:58.4462512Z [  9%] Linking CXX executable cs80_keyboard_event_queue_tests
+2026-11-24T16:39:58.4697399Z [  9%] Linking CXX executable cs80_keyboard_pressure_audit_tests
+2026-11-24T16:39:58.5272455Z [  9%] Built target cs80_keyboard_event_queue_tests
+2026-11-24T16:39:58.5302249Z [  9%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-24T16:39:58.5674673Z [  9%] Built target cs80_keyboard_pressure_audit_tests
+2026-11-24T16:39:58.5815226Z [ 10%] Building CXX object CMakeFiles/cs80_filter_idle_fallback_tests.dir/tests/FilterIdleFallbackTests.cpp.o
+2026-11-24T16:40:03.9102596Z [ 10%] Linking CXX executable cs80_filter_idle_fallback_tests
+2026-11-24T16:40:04.0032440Z [ 10%] Built target cs80_filter_idle_fallback_tests
+2026-11-24T16:40:04.0142669Z [ 10%] Building CXX object CMakeFiles/cs80_filter_batch_cap_tests.dir/tests/FilterBatchCapTests.cpp.o
+2026-11-24T16:40:04.2692923Z [ 11%] Building CXX object CMakeFiles/cs80_filter_batch_cap_tests.dir/src/core/Ig00156Batch.cpp.o
+2026-11-24T16:40:09.7237893Z [ 12%] Building CXX object CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o
+2026-11-24T16:40:09.7762484Z [ 12%] Linking CXX executable cs80_filter_batch_cap_tests
+2026-11-24T16:40:09.8712685Z [ 12%] Built target cs80_filter_batch_cap_tests
+2026-11-24T16:40:09.8825204Z [ 13%] Building CXX object CMakeFiles/cs80_high_resolution_velocity_tests.dir/tests/HighResolutionVelocityTests.cpp.o
+2026-11-24T16:40:10.3737058Z [ 13%] Linking CXX executable cs80_high_resolution_velocity_tests
+2026-11-24T16:40:10.4831815Z [ 13%] Built target cs80_high_resolution_velocity_tests
+2026-11-24T16:40:10.4833041Z [ 13%] Building CXX object CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o
+2026-11-24T16:40:15.0302579Z [ 13%] Linking CXX executable cs80_ig00156_cache_tests
+2026-11-24T16:40:15.1202304Z [ 13%] Built target cs80_ig00156_cache_tests
+2026-11-24T16:40:15.1292575Z [ 13%] Building CXX object CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o
+2026-11-24T16:40:22.8712878Z [ 13%] Linking CXX executable cs80_experimental_oscillator_tests
+2026-11-24T16:40:22.9764686Z [ 13%] Built target cs80_experimental_oscillator_tests
+2026-11-24T16:40:22.9876254Z [ 13%] Building CXX object CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o
+2026-11-24T16:40:28.2012900Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:227,
+2026-11-24T16:40:28.2014156Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/FactoryPresets.cpp:244:
+2026-11-24T16:40:28.2073238Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Brass.inc: In function ‘void cs80::curated::buildBrass(Builder&)’:
+2026-11-24T16:40:28.2075454Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Brass.inc:31:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:40:28.2101869Z    31 | void buildBrass(Builder& add)
+2026-11-24T16:40:28.2131856Z       |      ^~~~~~~~~~
+2026-11-24T16:40:32.2642629Z [ 13%] Linking CXX executable cs80_hardware_control_tests
+2026-11-24T16:40:32.3592475Z [ 13%] Built target cs80_hardware_control_tests
+2026-11-24T16:40:32.3676784Z [ 13%] Building CXX object CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o
+2026-11-24T16:40:36.7992692Z [ 14%] Linking CXX executable cs80_source_factory_tone_tests
+2026-11-24T16:40:36.9082512Z [ 14%] Built target cs80_source_factory_tone_tests
+2026-11-24T16:40:36.9183420Z [ 15%] Building CXX object CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o
+2026-11-24T16:40:37.7112674Z [ 15%] Linking CXX executable cs80_ig00156_reference_tests
+2026-11-24T16:40:37.8032622Z [ 15%] Built target cs80_ig00156_reference_tests
+2026-11-24T16:40:37.8122795Z [ 16%] Building CXX object CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o
+2026-11-24T16:40:39.3632600Z [ 16%] Linking CXX executable cs80_keyboard_contour_reference_tests
+2026-11-24T16:40:39.4572364Z [ 16%] Built target cs80_keyboard_contour_reference_tests
+2026-11-24T16:40:39.4652724Z [ 16%] Building CXX object CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o
+2026-11-24T16:40:39.5064871Z [ 16%] Linking CXX executable cs80_loaded_control_reference_tests
+2026-11-24T16:40:39.5825908Z [ 16%] Built target cs80_loaded_control_reference_tests
+2026-11-24T16:40:39.5968741Z [ 16%] Building CXX object CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o
+2026-11-24T16:40:42.6832425Z [ 16%] Linking CXX executable cs80_loaded_control_rank_tests
+2026-11-24T16:40:42.7722489Z [ 16%] Built target cs80_loaded_control_rank_tests
+2026-11-24T16:40:42.7822673Z [ 16%] Building CXX object CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o
+2026-11-24T16:40:43.1652409Z [ 16%] Linking CXX executable cs80_loaded_control_transient_tests
+2026-11-24T16:40:43.2552471Z [ 16%] Built target cs80_loaded_control_transient_tests
+2026-11-24T16:40:43.2652485Z [ 16%] Building CXX object CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o
+2026-11-24T16:40:48.6972481Z [ 16%] Linking CXX executable cs80_output_taps_tests
+2026-11-24T16:40:48.7867545Z [ 16%] Built target cs80_output_taps_tests
+2026-11-24T16:40:48.7985130Z [ 17%] Building CXX object CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o
+2026-11-24T16:40:52.5122485Z [ 17%] Linking CXX executable cs80_output_tap_circuit_tests
+2026-11-24T16:40:52.6082503Z [ 17%] Built target cs80_output_tap_circuit_tests
+2026-11-24T16:40:52.6172569Z [ 17%] Building CXX object CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o
+2026-11-24T16:40:54.5872663Z [ 17%] Linking CXX executable cs80_level_control_tests
+2026-11-24T16:40:54.6772374Z [ 17%] Built target cs80_level_control_tests
+2026-11-24T16:40:54.6862614Z [ 17%] Building CXX object CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o
+2026-11-24T16:40:57.4512468Z [ 18%] Linking CXX executable cs80_resonance_control_tests
+2026-11-24T16:40:57.5432734Z [ 18%] Built target cs80_resonance_control_tests
+2026-11-24T16:40:57.5516827Z [ 18%] Building CXX object CMakeFiles/cs80_stereo_pra_exact_tests.dir/tests/StereoPraExactTests.cpp.o
+2026-11-24T16:40:57.5863038Z [ 18%] Linking CXX executable cs80_stereo_pra_exact_tests
+2026-11-24T16:40:57.6812591Z [ 18%] Built target cs80_stereo_pra_exact_tests
+2026-11-24T16:40:57.6912795Z [ 18%] Building CXX object CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o
+2026-11-24T16:41:01.1750652Z [ 18%] Linking CXX executable cs80_oe2_filters_tests
+2026-11-24T16:41:01.2655357Z [ 18%] Built target cs80_oe2_filters_tests
+2026-11-24T16:41:01.2766966Z [ 18%] Building CXX object CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o
+2026-11-24T16:41:04.9652585Z [ 19%] Linking CXX executable cs80_pra_wah_circuit_tests
+2026-11-24T16:41:05.0632637Z [ 19%] Built target cs80_pra_wah_circuit_tests
+2026-11-24T16:41:05.0716929Z [ 19%] Building CXX object CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o
+2026-11-24T16:41:07.4022601Z [ 20%] Linking CXX executable cs80_pra_wah_tests
+2026-11-24T16:41:07.4972615Z [ 20%] Built target cs80_pra_wah_tests
+2026-11-24T16:41:07.5072617Z [ 20%] Building CXX object CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o
+2026-11-24T16:41:09.9402539Z [ 20%] Linking CXX executable cs80_mn3001_packet_tests
+2026-11-24T16:41:10.0242612Z [ 20%] Built target cs80_mn3001_packet_tests
+2026-11-24T16:41:10.0343037Z [ 20%] Building CXX object CMakeFiles/cs80_ig00156_top_octave_tests.dir/tests/Ig00156TopOctaveTests.cpp.o
+2026-11-24T16:41:10.5052687Z [ 20%] Linking CXX executable cs80_bbd_chorus_tests
+2026-11-24T16:41:10.6062696Z [ 20%] Built target cs80_bbd_chorus_tests
+2026-11-24T16:41:10.6170026Z [ 20%] Building CXX object CMakeFiles/cs80_fx_loudness_core_tests.dir/tests/FxLoudnessCoreTests.cpp.o
+2026-11-24T16:41:12.0432663Z [ 20%] Linking CXX executable cs80_fx_loudness_core_tests
+2026-11-24T16:41:12.1392438Z [ 20%] Built target cs80_fx_loudness_core_tests
+2026-11-24T16:41:12.1502898Z [ 21%] Building CXX object CMakeFiles/cs80_fx_loudness_gate_tests.dir/tests/FxLoudnessGateTests.cpp.o
+2026-11-24T16:41:13.5622731Z [ 21%] Linking CXX executable cs80_fx_loudness_gate_tests
+2026-11-24T16:41:13.6532670Z [ 21%] Built target cs80_fx_loudness_gate_tests
+2026-11-24T16:41:13.6643134Z [ 22%] Building CXX object CMakeFiles/cs80_fx_tape_lifecycle_tests.dir/tests/FxTapeLifecycleTests.cpp.o
+2026-11-24T16:41:16.7162809Z [ 22%] Linking CXX executable cs80_ig00156_top_octave_tests
+2026-11-24T16:41:16.8102797Z [ 22%] Built target cs80_ig00156_top_octave_tests
+2026-11-24T16:41:16.8222668Z [ 22%] Building CXX object CMakeFiles/cs80_external_interpolator_tests.dir/tests/ExternalModulationInterpolatorTests.cpp.o
+2026-11-24T16:41:23.1112124Z [ 23%] Linking CXX executable cs80_external_interpolator_tests
+2026-11-24T16:41:23.2122545Z [ 23%] Built target cs80_external_interpolator_tests
+2026-11-24T16:41:23.2231995Z [ 23%] Building CXX object CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o
+2026-11-24T16:41:25.9522523Z [ 23%] Linking CXX executable cs80_fx_tape_lifecycle_tests
+2026-11-24T16:41:26.0612501Z [ 23%] Built target cs80_fx_tape_lifecycle_tests
+2026-11-24T16:41:26.0713026Z [ 23%] Building CXX object CMakeFiles/cs80_tuning_frequency_domain_tests.dir/tests/TuningFrequencyDomainTests.cpp.o
+2026-11-24T16:41:29.6892962Z [ 23%] Linking CXX executable cs80_host_automation_curve_tests
+2026-11-24T16:41:29.7842618Z [ 23%] Built target cs80_host_automation_curve_tests
+2026-11-24T16:41:29.7942668Z [ 23%] Building CXX object CMakeFiles/cs80_tuning_robustness_tests.dir/tests/TuningRobustnessTests.cpp.o
+2026-11-24T16:41:33.0655394Z [ 24%] Linking CXX executable cs80_tuning_frequency_domain_tests
+2026-11-24T16:41:33.1832358Z [ 24%] Built target cs80_tuning_frequency_domain_tests
+2026-11-24T16:41:33.1942643Z [ 24%] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o
+2026-11-24T16:41:34.3432934Z [ 24%] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-24T16:41:37.0472710Z [ 25%] Linking CXX executable cs80_mts_esp_native_tests
+2026-11-24T16:41:37.1318945Z [ 25%] Built target cs80_mts_esp_native_tests
+2026-11-24T16:41:37.1432477Z [ 26%] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o
+2026-11-24T16:41:38.3352707Z [ 26%] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-24T16:41:39.2154197Z [ 26%] Linking CXX executable cs80_mts_esp_fallback_tests
+2026-11-24T16:41:39.3021760Z [ 26%] Built target cs80_mts_esp_fallback_tests
+2026-11-24T16:41:39.3142498Z [ 26%] Building CXX object CMakeFiles/cs80_mts_esp_windows_macro_tests.dir/tests/MtsEspWindowsMacroTests.cpp.o
+2026-11-24T16:41:40.5620766Z [ 26%] Linking CXX executable cs80_mts_esp_windows_macro_tests
+2026-11-24T16:41:40.6392197Z [ 26%] Built target cs80_mts_esp_windows_macro_tests
+2026-11-24T16:41:40.6602597Z [ 26%] Building CXX object CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o
+2026-11-24T16:41:40.6624674Z [ 27%] Linking CXX executable cs80_tuning_robustness_tests
+2026-11-24T16:41:40.7706604Z [ 27%] Built target cs80_tuning_robustness_tests
+2026-11-24T16:41:40.7802904Z [ 27%] Building CXX object CMakeFiles/cs80_lfo_random_switching_tests.dir/tests/LfoRandomSwitchingTests.cpp.o
+2026-11-24T16:41:47.3402515Z [ 28%] Linking CXX executable cs80_oe2_stereo_chorus_tests
+2026-11-24T16:41:47.4326325Z [ 28%] Built target cs80_oe2_stereo_chorus_tests
+2026-11-24T16:41:47.4426002Z [ 29%] Building CXX object CMakeFiles/cs80_lfo_random_variable_rate_tests.dir/tests/LfoRandomVariableRateTests.cpp.o
+2026-11-24T16:41:47.8042027Z [ 29%] Linking CXX executable cs80_lfo_random_switching_tests
+2026-11-24T16:41:47.9042719Z [ 29%] Built target cs80_lfo_random_switching_tests
+2026-11-24T16:41:47.9142644Z [ 29%] Building CXX object CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o
+2026-11-24T16:41:49.2052942Z [ 29%] Building CXX object CMakeFiles/cs80_mseg_transport_rate_tests.dir/tests/MsegTransportRateTests.cpp.o
+2026-11-24T16:41:52.7110479Z [ 29%] Linking CXX executable cs80_lfo_random_variable_rate_tests
+2026-11-24T16:41:52.8294467Z [ 29%] Built target cs80_lfo_random_variable_rate_tests
+2026-11-24T16:41:52.8416304Z [ 29%] Building CXX object CMakeFiles/cs80_delay_line_tests.dir/tests/DelayLineTests.cpp.o
+2026-11-24T16:41:56.1172437Z [ 30%] Linking CXX executable cs80_delay_line_tests
+2026-11-24T16:41:56.2042537Z [ 30%] Built target cs80_delay_line_tests
+2026-11-24T16:41:56.2152717Z [ 30%] Building CXX object CMakeFiles/cs80_plate_reverb_rate_tests.dir/tests/PlateReverbRateTests.cpp.o
+2026-11-24T16:41:57.5402635Z [ 31%] Linking CXX executable cs80_mseg_transport_rate_tests
+2026-11-24T16:41:57.6332686Z [ 31%] Built target cs80_mseg_transport_rate_tests
+2026-11-24T16:41:57.6419904Z [ 31%] Building CXX object CMakeFiles/cs80_tape_echo_time_tests.dir/tests/TapeEchoTimeTests.cpp.o
+2026-11-24T16:41:57.6742593Z [ 31%] Linking CXX executable cs80_mseg_tests
+2026-11-24T16:41:57.7742672Z [ 31%] Built target cs80_mseg_tests
+2026-11-24T16:41:57.7843492Z [ 31%] Building CXX object CMakeFiles/cs80_drive_control_cache_tests.dir/tests/DriveControlCacheTests.cpp.o
+2026-11-24T16:42:00.1382664Z [ 31%] Linking CXX executable cs80_tape_echo_time_tests
+2026-11-24T16:42:00.2232389Z [ 31%] Built target cs80_tape_echo_time_tests
+2026-11-24T16:42:00.2332436Z [ 31%] Building CXX object CMakeFiles/cs80_ensemble_rate_cache_tests.dir/tests/EnsembleRateCacheTests.cpp.o
+2026-11-24T16:42:04.2362511Z [ 31%] Linking CXX executable cs80_drive_control_cache_tests
+2026-11-24T16:42:04.3342329Z [ 31%] Built target cs80_drive_control_cache_tests
+2026-11-24T16:42:04.3432586Z [ 31%] Building CXX object CMakeFiles/cs80_tape_echo_control_cache_tests.dir/tests/TapeEchoControlCacheTests.cpp.o
+2026-11-24T16:42:04.5262795Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:228:
+2026-11-24T16:42:04.5293189Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Strings.inc: In function ‘void cs80::curated::buildStrings(Builder&)’:
+2026-11-24T16:42:04.5323125Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Strings.inc:31:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:42:04.5332001Z    31 | void buildStrings(Builder& add)
+2026-11-24T16:42:04.5362063Z       |      ^~~~~~~~~~~~
+2026-11-24T16:42:05.4812965Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Strings.inc:31:6: note: variable tracking size limit exceeded
+2026-11-24T16:42:06.1127870Z [ 32%] Linking CXX executable cs80_ensemble_rate_cache_tests
+2026-11-24T16:42:06.2042474Z [ 32%] Built target cs80_ensemble_rate_cache_tests
+2026-11-24T16:42:06.2129399Z [ 32%] Building CXX object CMakeFiles/cs80_instrument_body_tests.dir/tests/InstrumentBodyTests.cpp.o
+2026-11-24T16:42:06.2852553Z [ 32%] Linking CXX executable cs80_plate_reverb_rate_tests
+2026-11-24T16:42:06.3782722Z [ 32%] Built target cs80_plate_reverb_rate_tests
+2026-11-24T16:42:06.3872767Z [ 32%] Building CXX object CMakeFiles/cs80_tine_strike_dynamics_tests.dir/tests/TineStrikeDynamicsTests.cpp.o
+2026-11-24T16:42:10.0042639Z [ 33%] Linking CXX executable cs80_tape_echo_control_cache_tests
+2026-11-24T16:42:10.1052393Z [ 33%] Built target cs80_tape_echo_control_cache_tests
+2026-11-24T16:42:10.1142447Z [ 33%] Building CXX object CMakeFiles/cs80_electric_pickup_tests.dir/tests/ElectricPickupTests.cpp.o
+2026-11-24T16:42:12.5572922Z [ 33%] Linking CXX executable cs80_tine_strike_dynamics_tests
+2026-11-24T16:42:12.6592487Z [ 33%] Built target cs80_tine_strike_dynamics_tests
+2026-11-24T16:42:12.6712470Z [ 33%] Building CXX object CMakeFiles/cs80_struck_body_dynamics_tests.dir/tests/StruckBodyDynamicsTests.cpp.o
+2026-11-24T16:42:17.6862618Z [ 33%] Linking CXX executable cs80_electric_pickup_tests
+2026-11-24T16:42:17.7852592Z [ 33%] Built target cs80_electric_pickup_tests
+2026-11-24T16:42:17.7962968Z [ 34%] Building CXX object CMakeFiles/cs80_instrument_body_variant_tests.dir/tests/InstrumentBodyVariantTests.cpp.o
+2026-11-24T16:42:18.3462653Z [ 34%] Linking CXX executable cs80_instrument_body_tests
+2026-11-24T16:42:18.4580522Z [ 34%] Built target cs80_instrument_body_tests
+2026-11-24T16:42:18.4750745Z [ 34%] Building CXX object CMakeFiles/cs80_vocal_body_tests.dir/tests/VocalBodyTests.cpp.o
+2026-11-24T16:42:21.5663932Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:229:
+2026-11-24T16:42:21.5694721Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Pads.inc: In function ‘void cs80::curated::buildPads(Builder&)’:
+2026-11-24T16:42:21.5696830Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Pads.inc:23:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:42:21.5698123Z    23 | void buildPads(Builder& add)
+2026-11-24T16:42:21.5698544Z       |      ^~~~~~~~~
+2026-11-24T16:42:21.6968649Z [ 34%] Linking CXX executable cs80_struck_body_dynamics_tests
+2026-11-24T16:42:21.7912416Z [ 34%] Built target cs80_struck_body_dynamics_tests
+2026-11-24T16:42:21.8002623Z [ 34%] Building CXX object CMakeFiles/cs80_bowed_body_formant_tests.dir/tests/BowedBodyFormantTests.cpp.o
+2026-11-24T16:42:26.8502682Z [ 35%] Linking CXX executable cs80_vocal_body_tests
+2026-11-24T16:42:26.9012806Z [ 35%] Linking CXX executable cs80_instrument_body_variant_tests
+2026-11-24T16:42:26.9552710Z [ 35%] Built target cs80_vocal_body_tests
+2026-11-24T16:42:26.9683508Z [ 35%] Building CXX object CMakeFiles/cs80_piano_course_geometry_tests.dir/tests/PianoCourseGeometryTests.cpp.o
+2026-11-24T16:42:27.0132431Z [ 35%] Built target cs80_instrument_body_variant_tests
+2026-11-24T16:42:27.0222647Z [ 35%] Building CXX object CMakeFiles/cs80_piano_partial_decay_tests.dir/tests/PianoPartialDecayTests.cpp.o
+2026-11-24T16:42:29.0142745Z [ 35%] Linking CXX executable cs80_bowed_body_formant_tests
+2026-11-24T16:42:29.1182649Z [ 35%] Built target cs80_bowed_body_formant_tests
+2026-11-24T16:42:29.1292835Z [ 35%] Building CXX object CMakeFiles/cs80_piano_hammer_contact_tests.dir/tests/PianoHammerContactTests.cpp.o
+2026-11-24T16:42:34.8967453Z [ 36%] Linking CXX executable cs80_piano_course_geometry_tests
+2026-11-24T16:42:34.9952453Z [ 36%] Built target cs80_piano_course_geometry_tests
+2026-11-24T16:42:35.0042536Z [ 36%] Building CXX object CMakeFiles/cs80_piano_treble_contact_tests.dir/tests/PianoTrebleContactTests.cpp.o
+2026-11-24T16:42:35.1232719Z [ 37%] Linking CXX executable cs80_piano_partial_decay_tests
+2026-11-24T16:42:35.2266360Z [ 37%] Built target cs80_piano_partial_decay_tests
+2026-11-24T16:42:35.2317930Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:230:
+2026-11-24T16:42:35.2343366Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Polysynth.inc: In function ‘void cs80::curated::buildPolysynth(Builder&)’:
+2026-11-24T16:42:35.2360539Z [ 38%] Building CXX object CMakeFiles/cs80_body_noise_rate_tests.dir/tests/BodyNoiseRateTests.cpp.o
+2026-11-24T16:42:35.2373369Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Polysynth.inc:22:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:42:35.2392053Z    22 | void buildPolysynth(Builder& add)
+2026-11-24T16:42:35.2422308Z       |      ^~~~~~~~~~~~~~
+2026-11-24T16:42:36.6502615Z [ 38%] Linking CXX executable cs80_piano_hammer_contact_tests
+2026-11-24T16:42:36.7480215Z [ 38%] Built target cs80_piano_hammer_contact_tests
+2026-11-24T16:42:36.7582934Z [ 38%] Building CXX object CMakeFiles/cs80_string_body_formant_tests.dir/tests/StringBodyFormantTests.cpp.o
+2026-11-24T16:42:41.8314581Z [ 38%] Linking CXX executable cs80_piano_treble_contact_tests
+2026-11-24T16:42:41.9303852Z [ 38%] Built target cs80_piano_treble_contact_tests
+2026-11-24T16:42:41.9422815Z [ 39%] Building CXX object CMakeFiles/cs80_low_choir_spectrum_tests.dir/tests/LowChoirSpectrumTests.cpp.o
+2026-11-24T16:42:42.9192590Z [ 39%] Linking CXX executable cs80_body_noise_rate_tests
+2026-11-24T16:42:43.0172595Z [ 39%] Built target cs80_body_noise_rate_tests
+2026-11-24T16:42:43.0292799Z [ 39%] Building CXX object CMakeFiles/cs80_wind_body_formant_tests.dir/tests/WindBodyFormantTests.cpp.o
+2026-11-24T16:42:45.1053619Z [ 40%] Linking CXX executable cs80_string_body_formant_tests
+2026-11-24T16:42:45.2072822Z [ 40%] Built target cs80_string_body_formant_tests
+2026-11-24T16:42:45.2182581Z [ 41%] Building CXX object CMakeFiles/cs80_material_body_tests.dir/tests/MaterialBodyTests.cpp.o
+2026-11-24T16:42:50.9052814Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:231:
+2026-11-24T16:42:50.9083288Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Keys.inc: In function ‘void cs80::curated::buildKeys(Builder&)’:
+2026-11-24T16:42:50.9102936Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Keys.inc:34:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:42:50.9104223Z    34 | void buildKeys(Builder& add)
+2026-11-24T16:42:50.9104638Z       |      ^~~~~~~~~
+2026-11-24T16:42:51.1462540Z [ 42%] Linking CXX executable cs80_wind_body_formant_tests
+2026-11-24T16:42:51.2422617Z [ 42%] Built target cs80_wind_body_formant_tests
+2026-11-24T16:42:51.2522393Z [ 42%] Building CXX object CMakeFiles/cs80_plucked_material_tests.dir/tests/PluckedMaterialTests.cpp.o
+2026-11-24T16:42:51.5594628Z [ 42%] Linking CXX executable cs80_low_choir_spectrum_tests
+2026-11-24T16:42:51.6680573Z [ 42%] Built target cs80_low_choir_spectrum_tests
+2026-11-24T16:42:51.6791325Z [ 42%] Building CXX object CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o
+2026-11-24T16:42:53.6994871Z [ 42%] Linking CXX executable cs80_material_body_tests
+2026-11-24T16:42:53.8019863Z [ 42%] Built target cs80_material_body_tests
+2026-11-24T16:42:53.8112791Z [ 43%] Building CXX object CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o
+2026-11-24T16:42:59.8934435Z [ 44%] Linking CXX executable cs80_source_factory_boundary_tests
+2026-11-24T16:42:59.9902463Z [ 44%] Built target cs80_source_factory_boundary_tests
+2026-11-24T16:42:59.9992424Z [ 44%] Building CXX object CMakeFiles/cs80_memory_panel_ports_tests.dir/tests/MemoryPanelPortsTests.cpp.o
+2026-11-24T16:43:00.4192572Z [ 44%] Linking CXX executable cs80_plucked_material_tests
+2026-11-24T16:43:00.5252491Z [ 44%] Built target cs80_plucked_material_tests
+2026-11-24T16:43:00.5362696Z [ 45%] Building CXX object CMakeFiles/cs80_memory_panel_port_map_tests.dir/tests/MemoryPanelPortMapTests.cpp.o
+2026-11-24T16:43:04.7112807Z [ 45%] Linking CXX executable cs80_memory_panel_tests
+2026-11-24T16:43:04.8182413Z [ 45%] Built target cs80_memory_panel_tests
+2026-11-24T16:43:04.8249923Z [ 45%] Building CXX object CMakeFiles/cs80_memory_control_routing_tests.dir/tests/MemoryControlRoutingTests.cpp.o
+2026-11-24T16:43:08.1124840Z In file included from /usr/include/c++/13/array:43,
+2026-11-24T16:43:08.1132165Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/HardwareControl.h:3,
+2026-11-24T16:43:08.1202955Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/SourceFactoryTones.h:3,
+2026-11-24T16:43:08.1212280Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/MemoryPanels.h:3,
+2026-11-24T16:43:08.1234958Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/reference/MemoryPanelNetwork.h:11,
+2026-11-24T16:43:08.1245802Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/src/reference/MemoryPanelPorts.h:5,
+2026-11-24T16:43:08.1272303Z                  from /home/runner/work/yamaha-cs80/yamaha-cs80/tests/MemoryPanelPortsTests.cpp:1:
+2026-11-24T16:43:08.1305404Z In static member function ‘static constexpr _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(_Tp*, _Tp*, _Up*) [with _Tp = const double; _Up = double; bool _IsMove = false]’,
+2026-11-24T16:43:08.1324010Z     inlined from ‘constexpr _OI std::__copy_move_a2(_II, _II, _OI) [with bool _IsMove = false; _II = const double*; _OI = double*]’ at /usr/include/c++/13/bits/stl_algobase.h:506:30,
+2026-11-24T16:43:08.1343340Z     inlined from ‘constexpr _OI std::__copy_move_a1(_II, _II, _OI) [with bool _IsMove = false; _II = const double*; _OI = double*]’ at /usr/include/c++/13/bits/stl_algobase.h:533:42,
+2026-11-24T16:43:08.1363500Z     inlined from ‘constexpr _OI std::__copy_move_a(_II, _II, _OI) [with bool _IsMove = false; _II = const double*; _OI = double*]’ at /usr/include/c++/13/bits/stl_algobase.h:540:31,
+2026-11-24T16:43:08.1413680Z     inlined from ‘constexpr _OI std::copy(_II, _II, _OI) [with _II = const double*; _OI = double*]’ at /usr/include/c++/13/bits/stl_algobase.h:633:7,
+2026-11-24T16:43:08.1443868Z     inlined from ‘constexpr void std::vector<_Tp, _Alloc>::_M_assign_aux(_ForwardIterator, _ForwardIterator, std::forward_iterator_tag) [with _ForwardIterator = const double*; _Tp = double; _Alloc = std::allocator<double>]’ at /usr/include/c++/13/bits/vector.tcc:341:15,
+2026-11-24T16:43:08.1473159Z     inlined from ‘constexpr std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(std::initializer_list<_Tp>) [with _Tp = double; _Alloc = std::allocator<double>]’ at /usr/include/c++/13/bits/stl_vector.h:790:21,
+2026-11-24T16:43:08.1486867Z     inlined from ‘int main()’ at /home/runner/work/yamaha-cs80/yamaha-cs80/tests/MemoryPanelPortsTests.cpp:78:71:
+2026-11-24T16:43:08.1523663Z /usr/include/c++/13/bits/stl_algobase.h:437:30: warning: ‘void* __builtin_memmove(void*, const void*, long unsigned int)’ reading between 9 and 9223372036854775807 bytes from a region of size 8 [-Wstringop-overread]
+2026-11-24T16:43:08.1552141Z   437 |             __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+2026-11-24T16:43:08.1562502Z       |             ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-24T16:43:08.1583116Z /home/runner/work/yamaha-cs80/yamaha-cs80/tests/MemoryPanelPortsTests.cpp: In function ‘int main()’:
+2026-11-24T16:43:08.1584677Z /home/runner/work/yamaha-cs80/yamaha-cs80/tests/MemoryPanelPortsTests.cpp:78:71: note: source object ‘<anonymous>’ of size 8
+2026-11-24T16:43:08.1586187Z    78 |         mp::Jacobian stale; stale.dimension = 123; stale.values = {1.0};
+2026-11-24T16:43:08.1587057Z       |                                                                       ^
+2026-11-24T16:43:09.2023031Z [ 45%] Linking CXX executable cs80_memory_panel_ports_tests
+2026-11-24T16:43:09.3072557Z [ 45%] Built target cs80_memory_panel_ports_tests
+2026-11-24T16:43:09.3142065Z [ 46%] Building CXX object CMakeFiles/cs80_memory_receiver_truth_tests.dir/tests/MemoryReceiverTruthTests.cpp.o
+2026-11-24T16:43:12.7234614Z [ 46%] Linking CXX executable cs80_memory_panel_port_map_tests
+2026-11-24T16:43:12.8352720Z [ 46%] Built target cs80_memory_panel_port_map_tests
+2026-11-24T16:43:12.8459619Z [ 46%] Building CXX object CMakeFiles/cs80_memory_qualification_probe.dir/tests/MemoryQualificationProbe.cpp.o
+2026-11-24T16:43:14.5812732Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:233:
+2026-11-24T16:43:14.5833524Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Winds.inc: In function ‘void cs80::curated::buildWinds(Builder&)’:
+2026-11-24T16:43:14.5873163Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Winds.inc:31:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:43:14.5892194Z    31 | void buildWinds(Builder& add)
+2026-11-24T16:43:14.5932584Z       |      ^~~~~~~~~~
+2026-11-24T16:43:23.1602619Z [ 46%] Linking CXX executable cs80_memory_receiver_truth_tests
+2026-11-24T16:43:23.2662443Z [ 46%] Built target cs80_memory_receiver_truth_tests
+2026-11-24T16:43:23.2762699Z [ 46%] Building CXX object CMakeFiles/cs80_memory_verified_diode_tests.dir/tests/MemoryVerifiedDiodeTests.cpp.o
+2026-11-24T16:43:24.2302116Z [ 46%] Linking CXX executable cs80_memory_control_routing_tests
+2026-11-24T16:43:24.3402408Z [ 46%] Built target cs80_memory_control_routing_tests
+2026-11-24T16:43:24.3492650Z [ 47%] Building CXX object CMakeFiles/cs80_memory_sparse_update_tests.dir/tests/MemorySparseUpdateTests.cpp.o
+2026-11-24T16:43:26.1022611Z [ 47%] Linking CXX executable cs80_memory_verified_diode_tests
+2026-11-24T16:43:26.1882577Z [ 47%] Built target cs80_memory_verified_diode_tests
+2026-11-24T16:43:26.1982769Z [ 47%] Building CXX object CMakeFiles/cs80_memory_sparse_probe.dir/tests/MemorySparseProbe.cpp.o
+2026-11-24T16:43:33.7362684Z [ 47%] Linking CXX executable cs80_memory_qualification_probe
+2026-11-24T16:43:33.8652942Z [ 47%] Built target cs80_memory_qualification_probe
+2026-11-24T16:43:33.8810087Z [ 47%] Building CXX object CMakeFiles/cs80_programmer_control_identity_tests.dir/tests/ProgrammerControlIdentityTests.cpp.o
+2026-11-24T16:43:35.3812671Z [ 47%] Linking CXX executable cs80_programmer_control_identity_tests
+2026-11-24T16:43:35.4732657Z [ 47%] Built target cs80_programmer_control_identity_tests
+2026-11-24T16:43:35.4852609Z [ 47%] Building CXX object CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o
+2026-11-24T16:43:39.4122546Z [ 48%] Linking CXX executable cs80_evidence_register_tests
+2026-11-24T16:43:39.5082631Z [ 48%] Built target cs80_evidence_register_tests
+2026-11-24T16:43:39.5202909Z [ 49%] Building CXX object CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o
+2026-11-24T16:43:41.1022510Z [ 49%] Linking CXX executable cs80_midi_learn_tests
+2026-11-24T16:43:41.1882415Z [ 49%] Built target cs80_midi_learn_tests
+2026-11-24T16:43:41.2002654Z [ 49%] Building CXX object CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o
+2026-11-24T16:43:44.1122692Z [ 49%] Linking CXX executable cs80_memory_sparse_probe
+2026-11-24T16:43:44.2202443Z [ 49%] Built target cs80_memory_sparse_probe
+2026-11-24T16:43:44.2302729Z [ 49%] Building CXX object CMakeFiles/cs80_callback_cpu_measurement_tests.dir/tests/CallbackCpuMeasurementTests.cpp.o
+2026-11-24T16:43:44.8742693Z [ 49%] Linking CXX executable cs80_callback_cpu_measurement_tests
+2026-11-24T16:43:44.9552438Z [ 49%] Built target cs80_callback_cpu_measurement_tests
+2026-11-24T16:43:44.9652587Z [ 49%] Building CXX object CMakeFiles/cs80_truth_render.dir/src/tools/truth_render.cpp.o
+2026-11-24T16:43:47.5352599Z [ 49%] Linking CXX executable cs80_memory_sparse_update_tests
+2026-11-24T16:43:47.6502557Z [ 49%] Built target cs80_memory_sparse_update_tests
+2026-11-24T16:43:47.6612819Z [ 50%] Building CXX object CMakeFiles/cs80_ig00156_step_diagnostics_tests.dir/tests/Ig00156StepDiagnosticsTests.cpp.o
+2026-11-24T16:43:48.4369391Z [ 51%] Linking CXX executable cs80_voice_continuity_probe
+2026-11-24T16:43:48.5362566Z [ 51%] Built target cs80_voice_continuity_probe
+2026-11-24T16:43:48.5458950Z [ 51%] Building CXX object CMakeFiles/cs80_truth_input_sha256_tests.dir/tests/TruthInputSha256Tests.cpp.o
+2026-11-24T16:43:50.0362613Z [ 52%] Linking CXX executable cs80_truth_input_sha256_tests
+2026-11-24T16:43:50.1192552Z [ 52%] Built target cs80_truth_input_sha256_tests
+2026-11-24T16:43:50.1282667Z [ 53%] Building CXX object CMakeFiles/cs80_amplitude_production_trace.dir/src/tools/amplitude_production_trace.cpp.o
+2026-11-24T16:43:50.2572610Z [ 53%] Linking CXX executable cs80_ig00156_step_diagnostics_tests
+2026-11-24T16:43:50.3442427Z [ 53%] Built target cs80_ig00156_step_diagnostics_tests
+2026-11-24T16:43:50.3562619Z [ 53%] Building CXX object CMakeFiles/cs80_amplitude_production_oracle.dir/tests/AmplitudeProductionOracle.cpp.o
+2026-11-24T16:43:51.7957017Z [ 53%] Linking CXX executable cs80_amplitude_production_oracle
+2026-11-24T16:43:51.8892762Z [ 53%] Built target cs80_amplitude_production_oracle
+2026-11-24T16:43:51.9009929Z [ 54%] Building CXX object CMakeFiles/cs80_filter_production_trace.dir/src/tools/filter_production_trace.cpp.o
+2026-11-24T16:43:54.4682778Z [ 54%] Linking CXX executable cs80_amplitude_production_trace
+2026-11-24T16:43:54.5592382Z [ 54%] Built target cs80_amplitude_production_trace
+2026-11-24T16:43:54.5692649Z [ 54%] Building CXX object CMakeFiles/cs80_filter_production_oracle.dir/tests/FilterProductionOracle.cpp.o
+2026-11-24T16:43:56.0882544Z [ 54%] Linking CXX executable cs80_filter_production_oracle
+2026-11-24T16:43:56.1922558Z [ 54%] Built target cs80_filter_production_oracle
+2026-11-24T16:43:56.2015023Z [ 54%] Building CXX object CMakeFiles/cs80_vca_reference.dir/src/tools/vca_reference.cpp.o
+2026-11-24T16:43:56.3672720Z [ 54%] Linking CXX executable cs80_filter_production_trace
+2026-11-24T16:43:56.4593172Z [ 54%] Built target cs80_filter_production_trace
+2026-11-24T16:43:56.4712577Z [ 54%] Building CXX object CMakeFiles/cs80_decimal_conversion_tests.dir/tests/DecimalConversionTests.cpp.o
+2026-11-24T16:44:00.0449764Z [ 54%] Linking CXX executable cs80_decimal_conversion_tests
+2026-11-24T16:44:00.1402492Z [ 54%] Built target cs80_decimal_conversion_tests
+2026-11-24T16:44:00.1492641Z [ 54%] Building CXX object CMakeFiles/cs80_decimal_conversion_locale_tests.dir/tests/DecimalConversionTests.cpp.o
+2026-11-24T16:44:01.7015250Z [ 54%] Linking CXX executable cs80_truth_render
+2026-11-24T16:44:01.8242676Z [ 54%] Built target cs80_truth_render
+2026-11-24T16:44:01.8347390Z [ 54%] Building CXX object CMakeFiles/cs80_float_wav_fixture.dir/tests/float_wav_fixture.cpp.o
+2026-11-24T16:44:04.0922641Z [ 55%] Linking CXX executable cs80_decimal_conversion_locale_tests
+2026-11-24T16:44:04.1932741Z [ 55%] Built target cs80_decimal_conversion_locale_tests
+2026-11-24T16:44:04.6263726Z [ 55%] Linking CXX executable cs80_float_wav_fixture
+2026-11-24T16:44:04.7115849Z [ 55%] Built target cs80_float_wav_fixture
+2026-11-24T16:44:05.6625719Z [ 55%] Linking CXX executable cs80_vca_reference
+2026-11-24T16:44:05.7343993Z [ 55%] Built target cs80_vca_reference
+2026-11-24T16:44:11.3512919Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:235:
+2026-11-24T16:44:11.3514419Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Bass.inc: In function ‘void cs80::curated::buildBass(Builder&)’:
+2026-11-24T16:44:11.3515834Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Bass.inc:25:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:44:11.3516745Z    25 | void buildBass(Builder& add)
+2026-11-24T16:44:11.3517053Z       |      ^~~~~~~~~
+2026-11-24T16:44:21.5603136Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:236:
+2026-11-24T16:44:21.5604844Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Leads.inc: In function ‘void cs80::curated::buildLeads(Builder&)’:
+2026-11-24T16:44:21.5606611Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Leads.inc:25:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:44:21.5607686Z    25 | void buildLeads(Builder& add)
+2026-11-24T16:44:21.5608033Z       |      ^~~~~~~~~~
+2026-11-24T16:44:44.1742665Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:237:
+2026-11-24T16:44:44.1745472Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Bells.inc: In function ‘void cs80::curated::buildBells(Builder&)’:
+2026-11-24T16:44:44.1746869Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Bells.inc:28:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:44:44.1747677Z    28 | void buildBells(Builder& add)
+2026-11-24T16:44:44.1747945Z       |      ^~~~~~~~~~
+2026-11-24T16:44:52.7822648Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:238:
+2026-11-24T16:44:52.7824351Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Fx.inc: In function ‘void cs80::curated::buildFx(Builder&)’:
+2026-11-24T16:44:52.7825962Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Fx.inc:25:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:44:52.7827000Z    25 | void buildFx(Builder& add)
+2026-11-24T16:44:52.7827331Z       |      ^~~~~~~
+2026-11-24T16:45:02.1768298Z In file included from /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/CuratedLibrary.inc:239:
+2026-11-24T16:45:02.1770551Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Modern.inc: In function ‘void cs80::curated::buildModern(Builder&)’:
+2026-11-24T16:45:02.1772979Z /home/runner/work/yamaha-cs80/yamaha-cs80/src/core/curated/Modern.inc:13:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+2026-11-24T16:45:02.1773966Z    13 | void buildModern(Builder& add)
+2026-11-24T16:45:02.1774294Z       |      ^~~~~~~~~~~
+2026-11-24T16:45:07.9343404Z [ 56%] Linking CXX static library libcs80_core.a
+2026-11-24T16:45:08.7237476Z [ 56%] Built target cs80_core
+2026-11-24T16:45:08.7336338Z [ 56%] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+2026-11-24T16:45:08.7353261Z [ 56%] Building CXX object CMakeFiles/cs80_engine_output_fir_packed_tests.dir/tests/EngineOutputFirPackedTests.cpp.o
+2026-11-24T16:45:08.7362011Z [ 56%] Building CXX object CMakeFiles/cs80_wsc_held_endpoint_tests.dir/tests/WscHeldEndpointTests.cpp.o
+2026-11-24T16:45:08.7392909Z [ 56%] Building CXX object CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o
+2026-11-24T16:45:09.8510876Z [ 56%] Linking CXX executable cs80_engine_output_fir_packed_tests
+2026-11-24T16:45:10.1102542Z [ 56%] Built target cs80_engine_output_fir_packed_tests
+2026-11-24T16:45:10.1192317Z [ 56%] Building CXX object CMakeFiles/cs80_ig00156_batch_tests.dir/tests/Ig00156BatchTests.cpp.o
+2026-11-24T16:45:12.6972677Z [ 56%] Linking CXX executable cs80_legacy_sub_lfo_oracle_tests
+2026-11-24T16:45:12.9640525Z [ 56%] Built target cs80_legacy_sub_lfo_oracle_tests
+2026-11-24T16:45:12.9762987Z [ 56%] Building CXX object CMakeFiles/cs80_filter_batch_engine_tests.dir/tests/FilterBatchEngineTests.cpp.o
+2026-11-24T16:45:13.2687160Z [ 57%] Linking CXX executable cs80_wsc_held_endpoint_tests
+2026-11-24T16:45:13.3582758Z [ 57%] Built target cs80_wsc_held_endpoint_tests
+2026-11-24T16:45:13.3672857Z [ 58%] Building CXX object CMakeFiles/cs80_filter_batch_scheduling_tests.dir/tests/FilterBatchSchedulingTests.cpp.o
+2026-11-24T16:45:15.3752631Z [ 58%] Linking CXX executable cs80_ig00156_batch_tests
+2026-11-24T16:45:15.4692507Z [ 58%] Built target cs80_ig00156_batch_tests
+2026-11-24T16:45:15.4820837Z [ 58%] Building CXX object CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o
+2026-11-24T16:45:19.4925590Z [ 58%] Linking CXX executable cs80_filter_batch_engine_tests
+2026-11-24T16:45:19.7612513Z [ 58%] Built target cs80_filter_batch_engine_tests
+2026-11-24T16:45:19.7732773Z [ 58%] Building CXX object CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o
+2026-11-24T16:45:21.3142700Z [ 58%] Linking CXX executable cs80_filter_batch_scheduling_tests
+2026-11-24T16:45:21.5892640Z [ 58%] Built target cs80_filter_batch_scheduling_tests
+2026-11-24T16:45:21.6012972Z [ 58%] Building CXX object CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o
+2026-11-24T16:45:24.5532637Z [ 58%] Linking CXX executable cs80_parity_mode_tests
+2026-11-24T16:45:24.8272600Z [ 58%] Built target cs80_parity_mode_tests
+2026-11-24T16:45:24.8392836Z [ 58%] Building CXX object CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o
+2026-11-24T16:45:27.5102870Z [ 59%] Linking CXX executable cs80_source_performance_tests
+2026-11-24T16:45:27.7873797Z [ 59%] Built target cs80_source_performance_tests
+2026-11-24T16:45:27.7992878Z [ 59%] Building CXX object CMakeFiles/cs80_filter_default_history_tests.dir/tests/FilterDefaultHistoryTests.cpp.o
+2026-11-24T16:45:28.6492888Z [ 59%] Linking CXX executable cs80_source_performance_audit_tests
+2026-11-24T16:45:28.9116740Z [ 59%] Built target cs80_source_performance_audit_tests
+2026-11-24T16:45:28.9224919Z [ 59%] Building CXX object CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o
+2026-11-24T16:45:29.7412706Z [ 59%] Linking CXX executable cs80_envelope_precision_tests
+2026-11-24T16:45:30.0202986Z [ 59%] Built target cs80_envelope_precision_tests
+2026-11-24T16:45:30.0303197Z [ 59%] Building CXX object CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o
+2026-11-24T16:45:31.6952784Z [ 60%] Linking CXX executable cs80_tests
+2026-11-24T16:45:32.1027475Z [ 60%] Built target cs80_tests
+2026-11-24T16:45:32.1162802Z [ 60%] Building CXX object CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o
+2026-11-24T16:45:32.7612044Z [ 60%] Linking CXX executable cs80_filter_default_history_tests
+2026-11-24T16:45:32.8792559Z [ 60%] Built target cs80_filter_default_history_tests
+2026-11-24T16:45:32.8895236Z [ 61%] Building CXX object CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o
+2026-11-24T16:45:33.0443119Z [ 61%] Linking CXX executable cs80_ig00156_filter_tests
+2026-11-24T16:45:33.3052606Z [ 61%] Built target cs80_ig00156_filter_tests
+2026-11-24T16:45:33.3142677Z [ 61%] Building CXX object CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o
+2026-11-24T16:45:34.9469731Z [ 62%] Linking CXX executable cs80_envelope_rc_model_tests
+2026-11-24T16:45:35.2182497Z [ 62%] Built target cs80_envelope_rc_model_tests
+2026-11-24T16:45:35.2342813Z [ 62%] Building CXX object CMakeFiles/cs80_voice_release_tests.dir/tests/VoiceReleaseTests.cpp.o
+2026-11-24T16:45:38.5081015Z [ 62%] Linking CXX executable cs80_active_tail_continuity_tests
+2026-11-24T16:45:38.7638692Z [ 62%] Built target cs80_active_tail_continuity_tests
+2026-11-24T16:45:38.7742607Z [ 62%] Building CXX object CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o
+2026-11-24T16:45:39.2552802Z [ 62%] Linking CXX executable cs80_live_envelope_timing_tests
+2026-11-24T16:45:39.2672432Z [ 62%] Linking CXX executable cs80_live_envelope_level_tests
+2026-11-24T16:45:39.5212803Z [ 62%] Built target cs80_live_envelope_timing_tests
+2026-11-24T16:45:39.5342666Z [ 62%] Building CXX object CMakeFiles/cs80_unison_glide_tests.dir/tests/UnisonGlideTests.cpp.o
+2026-11-24T16:45:39.5672436Z [ 62%] Built target cs80_live_envelope_level_tests
+2026-11-24T16:45:39.5782681Z [ 62%] Building CXX object CMakeFiles/cs80_unison_detune_latch_tests.dir/tests/UnisonDetuneLatchTests.cpp.o
+2026-11-24T16:45:42.0221207Z [ 62%] Linking CXX executable cs80_voice_release_tests
+2026-11-24T16:45:42.2942524Z [ 62%] Built target cs80_voice_release_tests
+2026-11-24T16:45:42.3052691Z [ 62%] Building CXX object CMakeFiles/cs80_pedal_release_tests.dir/tests/PedalReleaseTests.cpp.o
+2026-11-24T16:45:44.2322709Z [ 62%] Linking CXX executable cs80_unison_detune_latch_tests
+2026-11-24T16:45:44.5002580Z [ 62%] Built target cs80_unison_detune_latch_tests
+2026-11-24T16:45:44.5122760Z [ 62%] Building CXX object CMakeFiles/cs80_controller_reset_tests.dir/tests/ControllerResetTests.cpp.o
+2026-11-24T16:45:46.7478500Z [ 63%] Linking CXX executable cs80_unison_glide_tests
+2026-11-24T16:45:47.0182573Z [ 63%] Built target cs80_unison_glide_tests
+2026-11-24T16:45:47.0278642Z [ 63%] Building CXX object CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o
+2026-11-24T16:45:49.5792528Z [ 64%] Linking CXX executable cs80_pedal_release_tests
+2026-11-24T16:45:49.6853090Z [ 65%] Linking CXX executable cs80_sixteen_voice_release_tests
+2026-11-24T16:45:49.8582514Z [ 65%] Built target cs80_pedal_release_tests
+2026-11-24T16:45:49.8682976Z [ 65%] Building CXX object CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o
+2026-11-24T16:45:49.9626207Z [ 65%] Built target cs80_sixteen_voice_release_tests
+2026-11-24T16:45:49.9782861Z [ 65%] Building CXX object CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o
+2026-11-24T16:45:55.0772698Z [ 65%] Linking CXX executable cs80_controller_reset_tests
+2026-11-24T16:45:55.3432596Z [ 65%] Built target cs80_controller_reset_tests
+2026-11-24T16:45:55.3532695Z [ 65%] Building CXX object CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o
+2026-11-24T16:46:00.1393794Z [ 65%] Linking CXX executable cs80_source_factory_integration_tests
+2026-11-24T16:46:00.5532843Z [ 65%] Built target cs80_source_factory_integration_tests
+2026-11-24T16:46:00.5642694Z [ 66%] Building CXX object CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o
+2026-11-24T16:46:02.8602891Z [ 67%] Linking CXX executable cs80_output_tap_integration_tests
+2026-11-24T16:46:03.1402728Z [ 67%] Built target cs80_output_tap_integration_tests
+2026-11-24T16:46:03.1503993Z [ 67%] Building CXX object CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o
+2026-11-24T16:46:04.6732884Z [ 67%] Linking CXX executable cs80_pra_wah_integration_tests
+2026-11-24T16:46:04.9732615Z [ 67%] Built target cs80_pra_wah_integration_tests
+2026-11-24T16:46:04.9843983Z [ 67%] Building CXX object CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o
+2026-11-24T16:46:06.0771318Z [ 67%] Linking CXX executable cs80_performance_control_tests
+2026-11-24T16:46:06.3482627Z [ 67%] Built target cs80_performance_control_tests
+2026-11-24T16:46:06.3582596Z [ 67%] Building CXX object CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o
+2026-11-24T16:46:10.7592419Z [ 67%] Linking CXX executable cs80_ig00151_vca_tests
+2026-11-24T16:46:11.0309622Z [ 67%] Built target cs80_ig00151_vca_tests
+2026-11-24T16:46:11.0413725Z [ 68%] Building CXX object CMakeFiles/cs80_arp_rate_lifecycle_tests.dir/tests/ArpRateLifecycleTests.cpp.o
+2026-11-24T16:46:13.1872697Z [ 69%] Linking CXX executable cs80_oscillator_promotion_tests
+2026-11-24T16:46:13.4632321Z [ 69%] Built target cs80_oscillator_promotion_tests
+2026-11-24T16:46:13.4732478Z [ 69%] Building CXX object CMakeFiles/cs80_arp_pedal_lifecycle_tests.dir/tests/ArpPedalLifecycleTests.cpp.o
+2026-11-24T16:46:13.9862637Z [ 69%] Linking CXX executable cs80_ig00156_nodal_tests
+2026-11-24T16:46:14.2602938Z [ 69%] Built target cs80_ig00156_nodal_tests
+2026-11-24T16:46:14.2712816Z [ 69%] Building CXX object CMakeFiles/cs80_arp_repeat_lifecycle_tests.dir/tests/ArpRepeatLifecycleTests.cpp.o
+2026-11-24T16:46:14.9942539Z [ 69%] Linking CXX executable cs80_arp_rate_lifecycle_tests
+2026-11-24T16:46:15.2692531Z [ 69%] Built target cs80_arp_rate_lifecycle_tests
+2026-11-24T16:46:15.2792458Z [ 69%] Building CXX object CMakeFiles/cs80_quiet_fx_rack_tests.dir/tests/QuietFxRackTests.cpp.o
+2026-11-24T16:46:15.6182688Z [ 70%] Linking CXX executable cs80_tolerance_drift_tests
+2026-11-24T16:46:15.9131773Z [ 70%] Built target cs80_tolerance_drift_tests
+2026-11-24T16:46:15.9272757Z [ 70%] Building CXX object CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o
+2026-11-24T16:46:17.0002684Z [ 70%] Linking CXX executable cs80_arp_pedal_lifecycle_tests
+2026-11-24T16:46:17.2642491Z [ 70%] Built target cs80_arp_pedal_lifecycle_tests
+2026-11-24T16:46:17.2772495Z [ 70%] Building CXX object CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o
+2026-11-24T16:46:18.2135756Z [ 70%] Linking CXX executable cs80_arp_repeat_lifecycle_tests
+2026-11-24T16:46:18.4922796Z [ 70%] Built target cs80_arp_repeat_lifecycle_tests
+2026-11-24T16:46:18.5040646Z [ 70%] Building CXX object CMakeFiles/cs80_pitch_bend_range_tests.dir/tests/PitchBendRangeTests.cpp.o
+2026-11-24T16:46:19.8273068Z [ 70%] Linking CXX executable cs80_quiet_fx_rack_tests
+2026-11-24T16:46:20.0872462Z [ 70%] Built target cs80_quiet_fx_rack_tests
+2026-11-24T16:46:20.0973063Z [ 70%] Building CXX object CMakeFiles/cs80_mpe_member_onset_tests.dir/tests/MpeMemberOnsetTests.cpp.o
+2026-11-24T16:46:23.8432793Z [ 71%] Linking CXX executable cs80_pitch_bend_range_tests
+2026-11-24T16:46:23.9982484Z [ 71%] Linking CXX executable cs80_smoothing_tests
+2026-11-24T16:46:24.0972060Z [ 72%] Linking CXX executable cs80_oversampling_tests
+2026-11-24T16:46:24.1060624Z [ 72%] Built target cs80_pitch_bend_range_tests
+2026-11-24T16:46:24.1243081Z [ 72%] Building CXX object CMakeFiles/cs80_mpe_timbre_combination_tests.dir/tests/MpeTimbreCombinationTests.cpp.o
+2026-11-24T16:46:24.2617854Z [ 72%] Built target cs80_smoothing_tests
+2026-11-24T16:46:24.2742769Z [ 72%] Building CXX object CMakeFiles/cs80_mpe_pressure_combination_tests.dir/tests/MpePressureCombinationTests.cpp.o
+2026-11-24T16:46:24.3672675Z [ 72%] Built target cs80_oversampling_tests
+2026-11-24T16:46:24.3762572Z [ 72%] Building CXX object CMakeFiles/cs80_mpe_released_target_tests.dir/tests/MpeReleasedTargetTests.cpp.o
+2026-11-24T16:46:27.7622709Z [ 72%] Linking CXX executable cs80_mpe_member_onset_tests
+2026-11-24T16:46:28.0244101Z [ 72%] Built target cs80_mpe_member_onset_tests
+2026-11-24T16:46:28.0331855Z [ 72%] Building CXX object CMakeFiles/cs80_mpe_master_smoothing_tests.dir/tests/MpeMasterSmoothingTests.cpp.o
+2026-11-24T16:46:30.2182596Z [ 73%] Linking CXX executable cs80_mpe_pressure_combination_tests
+2026-11-24T16:46:30.4761032Z [ 73%] Built target cs80_mpe_pressure_combination_tests
+2026-11-24T16:46:30.4882902Z [ 73%] Building CXX object CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o
+2026-11-24T16:46:32.0302556Z [ 74%] Linking CXX executable cs80_mpe_master_smoothing_tests
+2026-11-24T16:46:32.1672840Z [ 75%] Linking CXX executable cs80_mpe_timbre_combination_tests
+2026-11-24T16:46:32.2922657Z [ 75%] Built target cs80_mpe_master_smoothing_tests
+2026-11-24T16:46:32.3012628Z [ 75%] Building CXX object CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o
+2026-11-24T16:46:32.4442682Z [ 75%] Built target cs80_mpe_timbre_combination_tests
+2026-11-24T16:46:32.4552931Z [ 75%] Building CXX object CMakeFiles/cs80_poly_pressure_routing_tests.dir/tests/PolyPressureRoutingTests.cpp.o
+2026-11-24T16:46:34.2123158Z [ 75%] Linking CXX executable cs80_mpe_released_target_tests
+2026-11-24T16:46:34.4932694Z [ 75%] Built target cs80_mpe_released_target_tests
+2026-11-24T16:46:34.5052659Z [ 76%] Building CXX object CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o
+2026-11-24T16:46:35.4682544Z [ 76%] Linking CXX executable cs80_output_listening_tests
+2026-11-24T16:46:35.7502611Z [ 76%] Built target cs80_output_listening_tests
+2026-11-24T16:46:35.7622740Z [ 77%] Building CXX object CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o
+2026-11-24T16:46:36.5592634Z [ 78%] Linking CXX executable cs80_poly_pressure_routing_tests
+2026-11-24T16:46:36.8362753Z [ 78%] Built target cs80_poly_pressure_routing_tests
+2026-11-24T16:46:36.8462642Z [ 78%] Building CXX object CMakeFiles/cs80_scanner_ordering_tests.dir/tests/ScannerOrderingTests.cpp.o
+2026-11-24T16:46:37.8988714Z [ 79%] Linking CXX executable cs80_noise_tests
+2026-11-24T16:46:38.1890398Z [ 79%] Built target cs80_noise_tests
+2026-11-24T16:46:38.2002680Z [ 79%] Building CXX object CMakeFiles/cs80_scanner_overflow_tests.dir/tests/ScannerOverflowTests.cpp.o
+2026-11-24T16:46:46.8432527Z [ 79%] Linking CXX executable cs80_kas_scanner_tests
+2026-11-24T16:46:47.0932731Z [ 80%] Linking CXX executable cs80_scanner_ordering_tests
+2026-11-24T16:46:47.1082337Z [ 80%] Built target cs80_kas_scanner_tests
+2026-11-24T16:46:47.1172644Z [ 80%] Building CXX object CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o
+2026-11-24T16:46:47.3732823Z [ 80%] Built target cs80_scanner_ordering_tests
+2026-11-24T16:46:47.3872679Z [ 80%] Building CXX object CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o
+2026-11-24T16:46:48.8877395Z [ 80%] Linking CXX executable cs80_free_running_voice_tests
+2026-11-24T16:46:49.1742546Z [ 80%] Built target cs80_free_running_voice_tests
+2026-11-24T16:46:49.1873204Z [ 80%] Building CXX object CMakeFiles/cs80_mpe_master_bend_routing_tests.dir/tests/MpeMasterBendRoutingTests.cpp.o
+2026-11-24T16:46:49.5092847Z [ 80%] Linking CXX executable cs80_scanner_overflow_tests
+2026-11-24T16:46:49.7872659Z [ 80%] Built target cs80_scanner_overflow_tests
+2026-11-24T16:46:49.7982565Z [ 80%] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+2026-11-24T16:46:52.4872840Z [ 80%] Linking CXX executable cs80_keyboard_contour_key_map_tests
+2026-11-24T16:46:52.7572585Z [ 80%] Built target cs80_keyboard_contour_key_map_tests
+2026-11-24T16:46:52.7672786Z [ 80%] Building CXX object CMakeFiles/cs80_mts_esp_integration_tests.dir/tests/MtsEspIntegrationTests.cpp.o
+2026-11-24T16:46:55.0642640Z [ 80%] Linking CXX executable cs80_touch_circuit_tests
+2026-11-24T16:46:55.3132502Z [ 80%] Built target cs80_touch_circuit_tests
+2026-11-24T16:46:55.3262670Z [ 80%] Building CXX object CMakeFiles/cs80_mts_esp_channel_tests.dir/tests/MtsEspChannelTests.cpp.o
+2026-11-24T16:46:55.3703140Z [ 80%] Linking CXX executable cs80_mpe_master_bend_routing_tests
+2026-11-24T16:46:55.6399733Z [ 80%] Built target cs80_mpe_master_bend_routing_tests
+2026-11-24T16:46:55.6452519Z [ 81%] Building CXX object CMakeFiles/cs80_mts_esp_integration_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-24T16:46:56.8732028Z [ 81%] Building CXX object CMakeFiles/cs80_mts_esp_channel_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-24T16:46:57.0393114Z [ 81%] Linking CXX executable cs80_mts_esp_integration_tests
+2026-11-24T16:46:57.3308275Z [ 81%] Built target cs80_mts_esp_integration_tests
+2026-11-24T16:46:57.3416778Z [ 82%] Building CXX object CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o
+2026-11-24T16:46:58.0343238Z [ 82%] Building CXX object CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o
+2026-11-24T16:46:58.2772596Z [ 82%] Linking CXX executable cs80_mts_esp_channel_tests
+2026-11-24T16:46:58.3652592Z [ 82%] Built target cs80_mts_esp_channel_tests
+2026-11-24T16:46:58.3762730Z [ 82%] Building CXX object CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o
+2026-11-24T16:47:03.4182676Z [ 82%] Linking CXX executable cs80_ring_modulator_circuit_tests
+2026-11-24T16:47:03.6852693Z [ 82%] Built target cs80_ring_modulator_circuit_tests
+2026-11-24T16:47:03.7022845Z [ 82%] Building CXX object CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o
+2026-11-24T16:47:03.7632553Z [ 82%] Linking CXX executable cs80_pra_optical_cell_tests
+2026-11-24T16:47:04.0200976Z [ 82%] Built target cs80_pra_optical_cell_tests
+2026-11-24T16:47:04.0302823Z [ 82%] Building CXX object CMakeFiles/cs80_mono_mseg_routing_tests.dir/tests/MonoMsegRoutingTests.cpp.o
+2026-11-24T16:47:04.4842431Z [ 82%] Linking CXX executable cs80_ig00150_sub_tests
+2026-11-24T16:47:04.7735772Z [ 82%] Built target cs80_ig00150_sub_tests
+2026-11-24T16:47:04.7842547Z [ 82%] Building CXX object CMakeFiles/cs80_mseg_retrigger_rate_tests.dir/tests/MsegRetriggerRateTests.cpp.o
+2026-11-24T16:47:09.5432792Z [ 83%] Linking CXX executable cs80_modern_lfo_tests
+2026-11-24T16:47:09.8232376Z [ 83%] Built target cs80_modern_lfo_tests
+2026-11-24T16:47:09.8342785Z [ 83%] Building CXX object CMakeFiles/cs80_mseg_combined_interaction_tests.dir/tests/MsegCombinedInteractionTests.cpp.o
+2026-11-24T16:47:13.4762576Z [ 84%] Linking CXX executable cs80_mono_mseg_routing_tests
+2026-11-24T16:47:13.7442729Z [ 84%] Built target cs80_mono_mseg_routing_tests
+2026-11-24T16:47:13.7550864Z [ 85%] Building CXX object CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o
+2026-11-24T16:47:18.4863670Z [ 86%] Linking CXX executable cs80_mseg_retrigger_rate_tests
+2026-11-24T16:47:18.7512591Z [ 86%] Built target cs80_mseg_retrigger_rate_tests
+2026-11-24T16:47:18.7602524Z [ 86%] Building CXX object CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o
+2026-11-24T16:47:19.3622742Z [ 86%] Linking CXX executable cs80_mseg_combined_interaction_tests
+2026-11-24T16:47:19.4665310Z [ 86%] Built target cs80_mseg_combined_interaction_tests
+2026-11-24T16:47:19.4783352Z [ 86%] Building CXX object CMakeFiles/cs80_instrument_damper_tests.dir/tests/InstrumentDamperTests.cpp.o
+2026-11-24T16:47:32.7200985Z [ 86%] Linking CXX executable cs80_instrument_damper_tests
+2026-11-24T16:47:32.9932591Z [ 86%] Built target cs80_instrument_damper_tests
+2026-11-24T16:47:33.0052715Z [ 87%] Building CXX object CMakeFiles/cs80_instrument_body_engine_tests.dir/tests/InstrumentBodyEngineTests.cpp.o
+2026-11-24T16:47:35.7043318Z [ 87%] Linking CXX executable cs80_tuning_midi_tests
+2026-11-24T16:47:36.0342627Z [ 87%] Built target cs80_tuning_midi_tests
+2026-11-24T16:47:36.0451851Z [ 87%] Building CXX object CMakeFiles/cs80_body_articulation_engine_tests.dir/tests/BodyArticulationEngineTests.cpp.o
+2026-11-24T16:47:37.5972610Z [ 87%] Linking CXX executable cs80_mod_matrix_tests
+2026-11-24T16:47:37.8862364Z [ 87%] Built target cs80_mod_matrix_tests
+2026-11-24T16:47:37.8952625Z [ 87%] Building CXX object CMakeFiles/cs80_original_articulation_tests.dir/tests/OriginalArticulationTests.cpp.o
+2026-11-24T16:47:39.2282702Z [ 87%] Linking CXX executable cs80_modern_fx_tests
+2026-11-24T16:47:39.5218320Z [ 87%] Built target cs80_modern_fx_tests
+2026-11-24T16:47:39.5322243Z [ 87%] Building CXX object CMakeFiles/cs80_keyboard_response_tests.dir/tests/KeyboardResponseTests.cpp.o
+2026-11-24T16:47:40.0182885Z [ 87%] Linking CXX executable cs80_instrument_body_engine_tests
+2026-11-24T16:47:40.4272557Z [ 87%] Built target cs80_instrument_body_engine_tests
+2026-11-24T16:47:40.4372828Z [ 87%] Building CXX object CMakeFiles/cs80_mallet_preset_refinement_tests.dir/tests/MalletPresetRefinementTests.cpp.o
+2026-11-24T16:47:43.3152780Z [ 87%] Linking CXX executable cs80_original_articulation_tests
+2026-11-24T16:47:43.6892610Z [ 87%] Built target cs80_original_articulation_tests
+2026-11-24T16:47:43.6982788Z [ 88%] Building CXX object CMakeFiles/cs80_bell_material_preset_tests.dir/tests/BellMaterialPresetTests.cpp.o
+2026-11-24T16:47:44.5055730Z [ 88%] Linking CXX executable cs80_body_articulation_engine_tests
+2026-11-24T16:47:44.7982719Z [ 88%] Built target cs80_body_articulation_engine_tests
+2026-11-24T16:47:44.8092791Z [ 88%] Building CXX object CMakeFiles/cs80_plucked_material_preset_tests.dir/tests/PluckedMaterialPresetTests.cpp.o
+2026-11-24T16:47:45.6167467Z [ 88%] Linking CXX executable cs80_keyboard_response_tests
+2026-11-24T16:47:45.8070504Z [ 88%] Linking CXX executable cs80_mallet_preset_refinement_tests
+2026-11-24T16:47:45.9992661Z [ 88%] Built target cs80_keyboard_response_tests
+2026-11-24T16:47:46.0072748Z [ 89%] Building CXX object CMakeFiles/cs80_bass_plucked_refinement_tests.dir/tests/BassPluckedRefinementTests.cpp.o
+2026-11-24T16:47:46.1842629Z [ 89%] Built target cs80_mallet_preset_refinement_tests
+2026-11-24T16:47:46.1939982Z [ 90%] Building CXX object CMakeFiles/cs80_brass_organ_refinement_tests.dir/tests/BrassOrganRefinementTests.cpp.o
+2026-11-24T16:47:49.0942660Z [ 90%] Linking CXX executable cs80_bell_material_preset_tests
+2026-11-24T16:47:49.4812635Z [ 90%] Built target cs80_bell_material_preset_tests
+2026-11-24T16:47:49.4932848Z [ 90%] Building CXX object CMakeFiles/cs80_wind_string_refinement_tests.dir/tests/WindStringRefinementTests.cpp.o
+2026-11-24T16:47:50.8604871Z [ 91%] Linking CXX executable cs80_plucked_material_preset_tests
+2026-11-24T16:47:51.2645376Z [ 91%] Built target cs80_plucked_material_preset_tests
+2026-11-24T16:47:51.2763513Z [ 91%] Building CXX object CMakeFiles/cs80_crystal_string_stability_tests.dir/tests/CrystalStringStabilityTests.cpp.o
+2026-11-24T16:47:51.4022587Z [ 91%] Linking CXX executable cs80_brass_organ_refinement_tests
+2026-11-24T16:47:51.5612929Z [ 91%] Linking CXX executable cs80_bass_plucked_refinement_tests
+2026-11-24T16:47:51.7732630Z [ 91%] Built target cs80_brass_organ_refinement_tests
+2026-11-24T16:47:51.7829117Z [ 91%] Building CXX object CMakeFiles/cs80_pad_poly_refinement_tests.dir/tests/PadPolyRefinementTests.cpp.o
+2026-11-24T16:47:51.9362700Z [ 91%] Built target cs80_bass_plucked_refinement_tests
+2026-11-24T16:47:51.9483015Z [ 91%] Building CXX object CMakeFiles/cs80_fx_refinement_tests.dir/tests/FxRefinementTests.cpp.o
+2026-11-24T16:47:55.1972655Z [ 91%] Linking CXX executable cs80_wind_string_refinement_tests
+2026-11-24T16:47:55.5932681Z [ 91%] Built target cs80_wind_string_refinement_tests
+2026-11-24T16:47:55.6062821Z [ 91%] Building CXX object CMakeFiles/cs80_modern_preset_refinement_tests.dir/tests/ModernPresetRefinementTests.cpp.o
+2026-11-24T16:47:55.8042984Z [ 91%] Linking CXX executable cs80_crystal_string_stability_tests
+2026-11-24T16:47:56.2091935Z [ 91%] Built target cs80_crystal_string_stability_tests
+2026-11-24T16:47:56.2197776Z [ 92%] Building CXX object CMakeFiles/cs80_lead_refinement_tests.dir/tests/LeadRefinementTests.cpp.o
+2026-11-24T16:47:57.3662541Z [ 92%] Linking CXX executable cs80_fx_refinement_tests
+2026-11-24T16:47:57.7392507Z [ 92%] Built target cs80_fx_refinement_tests
+2026-11-24T16:47:57.7503456Z [ 93%] Building CXX object CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o
+2026-11-24T16:47:57.8009701Z [ 93%] Linking CXX executable cs80_pad_poly_refinement_tests
+2026-11-24T16:47:58.1862514Z [ 93%] Built target cs80_pad_poly_refinement_tests
+2026-11-24T16:47:58.1962846Z [ 93%] Building CXX object CMakeFiles/cs80_preset_voicing_tests.dir/tests/PresetVoicingTests.cpp.o
+2026-11-24T16:48:02.6292776Z [ 93%] Linking CXX executable cs80_lead_refinement_tests
+2026-11-24T16:48:02.7082576Z [ 93%] Linking CXX executable cs80_modern_preset_refinement_tests
+2026-11-24T16:48:03.0222614Z [ 93%] Built target cs80_lead_refinement_tests
+2026-11-24T16:48:03.0382782Z [ 93%] Building CXX object CMakeFiles/cs80_preset_repeatability_tests.dir/tests/PresetRepeatabilityTests.cpp.o
+2026-11-24T16:48:03.0794077Z [ 93%] Built target cs80_modern_preset_refinement_tests
+2026-11-24T16:48:03.0889140Z [ 93%] Building CXX object CMakeFiles/cs80_preset_character_tests.dir/tests/PresetCharacterTests.cpp.o
+2026-11-24T16:48:06.6002725Z [ 94%] Linking CXX executable cs80_preset_voicing_tests
+2026-11-24T16:48:06.9992552Z [ 94%] Built target cs80_preset_voicing_tests
+2026-11-24T16:48:07.0082860Z [ 94%] Building CXX object CMakeFiles/cs80_preset_precision_tests.dir/tests/PresetPrecisionTests.cpp.o
+2026-11-24T16:48:07.6742777Z [ 94%] Linking CXX executable cs80_preset_repeatability_tests
+2026-11-24T16:48:08.0402767Z [ 94%] Built target cs80_preset_repeatability_tests
+2026-11-24T16:48:08.0512455Z [ 94%] Building CXX object CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o
+2026-11-24T16:48:09.3902591Z [ 95%] Linking CXX executable cs80_preset_character_tests
+2026-11-24T16:48:09.7793177Z [ 95%] Built target cs80_preset_character_tests
+2026-11-24T16:48:09.7890965Z [ 95%] Building CXX object CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o
+2026-11-24T16:48:10.2372594Z [ 95%] Linking CXX executable cs80_fast_math_tests
+2026-11-24T16:48:10.3152395Z [ 95%] Built target cs80_fast_math_tests
+2026-11-24T16:48:10.3252510Z [ 95%] Building CXX object CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o
+2026-11-24T16:48:10.5172656Z [ 95%] Linking CXX executable cs80_library_audit_tests
+2026-11-24T16:48:10.9118004Z [ 95%] Built target cs80_library_audit_tests
+2026-11-24T16:48:10.9232738Z [ 95%] Building CXX object CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o
+2026-11-24T16:48:13.7962691Z [ 95%] Linking CXX executable cs80_preset_precision_tests
+2026-11-24T16:48:14.1702264Z [ 95%] Built target cs80_preset_precision_tests
+2026-11-24T16:48:14.1812572Z [ 95%] Building CXX object CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o
+2026-11-24T16:48:16.6879971Z [ 95%] Linking CXX executable cs80_render
+2026-11-24T16:48:16.7712452Z [ 96%] Linking CXX executable cs80_randomise_tests
+2026-11-24T16:48:16.9722440Z [ 96%] Built target cs80_render
+2026-11-24T16:48:16.9808006Z [ 96%] Building CXX object CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o
+2026-11-24T16:48:17.0582661Z [ 96%] Built target cs80_randomise_tests
+2026-11-24T16:48:17.0663167Z [ 96%] Building CXX object CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o
+2026-11-24T16:48:22.1982617Z [ 97%] Linking CXX executable cs80_source_factory_audition
+2026-11-24T16:48:22.4792657Z [ 97%] Built target cs80_source_factory_audition
+2026-11-24T16:48:22.4974362Z [ 97%] Building CXX object CMakeFiles/cs80_preset_capture.dir/src/tools/preset_capture.cpp.o
+2026-11-24T16:48:24.8322591Z [ 98%] Linking CXX executable cs80_dsp_probe
+2026-11-24T16:48:25.0952624Z [ 98%] Built target cs80_dsp_probe
+2026-11-24T16:48:25.1052511Z [ 98%] Building CXX object CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o
+2026-11-24T16:48:26.0661830Z [ 98%] Linking CXX executable cs80_source_factory_benchmark
+2026-11-24T16:48:26.4692358Z [ 98%] Built target cs80_source_factory_benchmark
+2026-11-24T16:48:31.2552164Z [ 99%] Linking CXX executable cs80_engine_audit
+2026-11-24T16:48:31.5244071Z [ 99%] Built target cs80_engine_audit
+2026-11-24T16:48:32.6368520Z [ 99%] Linking CXX executable cs80_preset_capture
+2026-11-24T16:48:32.7536215Z [100%] Linking CXX executable cs80_parity_capture
+2026-11-24T16:48:32.9200318Z [100%] Built target cs80_preset_capture
+2026-11-24T16:48:32.9406917Z [100%] Built target cs80_parity_capture
+2026-11-24T16:48:32.9575016Z ##[group]Run ctest --test-dir build-sanitizers --output-on-failure --parallel 2
+2026-11-24T16:48:32.9575613Z [36;1mctest --test-dir build-sanitizers --output-on-failure --parallel 2[0m
+2026-11-24T16:48:32.9596072Z shell: /usr/bin/bash -e {0}
+2026-11-24T16:48:32.9596318Z env:
+2026-11-24T16:48:32.9596541Z   ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+2026-11-24T16:48:32.9596880Z   UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+2026-11-24T16:48:32.9597177Z ##[endgroup]
+2026-11-24T16:48:32.9865014Z Internal ctest changing into directory: /home/runner/work/yamaha-cs80/yamaha-cs80/build-sanitizers
+2026-11-24T16:48:32.9922226Z Test project /home/runner/work/yamaha-cs80/yamaha-cs80/build-sanitizers
+2026-11-24T16:48:33.0007054Z         Start   1: cs80_engine_output_fir_packed_tests
+2026-11-24T16:48:34.4329855Z   1/232 Test   #1: cs80_engine_output_fir_packed_tests ...............   Passed    1.43 sec
+2026-11-24T16:48:34.4340575Z         Start   2: cs80_wsc_held_endpoint_tests
+2026-11-24T16:48:34.4903068Z   2/232 Test   #2: cs80_wsc_held_endpoint_tests ......................   Passed    0.05 sec
+2026-11-24T16:48:34.4903896Z         Start   3: cs80_legacy_sub_lfo_oracle_tests
+2026-11-24T16:48:41.8783246Z   3/232 Test   #3: cs80_legacy_sub_lfo_oracle_tests ..................   Passed    7.39 sec
+2026-11-24T16:48:41.8789900Z         Start   4: cs80_ig00156_batch_tests
+2026-11-24T16:48:41.9701065Z   4/232 Test   #4: cs80_ig00156_batch_tests ..........................   Passed    0.09 sec
+2026-11-24T16:48:41.9702134Z         Start   5: cs80_filter_batch_engine_tests
+2026-11-24T16:49:12.9796355Z   5/232 Test   #5: cs80_filter_batch_engine_tests ....................   Passed   31.01 sec
+2026-11-24T16:49:12.9797441Z         Start   6: cs80_filter_batch_scheduling_tests
+2026-11-24T16:49:23.6886565Z   6/232 Test   #6: cs80_filter_batch_scheduling_tests ................   Passed   10.71 sec
+2026-11-24T16:49:23.6889006Z         Start   7: cs80_ig00151_zero_ei_tests
+2026-11-24T16:49:23.7369646Z   7/232 Test   #7: cs80_ig00151_zero_ei_tests ........................   Passed    0.05 sec
+2026-11-24T16:49:23.7370488Z         Start   8: cs80_event_timeline_tests
+2026-11-24T16:49:23.7642435Z   8/232 Test   #8: cs80_event_timeline_tests .........................   Passed    0.03 sec
+2026-11-24T16:49:23.7643239Z         Start   9: cs80_pump_until_tests
+2026-11-24T16:49:23.7760401Z   9/232 Test   #9: cs80_pump_until_tests .............................   Passed    0.01 sec
+2026-11-24T16:49:23.7761266Z         Start  10: cs80_filter_batch_admission_tests
+2026-11-24T16:49:34.6615838Z  10/232 Test  #10: cs80_filter_batch_admission_tests .................   Passed   10.89 sec
+2026-11-24T16:49:34.6616913Z         Start  11: cs80_package_binary_identity_tests
+2026-11-24T16:49:34.8911947Z  11/232 Test  #11: cs80_package_binary_identity_tests ................   Passed    0.23 sec
+2026-11-24T16:49:34.8912875Z         Start  12: cs80_packaging_notice_tests
+2026-11-24T16:49:36.0950883Z  12/232 Test  #12: cs80_packaging_notice_tests .......................   Passed    1.20 sec
+2026-11-24T16:49:36.0951827Z         Start  13: cs80_factory_audition_artifact_tests
+2026-11-24T16:49:37.3550977Z  13/232 Test  #13: cs80_factory_audition_artifact_tests ..............   Passed    1.26 sec
+2026-11-24T16:49:37.3552172Z         Start  14: cs80_preset_response_2026_11_6_comparison_tests
+2026-11-24T16:49:40.1989920Z  14/232 Test  #14: cs80_preset_response_2026_11_6_comparison_tests ...   Passed    2.84 sec
+2026-11-24T16:49:40.1990764Z         Start  15: cs80_ci_juce_provenance_tests
+2026-11-24T16:49:40.5334341Z  15/232 Test  #15: cs80_ci_juce_provenance_tests .....................   Passed    0.33 sec
+2026-11-24T16:49:40.5335150Z         Start  16: cs80_pluginval_windows_download_tests
+2026-11-24T16:49:40.6527103Z  16/232 Test  #16: cs80_pluginval_windows_download_tests .............   Passed    0.12 sec
+2026-11-24T16:49:40.6528213Z         Start  17: cs80_pluginval_macos_download_tests
+2026-11-24T16:49:40.7747684Z  17/232 Test  #17: cs80_pluginval_macos_download_tests ...............   Passed    0.12 sec
+2026-11-24T16:49:40.7748522Z         Start  18: cs80_deb_runtime_dependency_tests
+2026-11-24T16:49:44.4093074Z  18/232 Test  #18: cs80_deb_runtime_dependency_tests .................   Passed    3.63 sec
+2026-11-24T16:49:44.4094908Z         Start  19: cs80_ci_bundle_verification_tests
+2026-11-24T16:49:44.6798071Z  19/232 Test  #19: cs80_ci_bundle_verification_tests .................   Passed    0.27 sec
+2026-11-24T16:49:44.6799270Z         Start  20: cs80_windows_installer_preflight_tests
+2026-11-24T16:49:45.5890657Z  20/232 Test  #20: cs80_windows_installer_preflight_tests ............   Passed    0.91 sec
+2026-11-24T16:49:45.5891958Z         Start  21: cs80_parity_harness_tests
+2026-11-24T16:49:48.1283035Z  21/232 Test  #21: cs80_parity_harness_tests .........................   Passed    2.54 sec
+2026-11-24T16:49:48.1284083Z         Start  22: cs80_ui_environment_tests
+2026-11-24T16:50:03.6049314Z  22/232 Test  #22: cs80_ui_environment_tests .........................   Passed   15.48 sec
+2026-11-24T16:50:03.6050084Z         Start  23: cs80_preset_trash_safety_tests
+2026-11-24T16:50:04.2817826Z  23/232 Test  #23: cs80_preset_trash_safety_tests ....................   Passed    0.68 sec
+2026-11-24T16:50:04.2818703Z         Start  24: cs80_preset_signature_math_tests
+2026-11-24T16:50:24.7605011Z  24/232 Test  #24: cs80_preset_signature_math_tests ..................   Passed   20.48 sec
+2026-11-24T16:50:24.7606057Z         Start  25: cs80_macos_installer_architecture_tests
+2026-11-24T16:50:28.1303130Z  25/232 Test  #25: cs80_macos_installer_architecture_tests ...........   Passed    3.37 sec
+2026-11-24T16:50:28.1304039Z         Start  26: cs80_continuous_voice_circuit_tests
+2026-11-24T16:50:28.2114451Z  26/232 Test  #26: cs80_continuous_voice_circuit_tests ...............   Passed    0.08 sec
+2026-11-24T16:50:28.2115297Z         Start  27: cs80_continuous_voice_circuit_audit_tests
+2026-11-24T16:50:30.8270910Z  27/232 Test  #27: cs80_continuous_voice_circuit_audit_tests .........   Passed    2.62 sec
+2026-11-24T16:50:30.8271950Z         Start  28: cs80_lfo_scope_preview_tests
+2026-11-24T16:50:30.8506581Z  28/232 Test  #28: cs80_lfo_scope_preview_tests ......................   Passed    0.02 sec
+2026-11-24T16:50:30.8507857Z         Start  29: cs80_preset_preview_math_tests
+2026-11-24T16:50:30.8638279Z  29/232 Test  #29: cs80_preset_preview_math_tests ....................   Passed    0.01 sec
+2026-11-24T16:50:30.8639123Z         Start  30: cs80_output_meter_display_tests
+2026-11-24T16:50:30.8744732Z  30/232 Test  #30: cs80_output_meter_display_tests ...................   Passed    0.01 sec
+2026-11-24T16:50:30.8745632Z         Start  31: cs80_voice_activity_tests
+2026-11-24T16:50:30.8907674Z  31/232 Test  #31: cs80_voice_activity_tests .........................   Passed    0.02 sec
+2026-11-24T16:50:30.8910740Z         Start  32: cs80_output_meter_tests
+2026-11-24T16:50:30.9013950Z  32/232 Test  #32: cs80_output_meter_tests ...........................   Passed    0.01 sec
+2026-11-24T16:50:30.9014874Z         Start  33: cs80_output_meter_audit_tests
+2026-11-24T16:50:30.9719470Z  33/232 Test  #33: cs80_output_meter_audit_tests .....................   Passed    0.07 sec
+2026-11-24T16:50:30.9720168Z         Start  34: cs80_keyboard_pressure_audit_tests
+2026-11-24T16:50:30.9832231Z  34/232 Test  #34: cs80_keyboard_pressure_audit_tests ................   Passed    0.01 sec
+2026-11-24T16:50:30.9836947Z         Start  35: cs80_captured_keyboard_events_tests
+2026-11-24T16:50:30.9940554Z  35/232 Test  #35: cs80_captured_keyboard_events_tests ...............   Passed    0.01 sec
+2026-11-24T16:50:30.9942049Z         Start  36: cs80_keyboard_event_queue_tests
+2026-11-24T16:50:31.0106223Z  36/232 Test  #36: cs80_keyboard_event_queue_tests ...................   Passed    0.02 sec
+2026-11-24T16:50:31.0107832Z         Start  37: cs80_keyboard_epoch_interleaving_tests
+2026-11-24T16:50:33.0740408Z  37/232 Test  #37: cs80_keyboard_epoch_interleaving_tests ............   Passed    2.06 sec
+2026-11-24T16:50:33.0741285Z         Start  38: cs80_parity_mode_tests
+2026-11-24T16:50:50.4077899Z  38/232 Test  #38: cs80_parity_mode_tests ............................   Passed   17.33 sec
+2026-11-24T16:50:50.4079188Z         Start  39: cs80_source_performance_tests
+2026-11-24T16:51:48.3136433Z  39/232 Test  #39: cs80_source_performance_tests .....................   Passed   57.91 sec
+2026-11-24T16:51:48.3137715Z         Start  40: cs80_source_performance_audit_tests
+2026-11-24T16:52:01.9555471Z  40/232 Test  #40: cs80_source_performance_audit_tests ...............   Passed   13.64 sec
+2026-11-24T16:52:01.9556719Z         Start  41: cs80_envelope_precision_tests
+2026-11-24T16:56:38.8429661Z  41/232 Test  #41: cs80_envelope_precision_tests .....................   Passed  276.89 sec
+2026-11-24T16:56:38.8431073Z         Start  42: cs80_filter_default_history_tests
+2026-11-24T16:56:38.9770942Z  42/232 Test  #42: cs80_filter_default_history_tests .................   Passed    0.13 sec
+2026-11-24T16:56:38.9772478Z         Start  43: cs80_filter_default_history_missing_tests
+2026-11-24T16:56:38.9900798Z  43/232 Test  #43: cs80_filter_default_history_missing_tests .........   Passed    0.01 sec
+2026-11-24T16:56:38.9902431Z         Start  44: cs80_filter_default_history_truncated_tests
+2026-11-24T16:56:39.0072745Z  44/232 Test  #44: cs80_filter_default_history_truncated_tests .......   Passed    0.01 sec
+2026-11-24T16:56:39.0073694Z         Start  45: cs80_filter_idle_fallback_tests
+2026-11-24T16:56:39.1048246Z  45/232 Test  #45: cs80_filter_idle_fallback_tests ...................   Passed    0.10 sec
+2026-11-24T16:56:39.1049502Z         Start  46: cs80_filter_idle_fallback_missing_tests
+2026-11-24T16:56:39.1178854Z  46/232 Test  #46: cs80_filter_idle_fallback_missing_tests ...........   Passed    0.01 sec
+2026-11-24T16:56:39.1180399Z         Start  47: cs80_filter_idle_fallback_truncated_tests
+2026-11-24T16:56:39.1341008Z  47/232 Test  #47: cs80_filter_idle_fallback_truncated_tests .........   Passed    0.02 sec
+2026-11-24T16:56:39.1342326Z         Start  48: cs80_filter_batch_cap_tests
+2026-11-24T16:56:39.5503691Z  48/232 Test  #48: cs80_filter_batch_cap_tests .......................   Passed    0.42 sec
+2026-11-24T16:56:39.5504927Z         Start  49: cs80_filter_batch_cap_missing_tests
+2026-11-24T16:56:39.5632326Z  49/232 Test  #49: cs80_filter_batch_cap_missing_tests ...............   Passed    0.01 sec
+2026-11-24T16:56:39.5633773Z         Start  50: cs80_filter_batch_cap_truncated_tests
+2026-11-24T16:56:39.5807296Z  50/232 Test  #50: cs80_filter_batch_cap_truncated_tests .............   Passed    0.02 sec
+2026-11-24T16:56:39.5807946Z         Start  51: cs80_ig00156_cache_tests
+2026-11-24T16:56:40.3623499Z  51/232 Test  #51: cs80_ig00156_cache_tests ..........................   Passed    0.78 sec
+2026-11-24T16:56:40.3625023Z         Start  52: cs80_ig00156_filter_tests
+2026-11-24T16:56:41.8708217Z  52/232 Test  #52: cs80_ig00156_filter_tests .........................   Passed    1.51 sec
+2026-11-24T16:56:41.8709865Z         Start  53: cs80_envelope_rc_model_tests
+2026-11-24T16:56:43.2149000Z  53/232 Test  #53: cs80_envelope_rc_model_tests ......................   Passed    1.34 sec
+2026-11-24T16:56:43.2150256Z         Start  54: cs80_live_envelope_level_tests
+2026-11-24T16:57:12.4837391Z  54/232 Test  #54: cs80_live_envelope_level_tests ....................   Passed   29.27 sec
+2026-11-24T16:57:12.4838641Z         Start  55: cs80_live_envelope_timing_tests
+2026-11-24T16:57:21.5312181Z  55/232 Test  #55: cs80_live_envelope_timing_tests ...................   Passed    9.05 sec
+2026-11-24T16:57:21.5313924Z         Start  56: cs80_active_tail_continuity_tests
+2026-11-24T16:58:32.2845785Z  56/232 Test  #56: cs80_active_tail_continuity_tests .................   Passed   70.75 sec
+2026-11-24T16:58:32.2847129Z         Start  57: cs80_core_tests
+2026-11-24T16:59:22.2862911Z  57/232 Test  #57: cs80_core_tests ...................................   Passed   50.00 sec
+2026-11-24T16:59:22.2865153Z         Start  58: cs80_voice_release_tests
+2026-11-24T16:59:27.7420479Z  58/232 Test  #58: cs80_voice_release_tests ..........................   Passed    5.46 sec
+2026-11-24T16:59:27.7422681Z         Start  59: cs80_sixteen_voice_release_tests
+2026-11-24T16:59:40.7095376Z  59/232 Test  #59: cs80_sixteen_voice_release_tests ..................   Passed   12.97 sec
+2026-11-24T16:59:40.7096580Z         Start  60: cs80_unison_glide_tests
+2026-11-24T17:00:17.0425798Z  60/232 Test  #60: cs80_unison_glide_tests ...........................   Passed   36.33 sec
+2026-11-24T17:00:17.0426880Z         Start  61: cs80_unison_detune_latch_tests
+2026-11-24T17:00:18.0133415Z  61/232 Test  #61: cs80_unison_detune_latch_tests ....................   Passed    0.97 sec
+2026-11-24T17:00:18.0135142Z         Start  62: cs80_pedal_release_tests
+2026-11-24T17:00:23.5681544Z  62/232 Test  #62: cs80_pedal_release_tests ..........................   Passed    5.55 sec
+2026-11-24T17:00:23.5682850Z         Start  63: cs80_high_resolution_velocity_tests
+2026-11-24T17:00:23.5830812Z  63/232 Test  #63: cs80_high_resolution_velocity_tests ...............   Passed    0.01 sec
+2026-11-24T17:00:23.5835395Z         Start  64: cs80_controller_reset_tests
+2026-11-24T17:01:02.7703310Z  64/232 Test  #64: cs80_controller_reset_tests .......................   Passed   39.19 sec
+2026-11-24T17:01:02.7705165Z         Start  65: cs80_experimental_oscillator_tests
+2026-11-24T17:02:07.2760465Z  65/232 Test  #65: cs80_experimental_oscillator_tests ................   Passed   64.51 sec
+2026-11-24T17:02:07.2761801Z         Start  66: cs80_source_factory_integration_tests
+2026-11-24T17:22:30.8970088Z  66/232 Test  #66: cs80_source_factory_integration_tests .............   Passed  1223.62 sec
+2026-11-24T17:22:30.8970611Z         Start  67: cs80_source_factory_tone_tests
+2026-11-24T17:22:31.2824198Z  67/232 Test  #67: cs80_source_factory_tone_tests ....................   Passed    0.39 sec
+2026-11-24T17:22:31.2825094Z         Start  68: cs80_hardware_control_tests
+2026-11-24T17:22:31.2972574Z  68/232 Test  #68: cs80_hardware_control_tests .......................   Passed    0.01 sec
+2026-11-24T17:22:31.2973545Z         Start  69: cs80_ig00156_reference_tests
+2026-11-24T17:22:31.4662972Z  69/232 Test  #69: cs80_ig00156_reference_tests ......................   Passed    0.17 sec
+2026-11-24T17:22:31.4663973Z         Start  70: cs80_keyboard_contour_reference_tests
+2026-11-24T17:22:31.4906427Z  70/232 Test  #70: cs80_keyboard_contour_reference_tests .............   Passed    0.02 sec
+2026-11-24T17:22:31.4907425Z         Start  71: cs80_loaded_control_reference_tests
+2026-11-24T17:22:31.5040684Z  71/232 Test  #71: cs80_loaded_control_reference_tests ...............   Passed    0.01 sec
+2026-11-24T17:22:31.5041933Z         Start  72: cs80_loaded_control_rank_tests
+2026-11-24T17:22:31.5451793Z  72/232 Test  #72: cs80_loaded_control_rank_tests ....................   Passed    0.04 sec
+2026-11-24T17:22:31.5455303Z         Start  73: cs80_loaded_control_transient_tests
+2026-11-24T17:22:31.6590041Z  73/232 Test  #73: cs80_loaded_control_transient_tests ...............   Passed    0.11 sec
+2026-11-24T17:22:31.6590873Z         Start  74: cs80_output_tap_integration_tests
+2026-11-24T17:22:39.5372072Z  74/232 Test  #74: cs80_output_tap_integration_tests .................   Passed    7.88 sec
+2026-11-24T17:22:39.5373389Z         Start  75: cs80_output_tap_circuit_tests
+2026-11-24T17:22:48.8692195Z  75/232 Test  #75: cs80_output_tap_circuit_tests .....................   Passed    9.33 sec
+2026-11-24T17:22:48.8693434Z         Start  76: cs80_output_taps_tests
+2026-11-24T17:22:48.8945991Z  76/232 Test  #76: cs80_output_taps_tests ............................   Passed    0.03 sec
+2026-11-24T17:22:48.8946991Z         Start  77: cs80_level_control_tests
+2026-11-24T17:22:49.1092166Z  77/232 Test  #77: cs80_level_control_tests ..........................   Passed    0.21 sec
+2026-11-24T17:22:49.1093025Z         Start  78: cs80_resonance_control_tests
+2026-11-24T17:22:49.1910614Z  78/232 Test  #78: cs80_resonance_control_tests ......................   Passed    0.08 sec
+2026-11-24T17:22:49.1911648Z         Start  79: cs80_oe2_filters_tests
+2026-11-24T17:22:49.2371912Z  79/232 Test  #79: cs80_oe2_filters_tests ............................   Passed    0.05 sec
+2026-11-24T17:22:49.2373206Z         Start  80: cs80_stereo_pra_exact_tests
+2026-11-24T17:22:49.2468208Z  80/232 Test  #80: cs80_stereo_pra_exact_tests .......................***Skipped   0.01 sec
+2026-11-24T17:22:49.2469197Z         Start  81: cs80_pra_wah_integration_tests
+2026-11-24T17:22:56.5228903Z  81/232 Test  #81: cs80_pra_wah_integration_tests ....................   Passed    7.28 sec
+2026-11-24T17:22:56.5230039Z         Start  82: cs80_pra_wah_circuit_tests
+2026-11-24T17:23:00.1343528Z  82/232 Test  #82: cs80_pra_wah_circuit_tests ........................   Passed    3.61 sec
+2026-11-24T17:23:00.1344612Z         Start  83: cs80_pra_wah_tests
+2026-11-24T17:23:00.3234424Z  83/232 Test  #83: cs80_pra_wah_tests ................................   Passed    0.19 sec
+2026-11-24T17:23:00.3235226Z         Start  84: cs80_bbd_chorus_tests
+2026-11-24T17:23:03.3878190Z  84/232 Test  #84: cs80_bbd_chorus_tests .............................   Passed    3.06 sec
+2026-11-24T17:23:03.3878860Z         Start  85: cs80_mn3001_packet_tests
+2026-11-24T17:23:03.5301125Z  85/232 Test  #85: cs80_mn3001_packet_tests ..........................   Passed    0.14 sec
+2026-11-24T17:23:03.5302518Z         Start  86: cs80_performance_control_tests
+2026-11-24T17:23:54.7844204Z  86/232 Test  #86: cs80_performance_control_tests ....................   Passed   51.25 sec
+2026-11-24T17:23:54.7845580Z         Start  87: cs80_validator_diagnostic_selection_tests
+2026-11-24T17:23:58.9973686Z  87/232 Test  #87: cs80_validator_diagnostic_selection_tests .........   Passed    4.21 sec
+2026-11-24T17:23:58.9974792Z         Start  88: cs80_validator_retry_tests
+2026-11-24T17:24:03.1442352Z  88/232 Test  #88: cs80_validator_retry_tests ........................   Passed    4.15 sec
+2026-11-24T17:24:03.1443144Z         Start  89: cs80_validator_exit_classification_tests
+2026-11-24T17:24:03.4897069Z  89/232 Test  #89: cs80_validator_exit_classification_tests ..........   Passed    0.35 sec
+2026-11-24T17:24:03.4897914Z         Start  90: cs80_ig00156_nodal_tests
+2026-11-24T17:25:46.1266091Z  90/232 Test  #90: cs80_ig00156_nodal_tests ..........................   Passed  102.64 sec
+2026-11-24T17:25:46.1266967Z         Start  91: cs80_ig00156_top_octave_tests
+2026-11-24T17:25:49.4284461Z  91/232 Test  #91: cs80_ig00156_top_octave_tests .....................   Passed    3.30 sec
+2026-11-24T17:25:49.4286264Z         Start  92: cs80_oscillator_promotion_tests
+2026-11-24T17:26:16.0184114Z  92/232 Test  #92: cs80_oscillator_promotion_tests ...................   Passed   26.59 sec
+2026-11-24T17:26:16.0184954Z         Start  93: cs80_ig00151_vca_tests
+2026-11-24T17:26:23.8011812Z  93/232 Test  #93: cs80_ig00151_vca_tests ............................   Passed    7.78 sec
+2026-11-24T17:26:23.8012851Z         Start  94: cs80_tolerance_drift_tests
+2026-11-24T17:27:04.3244086Z  94/232 Test  #94: cs80_tolerance_drift_tests ........................   Passed   40.52 sec
+2026-11-24T17:27:04.3245114Z         Start  95: cs80_fx_loudness_core_tests
+2026-11-24T17:27:04.8122843Z  95/232 Test  #95: cs80_fx_loudness_core_tests .......................   Passed    0.49 sec
+2026-11-24T17:27:04.8124008Z         Start  96: cs80_fx_loudness_gate_tests
+2026-11-24T17:27:04.9055889Z  96/232 Test  #96: cs80_fx_loudness_gate_tests .......................   Passed    0.09 sec
+2026-11-24T17:27:04.9057090Z         Start  97: cs80_arp_rate_lifecycle_tests
+2026-11-24T17:27:05.9068198Z  97/232 Test  #97: cs80_arp_rate_lifecycle_tests .....................   Passed    1.00 sec
+2026-11-24T17:27:05.9069114Z         Start  98: cs80_arp_pedal_lifecycle_tests
+2026-11-24T17:27:06.8680517Z  98/232 Test  #98: cs80_arp_pedal_lifecycle_tests ....................   Passed    0.96 sec
+2026-11-24T17:27:06.8683527Z         Start  99: cs80_arp_repeat_lifecycle_tests
+2026-11-24T17:27:07.2393082Z  99/232 Test  #99: cs80_arp_repeat_lifecycle_tests ...................   Passed    0.37 sec
+2026-11-24T17:27:07.2393982Z         Start 100: cs80_quiet_fx_rack_tests
+2026-11-24T17:27:14.4781315Z 100/232 Test #100: cs80_quiet_fx_rack_tests ..........................   Passed    7.24 sec
+2026-11-24T17:27:14.4782378Z         Start 101: cs80_fx_tape_lifecycle_tests
+2026-11-24T17:27:14.7238527Z 101/232 Test #101: cs80_fx_tape_lifecycle_tests ......................   Passed    0.25 sec
+2026-11-24T17:27:14.7239545Z         Start 102: cs80_external_interpolator_tests
+2026-11-24T17:27:34.5594025Z 102/232 Test #102: cs80_external_interpolator_tests ..................   Passed   19.84 sec
+2026-11-24T17:27:34.5594972Z         Start 103: cs80_oversampling_tests
+2026-11-24T17:27:43.2047548Z 103/232 Test #103: cs80_oversampling_tests ...........................   Passed    8.64 sec
+2026-11-24T17:27:43.2048349Z         Start 104: cs80_smoothing_tests
+2026-11-24T17:27:58.4982071Z 104/232 Test #104: cs80_smoothing_tests ..............................   Passed   15.29 sec
+2026-11-24T17:27:58.4983727Z         Start 105: cs80_pitch_bend_range_tests
+2026-11-24T17:28:08.2280378Z 105/232 Test #105: cs80_pitch_bend_range_tests .......................   Passed    9.73 sec
+2026-11-24T17:28:08.2282611Z         Start 106: cs80_mpe_member_onset_tests
+2026-11-24T17:28:22.4359510Z 106/232 Test #106: cs80_mpe_member_onset_tests .......................   Passed   14.21 sec
+2026-11-24T17:28:22.4360241Z         Start 107: cs80_mpe_timbre_combination_tests
+2026-11-24T17:28:26.1244549Z 107/232 Test #107: cs80_mpe_timbre_combination_tests .................   Passed    3.69 sec
+2026-11-24T17:28:26.1245389Z         Start 108: cs80_mpe_pressure_combination_tests
+2026-11-24T17:28:28.1348403Z 108/232 Test #108: cs80_mpe_pressure_combination_tests ...............   Passed    2.01 sec
+2026-11-24T17:28:28.1349492Z         Start 109: cs80_mpe_released_target_tests
+2026-11-24T17:28:43.7303200Z 109/232 Test #109: cs80_mpe_released_target_tests ....................   Passed   15.60 sec
+2026-11-24T17:28:43.7304077Z         Start 110: cs80_mpe_master_smoothing_tests
+2026-11-24T17:28:45.6823411Z 110/232 Test #110: cs80_mpe_master_smoothing_tests ...................   Passed    1.95 sec
+2026-11-24T17:28:45.6824271Z         Start 111: cs80_output_listening_tests
+2026-11-24T17:28:51.6101219Z 111/232 Test #111: cs80_output_listening_tests .......................   Passed    5.93 sec
+2026-11-24T17:28:51.6102428Z         Start 112: cs80_noise_tests
+2026-11-24T17:29:33.7846039Z 112/232 Test #112: cs80_noise_tests ..................................   Passed   42.17 sec
+2026-11-24T17:29:33.7847026Z         Start 113: cs80_poly_pressure_routing_tests
+2026-11-24T17:29:38.5477416Z 113/232 Test #113: cs80_poly_pressure_routing_tests ..................   Passed    4.76 sec
+2026-11-24T17:29:38.5478384Z         Start 114: cs80_host_automation_curve_tests
+2026-11-24T17:29:42.8297395Z 114/232 Test #114: cs80_host_automation_curve_tests ..................   Passed    4.28 sec
+2026-11-24T17:29:42.8298532Z         Start 115: cs80_free_running_voice_tests
+2026-11-24T17:30:05.4760139Z 115/232 Test #115: cs80_free_running_voice_tests .....................   Passed   22.65 sec
+2026-11-24T17:30:05.4761043Z         Start 116: cs80_kas_scanner_tests
+2026-11-24T17:30:19.3714354Z 116/232 Test #116: cs80_kas_scanner_tests ............................   Passed   13.90 sec
+2026-11-24T17:30:19.3715184Z         Start 117: cs80_scanner_ordering_tests
+2026-11-24T17:30:24.1008074Z 117/232 Test #117: cs80_scanner_ordering_tests .......................   Passed    4.73 sec
+2026-11-24T17:30:24.1008701Z         Start 118: cs80_scanner_overflow_tests
+2026-11-24T17:30:30.5064276Z 118/232 Test #118: cs80_scanner_overflow_tests .......................   Passed    6.41 sec
+2026-11-24T17:30:30.5065135Z         Start 119: cs80_keyboard_contour_key_map_tests
+2026-11-24T17:31:33.0734698Z 119/232 Test #119: cs80_keyboard_contour_key_map_tests ...............   Passed   62.57 sec
+2026-11-24T17:31:33.0735999Z         Start 120: cs80_touch_circuit_tests
+2026-11-24T17:31:52.8738100Z 120/232 Test #120: cs80_touch_circuit_tests ..........................   Passed   19.80 sec
+2026-11-24T17:31:52.8739468Z         Start 121: cs80_mpe_master_bend_routing_tests
+2026-11-24T17:32:10.8927406Z 121/232 Test #121: cs80_mpe_master_bend_routing_tests ................   Passed   18.02 sec
+2026-11-24T17:32:10.8929899Z         Start 122: cs80_tuning_midi_tests
+2026-11-24T17:33:29.2812543Z 122/232 Test #122: cs80_tuning_midi_tests ............................   Passed   78.39 sec
+2026-11-24T17:33:29.2813581Z         Start 123: cs80_tuning_frequency_domain_tests
+2026-11-24T17:33:29.3013727Z 123/232 Test #123: cs80_tuning_frequency_domain_tests ................   Passed    0.02 sec
+2026-11-24T17:33:29.3015082Z         Start 124: cs80_tuning_robustness_tests
+2026-11-24T17:33:29.3406002Z 124/232 Test #124: cs80_tuning_robustness_tests ......................   Passed    0.04 sec
+2026-11-24T17:33:29.3406980Z         Start 125: cs80_mts_esp_native_tests
+2026-11-24T17:33:29.3568438Z 125/232 Test #125: cs80_mts_esp_native_tests .........................   Passed    0.02 sec
+2026-11-24T17:33:29.3569438Z         Start 126: cs80_mts_esp_integration_tests
+2026-11-24T17:33:30.7166640Z 126/232 Test #126: cs80_mts_esp_integration_tests ....................   Passed    1.36 sec
+2026-11-24T17:33:30.7167781Z         Start 127: cs80_mts_esp_channel_tests
+2026-11-24T17:33:30.7341035Z 127/232 Test #127: cs80_mts_esp_channel_tests ........................   Passed    0.02 sec
+2026-11-24T17:33:30.7342138Z         Start 128: cs80_mts_esp_fallback_tests
+2026-11-24T17:33:30.7445154Z 128/232 Test #128: cs80_mts_esp_fallback_tests .......................   Passed    0.01 sec
+2026-11-24T17:33:30.7472217Z         Start 129: cs80_mts_esp_windows_macro_tests
+2026-11-24T17:33:30.7549120Z 129/232 Test #129: cs80_mts_esp_windows_macro_tests ..................   Passed    0.01 sec
+2026-11-24T17:33:30.7550107Z         Start 130: cs80_ig00150_sub_tests
+2026-11-24T17:34:21.8204397Z 130/232 Test #130: cs80_ig00150_sub_tests ............................   Passed   51.07 sec
+2026-11-24T17:34:21.8205645Z         Start 131: cs80_ring_modulator_circuit_tests
+2026-11-24T17:34:38.8186299Z 131/232 Test #131: cs80_ring_modulator_circuit_tests .................   Passed   17.00 sec
+2026-11-24T17:34:38.8187275Z         Start 132: cs80_oe2_stereo_chorus_tests
+2026-11-24T17:34:42.5769803Z 132/232 Test #132: cs80_oe2_stereo_chorus_tests ......................   Passed    3.76 sec
+2026-11-24T17:34:42.5770734Z         Start 133: cs80_pra_optical_cell_tests
+2026-11-24T17:34:49.9172624Z 133/232 Test #133: cs80_pra_optical_cell_tests .......................   Passed    7.34 sec
+2026-11-24T17:34:49.9173548Z         Start 134: cs80_lfo_random_switching_tests
+2026-11-24T17:34:50.1537945Z 134/232 Test #134: cs80_lfo_random_switching_tests ...................   Passed    0.24 sec
+2026-11-24T17:34:50.1538851Z         Start 135: cs80_lfo_random_variable_rate_tests
+2026-11-24T17:34:50.3992979Z 135/232 Test #135: cs80_lfo_random_variable_rate_tests ...............   Passed    0.25 sec
+2026-11-24T17:34:50.3993959Z         Start 136: cs80_modern_lfo_tests
+2026-11-24T17:34:57.1261039Z 136/232 Test #136: cs80_modern_lfo_tests .............................   Passed    6.73 sec
+2026-11-24T17:34:57.1262201Z         Start 137: cs80_mseg_tests
+2026-11-24T17:35:12.0832012Z 137/232 Test #137: cs80_mseg_tests ...................................   Passed   14.96 sec
+2026-11-24T17:35:12.0832821Z         Start 138: cs80_mseg_transport_rate_tests
+2026-11-24T17:35:13.2287310Z 138/232 Test #138: cs80_mseg_transport_rate_tests ....................   Passed    1.15 sec
+2026-11-24T17:35:13.2287971Z         Start 139: cs80_mono_mseg_routing_tests
+2026-11-24T17:35:15.6008769Z 139/232 Test #139: cs80_mono_mseg_routing_tests ......................   Passed    2.37 sec
+2026-11-24T17:35:15.6009545Z         Start 140: cs80_mseg_retrigger_rate_tests
+2026-11-24T17:35:18.8429594Z 140/232 Test #140: cs80_mseg_retrigger_rate_tests ....................   Passed    3.24 sec
+2026-11-24T17:35:18.8432383Z         Start 141: cs80_mseg_combined_interaction_tests
+2026-11-24T17:35:19.0112132Z 141/232 Test #141: cs80_mseg_combined_interaction_tests ..............   Passed    0.17 sec
+2026-11-24T17:35:19.0112970Z         Start 142: cs80_mod_matrix_tests
+2026-11-24T17:38:00.3727916Z 142/232 Test #142: cs80_mod_matrix_tests .............................   Passed  161.36 sec
+2026-11-24T17:38:00.3728919Z         Start 143: cs80_modern_fx_tests
+2026-11-24T17:41:53.4265842Z 143/232 Test #143: cs80_modern_fx_tests ..............................   Passed  233.05 sec
+2026-11-24T17:41:53.4266916Z         Start 144: cs80_delay_line_tests
+2026-11-24T17:41:53.5163311Z 144/232 Test #144: cs80_delay_line_tests .............................   Passed    0.09 sec
+2026-11-24T17:41:53.5165776Z         Start 145: cs80_plate_reverb_rate_tests
+2026-11-24T17:42:17.4230745Z 145/232 Test #145: cs80_plate_reverb_rate_tests ......................   Passed   23.91 sec
+2026-11-24T17:42:17.4232295Z         Start 146: cs80_tape_echo_time_tests
+2026-11-24T17:42:24.7018310Z 146/232 Test #146: cs80_tape_echo_time_tests .........................   Passed    7.28 sec
+2026-11-24T17:42:24.7019203Z         Start 147: cs80_drive_control_cache_tests
+2026-11-24T17:42:26.5778071Z 147/232 Test #147: cs80_drive_control_cache_tests ....................   Passed    1.88 sec
+2026-11-24T17:42:26.5778760Z         Start 148: cs80_ensemble_rate_cache_tests
+2026-11-24T17:42:41.5466049Z 148/232 Test #148: cs80_ensemble_rate_cache_tests ....................   Passed   14.97 sec
+2026-11-24T17:42:41.5466968Z         Start 149: cs80_tape_echo_control_cache_tests
+2026-11-24T17:43:03.2298760Z 149/232 Test #149: cs80_tape_echo_control_cache_tests ................   Passed   21.68 sec
+2026-11-24T17:43:03.2299671Z         Start 150: cs80_instrument_damper_tests
+2026-11-24T17:43:14.0147132Z 150/232 Test #150: cs80_instrument_damper_tests ......................   Passed   10.78 sec
+2026-11-24T17:43:14.0148964Z         Start 151: cs80_instrument_body_tests
+2026-11-24T17:43:31.2358325Z 151/232 Test #151: cs80_instrument_body_tests ........................   Passed   17.22 sec
+2026-11-24T17:43:31.2359506Z         Start 152: cs80_tine_strike_dynamics_tests
+2026-11-24T17:43:32.4819208Z 152/232 Test #152: cs80_tine_strike_dynamics_tests ...................   Passed    1.25 sec
+2026-11-24T17:43:32.4820307Z         Start 153: cs80_electric_pickup_tests
+2026-11-24T17:43:38.1644786Z 153/232 Test #153: cs80_electric_pickup_tests ........................   Passed    5.68 sec
+2026-11-24T17:43:38.1645808Z         Start 154: cs80_struck_body_dynamics_tests
+2026-11-24T17:43:51.5313637Z 154/232 Test #154: cs80_struck_body_dynamics_tests ...................   Passed   13.37 sec
+2026-11-24T17:43:51.5314600Z         Start 155: cs80_instrument_body_variant_tests
+2026-11-24T17:43:54.2104954Z 155/232 Test #155: cs80_instrument_body_variant_tests ................   Passed    2.68 sec
+2026-11-24T17:43:54.2105742Z         Start 156: cs80_vocal_body_tests
+2026-11-24T17:44:16.2056238Z 156/232 Test #156: cs80_vocal_body_tests .............................   Passed   21.99 sec
+2026-11-24T17:44:16.2057291Z         Start 157: cs80_bowed_body_formant_tests
+2026-11-24T17:44:25.6219240Z 157/232 Test #157: cs80_bowed_body_formant_tests .....................   Passed    9.42 sec
+2026-11-24T17:44:25.6220422Z         Start 158: cs80_piano_course_geometry_tests
+2026-11-24T17:44:36.4894931Z 158/232 Test #158: cs80_piano_course_geometry_tests ..................   Passed   10.87 sec
+2026-11-24T17:44:36.4895763Z         Start 159: cs80_piano_partial_decay_tests
+2026-11-24T17:44:49.0305736Z 159/232 Test #159: cs80_piano_partial_decay_tests ....................   Passed   12.54 sec
+2026-11-24T17:44:49.0306803Z         Start 160: cs80_piano_hammer_contact_tests
+2026-11-24T17:44:49.2062368Z 160/232 Test #160: cs80_piano_hammer_contact_tests ...................   Passed    0.18 sec
+2026-11-24T17:44:49.2063408Z         Start 161: cs80_piano_treble_contact_tests
+2026-11-24T17:44:50.1378840Z 161/232 Test #161: cs80_piano_treble_contact_tests ...................   Passed    0.93 sec
+2026-11-24T17:44:50.1379819Z         Start 162: cs80_body_noise_rate_tests
+2026-11-24T17:45:14.8825450Z 162/232 Test #162: cs80_body_noise_rate_tests ........................   Passed   24.74 sec
+2026-11-24T17:45:14.8826290Z         Start 163: cs80_string_body_formant_tests
+2026-11-24T17:45:28.7266411Z 163/232 Test #163: cs80_string_body_formant_tests ....................   Passed   13.84 sec
+2026-11-24T17:45:28.7267207Z         Start 164: cs80_low_choir_spectrum_tests
+2026-11-24T17:46:03.4667368Z 164/232 Test #164: cs80_low_choir_spectrum_tests .....................   Passed   34.74 sec
+2026-11-24T17:46:03.4668373Z         Start 165: cs80_wind_body_formant_tests
+2026-11-24T17:46:21.1679894Z 165/232 Test #165: cs80_wind_body_formant_tests ......................   Passed   17.70 sec
+2026-11-24T17:46:21.1680677Z         Start 166: cs80_material_body_tests
+2026-11-24T17:46:25.2736999Z 166/232 Test #166: cs80_material_body_tests ..........................   Passed    4.11 sec
+2026-11-24T17:46:25.2739622Z         Start 167: cs80_plucked_material_tests
+2026-11-24T17:46:38.9875834Z 167/232 Test #167: cs80_plucked_material_tests .......................   Passed   13.71 sec
+2026-11-24T17:46:38.9876735Z         Start 168: cs80_instrument_body_engine_tests
+2026-11-24T17:47:26.2590156Z 168/232 Test #168: cs80_instrument_body_engine_tests .................   Passed   47.27 sec
+2026-11-24T17:47:26.2591737Z         Start 169: cs80_body_articulation_engine_tests
+2026-11-24T17:47:45.4067508Z 169/232 Test #169: cs80_body_articulation_engine_tests ...............   Passed   19.15 sec
+2026-11-24T17:47:45.4068690Z         Start 170: cs80_original_articulation_tests
+2026-11-24T17:47:55.9131060Z 170/232 Test #170: cs80_original_articulation_tests ..................   Passed   10.51 sec
+2026-11-24T17:47:55.9132160Z         Start 171: cs80_keyboard_response_tests
+2026-11-24T17:51:09.7803054Z 171/232 Test #171: cs80_keyboard_response_tests ......................   Passed  193.87 sec
+2026-11-24T17:51:09.7803662Z         Start 172: cs80_mallet_preset_refinement_tests
+2026-11-24T17:51:59.3518605Z 172/232 Test #172: cs80_mallet_preset_refinement_tests ...............   Passed   49.57 sec
+2026-11-24T17:51:59.3519660Z         Start 173: cs80_bell_material_preset_tests
+2026-11-24T17:53:55.2174474Z 173/232 Test #173: cs80_bell_material_preset_tests ...................   Passed  115.87 sec
+2026-11-24T17:53:55.2175537Z         Start 174: cs80_plucked_material_preset_tests
+2026-11-24T17:54:44.6730614Z ##[error]The operation was canceled.
+2026-11-24T17:54:44.6862386Z Post job cleanup.
+2026-11-24T17:54:44.7948809Z [command]/usr/bin/git version
+2026-11-24T17:54:44.7977497Z git version 2.56.1
+2026-11-24T17:54:44.8024395Z Temporarily overriding HOME='/home/runner/work/_temp/583a529c-c650-4498-a064-9ce74b789237' before making global git config changes
+2026-11-24T17:54:44.8026133Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T17:54:44.8034347Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T17:54:44.8092285Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T17:54:44.8144952Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T17:54:44.8594396Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T17:54:44.8632087Z http.https://github.com/.extraheader
+2026-11-24T17:54:44.8654673Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-24T17:54:44.8656809Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T17:54:44.9100173Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T17:54:44.9145342Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T17:54:44.9643047Z Cleaning up orphan processes
+2026-11-24T17:54:44.9870096Z Terminate orphan process: pid (6030) (ctest)
+2026-11-24T17:54:44.9980153Z Terminate orphan process: pid (10318) (cs80_plucked_material_preset_tests)
