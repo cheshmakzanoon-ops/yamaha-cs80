@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "status": "source_continuity_verified_not_binary_or_artifact_acceptance",
+  "factory_revision": "2026.11.7",
+  "old_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "old_tree": "469244af34233cfa145537266efd29024b66abba",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "producer_job_ids": {
+    "linux-x86_64": 138455975798,
+    "windows-x86_64": 138455976256,
+    "macos-arm64": 138455976227,
+    "macos-x86_64": 138455976307
+  },
+  "retained_old_manifest": {
+    "path": "docs/preset-evidence/2026.11.7/development/source-inputs-c5549f7d.json",
+    "bytes": 148092,
+    "sha256": "6a166539feb20e09fec508acc949d028393485bb6feb571e600f08309f4dbc42",
+    "all_945_entries_independently_matched_to_old_git_blobs": true,
+    "bytes_match_new_frozen_manifest": true
+  },
+  "protected_roots": [
+    ".github",
+    "CMakeLists.txt",
+    "cmake",
+    "scripts",
+    "src",
+    "tests"
+  ],
+  "protected_file_count": 945,
+  "identical_protected_files": 943,
+  "protected_path_sets_identical": true,
+  "protected_file_modes_identical": true,
+  "root_counts": {
+    ".github": 29,
+    "CMakeLists.txt": 1,
+    "cmake": 4,
+    "scripts": 90,
+    "src": 233,
+    "tests": 588
+  },
+  "old_canonical_input_records_sha256": "29a65cd1d1c45b83f36a95d7e6e6c276622be4de051f6ea7b9cbbfd5e296a339",
+  "new_canonical_input_records_sha256": "0d552e90614ac6787356d1263d9a376dbcf3bca434773b307b6cbcdb995472ed",
+  "exact_ownership_only_changes": {
+    "src/tools/parity_capture.cpp": {
+      "before": {
+        "bytes": 15829,
+        "sha256": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051"
+      },
+      "after": {
+        "bytes": 15989,
+        "sha256": "745dae18d1a05c087008bb70d3e5c0bdeebf26b970b51dc5f2efd3231a521714"
+      },
+      "new_engine_owners": 2,
+      "normalized_bytes_equal_old_source": true
+    },
+    "tests/LibraryAuditTests.cpp": {
+      "before": {
+        "bytes": 23378,
+        "sha256": "8ce1469c4d41d41df2393fdf9d4053fe3f96b090d5f5de96e25cc15e0059e9e8"
+      },
+      "after": {
+        "bytes": 23613,
+        "sha256": "958e67fc42fa3438c5dd47425f9f4dc8012650e44d814283aa0e3d2bbc4f69cd"
+      },
+      "new_engine_owners": 2,
+      "normalized_bytes_equal_old_source": true
+    }
+  },
+  "complete_tree_changed_paths": 373,
+  "other_changes": 371,
+  "other_changes_scope": "Only docs/preset-evidence and docs/screenshots; see complete-tree-changed-files.json.",
+  "unchanged_git_trees": {
+    ".github": {
+      "old_git_tree": "74131d3884433dcd04fd59a2c83aae40b8a94f20",
+      "new_git_tree": "74131d3884433dcd04fd59a2c83aae40b8a94f20",
+      "identical": true
+    },
+    "cmake": {
+      "old_git_tree": "22c04e90f3245ccd8a17e7640122fa949948cec3",
+      "new_git_tree": "22c04e90f3245ccd8a17e7640122fa949948cec3",
+      "identical": true
+    },
+    "scripts": {
+      "old_git_tree": "63e7944cfea98475f3e36daf7b9c7574e166e627",
+      "new_git_tree": "63e7944cfea98475f3e36daf7b9c7574e166e627",
+      "identical": true
+    },
+    "src/core": {
+      "old_git_tree": "4b5bdac565c3200d674475f22a17b8b782d45ec7",
+      "new_git_tree": "4b5bdac565c3200d674475f22a17b8b782d45ec7",
+      "identical": true
+    },
+    "src/experimental": {
+      "old_git_tree": "a94fc7b3239b14d5a444d35815e73139176d7a2a",
+      "new_git_tree": "a94fc7b3239b14d5a444d35815e73139176d7a2a",
+      "identical": true
+    },
+    "src/plugin": {
+      "old_git_tree": "49a48e3086fbeb9fddc4737118d7fa8190c4cb64",
+      "new_git_tree": "49a48e3086fbeb9fddc4737118d7fa8190c4cb64",
+      "identical": true
+    },
+    "src/reference": {
+      "old_git_tree": "661f13dcd7fe0075fd9411fa481a421f23272eaf",
+      "new_git_tree": "661f13dcd7fe0075fd9411fa481a421f23272eaf",
+      "identical": true
+    },
+    "src/vendor": {
+      "old_git_tree": "50f4f45d1704d9a13e16fdd79d48e8d30ea03f2e",
+      "new_git_tree": "50f4f45d1704d9a13e16fdd79d48e8d30ea03f2e",
+      "identical": true
+    },
+    "assets": {
+      "old_git_tree": "7158ccc1e8ca73ffaf4194367c03d333e36f6808",
+      "new_git_tree": "7158ccc1e8ca73ffaf4194367c03d333e36f6808",
+      "identical": true
+    },
+    "installer": {
+      "old_git_tree": "b061a10533566872abd599766429d5c3722535a6",
+      "new_git_tree": "b061a10533566872abd599766429d5c3722535a6",
+      "identical": true
+    }
+  },
+  "unchanged_critical_inputs": {
+    "CMakeLists.txt": {
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 22321,
+      "sha256": "fddadc3493aa880156b87d0075436e99128ef7785b045c53bedf61b94b13a544"
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec"
+    },
+    "src/core/FactoryPresets.cpp": {
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac"
+    },
+    "src/core/Engine.h": {
+      "bytes": 40920,
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad"
+    },
+    "src/core/Engine.cpp": {
+      "bytes": 168644,
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4"
+    },
+    "src/core/InstrumentBody.h": {
+      "bytes": 72714,
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc"
+    },
+    "src/tools/ui_snapshot.cpp": {
+      "bytes": 219971,
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e"
+    },
+    "tests/InstrumentBodyHostTests.h": {
+      "bytes": 43689,
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+    }
+  },
+  "unchanged_additional_documentation_and_license_inputs": {
+    "docs/IG00156_NODAL_MODEL.md": {
+      "bytes": 11744,
+      "sha256": "98a306432a6287deb72e7f2df997ea482d26c1be08dd29867c6406d61c085bb5"
+    },
+    "docs/IG00151_VCA_MODEL.md": {
+      "bytes": 4556,
+      "sha256": "9e0c9f27808dc32ac6e6409691a7998ae22bbcdd4e3a5b44f34c12d513b97dd4"
+    },
+    "docs/VCA_REFERENCE.md": {
+      "bytes": 7291,
+      "sha256": "58b13ca635b1102179b1ec800a3ac03f4912ba6eaafbd6714fd6ea81f0333f59"
+    },
+    "docs/INSTALL_AND_QUICKSTART.md": {
+      "bytes": 18521,
+      "sha256": "c4a1397decd8e6e670b8713fbd05afb20ed6f319e2c8be094028684f8ed833a1"
+    },
+    "docs/PRESET_GUIDE.md": {
+      "bytes": 37423,
+      "sha256": "8cd25a3ad41da07e64ab3b5683801bc5131bae5d865933eafb2494054b57b18b"
+    },
+    "docs/CI_DISTRIBUTION_STATUS.md": {
+      "bytes": 35971,
+      "sha256": "c0070cc1258b2672549f02836d31291c2fd484df45519e66d96550ab03758686"
+    },
+    "LICENSE": {
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    }
+  },
+  "bank_identity": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "bytes": 710464,
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+    "programs": 523,
+    "parameters": 204,
+    "values": 106692,
+    "inventory_bytes_equal_in_both_frozen_sources": true,
+    "all_ordered_identities_and_metadata_identical": true,
+    "all_binary32_parameter_values_identical": true,
+    "ordered_parameter_ids_sha256": "3ddea1a21e32658fdd1f020f300fa1ebcaec016339dfd30401c824b0ca05bade",
+    "ordered_program_metadata_sha256": "0aa61b7659155a363f70a6feebd118c8ae166d682acc43bca8ced22c0e1ba8af",
+    "ordered_binary32_parameter_values_sha256": "aedb533d123874448b4df31f3c25aa7cb109d4109c6dc22ee9548ebcdeb42273",
+    "runtime_inventory_from_new_artifact_checked": false
+  },
+  "source_sound_continuity_basis": "All product core, plugin, reference and vendor trees, factory data, parameter definitions, audition producer, curated capture executable source, build recipe and workflow bytes remain identical. The only protected edits change ownership of four fresh Engine objects in two offline harnesses. Removing exactly those ownership edits reconstructs each old file byte for byte; Engine construction and call order remain unchanged.",
+  "retained_audio_reviews_applicable_to_unchanged_sound_source": true,
+  "retained_audio_reviews_scope": "Prior local/reference listening and measurement reviews remain evidence about the identical audio implementation and bank, with their original source/run and original limitations. They are not relabeled as measurements of ee0dabca native artifacts.",
+  "binary_byte_identity_claimed": false,
+  "new_pcm_byte_identity_claimed": false,
+  "original_c554_platform_or_artifact_receipts_rebound": false,
+  "actual_artifact_checked": false,
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "remaining_requirements": "Fresh ee0dabca native, validator, package, original-process/upload, payload and audition checks; old failed gates remain failed and old accepted receipts retain their original source.",
+  "generated_records": {
+    "source-inputs-ee0dabca.json": {
+      "bytes": 148012,
+      "sha256": "368b7bc55a65b2a9a5836e41464919e4d78efda4467a06c43c7c566ec174acb1"
+    },
+    "complete-tree-changed-files.json": {
+      "bytes": 96194,
+      "sha256": "98993e99cce20c1b610281a066a162c32ff98d549581e75e90eef4778038ddf7"
+    },
+    "protected-source-difference.patch": {
+      "bytes": 2603,
+      "sha256": "bd355e7b03398fded0e439da6594b0c788b045ef29f1d9f103cf77d2fe716fe6"
+    }
+  }
+}

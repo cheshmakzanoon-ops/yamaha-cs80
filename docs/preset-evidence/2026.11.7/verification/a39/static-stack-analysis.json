@@ -1,0 +1,140 @@
+{
+  "schema": "cs80-a39-static-stack-analysis-v1",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "host": "Linux x86_64",
+  "compiler": "GCC 14.2.0",
+  "compiler_scope": "Local GCC measurements; not MSVC frame measurements. The -fstack-usage flag emits a report and does not alter runtime stack limits.",
+  "sizeof_engine_bytes": 504776,
+  "sizeof_instrument_body_bytes": 6496,
+  "sizeof_evidence": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a45/sizeof-results.json",
+    "bytes": 1243,
+    "sha256": "e6bd406613e999c60939c2ae374effe7c4b60ed98f6ab793802e218b8d96bb57"
+  },
+  "sizeof_evidence_record": {
+    "case": "current",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "compile_command": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-a45-1cee5a/current/src",
+      "/tmp/cs80-a45-1cee5a/current/size.cpp",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/current/size"
+    ],
+    "sizeof_probe_sha256": "4dfb290f2421b34d7e4ab7948f3d2be46f25d562bd6b73998eaf054e93f7b7f1",
+    "stdout": "Engine=504776 InstrumentBody=6496\n",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "execution_scope": "Constant sizeof reporting only; no Engine object is constructed."
+  },
+  "frames": {
+    "before": {
+      "frames_bytes": {
+        "captureLiveAdr": 507888,
+        "main": 506400
+      },
+      "two_active_frames_sum_bytes": 1014288,
+      "records": [
+        "/tmp/cs80-a39-1cee5a/before/parity_capture.cpp:75:5:int captureLiveAdr(const std::filesystem::__cxx11::path&)\t507888\tstatic",
+        "/tmp/cs80-a39-1cee5a/before/parity_capture.cpp:236:5:int main(int, char**)\t506400\tstatic"
+      ],
+      "source": {
+        "path": "/tmp/cs80-a39-1cee5a/before/parity_capture.cpp",
+        "bytes": 15829,
+        "sha256": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051"
+      },
+      "stack_report": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a39/before-capture.stack-usage.txt",
+        "bytes": 2351,
+        "sha256": "f18009448435005b6e585b7f2ced1148e49ac76cda61ef2e80f0a4e8b0ee0adb"
+      },
+      "main_disassembly": {
+        "argv": [
+          "objdump",
+          "-d",
+          "--demangle",
+          "--disassemble=main",
+          "/tmp/cs80-a39-1cee5a/before/cs80_parity_capture"
+        ],
+        "returncode": 0,
+        "path": "docs/preset-evidence/2026.11.7/verification/a39/before-main-disassembly.txt",
+        "bytes": 54593,
+        "sha256": "1aa0fc57cde23f981645f4828e79ab75b6b847669067df9d77b6deb5d02a6a5d"
+      }
+    },
+    "after": {
+      "frames_bytes": {
+        "captureLiveAdr": 3088,
+        "main": 1616
+      },
+      "two_active_frames_sum_bytes": 4704,
+      "records": [
+        "/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:76:5:int captureLiveAdr(const std::filesystem::__cxx11::path&)\t3088\tstatic",
+        "/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:238:5:int main(int, char**)\t1616\tstatic"
+      ],
+      "source": {
+        "path": "/tmp/cs80-a39-1cee5a/after/parity_capture.cpp",
+        "bytes": 15989,
+        "sha256": "745dae18d1a05c087008bb70d3e5c0bdeebf26b970b51dc5f2efd3231a521714"
+      },
+      "stack_report": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a39/after-capture.stack-usage.txt",
+        "bytes": 2402,
+        "sha256": "a7349c264deb5be845f2797ed9f47e7df6550d70d26b013c413dd44d3b4c135a"
+      },
+      "main_disassembly": {
+        "argv": [
+          "objdump",
+          "-d",
+          "--demangle",
+          "--disassemble=main",
+          "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture"
+        ],
+        "returncode": 0,
+        "path": "docs/preset-evidence/2026.11.7/verification/a39/after-main-disassembly.txt",
+        "bytes": 55186,
+        "sha256": "3ca56db8bcfe3ddd4a02b2c9f4d4b15f7e9eb5ccf817f88d21de1f1e5f36493f"
+      }
+    }
+  },
+  "two_frame_reduction_bytes": 1009584,
+  "documented_windows_default_reserve_bytes": 1048576,
+  "capture_target_receives_existing_tests_stack_override": false,
+  "source_linker_basis": {
+    "path": "CMakeLists.txt",
+    "capture_target_lines": "1035-1036: executable cs80_parity_capture links cs80_core",
+    "override_lines": "2778-2786: existing 8 MiB override only applies to executable targets matching ^cs80_.*tests$",
+    "capture_target_matches_override": false
+  },
+  "source_call_chain": [
+    "main",
+    "captureLiveAdr",
+    "Engine initialization / prepare / render"
+  ],
+  "official_sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/cpp/build/reference/stack-stack-allocations?view=msvc-170",
+      "claim": "The default MSVC executable stack reserve for ARM64/x86/x64 is 1 MB."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/596a1078-e883-4972-9bbc-49e60bebca55",
+      "claim": "0xC00000FD is STATUS_STACK_OVERFLOW."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-a-stack-overflow",
+      "claim": "Automatic locals use the call stack; compiler optimization affects actual frame usage."
+    }
+  ],
+  "observed": "Original Windows process exits with STATUS_STACK_OVERFLOW. Local GCC main retains its automatic-object frame while calling captureLiveAdr; the two original measured frames total 1,014,288 bytes before nested calls.",
+  "inference": "Two large active capture frames are the narrow storage defect consistent with the native live-only stack overflow. Removing both automatic Engine objects eliminates approximately 1 MB of this local stack demand.",
+  "native_msvc_frames_observed": false,
+  "native_executable_pe_stack_reserve_observed": false,
+  "native_fault_backtrace_observed": false,
+  "native_rerun_performed": false,
+  "constrained_stack_probe_executed": false,
+  "fault_reproduction_executed": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

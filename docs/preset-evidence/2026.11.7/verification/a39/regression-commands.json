@@ -1,0 +1,30 @@
+[
+  {
+    "version": "before",
+    "argv": [
+      "python3",
+      "/workspace/scratch/1cee5a9391a9/yamaha-cs80/tests/test_parity_capture.py",
+      "--capture",
+      "/tmp/cs80-a39-1cee5a/before/cs80_parity_capture"
+    ],
+    "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "returncode": 0,
+    "elapsed_seconds": 3.516782,
+    "stdout": "",
+    "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 3.442s\n\nOK\n"
+  },
+  {
+    "version": "after",
+    "argv": [
+      "python3",
+      "/workspace/scratch/1cee5a9391a9/yamaha-cs80/tests/test_parity_capture.py",
+      "--capture",
+      "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture"
+    ],
+    "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "returncode": 0,
+    "elapsed_seconds": 3.141987,
+    "stdout": "",
+    "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 3.040s\n\nOK\n"
+  }
+]

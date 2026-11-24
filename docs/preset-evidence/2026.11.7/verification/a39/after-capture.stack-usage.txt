@@ -1,0 +1,15 @@
+/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:32:13:cs80::ParamValues {anonymous}::patch()	8	static
+/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:118:24:captureLiveAdr(const std::filesystem::__cxx11::path&)::<lambda(int, const char*)>	208	static
+/usr/include/c++/14/bits/fs_path.h:355:5:std::filesystem::__cxx11::path::~path()	16	static
+/usr/include/c++/14/bits/basic_string.h:3772:5:constexpr bool std::operator==(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const _CharT*) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]	32	static
+/usr/include/c++/14/bits/basic_string.h:646:7:constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::basic_string(const _CharT*, const _Alloc&) [with <template-parameter-2-1> = std::allocator<char>; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	48	static
+/usr/include/c++/14/bits/basic_string.h:285:7:constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_dispose() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]	8	static
+/usr/include/c++/14/bits/fs_path.h:591:17:std::filesystem::__cxx11::path std::filesystem::__cxx11::operator/(const path&, const path&)	48	static
+/workspace/scratch/1cee5a9391a9/yamaha-cs80/src/core/Params.h:538:20:std::string cs80::paramId(int)	208	static
+/usr/include/c++/14/bits/fs_path.h:330:7:std::filesystem::__cxx11::path::path(const _Source&, format) [with _Source = char [13]; _Require = std::filesystem::__cxx11::path]	32	static
+/usr/include/c++/14/bits/unique_ptr.h:393:7:std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = cs80::Engine; _Dp = std::default_delete<cs80::Engine>]	96	static
+/usr/include/c++/14/bits/fs_path.h:330:7:std::filesystem::__cxx11::path::path(const _Source&, format) [with _Source = char [20]; _Require = std::filesystem::__cxx11::path]	32	static
+/usr/include/c++/14/bits/fs_path.h:330:7:std::filesystem::__cxx11::path::path(const _Source&, format) [with _Source = const char*; _Require = std::filesystem::__cxx11::path]	32	static
+/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:64:15:std::ofstream {anonymous}::output(const std::filesystem::__cxx11::path&)	80	static
+/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:76:5:int captureLiveAdr(const std::filesystem::__cxx11::path&)	3088	static
+/tmp/cs80-a39-1cee5a/after/parity_capture.cpp:238:5:int main(int, char**)	1616	static

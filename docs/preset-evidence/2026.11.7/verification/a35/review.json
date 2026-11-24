@@ -1,0 +1,2448 @@
+{
+  "scope": "All seven existing vocal recipes; inventory/source review, reused A07/A21/A25 and bank evidence, one ordinary complete-preset gesture pair. No listening qualification.",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "baseline": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "head_at_review": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "inventory": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+    "bytes": 710464
+  },
+  "baseline_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "summary": {
+    "program_count": 7,
+    "original_address_count": 4,
+    "curated_count": 3,
+    "active_rank_count": 14,
+    "active_vocal_rank_count": 12,
+    "category_program_counts": {
+      "Pads": 5,
+      "FX": 2
+    },
+    "vowel_program_counts": {
+      "Oo": 3,
+      "Ah": 4
+    },
+    "vowel_rank_counts": {
+      "Oo": 6,
+      "Ah": 6
+    },
+    "unchanged_parameter_values": 1428,
+    "all_complete_records_equal_6": true,
+    "default_bank_equal_metric_rows": 4,
+    "default_bank_changed_metric_rows": 3
+  },
+  "programs": [
+    {
+      "host_index": 32,
+      "name": "Blade Choir",
+      "category": "Pads",
+      "origin": "original address",
+      "description": "A covered oo vowel at 16 feet supports a lighter 8-foot choir. Vocal-body resonances stay in place as the notes change; unequal breath entrances and restrained upper effort preserve the dark ensemble color. A covered upper register and rounded main release, preserving the shorter edge.",
+      "tags": [
+        "resonance",
+        "feet-layer"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "5db2ac267aab1bf967a405017a3c3f367a6c9ecbaeb4b6e8275fa59933b5f357",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.769999996,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 16,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.13999999,
+            "brightness": 0.281113505,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 35,
+            "lpf_cutoff": 4162.10254,
+            "v_a": 0.352719665,
+            "v_d": 3.79999995,
+            "v_s": 0.959999979,
+            "v_r": 2.57599998,
+            "v_level": 0.219999999,
+            "init_brill": 0.0149999997,
+            "init_level": 0.879999995,
+            "after_brill": 0.100000001,
+            "after_level": 0.419999987
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 32.70319566257483,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 1569.7533918035917,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 29.505137636140315,
+              "mode_count": 30,
+              "last_mode_coverage": 0.505137636140315,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3924.3834795089792,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.230000004,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.02999997,
+            "brightness": 0.381113499,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 65,
+            "lpf_cutoff": 5202.62842,
+            "v_a": 0.603036821,
+            "v_d": 3.0999999,
+            "v_s": 0.649999976,
+            "v_r": 2.12800002,
+            "v_level": 0.119999997,
+            "init_brill": 0.0199999996,
+            "init_level": 0.75999999,
+            "after_brill": 0.140000001,
+            "after_level": 0.439999998
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.45174329875749,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3141.6836783403596,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.90348659751496,
+              "budget": 32.63354472559888,
+              "mode_count": 33,
+              "last_mode_coverage": 0.6335447255988811,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4319.815057717993,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.80697319502997,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6283.367356680719,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.6139463900597,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12566.734713361433,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            }
+          ]
+        }
+      ],
+      "global_controls": {
+        "mix": 0.230000004,
+        "detune": 1.20000005,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 1,
+        "chorus_depth": 0.100000001,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004,
+        "analog_noise": 0,
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_amount": 0,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "32",
+          "name": "Blade Choir",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "bb6b1cc3bc3c5d0d",
+          "peak_dbfs": "-25.08790737",
+          "rms_dbfs": "-34.08957115",
+          "early_rms_dbfs": "-37.87387908",
+          "body_rms_dbfs": "-34.19749083",
+          "tail_rms_dbfs": "-48.38948413",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "262.3579206",
+          "low_power": "0.9848461874",
+          "mid_power": "0.01510476217",
+          "high_power": "4.905041673e-05",
+          "tilt": "0.001302052257",
+          "stereo_correlation": "0.9999868991",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "32",
+          "name": "Blade Choir",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "bb6b1cc3bc3c5d0d",
+          "peak_dbfs": "-25.06335137",
+          "rms_dbfs": "-34.0640519",
+          "early_rms_dbfs": "-37.85309938",
+          "body_rms_dbfs": "-34.16723592",
+          "tail_rms_dbfs": "-48.36550082",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "262.3537871",
+          "low_power": "0.9848385835",
+          "mid_power": "0.01511252653",
+          "high_power": "4.888995906e-05",
+          "tilt": "0.001301796582",
+          "stereo_correlation": "0.9999869743",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": false,
+        "rms_delta_db": -0.025519249999994997,
+        "peak_delta_db": -0.024556000000000466
+      }
+    },
+    {
+      "host_index": 95,
+      "name": "Golden Pads 52",
+      "category": "Pads",
+      "origin": "original address",
+      "description": "Two softly voiced open-vowel bodies retain their vocal resonances across the keyboard. The upper choir enters later and remains lighter; pressure adds effort and upper color without moving the vowel bands with the played pitch. A gently open body, a defined attack and a clean key release.",
+      "tags": [
+        "resonance",
+        "dual-rank"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "ab5039c9801d1e0a181f28a1107a48278a4186c33facfadd5f537a8c837d2881",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.6999999880000001,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 1,
+            "size": 1.01999998,
+            "brightness": 0.535125375,
+            "decay": 1.04708266,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 55,
+            "lpf_cutoff": 7623.74072,
+            "v_a": 0.180000007,
+            "v_d": 3.42400026,
+            "v_s": 0.949999988,
+            "v_r": 1.4569999,
+            "v_level": 0.180000007,
+            "init_brill": 0.0199999996,
+            "init_level": 0.939999998,
+            "after_brill": 0.140000001,
+            "after_level": 0.409999996
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 32.97633065654431,
+              "mode_count": 33,
+              "last_mode_coverage": 0.9763306565443131,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4316.821827459878,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.2511306011972,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12558.027134428734,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.300000012,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 1,
+            "size": 0.949999988,
+            "brightness": 0.605125368,
+            "decay": 1.04708266,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 90,
+            "lpf_cutoff": 8259.05273,
+            "v_a": 0.310000002,
+            "v_d": 2.88900018,
+            "v_s": 0.730000019,
+            "v_r": 1.59800005,
+            "v_level": 0.119999997,
+            "init_brill": 0.0250000004,
+            "init_level": 0.800000012,
+            "after_brill": 0.180000007,
+            "after_level": 0.460000008
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.48577790743863,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3143.3173395570543,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.97155581487723,
+              "budget": 35.363243393238136,
+              "mode_count": 36,
+              "last_mode_coverage": 0.36324339323813604,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4714.976009335581,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.94311162975447,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6286.634679114108,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.8862232595089,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12573.269358228215,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            }
+          ]
+        }
+      ],
+      "global_controls": {
+        "mix": 0.300000012,
+        "detune": 2.0999999,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 1,
+        "chorus_depth": 0.140000001,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0.0500000007,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004,
+        "analog_noise": 0,
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_amount": 0,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "95",
+          "name": "Golden Pads 52",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "734473e13e6915fb",
+          "peak_dbfs": "-27.32053341",
+          "rms_dbfs": "-37.59990561",
+          "early_rms_dbfs": "-38.53355212",
+          "body_rms_dbfs": "-36.44244864",
+          "tail_rms_dbfs": "-64.54568316",
+          "peak_window_seconds": "2.95",
+          "centroid_hz": "786.0208278",
+          "low_power": "0.1577860881",
+          "mid_power": "0.8348420954",
+          "high_power": "0.007371816458",
+          "tilt": "0.01228394393",
+          "stereo_correlation": "0.9999702117",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "95",
+          "name": "Golden Pads 52",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "734473e13e6915fb",
+          "peak_dbfs": "-27.32053341",
+          "rms_dbfs": "-37.59990561",
+          "early_rms_dbfs": "-38.53355212",
+          "body_rms_dbfs": "-36.44244864",
+          "tail_rms_dbfs": "-64.54568316",
+          "peak_window_seconds": "2.95",
+          "centroid_hz": "786.0208278",
+          "low_power": "0.1577860881",
+          "mid_power": "0.8348420954",
+          "high_power": "0.007371816458",
+          "tilt": "0.01228394393",
+          "stereo_correlation": "0.9999702117",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": true,
+        "rms_delta_db": 0.0,
+        "peak_delta_db": 0.0
+      }
+    },
+    {
+      "host_index": 98,
+      "name": "Midnight Pads 55",
+      "category": "Pads",
+      "origin": "original address",
+      "description": "A covered oo vowel at 16 feet supports a lighter 8-foot choir. Vocal-body resonances stay in place as the notes change; unequal breath entrances and restrained upper effort preserve the dark ensemble color. A dark upper contour with a slightly lingering body; the onset remains defined.",
+      "tags": [
+        "resonance",
+        "feet-layer"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "c76a66e015e939d7c777b33044a2df89c556cdb60ab2f32b448773d47592d7fe",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.769999996,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 16,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.13999999,
+            "brightness": 0.250793725,
+            "decay": 1.07354343,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 35,
+            "lpf_cutoff": 3711.3186,
+            "v_a": 0.310000002,
+            "v_d": 4.21799994,
+            "v_s": 0.959999979,
+            "v_r": 2.43799973,
+            "v_level": 0.219999999,
+            "init_brill": 0.0149999997,
+            "init_level": 0.879999995,
+            "after_brill": 0.100000001,
+            "after_level": 0.419999987
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 32.70319566257483,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 1569.7533918035917,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 29.505137636140315,
+              "mode_count": 30,
+              "last_mode_coverage": 0.505137636140315,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3924.3834795089792,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.230000004,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.02999997,
+            "brightness": 0.350793719,
+            "decay": 1.07354343,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 65,
+            "lpf_cutoff": 4639.14844,
+            "v_a": 0.529999971,
+            "v_d": 3.44099998,
+            "v_s": 0.649999976,
+            "v_r": 2.01399994,
+            "v_level": 0.119999997,
+            "init_brill": 0.0199999996,
+            "init_level": 0.75999999,
+            "after_brill": 0.140000001,
+            "after_level": 0.439999998
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.45174329875749,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3141.6836783403596,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.90348659751496,
+              "budget": 32.63354472559888,
+              "mode_count": 33,
+              "last_mode_coverage": 0.6335447255988811,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4319.815057717993,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.80697319502997,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6283.367356680719,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.6139463900597,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12566.734713361433,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            }
+          ]
+        }
+      ],
+      "global_controls": {
+        "mix": 0.230000004,
+        "detune": 1.20000005,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 1,
+        "chorus_depth": 0.100000001,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004,
+        "analog_noise": 0,
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_amount": 0,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "98",
+          "name": "Midnight Pads 55",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "a15ce86099de393e",
+          "peak_dbfs": "-25.08419915",
+          "rms_dbfs": "-34.14761857",
+          "early_rms_dbfs": "-37.07721427",
+          "body_rms_dbfs": "-34.32246982",
+          "tail_rms_dbfs": "-49.36060387",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "261.9168896",
+          "low_power": "0.9858977885",
+          "mid_power": "0.01406012888",
+          "high_power": "4.208264859e-05",
+          "tilt": "0.001289401851",
+          "stereo_correlation": "0.999986782",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "98",
+          "name": "Midnight Pads 55",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "a15ce86099de393e",
+          "peak_dbfs": "-25.06060789",
+          "rms_dbfs": "-34.12222199",
+          "early_rms_dbfs": "-37.05652201",
+          "body_rms_dbfs": "-34.29218446",
+          "tail_rms_dbfs": "-49.33660458",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "261.9118599",
+          "low_power": "0.9858910522",
+          "mid_power": "0.01406698833",
+          "high_power": "4.195942143e-05",
+          "tilt": "0.00128916881",
+          "stereo_correlation": "0.9999868575",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": false,
+        "rms_delta_db": -0.02539657999999889,
+        "peak_delta_db": -0.023591259999999892
+      }
+    },
+    {
+      "host_index": 184,
+      "name": "Hollow FX 141",
+      "category": "FX",
+      "origin": "original address",
+      "description": "A voiced ah-formant body carries a fixed 73 Hz mechanical ring, with a brief noisy saw consonant above it. The vocal resonances retain their shape across pitch changes; pressure opens and raises the sustained robotic vowel. A lightly focused filter band over a longer body, with restrained resonance on acoustic models.",
+      "tags": [
+        "ring-mod",
+        "resonance",
+        "aftertouch"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "fff70ba5aaa097a4c8d7e16f50275ba81a618630ac33e7b123325553bd3e2c75",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.719999999,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 0.879999995,
+            "size": 1.04999995,
+            "brightness": 0.605033219,
+            "decay": 1.08665919,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 180,
+            "lpf_cutoff": 4724.92432,
+            "v_a": 0.0120000001,
+            "v_d": 0.937900007,
+            "v_s": 0.680000007,
+            "v_r": 0.219999999,
+            "v_level": 1,
+            "init_brill": 0.0500000007,
+            "init_level": 1,
+            "after_brill": 0.239999995,
+            "after_level": 0.850000024
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 32.03415067795821,
+              "mode_count": 33,
+              "last_mode_coverage": 0.03415067795820903,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4316.821827459878,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.2511306011972,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12558.027134428734,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.280000001,
+          "vocal": false,
+          "vowel": null,
+          "feet": 8,
+          "body": {
+            "model": 0,
+            "variant": 0,
+            "mix": 0,
+            "size": 1,
+            "brightness": 0.5,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 1,
+            "pulse": 0,
+            "sine": 0,
+            "noise": 0.159999996,
+            "hpf_cutoff": 1350,
+            "lpf_cutoff": 2639,
+            "v_a": 0.00300000003,
+            "v_d": 0.186266378,
+            "v_s": 0.0250000004,
+            "v_r": 0.0549999997,
+            "v_level": 0.159999996,
+            "init_brill": 0.100000001,
+            "init_level": 0.949999988,
+            "after_brill": 0.310000002,
+            "after_level": 0.289999992
+          },
+          "nominal_budgets": []
+        }
+      ],
+      "global_controls": {
+        "mix": 0.280000001,
+        "detune": 0,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 0,
+        "chorus_depth": 0.5,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0.0199999996,
+        "voice_dispersion": 0.0700000003,
+        "analog_noise": 0,
+        "ring_speed": 73,
+        "ring_depth": 0,
+        "ring_amount": 0.74000001,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "184",
+          "name": "Hollow FX 141",
+          "category": "FX",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "78b33e27b964e725",
+          "peak_dbfs": "-23.27879661",
+          "rms_dbfs": "-39.80626588",
+          "early_rms_dbfs": "-37.76135129",
+          "body_rms_dbfs": "-38.72497877",
+          "tail_rms_dbfs": "-67.42663329",
+          "peak_window_seconds": "0.1",
+          "centroid_hz": "753.8251781",
+          "low_power": "0.2126395629",
+          "mid_power": "0.7779074203",
+          "high_power": "0.009453016795",
+          "tilt": "0.01102465851",
+          "stereo_correlation": "0.9999999289",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "184",
+          "name": "Hollow FX 141",
+          "category": "FX",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "78b33e27b964e725",
+          "peak_dbfs": "-23.27879661",
+          "rms_dbfs": "-39.80626588",
+          "early_rms_dbfs": "-37.76135129",
+          "body_rms_dbfs": "-38.72497877",
+          "tail_rms_dbfs": "-67.42663329",
+          "peak_window_seconds": "0.1",
+          "centroid_hz": "753.8251781",
+          "low_power": "0.2126395629",
+          "mid_power": "0.7779074203",
+          "high_power": "0.009453016795",
+          "tilt": "0.01102465851",
+          "stereo_correlation": "0.9999999289",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": true,
+        "rms_delta_db": 0.0,
+        "peak_delta_db": 0.0
+      }
+    },
+    {
+      "host_index": 284,
+      "name": "Choir Pad",
+      "category": "Pads",
+      "origin": "curated",
+      "description": "Two softly voiced open-vowel bodies retain their vocal resonances across the keyboard. The upper choir enters later and remains lighter; pressure adds effort and upper color without moving the vowel bands with the played pitch.",
+      "tags": [
+        "resonance",
+        "dual-rank"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "0ec7583e3e4bf4caa54148c0141b1efe446fc873187558b16dfa6e1060e2dd7c",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.6999999880000001,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 1,
+            "size": 1.01999998,
+            "brightness": 0.519999981,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 55,
+            "lpf_cutoff": 7200,
+            "v_a": 0.180000007,
+            "v_d": 3.20000005,
+            "v_s": 0.949999988,
+            "v_r": 1.54999995,
+            "v_level": 0.180000007,
+            "init_brill": 0.0199999996,
+            "init_level": 0.939999998,
+            "after_brill": 0.140000001,
+            "after_level": 0.409999996
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 32.97633065654431,
+              "mode_count": 33,
+              "last_mode_coverage": 0.9763306565443131,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4316.821827459878,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.2511306011972,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12558.027134428734,
+              "coverage_target_hz": 4313.725574778933,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.300000012,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 1,
+            "size": 0.949999988,
+            "brightness": 0.589999974,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 90,
+            "lpf_cutoff": 7800,
+            "v_a": 0.310000002,
+            "v_d": 2.70000005,
+            "v_s": 0.730000019,
+            "v_r": 1.70000005,
+            "v_level": 0.119999997,
+            "init_brill": 0.0250000004,
+            "init_level": 0.800000012,
+            "after_brill": 0.180000007,
+            "after_level": 0.460000008
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.48577790743863,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3143.3173395570543,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.97155581487723,
+              "budget": 35.363243393238136,
+              "mode_count": 36,
+              "last_mode_coverage": 0.36324339323813604,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4714.976009335581,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.94311162975447,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6286.634679114108,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.8862232595089,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12573.269358228215,
+              "coverage_target_hz": 4631.579005872577,
+              "ceiling_limits_target": false
+            }
+          ]
+        }
+      ],
+      "global_controls": {
+        "mix": 0.300000012,
+        "detune": 2.0999999,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 1,
+        "chorus_depth": 0.140000001,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0.0500000007,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004,
+        "analog_noise": 0,
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_amount": 0,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "284",
+          "name": "Choir Pad",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "7463c37f3e853a37",
+          "peak_dbfs": "-27.39257089",
+          "rms_dbfs": "-37.67782538",
+          "early_rms_dbfs": "-38.61201221",
+          "body_rms_dbfs": "-36.51650519",
+          "tail_rms_dbfs": "-63.13231955",
+          "peak_window_seconds": "2.95",
+          "centroid_hz": "782.4806534",
+          "low_power": "0.1607007079",
+          "mid_power": "0.8322536837",
+          "high_power": "0.007045608398",
+          "tilt": "0.01218164101",
+          "stereo_correlation": "0.9999696351",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "284",
+          "name": "Choir Pad",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "7463c37f3e853a37",
+          "peak_dbfs": "-27.39257089",
+          "rms_dbfs": "-37.67782538",
+          "early_rms_dbfs": "-38.61201221",
+          "body_rms_dbfs": "-36.51650519",
+          "tail_rms_dbfs": "-63.13231955",
+          "peak_window_seconds": "2.95",
+          "centroid_hz": "782.4806534",
+          "low_power": "0.1607007079",
+          "mid_power": "0.8322536837",
+          "high_power": "0.007045608398",
+          "tilt": "0.01218164101",
+          "stereo_correlation": "0.9999696351",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": true,
+        "rms_delta_db": 0.0,
+        "peak_delta_db": 0.0
+      }
+    },
+    {
+      "host_index": 285,
+      "name": "Dark Choir",
+      "category": "Pads",
+      "origin": "curated",
+      "description": "A covered oo vowel at 16 feet supports a lighter 8-foot choir. Vocal-body resonances stay in place as the notes change; unequal breath entrances and restrained upper effort preserve the dark ensemble color.",
+      "tags": [
+        "resonance",
+        "feet-layer"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "8e35178176e4a5c90631463b559f7cf0bb8265971c69cb4ce4050fa8df9a278c",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.769999996,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 16,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.13999999,
+            "brightness": 0.340000004,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 35,
+            "lpf_cutoff": 5200,
+            "v_a": 0.310000002,
+            "v_d": 3.79999995,
+            "v_s": 0.959999979,
+            "v_r": 2.29999995,
+            "v_level": 0.219999999,
+            "init_brill": 0.0149999997,
+            "init_level": 0.879999995,
+            "after_brill": 0.100000001,
+            "after_level": 0.419999987
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 32.70319566257483,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 1569.7533918035917,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 29.505137636140315,
+              "mode_count": 30,
+              "last_mode_coverage": 0.505137636140315,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3924.3834795089792,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 3859.649156663589,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.230000004,
+          "vocal": true,
+          "vowel": "Oo",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 4,
+            "mix": 1,
+            "size": 1.02999997,
+            "brightness": 0.439999998,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 65,
+            "lpf_cutoff": 6500,
+            "v_a": 0.529999971,
+            "v_d": 3.0999999,
+            "v_s": 0.649999976,
+            "v_r": 1.89999998,
+            "v_level": 0.119999997,
+            "init_brill": 0.0199999996,
+            "init_level": 0.75999999,
+            "after_brill": 0.140000001,
+            "after_level": 0.439999998
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.45174329875749,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3141.6836783403596,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.90348659751496,
+              "budget": 32.63354472559888,
+              "mode_count": 33,
+              "last_mode_coverage": 0.6335447255988811,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4319.815057717993,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.80697319502997,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6283.367356680719,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.6139463900597,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12566.734713361433,
+              "coverage_target_hz": 4271.844784616838,
+              "ceiling_limits_target": false
+            }
+          ]
+        }
+      ],
+      "global_controls": {
+        "mix": 0.230000004,
+        "detune": 1.20000005,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 1,
+        "chorus_depth": 0.100000001,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004,
+        "analog_noise": 0,
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_amount": 0,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "285",
+          "name": "Dark Choir",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "d3dc2cba2e5e861f",
+          "peak_dbfs": "-24.79869959",
+          "rms_dbfs": "-33.8352392",
+          "early_rms_dbfs": "-36.80318585",
+          "body_rms_dbfs": "-33.95810306",
+          "tail_rms_dbfs": "-50.03048318",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "263.4697539",
+          "low_power": "0.983450506",
+          "mid_power": "0.01648139318",
+          "high_power": "6.810081453e-05",
+          "tilt": "0.001324680704",
+          "stereo_correlation": "0.9999877249",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "285",
+          "name": "Dark Choir",
+          "category": "Pads",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "d3dc2cba2e5e861f",
+          "peak_dbfs": "-24.77220027",
+          "rms_dbfs": "-33.80977348",
+          "early_rms_dbfs": "-36.78236821",
+          "body_rms_dbfs": "-33.9279069",
+          "tail_rms_dbfs": "-50.00633032",
+          "peak_window_seconds": "0.45",
+          "centroid_hz": "263.4659631",
+          "low_power": "0.9834421491",
+          "mid_power": "0.01648998778",
+          "high_power": "6.786308482e-05",
+          "tilt": "0.001324380766",
+          "stereo_correlation": "0.9999877951",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": false,
+        "rms_delta_db": -0.025465719999999692,
+        "peak_delta_db": -0.026499319999999216
+      }
+    },
+    {
+      "host_index": 487,
+      "name": "Robot Voice",
+      "category": "FX",
+      "origin": "curated",
+      "description": "A voiced ah-formant body carries a fixed 73 Hz mechanical ring, with a brief noisy saw consonant above it. The vocal resonances retain their shape across pitch changes; pressure opens and raises the sustained robotic vowel.",
+      "tags": [
+        "ring-mod",
+        "resonance",
+        "aftertouch"
+      ],
+      "complete_record_equals_6": true,
+      "parameter_binary32_sha256": "bd3f152d1148d2048598f8796c06acc0b41ddaf8af98db81b321a7aa80e7ffce",
+      "ranks": [
+        {
+          "rank": 1,
+          "active": true,
+          "balance_weight": 0.719999999,
+          "vocal": true,
+          "vowel": "Ah",
+          "feet": 8,
+          "body": {
+            "model": 15,
+            "variant": 3,
+            "mix": 0.879999995,
+            "size": 1.04999995,
+            "brightness": 0.620000005,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 0,
+            "pulse": 1,
+            "sine": 0,
+            "noise": 0,
+            "hpf_cutoff": 180,
+            "lpf_cutoff": 5000,
+            "v_a": 0.0120000001,
+            "v_d": 0.829999983,
+            "v_s": 0.680000007,
+            "v_r": 0.219999999,
+            "v_level": 1,
+            "init_brill": 0.0500000007,
+            "init_level": 1,
+            "after_brill": 0.239999995,
+            "after_level": 0.850000024
+          },
+          "nominal_budgets": [
+            {
+              "played_midi": 36,
+              "nominal_captured_body_hz": 65.40639132514966,
+              "budget": 48,
+              "mode_count": 48,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 3139.5067836071835,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": true
+            },
+            {
+              "played_midi": 48,
+              "nominal_captured_body_hz": 130.8127826502993,
+              "budget": 32.03415067795821,
+              "mode_count": 33,
+              "last_mode_coverage": 0.03415067795820903,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 4316.821827459878,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 60,
+              "nominal_captured_body_hz": 261.6255653005986,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 6279.013567214367,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            },
+            {
+              "played_midi": 72,
+              "nominal_captured_body_hz": 523.2511306011972,
+              "budget": 24,
+              "mode_count": 24,
+              "last_mode_coverage": 1,
+              "old_mode_count": 24,
+              "last_mode_frequency_hz": 12558.027134428734,
+              "coverage_target_hz": 4190.476390022685,
+              "ceiling_limits_target": false
+            }
+          ]
+        },
+        {
+          "rank": 2,
+          "active": true,
+          "balance_weight": 0.280000001,
+          "vocal": false,
+          "vowel": null,
+          "feet": 8,
+          "body": {
+            "model": 0,
+            "variant": 0,
+            "mix": 0,
+            "size": 1,
+            "brightness": 0.5,
+            "decay": 1,
+            "material": 0
+          },
+          "controls": {
+            "saw": 1,
+            "pulse": 0,
+            "sine": 0,
+            "noise": 0.159999996,
+            "hpf_cutoff": 1350,
+            "lpf_cutoff": 2900,
+            "v_a": 0.00300000003,
+            "v_d": 0.180000007,
+            "v_s": 0.0250000004,
+            "v_r": 0.0549999997,
+            "v_level": 0.159999996,
+            "init_brill": 0.100000001,
+            "init_level": 0.949999988,
+            "after_brill": 0.310000002,
+            "after_level": 0.289999992
+          },
+          "nominal_budgets": []
+        }
+      ],
+      "global_controls": {
+        "mix": 0.280000001,
+        "detune": 0,
+        "tuning_ref": 440,
+        "master_tune": 0,
+        "chorus_on": 0,
+        "chorus_depth": 0.5,
+        "modwheel_sub": 0,
+        "modwheel_vcf": 0,
+        "sub_vco": 0,
+        "sub_vcf": 0,
+        "sub_vca": 0,
+        "sub_at_vco": 0,
+        "sub_at_vcf": 0,
+        "sub_at_speed": 0,
+        "pitch_bend_range": 2,
+        "mpe_on": 0,
+        "ribbon": 0,
+        "ribbon_cc_enable": 0,
+        "portamento": 0,
+        "init_bend": 0,
+        "drift": 0.0199999996,
+        "voice_dispersion": 0.0700000003,
+        "analog_noise": 0,
+        "ring_speed": 73,
+        "ring_depth": 0,
+        "ring_amount": 0.74000001,
+        "fx1_type": 0,
+        "fx2_type": 0,
+        "fx3_type": 0
+      },
+      "nonzero_mod_matrix_amounts": {},
+      "nonzero_lfo_routes": [],
+      "matched_bank": {
+        "conditions": "48 kHz, played MIDI60, velocity .8, pressure0, 3-second hold, 1-second tail",
+        "current_row": {
+          "index": "487",
+          "name": "Robot Voice",
+          "category": "FX",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "73a509c70682f331",
+          "peak_dbfs": "-23.26623714",
+          "rms_dbfs": "-39.76309041",
+          "early_rms_dbfs": "-37.81024561",
+          "body_rms_dbfs": "-38.66191236",
+          "tail_rms_dbfs": "-67.42663329",
+          "peak_window_seconds": "0.1",
+          "centroid_hz": "754.1021915",
+          "low_power": "0.2127379549",
+          "mid_power": "0.7777728065",
+          "high_power": "0.009489238685",
+          "tilt": "0.01113728676",
+          "stereo_correlation": "0.9999999296",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "baseline_row": {
+          "index": "487",
+          "name": "Robot Voice",
+          "category": "FX",
+          "note": "60",
+          "sample_rate": "48000",
+          "velocity": "0.8000000119",
+          "pressure": "0",
+          "hold_seconds": "3",
+          "tail_seconds": "1",
+          "rank": "0",
+          "parameter_digest": "73a509c70682f331",
+          "peak_dbfs": "-23.26623714",
+          "rms_dbfs": "-39.76309041",
+          "early_rms_dbfs": "-37.81024561",
+          "body_rms_dbfs": "-38.66191236",
+          "tail_rms_dbfs": "-67.42663329",
+          "peak_window_seconds": "0.1",
+          "centroid_hz": "754.1021915",
+          "low_power": "0.2127379549",
+          "mid_power": "0.7777728065",
+          "high_power": "0.009489238685",
+          "tilt": "0.01113728676",
+          "stereo_correlation": "0.9999999296",
+          "nonfinite": "0",
+          "samples_over_full_scale": "0"
+        },
+        "metric_rows_exactly_equal": true,
+        "rms_delta_db": 0.0,
+        "peak_delta_db": 0.0
+      }
+    }
+  ],
+  "source_receipts": [
+    {
+      "path": "src/core/InstrumentBody.h",
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "bytes": 72714
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "bytes": 1259
+    },
+    {
+      "path": "src/core/InstrumentBodyFilter.h",
+      "sha256": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+      "bytes": 3648
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "bytes": 11002
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "bytes": 2815
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "bytes": 26057
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "sha256": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+      "bytes": 11073
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "bytes": 31027
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "bytes": 28629
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "sha256": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3",
+      "bytes": 24328
+    }
+  ],
+  "reused_evidence": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a07/receipt.json",
+      "sha256": "858063188b10e25978a44d6db47795515fe54207d157dc9eb54b447822fb9023",
+      "bytes": 858
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a07/current.log",
+      "sha256": "411faec0861488daa502b3bb2fa141714ca17ad340b0d9cfaa59a9bf1cf9f826",
+      "bytes": 1826
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a07/vocal-regression.log",
+      "sha256": "62b2a730e1b22c0c98515561f8a736dc19e2c02c487e4fa152c3636254579571",
+      "bytes": 493
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/binding.json",
+      "sha256": "0512193cf8f7296a537d493db9efaed74606cc8027af7cfec8c834464e65f5eb",
+      "bytes": 2863
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/structural-coverage.json",
+      "sha256": "f6f5a953a9eb5d1210cfff2cf47893be3e966541306765d862ea6e176ed2b94b",
+      "bytes": 223628
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/rendered-measurements.json",
+      "sha256": "e344b6c5beb7c8dad8984e8d1516b4f50e72cd0096a17d3fc30a4874ef2c29a7",
+      "bytes": 42450
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/review.json",
+      "sha256": "6c688eab07af61987470b7d764af7fe72e838903fa6d1b983808107eb9c7b829",
+      "bytes": 238387
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/reused-fx-refinement.txt",
+      "sha256": "1fe2552346bc82252abace1c53ecf6b485c5aee444c60d7c6afe9ca8da0c0f41",
+      "bytes": 521
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/matched-published-current-bank.json",
+      "sha256": "99531c4f60c36ece3cf08108dfdaab9f95dc7700bba727a021eb6c283fdb5272",
+      "bytes": 1354
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/current-bank-metrics.csv",
+      "sha256": "0cc474d4b3e4d17684348913797f06bf1ce80e5f0d823394b28dee6237cfb7bc",
+      "bytes": 118462
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/baseline-bank-metrics.csv",
+      "sha256": "240fd7e682a7c138f52157cc9374daaaec33cf59204fc0e9f1e36db595d4fdea",
+      "bytes": 118465
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/focused-ctest-receipt.json",
+      "sha256": "506fc26c5c02f63d05321d5dd92f66a73156c285c5ee5499fe4e6c24a2bb2df3",
+      "bytes": 836
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/mechanism-coverage.json",
+      "sha256": "1a64129ae4a8245396dc13f49a372def2e082606ecfb8ad399ce54cbc0293f40",
+      "bytes": 101393
+    }
+  ],
+  "gesture": {
+    "reason": "Named-preset tests and A21/A25 captures do not exercise live pitch-bend/wheel changes through an extended choir bank; A07 bend qualification is component-only.",
+    "preset": "Golden Pads 52",
+    "no_preset_overrides": true,
+    "render_count": 2,
+    "generated_seconds": 26,
+    "events": "MIDI48 velocity .85 at 0; channel pressure 0->.8 at 1-1.5s; CC1 0->1 at 2-2.5s; pitch-wheel 0->+1 at 3-3.5s, +1->-1 at 4-4.5s, -1->0 at 5.5-6s; note-off at7s, end13s.",
+    "event_period_seconds": 0.01,
+    "maximum_render_block_frames": 113,
+    "saved_bend_range_semitones": 2,
+    "native_sample_rate": 48000,
+    "native_internal_rate": 96000,
+    "captured_rank_mode_counts": [
+      33,
+      36
+    ],
+    "baseline_uses_all_archived_src_headers": true,
+    "commands": [
+      [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I",
+        "/tmp/cs80-session-1cee5a/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a35/vocal_gesture.cpp",
+        "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a35-1cee5a/gesture-current"
+      ],
+      [
+        "/tmp/cs80-a35-1cee5a/gesture-current",
+        "/tmp/cs80-a35-1cee5a/current.f32"
+      ],
+      [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I",
+        "/tmp/cs80-a35-1cee5a/baseline-src/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a35/vocal_gesture.cpp",
+        "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a35-1cee5a/gesture-baseline"
+      ],
+      [
+        "/tmp/cs80-a35-1cee5a/gesture-baseline",
+        "/tmp/cs80-a35-1cee5a/baseline.f32"
+      ]
+    ],
+    "reproduction_inputs": [
+      {
+        "path": "docs/preset-evidence/2026.11.7/verification/a35/review.py",
+        "sha256": "838e45261403d61cc7202124581beaa80ff2b9e1a3dcb1c55dd8a7a44b377fe4",
+        "bytes": 15849
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.7/verification/a35/vocal_gesture.cpp",
+        "sha256": "c7888f322a43ff89b2f2215746529e74cd9dd89bbe9d7adb15005c7a138de699",
+        "bytes": 4165
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.7/verification/a35/current-capture.json",
+        "sha256": "269565d8fbc22ee6c377713c313756e8652652bab1b701620fc66b6667c3b947",
+        "bytes": 938
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.7/verification/a35/baseline-capture.json",
+        "sha256": "269565d8fbc22ee6c377713c313756e8652652bab1b701620fc66b6667c3b947",
+        "bytes": 938
+      }
+    ],
+    "current_baseline_telemetry_exactly_equal": true,
+    "cores": {
+      "current": {
+        "path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+        "bytes": 1736086
+      },
+      "baseline": {
+        "path": "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+        "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+        "bytes": 1735386
+      }
+    },
+    "measurements": {
+      "current": {
+        "pcm": {
+          "path": "/tmp/cs80-a35-1cee5a/current.f32",
+          "sha256": "ca3aec47d72110414ca080250fbb93f042c077837e59bad3d65fc98bbc3ee956",
+          "bytes": 4992000
+        },
+        "binary": {
+          "path": "/tmp/cs80-a35-1cee5a/gesture-current",
+          "sha256": "752e587700be99957dcfa1ebf80a2fbc8204f334908ddb71bcaf46ca56f41b57",
+          "bytes": 1113176
+        },
+        "peak_dbfs": -24.237411509084197,
+        "rms_dbfs": -39.60993487003268,
+        "nonfinite_samples": 0,
+        "samples_over_full_scale": 0,
+        "maximum_adjacent_sample_step": 0.008901163935661316,
+        "telemetry": {
+          "preset": "Golden Pads 52",
+          "host_index": 95,
+          "rate": 48000,
+          "note": 48,
+          "velocity": 0.85,
+          "frames": 624000,
+          "hold_seconds": 7,
+          "tail_seconds": 6,
+          "oversampling": 2,
+          "control_events": 253,
+          "active_voices_at_end": 0,
+          "checkpoints": [
+            {
+              "time": 0.75,
+              "touch_a": 0,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                3945.56299,
+                4317.6875
+              ]
+            },
+            {
+              "time": 1.75,
+              "touch_a": 0.785571039,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4548.75586,
+                5192.28027
+              ]
+            },
+            {
+              "time": 2.75,
+              "touch_a": 0.799999356,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4801.53027,
+                5489.07422
+              ]
+            },
+            {
+              "time": 3.75,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                146.831543,
+                147.019211
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            },
+            {
+              "time": 5.0,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                116.54026,
+                116.689224
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            },
+            {
+              "time": 6.5,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            }
+          ]
+        },
+        "windows": [
+          {
+            "name": "before_gesture",
+            "seconds": [
+              0.5,
+              0.95
+            ],
+            "rms_dbfs": -39.43987201463194,
+            "peak_dbfs": -29.057672058054393,
+            "power_2k_4k_share": 0.0025779787541346266
+          },
+          {
+            "name": "pressure_settled",
+            "seconds": [
+              1.6,
+              1.95
+            ],
+            "rms_dbfs": -37.41709910737485,
+            "peak_dbfs": -27.149159316143802,
+            "power_2k_4k_share": 0.0034160013419642886
+          },
+          {
+            "name": "wheel_settled",
+            "seconds": [
+              2.55,
+              2.95
+            ],
+            "rms_dbfs": -36.87280607500219,
+            "peak_dbfs": -26.901745061563936,
+            "power_2k_4k_share": 0.003178443450915809
+          },
+          {
+            "name": "up_two_semitones",
+            "seconds": [
+              3.55,
+              3.95
+            ],
+            "rms_dbfs": -36.12139884178299,
+            "peak_dbfs": -26.303796149440238,
+            "power_2k_4k_share": 0.0033292656037651994
+          },
+          {
+            "name": "down_two_semitones",
+            "seconds": [
+              4.9,
+              5.4
+            ],
+            "rms_dbfs": -36.537882194698746,
+            "peak_dbfs": -26.07304225874616,
+            "power_2k_4k_share": 0.002114656527713191
+          },
+          {
+            "name": "returned_to_center",
+            "seconds": [
+              6.3,
+              6.8
+            ],
+            "rms_dbfs": -37.33957991812761,
+            "peak_dbfs": -26.27768994663269,
+            "power_2k_4k_share": 0.0036766145499884024
+          },
+          {
+            "name": "last_half_second",
+            "seconds": [
+              12.5,
+              13
+            ],
+            "rms_dbfs": -82.00801352068906,
+            "peak_dbfs": -71.248236271969,
+            "power_2k_4k_share": 0.1274551420594387
+          }
+        ]
+      },
+      "baseline": {
+        "pcm": {
+          "path": "/tmp/cs80-a35-1cee5a/baseline.f32",
+          "sha256": "dc9ec6888e52a11106ece1217980516737ad73d211d8f7e68b1d5777b3be4237",
+          "bytes": 4992000
+        },
+        "binary": {
+          "path": "/tmp/cs80-a35-1cee5a/gesture-baseline",
+          "sha256": "32df1e302b1fa4bd335d5dc4e7cf77b263c25f41f97c8c3de9a5fe54ec504135",
+          "bytes": 1112784
+        },
+        "peak_dbfs": -23.967788488237012,
+        "rms_dbfs": -39.432583493193995,
+        "nonfinite_samples": 0,
+        "samples_over_full_scale": 0,
+        "maximum_adjacent_sample_step": 0.008626478957012296,
+        "telemetry": {
+          "preset": "Golden Pads 52",
+          "host_index": 95,
+          "rate": 48000,
+          "note": 48,
+          "velocity": 0.85,
+          "frames": 624000,
+          "hold_seconds": 7,
+          "tail_seconds": 6,
+          "oversampling": 2,
+          "control_events": 253,
+          "active_voices_at_end": 0,
+          "checkpoints": [
+            {
+              "time": 0.75,
+              "touch_a": 0,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                3945.56299,
+                4317.6875
+              ]
+            },
+            {
+              "time": 1.75,
+              "touch_a": 0.785571039,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4548.75586,
+                5192.28027
+              ]
+            },
+            {
+              "time": 2.75,
+              "touch_a": 0.799999356,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4801.53027,
+                5489.07422
+              ]
+            },
+            {
+              "time": 3.75,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                146.831543,
+                147.019211
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            },
+            {
+              "time": 5.0,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                116.54026,
+                116.689224
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            },
+            {
+              "time": 6.5,
+              "touch_a": 0.800000012,
+              "rank_oscillator_hz": [
+                130.812027,
+                130.979218
+              ],
+              "rank_lpf_hz": [
+                4801.53223,
+                5489.07422
+              ]
+            }
+          ]
+        },
+        "windows": [
+          {
+            "name": "before_gesture",
+            "seconds": [
+              0.5,
+              0.95
+            ],
+            "rms_dbfs": -39.25188385167513,
+            "peak_dbfs": -28.917225533866926,
+            "power_2k_4k_share": 0.002405742355216169
+          },
+          {
+            "name": "pressure_settled",
+            "seconds": [
+              1.6,
+              1.95
+            ],
+            "rms_dbfs": -37.233025170060436,
+            "peak_dbfs": -26.880855842815976,
+            "power_2k_4k_share": 0.0031620031455545446
+          },
+          {
+            "name": "wheel_settled",
+            "seconds": [
+              2.55,
+              2.95
+            ],
+            "rms_dbfs": -36.68304240660957,
+            "peak_dbfs": -26.701687406347432,
+            "power_2k_4k_share": 0.002941404972886995
+          },
+          {
+            "name": "up_two_semitones",
+            "seconds": [
+              3.55,
+              3.95
+            ],
+            "rms_dbfs": -36.016445914533165,
+            "peak_dbfs": -26.220887290721496,
+            "power_2k_4k_share": 0.003283488632894104
+          },
+          {
+            "name": "down_two_semitones",
+            "seconds": [
+              4.9,
+              5.4
+            ],
+            "rms_dbfs": -36.34666677909182,
+            "peak_dbfs": -25.737848198444475,
+            "power_2k_4k_share": 0.0015961515878772589
+          },
+          {
+            "name": "returned_to_center",
+            "seconds": [
+              6.3,
+              6.8
+            ],
+            "rms_dbfs": -37.15607150606765,
+            "peak_dbfs": -25.98973003302199,
+            "power_2k_4k_share": 0.003405822109517362
+          },
+          {
+            "name": "last_half_second",
+            "seconds": [
+              12.5,
+              13
+            ],
+            "rms_dbfs": -82.00801352068906,
+            "peak_dbfs": -71.248236271969,
+            "power_2k_4k_share": 0.1274551420594387
+          }
+        ]
+      }
+    },
+    "comparison": [
+      {
+        "window": "before_gesture",
+        "rms_change_db": -0.18798816295681534,
+        "difference_rms_db_relative_baseline": -31.894916221486525,
+        "upper_2k_4k_share_change_db": 0.30030219485631454
+      },
+      {
+        "window": "pressure_settled",
+        "rms_change_db": -0.18407393731442065,
+        "difference_rms_db_relative_baseline": -31.495699155112625,
+        "upper_2k_4k_share_change_db": 0.3355573499637675
+      },
+      {
+        "window": "wheel_settled",
+        "rms_change_db": -0.18976366839262046,
+        "difference_rms_db_relative_baseline": -31.46369426814484,
+        "upper_2k_4k_share_change_db": 0.33659666786355946
+      },
+      {
+        "window": "up_two_semitones",
+        "rms_change_db": -0.10495292724982482,
+        "difference_rms_db_relative_baseline": -36.935838536085384,
+        "upper_2k_4k_share_change_db": 0.06012926751900783
+      },
+      {
+        "window": "down_two_semitones",
+        "rms_change_db": -0.19121541560692237,
+        "difference_rms_db_relative_baseline": -29.968316877117886,
+        "upper_2k_4k_share_change_db": 1.221657030315484
+      },
+      {
+        "window": "returned_to_center",
+        "rms_change_db": -0.18350841205996327,
+        "difference_rms_db_relative_baseline": -31.43554977673527,
+        "upper_2k_4k_share_change_db": 0.3322614110320022
+      },
+      {
+        "window": "last_half_second",
+        "rms_change_db": 0.0,
+        "difference_rms_db_relative_baseline": -300.0,
+        "upper_2k_4k_share_change_db": 0.0
+      }
+    ],
+    "causal_limit": "Pressure and wheel occur within one evolving performance. Their separate gains are not isolated here; causal touch evidence comes from A21/A25. Rank telemetry proves commanded pitches, while formant tracking remains attributed to A07.",
+    "coverage_limit": "Onset budgets stay captured during the bends. A fresh lower note could admit more modes; the held note does not rebuild. No large ribbon or MPE gesture is qualified by this pair."
+  },
+  "limitations": [
+    "Authored, physically motivated formants, not a fit to singer recordings or a phonetic corpus.",
+    "No human listening approval, perceptual preference, universal vowel-recognition or acoustic-equivalence claim.",
+    "The 48-mode ceiling leaves the deepest registers short of upper formants; footage and size change coverage.",
+    "The two original Oo finishes have full-bank and structural coverage, not a new individual low-note gesture capture.",
+    "Full-bank rows are numerical metrics, not PCM identity proofs; high-note PCM identity is separately supplied by A21.",
+    "No new native-host, CPU or all-gesture qualification."
+  ],
+  "pass_within_stated_scope": true
+}

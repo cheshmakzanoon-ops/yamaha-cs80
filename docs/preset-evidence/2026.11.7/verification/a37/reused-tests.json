@@ -1,0 +1,65 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "attempt": 1,
+  "job_id": 138415960996,
+  "original_job_conclusion": "failure",
+  "original_suite_not_qualified": true,
+  "scope": "Reuse these four passing original test cases only. Does not clear the failed full suite or qualify successor.",
+  "artifact_path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-x86_64-native.zip",
+  "artifact_sha256": "f0e2ae0152cb4fa910abe9b0bf512aac648868b7bd7801051a40f7655c9aacfb",
+  "api_path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/native-api.json",
+  "api_sha256": "9a850d7e4f108650d213e5842a5eecabd23c8e05654d83ccc0ea2d0e250b13cd",
+  "junit_sha256": "8f4183280b53ea837850227741c978c40a7090626f5196f48f2aee135f0bf6fb",
+  "lasttest_sha256": "3166592777566b8fa59558fe1942ca6269ce7a437a97afe2eb19d449be2ce6d5",
+  "tests": [
+    {
+      "name": "cs80_source_performance_audit_tests",
+      "junit": {
+        "name": "cs80_source_performance_audit_tests",
+        "classname": "cs80_source_performance_audit_tests",
+        "time": "3.97167",
+        "status": "run"
+      },
+      "checks": 2711,
+      "failures": 0,
+      "lasttest_section_sha256": "4593955cb8f35aadf53d40b564a95ae86713a579f11708b95e1d5ccbf4a0f35e"
+    },
+    {
+      "name": "cs80_oversampling_tests",
+      "junit": {
+        "name": "cs80_oversampling_tests",
+        "classname": "cs80_oversampling_tests",
+        "time": "2.98421",
+        "status": "run"
+      },
+      "checks": 11731,
+      "failures": 0,
+      "lasttest_section_sha256": "3e19c7efb3604d86884412c9f428dc5c66a02d2c8dae53c5245885ebabd1e3eb"
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "junit": {
+        "name": "cs80_instrument_body_engine_tests",
+        "classname": "cs80_instrument_body_engine_tests",
+        "time": "11.6093",
+        "status": "run"
+      },
+      "checks": 18156,
+      "failures": 0,
+      "lasttest_section_sha256": "f0e3bfe62dec90e2b1df2a13d5f7bc4101b9f7ff92c2a4b7ad40f2d1585e38eb"
+    },
+    {
+      "name": "cs80_low_choir_spectrum_tests",
+      "junit": {
+        "name": "cs80_low_choir_spectrum_tests",
+        "classname": "cs80_low_choir_spectrum_tests",
+        "time": "7.16785",
+        "status": "run"
+      },
+      "checks": 1342,
+      "failures": 0,
+      "lasttest_section_sha256": "4cdd669d6bd123e3db38297f1c99a6c93601e3b3053d66e04260a177987fe0de"
+    }
+  ]
+}

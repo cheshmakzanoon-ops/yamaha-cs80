@@ -1,0 +1,794 @@
+
+/tmp/cs80-a39-1cee5a/before/cs80_parity_capture:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000008de0 <main>:
+    8de0:	41 57                	push   %r15
+    8de2:	41 56                	push   %r14
+    8de4:	41 55                	push   %r13
+    8de6:	41 54                	push   %r12
+    8de8:	55                   	push   %rbp
+    8de9:	89 fd                	mov    %edi,%ebp
+    8deb:	53                   	push   %rbx
+    8dec:	48 89 f3             	mov    %rsi,%rbx
+    8def:	48 81 ec e8 b9 07 00 	sub    $0x7b9e8,%rsp
+    8df6:	83 ff 05             	cmp    $0x5,%edi
+    8df9:	74 7b                	je     8e76 <main+0x96>
+    8dfb:	b8 01 00 00 00       	mov    $0x1,%eax
+    8e00:	45 31 e4             	xor    %r12d,%r12d
+    8e03:	83 fd 03             	cmp    $0x3,%ebp
+    8e06:	74 2e                	je     8e36 <main+0x56>
+    8e08:	84 c0                	test   %al,%al
+    8e0a:	74 2a                	je     8e36 <main+0x56>
+    8e0c:	48 8d 35 ed 38 08 00 	lea    0x838ed(%rip),%rsi        # 8c700 <_IO_stdin_used+0x700>
+    8e13:	48 8d 3d c6 75 09 00 	lea    0x975c6(%rip),%rdi        # a03e0 <std::cerr@GLIBCXX_3.4>
+    8e1a:	e8 81 f4 ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    8e1f:	b8 02 00 00 00       	mov    $0x2,%eax
+    8e24:	48 81 c4 e8 b9 07 00 	add    $0x7b9e8,%rsp
+    8e2b:	5b                   	pop    %rbx
+    8e2c:	5d                   	pop    %rbp
+    8e2d:	41 5c                	pop    %r12
+    8e2f:	41 5d                	pop    %r13
+    8e31:	41 5e                	pop    %r14
+    8e33:	41 5f                	pop    %r15
+    8e35:	c3                   	ret
+    8e36:	4c 8d bc 24 b0 00 00 	lea    0xb0(%rsp),%r15
+    8e3d:	00 
+    8e3e:	4c 8d b4 24 e0 02 00 	lea    0x2e0(%rsp),%r14
+    8e45:	00 
+    8e46:	48 8b 73 08          	mov    0x8(%rbx),%rsi
+    8e4a:	4c 89 fa             	mov    %r15,%rdx
+    8e4d:	4c 89 f7             	mov    %r14,%rdi
+    8e50:	e8 5b 55 00 00       	call   e3b0 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)>
+    8e55:	48 8d 35 d8 41 08 00 	lea    0x841d8(%rip),%rsi        # 8d034 <_IO_stdin_used+0x1034>
+    8e5c:	4c 89 f7             	mov    %r14,%rdi
+    8e5f:	e8 fc 54 00 00       	call   e360 <bool std::operator==<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)>
+    8e64:	84 c0                	test   %al,%al
+    8e66:	0f 85 8c 00 00 00    	jne    8ef8 <main+0x118>
+    8e6c:	4c 89 f7             	mov    %r14,%rdi
+    8e6f:	e8 dc 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8e74:	eb 96                	jmp    8e0c <main+0x2c>
+    8e76:	4c 8d b4 24 e0 02 00 	lea    0x2e0(%rsp),%r14
+    8e7d:	00 
+    8e7e:	48 8b 76 18          	mov    0x18(%rsi),%rsi
+    8e82:	48 8d 94 24 b0 00 00 	lea    0xb0(%rsp),%rdx
+    8e89:	00 
+    8e8a:	4c 89 f7             	mov    %r14,%rdi
+    8e8d:	e8 1e 55 00 00       	call   e3b0 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)>
+    8e92:	48 8d 35 85 41 08 00 	lea    0x84185(%rip),%rsi        # 8d01e <_IO_stdin_used+0x101e>
+    8e99:	4c 89 f7             	mov    %r14,%rdi
+    8e9c:	e8 bf 54 00 00       	call   e360 <bool std::operator==<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)>
+    8ea1:	84 c0                	test   %al,%al
+    8ea3:	74 c7                	je     8e6c <main+0x8c>
+    8ea5:	48 8d 84 24 10 06 00 	lea    0x610(%rsp),%rax
+    8eac:	00 
+    8ead:	48 8b 73 20          	mov    0x20(%rbx),%rsi
+    8eb1:	48 8d 94 24 e0 00 00 	lea    0xe0(%rsp),%rdx
+    8eb8:	00 
+    8eb9:	48 89 c7             	mov    %rax,%rdi
+    8ebc:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+    8ec1:	e8 ea 54 00 00       	call   e3b0 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)>
+    8ec6:	4c 8b 7c 24 10       	mov    0x10(%rsp),%r15
+    8ecb:	48 8d 35 56 41 08 00 	lea    0x84156(%rip),%rsi        # 8d028 <_IO_stdin_used+0x1028>
+    8ed2:	4c 89 ff             	mov    %r15,%rdi
+    8ed5:	e8 86 54 00 00       	call   e360 <bool std::operator==<char, std::char_traits<char>, std::allocator<char> >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)>
+    8eda:	4c 89 ff             	mov    %r15,%rdi
+    8edd:	41 89 c4             	mov    %eax,%r12d
+    8ee0:	e8 6b 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8ee5:	4c 89 f7             	mov    %r14,%rdi
+    8ee8:	e8 63 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8eed:	44 89 e0             	mov    %r12d,%eax
+    8ef0:	83 f0 01             	xor    $0x1,%eax
+    8ef3:	e9 0b ff ff ff       	jmp    8e03 <main+0x23>
+    8ef8:	48 8d 84 24 10 06 00 	lea    0x610(%rsp),%rax
+    8eff:	00 
+    8f00:	48 8d ac 24 e0 00 00 	lea    0xe0(%rsp),%rbp
+    8f07:	00 
+    8f08:	48 8b 73 10          	mov    0x10(%rbx),%rsi
+    8f0c:	48 89 ea             	mov    %rbp,%rdx
+    8f0f:	48 89 c7             	mov    %rax,%rdi
+    8f12:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+    8f17:	e8 94 54 00 00       	call   e3b0 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)>
+    8f1c:	48 83 bc 24 18 06 00 	cmpq   $0x0,0x618(%rsp)
+    8f23:	00 00 
+    8f25:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    8f2a:	75 14                	jne    8f40 <main+0x160>
+    8f2c:	e8 1f 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8f31:	e9 36 ff ff ff       	jmp    8e6c <main+0x8c>
+    8f36:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+    8f3d:	00 00 00 
+    8f40:	e8 0b 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8f45:	4c 89 f7             	mov    %r14,%rdi
+    8f48:	e8 03 55 00 00       	call   e450 <std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()>
+    8f4d:	4c 8b 6b 10          	mov    0x10(%rbx),%r13
+    8f51:	4c 89 ef             	mov    %r13,%rdi
+    8f54:	e8 e7 f1 ff ff       	call   8140 <strlen@plt>
+    8f59:	48 89 c3             	mov    %rax,%rbx
+    8f5c:	48 8d 44 24 60       	lea    0x60(%rsp),%rax
+    8f61:	48 89 44 24 50       	mov    %rax,0x50(%rsp)
+    8f66:	48 83 fb 0f          	cmp    $0xf,%rbx
+    8f6a:	0f 87 55 0a 00 00    	ja     99c5 <main+0xbe5>
+    8f70:	48 83 fb 01          	cmp    $0x1,%rbx
+    8f74:	0f 84 3d 0a 00 00    	je     99b7 <main+0xbd7>
+    8f7a:	48 85 db             	test   %rbx,%rbx
+    8f7d:	0f 85 55 0a 00 00    	jne    99d8 <main+0xbf8>
+    8f83:	48 8b 44 24 50       	mov    0x50(%rsp),%rax
+    8f88:	48 89 5c 24 58       	mov    %rbx,0x58(%rsp)
+    8f8d:	c6 04 18 00          	movb   $0x0,(%rax,%rbx,1)
+    8f91:	48 8d 5c 24 70       	lea    0x70(%rsp),%rbx
+    8f96:	48 89 df             	mov    %rbx,%rdi
+    8f99:	e8 22 f1 ff ff       	call   80c0 <std::filesystem::__cxx11::path::_List::_List()@plt>
+    8f9e:	48 8d 44 24 50       	lea    0x50(%rsp),%rax
+    8fa3:	48 89 c7             	mov    %rax,%rdi
+    8fa6:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+    8fab:	e8 60 f2 ff ff       	call   8210 <std::filesystem::__cxx11::path::_M_split_cmpts()@plt>
+    8fb0:	45 84 e4             	test   %r12b,%r12b
+    8fb3:	74 1b                	je     8fd0 <main+0x1f0>
+    8fb5:	48 8b 7c 24 28       	mov    0x28(%rsp),%rdi
+    8fba:	e8 71 2b 00 00       	call   bb30 <captureLiveAdr(std::filesystem::__cxx11::path const&)>
+    8fbf:	48 8b 7c 24 28       	mov    0x28(%rsp),%rdi
+    8fc4:	e8 c7 4b 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    8fc9:	31 c0                	xor    %eax,%eax
+    8fcb:	e9 54 fe ff ff       	jmp    8e24 <main+0x44>
+    8fd0:	4c 8b 6c 24 28       	mov    0x28(%rsp),%r13
+    8fd5:	4c 89 ef             	mov    %r13,%rdi
+    8fd8:	e8 e3 f1 ff ff       	call   81c0 <std::filesystem::create_directories(std::filesystem::__cxx11::path const&)@plt>
+    8fdd:	ba 02 00 00 00       	mov    $0x2,%edx
+    8fe2:	48 8d 35 51 40 08 00 	lea    0x84051(%rip),%rsi        # 8d03a <_IO_stdin_used+0x103a>
+    8fe9:	4c 89 f7             	mov    %r14,%rdi
+    8fec:	e8 4f 5e 00 00       	call   ee40 <std::filesystem::__cxx11::path::path<char [13], std::filesystem::__cxx11::path>(char const (&) [13], std::filesystem::__cxx11::path::format)>
+    8ff1:	48 8b 5c 24 10       	mov    0x10(%rsp),%rbx
+    8ff6:	4c 89 f2             	mov    %r14,%rdx
+    8ff9:	4c 89 ee             	mov    %r13,%rsi
+    8ffc:	48 89 df             	mov    %rbx,%rdi
+    8fff:	e8 7c 54 00 00       	call   e480 <std::filesystem::__cxx11::operator/(std::filesystem::__cxx11::path const&, std::filesystem::__cxx11::path const&)>
+    9004:	48 89 df             	mov    %rbx,%rdi
+    9007:	e8 34 f2 ff ff       	call   8240 <std::filesystem::remove(std::filesystem::__cxx11::path const&)@plt>
+    900c:	48 89 df             	mov    %rbx,%rdi
+    900f:	e8 7c 4b 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    9014:	4c 89 f7             	mov    %r14,%rdi
+    9017:	e8 74 4b 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    901c:	ba 02 00 00 00       	mov    $0x2,%edx
+    9021:	48 8d 35 1f 40 08 00 	lea    0x8401f(%rip),%rsi        # 8d047 <_IO_stdin_used+0x1047>
+    9028:	4c 89 f7             	mov    %r14,%rdi
+    902b:	e8 c0 5e 00 00       	call   eef0 <std::filesystem::__cxx11::path::path<char [20], std::filesystem::__cxx11::path>(char const (&) [20], std::filesystem::__cxx11::path::format)>
+    9030:	4c 89 f2             	mov    %r14,%rdx
+    9033:	4c 89 ee             	mov    %r13,%rsi
+    9036:	48 89 df             	mov    %rbx,%rdi
+    9039:	e8 42 54 00 00       	call   e480 <std::filesystem::__cxx11::operator/(std::filesystem::__cxx11::path const&, std::filesystem::__cxx11::path const&)>
+    903e:	48 89 df             	mov    %rbx,%rdi
+    9041:	e8 fa f1 ff ff       	call   8240 <std::filesystem::remove(std::filesystem::__cxx11::path const&)@plt>
+    9046:	48 89 df             	mov    %rbx,%rdi
+    9049:	e8 42 4b 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    904e:	4c 89 f7             	mov    %r14,%rdi
+    9051:	e8 3a 4b 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    9056:	48 89 df             	mov    %rbx,%rdi
+    9059:	e8 02 42 02 00       	call   2d260 <cs80::Engine::Engine()>
+    905e:	4c 89 f7             	mov    %r14,%rdi
+    9061:	e8 da 1e 00 00       	call   af40 <(anonymous namespace)::patch()>
+    9066:	4c 89 f6             	mov    %r14,%rsi
+    9069:	48 89 df             	mov    %rbx,%rdi
+    906c:	e8 7f 41 02 00       	call   2d1f0 <cs80::Engine::setParams(cs80::ParamValues const&)>
+    9071:	f2 0f 10 05 77 67 08 	movsd  0x86777(%rip),%xmm0        # 8f7f0 <_IO_stdin_used+0x37f0>
+    9078:	00 
+    9079:	48 89 df             	mov    %rbx,%rdi
+    907c:	e8 ef b8 02 00       	call   34970 <cs80::Engine::prepare(double)>
+    9081:	48 89 df             	mov    %rbx,%rdi
+    9084:	e8 17 9f 01 00       	call   22fa0 <cs80::Engine::reset()>
+    9089:	80 bc 24 40 09 00 00 	cmpb   $0x0,0x940(%rsp)
+    9090:	00 
+    9091:	0f 84 bf fa ff ff    	je     8b56 <main.cold+0x135>
+    9097:	bf 00 b8 0b 00       	mov    $0xbb800,%edi
+    909c:	e8 0f f2 ff ff       	call   82b0 <operator new(unsigned long)@plt>
+    90a1:	c7 00 00 00 00 00    	movl   $0x0,(%rax)
+    90a7:	48 8d 78 04          	lea    0x4(%rax),%rdi
+    90ab:	31 f6                	xor    %esi,%esi
+    90ad:	45 31 e4             	xor    %r12d,%r12d
+    90b0:	ba fc b7 0b 00       	mov    $0xbb7fc,%edx
+    90b5:	48 89 44 24 20       	mov    %rax,0x20(%rsp)
+    90ba:	e8 c1 f0 ff ff       	call   8180 <memset@plt>
+    90bf:	48 8d 05 7a c7 08 00 	lea    0x8c77a(%rip),%rax        # 95840 <(anonymous namespace)::events>
+    90c6:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+    90cb:	48 89 c3             	mov    %rax,%rbx
+    90ce:	48 8d 84 24 f0 00 00 	lea    0xf0(%rsp),%rax
+    90d5:	00 
+    90d6:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    90db:	e9 bc 00 00 00       	jmp    919c <main+0x3bc>
+    90e0:	48 83 f8 01          	cmp    $0x1,%rax
+    90e4:	0f 84 7b 01 00 00    	je     9265 <main+0x485>
+    90ea:	48 85 c0             	test   %rax,%rax
+    90ed:	0f 85 f8 08 00 00    	jne    99eb <main+0xc0b>
+    90f3:	48 8b 84 24 e0 00 00 	mov    0xe0(%rsp),%rax
+    90fa:	00 
+    90fb:	48 89 94 24 e8 00 00 	mov    %rdx,0xe8(%rsp)
+    9102:	00 
+    9103:	c6 04 10 00          	movb   $0x0,(%rax,%rdx,1)
+    9107:	48 8b 84 24 e8 00 00 	mov    0xe8(%rsp),%rax
+    910e:	00 
+    910f:	8b 4b 10             	mov    0x10(%rbx),%ecx
+    9112:	48 83 f8 07          	cmp    $0x7,%rax
+    9116:	0f 84 09 01 00 00    	je     9225 <main+0x445>
+    911c:	48 83 f8 0d          	cmp    $0xd,%rax
+    9120:	0f 85 50 01 00 00    	jne    9276 <main+0x496>
+    9126:	ba 0d 00 00 00       	mov    $0xd,%edx
+    912b:	48 8b bc 24 e0 00 00 	mov    0xe0(%rsp),%rdi
+    9132:	00 
+    9133:	48 8d 35 21 3f 08 00 	lea    0x83f21(%rip),%rsi        # 8d05b <_IO_stdin_used+0x105b>
+    913a:	89 4c 24 30          	mov    %ecx,0x30(%rsp)
+    913e:	e8 0d f0 ff ff       	call   8150 <memcmp@plt>
+    9143:	8b 4c 24 30          	mov    0x30(%rsp),%ecx
+    9147:	85 c0                	test   %eax,%eax
+    9149:	0f 85 27 01 00 00    	jne    9276 <main+0x496>
+    914f:	f3 0f 10 43 14       	movss  0x14(%rbx),%xmm0
+    9154:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    9159:	ba 01 00 00 00       	mov    $0x1,%edx
+    915e:	89 ce                	mov    %ecx,%esi
+    9160:	e8 fb 2e 02 00       	call   2c060 <cs80::Engine::polyPressure(int, float, int)>
+    9165:	48 8b bc 24 e0 00 00 	mov    0xe0(%rsp),%rdi
+    916c:	00 
+    916d:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    9172:	48 39 c7             	cmp    %rax,%rdi
+    9175:	74 11                	je     9188 <main+0x3a8>
+    9177:	48 8b 84 24 f0 00 00 	mov    0xf0(%rsp),%rax
+    917e:	00 
+    917f:	48 8d 70 01          	lea    0x1(%rax),%rsi
+    9183:	e8 38 f1 ff ff       	call   82c0 <operator delete(void*, unsigned long)@plt>
+    9188:	48 83 c3 18          	add    $0x18,%rbx
+    918c:	48 8d 05 3d c7 08 00 	lea    0x8c73d(%rip),%rax        # 958d0 <(anonymous namespace)::events+0x90>
+    9193:	48 39 d8             	cmp    %rbx,%rax
+    9196:	0f 84 f0 00 00 00    	je     928c <main+0x4ac>
+    919c:	8b 13                	mov    (%rbx),%edx
+    919e:	48 8b 44 24 20       	mov    0x20(%rsp),%rax
+    91a3:	31 c9                	xor    %ecx,%ecx
+    91a5:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    91aa:	44 29 e2             	sub    %r12d,%edx
+    91ad:	4a 8d 34 e0          	lea    (%rax,%r12,8),%rsi
+    91b1:	e8 ca 69 03 00       	call   3fb80 <cs80::Engine::render(float*, int, float const*)>
+    91b6:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    91bb:	4c 8b 6b 08          	mov    0x8(%rbx),%r13
+    91bf:	4c 63 23             	movslq (%rbx),%r12
+    91c2:	48 89 84 24 e0 00 00 	mov    %rax,0xe0(%rsp)
+    91c9:	00 
+    91ca:	4d 85 ed             	test   %r13,%r13
+    91cd:	0f 84 15 f9 ff ff    	je     8ae8 <main.cold+0xc7>
+    91d3:	4c 89 ef             	mov    %r13,%rdi
+    91d6:	e8 65 ef ff ff       	call   8140 <strlen@plt>
+    91db:	48 89 c2             	mov    %rax,%rdx
+    91de:	48 83 f8 0f          	cmp    $0xf,%rax
+    91e2:	0f 86 f8 fe ff ff    	jbe    90e0 <main+0x300>
+    91e8:	48 8d 78 01          	lea    0x1(%rax),%rdi
+    91ec:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+    91f1:	e8 ba f0 ff ff       	call   82b0 <operator new(unsigned long)@plt>
+    91f6:	48 8b 54 24 30       	mov    0x30(%rsp),%rdx
+    91fb:	48 89 84 24 e0 00 00 	mov    %rax,0xe0(%rsp)
+    9202:	00 
+    9203:	48 89 c7             	mov    %rax,%rdi
+    9206:	48 89 94 24 f0 00 00 	mov    %rdx,0xf0(%rsp)
+    920d:	00 
+    920e:	4c 89 ee             	mov    %r13,%rsi
+    9211:	48 89 54 24 30       	mov    %rdx,0x30(%rsp)
+    9216:	e8 35 f0 ff ff       	call   8250 <memcpy@plt>
+    921b:	48 8b 54 24 30       	mov    0x30(%rsp),%rdx
+    9220:	e9 ce fe ff ff       	jmp    90f3 <main+0x313>
+    9225:	ba 07 00 00 00       	mov    $0x7,%edx
+    922a:	48 8b bc 24 e0 00 00 	mov    0xe0(%rsp),%rdi
+    9231:	00 
+    9232:	48 8d 35 1d 3c 08 00 	lea    0x83c1d(%rip),%rsi        # 8ce56 <_IO_stdin_used+0xe56>
+    9239:	89 4c 24 30          	mov    %ecx,0x30(%rsp)
+    923d:	e8 0e ef ff ff       	call   8150 <memcmp@plt>
+    9242:	8b 4c 24 30          	mov    0x30(%rsp),%ecx
+    9246:	85 c0                	test   %eax,%eax
+    9248:	75 2c                	jne    9276 <main+0x496>
+    924a:	f3 0f 10 43 14       	movss  0x14(%rbx),%xmm0
+    924f:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    9254:	ba 01 00 00 00       	mov    $0x1,%edx
+    9259:	89 ce                	mov    %ecx,%esi
+    925b:	e8 80 66 03 00       	call   3f8e0 <cs80::Engine::noteOn(int, float, int)>
+    9260:	e9 00 ff ff ff       	jmp    9165 <main+0x385>
+    9265:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+    926a:	88 84 24 f0 00 00 00 	mov    %al,0xf0(%rsp)
+    9271:	e9 7d fe ff ff       	jmp    90f3 <main+0x313>
+    9276:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    927b:	ba 01 00 00 00       	mov    $0x1,%edx
+    9280:	89 ce                	mov    %ecx,%esi
+    9282:	e8 e9 67 03 00       	call   3fa70 <cs80::Engine::noteOff(int, int)>
+    9287:	e9 d9 fe ff ff       	jmp    9165 <main+0x385>
+    928c:	48 8b 5c 24 20       	mov    0x20(%rsp),%rbx
+    9291:	ba 00 77 01 00       	mov    $0x17700,%edx
+    9296:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    929b:	31 c9                	xor    %ecx,%ecx
+    929d:	44 29 e2             	sub    %r12d,%edx
+    92a0:	4a 8d 34 e3          	lea    (%rbx,%r12,8),%rsi
+    92a4:	e8 d7 68 03 00       	call   3fb80 <cs80::Engine::render(float*, int, float const*)>
+    92a9:	f3 0f 10 0d 5b 2d 08 	movss  0x82d5b(%rip),%xmm1        # 8c00c <_IO_stdin_used+0xc>
+    92b0:	00 
+    92b1:	48 89 d8             	mov    %rbx,%rax
+    92b4:	48 8d 93 00 b8 0b 00 	lea    0xbb800(%rbx),%rdx
+    92bb:	f3 0f 10 15 ed 52 08 	movss  0x852ed(%rip),%xmm2        # 8e5b0 <_IO_stdin_used+0x25b0>
+    92c2:	00 
+    92c3:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+    92ca:	00 00 00 00 
+    92ce:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+    92d5:	00 00 00 00 
+    92d9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    92e0:	f3 0f 10 00          	movss  (%rax),%xmm0
+    92e4:	0f 54 c2             	andps  %xmm2,%xmm0
+    92e7:	0f 2e c8             	ucomiss %xmm0,%xmm1
+    92ea:	0f 82 04 f8 ff ff    	jb     8af4 <main.cold+0xd3>
+    92f0:	48 83 c0 04          	add    $0x4,%rax
+    92f4:	48 39 c2             	cmp    %rax,%rdx
+    92f7:	75 e7                	jne    92e0 <main+0x500>
+    92f9:	31 c0                	xor    %eax,%eax
+    92fb:	4c 8d ac 24 80 00 00 	lea    0x80(%rsp),%r13
+    9302:	00 
+    9303:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+    9308:	48 8d 44 24 48       	lea    0x48(%rsp),%rax
+    930d:	48 89 44 24 38       	mov    %rax,0x38(%rsp)
+    9312:	48 83 7c 24 30 00    	cmpq   $0x0,0x30(%rsp)
+    9318:	48 8d 05 51 3b 08 00 	lea    0x83b51(%rip),%rax        # 8ce70 <_IO_stdin_used+0xe70>
+    931f:	75 07                	jne    9328 <main+0x548>
+    9321:	48 8d 05 3f 3b 08 00 	lea    0x83b3f(%rip),%rax        # 8ce67 <_IO_stdin_used+0xe67>
+    9328:	48 8b 74 24 38       	mov    0x38(%rsp),%rsi
+    932d:	ba 02 00 00 00       	mov    $0x2,%edx
+    9332:	4c 89 ef             	mov    %r13,%rdi
+    9335:	48 89 44 24 48       	mov    %rax,0x48(%rsp)
+    933a:	e8 61 5c 00 00       	call   efa0 <std::filesystem::__cxx11::path::path<char const*, std::filesystem::__cxx11::path>(char const* const&, std::filesystem::__cxx11::path::format)>
+    933f:	48 8b 74 24 28       	mov    0x28(%rsp),%rsi
+    9344:	4c 89 ea             	mov    %r13,%rdx
+    9347:	4c 89 ff             	mov    %r15,%rdi
+    934a:	e8 31 51 00 00       	call   e480 <std::filesystem::__cxx11::operator/(std::filesystem::__cxx11::path const&, std::filesystem::__cxx11::path const&)>
+    934f:	4c 89 fe             	mov    %r15,%rsi
+    9352:	48 89 ef             	mov    %rbp,%rdi
+    9355:	e8 76 26 00 00       	call   b9d0 <(anonymous namespace)::output(std::filesystem::__cxx11::path const&)>
+    935a:	4c 89 ff             	mov    %r15,%rdi
+    935d:	e8 2e 48 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    9362:	4c 89 ef             	mov    %r13,%rdi
+    9365:	e8 26 48 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    936a:	48 8d 35 ac 3b 08 00 	lea    0x83bac(%rip),%rsi        # 8cf1d <_IO_stdin_used+0xf1d>
+    9371:	48 89 ef             	mov    %rbp,%rdi
+    9374:	e8 27 ef ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    9379:	48 8b 44 24 20       	mov    0x20(%rsp),%rax
+    937e:	48 8b 4c 24 30       	mov    0x30(%rsp),%rcx
+    9383:	31 db                	xor    %ebx,%ebx
+    9385:	4c 8d 24 88          	lea    (%rax,%rcx,4),%r12
+    9389:	eb 58                	jmp    93e3 <main+0x603>
+    938b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    9390:	ba 01 00 00 00       	mov    $0x1,%edx
+    9395:	4c 89 ee             	mov    %r13,%rsi
+    9398:	e8 53 ef ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    939d:	48 89 c7             	mov    %rax,%rdi
+    93a0:	66 0f ef c0          	pxor   %xmm0,%xmm0
+    93a4:	f3 41 0f 5a 04 dc    	cvtss2sd (%r12,%rbx,8),%xmm0
+    93aa:	e8 51 f0 ff ff       	call   8400 <std::ostream& std::ostream::_M_insert<double>(double)@plt>
+    93af:	c6 84 24 b0 00 00 00 	movb   $0xa,0xb0(%rsp)
+    93b6:	0a 
+    93b7:	48 89 c7             	mov    %rax,%rdi
+    93ba:	48 8b 00             	mov    (%rax),%rax
+    93bd:	48 8b 40 e8          	mov    -0x18(%rax),%rax
+    93c1:	48 83 7c 07 10 00    	cmpq   $0x0,0x10(%rdi,%rax,1)
+    93c7:	74 57                	je     9420 <main+0x640>
+    93c9:	ba 01 00 00 00       	mov    $0x1,%edx
+    93ce:	4c 89 fe             	mov    %r15,%rsi
+    93d1:	e8 1a ef ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    93d6:	48 83 c3 01          	add    $0x1,%rbx
+    93da:	48 81 fb 00 77 01 00 	cmp    $0x17700,%rbx
+    93e1:	74 54                	je     9437 <main+0x657>
+    93e3:	89 de                	mov    %ebx,%esi
+    93e5:	48 89 ef             	mov    %rbp,%rdi
+    93e8:	e8 83 f0 ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    93ed:	c6 84 24 80 00 00 00 	movb   $0x2c,0x80(%rsp)
+    93f4:	2c 
+    93f5:	48 89 c7             	mov    %rax,%rdi
+    93f8:	48 8b 00             	mov    (%rax),%rax
+    93fb:	48 8b 40 e8          	mov    -0x18(%rax),%rax
+    93ff:	48 83 7c 07 10 00    	cmpq   $0x0,0x10(%rdi,%rax,1)
+    9405:	75 89                	jne    9390 <main+0x5b0>
+    9407:	be 2c 00 00 00       	mov    $0x2c,%esi
+    940c:	48 89 7c 24 08       	mov    %rdi,0x8(%rsp)
+    9411:	e8 1a ec ff ff       	call   8030 <std::ostream::put(char)@plt>
+    9416:	48 8b 7c 24 08       	mov    0x8(%rsp),%rdi
+    941b:	eb 83                	jmp    93a0 <main+0x5c0>
+    941d:	0f 1f 00             	nopl   (%rax)
+    9420:	be 0a 00 00 00       	mov    $0xa,%esi
+    9425:	e8 06 ec ff ff       	call   8030 <std::ostream::put(char)@plt>
+    942a:	48 83 c3 01          	add    $0x1,%rbx
+    942e:	48 81 fb 00 77 01 00 	cmp    $0x17700,%rbx
+    9435:	75 ac                	jne    93e3 <main+0x603>
+    9437:	48 89 ef             	mov    %rbp,%rdi
+    943a:	e8 51 ef ff ff       	call   8390 <std::basic_ofstream<char, std::char_traits<char> >::close()@plt>
+    943f:	48 89 ef             	mov    %rbp,%rdi
+    9442:	e8 79 ef ff ff       	call   83c0 <std::basic_ofstream<char, std::char_traits<char> >::~basic_ofstream()@plt>
+    9447:	48 8b 44 24 30       	mov    0x30(%rsp),%rax
+    944c:	48 c7 44 24 30 01 00 	movq   $0x1,0x30(%rsp)
+    9453:	00 00 
+    9455:	48 83 c0 01          	add    $0x1,%rax
+    9459:	48 83 f8 02          	cmp    $0x2,%rax
+    945d:	0f 85 af fe ff ff    	jne    9312 <main+0x532>
+    9463:	ba 02 00 00 00       	mov    $0x2,%edx
+    9468:	48 8d 35 cb 3b 08 00 	lea    0x83bcb(%rip),%rsi        # 8d03a <_IO_stdin_used+0x103a>
+    946f:	4c 89 ef             	mov    %r13,%rdi
+    9472:	e8 c9 59 00 00       	call   ee40 <std::filesystem::__cxx11::path::path<char [13], std::filesystem::__cxx11::path>(char const (&) [13], std::filesystem::__cxx11::path::format)>
+    9477:	48 8b 74 24 28       	mov    0x28(%rsp),%rsi
+    947c:	4c 89 ea             	mov    %r13,%rdx
+    947f:	4c 89 ff             	mov    %r15,%rdi
+    9482:	e8 f9 4f 00 00       	call   e480 <std::filesystem::__cxx11::operator/(std::filesystem::__cxx11::path const&, std::filesystem::__cxx11::path const&)>
+    9487:	4c 89 fe             	mov    %r15,%rsi
+    948a:	48 89 ef             	mov    %rbp,%rdi
+    948d:	e8 3e 25 00 00       	call   b9d0 <(anonymous namespace)::output(std::filesystem::__cxx11::path const&)>
+    9492:	4c 89 ff             	mov    %r15,%rdi
+    9495:	e8 f6 46 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    949a:	4c 89 ef             	mov    %r13,%rdi
+    949d:	e8 ee 46 00 00       	call   db90 <std::filesystem::__cxx11::path::~path()>
+    94a2:	ba 19 00 00 00       	mov    $0x19,%edx
+    94a7:	48 8d 35 bb 3b 08 00 	lea    0x83bbb(%rip),%rsi        # 8d069 <_IO_stdin_used+0x1069>
+    94ae:	48 89 ef             	mov    %rbp,%rdi
+    94b1:	e8 3a ee ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    94b6:	ba 2b 00 00 00       	mov    $0x2b,%edx
+    94bb:	48 8d 35 86 32 08 00 	lea    0x83286(%rip),%rsi        # 8c748 <_IO_stdin_used+0x748>
+    94c2:	48 89 ef             	mov    %rbp,%rdi
+    94c5:	e8 26 ee ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    94ca:	ba 1c 00 00 00       	mov    $0x1c,%edx
+    94cf:	48 8d 35 ad 3b 08 00 	lea    0x83bad(%rip),%rsi        # 8d083 <_IO_stdin_used+0x1083>
+    94d6:	48 89 ef             	mov    %rbp,%rdi
+    94d9:	e8 12 ee ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    94de:	ba 29 00 00 00       	mov    $0x29,%edx
+    94e3:	48 8d 35 8e 32 08 00 	lea    0x8328e(%rip),%rsi        # 8c778 <_IO_stdin_used+0x778>
+    94ea:	48 89 ef             	mov    %rbp,%rdi
+    94ed:	e8 fe ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    94f2:	ba 14 00 00 00       	mov    $0x14,%edx
+    94f7:	48 8d 35 2d 3a 08 00 	lea    0x83a2d(%rip),%rsi        # 8cf2b <_IO_stdin_used+0xf2b>
+    94fe:	48 89 ef             	mov    %rbp,%rdi
+    9501:	e8 ea ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9506:	be 80 bb 00 00       	mov    $0xbb80,%esi
+    950b:	48 89 ef             	mov    %rbp,%rdi
+    950e:	e8 5d ef ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    9513:	ba 02 00 00 00       	mov    $0x2,%edx
+    9518:	48 8d 35 61 3b 08 00 	lea    0x83b61(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    951f:	48 89 c7             	mov    %rax,%rdi
+    9522:	48 89 c3             	mov    %rax,%rbx
+    9525:	e8 c6 ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    952a:	ba 1d 00 00 00       	mov    $0x1d,%edx
+    952f:	48 8d 35 6a 3b 08 00 	lea    0x83b6a(%rip),%rsi        # 8d0a0 <_IO_stdin_used+0x10a0>
+    9536:	48 89 df             	mov    %rbx,%rdi
+    9539:	e8 b2 ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    953e:	f2 0f 10 84 24 f8 2f 	movsd  0x62ff8(%rsp),%xmm0
+    9545:	06 00 
+    9547:	48 89 df             	mov    %rbx,%rdi
+    954a:	e8 b1 ee ff ff       	call   8400 <std::ostream& std::ostream::_M_insert<double>(double)@plt>
+    954f:	ba 02 00 00 00       	mov    $0x2,%edx
+    9554:	48 8d 35 25 3b 08 00 	lea    0x83b25(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    955b:	48 89 c7             	mov    %rax,%rdi
+    955e:	48 89 c3             	mov    %rax,%rbx
+    9561:	e8 8a ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9566:	ba 12 00 00 00       	mov    $0x12,%edx
+    956b:	48 8d 35 d0 39 08 00 	lea    0x839d0(%rip),%rsi        # 8cf42 <_IO_stdin_used+0xf42>
+    9572:	48 89 df             	mov    %rbx,%rdi
+    9575:	e8 76 ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    957a:	be 00 77 01 00       	mov    $0x17700,%esi
+    957f:	48 89 df             	mov    %rbx,%rdi
+    9582:	e8 e9 ee ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    9587:	ba 02 00 00 00       	mov    $0x2,%edx
+    958c:	48 8d 35 ed 3a 08 00 	lea    0x83aed(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    9593:	48 89 c7             	mov    %rax,%rdi
+    9596:	48 89 c3             	mov    %rax,%rbx
+    9599:	e8 52 ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    959e:	ba 15 00 00 00       	mov    $0x15,%edx
+    95a3:	48 8d 35 ad 39 08 00 	lea    0x839ad(%rip),%rsi        # 8cf57 <_IO_stdin_used+0xf57>
+    95aa:	48 89 df             	mov    %rbx,%rdi
+    95ad:	e8 3e ed ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    95b2:	8b b4 24 08 30 06 00 	mov    0x63008(%rsp),%esi
+    95b9:	b9 02 00 00 00       	mov    $0x2,%ecx
+    95be:	89 f0                	mov    %esi,%eax
+    95c0:	c1 e0 07             	shl    $0x7,%eax
+    95c3:	83 e8 02             	sub    $0x2,%eax
+    95c6:	99                   	cltd
+    95c7:	f7 f9                	idiv   %ecx
+    95c9:	8d 56 ff             	lea    -0x1(%rsi),%edx
+    95cc:	29 d0                	sub    %edx,%eax
+    95ce:	99                   	cltd
+    95cf:	f7 fe                	idiv   %esi
+    95d1:	89 c1                	mov    %eax,%ecx
+    95d3:	8b 84 24 44 09 00 00 	mov    0x944(%rsp),%eax
+    95da:	85 c0                	test   %eax,%eax
+    95dc:	74 13                	je     95f1 <main+0x811>
+    95de:	85 f6                	test   %esi,%esi
+    95e0:	b8 01 00 00 00       	mov    $0x1,%eax
+    95e5:	0f 4e f0             	cmovle %eax,%esi
+    95e8:	b8 08 00 00 00       	mov    $0x8,%eax
+    95ed:	31 d2                	xor    %edx,%edx
+    95ef:	f7 fe                	idiv   %esi
+    95f1:	8d 34 01             	lea    (%rcx,%rax,1),%esi
+    95f4:	48 89 df             	mov    %rbx,%rdi
+    95f7:	e8 74 ee ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    95fc:	ba 02 00 00 00       	mov    $0x2,%edx
+    9601:	48 8d 35 78 3a 08 00 	lea    0x83a78(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    9608:	48 89 c7             	mov    %rax,%rdi
+    960b:	48 89 c3             	mov    %rax,%rbx
+    960e:	e8 dd ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9613:	ba 20 00 00 00       	mov    $0x20,%edx
+    9618:	48 8d 35 f1 2c 08 00 	lea    0x82cf1(%rip),%rsi        # 8c310 <_IO_stdin_used+0x310>
+    961f:	48 89 df             	mov    %rbx,%rdi
+    9622:	e8 c9 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9627:	ba 3a 00 00 00       	mov    $0x3a,%edx
+    962c:	48 8d 35 05 2d 08 00 	lea    0x82d05(%rip),%rsi        # 8c338 <_IO_stdin_used+0x338>
+    9633:	48 89 df             	mov    %rbx,%rdi
+    9636:	e8 b5 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    963b:	ba 46 00 00 00       	mov    $0x46,%edx
+    9640:	48 8d 35 61 31 08 00 	lea    0x83161(%rip),%rsi        # 8c7a8 <_IO_stdin_used+0x7a8>
+    9647:	48 89 df             	mov    %rbx,%rdi
+    964a:	e8 a1 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    964f:	ba 50 00 00 00       	mov    $0x50,%edx
+    9654:	48 8d 35 2d 2f 08 00 	lea    0x82f2d(%rip),%rsi        # 8c588 <_IO_stdin_used+0x588>
+    965b:	48 89 df             	mov    %rbx,%rdi
+    965e:	e8 8d ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9663:	ba 9e 00 00 00       	mov    $0x9e,%edx
+    9668:	48 8d 35 71 2f 08 00 	lea    0x82f71(%rip),%rsi        # 8c5e0 <_IO_stdin_used+0x5e0>
+    966f:	48 89 df             	mov    %rbx,%rdi
+    9672:	e8 79 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9677:	ba 5e 00 00 00       	mov    $0x5e,%edx
+    967c:	48 8d 35 4d 2e 08 00 	lea    0x82e4d(%rip),%rsi        # 8c4d0 <_IO_stdin_used+0x4d0>
+    9683:	48 89 df             	mov    %rbx,%rdi
+    9686:	e8 65 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    968b:	ba 72 00 00 00       	mov    $0x72,%edx
+    9690:	48 8d 35 59 31 08 00 	lea    0x83159(%rip),%rsi        # 8c7f0 <_IO_stdin_used+0x7f0>
+    9697:	48 89 df             	mov    %rbx,%rdi
+    969a:	e8 51 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    969f:	ba 24 00 00 00       	mov    $0x24,%edx
+    96a4:	48 8d 35 d5 2f 08 00 	lea    0x82fd5(%rip),%rsi        # 8c680 <_IO_stdin_used+0x680>
+    96ab:	48 89 df             	mov    %rbx,%rdi
+    96ae:	e8 3d ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    96b3:	ba 52 00 00 00       	mov    $0x52,%edx
+    96b8:	48 8d 35 a9 31 08 00 	lea    0x831a9(%rip),%rsi        # 8c868 <_IO_stdin_used+0x868>
+    96bf:	48 89 df             	mov    %rbx,%rdi
+    96c2:	e8 29 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    96c7:	ba 42 00 00 00       	mov    $0x42,%edx
+    96cc:	48 8d 35 ed 31 08 00 	lea    0x831ed(%rip),%rsi        # 8c8c0 <_IO_stdin_used+0x8c0>
+    96d3:	48 89 df             	mov    %rbx,%rdi
+    96d6:	e8 15 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    96db:	ba 84 00 00 00       	mov    $0x84,%edx
+    96e0:	48 8d 35 21 32 08 00 	lea    0x83221(%rip),%rsi        # 8c908 <_IO_stdin_used+0x908>
+    96e7:	48 89 df             	mov    %rbx,%rdi
+    96ea:	e8 01 ec ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    96ef:	ba 15 00 00 00       	mov    $0x15,%edx
+    96f4:	48 8d 35 72 38 08 00 	lea    0x83872(%rip),%rsi        # 8cf6d <_IO_stdin_used+0xf6d>
+    96fb:	48 89 df             	mov    %rbx,%rdi
+    96fe:	e8 ed eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9703:	be cc 00 00 00       	mov    $0xcc,%esi
+    9708:	48 89 df             	mov    %rbx,%rdi
+    970b:	e8 60 ed ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    9710:	ba 02 00 00 00       	mov    $0x2,%edx
+    9715:	48 8d 35 64 39 08 00 	lea    0x83964(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    971c:	48 89 c7             	mov    %rax,%rdi
+    971f:	48 89 c3             	mov    %rax,%rbx
+    9722:	e8 c9 eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9727:	48 8d 35 90 39 08 00 	lea    0x83990(%rip),%rsi        # 8d0be <_IO_stdin_used+0x10be>
+    972e:	48 89 df             	mov    %rbx,%rdi
+    9731:	e8 6a eb ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    9736:	31 db                	xor    %ebx,%ebx
+    9738:	4c 8d 2d 55 38 08 00 	lea    0x83855(%rip),%r13        # 8cf94 <_IO_stdin_used+0xf94>
+    973f:	eb 4b                	jmp    978c <main+0x9ac>
+    9741:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    9748:	ba 02 00 00 00       	mov    $0x2,%edx
+    974d:	48 8d 35 2c 39 08 00 	lea    0x8392c(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    9754:	e8 97 eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9759:	48 8b bc 24 b0 00 00 	mov    0xb0(%rsp),%rdi
+    9760:	00 
+    9761:	48 8d 84 24 c0 00 00 	lea    0xc0(%rsp),%rax
+    9768:	00 
+    9769:	48 39 c7             	cmp    %rax,%rdi
+    976c:	74 11                	je     977f <main+0x99f>
+    976e:	48 8b 84 24 c0 00 00 	mov    0xc0(%rsp),%rax
+    9775:	00 
+    9776:	48 8d 70 01          	lea    0x1(%rax),%rsi
+    977a:	e8 41 eb ff ff       	call   82c0 <operator delete(void*, unsigned long)@plt>
+    977f:	48 83 c3 01          	add    $0x1,%rbx
+    9783:	48 81 fb cc 00 00 00 	cmp    $0xcc,%rbx
+    978a:	74 7c                	je     9808 <main+0xa28>
+    978c:	ba 05 00 00 00       	mov    $0x5,%edx
+    9791:	4c 89 ee             	mov    %r13,%rsi
+    9794:	48 89 ef             	mov    %rbp,%rdi
+    9797:	e8 54 eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    979c:	89 de                	mov    %ebx,%esi
+    979e:	4c 89 ff             	mov    %r15,%rdi
+    97a1:	e8 ba 4d 00 00       	call   e560 <cs80::paramId[abi:cxx11](int)>
+    97a6:	48 8b 94 24 b8 00 00 	mov    0xb8(%rsp),%rdx
+    97ad:	00 
+    97ae:	48 8b b4 24 b0 00 00 	mov    0xb0(%rsp),%rsi
+    97b5:	00 
+    97b6:	48 89 ef             	mov    %rbp,%rdi
+    97b9:	e8 32 eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    97be:	ba 03 00 00 00       	mov    $0x3,%edx
+    97c3:	48 8d 35 3d 38 08 00 	lea    0x8383d(%rip),%rsi        # 8d007 <_IO_stdin_used+0x1007>
+    97ca:	48 89 c7             	mov    %rax,%rdi
+    97cd:	49 89 c4             	mov    %rax,%r12
+    97d0:	e8 1b eb ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    97d5:	66 0f ef c0          	pxor   %xmm0,%xmm0
+    97d9:	4c 89 e7             	mov    %r12,%rdi
+    97dc:	f3 41 0f 5a 04 9e    	cvtss2sd (%r14,%rbx,4),%xmm0
+    97e2:	e8 19 ec ff ff       	call   8400 <std::ostream& std::ostream::_M_insert<double>(double)@plt>
+    97e7:	48 89 c7             	mov    %rax,%rdi
+    97ea:	48 81 fb cb 00 00 00 	cmp    $0xcb,%rbx
+    97f1:	0f 85 51 ff ff ff    	jne    9748 <main+0x968>
+    97f7:	ba 01 00 00 00       	mov    $0x1,%edx
+    97fc:	48 8d 35 7e 38 08 00 	lea    0x8387e(%rip),%rsi        # 8d081 <_IO_stdin_used+0x1081>
+    9803:	e9 4c ff ff ff       	jmp    9754 <main+0x974>
+    9808:	48 8d 35 c0 38 08 00 	lea    0x838c0(%rip),%rsi        # 8d0cf <_IO_stdin_used+0x10cf>
+    980f:	48 89 ef             	mov    %rbp,%rdi
+    9812:	e8 89 ea ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    9817:	45 31 e4             	xor    %r12d,%r12d
+    981a:	4c 8d 35 de 38 08 00 	lea    0x838de(%rip),%r14        # 8d0ff <_IO_stdin_used+0x10ff>
+    9821:	4c 8d 3d ed 37 08 00 	lea    0x837ed(%rip),%r15        # 8d015 <_IO_stdin_used+0x1015>
+    9828:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    982f:	00 
+    9830:	ba 0f 00 00 00       	mov    $0xf,%edx
+    9835:	48 8d 35 a7 38 08 00 	lea    0x838a7(%rip),%rsi        # 8d0e3 <_IO_stdin_used+0x10e3>
+    983c:	48 89 ef             	mov    %rbp,%rdi
+    983f:	e8 ac ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9844:	4c 8b 6c 24 18       	mov    0x18(%rsp),%r13
+    9849:	48 89 ef             	mov    %rbp,%rdi
+    984c:	41 8b 75 00          	mov    0x0(%r13),%esi
+    9850:	e8 1b ec ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    9855:	ba 0b 00 00 00       	mov    $0xb,%edx
+    985a:	48 8d 35 6d 37 08 00 	lea    0x8376d(%rip),%rsi        # 8cfce <_IO_stdin_used+0xfce>
+    9861:	48 89 c7             	mov    %rax,%rdi
+    9864:	48 89 c3             	mov    %rax,%rbx
+    9867:	e8 84 ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    986c:	4d 8b 6d 08          	mov    0x8(%r13),%r13
+    9870:	4d 85 ed             	test   %r13,%r13
+    9873:	0f 84 9c 00 00 00    	je     9915 <main+0xb35>
+    9879:	4c 89 ef             	mov    %r13,%rdi
+    987c:	e8 bf e8 ff ff       	call   8140 <strlen@plt>
+    9881:	4c 89 ee             	mov    %r13,%rsi
+    9884:	48 89 df             	mov    %rbx,%rdi
+    9887:	48 89 c2             	mov    %rax,%rdx
+    988a:	e8 61 ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    988f:	ba 0b 00 00 00       	mov    $0xb,%edx
+    9894:	48 8d 35 58 38 08 00 	lea    0x83858(%rip),%rsi        # 8d0f3 <_IO_stdin_used+0x10f3>
+    989b:	48 89 df             	mov    %rbx,%rdi
+    989e:	e8 4d ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    98a3:	4c 8b 6c 24 18       	mov    0x18(%rsp),%r13
+    98a8:	48 89 df             	mov    %rbx,%rdi
+    98ab:	41 8b 75 10          	mov    0x10(%r13),%esi
+    98af:	e8 bc eb ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    98b4:	ba 19 00 00 00       	mov    $0x19,%edx
+    98b9:	4c 89 f6             	mov    %r14,%rsi
+    98bc:	48 89 c7             	mov    %rax,%rdi
+    98bf:	48 89 c3             	mov    %rax,%rbx
+    98c2:	e8 29 ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    98c7:	66 0f ef c0          	pxor   %xmm0,%xmm0
+    98cb:	48 89 df             	mov    %rbx,%rdi
+    98ce:	f3 41 0f 5a 45 14    	cvtss2sd 0x14(%r13),%xmm0
+    98d4:	e8 27 eb ff ff       	call   8400 <std::ostream& std::ostream::_M_insert<double>(double)@plt>
+    98d9:	ba 01 00 00 00       	mov    $0x1,%edx
+    98de:	4c 89 fe             	mov    %r15,%rsi
+    98e1:	48 89 c7             	mov    %rax,%rdi
+    98e4:	48 89 c3             	mov    %rax,%rbx
+    98e7:	e8 04 ea ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    98ec:	49 83 fc 05          	cmp    $0x5,%r12
+    98f0:	74 3d                	je     992f <main+0xb4f>
+    98f2:	ba 02 00 00 00       	mov    $0x2,%edx
+    98f7:	48 8d 35 82 37 08 00 	lea    0x83782(%rip),%rsi        # 8d080 <_IO_stdin_used+0x1080>
+    98fe:	48 89 df             	mov    %rbx,%rdi
+    9901:	e8 ea e9 ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9906:	48 83 44 24 18 18    	addq   $0x18,0x18(%rsp)
+    990c:	49 83 c4 01          	add    $0x1,%r12
+    9910:	e9 1b ff ff ff       	jmp    9830 <main+0xa50>
+    9915:	48 8b 03             	mov    (%rbx),%rax
+    9918:	48 8b 78 e8          	mov    -0x18(%rax),%rdi
+    991c:	48 01 df             	add    %rbx,%rdi
+    991f:	8b 77 20             	mov    0x20(%rdi),%esi
+    9922:	83 ce 01             	or     $0x1,%esi
+    9925:	e8 26 eb ff ff       	call   8450 <std::basic_ios<char, std::char_traits<char> >::clear(std::_Ios_Iostate)@plt>
+    992a:	e9 60 ff ff ff       	jmp    988f <main+0xaaf>
+    992f:	ba 01 00 00 00       	mov    $0x1,%edx
+    9934:	48 8d 35 46 37 08 00 	lea    0x83746(%rip),%rsi        # 8d081 <_IO_stdin_used+0x1081>
+    993b:	48 89 df             	mov    %rbx,%rdi
+    993e:	e8 ad e9 ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9943:	48 8d 35 cd 36 08 00 	lea    0x836cd(%rip),%rsi        # 8d017 <_IO_stdin_used+0x1017>
+    994a:	48 89 ef             	mov    %rbp,%rdi
+    994d:	e8 4e e9 ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    9952:	48 89 ef             	mov    %rbp,%rdi
+    9955:	e8 36 ea ff ff       	call   8390 <std::basic_ofstream<char, std::char_traits<char> >::close()@plt>
+    995a:	48 8d 1d 5f 69 09 00 	lea    0x9695f(%rip),%rbx        # a02c0 <std::cout@GLIBCXX_3.4>
+    9961:	ba 09 00 00 00       	mov    $0x9,%edx
+    9966:	48 8d 35 ac 37 08 00 	lea    0x837ac(%rip),%rsi        # 8d119 <_IO_stdin_used+0x1119>
+    996d:	48 89 df             	mov    %rbx,%rdi
+    9970:	e8 7b e9 ff ff       	call   82f0 <std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)@plt>
+    9975:	be 00 77 01 00       	mov    $0x17700,%esi
+    997a:	48 89 df             	mov    %rbx,%rdi
+    997d:	e8 ee ea ff ff       	call   8470 <std::ostream::operator<<(int)@plt>
+    9982:	48 89 c7             	mov    %rax,%rdi
+    9985:	48 8d 35 04 30 08 00 	lea    0x83004(%rip),%rsi        # 8c990 <_IO_stdin_used+0x990>
+    998c:	e8 0f e9 ff ff       	call   82a0 <std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@plt>
+    9991:	48 89 ef             	mov    %rbp,%rdi
+    9994:	e8 27 ea ff ff       	call   83c0 <std::basic_ofstream<char, std::char_traits<char> >::~basic_ofstream()@plt>
+    9999:	48 8b 7c 24 20       	mov    0x20(%rsp),%rdi
+    999e:	be 00 b8 0b 00       	mov    $0xbb800,%esi
+    99a3:	e8 18 e9 ff ff       	call   82c0 <operator delete(void*, unsigned long)@plt>
+    99a8:	48 8b 7c 24 10       	mov    0x10(%rsp),%rdi
+    99ad:	e8 1e 42 00 00       	call   dbd0 <cs80::Engine::~Engine()>
+    99b2:	e9 08 f6 ff ff       	jmp    8fbf <main+0x1df>
+    99b7:	41 0f b6 45 00       	movzbl 0x0(%r13),%eax
+    99bc:	88 44 24 60          	mov    %al,0x60(%rsp)
+    99c0:	e9 be f5 ff ff       	jmp    8f83 <main+0x1a3>
+    99c5:	48 8d 7b 01          	lea    0x1(%rbx),%rdi
+    99c9:	e8 e2 e8 ff ff       	call   82b0 <operator new(unsigned long)@plt>
+    99ce:	48 89 44 24 50       	mov    %rax,0x50(%rsp)
+    99d3:	48 89 5c 24 60       	mov    %rbx,0x60(%rsp)
+    99d8:	48 89 da             	mov    %rbx,%rdx
+    99db:	4c 89 ee             	mov    %r13,%rsi
+    99de:	48 89 c7             	mov    %rax,%rdi
+    99e1:	e8 6a e8 ff ff       	call   8250 <memcpy@plt>
+    99e6:	e9 98 f5 ff ff       	jmp    8f83 <main+0x1a3>
+    99eb:	48 8b 7c 24 08       	mov    0x8(%rsp),%rdi
+    99f0:	e9 19 f8 ff ff       	jmp    920e <main+0x42e>
+    99f5:	48 89 c3             	mov    %rax,%rbx
+    99f8:	e9 24 f0 ff ff       	jmp    8a21 <main.cold>
+    99fd:	48 89 c3             	mov    %rax,%rbx
+    9a00:	e9 c1 f0 ff ff       	jmp    8ac6 <main.cold+0xa5>
+    9a05:	48 89 c3             	mov    %rax,%rbx
+    9a08:	49 89 d4             	mov    %rdx,%r12
+    9a0b:	e9 c6 f0 ff ff       	jmp    8ad6 <main.cold+0xb5>
+    9a10:	48 89 c7             	mov    %rax,%rdi
+    9a13:	48 89 d5             	mov    %rdx,%rbp
+    9a16:	e9 4f f0 ff ff       	jmp    8a6a <main.cold+0x49>
+    9a1b:	48 89 c3             	mov    %rax,%rbx
+    9a1e:	49 89 d4             	mov    %rdx,%r12
+    9a21:	e9 13 f0 ff ff       	jmp    8a39 <main.cold+0x18>
+    9a26:	48 89 c3             	mov    %rax,%rbx
+    9a29:	e9 fb ef ff ff       	jmp    8a29 <main.cold+0x8>
+    9a2e:	48 89 c3             	mov    %rax,%rbx
+    9a31:	49 89 d4             	mov    %rdx,%r12
+    9a34:	e9 f8 ef ff ff       	jmp    8a31 <main.cold+0x10>
+    9a39:	48 89 c3             	mov    %rax,%rbx
+    9a3c:	49 89 d4             	mov    %rdx,%r12
+    9a3f:	e9 8a f0 ff ff       	jmp    8ace <main.cold+0xad>
+    9a44:	48 89 c3             	mov    %rax,%rbx
+    9a47:	49 89 d4             	mov    %rdx,%r12
+    9a4a:	e9 87 f0 ff ff       	jmp    8ad6 <main.cold+0xb5>
+    9a4f:	48 89 c3             	mov    %rax,%rbx
+    9a52:	49 89 d4             	mov    %rdx,%r12
+    9a55:	e9 85 f1 ff ff       	jmp    8bdf <main.cold+0x1be>
+    9a5a:	48 89 c3             	mov    %rax,%rbx
+    9a5d:	48 89 d5             	mov    %rdx,%rbp
+    9a60:	e9 2e f1 ff ff       	jmp    8b93 <main.cold+0x172>
+    9a65:	48 89 c3             	mov    %rax,%rbx
+    9a68:	48 89 d5             	mov    %rdx,%rbp
+    9a6b:	e9 ed ef ff ff       	jmp    8a5d <main.cold+0x3c>
+    9a70:	48 89 c3             	mov    %rax,%rbx
+    9a73:	49 89 d4             	mov    %rdx,%r12
+    9a76:	e9 be f0 ff ff       	jmp    8b39 <main.cold+0x118>
+    9a7b:	48 89 c3             	mov    %rax,%rbx
+    9a7e:	49 89 d4             	mov    %rdx,%r12
+    9a81:	e9 b3 ef ff ff       	jmp    8a39 <main.cold+0x18>
+    9a86:	e9 fd f0 ff ff       	jmp    8b88 <main.cold+0x167>
+    9a8b:	e9 1a f1 ff ff       	jmp    8baa <main.cold+0x189>
+    9a90:	48 89 c3             	mov    %rax,%rbx
+    9a93:	48 89 d5             	mov    %rdx,%rbp
+    9a96:	e9 2d f1 ff ff       	jmp    8bc8 <main.cold+0x1a7>
+    9a9b:	48 89 c3             	mov    %rax,%rbx
+    9a9e:	48 89 d5             	mov    %rdx,%rbp
+    9aa1:	e9 2c f1 ff ff       	jmp    8bd2 <main.cold+0x1b1>
+    9aa6:	48 89 c3             	mov    %rax,%rbx
+    9aa9:	48 89 d5             	mov    %rdx,%rbp
+    9aac:	e9 ec f0 ff ff       	jmp    8b9d <main.cold+0x17c>
+    9ab1:	48 89 c3             	mov    %rax,%rbx
+    9ab4:	48 8d 44 24 50       	lea    0x50(%rsp),%rax
+    9ab9:	48 89 d5             	mov    %rdx,%rbp
+    9abc:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+    9ac1:	e9 3e f1 ff ff       	jmp    8c04 <main.cold+0x1e3>
+    9ac6:	48 89 c3             	mov    %rax,%rbx
+    9ac9:	e9 f0 ef ff ff       	jmp    8abe <main.cold+0x9d>
+    9ace:	48 89 c5             	mov    %rax,%rbp
+    9ad1:	49 89 d4             	mov    %rdx,%r12
+    9ad4:	e9 13 f1 ff ff       	jmp    8bec <main.cold+0x1cb>
+
+Disassembly of section .fini:

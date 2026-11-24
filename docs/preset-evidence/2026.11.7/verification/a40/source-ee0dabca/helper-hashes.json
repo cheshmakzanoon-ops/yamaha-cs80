@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "status": "prepared_helpers_frozen_not_artifact_acceptance",
+  "context": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1,
+    "producer_job_ids": {
+      "linux-x86_64": 138455975798,
+      "windows-x86_64": 138455976256,
+      "macos-arm64": 138455976227,
+      "macos-x86_64": 138455976307
+    }
+  },
+  "primary_helpers": {
+    "verify-native-contract.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+    },
+    "bind-audition-ci.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/bind-audition-ci.py",
+      "bytes": 10030,
+      "sha256": "65cf483ee4397533ea5ca4bf8d88eb4c5f21353059b99ba761833f7f288e2554"
+    },
+    "verify-audition-archive.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-audition-archive.py",
+      "bytes": 34289,
+      "sha256": "bae2c82d291bee1240a3c49673a82381114f9bf4c0260275ea1b4494fda59df5"
+    }
+  },
+  "companion_and_audit_helpers": {
+    "test-native-contract.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-native-contract.py",
+      "bytes": 10605,
+      "sha256": "78a330183f60b071774944b3215a8110a32faa4d7a81f2f0fa5cd0a4bb0bc1a0"
+    },
+    "test-audition-archive.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-audition-archive.py",
+      "bytes": 29566,
+      "sha256": "3d19bd8c81ec66d9b8d3cdb09be09d862da78d0af8a5acf018782316b0315a9d"
+    },
+    "test-audition-ci.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-audition-ci.py",
+      "bytes": 8225,
+      "sha256": "e9e9e69cb9245f6195149acfbcdd693fac66da217423b8a0cc8f9b227f0e63ff"
+    },
+    "verify-source-continuity.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-source-continuity.py",
+      "bytes": 12582,
+      "sha256": "8e51ef15b3c34bb92fb0251e09349d2e586ceff54f3b99ff8146a4d9e3260638"
+    }
+  },
+  "historical_reused_helpers": {
+    "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py": {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py": {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a52/test-evidence.py": {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/test-evidence.py",
+      "bytes": 10247,
+      "sha256": "33d6912cd08bce634e1337f754d314515502bfc2f706b167d02d6ec478e03567"
+    },
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py": {
+      "path": "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+    },
+    "docs/preset-evidence/2026.11.5/verification/a41-test-install-artifact.py": {
+      "path": "docs/preset-evidence/2026.11.5/verification/a41-test-install-artifact.py",
+      "bytes": 12097,
+      "sha256": "7a93df2477f0c6c9958d2decd667ccda264af2cf5204a9d8a35fb04135e5a739"
+    }
+  },
+  "independent_inventory": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "bytes": 710464,
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d"
+  },
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

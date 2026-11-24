@@ -1,0 +1,52 @@
+{
+  "schema": "cs80-a39-baseline-context-v1",
+  "created_utc": "2026-11-24T12:43:35.820501+00:00",
+  "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "head_commit": "e8e29133a14c492a98033871cfe3912ef8978f5d",
+  "host": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "target": "x86_64-linux-gnu",
+  "stack_rlimit_unchanged": [
+    8388608,
+    -1
+  ],
+  "constrained_stack": false,
+  "files": {
+    "src/tools/parity_capture.cpp": {
+      "sha256": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051",
+      "frozen_sha256": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051",
+      "equal_frozen": true
+    },
+    "src/core/Engine.h": {
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "frozen_sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "equal_frozen": true
+    },
+    "src/core/Engine.cpp": {
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "frozen_sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "equal_frozen": true
+    },
+    "src/core/InstrumentBody.h": {
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "frozen_sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "equal_frozen": true
+    },
+    "tests/test_parity_capture.py": {
+      "sha256": "4557d682e67e7061d362fb8a9a550a9566cfdee91cfd03ee490c4d5e4ef72e8c",
+      "frozen_sha256": "4557d682e67e7061d362fb8a9a550a9566cfdee91cfd03ee490c4d5e4ef72e8c",
+      "equal_frozen": true
+    },
+    "CMakeLists.txt": {
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92",
+      "frozen_sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92",
+      "equal_frozen": true
+    }
+  },
+  "frozen_core_archive": {
+    "source_path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+    "snapshot_path": "/tmp/cs80-a39-1cee5a/libcs80_core.frozen.a",
+    "bytes": 1736086,
+    "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+  }
+}

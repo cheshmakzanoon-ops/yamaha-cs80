@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "status": "ee0dabca_successors_prepared_pending_actual_artifacts",
+  "prepared_utc": "2026-11-24T12:59:22.515809+00:00",
+  "context": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1,
+    "producer_job_ids": {
+      "linux-x86_64": 138455975798,
+      "windows-x86_64": 138455976256,
+      "macos-arm64": 138455976227,
+      "macos-x86_64": 138455976307
+    }
+  },
+  "actual_artifacts_checked": false,
+  "actual_native_product_tests_executed": 0,
+  "fixture_test_methods": 40,
+  "native_and_audition_acceptance_function_asts_unchanged": true,
+  "threshold_count_roster_and_skip_requirements_unchanged": true,
+  "generic_content_verifier_byte_identical_to_a28": true,
+  "historical_files_checked": 67,
+  "all_historical_files_byte_identical": true,
+  "old_c554_accepted_and_failed_receipts_not_rebound": true,
+  "helpers_frozen_and_root_notified_before_artifact_qualification": true,
+  "output_records": {
+    "source-continuity.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/source-continuity.json",
+      "bytes": 9801,
+      "sha256": "d0fe9cdd19f0e86662044a71569fbb5f14201552dd78ec345e23071121468975"
+    },
+    "source-inputs-ee0dabca.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/source-inputs-ee0dabca.json",
+      "bytes": 148012,
+      "sha256": "368b7bc55a65b2a9a5836e41464919e4d78efda4467a06c43c7c566ec174acb1"
+    },
+    "complete-tree-changed-files.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/complete-tree-changed-files.json",
+      "bytes": 96194,
+      "sha256": "98993e99cce20c1b610281a066a162c32ff98d549581e75e90eef4778038ddf7"
+    },
+    "protected-source-difference.patch": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/protected-source-difference.patch",
+      "bytes": 2603,
+      "sha256": "bd355e7b03398fded0e439da6594b0c788b045ef29f1d9f103cf77d2fe716fe6"
+    },
+    "helper-differences.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/helper-differences.json",
+      "bytes": 7539,
+      "sha256": "56199f2ea175209afee3583ab89507d7e5954bb256f023f5828f222ba9244b62"
+    },
+    "helper-differences.patch": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/helper-differences.patch",
+      "bytes": 5709,
+      "sha256": "3db6e77be9c8561a8de18f4d9a9ff2bb59673e05857226025cb3964e41dbd4b7"
+    },
+    "helper-hashes.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/helper-hashes.json",
+      "bytes": 4114,
+      "sha256": "1efc8230729f7d473d8d0c4f2331575f721ae662b53ab197c24efa4b73a97318"
+    },
+    "fixture-results.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/fixture-results.json",
+      "bytes": 3037,
+      "sha256": "56857856dd5ed6a60ece5bb6b5222643fdccbf7e45e42f902b8960bbf7f32fde"
+    },
+    "contract.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract.json",
+      "bytes": 67113,
+      "sha256": "917392950e0dac4e0518dd6bea3ea7b398eb4aa56c98ba3f40dbfec9446df90d"
+    },
+    "prepared-contract.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/prepared-contract.json",
+      "bytes": 15117,
+      "sha256": "74d0b21eb8c116b935adf421896e1b7730a12ce67fb3a717bec90cd46802c3c3"
+    },
+    "contract-comparison.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract-comparison.json",
+      "bytes": 1483,
+      "sha256": "b81a0bf1b8645dc402c183aa644c00b2a54df574fcdd58f5f3742232311e18d4"
+    },
+    "consumer-context.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/consumer-context.json",
+      "bytes": 2295,
+      "sha256": "9b3b7b958aab23eef13479bf6494c2aa2c37b496e9935629c2e2d4c9c4253316"
+    },
+    "predecessor-files.json": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/predecessor-files.json",
+      "bytes": 13248,
+      "sha256": "f0975468a12ef0eff7b447085536dc7ff18b6ffb5c6adbb775716bfa521789df"
+    }
+  },
+  "preparation_commands": [
+    [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "--repo",
+      ".",
+      "--describe",
+      "--out",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract.json"
+    ],
+    [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-audition-archive.py",
+      "--repo",
+      ".",
+      "--source",
+      "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "--run-id",
+      "45397189410",
+      "--attempt",
+      "1",
+      "--expected-inventory",
+      "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+      "--inventory-source-path",
+      "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+      "--expected-inventory-sha256",
+      "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+      "--prepare",
+      "--out",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/prepared-contract.json"
+    ],
+    [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-source-continuity.py",
+      "--repo",
+      ".",
+      "--out-dir",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca"
+    ]
+  ],
+  "write_scope": [
+    "docs/preset-evidence/2026.11.7/verification/a40/",
+    "docs/preset-evidence/2026.11.7/reviews/a40.md",
+    "/tmp/cs80-a40-1cee5a/"
+  ],
+  "no_product_test_cmake_workflow_capture_producer_or_old_helper_edits": true,
+  "no_git_stage_commit_push_or_extra_agents": true,
+  "all_prepared_qualification_flags_false": true,
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

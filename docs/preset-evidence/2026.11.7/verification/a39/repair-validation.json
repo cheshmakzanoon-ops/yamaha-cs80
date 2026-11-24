@@ -1,0 +1,66 @@
+{
+  "schema": "cs80-a39-repair-validation-v1",
+  "completed_utc": "2026-11-24T12:47:36.592690+00:00",
+  "baseline_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "modified_source_path": "src/tools/parity_capture.cpp",
+  "modified_source_sha256": "745dae18d1a05c087008bb70d3e5c0bdeebf26b970b51dc5f2efd3231a521714",
+  "exact_allowed_diff_verified": true,
+  "allowed_changes": [
+    "Add <memory>",
+    "Replace two automatic Engine ownership declarations with std::make_unique<Engine>() and Engine references"
+  ],
+  "immutable_source_paths": [
+    "src/core",
+    "tests/test_parity_capture.py",
+    "CMakeLists.txt",
+    ".github/workflows"
+  ],
+  "immutable_source_diff_exit": 0,
+  "frozen_core_archive": {
+    "path": "/tmp/cs80-a39-1cee5a/libcs80_core.frozen.a",
+    "bytes": 1736086,
+    "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+  },
+  "core_archive_identical_before_after": true,
+  "existing_build_core_archive_still_identical": true,
+  "instrument_body_sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+  "executables": {
+    "before": {
+      "path": "/tmp/cs80-a39-1cee5a/before/cs80_parity_capture",
+      "bytes": 683312,
+      "sha256": "9577acbaab9ba8b72398ff095d372911bc2d5a2fd25836916a15e776236f1612"
+    },
+    "after": {
+      "path": "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture",
+      "bytes": 683392,
+      "sha256": "4d001d915f82fed1ce741dc261d28516ec452e1e15f3a055e3410d424ba19f07"
+    }
+  },
+  "regression_test_count_each": 13,
+  "regression_exit_codes": {
+    "before": 0,
+    "after": 0
+  },
+  "both_fixture_cli_stdout_stderr_and_exit_equal": true,
+  "all_seven_files_byte_equal": true,
+  "audio_samples_compared": 384000,
+  "all_audio_metrics_exactly_equal": true,
+  "maximum_absolute_sample_difference": 0.0,
+  "stack_rlimit_unchanged": [
+    8388608,
+    -1
+  ],
+  "constrained_stack": false,
+  "native_rerun_performed": false,
+  "native_failure_retained": true,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "limitations": [
+    "Local GCC/Linux success does not establish a repaired Windows native job outcome.",
+    "The original failing Windows executable and fault backtrace were not retained in the native-evidence artifact; exact MSVC frame sizes and PE reserve were not measured.",
+    "The same-host exact capture comparison is not a cross-platform bit-identical audio claim."
+  ],
+  "repair_source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "repair_source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "tested_capture_source_equals_committed_source": true
+}

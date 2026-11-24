@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "status": "existing_companion_fixtures_passed",
+  "test_methods": 40,
+  "commands": [
+    {
+      "name": "native-contract",
+      "command": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-native-contract.py"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "temp_root": "/tmp/cs80-a40-1cee5a",
+      "started_utc": "2026-11-24T12:56:18.036222+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 0.5705621189990779,
+      "test_methods": 10,
+      "status": "passed_synthetic_fixtures_only",
+      "log": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/native-contract-tests.log",
+      "log_sha256": "0d794a2f2182094c9178e757919d6e52c0d05da9b89eba8a84b7f4fcc132eb02"
+    },
+    {
+      "name": "audition-content",
+      "command": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-audition-archive.py"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "temp_root": "/tmp/cs80-a40-1cee5a",
+      "started_utc": "2026-11-24T12:56:18.037276+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 3.9176250279997475,
+      "test_methods": 16,
+      "status": "passed_synthetic_fixtures_only",
+      "log": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/audition-content-tests.log",
+      "log_sha256": "253be794ef99f0c4ffd6e02c122657c88a239565500d66bd6d4d75b48bc53540"
+    },
+    {
+      "name": "audition-ci",
+      "command": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/test-audition-ci.py"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "temp_root": "/tmp/cs80-a40-1cee5a",
+      "started_utc": "2026-11-24T12:56:18.037953+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 0.13099510599931818,
+      "test_methods": 7,
+      "status": "passed_synthetic_fixtures_only",
+      "log": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/audition-ci-tests.log",
+      "log_sha256": "f8e9f38865dcd521a3b8dc06e0c3613df9fac77f8acde85ead6bd1d386ab3834"
+    },
+    {
+      "name": "a52-reuse",
+      "command": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.6/verification/a52/test-evidence.py"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "temp_root": "/tmp/cs80-a40-1cee5a",
+      "started_utc": "2026-11-24T12:56:18.038779+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 0.40379887399831205,
+      "test_methods": 7,
+      "status": "passed_synthetic_fixtures_only",
+      "log": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/a52-reuse-tests.log",
+      "log_sha256": "e0bb5aad9a460f9f5453a92ed55f8aa68d4ac7deade8a00d82cb683fd9bae3ba"
+    }
+  ],
+  "actual_native_test_executions": 0,
+  "actual_ci_artifacts_checked": 0,
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

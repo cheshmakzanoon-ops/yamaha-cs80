@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "prepared_context_no_actual_artifacts",
+  "factory_revision": "2026.11.7",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "producer_job_ids": {
+    "linux-x86_64": 138455975798,
+    "windows-x86_64": 138455976256,
+    "macos-arm64": 138455976227,
+    "macos-x86_64": 138455976307
+  },
+  "root_ci_directory": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca",
+  "root_download_directory": "/tmp/cs80-ci-1cee5a/ee0dabca",
+  "expected_native_counts": {
+    "linux-x86_64": 613,
+    "windows-x86_64": 255,
+    "macos-arm64": 277,
+    "macos-x86_64": 277
+  },
+  "required_validator_lanes": 15,
+  "expected_audition_artifact_name": "cs80-curated-preset-audition-ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "audition": {
+    "wav_count": 238,
+    "selected_program_count": 92,
+    "folder_count": 54,
+    "audio_seconds": 1361.2,
+    "stereo_frames": 65337600,
+    "raw_audio_bytes": 522700800,
+    "regular_files": 297,
+    "checksums": 296,
+    "programs": 523,
+    "parameters": 204,
+    "values": 106692
+  },
+  "independent_inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "helpers": {
+    "verify-native-contract.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+    },
+    "bind-audition-ci.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/bind-audition-ci.py",
+      "bytes": 10030,
+      "sha256": "65cf483ee4397533ea5ca4bf8d88eb4c5f21353059b99ba761833f7f288e2554"
+    },
+    "verify-audition-archive.py": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-audition-archive.py",
+      "bytes": 34289,
+      "sha256": "bae2c82d291bee1240a3c49673a82381114f9bf4c0260275ea1b4494fda59df5"
+    }
+  },
+  "actual_artifact_ids": null,
+  "actual_artifact_bytes_or_digests": null,
+  "actual_artifacts_checked": false,
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

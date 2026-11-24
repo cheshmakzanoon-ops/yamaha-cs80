@@ -246,8 +246,9 @@
     {
       "id": "a35",
       "role": "All seven vocal recipes across Pads and FX",
-      "status": "in_progress",
-      "agent": "/root/a35_vocal_recipe_review"
+      "status": "completed",
+      "agent": "/root/a35_vocal_recipe_review",
+      "report": "reviews/a35.md"
     },
     {
       "id": "a36",
@@ -259,14 +260,41 @@
     {
       "id": "a37",
       "role": "Full Engine runtime, allocation and lifecycle review",
+      "status": "completed",
+      "agent": "/root/a37_engine_runtime_review",
+      "report": "reviews/a37.md"
+    },
+    {
+      "id": "a38",
+      "role": "Combined modal-array bounds, reset and ordinary sanitizer review",
       "status": "in_progress",
-      "agent": "/root/a37_engine_runtime_review"
+      "agent": "/root/a38_combined_boundary_review"
     },
     {
       "id": "a39",
       "role": "Windows capture-tool stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a39_windows_capture_repair",
+      "report": "reviews/a39.md"
+    },
+    {
+      "id": "a40",
+      "role": "Final-source input identity and unchanged acceptance-gate successors",
+      "status": "completed",
+      "agent": "/root/a40_final_source_contract",
+      "report": "reviews/a40.md"
+    },
+    {
+      "id": "a41",
+      "role": "Nine materials and four variants: exact recipe and physical-claim review",
       "status": "in_progress",
-      "agent": "/root/a39_windows_capture_repair"
+      "agent": "/root/a41_material_identity_review"
+    },
+    {
+      "id": "a42",
+      "role": "Host parameter, program and saved-session compatibility",
+      "status": "in_progress",
+      "agent": "/root/a42_host_state_compatibility"
     },
     {
       "id": "a44",
@@ -283,10 +311,11 @@
       "report": "reviews/a45.md"
     }
   ],
-  "candidate_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
-  "candidate_build_run": 45385716988,
-  "documentation_head_observed": "e8e29133a14c492a98033871cfe3912ef8978f5d",
-  "assigned_count": 40,
-  "completed_count": 37,
-  "candidate_build_note": "c554 source: Apple Silicon platform-qualified; original Intel LibraryAudit and Windows parity-capture failures retained; test/tool-only ownership repairs under ordinary verification before a new complete native run."
+  "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "candidate_build_run": 45397189410,
+  "documentation_head_observed": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "assigned_count": 44,
+  "completed_count": 41,
+  "candidate_build_note": "Fresh four-platform native run for ownership-only audit/capture repair. Previous c554: ARM platform-qualified, Intel and Windows original failures retained, Linux canceled on successor push. No cross-platform/release qualification yet.",
+  "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
 }

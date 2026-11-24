@@ -1,0 +1,161 @@
+{
+  "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "baseline_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "successor_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "reviewed_files": {
+    "src/core/Engine.h": {
+      "sha256": {
+        "baseline": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+        "source": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+        "successor": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/core/Engine.cpp": {
+      "sha256": {
+        "baseline": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+        "source": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+        "successor": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/core/InstrumentBody.h": {
+      "sha256": {
+        "baseline": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+        "source": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+        "successor": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc"
+      },
+      "baseline_source_equal": false,
+      "source_successor_equal": true
+    },
+    "src/core/ReconstructedOscillator.h": {
+      "sha256": {
+        "baseline": "ae3f9b5e158bc1defd155fb19c486e9f9fd45dadeebc1b30cbbaa6c0354aa0fe",
+        "source": "ae3f9b5e158bc1defd155fb19c486e9f9fd45dadeebc1b30cbbaa6c0354aa0fe",
+        "successor": "ae3f9b5e158bc1defd155fb19c486e9f9fd45dadeebc1b30cbbaa6c0354aa0fe"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/core/Dsp.h": {
+      "sha256": {
+        "baseline": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+        "source": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+        "successor": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/core/BbdChorus.h": {
+      "sha256": {
+        "baseline": "380733392e63e8ae9b183ad6816f9f626702824875928a9ef689321a25f4d0f2",
+        "source": "380733392e63e8ae9b183ad6816f9f626702824875928a9ef689321a25f4d0f2",
+        "successor": "380733392e63e8ae9b183ad6816f9f626702824875928a9ef689321a25f4d0f2"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/core/FxSlot.h": {
+      "sha256": {
+        "baseline": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe",
+        "source": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe",
+        "successor": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/plugin/PluginProcessor.h": {
+      "sha256": {
+        "baseline": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+        "source": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+        "successor": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "src/plugin/PluginProcessor.cpp": {
+      "sha256": {
+        "baseline": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+        "source": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+        "successor": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "tests/OversamplingTests.cpp": {
+      "sha256": {
+        "baseline": "25e141327aa6a22a31d0ce8615006e303deb6f68961b31515e22f385ed899f9b",
+        "source": "25e141327aa6a22a31d0ce8615006e303deb6f68961b31515e22f385ed899f9b",
+        "successor": "25e141327aa6a22a31d0ce8615006e303deb6f68961b31515e22f385ed899f9b"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "tests/SourcePerformanceAuditTests.cpp": {
+      "sha256": {
+        "baseline": "005d2327fd5fa40ab7c45bbc0f7dcf1373b9709c13cc159c1ac075043e2be881",
+        "source": "005d2327fd5fa40ab7c45bbc0f7dcf1373b9709c13cc159c1ac075043e2be881",
+        "successor": "005d2327fd5fa40ab7c45bbc0f7dcf1373b9709c13cc159c1ac075043e2be881"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "tests/InstrumentBodyEngineTests.cpp": {
+      "sha256": {
+        "baseline": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6",
+        "source": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6",
+        "successor": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6"
+      },
+      "baseline_source_equal": true,
+      "source_successor_equal": true
+    },
+    "tests/LowChoirSpectrumTests.cpp": {
+      "sha256": {
+        "baseline": null,
+        "source": "a806486540235c7ccc7f0fb7ab551bfbac6afa0d9ad7e47a59f509ad324dc034",
+        "successor": "a806486540235c7ccc7f0fb7ab551bfbac6afa0d9ad7e47a59f509ad324dc034"
+      },
+      "baseline_source_equal": false,
+      "source_successor_equal": true
+    }
+  },
+  "reused_evidence_sha256": {
+    "docs/preset-evidence/2026.11.7/reviews/a07.md": "faa98885f9f6bd46c6fb7bd63e96e67965e055b5fd9eea3071e680b5ba5db6d9",
+    "docs/preset-evidence/2026.11.7/reviews/a11.md": "c4c50735a58f200d5d4bda6cd200ce5caeb5976f97c6f272914521ce435739bd",
+    "docs/preset-evidence/2026.11.7/reviews/a21.md": "bfa7b30d8499b2b5d1d5dc51f25dcbcd0249ef9b46e2b46c5792b8ecff35e827",
+    "docs/preset-evidence/2026.11.7/reviews/a45.md": "5950042393b31ff9d4b62160e46a8bda2d0084cb69bce0fe5296586df2ff0aab",
+    "docs/preset-evidence/2026.11.7/development/focused-ctest-receipt.json": "506fc26c5c02f63d05321d5dd92f66a73156c285c5ee5499fe4e6c24a2bb2df3",
+    "docs/preset-evidence/2026.11.7/verification/a45/sizeof-results.json": "e6bd406613e999c60939c2ae374effe7c4b60ed98f6ab793802e218b8d96bb57",
+    "docs/preset-evidence/2026.11.7/verification/a45/static-stack-analysis.json": "6869af100d8c55265697fffb7fa31957981438bc35347f65ff3d7539a92bdbc7",
+    "docs/preset-evidence/2026.11.7/verification/a21/binding.json": "0512193cf8f7296a537d493db9efaed74606cc8027af7cfec8c834464e65f5eb"
+  },
+  "successor_protected_differences": [
+    "src/tools/parity_capture.cpp",
+    "tests/LibraryAuditTests.cpp"
+  ],
+  "ownership": {
+    "entry": "createPluginFilter returns new Cs80AudioProcessor",
+    "primary_engine": "value member of heap-owned processor; no callback Engine local",
+    "extension_engine": "unique_ptr allocated and prepared unconditionally in processor constructor",
+    "release_clock": "member declared before both engines; survives both destructions",
+    "voice_mode": "8 voices per Engine; processor activates second Engine for 16-voice mode",
+    "body_storage": "8 voices x 2 ranks x current/previous body = 32 fixed body objects per Engine",
+    "byte_growth": {
+      "body": 400,
+      "body_noise_coefficients": 16,
+      "body_formant_histories": 384,
+      "engine": 12800,
+      "both_engine_extents": 25600
+    },
+    "initial_prepare": "effect vectors reserve maximum-factor capacity, then reinitialize actual factor",
+    "callback_rate_transition": "setNonRealtime/setControlFrame can configureInternalRate using preallocated buffers; oscillator basis acquire takes existing mutex",
+    "scratch": "prepareToPlay sizes primary, extension, and mono-input vectors; renderSegment chunks beyond capacity",
+    "onset": "body noteOn captures finite harmonic budget in existing fixed bank; prior body copy/handoff uses inline storage",
+    "allocation_scope_limit": "Offline C++ new/new[] hooks are not a universal malloc/host/plugin callback allocation proof",
+    "deadline_scope_limit": "No per-callback deadline, concurrent-instance contention, or full plugin host guarantee"
+  },
+  "new_release_blocker_found": false,
+  "native_successor_qualification": "Root-owned and not established by this review"
+}

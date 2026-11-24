@@ -1,0 +1,64 @@
+[
+  {
+    "argv": [
+      "/usr/bin/c++",
+      "-I/workspace/scratch/1cee5a9391a9/yamaha-cs80/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-fstack-usage",
+      "-o",
+      "/tmp/cs80-a39-1cee5a/after/parity_capture.o",
+      "-c",
+      "/tmp/cs80-a39-1cee5a/after/parity_capture.cpp"
+    ],
+    "cwd": "/tmp/cs80-a39-1cee5a/after",
+    "returncode": 0,
+    "elapsed_seconds": 2.800103,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/tmp/cs80-a39-1cee5a/after/parity_capture.o",
+      "/tmp/cs80-a39-1cee5a/libcs80_core.frozen.a",
+      "-o",
+      "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture"
+    ],
+    "cwd": "/tmp/cs80-a39-1cee5a/after",
+    "returncode": 0,
+    "elapsed_seconds": 0.066225,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture",
+      "--out",
+      "/tmp/cs80-a39-1cee5a/after/default"
+    ],
+    "cwd": "/tmp/cs80-a39-1cee5a/after",
+    "returncode": 0,
+    "elapsed_seconds": 0.35319,
+    "stdout": "Captured 96000 engine candidate frames; no reference comparison or analog evidence.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/cs80-a39-1cee5a/after/cs80_parity_capture",
+      "--out",
+      "/tmp/cs80-a39-1cee5a/after/live",
+      "--fixture",
+      "live-adr-v1"
+    ],
+    "cwd": "/tmp/cs80-a39-1cee5a/after",
+    "returncode": 0,
+    "elapsed_seconds": 0.309231,
+    "stdout": "Captured live A/D/R candidate trace; no reference comparison or analog evidence.\n",
+    "stderr": ""
+  }
+]

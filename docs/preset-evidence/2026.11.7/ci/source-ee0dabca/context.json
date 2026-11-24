@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "factory_revision": "2026.11.7",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "producer_jobs": {
+    "linux-x86_64": 138455975798,
+    "macos-arm64": 138455976227,
+    "windows-x86_64": 138455976256,
+    "macos-x86_64": 138455976307
+  },
+  "expected_registered": {
+    "linux-x86_64": 613,
+    "windows-x86_64": 255,
+    "macos-arm64": 277,
+    "macos-x86_64": 277
+  },
+  "protected_source_changes": [
+    "tests/LibraryAuditTests.cpp",
+    "src/tools/parity_capture.cpp"
+  ],
+  "status": "fresh_source_native_jobs_started_or_queued",
+  "release_qualified": false
+}

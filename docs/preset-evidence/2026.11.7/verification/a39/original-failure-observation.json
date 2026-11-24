@@ -1,0 +1,94 @@
+{
+  "schema": "cs80-a39-original-windows-failure-v1",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "run_attempt": 1,
+  "job_id": 138415960660,
+  "job_name": "Windows / VST3 + Standalone",
+  "job_status": "completed",
+  "job_conclusion": "failure",
+  "build_and_test_steps": [
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T11:40:39Z",
+      "completed_at": "2026-11-24T11:56:20Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 7,
+      "started_at": "2026-11-24T11:56:20Z",
+      "completed_at": "2026-11-24T12:35:39Z"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/producer-job.log",
+      "bytes": 149901,
+      "sha256": "bb468698bb4c6d76b0dfb278fdc70730b0daac39b025565edc1711ba02b5d533"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/producer-job-api.json",
+      "bytes": 3895,
+      "sha256": "0fb5b1316b6df86d8fd68488ed133c6f5e567fe30a58022e76065a1f9509d7df"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/native-api.json",
+      "bytes": 747,
+      "sha256": "f2cff144faa84fb3ad0f83841e9e08a147cdb92202dafc03892517b2ead03496"
+    }
+  ],
+  "native_artifact_id": 14919929427,
+  "native_zip": {
+    "path": "/tmp/cs80-ci-1cee5a/c5549f7d/windows-native.zip",
+    "bytes": 84973,
+    "sha256": "9cc5722bc30503a7c921f249b551efc7869507e78675141dda8e00d4865999ce"
+  },
+  "native_archive_members": {
+    "Testing/Temporary/LastTest.log": {
+      "bytes": 382860,
+      "sha256": "04f8bd2b8f72d7d7803fb808246675cbdba67d4a91de0804a387a2495c75d5b9"
+    },
+    "ctest-results.xml": {
+      "bytes": 133514,
+      "sha256": "9a48f75fccfae9b7c7888dab4ad0cb686f591695dc8c8d0fd79c6a67b7c83ad1"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 585,
+      "sha256": "855a4a37c56e0dddec387f9c66afc1da3bf4604d8cebb46ac8bf63323c30ddbc"
+    }
+  },
+  "junit_attributes": {
+    "name": "(empty)",
+    "tests": "255",
+    "failures": "1",
+    "disabled": "0",
+    "skipped": "2",
+    "hostname": "",
+    "time": "2357",
+    "timestamp": "2026-11-24T11:56:21"
+  },
+  "junit_status_counts": {
+    "run": 252,
+    "notrun": 2,
+    "fail": 1
+  },
+  "failed_test_names": [
+    "cs80_parity_capture_tests"
+  ],
+  "failure_output": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a39/original-windows-parity-failure.txt",
+    "bytes": 1139,
+    "sha256": "8d9eb8870c1e3e734fcf55486238a8fed52b3c93b16899d812bfd5f2a836fd38"
+  },
+  "decimal_exit": 3221225725,
+  "hex_exit": "0xc00000fd",
+  "status_name": "STATUS_STACK_OVERFLOW",
+  "failure_scope": "LiveCaptureTests.setUpClass first live-adr-v1 capture launch. Seven default-fixture test methods completed before this class setup failed.",
+  "native_fault_backtrace_observed": false,
+  "all_original_inputs_preserved": true
+}

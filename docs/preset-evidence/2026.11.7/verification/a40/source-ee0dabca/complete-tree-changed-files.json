@@ -1,0 +1,3453 @@
+{
+  "schema": 1,
+  "old_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "changed_path_count": 373,
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/attempt-1-initial.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "275c49c873a5299b38746a2f4418a49b9435f140"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/jobs-initial.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "593ffafec19205a7f6aef7ac7770b99112f5c260"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/archive-payload-binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ce1c1e66df220dcfcacc2dd8397cb5cb927e86c9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/attempt1-api-at-platform-completion.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "275c49c873a5299b38746a2f4418a49b9435f140"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/install-acceptance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "86cadf7cbdbd294f021aebead78823e367566f96"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/install-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d03421d53b41c29b058b886f946e1db1d346f984"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/native-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "68264fbc05e955b3dde630ae954653453a3d4481"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/original-execution-binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8fa563853498de12ed89f9de527bbf91982b703b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/platform-qualification.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "28f6373a2ace0beba1c10e3630fd4e0e89c17c63"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/producer-job-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e1fe9c5cb25dc96a9e3255e90806872769322018"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/producer-job.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a88b10435a5590a35d4815cd439184e6b20f6d22"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/public-route-platform-check.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "59ad07e43f37fcec538b01a416bca7ba97d855a6"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/retrieval-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "574939dc44c2360e7acdd885ddbe692db04b0413"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/run-api-at-platform-completion.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "49ce1d64c9f7005c810610a94d72dbb8da61755a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/validator-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "59847a891bbb6d2c6d132fdaeb5fec1b84735b83"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/native-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b03e51679919d1ad7605b66b3dacf1cff863ae75"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/producer-job-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3e0a568576384fed9f8361e4ab36e1ad47fdf56c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/producer-job.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4fa09b6f35bf1ca5439e5e26b2950355c35b218c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/run-initial.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "49ce1d64c9f7005c810610a94d72dbb8da61755a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/screenshots-producer.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1fca8c3095d3d82968eb4e765228d52c8ff76d77"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/native-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "411fb0210aed814ff4f3a1d240d60a7cf0d67b66"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/producer-job-api.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a10d5eda6382d31858f8e362082a2c487175e9b9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/producer-job.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d24b83e14608c0d225d72d9d562d2bb2cb8f0536"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/windows/retrieval-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "20a59d54bf25ec5092df7c3b53b0b0f235283b4a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/cs80-focused.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3d9afce14872331b28748d5637b001712a5fac2b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/cs80-focused.xml",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a4856db58ca1d188c7e3e9a2f1e7c17b201369c1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/current-bank-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "282461e67532be6a6f620bb6ba37b2578c99a190"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/focused-ctest-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "63a86cac5ab48db5783a2f150022ae92f16106f8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/matched-published-current-bank.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7f2123f77b7ce870038bdbf5421b4c4f116fb787"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-bank-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c7b91de3e52f1de1cd90b1da209d0b6360291346"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-inventory.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1e72e6020f8bd79eb54e2ae449d59d9e530404f6"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-reconstruction.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0da8a7b392644ac6c0a8a8da4cfc53e5048292cd"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/source-inputs-c5549f7d.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fb21f1a2862fc26d2a25a62f5cc42acf92f52607"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/development/temporary-pcm-cleanup.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "dc11525eac7d619877c7bfd7037be98ca111851d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a13.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6de336430885713bf70f50dddb2e671e4df3f091"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a14.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "62bc206539c32ad8aab83bda5682c0758d6d8f08"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a15.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "627120dc8835d221e7eb8b48b0676561de3b7611"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a16.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "30cf28b7b694bc152cff051b21288ed3fd4733aa"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a17.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "636f680af0f356eb1153ac64184778d678badf51"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a18.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e54c457844073fca73153e369b79ebddef4799f8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a19.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bd3a363f8a4dec789995462bc74e68fc516f2c03"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a20.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "aa6b1d247acbde57a1c4ef03e9b734f61702ab61"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a21.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "78983e85c7c50959b8da458f90064ba17001bca8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a22.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cfeb572b01fe9f7a36a644a1358cdac2518c8ac4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a23.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e15f8cab1ea0b527fe91f518607eb00e0de9183b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a24.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d8ac19d3d013f684a60c841d0bcd9661f7d25c66"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a25.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d5ff079b2f7585b2fb53a3edeb660fddc893f649"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a26.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0cf2afd945408f1148dc25ec3e0221fc42a32f60"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a27.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9dca08948e284cf840aa457d178e704f58a74d2c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a28.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1ae0ee10cabcf1d239919b3c3dbf5b9e12f48991"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a29.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "91965b07251e1c9b7a8e6e87d654dd1b582348d1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a30.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "628ed5bab072a4bba6e1d4a695986414aa0162d2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a31.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3ee2c1047f3286a45fe95731690060b6dda7fe2d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a32.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7bfdbc230495c7f2b1d4426e225a0513c9e854b2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a33.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "16d0e930ad0784b73ce72bdc0c2b234e79765e68"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a34.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1854a128226661c1498eb5353fac049fe8d04e22"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a36.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9c1f7a29e90d7f25463377a4d99a009a54274962"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a44.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6662682b3163b6190a6c8c863ae19d56fc8e4d72"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a45.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fe5cdc281c8d66dd603db57efb194b2989226850"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/README.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "64eb2756611e0a29ad8a879cf8785f49b041df3f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8a376b6a2fd4241ff91c4f562fde60284da45a6c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/analyze_pedal.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "dc67f100c4bf90dd49d18952a799d6ac683f9727"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/capture-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c0e982427ed9547955ffef8451285dcc1ea91ecf"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/capture-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7ad8e0dc1aa935f8ed4c126f8ca7c4a31c4958b8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/capture_matrix.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ee87a8c9e2729ea4e063ddc607de052901cf6023"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/comparisons.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b066cd7d67409e21de2d9cac5e9921da34e31597"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/keys-structure.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "46a096f44133391ebaff7d698a4ab8bec7b5059d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/pedal-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ec46352decbc4f674a1effc04f4ef9abde0eaf7c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/pedal_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "72a988f5d40e22020aa2c816f918fc94b734da19"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4149889b001ea21449dd439dccda6dd8a94fd512"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/touch-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "590dc6728a27712e3856258bcf8e272ca60273a3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/window-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0a21e239eb8f8c15f2f065ff22ac81df8a16ebc1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/analysis.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9af2fb1c8c95a130bcaafd13f8e4a7744c51ff0a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2b967694e2a08ff1d34a2191abbad04a3651d7de"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/baseline-probe.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5179bf87c170aff9e6b92d62e0af53075b2b8709"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/bass-plucked.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f4f430d4a534067d0f7dcaec2e2fb46d9608d50c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/current-probe.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4b5e5ba3522df269f562423393a973cd2a4ef273"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/engine_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a98d649b7aee47050ef7d5fe6bcf11aa369a1759"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/inventory-review.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a51854da6c52278d44f5f1200495744983899295"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/pcm-analysis.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "59a70c775cf3b5294615846dc210947bf3a9f4cb"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/run.sh",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1d872abda55ddae85a54b825f1b77331079d78c2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a14/string-formants.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "651e375270815565df95ed276f8aa03eeb366e2e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b078c012e450e7a6f7282c83ef6ab5d997e87e16"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/baseline-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b7a36afd22f413de4f504cf33a74f3d1750f04b3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/bass-plucked-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f4f430d4a534067d0f7dcaec2e2fb46d9608d50c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1d06cec13a4b0026fec039f9ece677d0709ac088"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f2b921b63641c4eaf857732069b4cc63bedf7e56"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/current-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b70d99dd4b37a312666d2c333f847720fd5be579"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/engine_gestures.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "818583fab7888a7e95921721766a2fabc87cf43d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/gesture-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f7252c84f847827e69d771493c028716aa2fa2ab"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/material-preset-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "82addd8f710440c92a19c5a2379bb1916bab9b2d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ba1b3e2d5d9b2c80369b9174275ed4d3d38992a1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/reproduce.sh",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a3da6d9ec0c7d78e54fa7a436a40338a3abb849c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/structural-coverage.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "460dab17892e45d9f0095501667044d67f6d8d95"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b57168e024d83c77bfb70b679c28253707a6b0b6"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/after-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f120befc59aff78d5738c8e429ec0648f81d2a3b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b2ecf401a6bf1549ce351c98f452fb58026ca543"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/before-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "01aa6eb977cb6b58de22499007e00979a148a5b3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/brass-inventory.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3357c3094a51210fbfc5f37a3db75b1add3d6f58"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/brass_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d940792e137ea5c01a0457d3fedc5808fc5d1859"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/classification.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fde0864977be3eb169f8ec2b19f2c1afd450d34c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/classify.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c39577484ae0dcbd7bb62142cd595007123c63e3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/dry-current-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "735dac673ba21b5190d33fc11440da355416ae1e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/dry-noair-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "735dac673ba21b5190d33fc11440da355416ae1e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/frozen-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "68256ef246ba64f3ac97909fd6db2c102c423397"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/measurements.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "73c9f3ac22b1088b6964d29854d135f2e6015e63"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/noair-provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "97c128e35a348bfcfdfbffca786d748d281a9b70"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/noair-render.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "01aa6eb977cb6b58de22499007e00979a148a5b3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/pcm-hashes.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5e4df37e3283f4cf15f9cfe275a0b69c341f9c56"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "221722dcab54a21088b5766579f144ac26f7e9ce"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/quality-summary.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fe15ece14bef55d68fa191ca558f4cd83a3ae0db"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "41d420bbea8c16b17d8b69a54850d3b8a7852655"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/REPRODUCE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ecd9ccc60ea798d9f3cb1fdc3d27a7b255978e93"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0527dda6bc83af15c2d870dfbe32ce4f5a378b87"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "765dbcc14343ce114554836d36d8572063e08de4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/component-baseline.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5dd006594b2ed1aca52147cfa019faa4ef5ac24e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/component-current.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67ca613d3497fbd3904012281a1a9731926a4c0a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/contact.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b742dad2c22c7d733d263861af84cfdde95a26ce"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/contact_component.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4e22cecf49252ee15a3a92fc57e01095e17c5631"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/inventory.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a6c9f34e7c5a750504614ff71743cd9b66cf1e0c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/matrix.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "87d8e86b00e6423146f0fdba6d318d67638a282f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/render.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f0d78f2ea25b758d8f2e40f208f824f3890a9032"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/results.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ac35f6f013a51bbf0935ec4b288d075375610952"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "410f2524155be10918901c7499d5810f59d4d21a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/articulation.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "acbd6a3d54c5040b003c199120d296c045133910"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/baseline-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d6b0f399d832a10253eedd270415f02711b1a9ce"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/baseline-probe.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8c69d086fc27d217a77cc4907141eaa71d42d8ab"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "13a0243dcf6a900439132741968265807991d7d3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/comparisons.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "df31cfc739f6a8633f1b09673b3d0421896fc168"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/current-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d6b0f399d832a10253eedd270415f02711b1a9ce"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/current-probe.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8c69d086fc27d217a77cc4907141eaa71d42d8ab"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/official-native-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f8ec550c4ded5f4241195e7070cdac877031c4a0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/official-pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e90fdb74bd27d800741590668304413a77c76f75"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a93b33653969d124673e2ef980060db4e1816bdd"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c543f80a66f06e6777e7e5304d5a783ce50a6829"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/spectral-windows.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9d0918b552bb62b6d7638be4035d0f047c230c26"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/strings_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "76d181d52470980acc60b43604c2aafb4b38df72"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/structural-coverage.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "43c59eb17c6990e9c3eebf92bf6b191ec4bc5b67"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8516c29674694d04f768376ddd9cf3d5e4ebd3d8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a18/window-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "abbda60508c71f5890dae15b047cc7fdce83dd83"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/after-render.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c6ffa58f432a829b56518a64282116474ce0b825"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "48e2b93902e3c3d34f3bde59a16d7a9f549092d1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/baseline.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3d5251b44f2004774ee2c078ee5fee4b1cd35745"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/before-render.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9d6ab7bb61e0eb5553db7355b48beccd8a5b664d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/captures.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "69f0ee9ad305cffe57a0e6fc1fa818f766872e51"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/expressivity.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "70972b02457348dd53d78379b90f00e64e32074e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/measurements.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3a90d6a89936a11cff5f7a15e509cc98a3f883f0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/pcm-hashes.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c6b9d3bd212bf9974328898d49014eebd88f2906"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "85fea39a3088f8158721430dd654589afc6460c3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/quality.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d8199539f4c2877d0603ea73e0b4735a3898a9a4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/recipes.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ea6e3592d3e1f51a8726e67dcba0164f4ef40b4c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/recipes.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "150ba490e27fe9eb853523e8625bfed910abde2f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1bf602a5c220465bb7537dff0fa5a571b73554fb"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a19/winds_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "62289fffe364e76caf0552b1693d585fa4cc2b9d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/baseline-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e64e258401a35121ebbba57d80df5461dfb813fc"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "584f8a197ec3ff4a863896776567221874b54e1d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/current-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d5993d49a0d33f39c46eddc0bc4643567f378a4a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/inventory-audit.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c603f9d1ba9ceffa2751f84dc9621d334844f2b0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d66a6520a8bf710df9764a48dae2fb60b556cf0b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/organ_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4d4c420aabb5ee9b3aeb2ae17bc1c1e57f354720"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f2bfe1bf2984a71b29fe5f64f402f31d4fb0e50e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b7927d21e3045a53430d0b7ec0cc67a329d2d63d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "32e065035e28be1561a1701a1fda4c8cb37328d5"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a20/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "329b109ba37457c6cf1a9b7eea9556cd3b221508"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/baseline-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9d4b316329e9e97e3295b379eefcc8b94977af8b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "18305802a0f17129fcd80aff94527b2703cfe716"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/current-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9d4b316329e9e97e3295b379eefcc8b94977af8b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/pads_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8bf2fd8d2a69b38b87ea79918c64d6867081fd3a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/rendered-measurements.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5a330d7a9f9f0e3fd59369de8f816ec946122d1e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b7e3891bd44c43c3cd519bef955e4f2c44a5cc2f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a21/structural-coverage.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b472c0de66e26812e8e0950deb655a793fc8a0aa"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/baseline-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f8c53c0d6cfebfc52e204fbf4da4f0ea3f62b450"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8370f3de9c383eec4112706065262d76ccbd72ed"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/current-renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "618a895be95030d563a4ca82fae56a10848680ed"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/inventory-audit.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0e3a0702b7a8f977afde521fbbf6aef5b12285a2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fb311218f0de63b7c44dbe2b76db635e31b563d4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e642950903b08ae42d2e4ba262e3c745269e0586"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/poly_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "34001dbf652daf7fa5a603be5a46a15b94d7b244"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "96deb7b472d7e6efe20a057158b2df5e62e3c0aa"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6e31c16e82238e131545b9d855f21220f5c33b02"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/reused-tests.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8fdd370b4de1006d7c4a919316d16d77962528a3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a22/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "148d021ca07013fce2fec6196ff59a4e5b062c7b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/audit.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fabb37a1516074874b32b1796697455983d43e5b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/audit.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "49ec3f5159ad85547ff41ce838a51e57bf8da722"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/commands.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "28649b5e7a1fbc50930d6ce1bbf7029a30eb1bd3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/gesture_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d718866a575d57caebcb904dbddad9ef7e3be815"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "31f99d8f7e9feb4d8ab10c2e2a265cc0728823cc"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/published-pressure-comparison.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c7c15670a29bcae1204d639ac6a123d7374c308a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/structural-audit.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d76198d7855c898769c1561c06167bf74804627b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d5b49a502b1bf462d3a60e71988d3797781ec592"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/README.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8b1890c082b3ca523f12ad69f52b974e12609ae0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/baseline.jsonl",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "178879e9830daea4b0e63394a9d6ec19fd52cd61"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/checks.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "42dff39ba45da49ee00abb177c6b4a3d95dbf7dd"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/cs80_arp_pedal_lifecycle_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a2109b2d1cdd9f3f74c0e4caa03c956428c721fe"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/cs80_arp_rate_lifecycle_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fbefbac3074425c1ae302ceb8b92f0b7f7680017"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/cs80_arp_repeat_lifecycle_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67c1edf967827848379c00d3e79deea88da86e43"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/current.jsonl",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d851352e34526ef92cdbaf3d73ce1d0433f26052"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/lifecycle-tests.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8daf571ec179a6022f2c2342c8398ec0e4d94b50"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/review.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "455b9f84e179d0a3bcb4f9ba0831a73773665f63"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/review.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5d24bbcfe2db5d9995b0d204cf3fc092a522598d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a24/sequence-probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d824f9f928288fc150e4b9eb02324da8e01cdba2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/baseline-low-robot-p0-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "41c4dfd7299611839a806eef29f0919d5dec8591"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/baseline-low-robot-p1-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b737ecd6ce804f359a72ac31dc67b14ed8799d10"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/baseline-strike-v0.25-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "69545099a6cb709358ae8fede6e18bb9de473e07"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/baseline-strike-v0.85-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b1372272ebe2d58c2111ce912e674e07a14116d3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/current-low-robot-p0-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "02b998542f4de1b476d0848a9b7581f6af3f5434"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/current-low-robot-p1-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1f63cc161f19476e384dc400507f20b6eb025f8b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/current-strike-v0.25-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "161bd88e93cc9e7b87b8aec0c0dd4765f8e3c3c3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/current-strike-v0.85-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "26abae5cf08d24d912d21ef802c17599fcdd2e7a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/long-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "342b99e2f7878ca3b90310c2b50f6b51ef615b4e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/long-repeat-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "347f61104ecb1fa497a9c175ff5641e1c3d8b553"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/reused-fx-refinement.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "25f19dfdc117eee08f35e5b8b9b7456b412b71d3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/review.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d4f081db09a492a339228943449241e8902f7aaa"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/review.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "10e039b0be618215d9246f76dc2345b735704732"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a25/robot-repeat-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1f63cc161f19476e384dc400507f20b6eb025f8b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/capture-summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a9254c5df1530cb5afe437ca52a22a09de90afa7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/firm-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "70cba88799f699c8f17e5616aed318d6db911441"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/firm-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67393d027404f51c2e93e9e59aeacbdfde15de05"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/material-routing-compile.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/material-routing.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "268a8317fd4e7a8fdaf3097e639e0d70b8ba9a91"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/program-audit.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8c2ec0b73f81a6ebbb3d26dc6d3422e5bb1c69f9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ea195536492b05ade8ebeb08964f8c96563c41ba"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/representative-stacks.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9651963872b4385bb7a0b1e50b4aaa752984adea"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/reused-focused-tests.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9914f8d2a932f2a848e4ad6d746f568320ecf72d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/review-probe-compile.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/review-probe.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fa211b8e21a02cbf41e532fb00538ce8628eb464"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/review_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f8ccf6eb9cd0feda14fa930966298d11a57d207e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/soft-capture.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d7c77f14924dc054982642efe73220aae196292d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/soft-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ebe204de61b83f4de54e7e3964d9f158a6961038"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/source-columns.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "505491bc28c99701a3fe2d43b044b68bb8c01d97"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/source-factory-tones.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "90d6b41e784eed3b825e3adb1839e451466ecd3b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a26/verify.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "29d9dc70983f6a412a0a75c614cb7de3c07fed5d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/audio.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "38396d37ab70defaca3ac58750c939d527214a7e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/controls.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "37717cb36020a47fec5ea453473ae5ce468898ed"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/core-completion.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bcd420bd73bc9692e9f060ff9abda78944ca9a6a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/core_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b3c2bb189be8481873b007bd60aadaa2772b0e00"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_instrument_body_engine_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c40481b2b5e6f8c9f8007164b8d79f28b9db9413"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_instrument_body_variant_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2735bb2ce1648f99925af1f3c83307ffb5094de7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_material_body_tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5b366fba0d0f69224770cb20a228aa890437c4d9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "358aa0583b6f68819c47fc6e7e83b4c05aada9c9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/verify.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bdd465ee611a0e71ee30f31b0f365c8cbb07d414"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "33e7a30b0f7a5025fec8c165bd3c0435c6b68cc5"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/bind-audition-ci.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4050b4a0bfae28698290eff22f45c2392a43f9cf"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/predecessor-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "14f1ba0ce78bdcbb86b8eb56ebc8a2fb4948c8be"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/preparation-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6971921ee5dca6a9afd34346a75c61e2058183d9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/prepared-contract.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f0be605fb8913244ef6f9bea0af0335aafdde0f5"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/prepared-contract.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "188554f1ac8845d0d596a8d28177275f160258a9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/retained-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "878ba4ac8b2c44f0fb8fe64d2004447b45e0ce64"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/synthetic-ci-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cdc2b06d07485567c86749ff799e559b698601ce"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/synthetic-content-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fa8f6d0f112aa81d0ca668ab21b82b62b78afa7b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/test-audition-archive.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b2d4cb1e485d6d045a4b1a35d2926d21bab09fe5"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/test-audition-ci.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "386ad74671e8fc4327e88e4ad5ebbfcb7518d1b0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a28/verify-audition-archive.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "06d3a79670eb05d31a615dd6cfa78e3081c6b6c8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "da6a40d1a3fa69e0c8884b353c090170e46b048b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/a52-reuse-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ef55c8fff3232c6930630da70dcd5559bc63e927"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/contract-tests.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7f6b5659d00f81450dc52b05e4228510d29fac23"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/contract.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2b03adc598226a2e460b2163155cc1fb96a3e6a8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/helper-hashes.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3b3f2cd02c4c84f01025dfdf6e904bde789467b3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/historical-roster-reconciliation.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "994f985367b0314d459f56213c0b825c76521402"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-inputs.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "13433380c8c24e712e5473002262f875e911820f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-native-contract.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d3e2d011044621851d22d6186584ad46a2c008b4"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-observations.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "47fec0d2e02f1d7fb9396fd1ae9387c82f4c7793"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-parser-archive-binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e676e4f3e2c1b50aeecb5a423096c00a5790e4e3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-skip-review.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "902d2cbdc6f7214d56215293b8f31d7d5b57ab17"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/native-inputs-template.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9c28883eb17e4d0fbaca212734d8edff98746258"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/remote-initial-checkpoint.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fd384ddff11b5b97df00864a06252ad04c56053c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/skip-review-template.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8a0532d991428825f2be90e90d32da9f53abe090"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/test-native-contract.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "aac8769d3dfc0cb73df747b1cf4037e745b5a721"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/verify-native-contract.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e74b6a52eb487406b2bfdd254a23ca7ea5ea49f7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/command-receipts.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "814d00b8729335e36fa05f90ec5c757376aa6ad7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/existing-checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "46f8703111e36c780d9450ed8b531e22ed2fcde6"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/existing-checks.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0fbce9671dc79df352c75fdeb61d18b1f13cacf2"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "434bbad409776774f47c491c8c00b2121b87af18"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/macos-arm64-docs-and-notices.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a0a1648da86a4ceab97611e04ac5e2b8be2fe113"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/macos-arm64-install-acceptance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "84f08a4c5581a2900456606ec072772769d07498"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/rerun-existing-checks.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ccbc01641a4d679dbd352ad06270c93e486435f9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/retained-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "af8098f2cdbd2d194e1719c7215a7e0a194f4e75"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/usage-and-mapping.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "902a6d72b81a54fc779ad7ad55f26f95f9719162"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e8d68f1cdb1bfd47ea32084691231e927cf74e89"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/a51-actual-inspection.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ef8d5947dbd1e00241c99e8184a9d4cfb73754e0"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/a51-fixtures.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "25a38c354b9467277c118c6b158b7e6a8da239a8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/a52-fixtures.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3958c1d26b4bc9ce049abbcf4b94feb7f1ef837b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/inspection.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9209ab296e262ed5f9d4a16ac46388b7e82b3dad"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a31/macos-arm64-a51-inspection.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ce1c1e66df220dcfcacc2dd8397cb5cb927e86c9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ba4741e30786d80816d6e4d8fbf0dd18727b976c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/command-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e04329140b757d44a94a20db6e21e0737ff212e7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/consumer-inputs-template.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "808665e5b813b792e664549f0036819f1044713e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/existing-probe-results.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "8f4b428c77c45dbc7e2e3cf7e6c7f97c7cbe5e4c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/existing-probe.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6da23bcbce76cd743e7b79e5f8b3699f11a9f126"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/helper-pins.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "527fe45851bb823d33c2e34e71c420d14036850a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/prepared-contract.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e5e164fcee1e0edd87dfccdf6dd5caa0187d6196"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/retained-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "058c2e76d1b522aeb1af3414a6d33fa5cebd0928"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/windows-notice-checkout-transform.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c57c041fecd9af1f312d6750582e89c33e2c6436"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/analyze.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ec0b24e1fda4db3a48795f1c6a7f90c0537ecc91"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/category-summary.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4cba78f3b14d8644271a01d300ad14880d2eeb19"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/causal-velocity-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "03cd10f7ff74659edb8809edb77b6afdbeffedc8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/causal-velocity-receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "51c0f4cfbfd47ae30b0d11da29ffd9935e0a8c03"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/causal-velocity-summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a985c8e76cc2833ac6f79f3f51e38900a61b05cf"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/causal_velocity.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9304304f7f4f0cd4dc428b97c7324046dc7b3b2e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/causal_velocity_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bfa32dc705a41183b32cfffc07be0b3b72485bc8"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/metrics-summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "63220d827ad5f01fef0c650984c099e3aa7808dc"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/program-deltas.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d5fae5263e5c74e0a4e541bdea0e5452d191052b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a33/receipt.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0e0d295b05fe9e7312f86eb88f5540eefd6e3cb9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/all-rank-timing.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c0ee8c91673cab19719866f5e0b6483204bea475"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/binding.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7c5d848538cd766e65f917ed7b688a3426f0b73a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/compile-provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c64ce9927c25a06c5f41b9c75859e19586813e83"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/long_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "27adea54490a0632ab1afc0d7ad8173ee7db9b61"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/matched-bank-scope.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2799a7d9331c9e10b730099afae40acc4e2b7106"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "594e3ecd719ffc886b5d38117e0bdbcd681b7560"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/one-second-windows.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9a459e5d9760b846c284a2dd5e54249c45d0db68"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/pcm-manifest.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ca07bc09bb7328e4aa3034cce7c588a92ed03b92"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/renders.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "bec9d0733df262f1ee527d9522d1d55c148c049f"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/reproduce.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "04cfc886cc231492e38f50b057e7d23bb88001c7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/reused-tests.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3a5f5ffd0e5f01f89753da9e819ebc600fa44937"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "be3998991e60dab4bedd11d2006ed210c7b9612c"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/timing-census.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b21a5c21da31f1b4bcf55cd632fa8abc741aa3e9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a34/timing_probe.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2eb849d1a98b95e7a52f06b5ead61a175cbab397"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/README.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1772e477612201304fa81a0750ff056b24793cc1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/capture-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "516084e09ab0445ec4f57b6e0e66f000654254aa"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/piano-substitution-diagnostic.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "91de51e1915e01198e024d222e5b03992bc6a6b7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/provenance.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "103495da4175f3b6c930710dbddc3cce19ce0318"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/recipes.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "983907d0b5752fd547929d6b9b2994ce9926bc7d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/struck-body-dynamics.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ee28fccf1b50cd20bb68e6b36100cc14662220c9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/summary.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "52e5e8be3182f2871a96b9d7d5052c9efcd1cb08"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/touch-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a56045067124a63c22ac277436432db76d8d6e57"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/window-metrics.csv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4f2992aedd037f00b9864b6a8c834c690043f59d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a44/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4da06cedec08ac439e3398acc1bcf476b9e91f2d"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a44/final-guard-checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "50c3355da86b6811a4f6377580a71d9075184cdb"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a44/guard-checks.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4af20cdd7412c6a6fb1c649f2f716f143d9c0297"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a44/qualify-macos-arm64.py",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e1a50f29f7684be651e9609ffbc9bf86e550c5ae"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a44/retained-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6980d8ad0515d2a405b82b2105edda8b5d92f0bd"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/USAGE.md",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "327da95fdc620b25a6d9bbdc473637d843ae302a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/actual-presets-comparison.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "dedc511f64be7f6ecfbfa833135635f21850c238"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/actual-presets-fixed.tsv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67f218d364257021d564f8cb6ff63adc468c2e04"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/actual-presets-original.tsv",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "67f218d364257021d564f8cb6ff63adc468c2e04"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/baseline-audit.stack-usage.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "749d51bc20b47e95e706c30fed24aacd349cf0f3"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/compare-actual-presets.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f423d112134c2adbfa4949c28329279eba98e445"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/fixed-audit.stack-usage.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "375e70512c248d2034af60169fca3257e711ddd9"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/frozen-build-commands.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "6681a6c1b3c3d698e048f74d323ae3d6ddc41f00"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/frozen-core.stack-usage.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e11a20d746df56aa269d53a951ddbbe7154f7cb1"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/full-audit-normal.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "ee9a35e6c0ccfc486598923ca498714a1fa6d07e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/full-audit-normal.log",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5bf0507fecf44c89d4c3430603e1ef477076b097"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/library-audit-heap-repair.patch",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "25ecdd59ed517c02bbef49e13683081086d31361"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/original-audit.stack-usage.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fd48b8b28599794161bd2f1032fe8f8457438797"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/original-failure-lasttest.txt",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7bc4df37386dbec719988c945425e605140ea46a"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/original-failure-observation.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "aeb17a42fcc7ced0f2b5089d7e2f72820c21dd9b"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/repair-build-commands.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "efbe6e66e4e2b26ce86604b9f7c824377de7b31e"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/retained-files.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "07c6981a5f02fcbb7c2526334a2c4c834eeece85"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/sizeof-engine.cpp",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5f211504883ee8b5ee9a00f9dae414a0893dd6a7"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/sizeof-results.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a835a8d1ad72cb84490ddb319ad4009a1583f4fe"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a45/static-stack-analysis.json",
+      "before": null,
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5995d073c8dbfa211e50b6a8e92084e278857e53"
+      }
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/work-log.json",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3f4d1cdac8992603b35781db3542fe0e62385c97"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d4068894819055ba9ae8bde94d6c5f36b5af3a13"
+      }
+    },
+    {
+      "path": "docs/screenshots/SHA256SUMS",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1313413ce73bbbc2a2cd68ed43c4e0621ae3d65b"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7d058fab77a44b40c932636f22cdcd52ba94ab0b"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-page1.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "71ad5ecb353f43ff5fb54fcb5c613cb05e51a6c8"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "162bf9686dc4de7a9a9e3e95ce0d32d9955adecc"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-page2.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "082a26c8d8dcc8af50a311076b5e6653e5225c79"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "354ef3980b10bd5d4ca8f863092eb8cef93fd03e"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-page3.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "71d6b27ca69e4ae8d12cc61e8ccced0d47eed656"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7462f09c6322ccd7809df8dc55eb69663467c75d"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-page4.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f961d0b85f0da6e3dd26e0f5130434ca8bcbf211"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "08b56fb4766f2512d85b8e7989d4ec90cc2e4bf0"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-populated-page1.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "87d6b6a1fb68ca085b6020e3061c62274f518f7b"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "04bb2591de8f051538eaa92eda7407a91c185d23"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-populated-page2.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c6a28ebb2ee16dbc72c80b71ef0f2f54361f633d"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "58ba86330b17421b5e6e68089c951b0bc1d61e05"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-populated-page3.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a053464b61d8e2fda902496d50e227c242c0d3e5"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9b4b5ffdc6131ab560348c39219650f7d67c955f"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-populated-page4.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4691f04c2bcf611860488cf0a24e805b634ef111"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "c77bb15dff91273010cac51ce83096f828598e78"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-source-performance-about.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "dda7a6a3c2018b4eee34934ea91f5d154154ec19"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "18c96e0cffd640a58fc03d1e1a06dea852a7a132"
+      }
+    },
+    {
+      "path": "docs/screenshots/advanced-sub-ext-enabled.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "e27e906703c952590628bdb056c66c0f869a570e"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "006c484e15badbeadc2fc979c010a0fa32d1c966"
+      }
+    },
+    {
+      "path": "docs/screenshots/browser-1600x1000.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3e612f61e21ef6ebf87cef4e65baccd0890a3430"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "01f3b3128de9f6f6645b53329e6cd06ad7e733fb"
+      }
+    },
+    {
+      "path": "docs/screenshots/main-1120x700.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "35e7654a01a99ea77dbb6b70926a6499f2a351f6"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d29d360a60d3a1466ee11ad0de96219b3123c0e6"
+      }
+    },
+    {
+      "path": "docs/screenshots/main-1200x760.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b3b7d5df7e48b222ebbd6076b1041fece3647492"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "f9292bebe3172511f353710610df6ca6524c9941"
+      }
+    },
+    {
+      "path": "docs/screenshots/main-populated-1600x1000.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0880df8b4193826d54d7d7a908e2db7034113bcf"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "7a82397128d78ce67a9c42772e0b14d63c9a6890"
+      }
+    },
+    {
+      "path": "docs/screenshots/main-restored-1600x1000.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "cfb97f1805b4d1f289a5e47b9eb5a75ca01913f2"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "04df55d608918c2f40e89f10bb93b0e682fc8545"
+      }
+    },
+    {
+      "path": "docs/screenshots/memory-programmer-1600x1000.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "3e3c412def092d752c986b87c8d22abe6e172955"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "610cd31dda76659c451becf19ea2b00fc6ef5a30"
+      }
+    },
+    {
+      "path": "docs/screenshots/provenance.json",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "37c598178c07bdcde74fa21baee1e2483e877fa5"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "2958e63e05637b36f74dc6b89ae6b1d86e6525e2"
+      }
+    },
+    {
+      "path": "docs/screenshots/studio-drawers-1120x700.png",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d6f420ea8b5b02e55b5722f1af90794999172b62"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d99a0af7a3b6962a875106b2114f9f9b8dec7b44"
+      }
+    },
+    {
+      "path": "src/tools/parity_capture.cpp",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9789bb9683d6b7e95a7fcd179e7dd8d72692e939"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "574981f7fdb4eea995c3dedf4f092d4f21aeef60"
+      }
+    },
+    {
+      "path": "tests/LibraryAuditTests.cpp",
+      "before": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "efb05d8c56effd2fd3936c9c893d84618cd33a4a"
+      },
+      "after": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "29be727b5e7829b6a90a76cc115631d2f589a593"
+      }
+    }
+  ]
+}

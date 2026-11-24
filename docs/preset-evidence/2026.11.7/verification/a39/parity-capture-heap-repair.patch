@@ -1,0 +1,32 @@
+diff --git a/src/tools/parity_capture.cpp b/src/tools/parity_capture.cpp
+index 9789bb96..574981f7 100644
+--- a/src/tools/parity_capture.cpp
++++ b/src/tools/parity_capture.cpp
+@@ -9,6 +9,7 @@
+ #include <iostream>
+ #include <limits>
+ #include <locale>
++#include <memory>
+ #include <stdexcept>
+ #include <string>
+ #include <vector>
+@@ -89,7 +90,8 @@ int captureLiveAdr(const std::filesystem::path& directory)
+         parameters[chParam(rank, CP_fAl)] = 0.8f;
+     }
+     const auto initial = parameters;
+-    Engine engine;
++    auto engineStorage = std::make_unique<Engine>();
++    auto& engine = *engineStorage;
+     engine.setParams(parameters);
+     engine.prepare(sampleRate);
+     engine.reset();
+@@ -250,7 +252,8 @@ int main(int argc, char** argv)
+         // A failed rerun must not leave an older success manifest beside partial CSVs.
+         std::filesystem::remove(directory / "capture.json");
+         std::filesystem::remove(directory / "envelope-events.csv");
+-        Engine engine;
++        auto engineStorage = std::make_unique<Engine>();
++        auto& engine = *engineStorage;
+         const auto parameters = patch();
+         engine.setParams(parameters);
+         engine.prepare(sampleRate);

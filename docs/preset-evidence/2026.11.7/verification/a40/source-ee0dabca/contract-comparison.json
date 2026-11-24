@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "complete_contracts_preserved",
+  "comparisons": {
+    "contract.json": {
+      "predecessor": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a29/contract.json",
+        "bytes": 67113,
+        "sha256": "dfa5aae199f5b52c4cd305f60d78e39e84a546ce439f44c68141a18e3a55ac37"
+      },
+      "successor": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract.json",
+        "bytes": 67113,
+        "sha256": "917392950e0dac4e0518dd6bea3ea7b398eb4aa56c98ba3f40dbfec9446df90d"
+      },
+      "equal_after_only_source_tree_run_substitution": true
+    },
+    "prepared-contract.json": {
+      "predecessor": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a28/prepared-contract.json",
+        "bytes": 15117,
+        "sha256": "eeb0749cd835da8f55f2880611549a812569fabb95d78ea3c67b7ba12e224b7b"
+      },
+      "successor": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/prepared-contract.json",
+        "bytes": 15117,
+        "sha256": "74d0b21eb8c116b935adf421896e1b7730a12ce67fb3a717bec90cd46802c3c3"
+      },
+      "equal_after_only_source_tree_run_substitution": true
+    }
+  },
+  "expected_names_identical": true,
+  "audition_counts_rosters_metrics_limits_and_inventory_identical": true,
+  "native_results_accepted": false,
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

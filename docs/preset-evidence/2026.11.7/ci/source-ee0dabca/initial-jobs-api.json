@@ -1,0 +1,210 @@
+{
+  "total_count": 4,
+  "jobs": [
+    {
+      "id": 138455975798,
+      "run_id": 45397189410,
+      "workflow_name": "build",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPJ6Hdg",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138455975798",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/job/138455975798",
+      "status": "pending",
+      "conclusion": null,
+      "created_at": "2026-11-24T12:49:06Z",
+      "started_at": "2026-11-24T12:49:06Z",
+      "completed_at": null,
+      "name": "Linux / VST3 + Standalone",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138455975798",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 138455976227,
+      "run_id": 45397189410,
+      "workflow_name": "build",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPJ6JIw",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138455976227",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/job/138455976227",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-11-24T12:49:06Z",
+      "started_at": "2026-11-24T12:49:06Z",
+      "completed_at": null,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138455976227",
+      "labels": [
+        "macos-15"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    },
+    {
+      "id": 138455976256,
+      "run_id": 45397189410,
+      "workflow_name": "build",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPJ6JQA",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138455976256",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/job/138455976256",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-24T12:49:06Z",
+      "started_at": "2026-11-24T12:49:23Z",
+      "completed_at": null,
+      "name": "Windows / VST3 + Standalone",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T12:49:24Z",
+          "completed_at": "2026-11-24T12:49:25Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T12:49:25Z",
+          "completed_at": "2026-11-24T12:49:40Z"
+        },
+        {
+          "name": "Configure",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 3,
+          "started_at": "2026-11-24T12:49:40Z",
+          "completed_at": null
+        },
+        {
+          "name": "Report CMake failure",
+          "status": "pending",
+          "conclusion": null,
+          "number": 4,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "status": "pending",
+          "conclusion": null,
+          "number": 5,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Build",
+          "status": "pending",
+          "conclusion": null,
+          "number": 6,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Test",
+          "status": "pending",
+          "conclusion": null,
+          "number": 7,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload Windows VST3",
+          "status": "pending",
+          "conclusion": null,
+          "number": 8,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Package Windows VST3 and Standalone",
+          "status": "pending",
+          "conclusion": null,
+          "number": 9,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload Windows install bundle",
+          "status": "pending",
+          "conclusion": null,
+          "number": 10,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload test and JUCE source evidence",
+          "status": "pending",
+          "conclusion": null,
+          "number": 11,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "pending",
+          "conclusion": null,
+          "number": 22,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138455976256",
+      "labels": [
+        "windows-2022"
+      ],
+      "runner_id": 1000045249,
+      "runner_name": "GitHub Actions 1000045249",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138455976307,
+      "run_id": 45397189410,
+      "workflow_name": "build",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPJ6Jcw",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138455976307",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/job/138455976307",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-11-24T12:49:06Z",
+      "started_at": "2026-11-24T12:49:06Z",
+      "completed_at": null,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138455976307",
+      "labels": [
+        "macos-15-intel"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    }
+  ]
+}

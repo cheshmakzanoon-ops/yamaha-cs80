@@ -1,0 +1,108 @@
+37/277 Testing: cs80_source_performance_audit_tests
+37/277 Test: cs80_source_performance_audit_tests
+Command: "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_source_performance_audit_tests"
+Directory: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+"cs80_source_performance_audit_tests" start time: Nov 24 11:52 UTC
+Output:
+----------------------------------------------------------
+Independent source-performance audit: 2711 checks, 0 failures
+<end of output>
+Test time =   3.97 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_performance_audit_tests" end time: Nov 24 11:52 UTC
+"cs80_source_performance_audit_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+100/277 Testing: cs80_oversampling_tests
+100/277 Test: cs80_oversampling_tests
+Command: "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_oversampling_tests"
+Directory: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+"cs80_oversampling_tests" start time: Nov 24 12:01 UTC
+Output:
+----------------------------------------------------------
+decimator 2x: taps 255 passband -0.0004/+0.0004 dB stopband -87.1 dB latency 63
+decimator 4x: taps 511 passband -0.0004/+0.0003 dB stopband -87.6 dB latency 63
+decimator 8x: taps 1023 passband -0.0004/+0.0003 dB stopband -87.8 dB latency 63
+sine render Standard vs Eco: lag +0.0381 host samples, level ratio 1.00000
+sine render HQ vs Eco: lag +0.4139 host samples, level ratio 1.00004
+11731 checks, 0 failures
+<end of output>
+Test time =   2.98 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_oversampling_tests" end time: Nov 24 12:01 UTC
+"cs80_oversampling_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+161/277 Testing: cs80_instrument_body_engine_tests
+161/277 Test: cs80_instrument_body_engine_tests
+Command: "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_instrument_body_engine_tests"
+Directory: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+"cs80_instrument_body_engine_tests" start time: Nov 24 12:08 UTC
+Output:
+----------------------------------------------------------
+BATCH comparison backend: scalar fallback on this platform
+REGISTER Piano strings relative waveform error 0
+REGISTER Bowed strings relative waveform error 0
+REGISTER Oboe relative waveform error 0
+REGISTER Bassoon relative waveform error 0
+KBC body LOW lever -1 relative waveform change 0.632447503
+KBC body LOW lever +1 relative waveform change 0.2394826
+KBC body HIGH lever -1 relative waveform change 0.976266417
+KBC body HIGH lever +1 relative waveform change 0.261277539
+BODY FILTER high-pass fundamental change -26.758 dB
+BODY FILTER high-pass resonance at cutoff change 9.069 dB
+BODY FILTER low-pass fourth-partial change -15.203 dB
+BODY FILTER resonance at cutoff change 9.069 dB
+TAIL rate 44100 maximum onset/pre derivative 0.78358, sample step 0.00132838 FS
+TAIL rate 48000 maximum onset/pre derivative 0.78412, sample step 0.00122170 FS
+TAIL rate 96000 maximum onset/pre derivative 1.34465, sample step 0.00061044 FS
+Instrument body Engine integration: 18156 checks, 0 failures
+<end of output>
+Test time =  11.61 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_instrument_body_engine_tests" end time: Nov 24 12:08 UTC
+"cs80_instrument_body_engine_tests" time elapsed: 00:00:11
+----------------------------------------------------------
+
+157/277 Testing: cs80_low_choir_spectrum_tests
+157/277 Test: cs80_low_choir_spectrum_tests
+Command: "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80_low_choir_spectrum_tests"
+Directory: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+"cs80_low_choir_spectrum_tests" start time: Nov 24 12:07 UTC
+Output:
+----------------------------------------------------------
+COVERAGE Choir ah note=36 rate=44100 group/floor=+50.274 dB group/h1=-24.798 dB
+COVERAGE Choir ah note=40 rate=44100 group/floor=+49.846 dB group/h1=-22.492 dB
+COVERAGE Choir ah note=48 rate=44100 group/floor=+51.241 dB group/h1=-21.575 dB
+COVERAGE Choir oo note=36 rate=44100 group/floor=+43.066 dB group/h1=-34.425 dB
+COVERAGE Choir oo note=40 rate=44100 group/floor=+41.113 dB group/h1=-34.736 dB
+COVERAGE Choir oo note=48 rate=44100 group/floor=+41.452 dB group/h1=-37.914 dB
+COVERAGE Choir ah note=36 rate=48000 group/floor=+50.339 dB group/h1=-24.771 dB
+COVERAGE Choir ah note=40 rate=48000 group/floor=+55.291 dB group/h1=-22.467 dB
+COVERAGE Choir ah note=48 rate=48000 group/floor=+51.151 dB group/h1=-21.583 dB
+COVERAGE Choir oo note=36 rate=48000 group/floor=+43.294 dB group/h1=-34.373 dB
+COVERAGE Choir oo note=40 rate=48000 group/floor=+46.804 dB group/h1=-34.645 dB
+COVERAGE Choir oo note=48 rate=48000 group/floor=+41.388 dB group/h1=-37.939 dB
+COVERAGE Choir ah note=36 rate=96000 group/floor=+47.667 dB group/h1=-24.780 dB
+COVERAGE Choir ah note=40 rate=96000 group/floor=+50.185 dB group/h1=-22.495 dB
+COVERAGE Choir ah note=48 rate=96000 group/floor=+53.550 dB group/h1=-21.553 dB
+COVERAGE Choir oo note=36 rate=96000 group/floor=+40.559 dB group/h1=-34.404 dB
+COVERAGE Choir oo note=40 rate=96000 group/floor=+41.494 dB group/h1=-34.725 dB
+COVERAGE Choir oo note=48 rate=96000 group/floor=+43.772 dB group/h1=-37.848 dB
+VOWEL size=0.75 Ah/Oo contrast=+28.104 dB upper_h=43
+VOWEL size=1.00 Ah/Oo contrast=+28.180 dB upper_h=34
+VOWEL size=1.50 Ah/Oo contrast=+24.853 dB upper_h=23
+VOWEL size=2.00 Ah/Oo contrast=+22.675 dB upper_h=17
+BEND worst normalized upper-harmonic error 0.445880 dB
+CONTINUITY worst relative PCM difference 7.35091807e-06 at size +/-1ppm
+LowChoirSpectrumTests: 1342 checks, 0 failures
+<end of output>
+Test time =   7.17 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_low_choir_spectrum_tests" end time: Nov 24 12:08 UTC
+"cs80_low_choir_spectrum_tests" time elapsed: 00:00:07
+----------------------------------------------------------

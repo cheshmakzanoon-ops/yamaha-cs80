@@ -1,0 +1,17 @@
+.......E
+======================================================================
+ERROR: setUpClass (__main__.LiveCaptureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\a\yamaha-cs80\yamaha-cs80\tests\test_parity_capture.py", line 376, in setUpClass
+    subprocess.run([str(CAPTURE), '--out', str(directory), '--fixture', 'live-adr-v1'], check=True, capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['D:\\a\\yamaha-cs80\\yamaha-cs80\\build\\Release\\cs80_parity_capture.exe', '--out', 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptw4rb86g\\a', '--fixture', 'live-adr-v1']' returned non-zero exit status 3221225725.
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.742s
+
+FAILED (errors=1)

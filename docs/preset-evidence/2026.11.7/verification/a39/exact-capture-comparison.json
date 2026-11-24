@@ -1,0 +1,173 @@
+{
+  "schema": "cs80-a39-exact-capture-comparison-v1",
+  "scope": "Same-host ordinary Release captures using the identical frozen core archive; not a Windows rerun or cross-platform bit-identity claim.",
+  "before_directory": "/tmp/cs80-a39-1cee5a/before",
+  "after_directory": "/tmp/cs80-a39-1cee5a/after",
+  "fixtures": {
+    "default": {
+      "files": {
+        "capture.json": {
+          "before_bytes": 6614,
+          "after_bytes": 6614,
+          "before_sha256": "fd3f4e6ea7f76d43e7c9f9376f8f851594307acf53dbe4289e8cccce868f40b8",
+          "after_sha256": "fd3f4e6ea7f76d43e7c9f9376f8f851594307acf53dbe4289e8cccce868f40b8",
+          "byte_equal": true
+        },
+        "left.csv": {
+          "before_bytes": 1904283,
+          "after_bytes": 1904283,
+          "before_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+          "after_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+          "byte_equal": true
+        },
+        "right.csv": {
+          "before_bytes": 1904283,
+          "after_bytes": 1904283,
+          "before_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+          "after_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+          "byte_equal": true
+        }
+      },
+      "channels": {
+        "left.csv": {
+          "before": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.0369719639,
+            "maximum": 0.021803394,
+            "peak_absolute": 0.0369719639,
+            "mean": 1.2221164827693372e-08,
+            "rms": 0.006998131669895897
+          },
+          "after": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.0369719639,
+            "maximum": 0.021803394,
+            "peak_absolute": 0.0369719639,
+            "mean": 1.2221164827693372e-08,
+            "rms": 0.006998131669895897
+          },
+          "metrics_exactly_equal": true,
+          "unequal_samples": 0,
+          "maximum_absolute_sample_difference": 0.0
+        },
+        "right.csv": {
+          "before": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.0369719639,
+            "maximum": 0.021803394,
+            "peak_absolute": 0.0369719639,
+            "mean": 1.2221164827693372e-08,
+            "rms": 0.006998131669895897
+          },
+          "after": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.0369719639,
+            "maximum": 0.021803394,
+            "peak_absolute": 0.0369719639,
+            "mean": 1.2221164827693372e-08,
+            "rms": 0.006998131669895897
+          },
+          "metrics_exactly_equal": true,
+          "unequal_samples": 0,
+          "maximum_absolute_sample_difference": 0.0
+        }
+      }
+    },
+    "live": {
+      "files": {
+        "capture.json": {
+          "before_bytes": 11754,
+          "after_bytes": 11754,
+          "before_sha256": "c0a4ffa21f96bff11d0c03d86c24ec36b695ccf0e15e3c16d0558f7fa19b525d",
+          "after_sha256": "c0a4ffa21f96bff11d0c03d86c24ec36b695ccf0e15e3c16d0558f7fa19b525d",
+          "byte_equal": true
+        },
+        "envelope-events.csv": {
+          "before_bytes": 2404,
+          "after_bytes": 2404,
+          "before_sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c",
+          "after_sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c",
+          "byte_equal": true
+        },
+        "left.csv": {
+          "before_bytes": 1936761,
+          "after_bytes": 1936761,
+          "before_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+          "after_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+          "byte_equal": true
+        },
+        "right.csv": {
+          "before_bytes": 1936761,
+          "after_bytes": 1936761,
+          "before_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+          "after_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+          "byte_equal": true
+        }
+      },
+      "channels": {
+        "left.csv": {
+          "before": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.03128317,
+            "maximum": 0.0146125769,
+            "peak_absolute": 0.03128317,
+            "mean": 5.879871654455675e-10,
+            "rms": 0.0041796741001044755
+          },
+          "after": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.03128317,
+            "maximum": 0.0146125769,
+            "peak_absolute": 0.03128317,
+            "mean": 5.879871654455675e-10,
+            "rms": 0.0041796741001044755
+          },
+          "metrics_exactly_equal": true,
+          "unequal_samples": 0,
+          "maximum_absolute_sample_difference": 0.0
+        },
+        "right.csv": {
+          "before": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.03128317,
+            "maximum": 0.0146125769,
+            "peak_absolute": 0.03128317,
+            "mean": 5.879871654455675e-10,
+            "rms": 0.0041796741001044755
+          },
+          "after": {
+            "samples": 96000,
+            "finite": true,
+            "nonzero_samples": 91200,
+            "minimum": -0.03128317,
+            "maximum": 0.0146125769,
+            "peak_absolute": 0.03128317,
+            "mean": 5.879871654455675e-10,
+            "rms": 0.0041796741001044755
+          },
+          "metrics_exactly_equal": true,
+          "unequal_samples": 0,
+          "maximum_absolute_sample_difference": 0.0
+        }
+      }
+    }
+  },
+  "all_seven_files_byte_equal": true,
+  "total_audio_samples_compared": 384000,
+  "all_metrics_exactly_equal": true,
+  "maximum_absolute_sample_difference": 0.0
+}
