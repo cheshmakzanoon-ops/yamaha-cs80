@@ -1,0 +1,16 @@
+PASS Legacy fixed 2x clock
+PASS positive current source before repeat
+PASS repeat preserves current generated voice and velocity immediately
+PASS repeat preserves gate expiry and scheduled onset times versus untouched control
+PASS sequence restarts from retained played order without duplicate entry
+PASS future generated occurrences use replaced and untouched source velocities
+PASS single source release leaves current other source intact
+PASS one note-off removes repeated source with no duplicate obligation
+PASS final source release stops generated pattern
+PASS finite audio and at most one generated held voice
+EVENT frame=0 note=60 channel=1 velocity=0.25
+EVENT frame=1740 note=-1 channel=-1 velocity=0
+EVENT frame=3000 note=60 channel=1 velocity=0.75
+EVENT frame=4740 note=-1 channel=-1 velocity=0
+EVENT frame=6000 note=64 channel=1 velocity=0.5
+RESULT checks=10 failures=0

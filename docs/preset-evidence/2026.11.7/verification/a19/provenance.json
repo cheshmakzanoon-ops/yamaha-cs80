@@ -1,0 +1,90 @@
+{
+  "source_bindings": [
+    {
+      "kind": "before",
+      "source_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "library_path": "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "library_sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+      "executable_sha256": "2adafca22d8af31a3bde9e68a35fa9b7bad3723341235263a7816c3ddf398d00",
+      "source_sha256": {
+        "Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+        "Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+        "InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+        "curated/Winds.inc": "97aec97d480995a3db46b00dc9ca16e678397bd38996a86a93c05ac4aa678420"
+      }
+    },
+    {
+      "kind": "after",
+      "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "library_path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "library_sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+      "executable_sha256": "8d9563db6555b835c34cec26576db17d69eeee4315f964f2c26d598fff3015b1",
+      "source_sha256": {
+        "Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+        "Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+        "InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+        "curated/Winds.inc": "97aec97d480995a3db46b00dc9ca16e678397bd38996a86a93c05ac4aa678420"
+      }
+    }
+  ],
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "probe_sha256": "598a1ef6eb45cf48ded7b6f7589d2c2d372618046cb46eaf8901eea62b8d6e10",
+  "reproduce_sha256": "ca3c24de78e6744dae756430294a472e00c356e76d9e69c27a10b7e23c05c298",
+  "current_inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "commands": [
+    [
+      "c++",
+      "-std=c++20",
+      "-O2",
+      "-I",
+      "/tmp/cs80-a19/after/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a19/winds_probe.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a19/after/winds_probe"
+    ],
+    [
+      "c++",
+      "-std=c++20",
+      "-O2",
+      "-I",
+      "/tmp/cs80-a19/before/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a19/winds_probe.cpp",
+      "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a19/before/winds_probe"
+    ],
+    [
+      "/tmp/cs80-a19/before/winds_probe",
+      "/tmp/cs80-a19/before/pcm",
+      "baseline"
+    ],
+    [
+      "/tmp/cs80-a19/after/winds_probe",
+      "/tmp/cs80-a19/after/pcm",
+      "current"
+    ],
+    [
+      "c++",
+      "-std=c++20",
+      "-O2",
+      "-I",
+      "/tmp/cs80-a19/after/src",
+      "/tmp/cs80-a19/after/src/tools/preset_capture.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a19/after/preset_capture"
+    ],
+    [
+      "/tmp/cs80-a19/after/preset_capture",
+      "--inventory",
+      "/tmp/cs80-a19/current-inventory.json",
+      "--library",
+      "all"
+    ]
+  ],
+  "method": "Unmodified full program vectors; only oversampling selected. Complete matching headers exported via git archive for both versions.",
+  "raw_pcm_directory": "/tmp/cs80-a19",
+  "rebuild": false,
+  "analysis_sha256": "27c1daccf0c35994d68d4bdb118547c0787fa3a6709512e4ce4ae6ace67e67e6"
+}

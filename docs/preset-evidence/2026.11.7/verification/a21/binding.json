@@ -1,0 +1,55 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "baseline": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "scope": "Read-only full-program Pads review; no listening or acoustic-equivalence claim",
+  "baseline_uses_all_archived_src_headers": true,
+  "commands": [
+    [
+      "c++",
+      "-O2",
+      "-std=c++20",
+      "-I",
+      "/tmp/cs80-a21/baseline-src/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a21/pads_probe.cpp",
+      "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a21/probe-baseline"
+    ],
+    [
+      "c++",
+      "-O2",
+      "-std=c++20",
+      "-I",
+      "/tmp/cs80-session-1cee5a/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a21/pads_probe.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a21/probe-current"
+    ]
+  ],
+  "binaries": {
+    "baseline": "84902acbf2be54a26ddf6d0b48842d0b1a7605e7f961c840d66018c8a147a939",
+    "current": "d21b55959d05fd855647973ccaba1d80cd4dfc314e59bfaec1a8556a0df1995e"
+  },
+  "cores": {
+    "baseline": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+    "current": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+  },
+  "source_files": {
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/FactoryPresets.h": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec"
+  },
+  "reused_tests_receipt": "docs/preset-evidence/2026.11.7/development/focused-ctest-receipt.json",
+  "reused_tests_receipt_sha256": "506fc26c5c02f63d05321d5dd92f66a73156c285c5ee5499fe4e6c24a2bb2df3",
+  "evidence_sha256": {
+    "docs/preset-evidence/2026.11.7/verification/a21/rendered-measurements.json": "e344b6c5beb7c8dad8984e8d1516b4f50e72cd0096a17d3fc30a4874ef2c29a7",
+    "docs/preset-evidence/2026.11.7/verification/a21/current-capture.log": "069f6e555a0f8f72f45a15b80094dafab9e5ed6c16e5bd0a4576dd09a0f25aa5",
+    "docs/preset-evidence/2026.11.7/verification/a21/baseline-capture.log": "069f6e555a0f8f72f45a15b80094dafab9e5ed6c16e5bd0a4576dd09a0f25aa5",
+    "docs/preset-evidence/2026.11.7/verification/a21/structural-coverage.json": "f6f5a953a9eb5d1210cfff2cf47893be3e966541306765d862ea6e176ed2b94b",
+    "docs/preset-evidence/2026.11.7/verification/a21/reproduce.py": "d3a2c13fa4d41734ce0f1f80c0c72f4893f9557aeb8387fca084b58b9619c377",
+    "docs/preset-evidence/2026.11.7/verification/a21/pads_probe.cpp": "80de7a88d3225b985f65dfad0fa66c82cab3d9397abfab55cb868d1ccd1bd66c"
+  }
+}

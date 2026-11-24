@@ -1,0 +1,21 @@
+{
+  "snapshot": "A17 development snapshot, not final release qualification",
+  "utc": "2026-11-24T11:38:01.288317+00:00",
+  "baseline_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "abi": "Baseline probes use git-archived 18711f93 full src headers; current probes use current src. Separate matching libraries.",
+  "settings": "48 kHz host, standard 2x; .85 velocity; pressure 0; actual factory params. Five full-patch 8s hold + 2s release at MIDI60; MIDI48/72 3s held. HQ Agogo changes only oversampling=2 (8x). Chords 48,55,60,64,67,72 at velocity1, 3s held.",
+  "contact_diagnostic": "Agogo authored body parameters; silence modal count after noteOn, 128 seeds, 20ms RMS; diagnostic separate from actual Engine captures.",
+  "sha256": {
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/curated/Bells.inc": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "src/core/FactoryPresets.h": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+    "/tmp/cs80-build-1cee5a/cs80_preset_capture": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d",
+    "/tmp/cs80-reference-1cee5a/cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+    "/tmp/cs80-build-1cee5a/libcs80_core.a": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+    "/tmp/cs80-reference-1cee5a/libcs80_core.a": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+    "/tmp/cs80-a15-1cee5a/baseline/src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "scope": "Local Release core focused CTest; native plugin and platform qualification are separate.",
+  "command": "ctest --test-dir /tmp/cs80-build-1cee5a --output-on-failure --no-tests=error -R 'cs80_(instrument_body|tine_strike|struck_body|vocal_body|low_choir|piano_|string_body|body_noise|wind_body|bowed_body|material_body|plucked_material|body_articulation|keyboard_response|.*refinement|preset_(voicing|character|precision)|original_articulation|library_audit)' --output-junit /tmp/cs80-focused-1cee5a.xml",
+  "passed": 31,
+  "failed": 0,
+  "elapsed_seconds": 819.2,
+  "files": {
+    "cs80-focused.log": "ce54830d3c2e31dac091ad02d2ed1b466bcba36bb384a4d6aca3a98188aae527",
+    "cs80-focused.xml": "b60d8c3fcffb849ec7011f0c22309b93ad216a4e710c2db9530cb15f87e8c862"
+  }
+}

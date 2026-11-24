@@ -1,0 +1,25 @@
+PASS case=0 fixed Legacy internal rate
+PASS case=0 positive current generated-note witness
+PASS case=0 current-source release stops gate; other-source release preserves it
+PASS case=0 remaining source continues both octaves without released source
+PASS case=0 final source release stops pattern despite pedal down
+PASS case=0 pedal-up cannot revive released ARP sources
+PASS case=0 generated gates never become pedalHeld tails
+PASS case=0 finite audio and single generated held gate
+PASS case=1 fixed Legacy internal rate
+PASS case=1 positive current generated-note witness
+PASS case=1 current-source release stops gate; other-source release preserves it
+PASS case=1 remaining source continues both octaves without released source
+PASS case=1 final source release stops pattern despite pedal down
+PASS case=1 pedal-up cannot revive released ARP sources
+PASS case=1 generated gates never become pedalHeld tails
+PASS case=1 finite audio and single generated held gate
+PASS case=2 fixed Legacy internal rate
+PASS case=2 positive current generated-note witness
+PASS case=2 current-source release stops gate; other-source release preserves it
+PASS case=2 remaining source continues both octaves without released source
+PASS case=2 final source release stops pattern despite pedal down
+PASS case=2 pedal-up cannot revive released ARP sources
+PASS case=2 generated gates never become pedalHeld tails
+PASS case=2 finite audio and single generated held gate
+RESULT checks=24 failures=0

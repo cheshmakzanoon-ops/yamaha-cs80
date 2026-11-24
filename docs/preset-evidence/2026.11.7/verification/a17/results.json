@@ -1,0 +1,122 @@
+{
+  "scope": "Authored model/PCM validation; no listening or recorded-instrument comparison",
+  "inventory_count": 23,
+  "all_inventory_entries_identical_to_11_6": true,
+  "default_pcm_controls": [
+    {
+      "name": "Tubular Bells",
+      "exact_pcm_match": true,
+      "max_abs_delta": 0.0,
+      "current_sha256": "e709968bf1d39b24c3a2d872ce902b3a4d2264efbd9d9955e8e233e308238de9",
+      "baseline_sha256": "e709968bf1d39b24c3a2d872ce902b3a4d2264efbd9d9955e8e233e308238de9"
+    },
+    {
+      "name": "Gong",
+      "exact_pcm_match": true,
+      "max_abs_delta": 0.0,
+      "current_sha256": "f8c1a943cb45184eeb76e715674ab8ec82e2d57e334cd102f1a98e01e6e8792a",
+      "baseline_sha256": "f8c1a943cb45184eeb76e715674ab8ec82e2d57e334cd102f1a98e01e6e8792a"
+    },
+    {
+      "name": "Temple Bell",
+      "exact_pcm_match": true,
+      "max_abs_delta": 0.0,
+      "current_sha256": "b7f461b08d861510a78b74a5021fe1d5e939522663fe1798f5d77168fe67321c",
+      "baseline_sha256": "b7f461b08d861510a78b74a5021fe1d5e939522663fe1798f5d77168fe67321c"
+    },
+    {
+      "name": "Agogo",
+      "exact_pcm_match": true,
+      "max_abs_delta": 0.0,
+      "current_sha256": "9e78066a59818d12c4f4f0b3afed6e27ef58b44bc471dc0694158d5efa216a36",
+      "baseline_sha256": "9e78066a59818d12c4f4f0b3afed6e27ef58b44bc471dc0694158d5efa216a36"
+    },
+    {
+      "name": "Music Box",
+      "exact_pcm_match": true,
+      "max_abs_delta": 0.0,
+      "current_sha256": "d2e23bf38d139c50571c10cdee1305519b44777bf722f294f65849533fed33f0",
+      "baseline_sha256": "d2e23bf38d139c50571c10cdee1305519b44777bf722f294f65849533fed33f0"
+    }
+  ],
+  "hq_and_chord": [
+    {
+      "name": "Agogo",
+      "scenario": "default-single",
+      "peak_dbfs": -25.830398467116634,
+      "onset_current_dbfs": -33.259633520517816,
+      "onset_baseline_dbfs": -33.259633520517816,
+      "difference_0_20ms_dbfs": -300.0,
+      "difference_0_25_3s_max_abs": 0.0,
+      "exact_pcm_match": true,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "name": "Agogo",
+      "scenario": "HQ-single",
+      "peak_dbfs": -25.827957452667395,
+      "onset_current_dbfs": -33.2662164530529,
+      "onset_baseline_dbfs": -33.26628822781097,
+      "difference_0_20ms_dbfs": -109.6810517270792,
+      "difference_0_25_3s_max_abs": 9.313225746154785e-10,
+      "exact_pcm_match": false,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "name": "Agogo",
+      "scenario": "default-six-note-chord",
+      "peak_dbfs": -13.511661687122562,
+      "onset_current_dbfs": -24.444229938315992,
+      "onset_baseline_dbfs": -24.444229938315992,
+      "difference_0_20ms_dbfs": -300.0,
+      "difference_0_25_3s_max_abs": 0.0,
+      "exact_pcm_match": true,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "name": "Gong",
+      "scenario": "default-six-note-chord",
+      "peak_dbfs": -16.4360112298867,
+      "onset_current_dbfs": -35.59248922596197,
+      "onset_baseline_dbfs": -35.59248922596197,
+      "difference_0_20ms_dbfs": -300.0,
+      "difference_0_25_3s_max_abs": 0.0,
+      "exact_pcm_match": true,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    }
+  ],
+  "isolated_agogo_contact_128_seeds": {
+    "current": [
+      {
+        "rank": 1,
+        "hq_vs_reference_contact_rms_db": -0.04315680027456286,
+        "reference_rms": 0.000477668819689,
+        "hq_rms": 0.000475301355869
+      },
+      {
+        "rank": 2,
+        "hq_vs_reference_contact_rms_db": -0.04315680027456286,
+        "reference_rms": 0.000477668819689,
+        "hq_rms": 0.000475301355869
+      }
+    ],
+    "baseline": [
+      {
+        "rank": 1,
+        "hq_vs_reference_contact_rms_db": -5.8800380333983115,
+        "reference_rms": 0.000477668819689,
+        "hq_rms": 0.00024273085828
+      },
+      {
+        "rank": 2,
+        "hq_vs_reference_contact_rms_db": -5.8800380333983115,
+        "reference_rms": 0.000477668819689,
+        "hq_rms": 0.00024273085828
+      }
+    ]
+  }
+}

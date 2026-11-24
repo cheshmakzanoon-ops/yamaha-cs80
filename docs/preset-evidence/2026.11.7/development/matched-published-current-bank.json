@@ -1,0 +1,32 @@
+{
+  "scope": "Whole-bank matched local unnormalized captures; fixed3-second hold can precede slow attack completion; native qualification and actual CI audition capture remain separate.",
+  "rate": 48000,
+  "hold_seconds": 3,
+  "tail_seconds": 1,
+  "runs": [
+    {
+      "label": "published-4",
+      "source_commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "capture_sha256": "adaa07ffc8f59c3dbe67e802bf49bd7690669fa3e5560aa106a6484befdd1742",
+      "metrics_path": "published-4-bank-metrics.csv",
+      "metrics_sha256": "7375f35c72bf5c9a79505dc18efed6ede1fc32b60f65b97c174b05ca0467b0e9",
+      "rows": 523,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "peak_dbfs_max": -13.53738822,
+      "command": "cs80_preset_capture --out OUT --library all --all --hold 3 --tail 1"
+    },
+    {
+      "label": "current",
+      "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "capture_sha256": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d",
+      "metrics_path": "current-bank-metrics.csv",
+      "metrics_sha256": "0cc474d4b3e4d17684348913797f06bf1ce80e5f0d823394b28dee6237cfb7bc",
+      "rows": 523,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "peak_dbfs_max": -13.40001375,
+      "command": "cs80_preset_capture --out OUT --library all --all --hold 3 --tail 1"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "baseline": "18711f93",
+  "headers": "baseline exported separately for ABI compatibility",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "hashes": [
+    {
+      "/tmp/cs80-reference-1cee5a/libcs80_core.a": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+      "/tmp/cs80-a16/probe_before": "a60decd4eff84592080b67b76b26a7332d380db6c0174ade4563b8825a14dcfd"
+    },
+    {
+      "/tmp/cs80-build-1cee5a/libcs80_core.a": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+      "/tmp/cs80-a16/probe_after": "41fc9c7375b6973bdaaedef80855289206b5beb9ecadd4b389c9b2244bd1489d"
+    },
+    {
+      "/tmp/cs80-a16/frozen/libcs80_core.a": "df68eeab9a81eee006cffb6482cee923bd41199823e1562355f5284d83735808",
+      "/tmp/cs80-a16/probe_frozen": "ca18dfe116f5121e6a1a3d0c85cdfc825db09fdbaa59602994f39870bb0325c7"
+    }
+  ],
+  "counterfactual": "isolated /tmp core excludes brass from tracksFormants(); factory vectors and all other DSP unchanged",
+  "source_sha256": {
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/curated/Brass.inc": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+    "docs/preset-evidence/2026.11.7/verification/a16/brass_probe.cpp": "a976694fb48d0876871b2f80889ace16d18dee319fd83f99fa9fb877f505c375"
+  },
+  "final_probe_sha256": "245c07dd54d9f2885d6892531524078d835b3913e6856f2d848febd117922462",
+  "probe_change_after_primary_captures": "Added dry-only Delay Brass branch; held/pressure/bend paths unchanged.",
+  "raw_pcm_directory": "/tmp/cs80-a16",
+  "current_git_head": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "reproduction_script_sha256": "5e98d87bad10e1a379e5558d272f0110b12146e0e118929f0fad9fdebcb29c4c",
+  "isolated_controls": {
+    "frozen": "12adb210da72cf33f9e36edf86e0310fddb1b323fb0d343279309f8955e72559",
+    "noair": "01511daa5bef3aae24382e63a50ac71439322ae233d1ae5b66417647dfb11211"
+  },
+  "dry_probe_binary_sha256": {
+    "current": "8b176939c4fbcea892f0e1611fa30e1b62b2e2bda78b68bf59bd2986d7ceacf1",
+    "noair": "de87c82e25f86f2448ed3d2a702b29f166b9340f88595f649a1795052f5ad7c7"
+  }
+}

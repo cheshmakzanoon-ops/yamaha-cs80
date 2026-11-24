@@ -1,0 +1,292 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "scope": "Only exact newly generated A23 paths; raw files remain in the session scratch directory.",
+  "files": [
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-inventory.json",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 710464,
+      "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+      "role": "authenticated executable inventory"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-inventory.json",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "role": "authenticated executable inventory"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/overlap_touch.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1036800,
+      "sha256": "b21b514b8a40bf269f0be8559652017afad3571070eed3d6d1c4f7ba254b043a",
+      "case": "overlap_touch",
+      "rate": 48000,
+      "frames": 129600,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/overlap_original.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1036800,
+      "sha256": "b6405c68463b5bed7768ef938e01e326c50c7f8dc4dbae9627291bc8f1862aea",
+      "case": "overlap_original",
+      "rate": 48000,
+      "frames": 129600,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/ribbon_return.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1036800,
+      "sha256": "c139275aefe1019c3d23b1a13e47ad92b020e9b57b8dfec632981d4c4825fdb5",
+      "case": "ribbon_return",
+      "rate": 48000,
+      "frames": 129600,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/glide_both_directions.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1536000,
+      "sha256": "62b46f7b1b4f6825514420395225ee4bd2a985fff8e1c88c825319d2010decbf",
+      "case": "glide_both_directions",
+      "rate": 48000,
+      "frames": 192000,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/pressure_vibrato_return.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1228800,
+      "sha256": "a3aec3bdff2f0efa8958e1717a3f8ab9d590ecc33300ef1bfa0b5b5976f0be98",
+      "case": "pressure_vibrato_return",
+      "rate": 48000,
+      "frames": 153600,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/pressure_required_original.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1267200,
+      "sha256": "ea97554979e58aa1e2afaff80977f3f7f7e192cc7c1fb96177792afa34e67be6",
+      "case": "pressure_required_original",
+      "rate": 48000,
+      "frames": 158400,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/modern_drive_release.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1536000,
+      "sha256": "9751a376936900618ad7ec4a2e65cc2aea2743e2a93b2f2957540bb19f6a3244",
+      "case": "modern_drive_release",
+      "rate": 48000,
+      "frames": 192000,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/modern_space_release.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1536000,
+      "sha256": "7812f59af66f4341f017aa1c7c67b483cb7636d8eae53b51c8bb65cad7b33271",
+      "case": "modern_space_release",
+      "rate": 48000,
+      "frames": 192000,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/reed_44100.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1058400,
+      "sha256": "dcf3a476989386964fde1e6ed73504852b3d2ea21b19c8e0271607b15906a773",
+      "case": "reed_44100",
+      "rate": 44100,
+      "frames": 132300,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/brass_44100.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1058400,
+      "sha256": "341e94910191a7b7cc5b8eb546f112bbb7ce03dab8c629d83077449a5db4fe27",
+      "case": "brass_44100",
+      "rate": 44100,
+      "frames": 132300,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/reed_96000.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 2304000,
+      "sha256": "d4e891f25c86b54d39101e8b782be599ec854d28375a8e216314b85434e3a20c",
+      "case": "reed_96000",
+      "rate": 96000,
+      "frames": 288000,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/brass_96000.f32",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 2304000,
+      "sha256": "d733b87772a45c59178f3d53be6ce0eea1d811c60abbd0fc3f7beb7d2adc91b9",
+      "case": "brass_96000",
+      "rate": 96000,
+      "frames": 288000,
+      "channels": 2,
+      "format": "little-endian float32 interleaved"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-0.30/179-Electric-Leads-136.wav",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 921658,
+      "sha256": "e7fc58fee2c1be32f4a36f40aaea27462df4f27167a2579860954905bdf516c5",
+      "role": "pressure-gap comparison",
+      "pressure": 0.3,
+      "preset": "Electric Leads 136"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-0.30/444-Pressure-Lead.wav",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 921658,
+      "sha256": "fd6065ad370e5f920c6e059fd9e29a475c899f0962c0361216bc853595acaa7b",
+      "role": "pressure-gap comparison",
+      "pressure": 0.3,
+      "preset": "Pressure Lead"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-0.30/metrics.csv",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 771,
+      "sha256": "e34ebd2233be95181a3d5c72a1e36ba5d9b6ecf61fea9c73fe3a76c18715c08b",
+      "role": "pressure-gap metrics",
+      "pressure": 0.3
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-1.00/179-Electric-Leads-136.wav",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 921658,
+      "sha256": "780f7620c2f8da6216a74b3feca8c72afdccbd987ebaa197f97dfd264fb6433a",
+      "role": "pressure-gap comparison",
+      "pressure": 1.0,
+      "preset": "Electric Leads 136"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-1.00/444-Pressure-Lead.wav",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 921658,
+      "sha256": "ca01d0845aed49daa147a50dfb1a42bfdf8d01ce0c1bacd427d83eebc36eb665",
+      "role": "pressure-gap comparison",
+      "pressure": 1.0,
+      "preset": "Pressure Lead"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/published4-pressure-1.00/metrics.csv",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 749,
+      "sha256": "065ab8895877b4bf6fe6546d2e61d56899fb775e904e0a6731b1769fceef25a0",
+      "role": "pressure-gap metrics",
+      "pressure": 1.0
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-0.30/179-Electric-Leads-136.wav",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 921658,
+      "sha256": "24464d026e62075a32e8f10d22a7cdb8c333bd97e8ed4a43ac1b44c00d50d0aa",
+      "role": "pressure-gap comparison",
+      "pressure": 0.3,
+      "preset": "Electric Leads 136"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-0.30/444-Pressure-Lead.wav",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 921658,
+      "sha256": "4d27118bf503da8cf3dc25adcb3d59ceb4fecef8ba951826462c0cbe8c82d8fc",
+      "role": "pressure-gap comparison",
+      "pressure": 0.3,
+      "preset": "Pressure Lead"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-0.30/metrics.csv",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 774,
+      "sha256": "ea9cf14d8e438d5ef439696825375b90892b3701d85d0f4085a4174ab6f27577",
+      "role": "pressure-gap metrics",
+      "pressure": 0.3
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-1.00/179-Electric-Leads-136.wav",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 921658,
+      "sha256": "84146f3da4b66b3f0e49426ccefcf1a56a43a1d52c657ec4e8113951fd9cec7b",
+      "role": "pressure-gap comparison",
+      "pressure": 1.0,
+      "preset": "Electric Leads 136"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-1.00/444-Pressure-Lead.wav",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 921658,
+      "sha256": "f5d229156c8832dcb3d5b50980d4aafcf425fe9bb241013beefc3a119ffc4056",
+      "role": "pressure-gap comparison",
+      "pressure": 1.0,
+      "preset": "Pressure Lead"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current7-pressure-1.00/metrics.csv",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 750,
+      "sha256": "d3b99965b7c5e1e7dafaceafd215022cc9dd032f9bf5e5421ef1db10f5785ff7",
+      "role": "pressure-gap metrics",
+      "pressure": 1.0
+    },
+    {
+      "path": "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1160168,
+      "sha256": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d"
+    },
+    {
+      "path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1736086,
+      "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+    },
+    {
+      "path": "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 1122384,
+      "sha256": "adaa07ffc8f59c3dbe67e802bf49bd7690669fa3e5560aa106a6484befdd1742"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/gesture_probe",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1142808,
+      "sha256": "7e1c832c572c62cb3e47183b54189aac9c771d37fd682e79d76e9c362bcec240"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/cases.csv",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 1481,
+      "sha256": "4fc0722899f0f1f9f2a300b533915150c43b9993fa6b9a1d67bd4c4458c2d697"
+    },
+    {
+      "path": "/tmp/cs80-a23-1cee5a/current-gestures/trace.csv",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "bytes": 281837,
+      "sha256": "86661766b7accc72b60bd1e35d3ef9e509017db07fca586d41db40c16c808bc9"
+    }
+  ]
+}

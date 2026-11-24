@@ -1,0 +1,39 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "suite_tests": 31,
+  "suite_failures": 0,
+  "xml_sha256": "b60d8c3fcffb849ec7011f0c22309b93ad216a4e710c2db9530cb15f87e8c862",
+  "reused_without_rerun": [
+    {
+      "name": "cs80_pad_poly_refinement_tests",
+      "status": "run",
+      "seconds": 89.0732,
+      "failed": false
+    },
+    {
+      "name": "cs80_modern_preset_refinement_tests",
+      "status": "run",
+      "seconds": 41.8069,
+      "failed": false
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "status": "run",
+      "seconds": 323.635,
+      "failed": false
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "status": "run",
+      "seconds": 15.3717,
+      "failed": false
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "status": "run",
+      "seconds": 38.5861,
+      "failed": false
+    }
+  ],
+  "scope_note": "JUnit logs truncate stdout. Test implementations establish assertions and coverage; metrics below come from A22 fresh renders."
+}

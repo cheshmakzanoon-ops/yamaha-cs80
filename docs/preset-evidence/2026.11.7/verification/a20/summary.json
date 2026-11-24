@@ -1,0 +1,129 @@
+{
+  "capture_count": 28,
+  "current_count": 18,
+  "baseline_count": 10,
+  "all_finite_and_below_full_scale": true,
+  "preservation_comparisons": [
+    {
+      "name": "Flute Organ 8+4",
+      "scenario": "single",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Flute Organ 8+4",
+      "scenario": "chord8",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Percussive Organ",
+      "scenario": "single",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Percussive Organ",
+      "scenario": "chord8",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Pipe Organ",
+      "scenario": "single",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Pipe Organ",
+      "scenario": "chord8",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Combo Organ",
+      "scenario": "single",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Combo Organ",
+      "scenario": "chord8",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Tremolo LFO Organ",
+      "scenario": "single",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    },
+    {
+      "name": "Tremolo LFO Organ",
+      "scenario": "chord8",
+      "exact_pcm_equal": true,
+      "maximum_sample_difference": 0.0
+    }
+  ],
+  "touch_comparisons": [
+    {
+      "name": "Flute Organ 8+4",
+      "velocity_0_25_vs_0_85_exact_pcm_equal": true,
+      "velocity_held_contrast_db": 0.0,
+      "pressure_0_vs_0_8_exact_pcm_equal": true,
+      "pressure_held_contrast_db": 0.0,
+      "pressure_523hz_contrast_db": 0.0
+    },
+    {
+      "name": "Percussive Organ",
+      "velocity_0_25_vs_0_85_exact_pcm_equal": true,
+      "velocity_held_contrast_db": 0.0
+    },
+    {
+      "name": "Pipe Organ",
+      "velocity_0_25_vs_0_85_exact_pcm_equal": true,
+      "velocity_held_contrast_db": 0.0
+    },
+    {
+      "name": "Combo Organ",
+      "velocity_0_25_vs_0_85_exact_pcm_equal": true,
+      "velocity_held_contrast_db": 0.0
+    },
+    {
+      "name": "Tremolo LFO Organ",
+      "velocity_0_25_vs_0_85_exact_pcm_equal": true,
+      "velocity_held_contrast_db": 0.0,
+      "pressure_0_vs_0_8_exact_pcm_equal": false,
+      "pressure_held_contrast_db": 0.4920457061791743,
+      "pressure_523hz_contrast_db": 1.3262425411569223
+    }
+  ],
+  "percussion_restrike": {
+    "strikes": [
+      {
+        "start_seconds": 0,
+        "early_octave_relative_root_db": -15.046285048108171,
+        "octave_late_relative_early_db": -24.17128399057693,
+        "root_late_relative_early_db": 2.346303177714003e-05,
+        "early_octave_magnitude": 0.012397943094168928
+      },
+      {
+        "start_seconds": 1.8,
+        "early_octave_relative_root_db": -15.489820425751368,
+        "octave_late_relative_early_db": -23.09435484975428,
+        "root_late_relative_early_db": -0.00010771224998684938,
+        "early_octave_magnitude": 0.012189482676438995
+      }
+    ],
+    "second_vs_first_early_octave_db": -0.14728728301088856
+  },
+  "tremolo_lfo": {
+    "quarter_second_normalized_error": 0.007322518606555237,
+    "half_period_error_vs_quarter_second_error": 26.62489027416687
+  },
+  "limitations": [
+    "Five programs, one single-note pitch and one eight-note voicing; not a worst-case bank headroom guarantee.",
+    "Full-mix narrowband magnitudes describe spectral evidence, not isolated physical stops or perceived realism.",
+    "No listening assessment, physical contact click, rotary speaker, room, or native host qualification."
+  ]
+}

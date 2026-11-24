@@ -1,0 +1,583 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "scope": "Full structural coverage of 56 Leads, 12 fresh gesture captures of 10 presets, plus 8 comparative pressure captures of 2 presets (11 unique current presets total).",
+  "all_checks_passed": true,
+  "check_count": 44,
+  "checks": [
+    {
+      "contract": "overlap_touch: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "overlap_touch: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "overlap_original: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "overlap_original: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "ribbon_return: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "ribbon_return: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "glide_both_directions: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "glide_both_directions: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "pressure_vibrato_return: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "pressure_vibrato_return: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "pressure_required_original: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "pressure_required_original: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "modern_drive_release: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "modern_drive_release: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "modern_space_release: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "modern_space_release: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "reed_44100: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "reed_44100: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "brass_44100: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "brass_44100: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "reed_96000: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "reed_96000: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "brass_96000: finite and below full scale",
+      "passed": true
+    },
+    {
+      "contract": "brass_96000: late phrase clears held level by at least 16 dB",
+      "passed": true
+    },
+    {
+      "contract": "overlap_touch: two held notes retain ownership; newer key-up leaves older key held",
+      "passed": true
+    },
+    {
+      "contract": "overlap_touch: older gate stays on its circuit without an amplitude-envelope restart",
+      "passed": true
+    },
+    {
+      "contract": "overlap_original: two held notes retain ownership; newer key-up leaves older key held",
+      "passed": true
+    },
+    {
+      "contract": "overlap_original: older gate stays on its circuit without an amplitude-envelope restart",
+      "passed": true
+    },
+    {
+      "contract": "ribbon: audible travel ratio agrees with 1.35 and return is within 5 cents",
+      "passed": true
+    },
+    {
+      "contract": "glide: ascending and descending audio moves toward each target",
+      "passed": true
+    },
+    {
+      "contract": "pressure vibrato: stable dry/returned pitch; controlled pressed span",
+      "passed": true
+    },
+    {
+      "contract": "pressure-required original: initial silence, audible pressure and fading after pressure removal",
+      "passed": true
+    },
+    {
+      "contract": "published4 Electric Leads 136 pressure 0.30: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "published4 Pressure Lead pressure 0.30: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "published4 Electric Leads 136 pressure 1.00: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "published4 Pressure Lead pressure 1.00: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "current7 Electric Leads 136 pressure 0.30: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "current7 Pressure Lead pressure 0.30: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "current7 Electric Leads 136 pressure 1.00: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "current7 Pressure Lead pressure 1.00: finite and unclipped",
+      "passed": true
+    },
+    {
+      "contract": "Electric Leads 136 pressure 0.30: published/current waveforms differ",
+      "passed": true
+    },
+    {
+      "contract": "Electric Leads 136 pressure 1.00: published/current waveforms differ",
+      "passed": true
+    },
+    {
+      "contract": "Pressure Lead pressure 0.30: published/current waveforms differ",
+      "passed": true
+    },
+    {
+      "contract": "Pressure Lead pressure 1.00: published/current waveforms differ",
+      "passed": true
+    }
+  ],
+  "gesture_captures": 12,
+  "gesture_audio_seconds": 38.6,
+  "gesture_unique_presets": 10,
+  "gesture_maximum_peak_dbfs": -14.494695009432764,
+  "pressure_comparison_captures": 8,
+  "total_new_audio_seconds": 57.8,
+  "source_files_sha256": {
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/FactoryPresets.h": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+    "src/core/curated/Leads.inc": "022dc22a0e45660680accd8856a44e77cd7ac09e3d4c1267cd5f0aa11cf7c9f4",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "src/core/VoiceModes.h": "406f954e1e2111c55b8c932ae8edd0cc75d0f580c75274121f766ed6ac192d5f",
+    "src/plugin/KeyboardTuningPage.cpp": "1992ae588812577407404fb8719705ad64080a7c7162e1006fc15de9b73b08d3",
+    "tests/LeadRefinementTests.cpp": "c27ede973f6d104178f84ef9ed3c7d6e710e7187714b4125fae34c7213cfb40a",
+    "tests/CoreTests.cpp": "422121be8df857a8eecb4625bec144ea196a211adee0c27356a17e7a47864be9",
+    "tests/TuningMidiTests.cpp": "c60fca759d618aa4f53c357ebfc8f32135ab5527565c8d32d6ff60db09b05ffb"
+  },
+  "probe_source_sha256": "a2f6ba9779d582d576b2e84cde2bc53e7e852ab1a6e85d92bc3ad422cb02ab50",
+  "audit_source_sha256": "310f5949d82fad2f29ad645079580b99d3b86dc62f6bcde3d4c2fbe55b4c1e2d",
+  "measurements": [
+    {
+      "id": "overlap_touch",
+      "preset": "Touch Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "overlap",
+      "sample_rate": 48000,
+      "duration_seconds": 2.7,
+      "peak_dbfs": -14.698724471844319,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -135.08800506543253,
+      "late_rms_dbfs": -164.43282929564015,
+      "patch_overrides": []
+    },
+    {
+      "id": "overlap_original",
+      "preset": "Ribbon Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "overlap",
+      "sample_rate": 48000,
+      "duration_seconds": 2.7,
+      "peak_dbfs": -14.494695009432764,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -133.47249215988145,
+      "late_rms_dbfs": -161.42705719102833,
+      "patch_overrides": []
+    },
+    {
+      "id": "ribbon_return",
+      "preset": "Ribbon Glide Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "ribbon",
+      "sample_rate": 48000,
+      "duration_seconds": 2.7,
+      "peak_dbfs": -18.254041387336983,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -104.54893106556241,
+      "late_rms_dbfs": -131.783789949623,
+      "patch_overrides": []
+    },
+    {
+      "id": "glide_both_directions",
+      "preset": "Glide Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "glide",
+      "sample_rate": 48000,
+      "duration_seconds": 4.0,
+      "peak_dbfs": -14.572962693424925,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -105.78110369105693,
+      "late_rms_dbfs": -131.344628286618,
+      "patch_overrides": []
+    },
+    {
+      "id": "pressure_vibrato_return",
+      "preset": "Aftertouch Vibrato Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "vibrato",
+      "sample_rate": 48000,
+      "duration_seconds": 3.2,
+      "peak_dbfs": -15.34766050042833,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -87.32693327675034,
+      "late_rms_dbfs": -120.77836487167971,
+      "patch_overrides": []
+    },
+    {
+      "id": "pressure_required_original",
+      "preset": "Electric Leads 136",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "pressure",
+      "sample_rate": 48000,
+      "duration_seconds": 3.3,
+      "peak_dbfs": -17.89525860081153,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -93.5872311333133,
+      "late_rms_dbfs": -158.92451875316507,
+      "patch_overrides": []
+    },
+    {
+      "id": "modern_drive_release",
+      "preset": "Drive Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "modern_release",
+      "sample_rate": 48000,
+      "duration_seconds": 4.0,
+      "peak_dbfs": -19.05333709117384,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -240.0,
+      "late_rms_dbfs": -240.0,
+      "patch_overrides": []
+    },
+    {
+      "id": "modern_space_release",
+      "preset": "Space Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "modern_release",
+      "sample_rate": 48000,
+      "duration_seconds": 4.0,
+      "peak_dbfs": -14.899600942138836,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -77.49496713963676,
+      "late_rms_dbfs": -101.40448357984039,
+      "patch_overrides": []
+    },
+    {
+      "id": "reed_44100",
+      "preset": "Reed Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "body_rate",
+      "sample_rate": 44100,
+      "duration_seconds": 3.0,
+      "peak_dbfs": -23.669065463492494,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -131.65445483515816,
+      "late_rms_dbfs": -160.48185894169353,
+      "patch_overrides": []
+    },
+    {
+      "id": "brass_44100",
+      "preset": "Neo-Noir Brass Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "body_rate",
+      "sample_rate": 44100,
+      "duration_seconds": 3.0,
+      "peak_dbfs": -21.403234584261725,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -49.21849013929062,
+      "late_rms_dbfs": -81.95988101546939,
+      "patch_overrides": []
+    },
+    {
+      "id": "reed_96000",
+      "preset": "Reed Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "body_rate",
+      "sample_rate": 96000,
+      "duration_seconds": 3.0,
+      "peak_dbfs": -23.48621402149712,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -131.8799953765112,
+      "late_rms_dbfs": -160.59288669137783,
+      "patch_overrides": []
+    },
+    {
+      "id": "brass_96000",
+      "preset": "Neo-Noir Brass Lead",
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "role": "body_rate",
+      "sample_rate": 96000,
+      "duration_seconds": 3.0,
+      "peak_dbfs": -21.608054438820066,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "late_to_pre_release_db": -48.496571228570616,
+      "late_rms_dbfs": -81.52873557237606,
+      "patch_overrides": []
+    }
+  ],
+  "gestures": {
+    "overlap_touch": {
+      "held_after_overlap": [
+        60,
+        67
+      ],
+      "held_after_newer_key_up": [
+        60
+      ],
+      "held_after_both_keys_up": [],
+      "older_note_same_circuit": true,
+      "older_amp_envelope_after_over_before": 0.9996376729026991,
+      "interpretation": "polyphonic overlap; not monophonic priority or mono legato"
+    },
+    "overlap_original": {
+      "held_after_overlap": [
+        60,
+        67
+      ],
+      "held_after_newer_key_up": [
+        60
+      ],
+      "held_after_both_keys_up": [],
+      "older_note_same_circuit": true,
+      "older_amp_envelope_after_over_before": 0.9997939875524554,
+      "interpretation": "polyphonic overlap; not monophonic priority or mono legato"
+    },
+    "ribbon_return": {
+      "pre_hz": 261.56565458143155,
+      "bent_hz": 353.1473944117149,
+      "return_hz": 261.53270460320624,
+      "travel_ratio": 1.3501290717117902,
+      "return_cents": -0.21810094906058036
+    },
+    "glide_both_directions": {
+      "ascending_early_hz": 321.36230022230603,
+      "ascending_settled_hz": 390.22387621627456,
+      "descending_early_hz": 239.2252967610152,
+      "descending_settled_hz": 196.82693913634057
+    },
+    "pressure_vibrato_return": {
+      "pitch_span_cents": {
+        "dry": 0.08719108580956035,
+        "pressed": 46.218105232405215,
+        "returned": 0.6775301147954172
+      },
+      "pressed_minus_dry_rms_db": 9.069244497257385
+    },
+    "pressure_required_original": {
+      "zero_pressure_rms_dbfs": -240.0,
+      "light_pressure_rms_dbfs": -36.1677241196587,
+      "full_pressure_rms_dbfs": -25.954160236988525,
+      "light_to_full_db": 10.213563882670178,
+      "pressure_removed_rms_dbfs": -58.65762286859087,
+      "removal_relative_to_full_db": -32.70346263160234,
+      "note": "Removal is a fade through the pressure/touch path, not an instantaneous mute."
+    }
+  },
+  "reused_focused_ctest": {
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "receipt_sha256": "506fc26c5c02f63d05321d5dd92f66a73156c285c5ee5499fe4e6c24a2bb2df3",
+    "passed": 31,
+    "failed": 0,
+    "lead_test": "cs80_lead_refinement_tests: passed; not rerun by A23"
+  },
+  "reused_6_lead_review": {
+    "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "summary_sha256": "aff42876bf777b69033fca7f85a8d6d3fc302d443e2101806b27ae3fa701cb8f",
+    "structural_programs": 56,
+    "existing_suite_checks": 234,
+    "complementary_captures": 55,
+    "scope": "Original .6 A27 evidence; not represented as new .7 captures."
+  },
+  "commands": [
+    [
+      "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+      "--inventory",
+      "/tmp/cs80-a23-1cee5a/current7-inventory.json",
+      "--library",
+      "all"
+    ],
+    [
+      "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+      "--inventory",
+      "/tmp/cs80-a23-1cee5a/published4-inventory.json",
+      "--library",
+      "all"
+    ],
+    [
+      "c++",
+      "-std=c++20",
+      "-O2",
+      "-DNDEBUG",
+      "-DCS80_ENABLE_BORROWED_HELD=1",
+      "-I",
+      "src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a23/gesture_probe.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a23-1cee5a/gesture_probe"
+    ],
+    [
+      "/tmp/cs80-a23-1cee5a/gesture_probe",
+      "/tmp/cs80-a23-1cee5a/current-gestures",
+      "all",
+      "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
+    ],
+    [
+      "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+      "--out",
+      "/tmp/cs80-a23-1cee5a/published4-pressure-0.30",
+      "--library",
+      "all",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.55",
+      "--pressure",
+      "0.30",
+      "--hold",
+      "1.8",
+      "--tail",
+      "0.6",
+      "--wav"
+    ],
+    [
+      "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+      "--out",
+      "/tmp/cs80-a23-1cee5a/published4-pressure-1.00",
+      "--library",
+      "all",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.55",
+      "--pressure",
+      "1.00",
+      "--hold",
+      "1.8",
+      "--tail",
+      "0.6",
+      "--wav"
+    ],
+    [
+      "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+      "--out",
+      "/tmp/cs80-a23-1cee5a/current7-pressure-0.30",
+      "--library",
+      "all",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.55",
+      "--pressure",
+      "0.30",
+      "--hold",
+      "1.8",
+      "--tail",
+      "0.6",
+      "--wav"
+    ],
+    [
+      "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+      "--out",
+      "/tmp/cs80-a23-1cee5a/current7-pressure-1.00",
+      "--library",
+      "all",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.55",
+      "--pressure",
+      "1.00",
+      "--hold",
+      "1.8",
+      "--tail",
+      "0.6",
+      "--wav"
+    ]
+  ],
+  "no_listening_or_native_host_claim": true
+}

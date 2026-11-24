@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="31"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="819"
+	timestamp="2026-11-24T04:23:39"
+	>
+	<testcase name="cs80_instrument_body_tests" classname="cs80_instrument_body_tests" time="4.11495" status="run">
+		<properties/>
+		<system-out>DECAY Piano strings        upper/fundamental change   -9.89 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALL...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_tine_strike_dynamics_tests" classname="cs80_tine_strike_dynamics_tests" time="0.365236" status="run">
+		<properties/>
+		<system-out>TINE rate=44100 note=36 colour=0.00 fundamental_delta=+0.00001 dB rms_delta=+0.023 dB third_ratio_delta=+12.687 dB peak=0.35393
+TINE rate=44100 note=36 colour=0.65 fundamental_delta=+0.00002 dB rms_delta=+0.471 dB third_ratio_delta=+12.689 dB peak=0.37698
+TINE rate=44100 note=36 colour=1.00 fundamental_delta=+0.00002 dB rms_delta=+0.898 dB third_ratio_delta=+12.690 dB peak=0.44796
+TINE rate=44100 note=60 colour=0.00 fundamental_delta=-0.00000 dB rms_delta=+0.024 dB third_ratio_delta=+12.690 dB peak=0.35160
+TINE rate=44100 note=60 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.407 dB third_ratio_delta=+12.690 dB peak=0.37775
+TINE rate=44100 note=60 colour=1.00 fundamental_delta=-0.00000 dB rms_delta=+0.774 dB third_ratio_delta=+12.690 dB peak=0.45199
+TINE rate=44100 note=84 colour=0.00 fundamental_delta=+0.00000 dB rms_delta=+0.018 dB third_ratio_delta=+12.690 dB peak=0.34835
+TINE rate=44100 note=84 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.308 dB third_ratio_delta=+12.690 dB peak=0.37820
+...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_struck_body_dynamics_tests" classname="cs80_struck_body_dynamics_tests" time="3.3655" status="run">
+		<properties/>
+		<system-out>STRIKE Piano strings        minimum_fundamental_step=+0.00042 dB minimum_rms_step=+0.00921 dB peak=0.540596
+STRIKE Tine electric piano  minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00026 dB peak=0.451995
+STRIKE Reed electric piano  minimum_fundamental_step=+0.36983 dB minimum_rms_step=+0.39392 dB peak=0.393721
+STRIKE Clavichord           minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.01154 dB peak=0.353231
+STRIKE Nylon strings        minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00381 dB peak=0.509575
+STRIKE Steel strings        minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.01496 dB peak=0.460349
+STRIKE Plucked bass         minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00568 dB peak=0.482581
+STRIKE Bell                 minimum_fundamental_step=-0.00001 dB minimum_rms_step=+0.00817 dB peak=0.707784
+STRIKE Vibraphone           minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00017 dB peak=0.683937
+STRIKE Marimba              minimum_fundamental_step...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_variant_tests" classname="cs80_instrument_body_variant_tests" time="0.892598" status="run">
+		<properties/>
+		<system-out>MATERIAL rate=44100 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=44100 note=60 xylo_third_over_fourth=+116.25 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=44100 note=72 xylo_third_over_fourth=+136.33 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=48000 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=48000 note=60 xylo_third_over_fourth=+116.24 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=48000 note=72 xylo_third_over_fourth=+136.34 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=96000 note=48 xylo_third_over_fourth=+99.28 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_vocal_body_tests" classname="cs80_vocal_body_tests" time="5.8913" status="run">
+		<properties/>
+		<system-out>VOWEL rate=44100 ah_770_over_440=+8.879 dB oo_330_over_110=+6.732 dB
+VOWEL rate=48000 ah_770_over_440=+8.880 dB oo_330_over_110=+6.732 dB
+VOWEL rate=96000 ah_770_over_440=+8.880 dB oo_330_over_110=+6.732 dB
+VOWEL tracking worst normalized harmonic error 0.039162 dB
+VOWEL Choir ah onset ratio firm/soft 1.7072; velocity tilt +2.165 dB; pressure tilt +2.460 dB
+VOWEL Choir oo onset ratio firm/soft 1.6301; velocity tilt +2.160 dB; pressure tilt +2.458 dB
+VocalBodyTests: 895 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_bowed_body_formant_tests" classname="cs80_bowed_body_formant_tests" time="3.01241" status="run">
+		<properties/>
+		<system-out>BOWED rate=44100 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.001363 dB
+BOWED rate=44100 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.001945 dB
+BOWED rate=44100 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.006267 dB
+BOWED rate=44100 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.004788 dB
+BOWED rate=44100 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.004741 dB
+BOWED rate=44100 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.002321 dB
+BOWED rate=44100 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.001478 dB
+BOWED rate=44100 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.001758 dB
+BOWED rate=44100 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.006780 dB
+BOWED rate=44100 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.005055 dB
+BOWED rate=44100 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.004959 dB
+BOWED rate=44100 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.002550 dB
+BOWED rate=44100 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.001648 ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_piano_course_geometry_tests" classname="cs80_piano_course_geometry_tests" time="2.84037" status="run">
+		<properties/>
+		<system-out>PIANO COURSE maximum_seed_spread=0.00002798 cents maximum_partial_mismatch=0.00011790 cents
+PIANO EXCITATION minimum_relative_strike_difference=0.05315115 maximum_register_boundary_difference=0.00001118
+Piano course geometry: 212 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_piano_partial_decay_tests" classname="cs80_piano_partial_decay_tests" time="2.70351" status="run">
+		<properties/>
+		<system-out>PIANO TAIL note=24 rate=44100 velocity=0.35 colour=0.45 change=[-2.6571,-2.6560] dB prominence=42.23 dB
+PIANO TAIL note=24 rate=44100 velocity=0.95 colour=0.80 change=[-2.6572,-2.6561] dB prominence=42.23 dB
+PIANO TAIL note=24 rate=48000 velocity=0.35 colour=0.45 change=[-2.6571,-2.6560] dB prominence=42.23 dB
+PIANO TAIL note=24 rate=48000 velocity=0.95 colour=0.80 change=[-2.6572,-2.6561] dB prominence=42.23 dB
+PIANO TAIL note=24 rate=96000 velocity=0.35 colour=0.45 change=[-2.6571,-2.6560] dB prominence=42.23 dB
+PIANO TAIL note=24 rate=96000 velocity=0.95 colour=0.80 change=[-2.6572,-2.6561] dB prominence=42.23 dB
+PIANO TAIL note=36 rate=44100 velocity=0.35 colour=0.45 change=[+1.4665,+1.8697] dB prominence=57.63 dB
+PIANO TAIL note=36 rate=44100 velocity=0.95 colour=0.80 change=[+1.4665,+1.8697] dB prominence=57.68 dB
+PIANO TAIL note=36 rate=48000 velocity=0.35 colour=0.45 change=[+1.4665,+1.8697] dB prominence=57.63 dB
+PIANO TAIL note=36 rate=48000 velocity=0.95 colour=0.80 change=[+1.4665,+1.8697] dB prom...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_body_noise_rate_tests" classname="cs80_body_noise_rate_tests" time="4.28737" status="run">
+		<properties/>
+		<system-out>AIR host=44100 factor=2 rms=0.0009335670098 relative=+0.01406 dB
+AIR host=44100 factor=4 rms=0.0009300487706 relative=-0.01874 dB
+AIR host=44100 factor=8 rms=0.0009318036187 relative=-0.00237 dB
+AIR host=48000 factor=2 rms=0.0009320575267 relative=+0.00000 dB
+AIR host=48000 factor=4 rms=0.0009303693435 relative=-0.01575 dB
+AIR host=48000 factor=8 rms=0.000931292611 relative=-0.00713 dB
+AIR host=96000 factor=2 rms=0.0009303693435 relative=-0.01575 dB
+AIR host=96000 factor=4 rms=0.000931292611 relative=-0.00713 dB
+AIR host=96000 factor=8 rms=0.0009290229608 relative=-0.02833 dB
+WIDE rate=8000 rms=0.0009402716488 relative=+0.07621 dB
+WIDE rate=11025 rms=0.0009387743251 relative=+0.06237 dB
+WIDE rate=16000 rms=0.0009349802564 relative=+0.02719 dB
+WIDE rate=22050 rms=0.0009347948116 relative=+0.02547 dB
+WIDE rate=48000 rms=0.0009335300973 relative=+0.01371 dB
+WIDE rate=1536000 rms=0.0009313156884 relative=-0.00692 dB
+CONTACT model=1 velocity=0.2 rate=88200 relative=-0.00213 dB
+CONTACT model=1 velocity=0.2 rate=192...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_string_body_formant_tests" classname="cs80_string_body_formant_tests" time="4.0213" status="run">
+		<properties/>
+		<system-out>STRING fixed-body worst 0.007053 dB, RMS 0.000501 dB; moving-body worst 4.040361 dB, RMS 1.143294 dB; 3093 partials, 405 meaningful bends
+STRING return-to-onset worst harmonic error 0.000321 dB
+String body formants: 5388 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_low_choir_spectrum_tests" classname="cs80_low_choir_spectrum_tests" time="8.83799" status="run">
+		<properties/>
+		<system-out>COVERAGE Choir ah note=36 rate=44100 group/floor=+50.274 dB group/h1=-24.798 dB
+COVERAGE Choir ah note=40 rate=44100 group/floor=+49.846 dB group/h1=-22.492 dB
+COVERAGE Choir ah note=48 rate=44100 group/floor=+51.241 dB group/h1=-21.575 dB
+COVERAGE Choir oo note=36 rate=44100 group/floor=+43.066 dB group/h1=-34.425 dB
+COVERAGE Choir oo note=40 rate=44100 group/floor=+41.113 dB group/h1=-34.736 dB
+COVERAGE Choir oo note=48 rate=44100 group/floor=+41.452 dB group/h1=-37.914 dB
+COVERAGE Choir ah note=36 rate=48000 group/floor=+50.339 dB group/h1=-24.771 dB
+COVERAGE Choir ah note=40 rate=48000 group/floor=+55.291 dB group/h1=-22.467 dB
+COVERAGE Choir ah note=48 rate=48000 group/floor=+51.151 dB group/h1=-21.583 dB
+COVERAGE Choir oo note=36 rate=48000 group/floor=+43.294 dB group/h1=-34.373 dB
+COVERAGE Choir oo note=40 rate=48000 group/floor=+46.804 dB group/h1=-34.645 dB
+COVERAGE Choir oo note=48 rate=48000 group/floor=+41.388 dB group/h1=-37.939 dB
+COVERAGE Choir ah note=36 rate=96000 group/floor=+47.667 dB grou...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_wind_body_formant_tests" classname="cs80_wind_body_formant_tests" time="4.53081" status="run">
+		<properties/>
+		<system-out>WIND tracking worst normalized harmonic error 0.202533 dB
+Wind body formants: 957 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_material_body_tests" classname="cs80_material_body_tests" time="1.04581" status="run">
+		<properties/>
+		<system-out>MATERIAL rate=44100 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=44100 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.05433 kalimba_upper=0.07200 compact_tail=-10.637dB
+MATERIAL rate=44100 note=72 tube_nominal=0.16672 temple_upper=0.07544 music_comb=0.04433 kalimba_upper=0.05792 compact_tail=-16.754dB
+MATERIAL rate=48000 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=48000 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.05433 kalimba_upper=0.07200 compact_tail=-10.637dB
+MATERIAL rate=48000 note=72 tube_nominal=0.16672 temple_upper=0.07544 music_comb=0.04433 kalimba_upper=0.05792 compact_tail=-16.754dB
+MATERIAL rate=96000 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=96000 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.054...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_plucked_material_tests" classname="cs80_plucked_material_tests" time="3.01704" status="run">
+		<properties/>
+		<system-out>MATERIAL Banjo membrane rate 44100 note 48 shape-distance 0.598226 touch 5.163517 dB tail-relative -14.481729 dB
+MATERIAL Koto bridge rate 44100 note 48 shape-distance 0.296650 touch 4.999643 dB tail-relative -1.666868 dB
+MATERIAL Harp soundboard rate 44100 note 48 shape-distance 0.161412 touch 4.746119 dB tail-relative 4.143280 dB
+MATERIAL Banjo membrane rate 44100 note 60 shape-distance 0.543578 touch 4.966077 dB tail-relative -18.830262 dB
+MATERIAL Koto bridge rate 44100 note 60 shape-distance 0.409369 touch 5.065546 dB tail-relative -3.814815 dB
+MATERIAL Harp soundboard rate 44100 note 60 shape-distance 0.129826 touch 4.729748 dB tail-relative 5.024148 dB
+MATERIAL Banjo membrane rate 44100 note 72 shape-distance 0.127697 touch 4.751130 dB tail-relative -24.242067 dB
+MATERIAL Koto bridge rate 44100 note 72 shape-distance 0.238448 touch 4.935841 dB tail-relative -3.318291 dB
+MATERIAL Harp soundboard rate 44100 note 72 shape-distance 0.128485 touch 4.728768 dB tail-relative 6.334531 dB
+MATERIAL Banjo membran...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_engine_tests" classname="cs80_instrument_body_engine_tests" time="8.63296" status="run">
+		<properties/>
+		<system-out>BATCH comparison backend: runtime-dispatched exact batch
+REGISTER Piano strings relative waveform error 0
+REGISTER Bowed strings relative waveform error 0
+REGISTER Oboe relative waveform error 0
+REGISTER Bassoon relative waveform error 0
+KBC body LOW lever -1 relative waveform change 0.632447503
+KBC body LOW lever +1 relative waveform change 0.2394826
+KBC body HIGH lever -1 relative waveform change 0.976266417
+KBC body HIGH lever +1 relative waveform change 0.261277539
+BODY FILTER high-pass fundamental change -26.758 dB
+BODY FILTER high-pass resonance at cutoff change 9.069 dB
+BODY FILTER low-pass fourth-partial change -15.203 dB
+BODY FILTER resonance at cutoff change 9.069 dB
+TAIL rate 44100 maximum onset/pre derivative 0.78358, sample step 0.00132838 FS
+TAIL rate 48000 maximum onset/pre derivative 0.78412, sample step 0.00122170 FS
+TAIL rate 96000 maximum onset/pre derivative 1.34464, sample step 0.00061044 FS
+Instrument body Engine integration: 18156 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_body_articulation_engine_tests" classname="cs80_body_articulation_engine_tests" time="5.38539" status="run">
+		<properties/>
+		<system-out>REGISTER Piano strings bass/treble envelope decay=1.97239 release=1.69511
+REGISTER Tine electric piano bass/treble envelope decay=1.56868 release=1.44565
+REGISTER Reed electric piano bass/treble envelope decay=1.71837 release=1.52425
+REGISTER Nylon strings bass/treble envelope decay=1.56868 release=1.52425
+REGISTER Marimba bass/treble envelope decay=1.97239 release=1.52425
+ATTACK Bowed strings envelope firm/soft=1.31107 audio early/held soft=0.29258 firm=0.39964
+ATTACK Flute envelope firm/soft=1.26592 audio early/held soft=0.33584 firm=0.43495
+ATTACK Clarinet envelope firm/soft=1.21852 audio early/held soft=0.33847 firm=0.42104
+ATTACK Oboe envelope firm/soft=1.21852 audio early/held soft=0.33287 firm=0.41836
+ATTACK Bassoon envelope firm/soft=1.24377 audio early/held soft=0.31699 firm=0.40844
+ATTACK Brass envelope firm/soft=1.29157 audio early/held soft=0.32893 firm=0.43605
+FOOTAGE Piano strings rate=44100 release relative error=0.0001463078 envelope 0.056103345 / 0.056103345 pitch 130.810867 / 130.811829
+FOOT...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_original_articulation_tests" classname="cs80_original_articulation_tests" time="2.499" status="run">
+		<properties/>
+		<system-out>Frozen Leads 121: relative onset 0.405875, source 0.709542; release 0.048135, source 0.009178
+Soft Leads 128: relative onset 0.535202, source 0.808595; release 0.054960, source 0.030137
+Amber Sequences 157: accent late/early 0.103352, fixed-time control 0.014260; gate 0.1450 s
+Distant Sequences 159: accent late/early 0.029694, fixed-time control 0.007144; gate 0.2320 s
+Neon Sequences 160: accent late/early 0.053562, fixed-time control 0.108547; gate 0.0563 s
+Distant Sequences 173: accent late/early 0.027442, fixed-time control 0.009309; gate 0.2109 s
+Neon Sequences 174: accent late/early 0.110923, fixed-time control 0.144753; gate 0.0644 s
+Original articulation: 63 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_response_tests" classname="cs80_keyboard_response_tests" time="38.321" status="run">
+		<properties/>
+		<system-out>Stage Keys dynamics 9.538 dB; held aftersound -28.230 dB relative to onset
+Soft Keys dynamics 9.476 dB; held aftersound -30.538 dB relative to onset
+Honky Keys dynamics 9.368 dB; held aftersound -34.746 dB relative to onset
+Velocity Keys dynamics 10.733 dB; held aftersound -30.941 dB relative to onset
+Electric Piano I dynamics 9.576 dB; held aftersound -21.411 dB relative to onset
+Electric Piano II dynamics 9.530 dB; held aftersound -20.822 dB relative to onset
+Tine Piano dynamics 9.335 dB; held aftersound -22.140 dB relative to onset
+Reed Piano dynamics 10.078 dB; held aftersound -22.730 dB relative to onset
+KeyboardResponseTests: 124 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mallet_preset_refinement_tests" classname="cs80_mallet_preset_refinement_tests" time="9.84995" status="run">
+		<properties/>
+		<system-out>TOUCH Ring Bell I         8.880 dB
+TOUCH Ring Bell II        9.276 dB
+TOUCH Tubular Bells       15.258 dB
+TOUCH Glockenspiel        8.992 dB
+TOUCH Celeste Bells       8.837 dB
+TOUCH Music Box           8.648 dB
+TOUCH Gong                7.504 dB
+TOUCH Temple Bell         8.855 dB
+TOUCH Marimba             8.865 dB
+TOUCH Vibraphone          8.809 dB
+TOUCH Xylophone           9.027 dB
+TOUCH Crystal Bell        9.053 dB
+TOUCH Bell Pad            8.726 dB
+TOUCH Ring Sweep Bell     9.254 dB
+TOUCH Steel Drum          9.675 dB
+TOUCH Chimes              8.958 dB
+TOUCH Dark Bell           8.825 dB
+TOUCH Bell Choir          8.849 dB
+TOUCH Metallic Keys       7.398 dB
+TOUCH Agogo               9.832 dB
+TOUCH Clock Bells         8.633 dB
+TOUCH Ring Mallet         9.290 dB
+TOUCH Ambient Bells       9.501 dB
+MATERIAL Xylophone    note 48 third -8.934 dB; control difference 94.928 dB
+MATERIAL Steel Drum   note 48 third -11.819 dB; control difference 75.180 dB
+MATERIAL Xylophone    note 60 third -11.261 dB; control differenc...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_plucked_material_preset_tests" classname="cs80_plucked_material_preset_tests" time="17.631" status="run">
+		<properties/>
+		<system-out>REGISTER Harp 48 0.25 -44.999898 -6.922088
+REGISTER Harp 48 0.55 -36.781999 -6.925759
+REGISTER Harp 48 0.85 -31.419899 -6.928425
+TOUCH Harp 48 13.579999
+REGISTER Harp 60 0.25 -44.493696 -7.581602
+REGISTER Harp 60 0.55 -36.287561 -7.582623
+REGISTER Harp 60 0.85 -30.933597 -7.583688
+TOUCH Harp 60 13.560098
+REGISTER Harp 72 0.25 -43.156421 -8.389029
+REGISTER Harp 72 0.55 -35.655508 -8.391351
+REGISTER Harp 72 0.85 -30.563147 -8.393083
+TOUCH Harp 72 12.593273
+SHAPE Harp 0.242490340
+PEDAL Harp 14.822757
+REGISTER Koto 48 0.25 -52.503195 -14.252534
+REGISTER Koto 48 0.55 -44.124616 -14.367090
+REGISTER Koto 48 0.85 -38.671237 -14.448009
+TOUCH Koto 48 13.831958
+REGISTER Koto 60 0.25 -53.073050 -16.319047
+REGISTER Koto 60 0.55 -44.667545 -16.435500
+REGISTER Koto 60 0.85 -39.197639 -16.518316
+TOUCH Koto 60 13.875412
+REGISTER Koto 72 0.25 -50.797270 -17.387004
+REGISTER Koto 72 0.55 -43.137814 -17.483027
+REGISTER Koto 72 0.85 -37.957504 -17.550191
+TOUCH Koto 72 12.839766
+SHAPE Koto 0.430299943
+PEDAL Koto 50.920232
+REGISTER ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_bass_plucked_refinement_tests" classname="cs80_bass_plucked_refinement_tests" time="15.2281" status="run">
+		<properties/>
+		<system-out>TOUCH Analog Bass        8.408 dB
+TOUCH Resonance Bass     8.736 dB
+TOUCH Sine Bass          9.253 dB
+TOUCH Sub Bass           9.381 dB
+TOUCH Pluck Bass         9.270 dB
+TOUCH Fretless Glide     8.968 dB
+TOUCH Funk Bass          8.708 dB
+TOUCH Brass Bass         7.954 dB
+TOUCH Octave Bass        8.446 dB
+TOUCH Pulse Bass         8.360 dB
+TOUCH Round Bass         8.024 dB
+TOUCH Velocity Bass      9.635 dB
+TOUCH Rubber Bass        8.288 dB
+TOUCH Dark Bass          7.498 dB
+TOUCH Bright Bass        8.662 dB
+TOUCH Picked Bass        9.294 dB
+TOUCH Upright Pluck      9.178 dB
+TOUCH Fifth Bass         8.304 dB
+TOUCH Squelch Bass       8.920 dB
+TOUCH Ring Bass          8.392 dB
+TOUCH Sub Wobble Bass    8.123 dB
+TOUCH Pressure Bass      7.539 dB
+TOUCH Contour Bass       8.908 dB
+TOUCH Guitar I           8.916 dB
+TOUCH Guitar II          9.206 dB
+TOUCH Funky Pluck I      8.991 dB
+TOUCH Funky Pluck II     8.656 dB
+TOUCH Harp               13.559 dB
+TOUCH Koto               13.873 dB
+TOUCH Banjo              13.681 dB
+T...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_brass_organ_refinement_tests" classname="cs80_brass_organ_refinement_tests" time="47.4392" status="run">
+		<properties/>
+		<system-out>BRASS Brass Swell I           soft/firm 8.653 dB
+BRASS Brass Swell II          soft/firm 8.831 dB
+PRESSURE range 21.867 dB
+BRASS Pressure Swell Brass    soft/firm 4.546 dB
+BRASS Resonant Swell Brass    soft/firm 7.869 dB
+BRASS Noir Swell Brass        soft/firm 7.496 dB
+BRASS Sforzando Brass         soft/firm 8.330 dB
+BRASS Brass Stab              soft/firm 8.982 dB
+BRASS Horn Section            soft/firm 8.588 dB
+BRASS Covered Horn            soft/firm 8.154 dB
+BRASS Muted Trumpet           soft/firm 8.662 dB
+BRASS Trombone Glide          soft/firm 8.074 dB
+BRASS Fanfare Brass           soft/firm 9.293 dB
+BRASS Brass Ensemble 16       soft/firm 8.452 dB
+BRASS Low Brass               soft/firm 7.899 dB
+BRASS Velvet Brass            soft/firm 8.051 dB
+BRASS Bright Brass Poly       soft/firm 8.981 dB
+BRASS Brass Pad Swell         soft/firm 7.495 dB
+BRASS Fifth Brass             soft/firm 9.219 dB
+BRASS Wah Brass               soft/firm 8.632 dB
+BRASS Synth Horns             soft/firm 8.137 dB
+BRASS Brass Bite   ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_wind_string_refinement_tests" classname="cs80_wind_string_refinement_tests" time="63.563" status="run">
+		<properties/>
+		<system-out>RESPONSE,Ensemble Strings,60,7.977012,-45.605674,-37.628662,-2.259139
+RESPONSE,Slow Strings,60,6.305944,-42.660797,-36.354853,-2.557931
+RESPONSE,Violins,60,8.395086,-46.612812,-38.217726,-9.842037
+RESPONSE,Cellos,60,8.288589,-44.313958,-36.025370,-7.874654
+RESPONSE,Octave Strings,60,8.891212,-45.272984,-36.381771,-5.926890
+RESPONSE,PWM Strings,60,6.916346,-30.250133,-23.333787,-9.779411
+RESPONSE,Thin Strings,60,6.457816,-40.789517,-34.331701,-3.314411
+RESPONSE,Dark Strings,60,7.865194,-40.968206,-33.103013,-4.113771
+RESPONSE,Tremolo Strings,60,9.373268,-43.378331,-34.005063,-13.301647
+RESPONSE,Solo Violin,60,9.052033,-44.521692,-35.469660,-22.609524
+RESPONSE,Solo Cello,60,8.601160,-43.317656,-34.716496,-16.150664
+RESPONSE,Pizzicato Strings,60,10.995149,-44.680009,-33.684861,-84.926299
+RESPONSE,Swell Strings,60,-0.684319,-49.862181,-50.546500,-5.155317
+RESPONSE,Chamber Strings,60,7.190164,-45.612870,-38.422707,-7.504165
+RESPONSE,Wide Strings,60,7.648885,-43.506164,-35.857279,-0.682588
+RESPONSE,Crystal Strings,...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_pad_poly_refinement_tests" classname="cs80_pad_poly_refinement_tests" time="89.0732" status="run">
+		<properties/>
+		<system-out>RESPONSE,Slow Pad,60,7.992545,-33.246541,-25.253995
+RESPONSE,Ring Drift Pad,60,8.135687,-34.489413,-26.353726
+RESPONSE,Choir Pad,60,8.754122,-44.391638,-35.637515
+RESPONSE,Dark Choir,60,7.653027,-41.019450,-33.366423
+RESPONSE,Sweep Pad,60,8.830096,-34.898894,-26.068798
+RESPONSE,Breathing Pad,60,8.051405,-34.097098,-26.045693
+RESPONSE,Glass Pad,60,8.388593,-34.577103,-26.188510
+RESPONSE,Warm Pad,60,7.889131,-34.343182,-26.454051
+RESPONSE,Wide Pad,60,8.474268,-35.959473,-27.485206
+RESPONSE,Octave Pad,60,7.893823,-35.142069,-27.248246
+RESPONSE,Fifth Pad,60,8.252511,-33.778930,-25.526419
+RESPONSE,Evolving Pad,60,8.586655,-34.833922,-26.247266
+RESPONSE,Noise Pad,60,8.227075,-34.571265,-26.344190
+RESPONSE,Pressure Pad,60,3.173160,-46.665712,-43.492552
+RESPONSE,Sine Pad,60,8.441158,-35.907394,-27.466236
+RESPONSE,Hollow Pad,60,8.322054,-34.248488,-25.926434
+RESPONSE,Resonant Pad,60,8.537819,-34.675393,-26.137575
+RESPONSE,Pulse Pad,60,8.618294,-33.902130,-25.283836
+RESPONSE,Tremolo Pad,60,8.432956,-33.846944,-25.41398...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_fx_refinement_tests" classname="cs80_fx_refinement_tests" time="11.0695" status="run">
+		<properties/>
+		<system-out>WIND gust deviation 0.648 dB; old-period difference 0.613 dB
+SURF rise 32.041 dB, crest 1.50 s, drain -55.765 dB; foam/low falls -46.232 / -19.066 dB
+THUNDER high-band crack/roll 0.33414 / 0.06167; tail -36.982 dB; roll variation 0.566 dB
+RAIN smooth/stepped maximum two-ms gain changes 0.0407 / 0.5523 dB
+CLOCKWORK within-tick decay -17.562 dB; between-tick attenuation -60.143 dB
+BREATH pressure range 9.926 dB
+ROBOT voiced-material residual -1.078 dB relative to pulse control
+FxRefinementTests: 30 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_modern_preset_refinement_tests" classname="cs80_modern_preset_refinement_tests" time="41.8069" status="run">
+		<properties/>
+		<system-out>TOUCH Delay Brass          note 60 7.464 dB
+TOUCH Plate Pad            note 60 7.779 dB
+TOUCH Phaser Strings       note 60 8.936 dB
+TOUCH Drive Lead           note 60 8.445 dB
+TOUCH Arp Poly             note 60 7.739 dB
+TOUCH Arp Bells            note 60 8.372 dB
+TOUCH Arp Bass             note 60 8.162 dB
+TOUCH LFO Sweep Pad        note 60 7.912 dB
+TOUCH LFO Pan Keys         note 60 9.338 dB
+TOUCH PWM LFO Strings      note 60 8.637 dB
+TOUCH Stereo Delay Pluck   note 60 9.222 dB
+TOUCH Ambient Bells        note 60 9.496 dB
+TOUCH Ensemble Plus        note 60 8.159 dB
+TOUCH Space Lead           note 60 8.427 dB
+TOUCH Random Arp           note 60 7.709 dB
+TOUCH Drive Bass           note 48 7.908 dB
+TOUCH Phased Polysynth     note 60 8.232 dB
+TOUCH Tremolo LFO Organ    note 60 0.000 dB
+TOUCH Phaser Strings       note 48 9.113 dB
+TOUCH Phaser Strings       note 72 8.076 dB
+TOUCH PWM LFO Strings      note 48 8.651 dB
+TOUCH PWM LFO Strings      note 72 7.968 dB
+TOUCH Ensemble Plus        note 48 8.692 dB
+TOUCH Ensemb...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_lead_refinement_tests" classname="cs80_lead_refinement_tests" time="36.1084" status="run">
+		<properties/>
+		<system-out>RESPONSE,Touch Lead,67,11.532434,-38.036677,-26.504242,-78.273508
+RESPONSE,Aftertouch Vibrato Lead,67,5.526832,-36.333732,-30.806901,-73.995469
+RESPONSE,Ribbon Glide Lead,67,10.344778,-37.201654,-26.856876,-74.663974
+RESPONSE,Noir Lead,67,10.301616,-40.255781,-29.954165,-47.687604
+RESPONSE,Neo-Noir Brass Lead,67,10.881620,-45.408292,-34.526673,-45.705217
+RESPONSE,Glide Lead,67,10.599406,-36.555952,-25.956546,-75.628979
+RESPONSE,Sine Lead,67,10.611317,-36.386872,-25.775556,-84.341451
+RESPONSE,Whistle Lead,67,11.044574,-37.193104,-26.148530,-82.875798
+RESPONSE,Square Lead,67,11.200534,-36.173087,-24.972552,-92.371557
+RESPONSE,Narrow Pulse Lead,67,11.422313,-35.964548,-24.542236,-91.541505
+RESPONSE,Resonant Lead,67,11.499284,-38.537133,-27.037849,-78.225958
+RESPONSE,Screaming Lead,67,11.829271,-40.784090,-28.954818,-75.717690
+RESPONSE,Fifth Lead,67,10.669869,-37.876966,-27.207097,-75.880395
+RESPONSE,Octave Lead,67,10.767384,-37.195279,-26.427896,-77.689656
+RESPONSE,Soft Lead,67,10.029951,-36.773304,-26.743353,-7...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_library_audit_tests" classname="cs80_library_audit_tests" time="323.635" status="run">
+		<properties/>
+		<system-out>closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)
+phrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS
+library audit passed: 301 curated + 222 original circuit programs
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_voicing_tests" classname="cs80_preset_voicing_tests" time="15.3717" status="run">
+		<properties/>
+		<system-out>MIX ONSET Pan Flute           transient/body   -19.9 dB; reconstruction error  -142.2 dB relative
+TRANSIENT Pan Flute           transient late/onset   -94.1 dB; body late/early   -0.1 dB; full late  -32.3 dBFS
+TRANSIENT Sine Bass           transient late/onset   -97.0 dB; body late/early   -0.0 dB; full late  -25.3 dBFS
+MIX ONSET Nylon Pluck         transient/body   -23.6 dB; reconstruction error  -142.7 dB relative
+PERCUSSION octave/other   51.3 dB; full octave/root onset  -15.0 dB; octave late/early  -24.1 dB; root late/early  +0.0 dB
+REGISTER  Piccolo             intended  -26.9 dBFS; strongest lower octave   -85.8 dB relative
+REGISTER  Ocarina             intended  -28.5 dBFS; strongest lower octave   -92.0 dB relative
+REGISTER  Whistle             intended  -23.2 dBFS; strongest lower octave  -104.5 dB relative
+VELOCITY  Velocity Keys       hard/soft attack  +14.2 dB; body  +13.6 dB; soft body  -55.6 dBFS
+VELOCITY  Velocity Lead       hard/soft attack  +13.5 dB; body  +13.7 dB; soft body  -39.9 dBFS
+STRI...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_character_tests" classname="cs80_preset_character_tests" time="6.04834" status="run">
+		<properties/>
+		<system-out>RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.5 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.6 dB relative
+BREATH      Flute  -25.7 dB, Breathy Flute  -18.3 dB air/body
+RECONSTRUCT Sine Bass            0.000-1.200 s error  -143.3 dB relative
+RECONSTRUCT Sine Bass            0.004-0.020 s error  -143.5 dB relative
+RECONSTRUCT Sine Bass            0.800-1.100 s error  -143.3 dB relative
+STRIKE      Sine Bass            onset/body  -21.2 dB, late/body  -137.1 dB
+RECONSTRUCT Upright Pluck        0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Upright Pluck        0.004-0.020 s error  -143.2 dB relative
+RECONSTRUCT Upright Pluck        0.800-1.100 s error  -143.4 dB relative
+STRIKE    ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_precision_tests" classname="cs80_preset_precision_tests" time="38.5861" status="run">
+		<properties/>
+		<system-out>VIBRAPHONE note=48 velocity=0.30 H4/H1=-20.578 H2/H1=-114.873 oldH4/H1=-60.477 dB
+VIBRAPHONE note=48 velocity=0.85 H4/H1=-18.726 H2/H1=-114.871 oldH4/H1=-60.539 dB
+VIBRAPHONE note=60 velocity=0.30 H4/H1=-20.777 H2/H1=-132.516 oldH4/H1=-66.363 dB
+VIBRAPHONE note=60 velocity=0.85 H4/H1=-19.035 H2/H1=-132.470 oldH4/H1=-66.431 dB
+VIBRAPHONE note=72 velocity=0.30 H4/H1=-21.743 H2/H1=-140.704 oldH4/H1=-68.130 dB
+VIBRAPHONE note=72 velocity=0.85 H4/H1=-20.327 H2/H1=-140.987 oldH4/H1=-68.196 dB
+TREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.3905 wetOnly=0.0069 dB peak-to-peak
+TREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3917 wetOnly=0.0014 dB peak-to-peak
+TREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.3909 wetOnly=0.0006 dB peak-to-peak
+TREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.6539 wetOnly=0.0036 dB peak-to-peak
+TREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.6496 wetOnly=0.0009 dB peak-to-peak
+TREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.6517 wetOnly=0.0018 dB peak-to-pea...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>

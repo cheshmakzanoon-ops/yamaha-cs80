@@ -1,0 +1,1248 @@
+{
+  "sample_rate": 48000,
+  "oversampling": "native saved quality; capture log records actual factor",
+  "complete_parameter_vectors_unmodified": true,
+  "preset_count": 3,
+  "pair_count": 14,
+  "render_count": 28,
+  "generated_seconds": 224.0,
+  "chord_notes": [
+    36,
+    43,
+    48,
+    52,
+    55,
+    60,
+    64,
+    67
+  ],
+  "chord_velocity": 1,
+  "chord_pressure": 1,
+  "pressure_onset_seconds": 1.5,
+  "spectral_method": "8192-sample Hann Welch, half overlap, summed channel power; complete patch bands, no isolated body measurement",
+  "expression": [
+    {
+      "preset": "Choir Pad",
+      "version": "baseline",
+      "velocity_85_vs_25_held_gain_db": 7.473098994319585,
+      "pressure_80_vs_0_held_gain_db": 3.0189008118136655
+    },
+    {
+      "preset": "Choir Pad",
+      "version": "current",
+      "velocity_85_vs_25_held_gain_db": 7.41247901739159,
+      "pressure_80_vs_0_held_gain_db": 3.0196668771111277
+    },
+    {
+      "preset": "Dark Choir",
+      "version": "baseline",
+      "velocity_85_vs_25_held_gain_db": 6.836038986810891,
+      "pressure_80_vs_0_held_gain_db": 2.809778599949226
+    },
+    {
+      "preset": "Dark Choir",
+      "version": "current",
+      "velocity_85_vs_25_held_gain_db": 6.78908143573296,
+      "pressure_80_vs_0_held_gain_db": 2.8100038191314596
+    }
+  ],
+  "slow_envelope": {
+    "preset": "Sweep Pad",
+    "hold_seconds": 6,
+    "opening_window": [
+      0.025,
+      0.125
+    ],
+    "bloom_window": [
+      4,
+      4.5
+    ],
+    "late_window": [
+      5.5,
+      6
+    ],
+    "bloom_over_opening_db": 13.321409694138104,
+    "late_over_bloom_db": -3.3527344690299272,
+    "bloom_rms_dbfs": -25.628900200779896,
+    "late_rms_dbfs": -28.98163466980982,
+    "baseline_current_sample_identical": true
+  },
+  "renders": [
+    {
+      "preset": "Choir Pad",
+      "scene": "high",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": true,
+      "held_difference_relative_db": -300.0,
+      "peak_delta_db": 0.0,
+      "held_rms_delta_db": 0.0,
+      "upper_2k_4k_fraction_delta_db": 0.0,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "7e55011a45158565b5312c95b973a4d0365b38b1e3fa5f75a9e2dcf467e5cfac",
+          "frames": 288000,
+          "peak_dbfs": -22.590779792672876,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -30.37688818432067,
+          "early_25_125ms_rms_dbfs": -34.17736788272774,
+          "final_half_second_rms_dbfs": -82.06365667582946,
+          "tail_rms_dbfs": -43.49765195297813,
+          "held_spectrum": {
+            "centroid_hz": 904.9271678273029,
+            "upper_2k_4k_fraction": 0.017906816797427567,
+            "low_below_500_fraction": 4.012234478668834e-06
+          },
+          "half_second_rms_dbfs": [
+            -31.9973574424617,
+            -30.053883316698485,
+            -30.378121827602676,
+            -30.76002990125382,
+            -30.12394561539415,
+            -29.989660203983725,
+            -35.758741874912346,
+            -55.897383549812886,
+            -75.75378116923248,
+            -81.74194864304076,
+            -82.08725588219397,
+            -82.06365667582946
+          ]
+        },
+        "current": {
+          "pcm_sha256": "7e55011a45158565b5312c95b973a4d0365b38b1e3fa5f75a9e2dcf467e5cfac",
+          "frames": 288000,
+          "peak_dbfs": -22.590779792672876,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -30.37688818432067,
+          "early_25_125ms_rms_dbfs": -34.17736788272774,
+          "final_half_second_rms_dbfs": -82.06365667582946,
+          "tail_rms_dbfs": -43.49765195297813,
+          "held_spectrum": {
+            "centroid_hz": 904.9271678273029,
+            "upper_2k_4k_fraction": 0.017906816797427567,
+            "low_below_500_fraction": 4.012234478668834e-06
+          },
+          "half_second_rms_dbfs": [
+            -31.9973574424617,
+            -30.053883316698485,
+            -30.378121827602676,
+            -30.76002990125382,
+            -30.12394561539415,
+            -29.989660203983725,
+            -35.758741874912346,
+            -55.897383549812886,
+            -75.75378116923248,
+            -81.74194864304076,
+            -82.08725588219397,
+            -82.06365667582946
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Choir Pad",
+      "scene": "low",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -24.474774519301707,
+      "peak_delta_db": -0.6310741793249406,
+      "held_rms_delta_db": -0.5023402030584379,
+      "upper_2k_4k_fraction_delta_db": 11.482251271163575,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "1560d95d3e120640815844cadc65c7e4cbcf95a8b4220e65b50d6969515da442",
+          "frames": 288000,
+          "peak_dbfs": -28.887503423436094,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -43.18974735909842,
+          "early_25_125ms_rms_dbfs": -46.50153185627455,
+          "final_half_second_rms_dbfs": -82.06365668659159,
+          "tail_rms_dbfs": -57.634382310482934,
+          "held_spectrum": {
+            "centroid_hz": 555.9732638400574,
+            "upper_2k_4k_fraction": 1.7774491979183903e-05,
+            "low_below_500_fraction": 0.3138023972761682
+          },
+          "half_second_rms_dbfs": [
+            -43.32156294191406,
+            -42.65363256940077,
+            -42.4335612511624,
+            -43.551952344108,
+            -42.794739244987895,
+            -43.37047564597502,
+            -49.921596007861865,
+            -68.6654268912927,
+            -81.08545630036879,
+            -82.04256447345321,
+            -82.0875368903428,
+            -82.06365668659159
+          ]
+        },
+        "current": {
+          "pcm_sha256": "c8452b8f3e18efadf67980215b27c76a93708f8fb2ec317c73fc8ebbdcf9b5f0",
+          "frames": 288000,
+          "peak_dbfs": -29.518577602761034,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -43.69208756215686,
+          "early_25_125ms_rms_dbfs": -47.00399112969474,
+          "final_half_second_rms_dbfs": -82.06365668459128,
+          "tail_rms_dbfs": -58.13475789464211,
+          "held_spectrum": {
+            "centroid_hz": 556.8005945545068,
+            "upper_2k_4k_fraction": 0.00025004738896118784,
+            "low_below_500_fraction": 0.3136636526650806
+          },
+          "half_second_rms_dbfs": [
+            -43.823815095072504,
+            -43.15594193861828,
+            -42.93572131269705,
+            -44.05478881824624,
+            -43.29716976418424,
+            -43.8726677264626,
+            -50.42358334290917,
+            -69.14250204116301,
+            -81.17564862961257,
+            -82.04395589096366,
+            -82.08753258818659,
+            -82.06365668459128
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Choir Pad",
+      "scene": "middle",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -32.135696842726404,
+      "peak_delta_db": -0.29161682292968294,
+      "held_rms_delta_db": -0.19103199922206926,
+      "upper_2k_4k_fraction_delta_db": 0.2857628359889694,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "bdb2435ca152d30bc6d78e7bff75929bc585c1fa59000ed370fe46793972aec4",
+          "frames": 288000,
+          "peak_dbfs": -27.930564273415236,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -39.37409144338998,
+          "early_25_125ms_rms_dbfs": -43.03651622086111,
+          "final_half_second_rms_dbfs": -82.0636566863858,
+          "tail_rms_dbfs": -54.056570649807504,
+          "held_spectrum": {
+            "centroid_hz": 683.9436507223538,
+            "upper_2k_4k_fraction": 0.0019588951742570706,
+            "low_below_500_fraction": 0.15478205657527164
+          },
+          "half_second_rms_dbfs": [
+            -40.05923467329794,
+            -39.35596441416967,
+            -38.77473944296306,
+            -39.94660418562727,
+            -39.167088983024314,
+            -39.59366650885228,
+            -46.34285517626769,
+            -64.7191760012535,
+            -80.37230039415682,
+            -82.02572344171446,
+            -82.08744890824129,
+            -82.0636566863858
+          ]
+        },
+        "current": {
+          "pcm_sha256": "136b74e6b9103de4ff6d35387a59288bdbb7edcb7c147dfea8e31a45f8a71b78",
+          "frames": 288000,
+          "peak_dbfs": -28.22218109634492,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -39.56512344261205,
+          "early_25_125ms_rms_dbfs": -43.23392239753916,
+          "final_half_second_rms_dbfs": -82.06365668686183,
+          "tail_rms_dbfs": -54.24465119807488,
+          "held_spectrum": {
+            "centroid_hz": 684.2898366000672,
+            "upper_2k_4k_fraction": 0.002092124281322119,
+            "low_below_500_fraction": 0.15486124303300397
+          },
+          "half_second_rms_dbfs": [
+            -40.24929469319754,
+            -39.5445987885294,
+            -38.9676958962957,
+            -40.13116186237164,
+            -39.35925598033982,
+            -39.78302071189618,
+            -46.53109120814571,
+            -64.91075174813163,
+            -80.43071161563302,
+            -82.02721663227183,
+            -82.08745100286392,
+            -82.06365668686183
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Choir Pad",
+      "scene": "pressure",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -24.287246876104255,
+      "peak_delta_db": -0.6696951365991204,
+      "held_rms_delta_db": -0.5015741377609757,
+      "upper_2k_4k_fraction_delta_db": 15.842943753730825,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "9d5a62a36a6e418beec64cb98f2be15c6c6b748800c32bd5d97ab9cff255df0a",
+          "frames": 288000,
+          "peak_dbfs": -27.028344894966413,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -40.170846547284754,
+          "early_25_125ms_rms_dbfs": -46.50153185627455,
+          "final_half_second_rms_dbfs": -82.06365668668512,
+          "tail_rms_dbfs": -56.07773677278223,
+          "held_spectrum": {
+            "centroid_hz": 579.199528437706,
+            "upper_2k_4k_fraction": 9.162658263970689e-06,
+            "low_below_500_fraction": 0.2825622819638992
+          },
+          "half_second_rms_dbfs": [
+            -43.32156294191406,
+            -42.65363256940077,
+            -42.4335612511624,
+            -41.150273483765496,
+            -39.730533943857445,
+            -40.37207865237731,
+            -48.34424175543369,
+            -68.65378799401255,
+            -81.0854327827127,
+            -82.04256437578397,
+            -82.08753689692671,
+            -82.06365668668512
+          ]
+        },
+        "current": {
+          "pcm_sha256": "1f0c128111c43022ed93fbf648c30aa6a2642004557bdababb02883db5b7d8e6",
+          "frames": 288000,
+          "peak_dbfs": -27.698040031565533,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -40.67242068504573,
+          "early_25_125ms_rms_dbfs": -47.00399112969474,
+          "final_half_second_rms_dbfs": -82.06365668461495,
+          "tail_rms_dbfs": -56.578395482952956,
+          "held_spectrum": {
+            "centroid_hz": 580.2609603160955,
+            "upper_2k_4k_fraction": 0.00035181622518621225,
+            "low_below_500_fraction": 0.2823872619489056
+          },
+          "half_second_rms_dbfs": [
+            -43.823815095072504,
+            -43.15594193861828,
+            -42.93572131269705,
+            -41.652196244463234,
+            -40.232288239568554,
+            -40.87341977333479,
+            -48.84602447379231,
+            -69.13092950570838,
+            -81.17562700046747,
+            -82.04395581157408,
+            -82.08753259413407,
+            -82.06365668461495
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Choir Pad",
+      "scene": "soft",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -25.603372332994326,
+      "peak_delta_db": -0.5488717419292612,
+      "held_rms_delta_db": -0.4417202261304425,
+      "upper_2k_4k_fraction_delta_db": 4.26701793652671,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "b49a08ed191f25c4ea1276d9248204779fef7b5b03b17d8de4c65eb088d30f09",
+          "frames": 288000,
+          "peak_dbfs": -36.56014887651561,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -50.662846353418004,
+          "early_25_125ms_rms_dbfs": -54.34717922561087,
+          "final_half_second_rms_dbfs": -82.06365667309875,
+          "tail_rms_dbfs": -65.05246037990644,
+          "held_spectrum": {
+            "centroid_hz": 509.4922094796666,
+            "upper_2k_4k_fraction": 9.814245266885964e-05,
+            "low_below_500_fraction": 0.387801511620888
+          },
+          "half_second_rms_dbfs": [
+            -50.66262414362336,
+            -50.01603981781371,
+            -49.9226265534036,
+            -50.918113935646375,
+            -50.315498070249866,
+            -50.81772659626001,
+            -57.398817212595276,
+            -75.34885518534506,
+            -81.82336314223797,
+            -82.05243075896547,
+            -82.0874918376734,
+            -82.06365667309875
+          ]
+        },
+        "current": {
+          "pcm_sha256": "06efdb9f3ef0a4704a9a26ea82653a52332eca2d85cbdf41e8aa897412975118",
+          "frames": 288000,
+          "peak_dbfs": -37.10902061844487,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -51.10456657954845,
+          "early_25_125ms_rms_dbfs": -54.78860469817296,
+          "final_half_second_rms_dbfs": -82.06365666878143,
+          "tail_rms_dbfs": -65.48498733694848,
+          "held_spectrum": {
+            "centroid_hz": 510.5901689449794,
+            "upper_2k_4k_fraction": 0.0002621553353521873,
+            "low_below_500_fraction": 0.3876688001108205
+          },
+          "half_second_rms_dbfs": [
+            -51.104339942279715,
+            -50.45775136265776,
+            -50.36429162145831,
+            -51.36009863593273,
+            -50.75730962497523,
+            -51.25930714531642,
+            -57.83907656636687,
+            -75.6892805339351,
+            -81.8395024539287,
+            -82.05265525351174,
+            -82.08749012129927,
+            -82.06365666878143
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Choir Pad",
+      "scene": "stack",
+      "hold_seconds": 4,
+      "held_window_seconds": [
+        3.25,
+        3.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -35.27598171148442,
+      "peak_delta_db": -0.0926917029914538,
+      "held_rms_delta_db": -0.07841388949312034,
+      "upper_2k_4k_fraction_delta_db": 0.2846552496473184,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "e059974cee19e598dad84dcc4d4afc802f07be7671b24900dd7ad4dd115ddcf0",
+          "frames": 576000,
+          "peak_dbfs": -9.4677863757229,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -21.60799602811357,
+          "early_25_125ms_rms_dbfs": -26.87898006533009,
+          "final_half_second_rms_dbfs": -81.94120407767711,
+          "tail_rms_dbfs": -39.86657935869002,
+          "held_spectrum": {
+            "centroid_hz": 768.532274559868,
+            "upper_2k_4k_fraction": 0.007877345190273466,
+            "low_below_500_fraction": 0.11816813162135041
+          },
+          "half_second_rms_dbfs": [
+            -24.52481226015752,
+            -23.59472567695007,
+            -22.441741379318493,
+            -21.9848806553478,
+            -20.181001327117816,
+            -21.21289847722892,
+            -20.98335742316689,
+            -21.829023335345205,
+            -27.85094787728927,
+            -50.24530348590322,
+            -68.19812162232981,
+            -81.08829475520814,
+            -82.03592215148012,
+            -82.00149036529584,
+            -81.97410009099596,
+            -81.95683499408736,
+            -81.99499726405465,
+            -81.99547490141364,
+            -82.16781826779011,
+            -82.19221635166619,
+            -82.14625374065626,
+            -82.10195450949179,
+            -81.97023312044402,
+            -81.94120407767711
+          ]
+        },
+        "current": {
+          "pcm_sha256": "d823598fd0208a8a3c22e49fa324f13b0eb4f56de6f43278e0470b92ab49a832",
+          "frames": 576000,
+          "peak_dbfs": -9.560478078714354,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -21.68640991760669,
+          "early_25_125ms_rms_dbfs": -26.964872877771462,
+          "final_half_second_rms_dbfs": -81.94120407767711,
+          "tail_rms_dbfs": -39.93376342818032,
+          "held_spectrum": {
+            "centroid_hz": 770.8194303610296,
+            "upper_2k_4k_fraction": 0.00841095679099335,
+            "low_below_500_fraction": 0.1166640407906702
+          },
+          "half_second_rms_dbfs": [
+            -24.609046928565732,
+            -23.67040437705687,
+            -22.515609023967862,
+            -22.054743317607727,
+            -20.2611095608062,
+            -21.279042094518708,
+            -21.06620181919848,
+            -21.897235263418185,
+            -27.9180124727488,
+            -50.334216318192546,
+            -68.24321373195447,
+            -81.09932133204325,
+            -82.03593867365035,
+            -82.0014903649877,
+            -81.97410009099596,
+            -81.95683499408736,
+            -81.99499726405465,
+            -81.99547490141364,
+            -82.16781826779011,
+            -82.19221635166619,
+            -82.14625374065626,
+            -82.10195450949179,
+            -81.97023312044402,
+            -81.94120407767711
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "high",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": true,
+      "held_difference_relative_db": -300.0,
+      "peak_delta_db": 0.0,
+      "held_rms_delta_db": 0.0,
+      "upper_2k_4k_fraction_delta_db": 0.0,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "da0a86aed2b6806df74b429232dd7676ffe6bb9fff9883c29551857dafffcccf",
+          "frames": 288000,
+          "peak_dbfs": -21.476413682675076,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -26.02137914172518,
+          "early_25_125ms_rms_dbfs": -34.6445756871002,
+          "final_half_second_rms_dbfs": -81.87460249385744,
+          "tail_rms_dbfs": -38.62655330623057,
+          "held_spectrum": {
+            "centroid_hz": 273.81031537569714,
+            "upper_2k_4k_fraction": 0.00013450559992018928,
+            "low_below_500_fraction": 0.9678401582283045
+          },
+          "half_second_rms_dbfs": [
+            -27.639138070063694,
+            -25.891384981532163,
+            -26.011265500330566,
+            -26.017893224169878,
+            -26.002235456648148,
+            -26.0440071238831,
+            -31.060299284544456,
+            -44.22275493619089,
+            -57.28020363471895,
+            -70.0789335950432,
+            -79.62601180123845,
+            -81.87460249385744
+          ]
+        },
+        "current": {
+          "pcm_sha256": "da0a86aed2b6806df74b429232dd7676ffe6bb9fff9883c29551857dafffcccf",
+          "frames": 288000,
+          "peak_dbfs": -21.476413682675076,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -26.02137914172518,
+          "early_25_125ms_rms_dbfs": -34.6445756871002,
+          "final_half_second_rms_dbfs": -81.87460249385744,
+          "tail_rms_dbfs": -38.62655330623057,
+          "held_spectrum": {
+            "centroid_hz": 273.81031537569714,
+            "upper_2k_4k_fraction": 0.00013450559992018928,
+            "low_below_500_fraction": 0.9678401582283045
+          },
+          "half_second_rms_dbfs": [
+            -27.639138070063694,
+            -25.891384981532163,
+            -26.011265500330566,
+            -26.017893224169878,
+            -26.002235456648148,
+            -26.0440071238831,
+            -31.060299284544456,
+            -44.22275493619089,
+            -57.28020363471895,
+            -70.0789335950432,
+            -79.62601180123845,
+            -81.87460249385744
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "low",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -26.934053828837957,
+      "peak_delta_db": -0.4226469871585756,
+      "held_rms_delta_db": -0.36981902361535646,
+      "upper_2k_4k_fraction_delta_db": 0.5312080941776105,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "8f7bacb47edded0ad89b846171adacc8add61984a405f7982e707a5c21c68c96",
+          "frames": 288000,
+          "peak_dbfs": -27.601725127140732,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -42.15788522017689,
+          "early_25_125ms_rms_dbfs": -48.62746118843689,
+          "final_half_second_rms_dbfs": -81.99694952432577,
+          "tail_rms_dbfs": -54.3941595588985,
+          "held_spectrum": {
+            "centroid_hz": 190.41958565774937,
+            "upper_2k_4k_fraction": 1.3858618619773246e-05,
+            "low_below_500_fraction": 0.9899175757618786
+          },
+          "half_second_rms_dbfs": [
+            -41.60534384734994,
+            -40.22038469974678,
+            -41.13639524336402,
+            -41.69693215070457,
+            -42.229798856868435,
+            -41.92688069391632,
+            -46.85935147719686,
+            -59.517965385551655,
+            -71.8398593355792,
+            -80.46568034238223,
+            -81.8887735210324,
+            -81.99694952432577
+          ]
+        },
+        "current": {
+          "pcm_sha256": "888d3391523a7696154942f03f2de40d7ba066a180388bc7e815e0113f87a71d",
+          "frames": 288000,
+          "peak_dbfs": -28.024372114299307,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -42.52770424379224,
+          "early_25_125ms_rms_dbfs": -48.967930420388434,
+          "final_half_second_rms_dbfs": -81.99730912957165,
+          "tail_rms_dbfs": -54.75631883191195,
+          "held_spectrum": {
+            "centroid_hz": 190.53265030025486,
+            "upper_2k_4k_fraction": 1.5661766789482507e-05,
+            "low_below_500_fraction": 0.9895510004559631
+          },
+          "half_second_rms_dbfs": [
+            -41.940921327866825,
+            -40.55714158369969,
+            -41.48706972558423,
+            -42.061148119336764,
+            -42.600829844685265,
+            -42.29477123817549,
+            -47.222276199147615,
+            -59.8748391237821,
+            -72.16143754405888,
+            -80.56654891624461,
+            -81.89603842258485,
+            -81.99730912957165
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "middle",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -31.468737544403442,
+      "peak_delta_db": -0.1500070305233976,
+      "held_rms_delta_db": -0.22638873081894673,
+      "upper_2k_4k_fraction_delta_db": 3.050719567207196,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "8df700672740f3a1845691033e46d91beb59c04be85774f308da087c6ab12b0d",
+          "frames": 288000,
+          "peak_dbfs": -26.094105094732114,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -38.554820837699964,
+          "early_25_125ms_rms_dbfs": -44.21820134476987,
+          "final_half_second_rms_dbfs": -81.9903973262172,
+          "tail_rms_dbfs": -50.545935600756984,
+          "held_spectrum": {
+            "centroid_hz": 247.89595080350412,
+            "upper_2k_4k_fraction": 1.3824315778430128e-05,
+            "low_below_500_fraction": 0.9696816223807597
+          },
+          "half_second_rms_dbfs": [
+            -37.16204479269896,
+            -35.638104090421024,
+            -36.89829668645287,
+            -37.808987826862534,
+            -38.446396807688934,
+            -38.44177225537732,
+            -43.034319115131616,
+            -55.22976839704228,
+            -67.90853191732204,
+            -78.55483148145592,
+            -81.71430438785642,
+            -81.9903973262172
+          ]
+        },
+        "current": {
+          "pcm_sha256": "4132b1c5af3cd026bca03cca389d86265847d68efddfaef6661d6b78f2c9798a",
+          "frames": 288000,
+          "peak_dbfs": -26.244112125255512,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -38.78120956851891,
+          "early_25_125ms_rms_dbfs": -44.399117766041165,
+          "final_half_second_rms_dbfs": -81.99091981463035,
+          "tail_rms_dbfs": -50.7605152613413,
+          "held_spectrum": {
+            "centroid_hz": 247.95298381244382,
+            "upper_2k_4k_fraction": 2.7907157423533216e-05,
+            "low_below_500_fraction": 0.9694102138285134
+          },
+          "half_second_rms_dbfs": [
+            -37.339318331286805,
+            -35.81720229389185,
+            -37.09357200640434,
+            -38.021162242139745,
+            -38.67177100405796,
+            -38.666576443761805,
+            -43.2497062258245,
+            -55.43369935875702,
+            -68.09935626324219,
+            -78.66148476885934,
+            -81.72584968532897,
+            -81.99091981463035
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "pressure",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -26.81172188727073,
+      "peak_delta_db": -0.46497781883379474,
+      "held_rms_delta_db": -0.36959380443312284,
+      "upper_2k_4k_fraction_delta_db": 0.9253902141925636,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "ce28e206499dea402adde7558b2df7e9117abbb68dc842d418651cadcb6223af",
+          "frames": 288000,
+          "peak_dbfs": -27.003926646167102,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -39.34810662022766,
+          "early_25_125ms_rms_dbfs": -48.62746118843689,
+          "final_half_second_rms_dbfs": -81.99694949010248,
+          "tail_rms_dbfs": -53.240378241342086,
+          "held_spectrum": {
+            "centroid_hz": 194.973443699389,
+            "upper_2k_4k_fraction": 7.352321007324077e-06,
+            "low_below_500_fraction": 0.9884762202820416
+          },
+          "half_second_rms_dbfs": [
+            -41.60534384734994,
+            -40.22038469974678,
+            -41.13639524336402,
+            -39.43889456672991,
+            -39.43576723922941,
+            -39.10089743989357,
+            -45.64711422045937,
+            -59.50901121755634,
+            -71.83977717156058,
+            -80.46567177653019,
+            -81.88877290936118,
+            -81.99694949010248
+          ]
+        },
+        "current": {
+          "pcm_sha256": "efdc8527a9a34a9b9d6d4b24c6bc25842b50e2605044a544b150dcff4cf9390b",
+          "frames": 288000,
+          "peak_dbfs": -27.468904465000897,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -39.717700424660784,
+          "early_25_125ms_rms_dbfs": -48.967930420388434,
+          "final_half_second_rms_dbfs": -81.9973091008312,
+          "tail_rms_dbfs": -53.60238499306397,
+          "held_spectrum": {
+            "centroid_hz": 195.1281259116121,
+            "upper_2k_4k_fraction": 9.09836764648583e-06,
+            "low_below_500_fraction": 0.9880239569350253
+          },
+          "half_second_rms_dbfs": [
+            -41.940921327866825,
+            -40.55714158369969,
+            -41.48706972558423,
+            -39.80342670790867,
+            -39.80706868467044,
+            -39.46821230344079,
+            -46.009693696608956,
+            -59.86588378412481,
+            -72.16135614133917,
+            -80.56654087758031,
+            -81.89603785408994,
+            -81.9973091008312
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "soft",
+      "hold_seconds": 3,
+      "held_window_seconds": [
+        2.25,
+        2.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -28.154860231675638,
+      "peak_delta_db": -0.36939523121542805,
+      "held_rms_delta_db": -0.3228614725374257,
+      "upper_2k_4k_fraction_delta_db": 0.3354378677477804,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "f79f334bce9940ae0adc40092a6e1b0ed00acf07ed20b7544e8d50e5e75870e1",
+          "frames": 288000,
+          "peak_dbfs": -34.867160665833914,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -48.99392420698778,
+          "early_25_125ms_rms_dbfs": -56.137588209191954,
+          "final_half_second_rms_dbfs": -82.0009947807338,
+          "tail_rms_dbfs": -61.30250535484737,
+          "held_spectrum": {
+            "centroid_hz": 175.86849299224522,
+            "upper_2k_4k_fraction": 6.654471011234834e-05,
+            "low_below_500_fraction": 0.9922945701622362
+          },
+          "half_second_rms_dbfs": [
+            -48.81267001441972,
+            -47.37837046268222,
+            -48.14465094187493,
+            -48.58020543908595,
+            -49.05070938855357,
+            -48.79213129886934,
+            -53.78892554247879,
+            -66.41429022253777,
+            -77.4330084670667,
+            -81.61486520718202,
+            -81.96368259217321,
+            -82.0009947807338
+          ]
+        },
+        "current": {
+          "pcm_sha256": "88331d5a506af4c44456808a8af8b7b16e488818ebf93385080e01fb6634bcd1",
+          "frames": 288000,
+          "peak_dbfs": -35.23655589704934,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -49.3167856795252,
+          "early_25_125ms_rms_dbfs": -56.43713837519541,
+          "final_half_second_rms_dbfs": -82.00106430973784,
+          "tail_rms_dbfs": -61.617828961694684,
+          "held_spectrum": {
+            "centroid_hz": 176.14628149094082,
+            "upper_2k_4k_fraction": 7.18881527856297e-05,
+            "low_below_500_fraction": 0.9920256101612507
+          },
+          "half_second_rms_dbfs": [
+            -49.10875558864005,
+            -47.67570268219114,
+            -48.453002886972136,
+            -48.898632235635276,
+            -49.374213091499435,
+            -49.113695808287076,
+            -54.10676176261157,
+            -66.72010182849236,
+            -77.63348367518877,
+            -81.63749388211927,
+            -81.96501578483927,
+            -82.00106430973784
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Dark Choir",
+      "scene": "stack",
+      "hold_seconds": 4,
+      "held_window_seconds": [
+        3.25,
+        3.9
+      ],
+      "sample_identical": false,
+      "held_difference_relative_db": -37.62645939129446,
+      "peak_delta_db": -0.09939462933897225,
+      "held_rms_delta_db": -0.09332778942157205,
+      "upper_2k_4k_fraction_delta_db": 0.7871069565950779,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "0efed86e63bf1aa8a4567f22baca6c9a3e9e778d4bac4ff97e2a8b53409eb863",
+          "frames": 576000,
+          "peak_dbfs": -8.638211479728472,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -19.03001103189758,
+          "early_25_125ms_rms_dbfs": -28.186237116244996,
+          "final_half_second_rms_dbfs": -82.0706705879242,
+          "tail_rms_dbfs": -36.71601969126151,
+          "held_spectrum": {
+            "centroid_hz": 269.08846004651235,
+            "upper_2k_4k_fraction": 0.00010283918451270868,
+            "low_below_500_fraction": 0.9660758969627151
+          },
+          "half_second_rms_dbfs": [
+            -21.139713804110713,
+            -19.968594460781972,
+            -21.47240086062403,
+            -20.64245301110003,
+            -20.904574941490786,
+            -20.549083565647308,
+            -19.521920333321475,
+            -18.7240290005422,
+            -24.855665346000926,
+            -38.7824295334588,
+            -52.02053105412066,
+            -65.58160959479615,
+            -77.20240090021937,
+            -81.72479304155168,
+            -82.0544892604925,
+            -82.0021308414738,
+            -81.96375429812747,
+            -81.88006633130416,
+            -82.00053803523349,
+            -82.0332781587093,
+            -82.05624394241244,
+            -82.11234949132334,
+            -82.06767111678083,
+            -82.0706705879242
+          ]
+        },
+        "current": {
+          "pcm_sha256": "21b7e72c4ad537bce782a2cb57b58c59153942e0aae1d33d4feba8cc9a925aa3",
+          "frames": 576000,
+          "peak_dbfs": -8.737606109067444,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -19.12333882131915,
+          "early_25_125ms_rms_dbfs": -28.276044089078532,
+          "final_half_second_rms_dbfs": -82.0706705879242,
+          "tail_rms_dbfs": -36.80194026367447,
+          "held_spectrum": {
+            "centroid_hz": 269.3235824255656,
+            "upper_2k_4k_fraction": 0.00012327338450040823,
+            "low_below_500_fraction": 0.9657648312175782
+          },
+          "half_second_rms_dbfs": [
+            -21.227662409696187,
+            -20.052464936246153,
+            -21.555863784121307,
+            -20.724206902173513,
+            -20.99156643633509,
+            -20.643922994205617,
+            -19.618737298455247,
+            -18.815782322963305,
+            -24.94149446946386,
+            -38.87070950048445,
+            -52.105599614159686,
+            -65.66273302293578,
+            -77.25814226649527,
+            -81.73089082871952,
+            -82.05448924940883,
+            -82.0021308401835,
+            -81.96375429835642,
+            -81.88006633130416,
+            -82.00053803523349,
+            -82.0332781587093,
+            -82.05624394241244,
+            -82.11234949132334,
+            -82.06767111678083,
+            -82.0706705879242
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Sweep Pad",
+      "scene": "slow",
+      "hold_seconds": 6,
+      "held_window_seconds": [
+        5.25,
+        5.9
+      ],
+      "sample_identical": true,
+      "held_difference_relative_db": -300.0,
+      "peak_delta_db": 0.0,
+      "held_rms_delta_db": 0.0,
+      "upper_2k_4k_fraction_delta_db": 0.0,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "8a648fb6a05a01a6d722e6a7d34656d85974f5e5a4a9ec084fab720eb4375d3f",
+          "frames": 672000,
+          "peak_dbfs": -16.072640827848385,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -27.35678708039793,
+          "early_25_125ms_rms_dbfs": -38.950309894918,
+          "final_half_second_rms_dbfs": -82.75717240788359,
+          "tail_rms_dbfs": -40.903326763667465,
+          "held_spectrum": {
+            "centroid_hz": 331.74436653653146,
+            "upper_2k_4k_fraction": 0.002986692974805896,
+            "low_below_500_fraction": 0.873160847261729
+          },
+          "half_second_rms_dbfs": [
+            -31.111561507787894,
+            -28.467376704928697,
+            -24.38736646292369,
+            -27.937669145135267,
+            -25.05929506222774,
+            -27.966076002745854,
+            -25.44909350253674,
+            -28.423376447269955,
+            -25.628900200779896,
+            -28.899329968560497,
+            -25.412819049999218,
+            -28.98163466980982,
+            -29.065839139143552,
+            -44.652917618279005,
+            -46.23388078819049,
+            -61.17977713249865,
+            -62.031803257141206,
+            -74.9441164045871,
+            -76.34410603333987,
+            -82.13578328263331,
+            -82.49614402591601,
+            -82.86486555920985,
+            -82.7372670081261,
+            -82.62994850254854,
+            -82.53403130776731,
+            -82.55107203671318,
+            -82.63592146246185,
+            -82.75717240788359
+          ]
+        },
+        "current": {
+          "pcm_sha256": "8a648fb6a05a01a6d722e6a7d34656d85974f5e5a4a9ec084fab720eb4375d3f",
+          "frames": 672000,
+          "peak_dbfs": -16.072640827848385,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -27.35678708039793,
+          "early_25_125ms_rms_dbfs": -38.950309894918,
+          "final_half_second_rms_dbfs": -82.75717240788359,
+          "tail_rms_dbfs": -40.903326763667465,
+          "held_spectrum": {
+            "centroid_hz": 331.74436653653146,
+            "upper_2k_4k_fraction": 0.002986692974805896,
+            "low_below_500_fraction": 0.873160847261729
+          },
+          "half_second_rms_dbfs": [
+            -31.111561507787894,
+            -28.467376704928697,
+            -24.38736646292369,
+            -27.937669145135267,
+            -25.05929506222774,
+            -27.966076002745854,
+            -25.44909350253674,
+            -28.423376447269955,
+            -25.628900200779896,
+            -28.899329968560497,
+            -25.412819049999218,
+            -28.98163466980982,
+            -29.065839139143552,
+            -44.652917618279005,
+            -46.23388078819049,
+            -61.17977713249865,
+            -62.031803257141206,
+            -74.9441164045871,
+            -76.34410603333987,
+            -82.13578328263331,
+            -82.49614402591601,
+            -82.86486555920985,
+            -82.7372670081261,
+            -82.62994850254854,
+            -82.53403130776731,
+            -82.55107203671318,
+            -82.63592146246185,
+            -82.75717240788359
+          ]
+        }
+      }
+    },
+    {
+      "preset": "Sweep Pad",
+      "scene": "stack",
+      "hold_seconds": 6,
+      "held_window_seconds": [
+        5.25,
+        5.9
+      ],
+      "sample_identical": true,
+      "held_difference_relative_db": -300.0,
+      "peak_delta_db": 0.0,
+      "held_rms_delta_db": 0.0,
+      "upper_2k_4k_fraction_delta_db": 0.0,
+      "versions": {
+        "baseline": {
+          "pcm_sha256": "d15cb06a87ea1aecff6e95b56c6e712c1d9aa147dc8134f94cf01c30978c2d10",
+          "frames": 672000,
+          "peak_dbfs": -4.984149723475669,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -18.032977846582686,
+          "early_25_125ms_rms_dbfs": -32.38645286608953,
+          "final_half_second_rms_dbfs": -82.75717240788359,
+          "tail_rms_dbfs": -34.82278492256883,
+          "held_spectrum": {
+            "centroid_hz": 358.69733706906226,
+            "upper_2k_4k_fraction": 0.005532398066819216,
+            "low_below_500_fraction": 0.8121116470823396
+          },
+          "half_second_rms_dbfs": [
+            -22.82280478869663,
+            -18.61202947851447,
+            -16.544048496002596,
+            -15.576458597467596,
+            -16.395380904440792,
+            -16.404065061020454,
+            -15.921293033141254,
+            -16.192477914002556,
+            -16.424079070990366,
+            -17.275689263425157,
+            -16.786466865252414,
+            -18.51694683716246,
+            -23.637201642852386,
+            -30.901858449177496,
+            -39.85300940003596,
+            -46.949880069201654,
+            -52.62534663182385,
+            -61.84703075020319,
+            -68.30457880340285,
+            -75.43049087855869,
+            -81.34873223150413,
+            -82.46542206594263,
+            -82.72330104096575,
+            -82.62994865223976,
+            -82.53403130627696,
+            -82.55107203359286,
+            -82.63592146246671,
+            -82.75717240788359
+          ]
+        },
+        "current": {
+          "pcm_sha256": "d15cb06a87ea1aecff6e95b56c6e712c1d9aa147dc8134f94cf01c30978c2d10",
+          "frames": 672000,
+          "peak_dbfs": -4.984149723475669,
+          "over_full_scale_samples": 0,
+          "nonfinite_samples": 0,
+          "held_rms_dbfs": -18.032977846582686,
+          "early_25_125ms_rms_dbfs": -32.38645286608953,
+          "final_half_second_rms_dbfs": -82.75717240788359,
+          "tail_rms_dbfs": -34.82278492256883,
+          "held_spectrum": {
+            "centroid_hz": 358.69733706906226,
+            "upper_2k_4k_fraction": 0.005532398066819216,
+            "low_below_500_fraction": 0.8121116470823396
+          },
+          "half_second_rms_dbfs": [
+            -22.82280478869663,
+            -18.61202947851447,
+            -16.544048496002596,
+            -15.576458597467596,
+            -16.395380904440792,
+            -16.404065061020454,
+            -15.921293033141254,
+            -16.192477914002556,
+            -16.424079070990366,
+            -17.275689263425157,
+            -16.786466865252414,
+            -18.51694683716246,
+            -23.637201642852386,
+            -30.901858449177496,
+            -39.85300940003596,
+            -46.949880069201654,
+            -52.62534663182385,
+            -61.84703075020319,
+            -68.30457880340285,
+            -75.43049087855869,
+            -81.34873223150413,
+            -82.46542206594263,
+            -82.72330104096575,
+            -82.62994865223976,
+            -82.53403130627696,
+            -82.55107203359286,
+            -82.63592146246671,
+            -82.75717240788359
+          ]
+        }
+      }
+    }
+  ]
+}

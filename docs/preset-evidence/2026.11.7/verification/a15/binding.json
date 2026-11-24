@@ -1,0 +1,26 @@
+{
+  "qualified_snapshot": "A15 development snapshot; no final release binding claimed",
+  "captured_utc": "2026-11-24T11:32:53.358499+00:00",
+  "baseline_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "current_checkout_head": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "abi": "Each probe compiled against its own matching full source header tree; baseline extracted using git archive 18711f93 src.",
+  "sha256": {
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/FactoryPresets.h": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+    "src/core/curated/Plucked.inc": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "/tmp/cs80-build-1cee5a/libcs80_core.a": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+    "/tmp/cs80-reference-1cee5a/libcs80_core.a": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+    "/tmp/cs80-build-1cee5a/cs80_preset_capture": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d",
+    "/tmp/cs80-reference-1cee5a/cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+    "/tmp/cs80-a15-1cee5a/current-probe": "f6c549ca897236bdc54bf560c9f0835bb7e0cc3f87b6d042b3a485710ce40064",
+    "/tmp/cs80-a15-1cee5a/baseline-probe": "4b56a3c9ebb25e1d5c2cb6c67ec6e5b50ba9574a1d048bf8cbfe043535635586",
+    "/tmp/cs80-a15-1cee5a/current-inventory.json": "18eb73b667d0ca49333d0e979bdc8c790359903449a6f0bb0ee1f4303f7dc1e7",
+    "/tmp/cs80-a15-1cee5a/baseline-inventory.json": "e8e77220d6a4b68faa6b9b003765c6f332112ae6635c2dc953880d00e30bb96a",
+    "/tmp/cs80-a15-1cee5a/baseline/src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "/tmp/cs80-a15-1cee5a/baseline/src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "current_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "baseline_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "probe_sha256": "617deb36ea55e585cf79ce60691f13fe4815d555eaa342027cef43fb0e22cf9e",
+  "reproduce_sha256": "ff6e189425974e218bf4aa0b5057048819eaf3a473381799d6acace40d6ef75b",
+  "sample_rate": 48000,
+  "block_size": 96,
+  "quality": "Standard, authored oversampling=1",
+  "chord8_notes": [
+    48,
+    55,
+    60,
+    64,
+    67,
+    72,
+    76,
+    79
+  ],
+  "scope": "Local core actual-preset renders, no native package or listening claim",
+  "builds": {
+    "current": {
+      "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "src_archive_sha256": "f5b70a563cf2ad48a9730f2f6731a149018e984eb9717e30c8fe7b572d19e69d",
+      "library": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "library_sha256_before_and_after": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+      "probe_executable_sha256": "145fd74eb87b97e8ce618654fc528fb379655fa37fa0c37d6049ef48da644f48",
+      "compile_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I/tmp/cs80-a20/current-src/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a20/organ_probe.cpp",
+        "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a20/probe-current"
+      ]
+    },
+    "baseline": {
+      "source_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "src_archive_sha256": "22f326052ca9c52763bdf4224fa2dd1487359758a21e60908729a4d9727c1ff8",
+      "library": "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "library_sha256_before_and_after": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+      "probe_executable_sha256": "67cc71d13f55b852bc48553ae34e7ce1295ff5e5a93187d776c05af7d67c0fbf",
+      "compile_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I/tmp/cs80-a20/baseline-src/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a20/organ_probe.cpp",
+        "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a20/probe-baseline"
+      ]
+    }
+  },
+  "existing_evidence": {
+    "all_family_previous_review": "docs/preset-evidence/2026.11.6/reviews/a24.md",
+    "current_focused_receipt": "docs/preset-evidence/2026.11.7/development/focused-ctest-receipt.json",
+    "current_focused_log_sha256": "ce54830d3c2e31dac091ad02d2ed1b466bcba36bb384a4d6aca3a98188aae527",
+    "current_inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d"
+  }
+}

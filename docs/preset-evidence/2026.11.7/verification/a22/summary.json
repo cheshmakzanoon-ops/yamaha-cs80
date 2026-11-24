@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "all_family_structural_programs": 25,
+  "fresh_rendered_programs": 7,
+  "current_captures": 11,
+  "baseline_captures": 7,
+  "rendered_audio_seconds": 180,
+  "largest_peak_dbfs": -2.4172135548531273,
+  "loudest_final_tail_window_dbfs": -81.86263578352522,
+  "paired_revisions": [
+    {
+      "name": "Poly Brass Stab",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "PWM Poly",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "Poly Pluck",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "Ring Poly",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "Poly Swell",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "Synthwave Chords",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    },
+    {
+      "name": "Phased Polysynth",
+      "scenario": "pressed8",
+      "exact_pcm_equal": true,
+      "max_absolute_sample_difference": 0.0
+    }
+  ],
+  "pressure_controls": [
+    {
+      "name": "Poly Brass Stab",
+      "pressure0_to_1_exact_pcm_equal": true,
+      "held_2_to_5s_pressure_gain_db": 0.0
+    },
+    {
+      "name": "PWM Poly",
+      "pressure0_to_1_exact_pcm_equal": false,
+      "held_2_to_5s_pressure_gain_db": 1.6083099788860733
+    },
+    {
+      "name": "Poly Swell",
+      "pressure0_to_1_exact_pcm_equal": false,
+      "held_2_to_5s_pressure_gain_db": 15.14275563198813
+    },
+    {
+      "name": "Phased Polysynth",
+      "pressure0_to_1_exact_pcm_equal": false,
+      "held_2_to_5s_pressure_gain_db": 1.4098866490625273
+    }
+  ],
+  "scope": "Local complete-engine numerical measurements; no listening, acoustic-replica, native-host or archive qualification."
+}

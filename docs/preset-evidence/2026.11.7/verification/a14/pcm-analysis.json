@@ -1,0 +1,942 @@
+{
+  "baseline_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "current_head": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "current_is_working_tree": true,
+  "abi": "Baseline caller compiled against git archive 18711f93 src; current caller against current src. Separate matching static libraries.",
+  "libraries": {
+    "/tmp/cs80-reference-1cee5a/libcs80_core.a": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+    "/tmp/cs80-build-1cee5a/libcs80_core.a": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+  },
+  "probe_source_sha256": "d05a702ad28315de37aed430c92a907902493ad5d8754987520983da5e07f3b5",
+  "inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "rate": 48000,
+  "note": 36,
+  "velocity": 0.85,
+  "hold_seconds": 2.3,
+  "tail_seconds": 0.7,
+  "recipe_changes": [],
+  "ribbon": "0.35-0.50s ramp; plateau until 1.05s; returned at 1.20s. Up +12 semitones, down -12 semitones.",
+  "pressure": "0.75 from 0.35s, no ribbon; note-local polyPressure.",
+  "raw_pcm_location": "/tmp/cs80-a14",
+  "main_comparison_renders": 32,
+  "human_listening": false,
+  "results": [
+    {
+      "name": "Analog Bass",
+      "scenario": "steady",
+      "sha256": {
+        "baseline": "7d97dd53a827354c01ef15f91485d43c4928cce27d1841838e8677c7aba62e1e",
+        "current": "7d97dd53a827354c01ef15f91485d43c4928cce27d1841838e8677c7aba62e1e"
+      },
+      "identical_pcm": true,
+      "peak_dbfs": {
+        "baseline": -19.565334823458628,
+        "current": -19.565334823458628
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -30.984044089720708,
+          "current_dbfs": -30.984044089720708,
+          "difference_db_relative_current": -300.0
+        },
+        "bend": {
+          "baseline_dbfs": -32.441436208017514,
+          "current_dbfs": -32.441436208017514,
+          "difference_db_relative_current": -300.0
+        },
+        "return": {
+          "baseline_dbfs": -32.518987500109844,
+          "current_dbfs": -32.518987500109844,
+          "difference_db_relative_current": -300.0
+        },
+        "pre_release": {
+          "baseline_dbfs": -32.5057126134382,
+          "current_dbfs": -32.5057126134382,
+          "difference_db_relative_current": -300.0
+        },
+        "late_release": {
+          "baseline_dbfs": -148.97070877949744,
+          "current_dbfs": -148.97070877949744,
+          "difference_db_relative_current": -300.0
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69623160600542,
+        "error_cents": -0.36870084041078094
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.694712849504775,
+        "error_cents": -0.4491194056579081
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -5.725276050105328,
+          -9.70057927665977,
+          -12.811826425007627
+        ],
+        "current": [
+          -5.725276050105328,
+          -9.70057927665977,
+          -12.811826425007627
+        ]
+      }
+    },
+    {
+      "name": "Analog Bass",
+      "scenario": "up_return",
+      "sha256": {
+        "baseline": "aacc76461ab850551bbc53408b18f6da2dede912a9b64b1f92034d21074e4c88",
+        "current": "aacc76461ab850551bbc53408b18f6da2dede912a9b64b1f92034d21074e4c88"
+      },
+      "identical_pcm": true,
+      "peak_dbfs": {
+        "baseline": -19.565334823458628,
+        "current": -19.565334823458628
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -30.984044089720708,
+          "current_dbfs": -30.984044089720708,
+          "difference_db_relative_current": -300.0
+        },
+        "bend": {
+          "baseline_dbfs": -32.07013697583427,
+          "current_dbfs": -32.07013697583427,
+          "difference_db_relative_current": -300.0
+        },
+        "return": {
+          "baseline_dbfs": -32.532881934954716,
+          "current_dbfs": -32.532881934954716,
+          "difference_db_relative_current": -300.0
+        },
+        "pre_release": {
+          "baseline_dbfs": -32.55627271185131,
+          "current_dbfs": -32.55627271185131,
+          "difference_db_relative_current": -300.0
+        },
+        "late_release": {
+          "baseline_dbfs": -158.88735972254185,
+          "current_dbfs": -158.88735972254185,
+          "difference_db_relative_current": -300.0
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 65.40639132514966,
+        "measured_hz": 65.39347199696688,
+        "error_cents": -0.3419939493169242
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69473019051681,
+        "error_cents": -0.44820117332303844
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -6.748681318628364,
+          -12.820075874119086,
+          -17.467389616596805
+        ],
+        "current": [
+          -6.748681318628364,
+          -12.820075874119086,
+          -17.467389616596805
+        ]
+      }
+    },
+    {
+      "name": "Analog Bass",
+      "scenario": "down_return",
+      "sha256": {
+        "baseline": "56d7f7a1fa3a500dd7033f8fba90a00d84b818ae89eaeb97a50a7e1ca2f41bb9",
+        "current": "56d7f7a1fa3a500dd7033f8fba90a00d84b818ae89eaeb97a50a7e1ca2f41bb9"
+      },
+      "identical_pcm": true,
+      "peak_dbfs": {
+        "baseline": -19.565334823458628,
+        "current": -19.565334823458628
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -30.984044089720708,
+          "current_dbfs": -30.984044089720708,
+          "difference_db_relative_current": -300.0
+        },
+        "bend": {
+          "baseline_dbfs": -35.41381881399253,
+          "current_dbfs": -35.41381881399253,
+          "difference_db_relative_current": -300.0
+        },
+        "return": {
+          "baseline_dbfs": -32.590370815133085,
+          "current_dbfs": -32.590370815133085,
+          "difference_db_relative_current": -300.0
+        },
+        "pre_release": {
+          "baseline_dbfs": -32.92002437679273,
+          "current_dbfs": -32.92002437679273,
+          "difference_db_relative_current": -300.0
+        },
+        "late_release": {
+          "baseline_dbfs": -128.16696764767323,
+          "current_dbfs": -128.16696764767323,
+          "difference_db_relative_current": -300.0
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 16.351597831287414,
+        "measured_hz": 16.347794881604205,
+        "error_cents": -0.40268613340619674
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69470008217708,
+        "error_cents": -0.44979545492738154
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -4.197077142911781,
+          -5.852292960919839,
+          -7.861749397845612
+        ],
+        "current": [
+          -4.197077142911781,
+          -5.852292960919839,
+          -7.861749397845612
+        ]
+      }
+    },
+    {
+      "name": "Analog Bass",
+      "scenario": "pressure",
+      "sha256": {
+        "baseline": "a1be6d3ce9c4e895853f50d60195060906f24cb29fc81422d47f4df200e8509b",
+        "current": "a1be6d3ce9c4e895853f50d60195060906f24cb29fc81422d47f4df200e8509b"
+      },
+      "identical_pcm": true,
+      "peak_dbfs": {
+        "baseline": -19.565334823458628,
+        "current": -19.565334823458628
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -30.984044089720708,
+          "current_dbfs": -30.984044089720708,
+          "difference_db_relative_current": -300.0
+        },
+        "bend": {
+          "baseline_dbfs": -31.500408979136253,
+          "current_dbfs": -31.500408979136253,
+          "difference_db_relative_current": -300.0
+        },
+        "return": {
+          "baseline_dbfs": -31.555503183168984,
+          "current_dbfs": -31.555503183168984,
+          "difference_db_relative_current": -300.0
+        },
+        "pre_release": {
+          "baseline_dbfs": -31.54038654613833,
+          "current_dbfs": -31.54038654613833,
+          "difference_db_relative_current": -300.0
+        },
+        "late_release": {
+          "baseline_dbfs": -148.46023395061312,
+          "current_dbfs": -148.46023395061312,
+          "difference_db_relative_current": -300.0
+        }
+      }
+    },
+    {
+      "name": "Pluck Bass",
+      "scenario": "steady",
+      "sha256": {
+        "baseline": "b2a034bf23f6a79fa5765ab2dbab7dd107a336860e9431efe6f7289cfdc8c3f7",
+        "current": "88877ee0bf534b8f9673bb9dcd05c383fbb17caf0065750301cfbdd2d640a7f0"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -27.585290486399906,
+        "current": -27.585402845891103
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -36.06611235014214,
+          "current_dbfs": -36.06625600110987,
+          "difference_db_relative_current": -95.05845425711655
+        },
+        "bend": {
+          "baseline_dbfs": -44.298108126057826,
+          "current_dbfs": -44.298270276982464,
+          "difference_db_relative_current": -94.17431829638518
+        },
+        "return": {
+          "baseline_dbfs": -58.36974099577603,
+          "current_dbfs": -58.36997442204903,
+          "difference_db_relative_current": -91.09835190680899
+        },
+        "pre_release": {
+          "baseline_dbfs": -63.329676390994464,
+          "current_dbfs": -63.329845361188134,
+          "difference_db_relative_current": -93.89390075636554
+        },
+        "late_release": {
+          "baseline_dbfs": -158.35586770045558,
+          "current_dbfs": -158.35588422496068,
+          "difference_db_relative_current": -114.4088814773496
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69681129330623,
+        "error_cents": -0.33800722688535195
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69290617567638,
+        "error_cents": -0.5447881360598342
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -7.822241235338772,
+          -16.99783935198752,
+          -29.656984141597967
+        ],
+        "current": [
+          -7.822364128041964,
+          -16.99785020082763,
+          -29.656593329569585
+        ]
+      }
+    },
+    {
+      "name": "Pluck Bass",
+      "scenario": "up_return",
+      "sha256": {
+        "baseline": "671ffbcc516b5e963af4d3d490c5b35277198be50c59ec9305711a6391905720",
+        "current": "eb04880ee2085d244be964353d71f1ae3cb3b222b7ad5fd944466f4c5c47866e"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -27.585290486399906,
+        "current": -27.585402845891103
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -36.06611235014214,
+          "current_dbfs": -36.06625600110987,
+          "difference_db_relative_current": -95.05845425711655
+        },
+        "bend": {
+          "baseline_dbfs": -44.28689862236218,
+          "current_dbfs": -43.68868438258917,
+          "difference_db_relative_current": -22.611138390887987
+        },
+        "return": {
+          "baseline_dbfs": -58.39380207019617,
+          "current_dbfs": -58.3940344715695,
+          "difference_db_relative_current": -91.13493920852312
+        },
+        "pre_release": {
+          "baseline_dbfs": -63.30294098687621,
+          "current_dbfs": -63.30310745194224,
+          "difference_db_relative_current": -94.02016378532181
+        },
+        "late_release": {
+          "baseline_dbfs": -159.2875204634846,
+          "current_dbfs": -159.28752251953665,
+          "difference_db_relative_current": -132.23808531392268
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 65.40639132514966,
+        "measured_hz": 65.39460195719566,
+        "error_cents": -0.3120795150253992
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69290755856986,
+        "error_cents": -0.5447149057322812
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -7.981623658042048,
+          -17.036303088623573,
+          -29.031739945411807
+        ],
+        "current": [
+          -8.302138968135615,
+          -19.230782251924264,
+          -31.458334634070546
+        ]
+      }
+    },
+    {
+      "name": "Pluck Bass",
+      "scenario": "down_return",
+      "sha256": {
+        "baseline": "00ad521de638549ee0c971b185d6d89556d5b8bf5280dbf49295f4569ec4d120",
+        "current": "349810409f7c7ec8ad19559bfd2ff8567ed7f927855bc69ced5272d7aafcd617"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -27.585290486399906,
+        "current": -27.585402845891103
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -36.06611235014214,
+          "current_dbfs": -36.06625600110987,
+          "difference_db_relative_current": -95.05845425711655
+        },
+        "bend": {
+          "baseline_dbfs": -45.14241157815402,
+          "current_dbfs": -45.63396856130656,
+          "difference_db_relative_current": -24.13991746888254
+        },
+        "return": {
+          "baseline_dbfs": -58.47085599581174,
+          "current_dbfs": -58.471087483317355,
+          "difference_db_relative_current": -91.15654365689156
+        },
+        "pre_release": {
+          "baseline_dbfs": -63.49881259383429,
+          "current_dbfs": -63.49897747178584,
+          "difference_db_relative_current": -94.10672084312063
+        },
+        "late_release": {
+          "baseline_dbfs": -160.79638000618718,
+          "current_dbfs": -160.79636280443378,
+          "difference_db_relative_current": -114.05582213828015
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 16.351597831287414,
+        "measured_hz": 16.347475431305973,
+        "error_cents": -0.43651630076734127
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69290786886777,
+        "error_cents": -0.5446984740856189
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -6.50839643346511,
+          -15.783261618336521,
+          -30.36136412760307
+        ],
+        "current": [
+          -6.925563581953166,
+          -16.4506737822773,
+          -30.666549826413203
+        ]
+      }
+    },
+    {
+      "name": "Pluck Bass",
+      "scenario": "pressure",
+      "sha256": {
+        "baseline": "b2a034bf23f6a79fa5765ab2dbab7dd107a336860e9431efe6f7289cfdc8c3f7",
+        "current": "88877ee0bf534b8f9673bb9dcd05c383fbb17caf0065750301cfbdd2d640a7f0"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -27.585290486399906,
+        "current": -27.585402845891103
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -36.06611235014214,
+          "current_dbfs": -36.06625600110987,
+          "difference_db_relative_current": -95.05845425711655
+        },
+        "bend": {
+          "baseline_dbfs": -44.298108126057826,
+          "current_dbfs": -44.298270276982464,
+          "difference_db_relative_current": -94.17431829638518
+        },
+        "return": {
+          "baseline_dbfs": -58.36974099577603,
+          "current_dbfs": -58.36997442204903,
+          "difference_db_relative_current": -91.09835190680899
+        },
+        "pre_release": {
+          "baseline_dbfs": -63.329676390994464,
+          "current_dbfs": -63.329845361188134,
+          "difference_db_relative_current": -93.89390075636554
+        },
+        "late_release": {
+          "baseline_dbfs": -158.35586770045558,
+          "current_dbfs": -158.35588422496068,
+          "difference_db_relative_current": -114.4088814773496
+        }
+      }
+    },
+    {
+      "name": "Fretless Glide",
+      "scenario": "steady",
+      "sha256": {
+        "baseline": "6546940bc50fec35eb9bd03cd9b263de6de23a7afbc9fa36995dd7fa48289ffc",
+        "current": "603a279cc3f04ff5c3ee9e21bf04ba0cc1305abdf2ee5705f62368cd5dadad27"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.800883269352145,
+        "current": -26.55085036900646
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.41169126926341,
+          "current_dbfs": -34.38713739842871,
+          "difference_db_relative_current": -44.592139151258635
+        },
+        "bend": {
+          "baseline_dbfs": -38.92378794689863,
+          "current_dbfs": -38.923946165134794,
+          "difference_db_relative_current": -94.33340200253782
+        },
+        "return": {
+          "baseline_dbfs": -46.48905509870984,
+          "current_dbfs": -46.48928632259329,
+          "difference_db_relative_current": -91.19559286586329
+        },
+        "pre_release": {
+          "baseline_dbfs": -48.7434982101194,
+          "current_dbfs": -48.743667198404516,
+          "difference_db_relative_current": -93.92490109371582
+        },
+        "late_release": {
+          "baseline_dbfs": -139.63680183448653,
+          "current_dbfs": -139.63683438869464,
+          "difference_db_relative_current": -108.52350950204944
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69667291038483,
+        "error_cents": -0.3453343552151384
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69435128061657,
+        "error_cents": -0.4682651260828382
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -6.100844693720143,
+          -13.356620534618655,
+          -23.66296119480743
+        ],
+        "current": [
+          -6.100942351060558,
+          -13.35657275808927,
+          -23.662535012037658
+        ]
+      }
+    },
+    {
+      "name": "Fretless Glide",
+      "scenario": "up_return",
+      "sha256": {
+        "baseline": "011508f27555590d53847ef38ba74d31d5273ea7ef23a1cb2d92269287ac67bc",
+        "current": "bd300aafcdf13d0c960c2391e9476e85a1e36a19b9ee28e730806020a646f65f"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.800883269352145,
+        "current": -26.55085036900646
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.41169126926341,
+          "current_dbfs": -34.38713739842871,
+          "difference_db_relative_current": -44.592139151258635
+        },
+        "bend": {
+          "baseline_dbfs": -38.77397115984078,
+          "current_dbfs": -38.23387256899314,
+          "difference_db_relative_current": -22.691379161410758
+        },
+        "return": {
+          "baseline_dbfs": -46.486466498441104,
+          "current_dbfs": -46.48669652552299,
+          "difference_db_relative_current": -91.2388701204331
+        },
+        "pre_release": {
+          "baseline_dbfs": -48.737175803372104,
+          "current_dbfs": -48.737344763952,
+          "difference_db_relative_current": -93.92849054025353
+        },
+        "late_release": {
+          "baseline_dbfs": -139.01052932474667,
+          "current_dbfs": -139.01056949434374,
+          "difference_db_relative_current": -106.69774115762064
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 65.40639132514966,
+        "measured_hz": 65.39330012787337,
+        "error_cents": -0.34654403678870827
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.694352855102785,
+        "error_cents": -0.46818175375800725
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -6.485437549861456,
+          -13.983042412191363,
+          -24.57106249857002
+        ],
+        "current": [
+          -6.926053196037742,
+          -16.042589134399154,
+          -27.260257861222385
+        ]
+      }
+    },
+    {
+      "name": "Fretless Glide",
+      "scenario": "down_return",
+      "sha256": {
+        "baseline": "f80fc7d3cfeb2675f7d77fcee621a16c38f82886c29237be451c0072f25e6efe",
+        "current": "a4a8b84d4593b1b8ec566903df6f9f38a8e8fc4e59edfbd1453ac65ade6707c1"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.800883269352145,
+        "current": -26.55085036900646
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.41169126926341,
+          "current_dbfs": -34.38713739842871,
+          "difference_db_relative_current": -44.592139151258635
+        },
+        "bend": {
+          "baseline_dbfs": -39.73352382299276,
+          "current_dbfs": -40.24218782666188,
+          "difference_db_relative_current": -23.937966172893358
+        },
+        "return": {
+          "baseline_dbfs": -46.60136972964744,
+          "current_dbfs": -46.60159850888856,
+          "difference_db_relative_current": -91.2732186546674
+        },
+        "pre_release": {
+          "baseline_dbfs": -48.8111101368419,
+          "current_dbfs": -48.81127465291514,
+          "difference_db_relative_current": -94.15101883626
+        },
+        "late_release": {
+          "baseline_dbfs": -146.74458407998188,
+          "current_dbfs": -146.7445087446321,
+          "difference_db_relative_current": -101.2351340598037
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 16.351597831287414,
+        "measured_hz": 16.348335491037176,
+        "error_cents": -0.3454364560269851
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69435620107669,
+        "error_cents": -0.4680045774831771
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -5.054413552145643,
+          -12.068560598735527,
+          -22.253866409617626
+        ],
+        "current": [
+          -5.437270449289633,
+          -12.508387174848721,
+          -22.193266917898633
+        ]
+      }
+    },
+    {
+      "name": "Fretless Glide",
+      "scenario": "pressure",
+      "sha256": {
+        "baseline": "b42226c325bcd75ecdd795fb4f2f8fcea9d85c2af46e937a2cc7f5d0b0e9619b",
+        "current": "8d629551578e8f1d985806b09204ff72d748564a9e91c169be0d38b3833c5093"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.800883269352145,
+        "current": -26.55085036900646
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.41169126926341,
+          "current_dbfs": -34.38713739842871,
+          "difference_db_relative_current": -44.592139151258635
+        },
+        "bend": {
+          "baseline_dbfs": -37.312483327876414,
+          "current_dbfs": -37.31300212898515,
+          "difference_db_relative_current": -73.04917472230414
+        },
+        "return": {
+          "baseline_dbfs": -44.83985610044029,
+          "current_dbfs": -44.84079295726203,
+          "difference_db_relative_current": -71.99822897129158
+        },
+        "pre_release": {
+          "baseline_dbfs": -47.094461266213756,
+          "current_dbfs": -47.095561445431,
+          "difference_db_relative_current": -71.6205269175311
+        },
+        "late_release": {
+          "baseline_dbfs": -137.96789092637073,
+          "current_dbfs": -137.96752874793575,
+          "difference_db_relative_current": -87.59780480928498
+        }
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "scenario": "steady",
+      "sha256": {
+        "baseline": "7101b0219a2048fbcdb8c2e9e4568b396cc1b6051dd0619f7700b4774476cd4f",
+        "current": "8a7dce9311ca08c6606256d3516d571c3d34dd04a1b52a7e6442485f02e9fec2"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.044569581823982,
+        "current": -26.04463382687942
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.516584237862425,
+          "current_dbfs": -34.51672591478037,
+          "difference_db_relative_current": -93.4927308307718
+        },
+        "bend": {
+          "baseline_dbfs": -40.44559362716268,
+          "current_dbfs": -40.445774460006575,
+          "difference_db_relative_current": -92.57733429654238
+        },
+        "return": {
+          "baseline_dbfs": -49.96419924961387,
+          "current_dbfs": -49.964488430018974,
+          "difference_db_relative_current": -89.24637516358376
+        },
+        "pre_release": {
+          "baseline_dbfs": -52.91275747671585,
+          "current_dbfs": -52.91297326541177,
+          "difference_db_relative_current": -91.86249538388502
+        },
+        "late_release": {
+          "baseline_dbfs": -142.1354414808723,
+          "current_dbfs": -142.13548933829588,
+          "difference_db_relative_current": -105.17678687184322
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.6967701285743,
+        "error_cents": -0.3401868226191185
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.694347559901594,
+        "error_cents": -0.46846214570769246
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -7.497310307258667,
+          -16.97491121231267,
+          -29.74875648141438
+        ],
+        "current": [
+          -7.49720952676072,
+          -16.974270469848587,
+          -29.747975592763613
+        ]
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "scenario": "up_return",
+      "sha256": {
+        "baseline": "b65ede5dd3a141da385da2e98f56b96a6b28454b22e1189a7e002d281bc7f8bf",
+        "current": "1c02083911e34af6f209accbe2cfeed7c6567b1ab2d783043372274b98158ab1"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.044569581823982,
+        "current": -26.04463382687942
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.516584237862425,
+          "current_dbfs": -34.51672591478037,
+          "difference_db_relative_current": -93.4927308307718
+        },
+        "bend": {
+          "baseline_dbfs": -40.157161635113255,
+          "current_dbfs": -39.573404775319055,
+          "difference_db_relative_current": -19.860068114197677
+        },
+        "return": {
+          "baseline_dbfs": -49.98745703352563,
+          "current_dbfs": -49.98774594457566,
+          "difference_db_relative_current": -89.25653778936558
+        },
+        "pre_release": {
+          "baseline_dbfs": -52.87800253093772,
+          "current_dbfs": -52.87821666107773,
+          "difference_db_relative_current": -91.93253412590991
+        },
+        "late_release": {
+          "baseline_dbfs": -142.91595330126273,
+          "current_dbfs": -142.91598886660952,
+          "difference_db_relative_current": -107.75482747331353
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 65.40639132514966,
+        "measured_hz": 65.39354468045244,
+        "error_cents": -0.34006971970766653
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.69434925414639,
+        "error_cents": -0.46837243190648414
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -7.952855860353802,
+          -17.761573482721708,
+          -30.93331845519775
+        ],
+        "current": [
+          -10.025031071184781,
+          -20.443491284543562,
+          -32.73348752267868
+        ]
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "scenario": "down_return",
+      "sha256": {
+        "baseline": "3101de328b4b723c34c0f0c12680be92adf0f44b65a51ca5d8ee18deb1525d29",
+        "current": "be245a56255b474cd6051087ff853ea59ec4b9f6e8d240fb5d8672453200f698"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.044569581823982,
+        "current": -26.04463382687942
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.516584237862425,
+          "current_dbfs": -34.51672591478037,
+          "difference_db_relative_current": -93.4927308307718
+        },
+        "bend": {
+          "baseline_dbfs": -41.522868543178866,
+          "current_dbfs": -42.151577761356414,
+          "difference_db_relative_current": -22.235500123002417
+        },
+        "return": {
+          "baseline_dbfs": -50.05588012539092,
+          "current_dbfs": -50.056170922103064,
+          "difference_db_relative_current": -89.20077528310509
+        },
+        "pre_release": {
+          "baseline_dbfs": -53.098442537668895,
+          "current_dbfs": -53.0986591945795,
+          "difference_db_relative_current": -91.821364220137
+        },
+        "late_release": {
+          "baseline_dbfs": -149.93669494293619,
+          "current_dbfs": -149.93658356967921,
+          "difference_db_relative_current": -97.83919567088452
+        }
+      },
+      "bend_pitch": {
+        "expected_hz": 16.351597831287414,
+        "measured_hz": 16.34834035835479,
+        "error_cents": -0.3449210234479498
+      },
+      "return_pitch": {
+        "expected_hz": 32.70319566257483,
+        "measured_hz": 32.694349058572016,
+        "error_cents": -0.4683827879779115
+      },
+      "bend_harmonic_ratios_db": {
+        "baseline": [
+          -6.40659908557626,
+          -15.615050571212464,
+          -28.232847924579207
+        ],
+        "current": [
+          -6.653251866551546,
+          -14.998475301993675,
+          -26.400400998076123
+        ]
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "scenario": "pressure",
+      "sha256": {
+        "baseline": "7101b0219a2048fbcdb8c2e9e4568b396cc1b6051dd0619f7700b4774476cd4f",
+        "current": "8a7dce9311ca08c6606256d3516d571c3d34dd04a1b52a7e6442485f02e9fec2"
+      },
+      "identical_pcm": false,
+      "peak_dbfs": {
+        "baseline": -26.044569581823982,
+        "current": -26.04463382687942
+      },
+      "windows": {
+        "onset": {
+          "baseline_dbfs": -34.516584237862425,
+          "current_dbfs": -34.51672591478037,
+          "difference_db_relative_current": -93.4927308307718
+        },
+        "bend": {
+          "baseline_dbfs": -40.44559362716268,
+          "current_dbfs": -40.445774460006575,
+          "difference_db_relative_current": -92.57733429654238
+        },
+        "return": {
+          "baseline_dbfs": -49.96419924961387,
+          "current_dbfs": -49.964488430018974,
+          "difference_db_relative_current": -89.24637516358376
+        },
+        "pre_release": {
+          "baseline_dbfs": -52.91275747671585,
+          "current_dbfs": -52.91297326541177,
+          "difference_db_relative_current": -91.86249538388502
+        },
+        "late_release": {
+          "baseline_dbfs": -142.1354414808723,
+          "current_dbfs": -142.13548933829588,
+          "difference_db_relative_current": -105.17678687184322
+        }
+      }
+    }
+  ],
+  "executables": {
+    "/tmp/cs80-a14/probe-baseline": "f29c844eb38afee2a503ffa3b67ed9cbe4a91bb93e92e5a549360f0b0285be91",
+    "/tmp/cs80-a14/probe-current": "817fd311015fbc62ad23a3f932884783c6457c72df30eae821939a274f2b5499",
+    "/tmp/cs80-build-1cee5a/cs80_bass_plucked_refinement_tests": "a7af067e5292c09adcfc49b08b86eb3f6a339c97e839ed59f13819d7b0b3675f",
+    "/tmp/cs80-build-1cee5a/cs80_string_body_formant_tests": "d9dc39df7e5dd8fc9c2584c866c972a78326742df2ab90bcb0cc9693faeb11c9"
+  },
+  "source_hashes": {
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/curated/Bass.inc": "ae22d2c220127be965640beda4ad8b9a566761f45aa7d24286ca080f10b48248",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13"
+  }
+}

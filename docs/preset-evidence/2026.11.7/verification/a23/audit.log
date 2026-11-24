@@ -1,0 +1,99 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "published_comparator_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "passed": true,
+  "checks": 44,
+  "structural_programs": 56,
+  "gesture_captures": 12,
+  "pressure_captures": 8,
+  "new_audio_seconds": 57.8,
+  "maximum_gesture_peak_dbfs": -14.494695009432764,
+  "gestures": {
+    "overlap_touch": {
+      "held_after_overlap": [
+        60,
+        67
+      ],
+      "held_after_newer_key_up": [
+        60
+      ],
+      "held_after_both_keys_up": [],
+      "older_note_same_circuit": true,
+      "older_amp_envelope_after_over_before": 0.9996376729026991,
+      "interpretation": "polyphonic overlap; not monophonic priority or mono legato"
+    },
+    "overlap_original": {
+      "held_after_overlap": [
+        60,
+        67
+      ],
+      "held_after_newer_key_up": [
+        60
+      ],
+      "held_after_both_keys_up": [],
+      "older_note_same_circuit": true,
+      "older_amp_envelope_after_over_before": 0.9997939875524554,
+      "interpretation": "polyphonic overlap; not monophonic priority or mono legato"
+    },
+    "ribbon_return": {
+      "pre_hz": 261.56565458143155,
+      "bent_hz": 353.1473944117149,
+      "return_hz": 261.53270460320624,
+      "travel_ratio": 1.3501290717117902,
+      "return_cents": -0.21810094906058036
+    },
+    "glide_both_directions": {
+      "ascending_early_hz": 321.36230022230603,
+      "ascending_settled_hz": 390.22387621627456,
+      "descending_early_hz": 239.2252967610152,
+      "descending_settled_hz": 196.82693913634057
+    },
+    "pressure_vibrato_return": {
+      "pitch_span_cents": {
+        "dry": 0.08719108580956035,
+        "pressed": 46.218105232405215,
+        "returned": 0.6775301147954172
+      },
+      "pressed_minus_dry_rms_db": 9.069244497257385
+    },
+    "pressure_required_original": {
+      "zero_pressure_rms_dbfs": -240.0,
+      "light_pressure_rms_dbfs": -36.1677241196587,
+      "full_pressure_rms_dbfs": -25.954160236988525,
+      "light_to_full_db": 10.213563882670178,
+      "pressure_removed_rms_dbfs": -58.65762286859087,
+      "removal_relative_to_full_db": -32.70346263160234,
+      "note": "Removal is a fade through the pressure/touch path, not an instantaneous mute."
+    }
+  },
+  "pressure_comparisons": [
+    {
+      "preset": "Electric Leads 136",
+      "pressure": 0.3,
+      "current_minus_published_peak_db": -0.17890238000000025,
+      "current_minus_published_body_rms_db": 1.0884003500000006,
+      "waveform_difference_relative_to_published_rms_db": -17.399123058740447
+    },
+    {
+      "preset": "Electric Leads 136",
+      "pressure": 1.0,
+      "current_minus_published_peak_db": -0.10200284999999987,
+      "current_minus_published_body_rms_db": 0.6949162999999992,
+      "waveform_difference_relative_to_published_rms_db": -18.291260320531045
+    },
+    {
+      "preset": "Pressure Lead",
+      "pressure": 0.3,
+      "current_minus_published_peak_db": -0.1790660399999986,
+      "current_minus_published_body_rms_db": 1.1477260099999995,
+      "waveform_difference_relative_to_published_rms_db": -17.418999159812362
+    },
+    {
+      "preset": "Pressure Lead",
+      "pressure": 1.0,
+      "current_minus_published_peak_db": -0.09350145000000154,
+      "current_minus_published_body_rms_db": 0.720202620000002,
+      "waveform_difference_relative_to_published_rms_db": -18.36063856099641
+    }
+  ]
+}

@@ -1,0 +1,5977 @@
+{
+  "source_current": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source_baseline": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "revision": "2026.11.7",
+  "scope": "Complete structural family audit; eight current representative complete-preset phrases plus named controls; prior .6 full-family phrases reused explicitly.",
+  "counts": {
+    "structural_programs": 27,
+    "exact_204_value_comparisons": 5508,
+    "fresh_unique_presets": 8,
+    "current_renders": 18,
+    "baseline_renders": 2,
+    "fresh_stereo_frames": 9444000,
+    "fresh_seconds": 200.0,
+    "main_48k_generated_onsets": 275,
+    "main_48k_complete_gates": 273,
+    "body_noise_eligible_programs": 7,
+    "checks": 366,
+    "failures": 0
+  },
+  "method": {
+    "source_notes_velocities": [
+      [
+        55,
+        0.65
+      ],
+      [
+        48,
+        0.25
+      ],
+      [
+        52,
+        0.95
+      ]
+    ],
+    "channel": 1,
+    "pressure": 0,
+    "hold_seconds": 6,
+    "ordinary_note_off_tail_seconds": 4,
+    "block_frames": 64,
+    "timing_tolerance_blocks": 2,
+    "normal_parameter_overrides": [],
+    "control_overrides": {
+      "tempo_jump": "transport 60 to 180 BPM at exactly 3 seconds",
+      "lfo_off": "lfo1_depth = 0 only",
+      "ring_off": "ring_amount = 0 only"
+    },
+    "motion_metric": "Stereo RMS difference and gain-normalized first-difference brightness ratios, 50 adjacent 100 ms windows between 1 and 6 seconds.",
+    "articulation_metric": "For complete onset/off/next-on triples after one second, compare stereo RMS in 65-90% of the released gap with RMS in 15-45% of the preceding held gate. Boundaries use public callback-end telemetry; tails are preserved.",
+    "capture_cli_limit": "preset_capture holds a single source MIDI note; arp remains enabled, but generic summary metrics alone cannot prove multi-key order, scheduled gate timing, or tempo behavior."
+  },
+  "inventory": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "bytes": 710464,
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d"
+  },
+  "baseline_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "published_4_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+  "source_receipts": [
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4"
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad"
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39"
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "matches_current_commit": true,
+      "unchanged_since_6": false,
+      "baseline_sha256": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4"
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "matches_current_commit": true,
+      "unchanged_since_6": false,
+      "baseline_sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201"
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13"
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "sha256": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc"
+    },
+    {
+      "path": "src/core/RingModulatorCircuit.h",
+      "sha256": "9e2ee4b2fb13f515c7f83360f4392fac8460d443078c425e27a5072a3fbdf630",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "9e2ee4b2fb13f515c7f83360f4392fac8460d443078c425e27a5072a3fbdf630"
+    },
+    {
+      "path": "src/core/ModulationLfo.h",
+      "sha256": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400"
+    },
+    {
+      "path": "src/tools/preset_capture.cpp",
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    {
+      "path": "tests/OriginalArticulationTests.cpp",
+      "sha256": "f5f46eb85a82361de84eb0cb29c8bf40b73c7bcd34848e3b5ce752450edb62c7",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "f5f46eb85a82361de84eb0cb29c8bf40b73c7bcd34848e3b5ce752450edb62c7"
+    },
+    {
+      "path": "tests/ModernPresetRefinementTests.cpp",
+      "sha256": "8a9a62c13bc06192aa1ddd5754fcba55c1ec260af339ff85ab35318864d19991",
+      "matches_current_commit": true,
+      "unchanged_since_6": true,
+      "baseline_sha256": "8a9a62c13bc06192aa1ddd5754fcba55c1ec260af339ff85ab35318864d19991"
+    }
+  ],
+  "core_archives": [
+    {
+      "path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "bytes": 1736086,
+      "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+    },
+    {
+      "path": "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "bytes": 1735386,
+      "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583"
+    }
+  ],
+  "build_setup": {
+    "source_current": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "source_baseline": "18711f93a39aa49f3d6f9a41784be456224facbe",
+    "archive_extraction": "Complete archived src tree for baseline ABI compatibility",
+    "baseline_source_archive_sha256": "22f326052ca9c52763bdf4224fa2dd1487359758a21e60908729a4d9727c1ff8",
+    "commands": {
+      "current": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-I/tmp/cs80-session-1cee5a/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a24/sequence-probe.cpp",
+        "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a24-1cee5a/probe-current"
+      ],
+      "baseline": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-I/tmp/cs80-a24-1cee5a/oldsrc/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a24/sequence-probe.cpp",
+        "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a24-1cee5a/probe-baseline"
+      ]
+    },
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0"
+  },
+  "probe_source": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a24/sequence-probe.cpp",
+    "bytes": 6630,
+    "sha256": "4c0bd8c0872a6c7877de4cd9a478eb649c2ea8d9d4f943cc0dd3da71194eb87d"
+  },
+  "probe_executables": [
+    {
+      "path": "/tmp/cs80-a24-1cee5a/probe-current",
+      "bytes": 1122096,
+      "sha256": "82ee247191b470159a2678bc8d50cc7adbf476e07bc6e2376c94a96ad1b9815b"
+    },
+    {
+      "path": "/tmp/cs80-a24-1cee5a/probe-baseline",
+      "bytes": 1121704,
+      "sha256": "a0d62a65d5bfa75a4e76822ca974cee9be6655fdebdf938585b426fcb07798ab"
+    }
+  ],
+  "raw_telemetry": {
+    "current": {
+      "file": "current.jsonl",
+      "sha256": "81893853cabcd1832bc199cc9aadbf8647ef43c8ba2e22445a9e24f6161fc520"
+    },
+    "baseline": {
+      "file": "baseline.jsonl",
+      "sha256": "dff66a6d9e3a684475f629895217d7f5b6b3bdf05c62d4d7cf47fbd26d1407a5"
+    }
+  },
+  "pcm_manifest": [
+    {
+      "build": "current",
+      "name": "Arp Motion",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/42-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "6aea21a27e7e66ba535c49e2e3754d4fea62cfbc519a41357fe455e8ca77d02f"
+    },
+    {
+      "build": "current",
+      "name": "Distant Sequences 159",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/202-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "cb5952bff87978e114dd502819d68cc666aed0349351af474f28243d63ed3901"
+    },
+    {
+      "build": "current",
+      "name": "Slow Sequences 166",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/209-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "3587bf3fe9d4da55866832f7908508fc3e6e667956ab3d6a9c60fe7650b62136"
+    },
+    {
+      "build": "current",
+      "name": "Neon Sequences 174",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/217-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "e871177dd9d370f9a9c37251edf0cab26955e465733806c4c8fa4c6c5fbb1365"
+    },
+    {
+      "build": "current",
+      "name": "Arp Poly",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/508-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "0151bf476ddebc0a1201cdac7770b469df1268d9dbcfbf890d5fe850559e12d3"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bells",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/509-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "d5a55ea2537fe35d157aeee8980f1012c131fae76b3e610ec15744ec7755b500"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bass",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/510-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "5b5e89ea32d01cfc378e766b1dc2b2d21816a6cb3f1a2a37f22f21395f99dd1c"
+    },
+    {
+      "build": "current",
+      "name": "Random Arp",
+      "scenario": "normal",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/518-48000-normal.f32",
+      "bytes": 3840000,
+      "sha256": "bc66725783f7cffb9b081a42afb5908e5aed5debea881ca7eada7535b4c4c752"
+    },
+    {
+      "build": "current",
+      "name": "Arp Poly",
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/508-48000-tempo_jump.f32",
+      "bytes": 3840000,
+      "sha256": "0151bf476ddebc0a1201cdac7770b469df1268d9dbcfbf890d5fe850559e12d3"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bells",
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/509-48000-tempo_jump.f32",
+      "bytes": 3840000,
+      "sha256": "d5a55ea2537fe35d157aeee8980f1012c131fae76b3e610ec15744ec7755b500"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bass",
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/510-48000-tempo_jump.f32",
+      "bytes": 3840000,
+      "sha256": "5b5e89ea32d01cfc378e766b1dc2b2d21816a6cb3f1a2a37f22f21395f99dd1c"
+    },
+    {
+      "build": "current",
+      "name": "Random Arp",
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/518-48000-tempo_jump.f32",
+      "bytes": 3840000,
+      "sha256": "bc66725783f7cffb9b081a42afb5908e5aed5debea881ca7eada7535b4c4c752"
+    },
+    {
+      "build": "current",
+      "name": "Arp Poly",
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/508-48000-lfo_off.f32",
+      "bytes": 3840000,
+      "sha256": "64045ed389581f8c90166ae5215089163c3b7761c03d58207f911e0a97fc3189"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bass",
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/510-48000-lfo_off.f32",
+      "bytes": 3840000,
+      "sha256": "973bb94c49aff8238e4e8ad4ad6c95b3c4ae4a3c72385eb28f7460d4b774c5d7"
+    },
+    {
+      "build": "current",
+      "name": "Random Arp",
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/518-48000-lfo_off.f32",
+      "bytes": 3840000,
+      "sha256": "f1e1e04ca0a09677d70b067fa89477a9cbab8a4cf356b7e868e216e255cbd6f5"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bells",
+      "scenario": "ring_off",
+      "host_rate": 48000,
+      "path": "/tmp/cs80-a24-1cee5a/current/509-48000-ring_off.f32",
+      "bytes": 3840000,
+      "sha256": "ccf80cb965eaf38411ac0b2847364d80e21d41c747d5fe67def57350dfd51023"
+    },
+    {
+      "build": "current",
+      "name": "Arp Bells",
+      "scenario": "normal",
+      "host_rate": 44100,
+      "path": "/tmp/cs80-a24-1cee5a/current/509-44100-normal.f32",
+      "bytes": 3528000,
+      "sha256": "eb0bd1d70418365eb727ac980c8679244804deb65ed6ff04578fcb53c91a84d6"
+    },
+    {
+      "build": "current",
+      "name": "Slow Sequences 166",
+      "scenario": "normal",
+      "host_rate": 44100,
+      "path": "/tmp/cs80-a24-1cee5a/current/209-44100-normal.f32",
+      "bytes": 3528000,
+      "sha256": "26ac0178e2250c9e5110bd40d960d6a6cff4319d2cdcbef5701fc0807314e6af"
+    },
+    {
+      "build": "baseline",
+      "name": "Arp Bells",
+      "scenario": "normal",
+      "host_rate": 44100,
+      "path": "/tmp/cs80-a24-1cee5a/baseline/509-44100-normal.f32",
+      "bytes": 3528000,
+      "sha256": "e3c3312a3e4c61d022c7dd98c01f7990ad45f10a057012f14d2aa9d9dac79275"
+    },
+    {
+      "build": "baseline",
+      "name": "Slow Sequences 166",
+      "scenario": "normal",
+      "host_rate": 44100,
+      "path": "/tmp/cs80-a24-1cee5a/baseline/209-44100-normal.f32",
+      "bytes": 3528000,
+      "sha256": "9f883d1ce70c5833c97800cb6307ef1bb3abe6b81fab4fae10b86acea45ec71f"
+    }
+  ],
+  "all_27_structural_rows": [
+    {
+      "host_index": 42,
+      "name": "Arp Motion",
+      "source_recipe": "Arp Poly",
+      "mode": "ascending",
+      "arp_rate_hz": 8,
+      "octaves": 2,
+      "gate_ms": 72.5,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 0.600000024,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0339200012,
+          "ch1_f_a": 0.00200000009,
+          "ch1_f_d": 0.254999995,
+          "ch1_f_r": 0.0381599963,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.125,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0174250007,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0729999989,
+          "ch2_f_r": 0.0194749981,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 200,
+      "name": "Amber Sequences 157",
+      "source_recipe": "Arp Poly",
+      "mode": "ascending",
+      "arp_rate_hz": 4,
+      "octaves": 1,
+      "gate_ms": 145.0,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00282842712,
+          "ch1_v_d": 1.03565109,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0525000021,
+          "ch1_f_a": 0.00282842712,
+          "ch1_f_d": 0.460635304,
+          "ch1_f_r": 0.0525000021,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00141421356,
+          "ch2_v_d": 0.239566967,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0285904799,
+          "ch2_f_a": 0.00141421356,
+          "ch2_f_d": 0.143740743,
+          "ch2_f_r": 0.031954065,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 201,
+      "name": "Velvet Sequences 158",
+      "source_recipe": "Arp Bells",
+      "mode": "up/down",
+      "arp_rate_hz": 3,
+      "octaves": 2,
+      "gate_ms": 193.33333333333334,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00230940105,
+          "ch1_v_d": 3.79999995,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.148399994,
+          "ch1_f_a": 0.00115470053,
+          "ch1_f_d": 0.300000012,
+          "ch1_f_r": 0.105999999,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00115470053,
+          "ch2_v_d": 0.272059649,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0445139334,
+          "ch2_f_a": 0.00115470053,
+          "ch2_f_d": 0.394287556,
+          "ch2_f_r": 0.0700000077,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.374346942,
+        "body1_decay": 0.579999983,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.654346943,
+        "body2_decay": 0.25,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_f_a",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 202,
+      "name": "Distant Sequences 159",
+      "source_recipe": "Arp Bass",
+      "mode": "descending",
+      "arp_rate_hz": 2.5,
+      "octaves": 1,
+      "gate_ms": 232.0,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00309838681,
+          "ch1_v_d": 1.32494724,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0694933459,
+          "ch1_f_a": 0.00309838681,
+          "ch1_f_d": 0.510980487,
+          "ch1_f_r": 0.0694933459,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.0015491934,
+          "ch2_v_d": 0.241870448,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0335993804,
+          "ch2_f_a": 0.0015491934,
+          "ch2_f_d": 0.144724235,
+          "ch2_f_r": 0.0355758108,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 203,
+      "name": "Neon Sequences 160",
+      "source_recipe": "Random Arp",
+      "mode": "random",
+      "arp_rate_hz": 8,
+      "octaves": 2,
+      "gate_ms": 56.25,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 3,
+          "lfo1_depth": 0.129999995,
+          "lfo1_dest": 2,
+          "lfo1_wave": 5
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00155884575,
+          "ch1_v_d": 0.362303436,
+          "ch1_v_s": 0,
+          "ch1_v_r": 0.0193422586,
+          "ch1_f_a": 0.00155884575,
+          "ch1_f_d": 0.138914868,
+          "ch1_f_r": 0.0225659702,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.0714184344,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0120889116,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0470388867,
+          "ch2_f_r": 0.0145066939,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 204,
+      "name": "Hollow Sequences 161",
+      "source_recipe": "Arp Poly",
+      "mode": "up/down",
+      "arp_rate_hz": 5,
+      "octaves": 1,
+      "gate_ms": 116.0,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00252982229,
+          "ch1_v_d": 0.920253992,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0420000032,
+          "ch1_f_a": 0.00252982229,
+          "ch1_f_d": 0.39759323,
+          "ch1_f_r": 0.0420000032,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00126491114,
+          "ch2_v_d": 0.197460368,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0241846014,
+          "ch2_f_a": 0.00126491114,
+          "ch2_f_d": 0.116910234,
+          "ch2_f_r": 0.0270298459,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 205,
+      "name": "Golden Sequences 162",
+      "source_recipe": "Arp Bells",
+      "mode": "ascending",
+      "arp_rate_hz": 6,
+      "octaves": 2,
+      "gate_ms": 96.66666666666667,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00163299334,
+          "ch1_v_d": 4.06599998,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.131600007,
+          "ch1_f_a": 0.00100000005,
+          "ch1_f_d": 0.315616071,
+          "ch1_f_r": 0.0940000042,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.14858146,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.024273226,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.206876606,
+          "ch2_f_r": 0.0350000039,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.482000589,
+        "body1_decay": 0.607307911,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.762000561,
+        "body2_decay": 0.253405929,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 206,
+      "name": "Frozen Sequences 163",
+      "source_recipe": "Arp Bells",
+      "mode": "descending",
+      "arp_rate_hz": 3.5,
+      "octaves": 3,
+      "gate_ms": 165.71428571428572,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00213809009,
+          "ch1_v_d": 4.63600016,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.148399994,
+          "ch1_f_a": 0.00106904504,
+          "ch1_f_d": 0.348250031,
+          "ch1_f_r": 0.105999999,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00106904504,
+          "ch2_v_d": 0.250376046,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0396538936,
+          "ch2_f_a": 0.00106904504,
+          "ch2_f_d": 0.354393333,
+          "ch2_f_r": 0.0600000098,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.445717245,
+        "body1_decay": 0.663976431,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.725717247,
+        "body2_decay": 0.260142893,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_f_a",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 207,
+      "name": "Electric Sequences 164",
+      "source_recipe": "Arp Bass",
+      "mode": "played order",
+      "arp_rate_hz": 7,
+      "octaves": 1,
+      "gate_ms": 82.85714285714286,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00155537773,
+          "ch1_v_d": 0.597074449,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0300000049,
+          "ch1_f_a": 0.00155537773,
+          "ch1_f_d": 0.214485422,
+          "ch1_f_r": 0.0300000049,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.0923837721,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0151439393,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0530441664,
+          "ch2_f_r": 0.0160347577,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 208,
+      "name": "Midnight Sequences 165",
+      "source_recipe": "Arp Poly",
+      "mode": "up/down",
+      "arp_rate_hz": 3,
+      "octaves": 1,
+      "gate_ms": 193.33333333333334,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00316227786,
+          "ch1_v_d": 1.20818996,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0674389601,
+          "ch1_f_a": 0.00316227786,
+          "ch1_f_d": 0.548261046,
+          "ch1_f_r": 0.0700000077,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00158113893,
+          "ch2_v_d": 0.293593496,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0346439816,
+          "ch2_f_a": 0.00158113893,
+          "ch2_f_d": 0.17800428,
+          "ch2_f_r": 0.0387197398,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 209,
+      "name": "Slow Sequences 166",
+      "source_recipe": "Arp Bells",
+      "mode": "ascending",
+      "arp_rate_hz": 2,
+      "octaves": 2,
+      "gate_ms": 290.0,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00282842712,
+          "ch1_v_d": 5.01600027,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.148399994,
+          "ch1_f_a": 0.00141421356,
+          "ch1_f_d": 0.369446665,
+          "ch1_f_r": 0.105999999,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00141421356,
+          "ch2_v_d": 0.423552245,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0603343174,
+          "ch2_f_a": 0.00141421356,
+          "ch2_f_d": 0.612652957,
+          "ch2_f_r": 0.105000004,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.430492073,
+        "body1_decay": 0.700516343,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.710492074,
+        "body2_decay": 0.26427421,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_hpf_cutoff",
+        "ch1_f_a",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 210,
+      "name": "Bright Sequences 167",
+      "source_recipe": "Arp Poly",
+      "mode": "descending",
+      "arp_rate_hz": 8,
+      "octaves": 2,
+      "gate_ms": 72.5,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 0.56400001,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.026250001,
+          "ch1_f_a": 0.00200000009,
+          "ch1_f_d": 0.243436694,
+          "ch1_f_r": 0.026250001,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.122853011,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0170000009,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0721021816,
+          "ch2_f_r": 0.0189999994,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_r",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 211,
+      "name": "Dark Sequences 168",
+      "source_recipe": "Arp Bass",
+      "mode": "up/down",
+      "arp_rate_hz": 4.5,
+      "octaves": 1,
+      "gate_ms": 128.88888888888889,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00230940105,
+          "ch1_v_d": 0.904214501,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0379686765,
+          "ch1_f_a": 0.00230940105,
+          "ch1_f_d": 0.328813702,
+          "ch1_f_r": 0.0379686765,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.00115470053,
+          "ch2_v_d": 0.142507449,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0189843383,
+          "ch2_f_a": 0.00115470053,
+          "ch2_f_d": 0.0828003883,
+          "ch2_f_r": 0.020101063,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 212,
+      "name": "Wide Sequences 169",
+      "source_recipe": "Random Arp",
+      "mode": "random",
+      "arp_rate_hz": 5.5,
+      "octaves": 2,
+      "gate_ms": 81.81818181818181,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 3,
+          "lfo1_depth": 0.129999995,
+          "lfo1_dest": 2,
+          "lfo1_wave": 5
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00208893185,
+          "ch1_v_d": 0.528247058,
+          "ch1_v_s": 0,
+          "ch1_v_r": 0.0256184414,
+          "ch1_f_a": 0.00208893185,
+          "ch1_f_d": 0.203370601,
+          "ch1_f_r": 0.029888181,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00104446593,
+          "ch2_v_d": 0.103873,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0160115249,
+          "ch2_f_a": 0.00104446593,
+          "ch2_f_d": 0.0689677894,
+          "ch2_f_r": 0.0192138292,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_pan",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_pan"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 213,
+      "name": "Soft Sequences 170",
+      "source_recipe": "Arp Bells",
+      "mode": "played order",
+      "arp_rate_hz": 3.25,
+      "octaves": 1,
+      "gate_ms": 178.46153846153845,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00221880083,
+          "ch1_v_d": 4.02799988,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.140000001,
+          "ch1_f_a": 0.00110940041,
+          "ch1_f_d": 0.313401192,
+          "ch1_f_r": 0.100000001,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00110940041,
+          "ch2_v_d": 0.257314295,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0408978537,
+          "ch2_f_a": 0.00110940041,
+          "ch2_f_d": 0.36970067,
+          "ch2_f_r": 0.0646153912,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.390495569,
+        "body1_decay": 0.60344255,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.67049557,
+        "body2_decay": 0.252930492,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_f_a",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 214,
+      "name": "Amber Sequences 171",
+      "source_recipe": "Arp Bass",
+      "mode": "ascending",
+      "arp_rate_hz": 4.25,
+      "octaves": 2,
+      "gate_ms": 136.47058823529412,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.0023763543,
+          "ch1_v_d": 1.03228474,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0440352745,
+          "ch1_f_a": 0.0023763543,
+          "ch1_f_d": 0.368648201,
+          "ch1_f_r": 0.0440352745,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.00118817715,
+          "ch2_v_d": 0.154087961,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0220176373,
+          "ch2_f_a": 0.00118817715,
+          "ch2_f_d": 0.089103207,
+          "ch2_f_r": 0.0233127903,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 215,
+      "name": "Velvet Sequences 172",
+      "source_recipe": "Arp Poly",
+      "mode": "up/down",
+      "arp_rate_hz": 3.75,
+      "octaves": 1,
+      "gate_ms": 154.66666666666666,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00292118732,
+          "ch1_v_d": 0.981837094,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0560000092,
+          "ch1_f_a": 0.00292118732,
+          "ch1_f_d": 0.450126141,
+          "ch1_f_r": 0.0560000092,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00146059366,
+          "ch2_v_d": 0.247208193,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0307586212,
+          "ch2_f_a": 0.00146059366,
+          "ch2_f_d": 0.149943858,
+          "ch2_f_r": 0.0343772769,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 216,
+      "name": "Distant Sequences 173",
+      "source_recipe": "Random Arp",
+      "mode": "descending",
+      "arp_rate_hz": 2.75,
+      "octaves": 2,
+      "gate_ms": 210.9090909090909,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 3,
+          "lfo1_depth": 0.129999995,
+          "lfo1_dest": 2,
+          "lfo1_wave": 5
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00316227786,
+          "ch1_v_d": 0.870767534,
+          "ch1_v_s": 0,
+          "ch1_v_r": 0.0505792163,
+          "ch1_f_a": 0.00316227786,
+          "ch1_f_d": 0.367812723,
+          "ch1_f_r": 0.0590090863,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00158113893,
+          "ch2_v_d": 0.216705337,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0305682179,
+          "ch2_f_a": 0.00158113893,
+          "ch2_f_d": 0.150447011,
+          "ch2_f_r": 0.0366818607,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 217,
+      "name": "Neon Sequences 174",
+      "source_recipe": "Arp Poly",
+      "mode": "played order",
+      "arp_rate_hz": 9,
+      "octaves": 3,
+      "gate_ms": 64.44444444444444,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00169705634,
+          "ch1_v_d": 0.505758941,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0233333334,
+          "ch1_f_a": 0.00169705634,
+          "ch1_f_d": 0.217498794,
+          "ch1_f_r": 0.0233333334,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.109497532,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0155626861,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0640525222,
+          "ch2_f_r": 0.017393589,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 218,
+      "name": "Hollow Sequences 175",
+      "source_recipe": "Arp Bells",
+      "mode": "up/down",
+      "arp_rate_hz": 5.25,
+      "octaves": 1,
+      "gate_ms": 110.47619047619048,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00174574321,
+          "ch1_v_d": 4.29400015,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.140000001,
+          "ch1_f_a": 0.00100000005,
+          "ch1_f_d": 0.328798711,
+          "ch1_f_r": 0.100000001,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.170134291,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0280000009,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.237433866,
+          "ch2_f_r": 0.0400000028,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.438230157,
+        "body1_decay": 0.630262315,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.718230188,
+        "body2_decay": 0.256186187,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 219,
+      "name": "Golden Sequences 176",
+      "source_recipe": "Arp Bass",
+      "mode": "ascending",
+      "arp_rate_hz": 6.25,
+      "octaves": 2,
+      "gate_ms": 92.8,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00195959187,
+          "ch1_v_d": 0.781486273,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0309963282,
+          "ch1_f_a": 0.00195959187,
+          "ch1_f_d": 0.270387828,
+          "ch1_f_r": 0.0309963282,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.108059824,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0154981641,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0614292212,
+          "ch2_f_r": 0.0164098181,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 220,
+      "name": "Frozen Sequences 177",
+      "source_recipe": "Arp Poly",
+      "mode": "descending",
+      "arp_rate_hz": 4.75,
+      "octaves": 2,
+      "gate_ms": 122.10526315789474,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.0025955427,
+          "ch1_v_d": 1.02723253,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0442105271,
+          "ch1_f_a": 0.0025955427,
+          "ch1_f_d": 0.437630236,
+          "ch1_f_r": 0.0442105271,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00129777135,
+          "ch2_v_d": 0.211274683,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0257614367,
+          "ch2_f_a": 0.00129777135,
+          "ch2_f_d": 0.124644004,
+          "ch2_f_r": 0.0287921894,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 221,
+      "name": "Electric Sequences 178",
+      "source_recipe": "Random Arp",
+      "mode": "random",
+      "arp_rate_hz": 7.5,
+      "octaves": 1,
+      "gate_ms": 60.0,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 3,
+          "lfo1_depth": 0.129999995,
+          "lfo1_dest": 2,
+          "lfo1_wave": 5
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00150263763,
+          "ch1_v_d": 0.365369618,
+          "ch1_v_s": 0,
+          "ch1_v_r": 0.0203015283,
+          "ch1_f_a": 0.00150263763,
+          "ch1_f_d": 0.142184168,
+          "ch1_f_r": 0.0236851182,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.0749824643,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0126884552,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0496789701,
+          "ch2_f_r": 0.0152261453,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 508,
+      "name": "Arp Poly",
+      "source_recipe": "Arp Poly",
+      "mode": "ascending",
+      "arp_rate_hz": 8,
+      "octaves": 2,
+      "gate_ms": 72.5,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1,
+          "lfo1_depth": 0.119999997,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 0.600000024,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.0320000015,
+          "ch1_f_a": 0.00200000009,
+          "ch1_f_d": 0.254999995,
+          "ch1_f_r": 0.0359999985,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.125,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0170000009,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.0729999989,
+          "ch2_f_r": 0.0189999994,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 509,
+      "name": "Arp Bells",
+      "source_recipe": "Arp Bells",
+      "mode": "up/down",
+      "arp_rate_hz": 4,
+      "octaves": 2,
+      "gate_ms": 145.0,
+      "ring": {
+        "ring_speed": 211,
+        "ring_depth": 0,
+        "ring_attack": 0.00100000005,
+        "ring_decay": 0.200000003,
+        "ring_amount": 0.0219999999
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 0.280000001,
+          "lfo1_depth": 0,
+          "lfo1_dest": 0,
+          "lfo1_wave": 0
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 3.79999995,
+          "ch1_v_s": 0.0149999997,
+          "ch1_v_r": 0.140000001,
+          "ch1_f_a": 0.00100000005,
+          "ch1_f_d": 0.300000012,
+          "ch1_f_r": 0.100000001,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.209999993,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0350000001,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.300000012,
+          "ch2_f_r": 0.100000001,
+          "ch2_feet": 4
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 3,
+        "fx1_mix": 0.144999996,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 4,
+        "fx1_param_a": 0.611999989,
+        "fx1_param_b": 0.430000007,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 16,
+        "body1_mix": 1,
+        "body1_brightness": 0.460000008,
+        "body1_decay": 0.579999983,
+        "body2_model": 16,
+        "body2_mix": 0.769999981,
+        "body2_brightness": 0.74000001,
+        "body2_decay": 0.25,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ],
+      "cumulative_4_changed_nonmaster_controls": [
+        "mix",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 510,
+      "name": "Arp Bass",
+      "source_recipe": "Arp Bass",
+      "mode": "ascending",
+      "arp_rate_hz": 6,
+      "octaves": 1,
+      "gate_ms": 96.66666666666667,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 1.5,
+          "lfo1_depth": 0.109999999,
+          "lfo1_dest": 2,
+          "lfo1_wave": 1
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 0.75,
+          "ch1_v_s": 0.0399999991,
+          "ch1_v_r": 0.0340000018,
+          "ch1_f_a": 0.00200000009,
+          "ch1_f_d": 0.264999986,
+          "ch1_f_r": 0.0340000018,
+          "ch1_feet": 0
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.109999999,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0170000009,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.063000001,
+          "ch2_f_r": 0.0179999992,
+          "ch2_feet": 1
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    },
+    {
+      "host_index": 518,
+      "name": "Random Arp",
+      "source_recipe": "Random Arp",
+      "mode": "random",
+      "arp_rate_hz": 6,
+      "octaves": 2,
+      "gate_ms": 75.0,
+      "ring": {
+        "ring_speed": 2,
+        "ring_depth": 0,
+        "ring_attack": 0.0799999982,
+        "ring_decay": 0.449999988,
+        "ring_amount": 0
+      },
+      "lfos": [
+        {
+          "lfo1_rate": 3,
+          "lfo1_depth": 0.129999995,
+          "lfo1_dest": 2,
+          "lfo1_wave": 5
+        },
+        {
+          "lfo2_rate": 0.550000012,
+          "lfo2_depth": 0,
+          "lfo2_dest": 0,
+          "lfo2_wave": 0
+        },
+        {
+          "lfo3_rate": 1.10000002,
+          "lfo3_depth": 0,
+          "lfo3_dest": 0,
+          "lfo3_wave": 0
+        }
+      ],
+      "rank_envelopes": [
+        {
+          "ch1_v_a": 0.00200000009,
+          "ch1_v_d": 0.479999989,
+          "ch1_v_s": 0,
+          "ch1_v_r": 0.0240000002,
+          "ch1_f_a": 0.00200000009,
+          "ch1_f_d": 0.185000002,
+          "ch1_f_r": 0.0280000009,
+          "ch1_feet": 1
+        },
+        {
+          "ch2_v_a": 0.00100000005,
+          "ch2_v_d": 0.0949999988,
+          "ch2_v_s": 0,
+          "ch2_v_r": 0.0149999997,
+          "ch2_f_a": 0.00100000005,
+          "ch2_f_d": 0.063000001,
+          "ch2_f_r": 0.0179999992,
+          "ch2_feet": 3
+        }
+      ],
+      "effect_values": {
+        "fx1_type": 0,
+        "fx1_mix": 0,
+        "fx2_type": 0,
+        "fx2_mix": 0,
+        "fx3_type": 0,
+        "fx3_mix": 0,
+        "fx1_model": 0,
+        "fx1_param_a": 0.5,
+        "fx1_param_b": 0.5,
+        "fx1_oversampling": 2,
+        "fx2_model": 0,
+        "fx2_param_a": 0.5,
+        "fx2_param_b": 0.5,
+        "fx2_oversampling": 2,
+        "fx3_model": 0,
+        "fx3_param_a": 0.5,
+        "fx3_param_b": 0.5,
+        "fx3_oversampling": 2,
+        "fx_gain_comp": 0
+      },
+      "body_values": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "new_7_eligible_mechanisms": [],
+      "cumulative_4_changed_nonmaster_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "full_record_equal_6": true
+    }
+  ],
+  "fresh_phrase_metrics": [
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Motion",
+      "index": 42,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.415224911,
+      "held_rms_dbfs": -28.64149259,
+      "first_tail_rms_dbfs": -102.051410776,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "42-48000-normal.f32",
+      "onsets": 48,
+      "complete_gates": 48,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_error_ms": 0.8333333333333387,
+      "mean_rate_hz": 8.000453926463914,
+      "final_tail_below_held_db": 77.432029197
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Distant Sequences 159",
+      "index": 202,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 2.5,
+      "mode": 1,
+      "octaves": 1,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 32,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.532073433,
+      "held_rms_dbfs": -31.38949987,
+      "first_tail_rms_dbfs": -48.673326433,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_file": "202-48000-normal.f32",
+      "onsets": 16,
+      "complete_gates": 15,
+      "expected_order": [
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 1.333333333333353,
+      "max_gate_error_ms": 2.7755575615628914e-14,
+      "mean_rate_hz": 2.5016677785190127,
+      "final_tail_below_held_db": 268.61050013
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Slow Sequences 166",
+      "index": 209,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 2,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 26,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.399418083,
+      "held_rms_dbfs": -34.662903642,
+      "first_tail_rms_dbfs": -50.050481604,
+      "final_tail_rms_dbfs": -96.295579173,
+      "pcm_file": "209-48000-normal.f32",
+      "onsets": 13,
+      "complete_gates": 12,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.333333333333353,
+      "max_gate_error_ms": 0.6666666666667043,
+      "mean_rate_hz": 2.0013342228152102,
+      "final_tail_below_held_db": 61.63267553099999
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Neon Sequences 174",
+      "index": 217,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 9,
+      "mode": 4,
+      "octaves": 3,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 108,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.906382488,
+      "held_rms_dbfs": -28.41306814,
+      "first_tail_rms_dbfs": -102.519404386,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "217-48000-normal.f32",
+      "onsets": 54,
+      "complete_gates": 54,
+      "expected_order": [
+        55,
+        48,
+        52,
+        67,
+        60,
+        64,
+        79,
+        72,
+        76
+      ],
+      "max_spacing_error_ms": 0.8888888888888974,
+      "max_gate_error_ms": 0.8888888888888835,
+      "mean_rate_hz": 9.001358695652174,
+      "final_tail_below_held_db": 77.660453647
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Poly",
+      "index": 508,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.593210558,
+      "held_rms_dbfs": -28.466923196,
+      "first_tail_rms_dbfs": -101.071371545,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "508-48000-normal.f32",
+      "onsets": 48,
+      "complete_gates": 48,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_error_ms": 0.8333333333333387,
+      "mean_rate_hz": 8.000453926463914,
+      "final_tail_below_held_db": 77.60659859100001
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 48,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.074792414,
+      "held_rms_dbfs": -34.703344854,
+      "first_tail_rms_dbfs": -55.179698878,
+      "final_tail_rms_dbfs": -96.295767671,
+      "pcm_file": "509-48000-normal.f32",
+      "onsets": 24,
+      "complete_gates": 24,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.6666666666666765,
+      "max_gate_error_ms": 1.0000000000000009,
+      "mean_rate_hz": 4.000463821892394,
+      "final_tail_below_held_db": 61.59242281699999
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bass",
+      "index": 510,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 0,
+      "octaves": 1,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.106574405,
+      "held_rms_dbfs": -30.293730756,
+      "first_tail_rms_dbfs": -90.77146486,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_file": "510-48000-normal.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": [
+        48,
+        52,
+        55
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.6666666666666488,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 269.706269244
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Random Arp",
+      "index": 518,
+      "scenario": "normal",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.049369935,
+      "held_rms_dbfs": -32.256052945,
+      "first_tail_rms_dbfs": -105.493312571,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "518-48000-normal.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": null,
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.3333333333333244,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 73.81746884200001
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Poly",
+      "index": 508,
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.593210558,
+      "held_rms_dbfs": -28.466923196,
+      "first_tail_rms_dbfs": -101.071371545,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "508-48000-tempo_jump.f32",
+      "onsets": 48,
+      "complete_gates": 48,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_error_ms": 0.8333333333333387,
+      "mean_rate_hz": 8.000453926463914,
+      "final_tail_below_held_db": 77.60659859100001
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 48,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.074792414,
+      "held_rms_dbfs": -34.703344854,
+      "first_tail_rms_dbfs": -55.179698878,
+      "final_tail_rms_dbfs": -96.295767671,
+      "pcm_file": "509-48000-tempo_jump.f32",
+      "onsets": 24,
+      "complete_gates": 24,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.6666666666666765,
+      "max_gate_error_ms": 1.0000000000000009,
+      "mean_rate_hz": 4.000463821892394,
+      "final_tail_below_held_db": 61.59242281699999
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bass",
+      "index": 510,
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 0,
+      "octaves": 1,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.106574405,
+      "held_rms_dbfs": -30.293730756,
+      "first_tail_rms_dbfs": -90.77146486,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_file": "510-48000-tempo_jump.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": [
+        48,
+        52,
+        55
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.6666666666666488,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 269.706269244
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Random Arp",
+      "index": 518,
+      "scenario": "tempo_jump",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.049369935,
+      "held_rms_dbfs": -32.256052945,
+      "first_tail_rms_dbfs": -105.493312571,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "518-48000-tempo_jump.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": null,
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.3333333333333244,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 73.81746884200001
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Poly",
+      "index": 508,
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.568676268,
+      "held_rms_dbfs": -28.463930206,
+      "first_tail_rms_dbfs": -100.77058172,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "508-48000-lfo_off.f32",
+      "onsets": 48,
+      "complete_gates": 48,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_error_ms": 0.8333333333333387,
+      "mean_rate_hz": 8.000453926463914,
+      "final_tail_below_held_db": 77.609591581
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bass",
+      "index": 510,
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 0,
+      "octaves": 1,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.277084933,
+      "held_rms_dbfs": -30.289374531,
+      "first_tail_rms_dbfs": -91.092367952,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_file": "510-48000-lfo_off.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": [
+        48,
+        52,
+        55
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.6666666666666488,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 269.710625469
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Random Arp",
+      "index": 518,
+      "scenario": "lfo_off",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 6,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 72,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.047205597,
+      "held_rms_dbfs": -32.26771356,
+      "first_tail_rms_dbfs": -105.448569822,
+      "final_tail_rms_dbfs": -106.073521787,
+      "pcm_file": "518-48000-lfo_off.f32",
+      "onsets": 36,
+      "complete_gates": 36,
+      "expected_order": null,
+      "max_spacing_error_ms": 0.0,
+      "max_gate_error_ms": 0.3333333333333244,
+      "mean_rate_hz": 6.0,
+      "final_tail_below_held_db": 73.805808227
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "ring_off",
+      "host_rate": 48000,
+      "internal_rate": 96000,
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 480000,
+      "block_frames": 64,
+      "events": 48,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.911202942,
+      "held_rms_dbfs": -34.511609114,
+      "first_tail_rms_dbfs": -54.987942602,
+      "final_tail_rms_dbfs": -202.473006578,
+      "pcm_file": "509-48000-ring_off.f32",
+      "onsets": 24,
+      "complete_gates": 24,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.6666666666666765,
+      "max_gate_error_ms": 1.0000000000000009,
+      "mean_rate_hz": 4.000463821892394,
+      "final_tail_below_held_db": 167.961397464
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "normal",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 441000,
+      "block_frames": 64,
+      "events": 50,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.99225073,
+      "held_rms_dbfs": -34.692165365,
+      "first_tail_rms_dbfs": -52.656672806,
+      "final_tail_rms_dbfs": -96.293600448,
+      "pcm_file": "509-44100-normal.f32",
+      "onsets": 25,
+      "complete_gates": 24,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.3378684807256458,
+      "max_gate_error_ms": 1.326530612244886,
+      "mean_rate_hz": 4.001149234095961,
+      "final_tail_below_held_db": 61.601435083000005
+    },
+    {
+      "build": "current",
+      "type": "program",
+      "name": "Slow Sequences 166",
+      "index": 209,
+      "scenario": "normal",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "rate_hz": 2,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 441000,
+      "block_frames": 64,
+      "events": 24,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.383860419,
+      "held_rms_dbfs": -34.664737618,
+      "first_tail_rms_dbfs": -50.685921678,
+      "final_tail_rms_dbfs": -96.293360557,
+      "pcm_file": "209-44100-normal.f32",
+      "onsets": 12,
+      "complete_gates": 12,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 0.9523809523809268,
+      "max_gate_error_ms": 1.2018140589569182,
+      "mean_rate_hz": 1.9992911192073723,
+      "final_tail_below_held_db": 61.628622939
+    },
+    {
+      "build": "baseline",
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "normal",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 441000,
+      "block_frames": 64,
+      "events": 50,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.992659361,
+      "held_rms_dbfs": -34.692166045,
+      "first_tail_rms_dbfs": -52.656675428,
+      "final_tail_rms_dbfs": -96.293588624,
+      "pcm_file": "509-44100-normal.f32",
+      "onsets": 25,
+      "complete_gates": 24,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.3378684807256458,
+      "max_gate_error_ms": 1.326530612244886,
+      "mean_rate_hz": 4.001149234095961,
+      "final_tail_below_held_db": 61.601422578999994
+    },
+    {
+      "build": "baseline",
+      "type": "program",
+      "name": "Slow Sequences 166",
+      "index": 209,
+      "scenario": "normal",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "rate_hz": 2,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 441000,
+      "block_frames": 64,
+      "events": 24,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.383753128,
+      "held_rms_dbfs": -34.664734484,
+      "first_tail_rms_dbfs": -50.685920583,
+      "final_tail_rms_dbfs": -96.293363902,
+      "pcm_file": "209-44100-normal.f32",
+      "onsets": 12,
+      "complete_gates": 12,
+      "expected_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 0.9523809523809268,
+      "max_gate_error_ms": 1.2018140589569182,
+      "mean_rate_hz": 1.9992911192073723,
+      "final_tail_below_held_db": 61.628629417999996
+    }
+  ],
+  "tempo_controls": [
+    {
+      "name": "Arp Poly",
+      "same_trace": true,
+      "exact_pcm_byte_equality": true,
+      "frames_compared": 480000
+    },
+    {
+      "name": "Arp Bells",
+      "same_trace": true,
+      "exact_pcm_byte_equality": true,
+      "frames_compared": 480000
+    },
+    {
+      "name": "Arp Bass",
+      "same_trace": true,
+      "exact_pcm_byte_equality": true,
+      "frames_compared": 480000
+    },
+    {
+      "name": "Random Arp",
+      "same_trace": true,
+      "exact_pcm_byte_equality": true,
+      "frames_compared": 480000
+    }
+  ],
+  "motion_controls": [
+    {
+      "name": "Arp Poly",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0017135382788859637,
+      "rms_difference_dbfs": -55.322123787643946,
+      "relative_rms_difference": 0.045482865218461094,
+      "max_absolute_difference": 0.026938408613204956,
+      "normalized_first_difference_ratio_span": 1.141212856850933,
+      "log_spectral_ratio_standard_deviation": 0.03945330193003342
+    },
+    {
+      "name": "Arp Bass",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0010423899947337178,
+      "rms_difference_dbfs": -59.639395316070406,
+      "relative_rms_difference": 0.03414852676576277,
+      "max_absolute_difference": 0.017250612378120422,
+      "normalized_first_difference_ratio_span": 1.1168892678370543,
+      "log_spectral_ratio_standard_deviation": 0.02938319766541305
+    },
+    {
+      "name": "Random Arp",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0013213441111421865,
+      "rms_difference_dbfs": -57.579681329634724,
+      "relative_rms_difference": 0.04810042121698419,
+      "max_absolute_difference": 0.029563821852207184,
+      "normalized_first_difference_ratio_span": 1.1411385409622938,
+      "log_spectral_ratio_standard_deviation": 0.03828706722632832
+    },
+    {
+      "name": "Arp Bells",
+      "control": "ring_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0005311017236224164,
+      "rms_difference_dbfs": -65.49644578263252,
+      "relative_rms_difference": 0.027487411181622203,
+      "max_absolute_difference": 0.003086879849433899,
+      "normalized_first_difference_ratio_span": 1.0037656236629235,
+      "log_spectral_ratio_standard_deviation": 0.0006106638676460312
+    }
+  ],
+  "baseline_rate_pairs": [
+    {
+      "name": "Arp Bells",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "same_trace": true,
+      "rms_difference": 1.1703758584674937e-06,
+      "rms_difference_dbfs": -118.63349290106032,
+      "relative_rms_difference": 8.015663101915241e-05,
+      "max_absolute_difference": 7.780268788337708e-06
+    },
+    {
+      "name": "Slow Sequences 166",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "same_trace": true,
+      "rms_difference": 1.1771391752307968e-06,
+      "rms_difference_dbfs": -118.58344373444025,
+      "relative_rms_difference": 8.298866812564095e-05,
+      "max_absolute_difference": 9.588897228240967e-06
+    }
+  ],
+  "actual_patch_articulation": [
+    {
+      "name": "Arp Motion",
+      "complete_pairs_after_first_second": 39,
+      "median_late_gap_to_early_gate_db": -55.955557285597195,
+      "minimum_db": -72.71939246000173,
+      "maximum_db": -48.9797782706437
+    },
+    {
+      "name": "Distant Sequences 159",
+      "complete_pairs_after_first_second": 12,
+      "median_late_gap_to_early_gate_db": -62.72866385555025,
+      "minimum_db": -68.86508122429856,
+      "maximum_db": -59.37339078174765
+    },
+    {
+      "name": "Slow Sequences 166",
+      "complete_pairs_after_first_second": 10,
+      "median_late_gap_to_early_gate_db": -10.243465360714353,
+      "minimum_db": -10.75877733168502,
+      "maximum_db": -9.609144966519338
+    },
+    {
+      "name": "Neon Sequences 174",
+      "complete_pairs_after_first_second": 44,
+      "median_late_gap_to_early_gate_db": -59.38953576112877,
+      "minimum_db": -84.04408021897939,
+      "maximum_db": -47.22834802827861
+    },
+    {
+      "name": "Arp Poly",
+      "complete_pairs_after_first_second": 39,
+      "median_late_gap_to_early_gate_db": -55.92427307339715,
+      "minimum_db": -78.48978552542448,
+      "maximum_db": -48.22226068436083
+    },
+    {
+      "name": "Arp Bells",
+      "complete_pairs_after_first_second": 19,
+      "median_late_gap_to_early_gate_db": -13.631854619765058,
+      "minimum_db": -21.494985023825237,
+      "maximum_db": -0.6603658741672142
+    },
+    {
+      "name": "Arp Bass",
+      "complete_pairs_after_first_second": 29,
+      "median_late_gap_to_early_gate_db": -47.060209706251754,
+      "minimum_db": -72.22232995776548,
+      "maximum_db": -40.84230286491628
+    },
+    {
+      "name": "Random Arp",
+      "complete_pairs_after_first_second": 29,
+      "median_late_gap_to_early_gate_db": -66.03673779356559,
+      "minimum_db": -76.79995819564803,
+      "maximum_db": -53.57260088906881
+    }
+  ],
+  "reused_6_review": {
+    "path": "docs/preset-evidence/2026.11.6/verification/a28/sequence-review.json",
+    "sha256": "e6e0b30570343f476ff884d2e3cb53248c5ba7745d504179d6cd27aaaaa0692f",
+    "counts": {
+      "programs": 27,
+      "numbered_original_sequences": 22,
+      "other_original_sequence": 1,
+      "modern_arps": 4,
+      "renders": 31,
+      "stereo_frames": 23808000,
+      "checks": 420,
+      "failures": 0
+    },
+    "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "not_fresh_7_renders": true
+  },
+  "reused_current_focused_tests": [
+    {
+      "name": "cs80_original_articulation_tests",
+      "seconds": 2.499,
+      "stdout": "Frozen Leads 121: relative onset 0.405875, source 0.709542; release 0.048135, source 0.009178\nSoft Leads 128: relative onset 0.535202, source 0.808595; release 0.054960, source 0.030137\nAmber Sequences 157: accent late/early 0.103352, fixed-time control 0.014260; gate 0.1450 s\nDistant Sequences 159: accent late/early 0.029694, fixed-time control 0.007144; gate 0.2320 s\nNeon Sequences 160: accent late/early 0.053562, fixed-time control 0.108547; gate 0.0563 s\nDistant Sequences 173: accent late/early 0.027442, fixed-time control 0.009309; gate 0.2109 s\nNeon Sequences 174: accent late/early 0.110923, fixed-time control 0.144753; gate 0.0644 s\nOriginal articulation: 63 checks, 0 failures\n",
+      "reused_from": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/development/cs80-focused.xml"
+    },
+    {
+      "name": "cs80_modern_preset_refinement_tests",
+      "seconds": 41.8069,
+      "stdout": "TOUCH Delay Brass          note 60 7.464 dB\nTOUCH Plate Pad            note 60 7.779 dB\nTOUCH Phaser Strings       note 60 8.936 dB\nTOUCH Drive Lead           note 60 8.445 dB\nTOUCH Arp Poly             note 60 7.739 dB\nTOUCH Arp Bells            note 60 8.372 dB\nTOUCH Arp Bass             note 60 8.162 dB\nTOUCH LFO Sweep Pad        note 60 7.912 dB\nTOUCH LFO Pan Keys         note 60 9.338 dB\nTOUCH PWM LFO Strings      note 60 8.637 dB\nTOUCH Stereo Delay Pluck   note 60 9.222 dB\nTOUCH Ambient Bells        note 60 9.496 dB\nTOUCH Ensemble Plus        note 60 8.159 dB\nTOUCH Space Lead           note 60 8.427 dB\nTOUCH Random Arp           note 60 7.709 dB\nTOUCH Drive Bass           note 48 7.908 dB\nTOUCH Phased Polysynth     note 60 8.232 dB\nTOUCH Tremolo LFO Organ    note 60 0.000 dB\nTOUCH Phaser Strings       note 48 9.113 dB\nTOUCH Phaser Strings       note 72 8.076 dB\nTOUCH PWM LFO Strings      note 48 8.651 dB\nTOUCH PWM LFO Strings      note 72 7.968 dB\nTOUCH Ensemble Plus        note 48 8.692 dB\nTOUCH Ensemb...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]\n",
+      "reused_from": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/development/cs80-focused.xml"
+    }
+  ],
+  "fresh_lifecycle_tests": [
+    {
+      "executable": "/tmp/cs80-build-1cee5a/cs80_arp_rate_lifecycle_tests",
+      "sha256": "e3839fbdaf83dc2ec12b70eb52de34daa5c23c85994e957deccf3a6bca2bf685",
+      "exit_code": 0,
+      "elapsed_seconds": 0.28982563899990055,
+      "summary": "RESULT checks=15 failures=0"
+    },
+    {
+      "executable": "/tmp/cs80-build-1cee5a/cs80_arp_pedal_lifecycle_tests",
+      "sha256": "c18456b14efb72310b5054d70720667c6631ee698f4aab64834acb99e696a9c2",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2309358290003729,
+      "summary": "RESULT checks=24 failures=0"
+    },
+    {
+      "executable": "/tmp/cs80-build-1cee5a/cs80_arp_repeat_lifecycle_tests",
+      "sha256": "90bc3b4d769bbacaca3a42b430d6483d27633ab61c1469c540db1c1f0a84cb05",
+      "exit_code": 0,
+      "elapsed_seconds": 0.13095454200083623,
+      "summary": "RESULT checks=10 failures=0"
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "label": "all 27 Sequences records selected by category, including Modern.inc"
+    },
+    {
+      "passed": true,
+      "label": "all 204 parameter identities unchanged"
+    },
+    {
+      "passed": true,
+      "label": "all 27 full program records equal authenticated .6 records"
+    },
+    {
+      "passed": true,
+      "label": "all 27 non-master-volume parameter vectors are distinct"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: retained cumulative non-master change versus published .4"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: valid enabled Hz arpeggiator"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: intentional electronic or fixed-carrier bell topology"
+    },
+    {
+      "passed": true,
+      "label": "src/core/Engine.cpp: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/Engine.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/Params.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/FactoryPresets.cpp: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/FactoryPresets.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/InstrumentBody.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/OriginalCircuitLibrary.inc: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/curated/Modern.inc: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/RingModulatorCircuit.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/core/ModulationLfo.h: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "src/tools/preset_capture.cpp: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "tests/OriginalArticulationTests.cpp: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "tests/ModernPresetRefinementTests.cpp: local bytes equal frozen .7 source"
+    },
+    {
+      "passed": true,
+      "label": "current: only recognized telemetry records"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Motion', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Distant Sequences 159', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Slow Sequences 166', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Neon Sequences 174', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Poly', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bells', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bass', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Random Arp', 48000, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Poly', 48000, 'tempo_jump'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bells', 48000, 'tempo_jump'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bass', 48000, 'tempo_jump'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Random Arp', 48000, 'tempo_jump'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Poly', 48000, 'lfo_off'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bass', 48000, 'lfo_off'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Random Arp', 48000, 'lfo_off'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bells', 48000, 'ring_off'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Arp Bells', 44100, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('current', 'Slow Sequences 166', 44100, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "baseline: only recognized telemetry records"
+    },
+    {
+      "passed": true,
+      "label": "('baseline', 'Arp Bells', 44100, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "('baseline', 'Slow Sequences 166', 44100, 'normal'): exact PCM size"
+    },
+    {
+      "passed": true,
+      "label": "fresh normal 48 kHz performances cover the declared eight presets exactly"
+    },
+    {
+      "passed": true,
+      "label": "exact declared current/control/baseline render counts"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Motion 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Distant Sequences 159 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Neon Sequences 174 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 tempo_jump: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 tempo_jump: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 tempo_jump: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 tempo_jump: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Poly 48000 lfo_off: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bass 48000 lfo_off: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Random Arp 48000 lfo_off: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 48000 ring_off: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Arp Bells 44100 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "current Slow Sequences 166 44100 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "baseline Arp Bells 44100 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: actual existing patch and authored scheduling settings"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: complete ten-second render accounted"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: finite complete output below full scale"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: one held generated note and bounded voices"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: ordinary final source release stops and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: held energy and final-tail reduction"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: immediate first observed onset and at least two sequence lengths"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: each onset spacing within two observation blocks of authored Hz rate"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: each complete held gate within two observation blocks of authored duty"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: allowed pitch, source channel and source velocity retained"
+    },
+    {
+      "passed": true,
+      "label": "baseline Slow Sequences 166 44100 normal: declared random membership or full ordered pattern"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: 60-to-180 BPM control preserves exact telemetry and complete PCM bytes"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: 60-to-180 BPM control preserves exact telemetry and complete PCM bytes"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: 60-to-180 BPM control preserves exact telemetry and complete PCM bytes"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: 60-to-180 BPM control preserves exact telemetry and complete PCM bytes"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: named modulation route changes audio with unchanged note trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: named modulation route changes audio with unchanged note trace"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: named modulation route changes audio with unchanged note trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: named modulation route changes audio with unchanged note trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: .7 changes 88.2 kHz internal body audio while preserving complete scheduling trace"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: .7 changes 88.2 kHz internal body audio while preserving complete scheduling trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: complete-patch gate/gap articulation windows measured"
+    },
+    {
+      "passed": true,
+      "label": "retained .6 family review equals committed final .6 evidence"
+    },
+    {
+      "passed": true,
+      "label": "retained .6 complete-family evidence passes its 420 checks"
+    },
+    {
+      "passed": true,
+      "label": "reused focused test evidence digest: cs80-focused.log"
+    },
+    {
+      "passed": true,
+      "label": "reused focused test evidence digest: cs80-focused.xml"
+    },
+    {
+      "passed": true,
+      "label": "reused cs80_original_articulation_tests passed"
+    },
+    {
+      "passed": true,
+      "label": "reused cs80_modern_preset_refinement_tests passed"
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Observed gate changes use callback-end telemetry; acoustic onset timing is not measured sample-exactly.",
+    "Twenty-seven structural records are covered, but only the declared eight distinct presets were freshly rendered by this assignment.",
+    "The .6 full-family 31-performance result remains historical evidence and is not relabeled as a .7 rerun.",
+    "Motion and ring controls establish a numerical contribution, not listener preference or a perceived-improvement rating.",
+    "Bell tails and low fixed-carrier feedthrough need not be zero after generated-note ownership ends.",
+    "No native-host or archive qualification is made."
+  ]
+}

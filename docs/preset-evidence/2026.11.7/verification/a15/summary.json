@@ -1,0 +1,27 @@
+{
+  "sample_rate": 48000,
+  "notes": [
+    48,
+    60,
+    72
+  ],
+  "duration_seconds": 2.2,
+  "velocity": 0.8,
+  "modes": {
+    "0": "note-off 1.0s",
+    "1": "wheel +2st .1s, -2st .35s, return .65s; note-off 1.0s",
+    "2": "pressure .8 at .35s, zero .7s; note-off 1.0s",
+    "3": "pedal on 0s, note-off 1.0s, pedal off 1.7s"
+  },
+  "checks": 269,
+  "failures": [],
+  "maximum_current_peak": 0.04763992875814438,
+  "worst_pitch_error_cents": 0.4686862991144096,
+  "pressure_pluck_gain_db": [
+    4.557185449439906,
+    4.673185364904285,
+    4.617479358230312
+  ],
+  "special_material_modes_bit_identical": true,
+  "evidence_type": "Source review and offline PCM measurement; no listening performed; no acoustic recording comparison."
+}

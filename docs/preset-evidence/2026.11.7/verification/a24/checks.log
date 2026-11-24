@@ -1,0 +1,105 @@
+{
+  "counts": {
+    "structural_programs": 27,
+    "exact_204_value_comparisons": 5508,
+    "fresh_unique_presets": 8,
+    "current_renders": 18,
+    "baseline_renders": 2,
+    "fresh_stereo_frames": 9444000,
+    "fresh_seconds": 200.0,
+    "main_48k_generated_onsets": 275,
+    "main_48k_complete_gates": 273,
+    "body_noise_eligible_programs": 7,
+    "checks": 366,
+    "failures": 0
+  },
+  "motion_controls": [
+    {
+      "name": "Arp Poly",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0017135382788859637,
+      "rms_difference_dbfs": -55.322123787643946,
+      "relative_rms_difference": 0.045482865218461094,
+      "max_absolute_difference": 0.026938408613204956,
+      "normalized_first_difference_ratio_span": 1.141212856850933,
+      "log_spectral_ratio_standard_deviation": 0.03945330193003342
+    },
+    {
+      "name": "Arp Bass",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0010423899947337178,
+      "rms_difference_dbfs": -59.639395316070406,
+      "relative_rms_difference": 0.03414852676576277,
+      "max_absolute_difference": 0.017250612378120422,
+      "normalized_first_difference_ratio_span": 1.1168892678370543,
+      "log_spectral_ratio_standard_deviation": 0.02938319766541305
+    },
+    {
+      "name": "Random Arp",
+      "control": "lfo_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0013213441111421865,
+      "rms_difference_dbfs": -57.579681329634724,
+      "relative_rms_difference": 0.04810042121698419,
+      "max_absolute_difference": 0.029563821852207184,
+      "normalized_first_difference_ratio_span": 1.1411385409622938,
+      "log_spectral_ratio_standard_deviation": 0.03828706722632832
+    },
+    {
+      "name": "Arp Bells",
+      "control": "ring_off",
+      "same_trace": true,
+      "window_seconds": [
+        1,
+        6
+      ],
+      "rms_difference": 0.0005311017236224164,
+      "rms_difference_dbfs": -65.49644578263252,
+      "relative_rms_difference": 0.027487411181622203,
+      "max_absolute_difference": 0.003086879849433899,
+      "normalized_first_difference_ratio_span": 1.0037656236629235,
+      "log_spectral_ratio_standard_deviation": 0.0006106638676460312
+    }
+  ],
+  "rate_pairs": [
+    {
+      "name": "Arp Bells",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "same_trace": true,
+      "rms_difference": 1.1703758584674937e-06,
+      "rms_difference_dbfs": -118.63349290106032,
+      "relative_rms_difference": 8.015663101915241e-05,
+      "max_absolute_difference": 7.780268788337708e-06
+    },
+    {
+      "name": "Slow Sequences 166",
+      "host_rate": 44100,
+      "internal_rate": 88200,
+      "same_trace": true,
+      "rms_difference": 1.1771391752307968e-06,
+      "rms_difference_dbfs": -118.58344373444025,
+      "relative_rms_difference": 8.298866812564095e-05,
+      "max_absolute_difference": 9.588897228240967e-06
+    }
+  ],
+  "max_main_peak_dbfs": -13.106574405,
+  "max_main_spacing_error_ms": 1.333333333333353,
+  "max_main_gate_error_ms": 1.0000000000000009,
+  "minimum_main_tail_drop_db": 61.59242281699999,
+  "failures": []
+}

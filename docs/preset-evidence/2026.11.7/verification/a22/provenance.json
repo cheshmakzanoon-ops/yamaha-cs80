@@ -1,0 +1,59 @@
+{
+  "current_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "baseline_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "sample_rate": 48000,
+  "block_frames": 96,
+  "hold_seconds": 6,
+  "tail_seconds": 4,
+  "notes": [
+    48,
+    55,
+    60,
+    64,
+    67,
+    72,
+    76,
+    79
+  ],
+  "velocity": 1,
+  "pressure": "1 at note onset; four current-only controls at 0",
+  "quality": "Untouched authored Standard (oversampling=1)",
+  "probe_sha256": "1a3d22e8eaa447dad5abc7b2cb8de817071939ecf0fc1ccdc894becb0f28006a",
+  "reproduce_sha256": "cf0fd3f087821a972fc6c12d861905b858d00df0be56dd6fb6e0dc7ab9dd42eb",
+  "builds": {
+    "current": {
+      "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "src_archive_sha256": "f5b70a563cf2ad48a9730f2f6731a149018e984eb9717e30c8fe7b572d19e69d",
+      "library": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "library_sha256_before_and_after": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+      "probe_executable_sha256": "b8ec2bce9f81bbaf23cb2ef66090896f931a0bd25fb3df600f5f91063bb803e5",
+      "compile_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I/tmp/cs80-a22-1cee5a/current-src/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a22/poly_probe.cpp",
+        "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a22-1cee5a/probe-current"
+      ]
+    },
+    "baseline": {
+      "source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "src_archive_sha256": "22f326052ca9c52763bdf4224fa2dd1487359758a21e60908729a4d9727c1ff8",
+      "library": "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+      "library_sha256_before_and_after": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+      "probe_executable_sha256": "491a8c7b5de1f81caf5e08b44a02c51a3a3d2a9b015e3d098bc3f4a056d2dcfc",
+      "compile_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-I/tmp/cs80-a22-1cee5a/baseline-src/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a22/poly_probe.cpp",
+        "/tmp/cs80-reference-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a22-1cee5a/probe-baseline"
+      ]
+    }
+  }
+}
