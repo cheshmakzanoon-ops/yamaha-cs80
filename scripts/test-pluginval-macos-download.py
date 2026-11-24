@@ -396,8 +396,9 @@ class DownloadTests(unittest.TestCase):
         self.assertIn("            pluginval-download.json", macos)
         self.assertIn("runner: [macos-15, macos-15-intel]", macos)
         # The 2026.11.2 audition exporter is a separately tested script. Freeze
-        # every other Linux byte, including validator commands, failure-only
-        # diagnostics and packaging, against the previous platform contract.
+        # every other Linux byte at the reviewed --parallel 2 contract: CMake
+        # admits only 108 headless witnesses and keeps all other tests exclusive.
+        # Validator commands, failure-only diagnostics and packaging stay frozen.
         # Splitting at exact step names also prevents an extra unguarded step
         # from being hidden inside the excluded audition body.
         linux = workflow.split("  macos:", 1)[0]
@@ -411,7 +412,7 @@ class DownloadTests(unittest.TestCase):
                          "          --capture build/cs80_preset_capture --out preset-audition\n\n")
         protected_linux = before + "      - name: Upload curated preset auditions\n" + after
         self.assertEqual(hashlib.sha256(protected_linux.encode()).hexdigest(),
-                         "b15a8c5ceaa7cd928baae9bd648cc1c2ada211e0d05758783113fe51a74064e0")
+                         "389cd7dd15aba376d1625cf690f6b84ea872a5d49c02b219d973871a52965708")
         self.assertEqual(hashlib.sha256(windows.encode()).hexdigest(), "d87bb8d1e298aeb055efb83ef32d721366786511e087678a43341f8e9721d3f4")
 
 
