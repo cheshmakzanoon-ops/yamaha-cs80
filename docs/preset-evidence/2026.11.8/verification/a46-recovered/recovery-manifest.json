@@ -1,0 +1,102 @@
+{
+  "scope": "Recovery identities and static Python syntax parsing only; no product tests/builds, current artifact acceptance, prior local measurement reproduction or public GET.",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "run_id": 45439302351,
+  "attempt": 1,
+  "release_qualified": false,
+  "intended_prefix": "docs/preset-evidence/2026.11.8/verification/a46-recovered/",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8364,
+      "sha256": "750881ab66839310c5cb0000b30ad7b6699385159a34b1326b4b88ad786b2e26",
+      "git_blob": "998fcb36450f628f7d8f335fc8fc86e33e58739c"
+    },
+    {
+      "path": "check_native.py",
+      "bytes": 5762,
+      "sha256": "5226abe7a947bccfb86500674fdfe77f59fcbdc8a047be3bd2b36400f27ee468",
+      "git_blob": "d56a91df7436d4ca9f5202af46504c037c983f84"
+    },
+    {
+      "path": "cmake-registration-delta.patch",
+      "bytes": 2581,
+      "sha256": "ba77845a7d49138442a6ce40d17c1c8a70651d3fe9d476983924c7b279b41257",
+      "git_blob": "f9aa67ec0bfbfcf2790f84b9c474c43ee40ab905"
+    },
+    {
+      "path": "helper-recovery.json",
+      "bytes": 2371,
+      "sha256": "9bd883816bb6cf6ab528a377e685883e5c7ad7355c4325562717cfecb4fca6ec",
+      "git_blob": "6d4b7c245837b88fc773585c1d77d1d4ecf3b147"
+    },
+    {
+      "path": "helpers/a36-verify-validator-payload.py",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741",
+      "git_blob": "74e19c37f6c99fe2339b583f7fd4562934f2ac97"
+    },
+    {
+      "path": "helpers/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+      "git_blob": "74dc56e918aef2aeb883906b5688ae668b602173"
+    },
+    {
+      "path": "helpers/bind-parser-archives.py",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11",
+      "git_blob": "825025c0bd95242192cddad11bbf79e18559e479"
+    },
+    {
+      "path": "helpers/parse-native-evidence.py",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+      "git_blob": "9f69d76742cbbb6c27d84182294e2caea4664ee8"
+    },
+    {
+      "path": "helpers/previous-native-contract.py",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f",
+      "git_blob": "5539584977934f570bd4af4b56e92d4fb03987be"
+    },
+    {
+      "path": "helpers/verify-macos-binding.py",
+      "bytes": 24265,
+      "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9",
+      "git_blob": "19dd646499df46f0f872cabf75c53b28cb1e5832"
+    },
+    {
+      "path": "inspect_receipt.py",
+      "bytes": 10908,
+      "sha256": "8b3de563357d2f5b6f7a43d14cebee818c6f4679f1d8904624ae6f0468ff6489",
+      "git_blob": "53ddeaaf2b4e448b8d91685caa6eb30f5fa2f948"
+    },
+    {
+      "path": "native-inputs-template.json",
+      "bytes": 951,
+      "sha256": "53846894587967f8c1786325003c43f638f8f7f37b0bf4b64a62b8e6b733d212",
+      "git_blob": "52e234176e863cf566785d20b516397e967273d2"
+    },
+    {
+      "path": "recover_contract.py",
+      "bytes": 8264,
+      "sha256": "91dec36711a11bf8e2983cd61cc18a9110bf3132e0d016401d560305d44ffb24",
+      "git_blob": "55825736ac2de6f7abdaec179c8ce5937c9c0170"
+    },
+    {
+      "path": "run-api-at-recovery.json",
+      "bytes": 13496,
+      "sha256": "7fac02b73c24c2912c362a3d73aef5c25a3254f425573a857f83f2fa014a8824",
+      "git_blob": "199db46756290e991772c6fadb5d257d8c967bf6"
+    },
+    {
+      "path": "source-contract.json",
+      "bytes": 96659,
+      "sha256": "1d656437f70edc4e889a7da31921ef0e5a64d095f170576d4eae77da752eb074",
+      "git_blob": "ce6ec26304c2563a4c595adf47a957e918281c78"
+    }
+  ],
+  "total_bytes": 283671
+}

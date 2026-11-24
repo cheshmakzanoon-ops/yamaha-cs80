@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "supplemental_independent_input_binding_only",
+  "release_qualified": false,
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "original_build_run_id": 45439302351,
+  "original_build_attempt": 1,
+  "prepared_contract": {
+    "bytes": 96659,
+    "sha256": "1d656437f70edc4e889a7da31921ef0e5a64d095f170576d4eae77da752eb074"
+  },
+  "independent_inventory": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53/recovery-independent-inventory.json",
+    "bytes": 710475,
+    "sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "programs": 523,
+    "parameters": 204
+  },
+  "independent_capture_receipt": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53/recovery-independent-inventory-receipt.json",
+    "bytes": 4403,
+    "sha256": "3136f354cac3f3dd42d8b56d6b3f9001d804751a8e464bfd14347e74ef5f02d0"
+  },
+  "execution_kind": "local_recovery",
+  "receipt_records_normal_exit": 0,
+  "receipt_capture_prepost_sha256": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1",
+  "source_file_records_matched": [
+    "scripts/capture-factory-auditions.py",
+    "src/tools/preset_capture.cpp",
+    "src/core/FactoryPresets.h"
+  ],
+  "cli_interface": "--expected-inventory PATH --independent-capture-receipt PATH",
+  "scope": "A46 read and hashed actual regenerated inventory/receipt and checked their source/run/shape consistency. A53 owns capture execution and full independent-inventory/audition verification. This supplemental record updates the earlier prepared contract's unset input interface without altering that immutable preparation. No original native lane, actual audition archive or public delivery is accepted."
+}
