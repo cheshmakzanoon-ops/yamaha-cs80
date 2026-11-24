@@ -1,0 +1,35 @@
+{
+  "purpose": "Full-patch development verification; no release provenance claim",
+  "sha256": {
+    "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/PluckedMaterialPresetTests.cpp": "2869a1728950837ead97128cd69c67f2a25b080c063ef53d7fd1f372a6c46c43",
+    "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/BassPluckedRefinementTests.cpp": "eee24f778c9e6a5a7394c0c9b30a5952ab310f9850b2a829c384f8a8e1e63234",
+    "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/LibraryAuditTests.cpp": "8ce1469c4d41d41df2393fdf9d4053fe3f96b090d5f5de96e25cc15e0059e9e8",
+    "/tmp/cs80-a11-new/plucked-material-preset-tests": "de1242fa2a6632b82f2bcb3e2ce7ca2ffe2aa8da154dd5cd4c47831b71d85ed9",
+    "/tmp/cs80-a11-new/cs80_bass_plucked_refinement_tests": "c078184104b6d0da3d2fbb37df8614c0d1866e4765ea7aaa41045f87dfb98bed",
+    "/tmp/cs80-a11-new/level_probe": "83ff90fc0646e5a58a709e15f31ac15a5be7fba99b524cc8aa6848dd89df6fa3",
+    "/tmp/cs80-a11-new/libcs80_core.a": "63fb97f562bfecdb4a93ec6ee4df58a75cb7118d407b5294531b8a87f045463b"
+  },
+  "new_test_compile": [
+    "g++",
+    "-std=c++20",
+    "-O2",
+    "-Isrc",
+    "tests/PluckedMaterialPresetTests.cpp",
+    "/tmp/cs80-a11-new/libcs80_core.a",
+    "-lpthread",
+    "-o",
+    "/tmp/cs80-a11-new/plucked-material-preset-tests"
+  ],
+  "new_test_result": {
+    "checks": 124,
+    "failures": 0
+  },
+  "preceding_family_result": {
+    "checks": 149,
+    "failures": 0
+  },
+  "unchanged_level_subset": {
+    "programs": 4,
+    "failures": 0
+  }
+}

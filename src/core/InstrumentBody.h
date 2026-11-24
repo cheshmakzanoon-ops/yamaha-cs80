@@ -29,6 +29,7 @@
 // loop.  Host-rate Nyquist, not the oversampled internal rate, bounds the modes.
 
 #include "InstrumentBodyVariants.h"
+#include "InstrumentBodyMaterials.h"
 
 #include <algorithm>
 #include <array>
@@ -50,6 +51,8 @@ inline constexpr int modelCount = celesta + 1;
 inline constexpr int maxModel = celesta;
 static_assert(organ == 15 && vibes == 17 && marimba == 18,
               "saved material variants retain their published model identities");
+static_assert(tine == 2 && nylon == 6 && steel == 7 && bell == 16 && celesta == 19,
+              "material specializations retain their published model identities");
 
 inline constexpr const char* name(int model) noexcept
 {
@@ -85,6 +88,7 @@ public:
         count = 0;
         model = off;
         variant = standard;
+        material = defaultMaterial;
         controlCountdown = 0;
         normalizationCountdown = 2048;
         coefficientRefresh = 0;
@@ -107,11 +111,12 @@ public:
     // Overall amplitude/decay/damping still comes from the external rank ADSR.
     void noteOn(int selectedModel, float midiNote, float velocity, float brightness,
                 float decay, std::uint32_t seed, float size = 1.0f,
-                int selectedVariant = standard) noexcept
+                int selectedVariant = standard, int selectedMaterial = defaultMaterial) noexcept
     {
         reset();
         model = std::clamp(selectedModel, 0, maxModel);
         variant = compatibleVariant(model, selectedVariant);
+        material = compatibleMaterial(model, selectedMaterial);
         if (model == off) return;
 
         const double note = finiteClamp(midiNote, 0.0, 127.0, 60.0);
@@ -139,7 +144,7 @@ public:
         // An EP pickup's harmonic output follows the decreasing excursion of
         // its tine/reed. This bounded additive approximation avoids generating
         // unbandlimited products with a sample-domain distortion function.
-        pickupMotion = model == tine || model == reed ? 1.0 : 0.0;
+        pickupMotion = (model == tine && material != kalimba) || model == reed ? 1.0 : 0.0;
         const double pickupRate = (model == tine ? 0.72 : 1.05) * registerLossScale(0.35);
         pickupLoss = std::exp(-controlPeriod * pickupRate / (sampleRate * decayScale));
 
@@ -163,7 +168,9 @@ public:
         configureExcitation();
 
         double maximumSum = 0.0;
-        if (model == bell || model == vibes || model == marimba || model == celesta)
+        if (material >= tubular && material <= kalimba)
+            maximumSum = makeMaterialModes();
+        else if (model == bell || model == vibes || model == marimba || model == celesta)
             maximumSum = makeBarModes();
         else if (model == tine)
             maximumSum = makeTineModes();
@@ -181,14 +188,19 @@ public:
         // Reference weights share the actual note, geometry and mode coverage;
         // they never consume random draws or rebuild the oscillator bank.
         // Sustained bodies and fixed-touch quills retain their authored sum.
-        const double scale = 0.72 / std::max(maximumSum, 1.0e-12);
+        // The dense gong bank has a lower crest factor than the sparse bars.
+        // Its authored 0.80 modal ceiling leaves room for the largest 0.017
+        // contact impulse, while retaining the same full-strike denominator
+        // and therefore the complete soft-to-hard excitation response.
+        const double excitationCeiling = material == gong ? 0.80 : 0.72;
+        const double scale = excitationCeiling / std::max(maximumSum, 1.0e-12);
         for (int i = 0; i < count; ++i)
         {
             auto& m = modes[static_cast<std::size_t>(i)];
             m.dark *= scale;
             m.bright *= scale;
         }
-        if (model == bowed || vocal())
+        if (tracksFormants())
         {
             bowedResponseBound = 0.0;
             bowedBoundGain = 1.0;
@@ -307,7 +319,8 @@ private:
     double airAmount = 0.0, hitAmount = 0.0;
     std::uint32_t state = 0x7a4f39b1u;
     std::uint32_t motionState = 0x613c47a9u;
-    int model = off, variant = standard, count = 0, controlCountdown = 0, normalizationCountdown = 2048;
+    int model = off, variant = standard, material = defaultMaterial;
+    int count = 0, controlCountdown = 0, normalizationCountdown = 2048;
     int motionCountdown = 0;
     unsigned int coefficientRefresh = 0;
     bool sustained = false;
@@ -360,6 +373,16 @@ private:
 
     double hitSeconds() const noexcept
     {
+        switch (material)
+        {
+            case tubular: return 0.0028 - 0.0010 * strike;
+            case gong: return 0.022 - 0.008 * strike;
+            case temple: return 0.0070 - 0.0020 * strike;
+            case agogo: return 0.0012;
+            case musicBox: return 0.0009;
+            case kalimba: return 0.0035;
+            default: break;
+        }
         if (variant == xylophone) return 0.0016 - 0.0006 * strike;
         if (variant == steelpan) return 0.0034 - 0.0008 * strike;
         switch (model)
@@ -378,6 +401,16 @@ private:
 
     void configureExcitation() noexcept
     {
+        switch (material)
+        {
+            case tubular: hitAmount = 0.006 + 0.009 * strike; return;
+            case gong: hitAmount = 0.004 + 0.013 * strike * strike; return;
+            case temple: hitAmount = 0.003 + 0.005 * strike; return;
+            case agogo: hitAmount = 0.010 + 0.013 * strike; return;
+            case musicBox: hitAmount = 0.004 + 0.003 * strike; return;
+            case kalimba: hitAmount = 0.009 + 0.008 * strike; return;
+            default: break;
+        }
         if (vocal())
         {
             // Quiet turbulent air under a voiced source, with no hammer
@@ -470,7 +503,101 @@ private:
 
     double fixedFormant(double frequency) const noexcept
     {
-        return vocal() ? vocalFormant(frequency) : bowedFormant(frequency);
+        if (material == banjo || material == koto || material == harp)
+            return pluckedMaterialResponse(frequency);
+        // Bore/bell radiation and broad body resonances stay in Hz while a
+        // performer bends or adds vibrato. The accepted fingering/register
+        // and excitation remain captured; only the radiation response moves
+        // across the sounding harmonics. As with the existing bowed/voice
+        // profiles, these coefficients are authored, not measured spectra.
+        // Radiation/cutoff background: https://www.phys.unsw.edu.au/jw/cutoff.html
+        // https://www.phys.unsw.edu.au/jw/brassacoustics.html
+        switch (model)
+        {
+            case flute: return 0.75 + 0.35 * bodyResonance(frequency, 1800.0, 1700.0);
+            case clarinet: return 0.82 + 0.28 * bodyResonance(frequency, 1500.0, 900.0);
+            case oboe: return 0.28 + 1.65 * bodyResonance(frequency, 1300.0, 650.0)
+                                  + 0.75 * bodyResonance(frequency, 2800.0, 1000.0);
+            case bassoon: return 0.34 + 1.25 * bodyResonance(frequency, 500.0, 280.0)
+                                     + 0.80 * bodyResonance(frequency, 1500.0, 700.0);
+            case brass: return 0.55 + 0.65 * bodyResonance(frequency, 1250.0, 1100.0);
+            default: return vocal() ? vocalFormant(frequency) : bowedFormant(frequency);
+        }
+    }
+
+    bool tracksFormants() const noexcept
+    {
+        return (model >= bowed && model <= brass) || vocal()
+            || material == banjo || material == koto || material == harp;
+    }
+
+    double pluckedMaterialResponse(double frequency) const noexcept
+    {
+        // One captured body keeps its resonances in Hz during a string bend.
+        // The same function shapes onset weights and the existing bounded
+        // live-pitch correction; standard nylon/steel/bass never call it.
+        if (material == banjo)
+            return 0.23 + 1.85 * bodyResonance(frequency, 650.0, 235.0)
+                        + 0.68 * bodyResonance(frequency, 2850.0, 1050.0);
+        if (material == koto)
+            return 0.45 + 0.35 * bodyResonance(frequency, 85.0, 38.0)
+                        + 0.65 * bodyResonance(frequency, 110.0, 65.0)
+                        + 0.62 * bodyResonance(frequency, 510.0, 230.0)
+                        + 0.48 * bodyResonance(frequency, 1850.0, 850.0);
+        return 0.58 + 0.74 * bodyResonance(frequency, 190.0, 160.0)
+                    + 0.32 * bodyResonance(frequency, 540.0, 340.0)
+                    + 0.12 * bodyResonance(frequency, 1450.0, 850.0);
+    }
+
+    double pluckedMaterialWeight(int harmonic, double colour, double excitation) const noexcept
+    {
+        const double h = static_cast<double>(harmonic);
+        const double frequency = keyHz * h;
+        // Finger/pick displacement changes the energy of the whole string,
+        // including its fundamental. The existing full-strike denominator
+        // preserves that reduction instead of normalizing soft notes upward.
+        const double displacement = 0.40 + 0.60 * excitation;
+        // Banjo identity is strongly affected by membrane/bridge formants and
+        // frequency-dependent string losses, not just a nasal low-pass:
+        // Woodhouse, Politzer & Mansour, Acta Acustica 5, 15 (2021),
+        // https://doi.org/10.1051/aacus/2021009 . Their measured instrument's
+        // broad low formant lay around 500--800 Hz. Our centers, widths and
+        // gains below are authored approximations, not their fitted model.
+        if (material == banjo)
+        {
+            const double position = 0.115 + pluckOffset;
+            const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
+            const double membrane = pluckedMaterialResponse(frequency);
+            return displacement * membrane * comb * std::pow(h, -1.08)
+                 * std::exp(-(h - 1.0) / (4.0 + 14.0 * colour + 6.0 * excitation));
+        }
+        if (material == koto)
+        {
+            // A near-bridge plectrum excites a broad notched string spectrum.
+            // The koto is a long paulownia body with individually movable
+            // bridges, not a steel-string guitar. The accepted model slot is
+            // only a stable saved ID. Coaldrake's measured CT study identifies
+            // low air/body modes near 85/100 Hz:
+            // https://pub.dega-akustik.de/ICA2019/data/articles/001444.pdf
+            // The higher clusters and all losses here are voicing choices.
+            const double position = 0.075 + 0.60 * pluckOffset;
+            const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
+            const double board = pluckedMaterialResponse(frequency);
+            return displacement * board * comb * std::pow(h, -1.13)
+                 * std::exp(-(h - 1.0) / (3.0 + 13.0 * colour + 7.0 * excitation));
+        }
+        // Harp finger width and plucking point affect the string spectrum:
+        // Chadefaux et al., JASA 131, 844--855 (2012),
+        // https://doi.org/10.1121/1.3651246 . A finite contact bandwidth and
+        // a rounded low soundboard response distinguish this authored profile
+        // from the shorter guitar-like nylon body. It is not a nonlinear
+        // harp model and does not claim phantom or sympathetic partials.
+        const double position = 0.325 + 0.50 * pluckOffset;
+        const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
+        const double finger = 1.0 / (1.0 + std::pow(h / (5.0 + 7.0 * excitation + 9.0 * colour), 2.0));
+        const double board = pluckedMaterialResponse(frequency);
+        return displacement * board * comb * std::pow(h, -1.53) * finger
+             * std::exp(-(h - 1.0) / (4.0 + 10.0 * colour + 4.0 * excitation));
     }
 
     double stringWeight(int harmonic, double colour) const noexcept
@@ -525,6 +652,8 @@ private:
             }
             case nylon: case steel: case bass:
             {
+                if (material == banjo || material == koto || material == harp)
+                    return pluckedMaterialWeight(harmonic, colour, excitation);
                 const double position = (model == nylon ? 0.22 : model == bass ? 0.19 : 0.135) + pluckOffset;
                 const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
                 const double falloff = model == nylon ? 1.75 : model == bass ? 1.6 : 1.32;
@@ -617,6 +746,18 @@ private:
         // These are authored relative losses, not measured instrument T60s.
         // They give the excitation a register-dependent tail; the rank VCA
         // still supplies the overall musical decay and key/pedal damping.
+        // Efficient radiation through the banjo head removes energy from
+        // its membrane-band string harmonics early. Harp's lower aftersound
+        // rings longer; the near-bridge koto strike loses its upper edge first.
+        // These are positive authored decay rates, not measured T60 values.
+        if (material == banjo)
+            return registerScale * (0.48 + 0.35 * h + 0.035 * h * h)
+                 + 1.35 * bodyResonance(keyHz * harmonic, 650.0, 260.0);
+        if (material == koto)
+            return registerScale * (0.17 + 0.27 * h + 0.040 * h * h)
+                 + 0.13 * bodyResonance(keyHz * harmonic, 510.0, 230.0);
+        if (material == harp)
+            return registerScale * (0.105 + 0.16 * h + 0.024 * h * h);
         switch (model)
         {
             case piano: return registerScale * (0.12 + 0.20 * std::sqrt(h) + 0.013 * h * h)
@@ -712,23 +853,27 @@ private:
             for (int slot = 0; slot < 42; ++slot) (void) randomBipolar();
             // Low bass single strings become coupled courses above the bass.
             // The doublet keeps a slowly beating aftersound as the prompt
-            // high modes decay.  Each strike has a bounded private variation.
+            // high modes decay. Its geometry belongs to the instrument, not
+            // the hammer strike: one neighbouring string has one detuning
+            // shared by its partials. Separating string tuning from excitation
+            // follows the string/hammer distinction in Bank & Sujbert, DAFx-02
+            // (reference above); 1.15 cents is an authored voicing choice.
             // These are authored register contours, so fine tuning across a
             // nominal course boundary must not cause a split-key timbre step.
             const double detunePosition = std::clamp((note - 30.0) / 2.0, 0.0, 1.0);
             const double detuneBlend = detunePosition * detunePosition * (3.0 - 2.0 * detunePosition);
+            const double courseRatio = std::exp2(detuneBlend * 1.15 / 1200.0);
             const double coursePosition = std::clamp((note - 47.0) / 2.0, 0.0, 1.0);
             const double courseBlend = coursePosition * coursePosition * (3.0 - 2.0 * coursePosition);
             const double course = 0.28 + 0.08 * courseBlend;
             for (int harmonic = 1; harmonic <= 6; ++harmonic)
             {
                 const double h = static_cast<double>(harmonic);
-                // Always reserve the detune draw, even in the undetuned bass,
-                // keeping course phases and contact noise independent of note.
-                const double cents = detuneBlend * (1.15 + 0.35 * randomBipolar())
-                                   * (harmonic % 2 ? 1.0 : -1.0);
+                // Reserve the former detune draw so changing the fixed course
+                // geometry does not reseed strike phases or contact texture.
+                (void) randomBipolar();
                 const double ratio = h * std::sqrt((1.0 + stiffness * h * h) / (1.0 + stiffness))
-                                   * std::exp2(cents / 1200.0);
+                                   * courseRatio;
                 const double dark = course * stringWeight(harmonic, 0.0);
                 const double bright = course * stringWeight(harmonic, 1.0);
                 addMode(ratio, dark, bright,
@@ -820,6 +965,151 @@ private:
                     (wooden ? 0.00022 : 0.00055) + 0.00085 / (1.0 + static_cast<double>(i)));
         }
         return maximumSum;
+    }
+
+    double makeMaterialModes() noexcept
+    {
+        // Modal ratios distinguish the geometry, not merely brightness of a
+        // common bar. All amplitude, loss and contact values are authored.
+        // They are not claimed as measurements of a particular instrument.
+        // Source/decaying-mode separation and split-mode beating:
+        // https://www.dafx.de/papers/DAFX02_Karjalainen_Valimaki_Esquef_bell-like_sounds.pdf
+        struct Shape { double ratio, dark, bright, loss, onset; };
+        const double registerScale = registerLossScale(material == kalimba ? 0.32 : 0.22);
+        const double highRegister = std::max(0.0, std::log2(keyHz / 261.625565));
+        const bool delayedPlate = material == gong;
+        const auto build = [&](const auto& profile)
+        {
+            double maximumSum = 0.0;
+            for (const auto& shape : profile)
+            {
+                const double upper = std::max(0.0, shape.ratio - 1.0);
+                // Soft contact suppresses high absolute frequencies. The
+                // denominator stays the full-strike bound: a soft hit never
+                // recovers the missing upper energy through normalization.
+                const double contact = std::exp(-keyHz * upper / (5000.0 + 15000.0 * strike)
+                                               - 0.025 * highRegister * upper);
+                const double fullContact = std::exp(-keyHz * upper / 20000.0
+                                                   - 0.025 * highRegister * upper);
+                const double edge = shape.ratio <= 1.05 ? 1.0
+                    : delayedPlate ? 0.08 + 0.92 * strike * strike : 0.22 + 0.78 * strike;
+                maximumSum += std::max(shape.dark, shape.bright) * fullContact;
+                addMode(shape.ratio, shape.dark * edge * contact, shape.bright * edge * contact,
+                        shape.loss * registerScale, 0.055 * randomBipolar(), shape.onset);
+            }
+            return maximumSum;
+        };
+
+        switch (material)
+        {
+            case tubular:
+            {
+                // Hibbert's 233-tube measurements list average cents relative
+                // to the fourth mode. That mode is twice the nominal strike
+                // pitch; the first two modes are weak. These source ratios
+                // replace the old free-bar series, rather than adding a
+                // fictitious strong harmonic fundamental to force the pitch.
+                // https://www.hibberts.co.uk/tubular-bells/
+                constexpr double cents[] {-3668, -1941, -816, 0, 631, 1139,
+                                           1562, 1926, 2242, 2530, 2796, 3068};
+                constexpr double dark[] {.006, .025, .12, .90, .47, .30,
+                                         .16, .09, .055, .030, .018, .010};
+                constexpr double bright[] {.010, .040, .20, 1.0, .76, .57,
+                                           .40, .29, .20, .14, .095, .060};
+                std::array<Shape, 12> profile {};
+                for (std::size_t i = 0; i < profile.size(); ++i)
+                {
+                    const double index = static_cast<double>(i);
+                    profile[i] = {2.0 * std::exp2(cents[i] / 1200.0), dark[i], bright[i],
+                                  0.14 + 0.045 * index + 0.018 * index * index,
+                                  0.0010 + 0.0020 / (1.0 + index)};
+                }
+                return build(profile);
+            }
+            case gong:
+            {
+                // Fletcher describes the tam-tam's transfer from a low thud
+                // into many higher modes. This bounded linear approximation
+                // authors delayed upper entrances; it does not claim to solve
+                // nonlinear energy exchange or reproduce one measured gong.
+                // https://newt.phys.unsw.edu.au/music/people/publications/Fletcher1999a.pdf
+                constexpr Shape profile[] {
+                    {1.000, .85, .90, .86, .008}, {1.421, .25, .42, .62, .025},
+                    {1.917, .19, .35, .49, .045}, {2.283, .13, .31, .36, .075},
+                    {2.719, .11, .32, .28, .14}, {3.153, .09, .33, .25, .22},
+                    {3.687, .08, .34, .24, .32}, {4.079, .065, .32, .26, .42},
+                    {4.531, .055, .30, .29, .53}, {5.137, .045, .28, .32, .62},
+                    {5.773, .035, .25, .37, .72}, {6.319, .030, .23, .42, .82},
+                    {7.081, .025, .21, .48, .89}, {7.813, .020, .19, .55, .95},
+                    {8.671, .016, .16, .63, 1.02}, {9.617, .012, .14, .72, 1.10},
+                    {10.723, .010, .12, .83, 1.17}, {12.211, .008, .095, 1.00, 1.25},
+                    {13.367, .006, .075, 1.18, 1.31}, {14.827, .004, .055, 1.40, 1.36}
+                };
+                return build(profile);
+            }
+            case temple:
+            {
+                // Asian temple bells are not the tuned minor-third church
+                // bell series. This authored bowl/shell has widely separated
+                // low modes and stable close pairs for slow metallic beating.
+                // Fletcher (1999), section 13.1, distinguishes these shapes.
+                constexpr Shape profile[] {
+                    {1.0000, 1.00, 1.00, .075, .004}, {1.0017, .28, .28, .094, .006},
+                    {2.3610, .27, .44, .21, .004}, {2.3651, .10, .17, .24, .005},
+                    {3.9840, .13, .32, .44, .003}, {3.9916, .045, .12, .48, .004},
+                    {5.2670, .065, .23, .74, .0028}, {6.6180, .036, .17, 1.05, .0024},
+                    {8.1530, .022, .115, 1.49, .0020}, {9.8470, .012, .075, 1.95, .0018},
+                    {11.7390, .008, .050, 2.70, .0016}, {13.8280, .004, .030, 3.60, .0014}
+                };
+                return build(profile);
+            }
+            case agogo:
+            {
+                // A compact struck shell: a quick hard contact and several
+                // broad-spaced metal modes, with much faster loss than the
+                // suspended temple shell. Ratios are authored, not measured.
+                constexpr Shape profile[] {
+                    {1.000, 1.0, 1.0, 1.80, .0006}, {1.873, .30, .67, 2.30, .0005},
+                    {2.647, .18, .51, 3.50, .0004}, {3.871, .095, .34, 5.10, .00035},
+                    {5.143, .045, .22, 7.20, .0003}, {6.627, .022, .14, 9.80, .0003},
+                    {8.239, .010, .085, 13.5, .00025}, {10.417, .005, .045, 18.0, .0002}
+                };
+                return build(profile);
+            }
+            case musicBox:
+            {
+                // Uniform clamped-free beam eigenfrequency ratios provide a
+                // comb-tooth starting point: the first overtone is near 6.27,
+                // unlike a free bar's 2.76 or an electric pickup's odd series.
+                // Chapman (2012), doi:10.1121/1.3651090, contrasts the beam
+                // boundary conditions. Actual shaped combs can differ.
+                constexpr Shape profile[] {
+                    {1.0, 1.0, 1.0, .36, .0005}, {6.2669, .035, .23, 2.7, .00025},
+                    {17.5475, .006, .080, 7.8, .00018}, {34.3861, .001, .026, 15.0, .00013},
+                    {56.8426, .0002, .008, 25.0, .00010}
+                };
+                return build(profile);
+            }
+            case kalimba:
+            {
+                // Chapman's measured first overtone is 5.3–5.9 times the
+                // fundamental, set by clamped-supported-free geometry. This
+                // smooth register law selects an authored position in that
+                // range. Higher ratios/losses are authored; no EP pickup
+                // harmonics or excursion-power decay enter this branch.
+                // https://dael.euracoustics.org/confs/acoustics2008/data/articles/000215.pdf
+                const double second = std::clamp(5.72 - 0.12 * std::log2(keyHz / 261.625565)
+                                                       + 0.10 * std::log2(bodySize), 5.3, 5.9);
+                const double geometry = second / 5.72;
+                const Shape profile[] {
+                    {1.0, 1.0, 1.0, .56, .0009}, {second, .075, .34, 3.10, .0004},
+                    {14.8 * geometry, .010, .095, 8.2, .00025},
+                    {28.6 * geometry, .002, .027, 16.0, .00018}
+                };
+                return build(profile);
+            }
+            default: return 0.0; // Dispatch excludes default and string materials.
+        }
     }
 
     double makeBarModes() noexcept
@@ -921,7 +1211,7 @@ private:
         pickupMotion *= pickupLoss;
         if (pickupMotion < 1.0e-8) pickupMotion = 0.0;
         transientControls = pickupMotion > 0.0;
-        if ((model == bowed || vocal()) && pitchChanged)
+        if (tracksFormants() && pitchChanged)
         {
             // tick() accepts float pitch. Returning to that exact onset pitch
             // restores the original weights without a rounding-sized colour
@@ -992,7 +1282,7 @@ private:
                     pickup *= excursion;
                 double target = (m.dark + colour * (m.bright - m.dark))
                               * antialias * (1.0 - m.onsetMissing) * pickup;
-                if (model == bowed || vocal())
+                if (tracksFormants())
                     target *= bowedResponseGain[static_cast<std::size_t>(i)] * bowedBoundGain;
                 m.gainStep = (target - m.gain) / controlPeriod;
             }

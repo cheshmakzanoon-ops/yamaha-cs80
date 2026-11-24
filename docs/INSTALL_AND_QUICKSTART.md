@@ -4,12 +4,14 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library revision **2026.11.5**: revoiced existing
+This guide covers factory library revision **2026.11.6**: revoiced existing
 programs and optional instrument bodies within one circuit instrument, the
 unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
 readout. All **521 existing musical programs** have revised sound controls;
 **Init Patch** and **Init Circuit** remain starting points, with all names and
-program addresses preserved. See the [2026.11.5 sound revision](CIRCUIT_LIBRARY_2026_11_5.md).
+program addresses preserved. The latest revision adds stable piano course tuning,
+body resonances that remain fixed during wind/brass bends, and distinct bell,
+comb, tine and plucked-string materials. See the [2026.11.6 sound revision](CIRCUIT_LIBRARY_2026_11_6.md).
 Engine and isolation selectors remain removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
@@ -58,7 +60,7 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.5** and that their full source commit matches
+confirm that both identify **2026.11.6** and that their full source commit matches
 the exact source SHA listed for the selected verified download and its completed
 workflow qualification. The sound-library revision is separate from
 the application's version string.
@@ -215,6 +217,13 @@ The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs use the
 circuit models. “Complete” describes the
 classified source column, not measured hardware equivalence. PANEL and memories
 retain their programmer identity; they do not become factory source columns.
+
+The original hardware tone tabs and the similarly named browser programs serve
+different purposes. A panel **E. PIANO** tab selects the original CS-80 electrical
+tone recipe; **Tone I: E. Piano** in Library loads the enhanced factory instrument
+voicing. Use **Library** to hear the revised named instruments. The tabs' tooltips
+identify the corresponding browser programs. Instrument bodies are available on
+PANEL sources and remain suppressed on the hardware-tone and memory paths.
 
 ### Screen size and performance limits
 

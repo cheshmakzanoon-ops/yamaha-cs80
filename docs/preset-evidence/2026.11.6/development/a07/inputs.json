@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "worker": "a07_modal_materials",
+  "baseline_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "baseline_models": "0..19 excluding piano=1; variant0..4; MIDI48/60/84; rates44100/48000/96000",
+  "stream_count": 855,
+  "samples_per_stream": 12000,
+  "matching_streams": 855,
+  "all_streams_identical": true,
+  "candidate_identity_inputs": {
+    "candidate/core/InstrumentBody.h": {
+      "sha256": "18a0d7fc495222093dae84a7246e3c3badd7fce50e839d6f20ea2b4c6727dd54",
+      "bytes": 68109
+    },
+    "candidate/core/InstrumentBodyMaterials.h": {
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "bytes": 1620
+    },
+    "candidate/core/InstrumentBodyVariants.h": {
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "bytes": 1259
+    }
+  },
+  "baseline_identity_inputs": {
+    "baseline/core/InstrumentBody.h": {
+      "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+      "bytes": 52123
+    },
+    "baseline/core/InstrumentBodyVariants.h": {
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "bytes": 1259
+    }
+  },
+  "commands": [
+    "c++ -std=c++20 -O2 -Wall -Wextra -Isrc tests/MaterialBodyTests.cpp -o <scratch>/material-tests",
+    "c++ -std=c++20 -O2 -Wall -Wextra -Isrc tests/InstrumentBodyVariantTests.cpp -o <scratch>/variant-tests",
+    "c++ -std=c++20 -O2 -I<captured-source> default-identity.cpp -o <scratch>/identity"
+  ],
+  "material_checks": 794,
+  "material_failures": 0,
+  "existing_variant_checks": 1132,
+  "existing_variant_failures": 0,
+  "retained_files": {
+    "default-after.csv": {
+      "sha256": "bf4590cd5dfaabc00ec6b2a95aef98c178afaebcf6cbbfad4c26e1834b041a10",
+      "bytes": 26100
+    },
+    "default-before.csv": {
+      "sha256": "bf4590cd5dfaabc00ec6b2a95aef98c178afaebcf6cbbfad4c26e1834b041a10",
+      "bytes": 26100
+    },
+    "default-identity.cpp": {
+      "sha256": "bcd42a71d1bdafd24e283b29bdc68ae7f3ba18ebc9445112b00927c117ff6938",
+      "bytes": 748
+    },
+    "initial-compact-decay.log": {
+      "sha256": "f51a9fc73e54c1c1986fda85f38a1cd9ed747938d838917e8b61d722ba31c6ce",
+      "bytes": 2060
+    },
+    "material-tests.log": {
+      "sha256": "2d983a9bacffe7e061dd18b43afea9cbed5c9d21c2c982746e21feba488166b9",
+      "bytes": 1658
+    },
+    "variant-tests.log": {
+      "sha256": "4b7cb44d4c31c159ac960be31614164c166f8d64d025dfe6ed13321e1039d1b0",
+      "bytes": 1403
+    }
+  }
+}

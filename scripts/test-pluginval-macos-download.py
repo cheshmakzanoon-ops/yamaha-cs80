@@ -305,14 +305,30 @@ class DownloadTests(unittest.TestCase):
         gate = macos.split("      - name: Register built AU", 1)[1].split(
             "      - name: Package native macOS", 1)[0]
         # Registration now signs the packaging source before copying it and
-        # compares the two AU bundles. Pin that reviewed correction separately
-        # from the original four validator bodies, whose bytes remain unchanged.
-        validators = gate.split("      - name: Validate VST3 with pluginval\n", 1)[1]
+        # compares the two AU bundles. Keep the original four validator command
+        # bodies byte-identical; only reviewed step IDs/conditions and a fifth
+        # independent required seed lane are added to that frozen contract.
+        condition = ("        if: always() && !cancelled() && "
+                     "(steps.validate_au_gui.outcome == 'success' || "
+                     "steps.validate_au_gui.outcome == 'failure')\n")
+        comments = ("      # These are separate required reproductions of recorded GUI failures.\n"
+                    "      # Each runs after an attempted random GUI lane, even if another lane\n"
+                    "      # failed. A passing replay never clears an earlier failure.\n")
+        c76_step = "      - name: Validate AU GUI regression seed 0x3c99748\n"
+        self.assertEqual(gate.count(c76_step), 1)
+        self.assertEqual(gate.count("        id: validate_au_gui\n"), 1)
+        self.assertIn("      - name: Validate AU with pluginval GUI\n"
+                      "        id: validate_au_gui\n"
+                      "        run: |\n", gate)
+        before_c76, c76_regression = gate.split(c76_step, 1)
+        legacy_gate = before_c76.replace("        id: validate_au_gui\n", "").replace(
+            "        id: validate_au_gui_seed\n" + condition, "").replace(comments, "")
+        validators = legacy_gate.split("      - name: Validate VST3 with pluginval\n", 1)[1]
         self.assertEqual(hashlib.sha256(validators.encode()).hexdigest(),
                          "cbc886a9c0c90a4988b0f012533620d2dfdc87bbb800180b53263925b9a66811")
         seed_step = "      - name: Validate AU GUI fixed-seed regression\n"
         self.assertEqual(gate.count(seed_step), 1)
-        original_gate, seed_regression = gate.split(seed_step, 1)
+        original_gate, seed_regression = legacy_gate.split(seed_step, 1)
         self.assertEqual(hashlib.sha256(original_gate.encode()).hexdigest(),
                          "8b66229b5a9309754ca272b3d5a2878850b3b5c37253518d5a4c1d3442cf3e7e")
         self.assertEqual(seed_regression,
@@ -328,13 +344,24 @@ class DownloadTests(unittest.TestCase):
                          "            \"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\" \\\n"
                          "            2>&1 | tee pluginval-au-seed-regression.log\n"
                          "          grep -qx 'SUCCESS' pluginval-au-seed-regression.log\n\n")
+        self.assertEqual(before_c76.split(seed_step, 1)[1],
+                         "        id: validate_au_gui_seed\n" + condition + seed_regression)
+        c76_body = seed_regression.replace("0x2b4eef5", "0x3c99748").replace(
+            "cs80-au-seed-regression", "cs80-au-seed-c76-regression").replace(
+            "pluginval-au-seed-regression.log", "pluginval-au-seed-c76-regression.log")
+        self.assertEqual(c76_regression,
+                         "        id: validate_au_gui_seed_c76\n" + condition + c76_body)
+        self.assertIn("runner: [macos-15, macos-15-intel]", macos)
+        self.assertNotIn("continue-on-error:", macos)
         failure = macos.split("      - name: Report pluginval failure", 1)[1].split(
             "      - name: Upload pluginval reports", 1)[0]
         self.assertIn("          for log in pluginval-vst3.log pluginval-au.log "
-                      "pluginval-au-gui.log pluginval-au-seed-regression.log; do\n", failure)
+                      "pluginval-au-gui.log pluginval-au-seed-regression.log "
+                      "pluginval-au-seed-c76-regression.log; do\n", failure)
         upload = macos.split("      - name: Upload pluginval reports", 1)[1].split(
             "      - name: Upload test and JUCE source evidence", 1)[0]
         self.assertIn("            pluginval-au-seed-regression.log\n", upload)
+        self.assertIn("            pluginval-au-seed-c76-regression.log\n", upload)
         registration = gate.split("      - name: Validate VST3 with pluginval\n", 1)[0]
         sign_source = '          codesign --force --sign - "$AU_SOURCE"\n'
         copy = '          cp -R "$AU_SOURCE" "$AU_DEST"\n'
@@ -351,6 +378,7 @@ class DownloadTests(unittest.TestCase):
                         packaging.index("          python scripts/package-ci-artifacts.py"))
         self.assertNotIn("|| true", packaging)
         self.assertNotIn("continue-on-error", packaging)
+        self.assertNotIn("        if:", packaging)
         for body, phase in ((registration, "before"), (packaging, "after")):
             record = f"au-payload-{phase}-validation.sha256"
             self.assertIn('          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \\\n'

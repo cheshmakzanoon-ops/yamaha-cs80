@@ -19,6 +19,13 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
+    seed_condition = ("        if: always() && !cancelled() && "
+                      "(steps.validate_au_gui.outcome == 'success' || "
+                      "steps.validate_au_gui.outcome == 'failure')\n")
+    workflow = (ROOT / WORKFLOW).read_text()
+    c76_lane = "      - name: Validate AU GUI regression seed 0x3c99748\n" + workflow.split(
+        "      - name: Validate AU GUI regression seed 0x3c99748\n", 1)[1].split(
+        "      - name: Package native macOS VST3, AU and Standalone\n", 1)[0]
     faults = [
         ('checksum-bypass', HELPER, 'if len(data) != EXPECTED_SIZE or digest != EXPECTED_SHA256:', 'if False:'),
         ('unbounded-read', HELPER, 'response.read(EXPECTED_SIZE + 1)', 'response.read()'),
@@ -41,12 +48,32 @@ def main():
          '            --random-seed 0x2b4eef5 \\\n', ''),
         ('change-au-gui-regression-seed', WORKFLOW,
          '--random-seed 0x2b4eef5', '--random-seed 0x2b4eef6'),
+        ('remove-c76-au-gui-regression', WORKFLOW, c76_lane, ''),
+        ('change-c76-au-gui-seed', WORKFLOW,
+         '--random-seed 0x3c99748', '--random-seed 0x3c99749'),
+        ('skip-c76-gui-tests', WORKFLOW,
+         '            --random-seed 0x3c99748', '            --skip-gui-tests \\\n            --random-seed 0x3c99748'),
+        ('remove-random-gui-step-id', WORKFLOW, '        id: validate_au_gui\n', ''),
+        ('skip-old-seed-after-failure', WORKFLOW,
+         '        id: validate_au_gui_seed\n' + seed_condition,
+         '        id: validate_au_gui_seed\n'),
+        ('skip-c76-seed-after-failure', WORKFLOW,
+         '        id: validate_au_gui_seed_c76\n' + seed_condition,
+         '        id: validate_au_gui_seed_c76\n'),
+        ('ignore-c76-validator-failure', WORKFLOW,
+         '        id: validate_au_gui_seed_c76\n',
+         '        id: validate_au_gui_seed_c76\n        continue-on-error: true\n'),
+        ('package-after-validator-failure', WORKFLOW,
+         '      - name: Package native macOS VST3, AU and Standalone\n',
+         '      - name: Package native macOS VST3, AU and Standalone\n        if: always()\n'),
+        ('no-c76-log-upload', WORKFLOW, '            pluginval-au-seed-c76-regression.log\n', ''),
         ('ignore-fetch-failure', WORKFLOW,
          '--evidence pluginval-download.json\n          unzip -q',
          '--evidence pluginval-download.json || true\n          unzip -q'),
         ('no-step-timeout', WORKFLOW, '- name: Fetch pluginval 1.0.4\n        timeout-minutes: 5', '- name: Fetch pluginval 1.0.4'),
-        ('no-provenance-upload', WORKFLOW, 'name: cs80-pluginval-${{ matrix.runner }}\n          path: |\n            pluginval-download.json',
-         'name: cs80-pluginval-${{ matrix.runner }}\n          path: |'),
+        ('no-provenance-upload', WORKFLOW,
+         '            au-payload-after-validation.sha256\n            pluginval-download.json\n',
+         '            au-payload-after-validation.sha256\n'),
     ]
     results = []
     with tempfile.TemporaryDirectory(prefix='cs80-macos-transfer-negative-') as directory:

@@ -5,6 +5,7 @@
 #include "PluginEditor.h"
 #include "core/VoiceModes.h"
 #include "core/InstrumentBodyVariants.h"
+#include "core/InstrumentBodyMaterials.h"
 #include "PluginProcessorLibrary.h"
 #include "ParameterStateChildIndex.h"
 #include "CircuitPolicyParameter.h"
@@ -453,6 +454,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
             juce::ParameterID { parameterId(cs80::bodyVariantParam(rank)), 18 },
             rank == 0 ? "Body I resonator variant (next note)" : "Body II resonator variant (next note)",
             choices, cs80::body::standard));
+    }
+
+    // Preserve all 308 previous host slots and the normalized ranges of their
+    // choices. A missing material in an older state is explicitly Standard.
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        juce::StringArray choices;
+        for (int material = 0; material <= cs80::body::maxMaterial; ++material)
+            choices.add(cs80::body::materialName(material));
+        layout.add(std::make_unique<juce::AudioParameterChoice>(
+            juce::ParameterID { parameterId(cs80::bodyMaterialParam(rank)), 19 },
+            rank == 0 ? "Body I material (next note)" : "Body II material (next note)",
+            choices, cs80::body::defaultMaterial));
     }
 
     return layout;

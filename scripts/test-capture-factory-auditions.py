@@ -42,6 +42,10 @@ SUSTAINED_BASS = ["Solo Cello", "Bass Clarinet", "Bassoon"]
 MATERIALS = ["Xylophone", "Steel Drum", "Marimba", "Vibraphone"]
 CHOIRS = ["Choir Pad", "Dark Choir"]
 ORIGINAL_ARTICULATION = ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"]
+MATERIAL_PROFILES = ["Tubular Bells", "Gong", "Temple Bell", "Agogo", "Music Box",
+                     "Banjo", "Koto", "Harp", "Kalimba"]
+PARAMETER_IDS = [f"fixture_parameter_{i}" for i in range(204)]
+PARAMETER_VALUES = [0.0] * 202 + [.125, .75]
 SOURCE = "3" * 40
 SOURCE_STATE = dict(source_commit=SOURCE, source_tree="5" * 40, tracked_source_clean=True)
 # A tiny valid stereo IEEE-float WAV, used only as an unchanged-byte witness.
@@ -63,9 +67,10 @@ class CaptureChild:
         if "--inventory" in command:
             names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS
                                        + TEXTURES + SUSTAINED + SUSTAINED_BASS
-                                       + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION))
+                                       + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION + MATERIAL_PROFILES))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
-            programs = [{"host_index": i, "name": name, "category": "Fixture"} for i, name in enumerate(names)]
+            programs = [{"host_index": i, "name": name, "category": "Fixture", "values": PARAMETER_VALUES}
+                        for i, name in enumerate(names)]
             if self.fault == "short inventory":
                 programs.pop()
             elif self.fault == "unordered addresses":
@@ -77,7 +82,8 @@ class CaptureChild:
             elif self.fault == "invalid category":
                 programs[0]["category"] = ""
             Path(option("--inventory")).write_text(json.dumps(
-                {"programs": programs, "library_revision": "2026.11.4"}), encoding="utf-8")
+                {"schema": 1, "programs": programs, "parameter_ids": PARAMETER_IDS,
+                 "library_revision": "2026.11.6"}), encoding="utf-8")
             return subprocess.CompletedProcess(command, 0)
         if self.fault == "child failure":
             raise subprocess.CalledProcessError(2, command)
@@ -154,10 +160,13 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((manifest["repository"], manifest["run_id"], manifest["run_attempt"]),
                          ("owner/repo", "42", "2"))
         self.assertEqual(manifest["capture_binary_sha256"], hashlib.sha256(self.capture.read_bytes()).hexdigest())
-        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (171, 171))
-        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (1033.2, 1033.2))
-        self.assertEqual(manifest["selected_program_count"], 81)
-        self.assertEqual(manifest["library_revision"], "2026.11.4")
+        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (225, 225))
+        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (1276.2, 1276.2))
+        self.assertEqual(manifest["selected_program_count"], 89)
+        self.assertEqual(manifest["library_revision"], "2026.11.6")
+        inventory = json.loads((out / "inventory.json").read_text())
+        self.assertEqual(inventory["parameter_ids"], PARAMETER_IDS)
+        self.assertTrue(all(program["values"] == PARAMETER_VALUES for program in inventory["programs"]))
         self.assertEqual(manifest["inventory_command"], child.commands[0])
         self.assertEqual(manifest["capture_commands"], child.commands[1:])
         groups = manifest["selections"]
@@ -172,11 +181,12 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
         self.assertEqual([(g["names"], g["note"]) for g in groups[9:12]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len(groups), 40)
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 81)
+        self.assertEqual(len(groups), 46)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 89)
         readme = (out / "README.txt").read_text()
-        self.assertIn("171 unnormalized circuit-synth auditions of 81 existing programs", readme)
-        self.assertIn("1033.2 seconds total", readme)
+        self.assertIn("225 unnormalized circuit-synth auditions of 89 existing programs", readme)
+        self.assertIn("1276.2 seconds total", readme)
+        self.assertIn("Material-profile folders compare Tubular Bells, Gong, Temple Bell", readme)
         self.assertIn("same-foundation comparisons do not isolate resonant size alone", readme)
         self.assertIn("Single-note examples do not establish acoustic similarity", readme)
         for group in groups:
@@ -221,7 +231,7 @@ class AuditionTests(unittest.TestCase):
     def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
         groups = helper.selections()
         self.assertEqual(helper.roster_summary(groups),
-                         dict(wav_count=171, selected_program_count=81, audio_seconds=1033.2))
+                         dict(wav_count=225, selected_program_count=89, audio_seconds=1276.2))
         by_folder = {group["folder"]: group for group in groups}
         quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
         self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
@@ -260,7 +270,7 @@ class AuditionTests(unittest.TestCase):
                 self.assertEqual(group["names"], ["Clarinet", "Bass Clarinet"])
                 self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
                                  (note, velocity, 0, 3, 1))
-        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 480_000_000)
+        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 500_000_000)
 
     def test_material_and_vowel_comparisons_preserve_matched_conditions(self):
         groups = {group["folder"]: group for group in helper.selections()}
@@ -279,6 +289,25 @@ class AuditionTests(unittest.TestCase):
         original = groups["original-articulation"]
         self.assertEqual(original["names"], ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"])
         self.assertEqual((original["note"], original["hold"], original["tail"]), (60, 5, 1))
+
+    def test_material_profiles_append_six_matched_folders_to_existing_roster(self):
+        groups = helper.selections()
+        existing, added = groups[:-6], groups[-6:]
+        self.assertEqual(len(existing), 40)
+        self.assertEqual(helper.roster_summary(existing),
+                         dict(wav_count=171, selected_program_count=81, audio_seconds=1033.2))
+        self.assertEqual(helper.roster_summary(added),
+                         dict(wav_count=54, selected_program_count=9, audio_seconds=243.0))
+        self.assertEqual([group["folder"] for group in added],
+                         [f"material-profile-{note}-{label}" for note in (48, 60, 72)
+                          for label in ("soft", "firm")])
+        for soft, firm in zip(added[::2], added[1::2]):
+            self.assertEqual(soft["names"], MATERIAL_PROFILES)
+            self.assertEqual((soft["pressure"], soft["hold"], soft["tail"]), (0, 3.5, 1))
+            self.assertEqual((soft["velocity"], firm["velocity"]), (.25, .85))
+            self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
+                             {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
+        self.assertEqual([group["note"] for group in added], [48, 48, 60, 60, 72, 72])
 
     def test_default_note_alias_is_rejected_before_rendering_audio(self):
         groups = helper.selections()

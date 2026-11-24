@@ -2652,7 +2652,8 @@ int main(int argc, char** argv)
                 || index == cs80::P_oversampling || index == cs80::P_outputJack
                 || index == cs80::P_driftModel
                 || index == cs80::P_body1Model || index == cs80::P_body2Model
-                || index == cs80::P_body1Variant || index == cs80::P_body2Variant;
+                || index == cs80::P_body1Variant || index == cs80::P_body2Variant
+                || index == cs80::P_body1Material || index == cs80::P_body2Material;
             const float expected = index == cs80::P_sourcePerformance ? 1.0f
                 : index == cs80::P_parityMode ? 0.0f
                 : discrete ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;

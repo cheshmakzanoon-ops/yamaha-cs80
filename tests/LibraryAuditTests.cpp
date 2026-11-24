@@ -93,7 +93,7 @@ bool isDiscrete(int i)
     return i == P_glideMode || i == P_subWave || i == P_subOriginalFunction || i == P_lfo1Dest
         || i == P_lfo2Dest || i == P_lfo3Dest || i == P_fx1Type || i == P_fx2Type || i == P_fx3Type
         || i == P_arpMode || i == P_arpOctaves || i == P_body1Model || i == P_body2Model
-        || i == P_body1Variant || i == P_body2Variant;
+        || i == P_body1Variant || i == P_body2Variant || i == P_body1Material || i == P_body2Material;
 }
 
 bool usesModernLayer(const ParamValues& v)

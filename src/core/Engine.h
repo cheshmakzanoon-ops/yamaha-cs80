@@ -107,6 +107,7 @@ struct RankSettings
     float pan = 0.0f;
     int bodyModel = 0;
     int bodyVariant = 0;
+    int bodyMaterial = 0;
     float bodyMix = 0.0f;
     float bodyBrightness = 0.5f;
     float bodyDecay = 1.0f;

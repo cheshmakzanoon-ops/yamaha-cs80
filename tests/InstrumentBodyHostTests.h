@@ -5,6 +5,7 @@
 // likeness. Run after JUCE initialization; files stay in temporary fixtures.
 #include "plugin/PluginProcessor.h"
 #include "core/InstrumentBodyVariants.h"
+#include "core/InstrumentBodyMaterials.h"
 
 #include <array>
 #include <bit>
@@ -16,14 +17,14 @@ namespace cs80::tests
 {
 namespace instrument_body_host_detail
 {
-using Values = std::array<float, 12>;
-inline constexpr Values a { 1.0f, 0.83f, 0.31f, 2.17f, 2.0f, 0.47f, 0.72f, 0.63f, 1.35f, 0.82f, 3.0f, 4.0f };
-inline constexpr Values b { 15.0f, 0.21f, 0.81f, 0.44f, 10.0f, 0.91f, 0.19f, 3.31f, 0.60f, 2.20f, 2.0f, 1.0f };
-inline constexpr Values defaults { 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f };
+using Values = std::array<float, 14>;
+inline constexpr Values a { 1.0f, 0.83f, 0.31f, 2.17f, 2.0f, 0.47f, 0.72f, 0.63f, 1.35f, 0.82f, 3.0f, 4.0f, 1.0f, 6.0f };
+inline constexpr Values b { 15.0f, 0.21f, 0.81f, 0.44f, 10.0f, 0.91f, 0.19f, 3.31f, 0.60f, 2.20f, 2.0f, 1.0f, 7.0f, 9.0f };
+inline constexpr Values defaults { 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 inline constexpr const char* ids[] {
     "body1_model", "body1_mix", "body1_brightness", "body1_decay",
     "body2_model", "body2_mix", "body2_brightness", "body2_decay", "body1_size", "body2_size",
-    "body1_variant", "body2_variant"
+    "body1_variant", "body2_variant", "body1_material", "body2_material"
 };
 
 inline void hashId(std::uint64_t& hash, const juce::String& id)
@@ -91,13 +92,13 @@ void testInstrumentBodyHost(Check&& check)
 {
     using namespace instrument_body_host_detail;
     static_assert(P_body1Model == 190 && P_body1Size == 198
-                      && P_body1Variant == 200 && P_numParams == 202,
-                  "resonator variants append after every published core control");
+                      && P_body1Variant == 200 && P_body1Material == 202 && P_numParams == 204,
+                  "materials append after every preceding core control");
     {
         auto host = std::make_unique<Cs80AudioProcessor>();
         const auto& parameters = host->getParameters();
-        check(parameters.size() == 308 && Cs80AudioProcessor::hostParameterCount == 308,
-              "resonator variants append after all 306 published host slots");
+        check(parameters.size() == 310 && Cs80AudioProcessor::hostParameterCount == 310,
+              "materials append after all 308 preceding host slots");
         std::uint64_t coreHash = UINT64_C(14695981039346656037);
         for (int index = 0; index < 190; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
         check(coreHash == UINT64_C(0x3a8332a1fb546bd8),
@@ -108,6 +109,9 @@ void testInstrumentBodyHost(Check&& check)
         for (int index = 198; index < 200; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
         check(coreHash == UINT64_C(0xd3a2c0a6ae64bd51),
               "the complete 2026.11.4 200-core-ID prefix is unchanged");
+        for (int index = 200; index < 202; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
+        check(coreHash == UINT64_C(0x51c33133d039491a),
+              "the complete preceding 202-core-ID prefix including variants is unchanged");
         // Frozen from 8685e9ed's Params.h: explicit little-endian float bits
         // make this independent of host endian order or textual formatting.
         std::uint64_t definitionHash = UINT64_C(14695981039346656037);
@@ -127,6 +131,22 @@ void testInstrumentBodyHost(Check&& check)
         }
         check(definitionHash == UINT64_C(0x7a2cca3cbb35820a),
               "all 200 published core ranges, defaults and normalization skews remain unchanged");
+        for (int index = 200; index < 202; ++index)
+        {
+            const auto& definition = paramDef(index);
+            for (const float value : { definition.min, definition.max, definition.def, definition.skew })
+            {
+                auto bits = std::bit_cast<std::uint32_t>(value);
+                for (int byte = 0; byte < 4; ++byte)
+                {
+                    definitionHash ^= bits & 255u;
+                    definitionHash *= UINT64_C(1099511628211);
+                    bits >>= 8;
+                }
+            }
+        }
+        check(definitionHash == UINT64_C(0xb97671b433da8d4a),
+              "all 202 preceding core ranges, defaults and normalization skews remain unchanged");
         std::uint64_t hostHash = UINT64_C(14695981039346656037);
         bool oldHostIds = parameters.size() >= 296;
         for (int index = 0; oldHostIds && index < 296; ++index)
@@ -149,6 +169,13 @@ void testInstrumentBodyHost(Check&& check)
             else oldHostIds = false;
         check(oldHostIds && hostHash == UINT64_C(0xe384b0acb2ff134e),
               "the complete 2026.11.4 306-host-ID prefix is unchanged");
+        oldHostIds = oldHostIds && parameters.size() >= 308;
+        for (int index = 306; oldHostIds && index < 308; ++index)
+            if (auto* parameter = dynamic_cast<juce::HostedAudioProcessorParameter*>(parameters[index]))
+                hashId(hostHash, parameter->getParameterID());
+            else oldHostIds = false;
+        check(oldHostIds && hostHash == UINT64_C(0xaefa68336c2bbe0d),
+              "the complete preceding 308-host-ID prefix including variants is unchanged");
 
         constexpr float minimum[] { 0.0f, 0.0f, 0.0f, 0.25f };
         constexpr float maximum[] { 19.0f, 1.0f, 1.0f, 4.0f };
@@ -229,6 +256,31 @@ void testInstrumentBodyHost(Check&& check)
                       "all variant choices round trip through their independent normalized automation");
             }
         }
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const int index = bodyMaterialParam(rank);
+            auto* parameter = host->getAPVTS().getParameter(ids[12 + rank]);
+            auto* choice = dynamic_cast<juce::AudioParameterChoice*>(parameter);
+            check(choice != nullptr && Cs80AudioProcessor::parameterId(index) == ids[12 + rank],
+                  "both material selectors expose stable named choice parameters");
+            if (choice == nullptr) continue;
+            const auto& range = choice->getNormalisableRange();
+            check(parameters.indexOf(choice) == 308 + rank && host->hostParameterIndex(index) == 308 + rank
+                      && choice->getVersionHint() == 19 && choice->isAutomatable(),
+                  "material automation appends with AU hint 19 after all 308 preceding slots");
+            check(choice->choices.joinIntoString("|") == "Standard|Tubular bell|Gong plate|Temple bell|Agogo bell|Music box comb|Kalimba tine|Banjo membrane|Koto bridge|Harp soundboard"
+                      && parameter->getNumSteps() == 10 && range.start == 0.0f && range.end == 9.0f
+                      && choice->convertFrom0to1(parameter->getDefaultValue()) == 0.0f
+                      && !Cs80AudioProcessor::isPhysicalSetupParameter(index),
+                  "ten material choices retain their fixed names, neutral default and normalized range");
+            for (int material = 0; material <= 9; ++material)
+            {
+                host->setParamValue(index, static_cast<float>(material));
+                check(host->getParamValue(index) == static_cast<float>(material)
+                          && std::abs(parameter->getValue() - static_cast<float>(material) / 9.0f) < 1.0e-7f,
+                      "every material survives independent normalized automation without shifting older choices");
+            }
+        }
     }
 
     juce::TemporaryFile fixture("-cs80-instrument-body-host");
@@ -242,17 +294,17 @@ void testInstrumentBodyHost(Check&& check)
         writer->getStateInformation(saved);
         set(*reader, b);
         reader->setStateInformation(saved.getData(), (int) saved.getSize());
-        check(matches(*reader, a), "session round trip replaces all twelve live body controls");
+        check(matches(*reader, a), "session round trip replaces all fourteen live body controls");
         reader->prepareToPlay(48000.0, 64);
         process(*reader);
         check(engineMatches(*reader, a), "restored body controls reach the engine on the next audio block");
         const auto file = writer->saveUserPreset("Distinct instrument bodies", Cs80AudioProcessor::PresetOverwrite::yes);
-        check(file.wasSaved(), "user preset saves both instrument bodies, resonant sizes and variants");
+        check(file.wasSaved(), "user preset saves both instrument bodies, resonant sizes, variants and materials");
         if (file.wasSaved())
         {
             set(*reader, b);
             check(reader->loadUserPreset(file.file).wasOk() && matches(*reader, a),
-                  "user preset loading restores all twelve body controls over different live values");
+                  "user preset loading restores all fourteen body controls over different live values");
         }
 
         // An old file must not inherit the receiving instance's audible body.
@@ -278,19 +330,19 @@ void testInstrumentBodyHost(Check&& check)
             }
         }
 
-        // The first body-aware release lacks geometry and variants. Keep
+        // The first body-aware release lacks geometry, variants and materials. Keep
         // its eight authored body values and initialize later controls neutrally.
         auto previousRelease = writer->getAPVTS().copyState();
         previousRelease.setProperty(Cs80AudioProcessor::stateSchemaKey, 4, nullptr);
-        for (int offset = 8; offset < 12; ++offset)
+        for (int offset = 8; offset < 14; ++offset)
             previousRelease.removeChild(previousRelease.getChildWithProperty("id", ids[offset]), nullptr);
         Values previousExpected = a;
         previousExpected[8] = previousExpected[9] = 1.0f;
-        previousExpected[10] = previousExpected[11] = 0.0f;
+        previousExpected[10] = previousExpected[11] = previousExpected[12] = previousExpected[13] = 0.0f;
         set(*reader, b);
         restore(*reader, previousRelease);
         check(matches(*reader, previousExpected),
-              "first body-aware sessions preserve eight sound controls and default missing geometry and variants");
+              "first body-aware sessions preserve eight sound controls and default missing geometry, variants and materials");
         process(*reader);
         check(engineMatches(*reader, previousExpected),
               "previous body-aware session geometry defaults reach the audio thread");
@@ -301,24 +353,24 @@ void testInstrumentBodyHost(Check&& check)
         {
             set(*reader, b);
             check(reader->loadUserPreset(previousFile).wasOk() && matches(*reader, previousExpected),
-                  "first body-aware user presets retain eight controls and default missing sizes and variants");
+                  "first body-aware user presets retain eight controls and default missing sizes, variants and materials");
             process(*reader);
             check(engineMatches(*reader, previousExpected),
                   "previous body-aware user-preset size defaults replace the receiving audio values");
         }
 
-        // The immediately preceding 2026.11.4 release already has geometry.
-        // Missing variant fields must reset a receiving nonstandard variant
+        // The 2026.11.4 release already has geometry.
+        // Missing variant/material fields must reset receiving nonstandard choices
         // while retaining all ten preceding controls, regardless of schema.
         auto sizedRelease = writer->getAPVTS().copyState();
-        for (int rank = 0; rank < 2; ++rank)
-            sizedRelease.removeChild(sizedRelease.getChildWithProperty("id", ids[10 + rank]), nullptr);
+        for (int offset = 10; offset < 14; ++offset)
+            sizedRelease.removeChild(sizedRelease.getChildWithProperty("id", ids[offset]), nullptr);
         Values sizedExpected = a;
-        sizedExpected[10] = sizedExpected[11] = 0.0f;
+        sizedExpected[10] = sizedExpected[11] = sizedExpected[12] = sizedExpected[13] = 0.0f;
         set(*reader, b);
         restore(*reader, sizedRelease);
         check(matches(*reader, sizedExpected),
-              "2026.11.4 sessions retain ten body controls and reset missing variants to Standard");
+              "2026.11.4 sessions retain ten body controls and reset missing variants and materials to Standard");
         process(*reader);
         check(engineMatches(*reader, sizedExpected),
               "missing-variant session defaults replace receiving audio-thread values");
@@ -329,15 +381,42 @@ void testInstrumentBodyHost(Check&& check)
         {
             set(*reader, b);
             check(reader->loadUserPreset(sizedFile).wasOk() && matches(*reader, sizedExpected),
-                  "2026.11.4 user presets default only absent variants without inheriting live choices");
+                  "2026.11.4 user presets default absent variants and materials without inheriting live choices");
             process(*reader);
             check(engineMatches(*reader, sizedExpected),
                   "missing-variant user-preset defaults reach the engine");
         }
 
+        // The 2026.11.5 source already contains both variants. Only the new
+        // material controls should default when loading one of those states.
+        auto variantRelease = writer->getAPVTS().copyState();
+        for (int offset = 12; offset < 14; ++offset)
+            variantRelease.removeChild(variantRelease.getChildWithProperty("id", ids[offset]), nullptr);
+        Values variantExpected = a;
+        variantExpected[12] = variantExpected[13] = 0.0f;
+        set(*reader, b);
+        restore(*reader, variantRelease);
+        check(matches(*reader, variantExpected),
+              "2026.11.5 sessions preserve twelve preceding controls and reset absent materials to Standard");
+        process(*reader);
+        check(engineMatches(*reader, variantExpected),
+              "missing-material session defaults replace stale audio-thread material choices");
+        const auto variantFile = directory.getChildFile("body-variant-aware.cs80xml");
+        const bool variantWrote = variantRelease.createXml()->writeTo(variantFile);
+        check(variantWrote, "material-free variant-aware user-preset fixture writes");
+        if (variantWrote)
+        {
+            set(*reader, b);
+            check(reader->loadUserPreset(variantFile).wasOk() && matches(*reader, variantExpected),
+                  "2026.11.5 user presets default only absent materials without inheriting live choices");
+            process(*reader);
+            check(engineMatches(*reader, variantExpected),
+                  "missing-material user-preset defaults reach the engine");
+        }
+
         auto malformed = writer->getAPVTS().copyState();
-        const Values outside { 3.7f, -0.25f, 1.25f, 0.01f, 77.0f, 1.5f, -0.5f, 8.0f, -1.0f, 12.0f, 1.7f, -2.0f };
-        const Values repaired { 4.0f, 0.0f, 1.0f, 0.25f, 19.0f, 1.0f, 0.0f, 4.0f, 0.5f, 2.5f, 2.0f, 0.0f };
+        const Values outside { 3.7f, -0.25f, 1.25f, 0.01f, 77.0f, 1.5f, -0.5f, 8.0f, -1.0f, 12.0f, 1.7f, -2.0f, 13.7f, -2.0f };
+        const Values repaired { 4.0f, 0.0f, 1.0f, 0.25f, 19.0f, 1.0f, 0.0f, 4.0f, 0.5f, 2.5f, 2.0f, 0.0f, 9.0f, 0.0f };
         for (size_t i = 0; i < outside.size(); ++i)
             malformed.getChildWithProperty("id", ids[i]).setProperty("value", outside[(size_t) i], nullptr);
         restore(*reader, malformed);
@@ -368,24 +447,34 @@ void testInstrumentBodyHost(Check&& check)
             auto previous = juce::ValueTree::fromXml(*xml);
             auto previousSlot = previous.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
             check(previousSlot.isValid(), "previous body-aware A/B fixture has an inactive slot");
-            for (int offset = 8; offset < 12; ++offset) previousSlot.removeProperty(ids[offset], nullptr);
+            for (int offset = 8; offset < 14; ++offset) previousSlot.removeProperty(ids[offset], nullptr);
             restore(*reopened, previous);
             reopened->abToggle();
             Values previousExpected = a;
             previousExpected[8] = previousExpected[9] = 1.0f;
-            previousExpected[10] = previousExpected[11] = 0.0f;
+            previousExpected[10] = previousExpected[11] = previousExpected[12] = previousExpected[13] = 0.0f;
             check(matches(*reopened, previousExpected),
-                  "first body-aware inactive A/B slots retain eight controls and default missing sizes and variants");
+                  "first body-aware inactive A/B slots retain eight controls and default missing sizes, variants and materials");
 
             auto sized = juce::ValueTree::fromXml(*xml);
             auto sizedSlot = sized.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
-            for (int rank = 0; rank < 2; ++rank) sizedSlot.removeProperty(ids[10 + rank], nullptr);
+            for (int offset = 10; offset < 14; ++offset) sizedSlot.removeProperty(ids[offset], nullptr);
             restore(*reopened, sized);
             reopened->abToggle();
             Values sizedExpected = a;
-            sizedExpected[10] = sizedExpected[11] = 0.0f;
+            sizedExpected[10] = sizedExpected[11] = sizedExpected[12] = sizedExpected[13] = 0.0f;
             check(matches(*reopened, sizedExpected),
-                  "2026.11.4 inactive A/B slots retain ten controls and default only missing variants");
+                  "2026.11.4 inactive A/B slots retain ten controls and default missing variants and materials");
+
+            auto variant = juce::ValueTree::fromXml(*xml);
+            auto variantSlot = variant.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
+            for (int offset = 12; offset < 14; ++offset) variantSlot.removeProperty(ids[offset], nullptr);
+            restore(*reopened, variant);
+            reopened->abToggle();
+            Values variantExpected = a;
+            variantExpected[12] = variantExpected[13] = 0.0f;
+            check(matches(*reopened, variantExpected),
+                  "2026.11.5 inactive A/B slots preserve twelve controls and default only absent materials");
 
             auto old = juce::ValueTree::fromXml(*xml);
             auto slot = old.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
@@ -430,7 +519,7 @@ void testInstrumentBodyHost(Check&& check)
             sawOff = sawOff || (expected[0] == 0.0f && expected[4] == 0.0f);
             set(*host, b);
             host->loadFactoryPreset(index);
-            const auto factoryLabel = "factory program " + juce::String(index) + " replaces all twelve body controls, including neutral defaults";
+            const auto factoryLabel = "factory program " + juce::String(index) + " replaces all fourteen body controls, including neutral defaults";
             check(matches(*host, expected), factoryLabel.toRawUTF8());
             set(*host, a);
             const bool original = index < legacyProgramCount;
@@ -440,7 +529,7 @@ void testInstrumentBodyHost(Check&& check)
             midi.addEvent(juce::MidiMessage::controllerEvent(1, 32, inBank / 128), 1);
             midi.addEvent(juce::MidiMessage::programChange(1, inBank % 128), 2);
             process(*host, midi);
-            const auto midiLabel = "MIDI program " + juce::String(index) + " publishes all twelve body values to the engine at recall";
+            const auto midiLabel = "MIDI program " + juce::String(index) + " publishes all fourteen body values to the engine at recall";
             check(host->getCurrentProgram() == index && matches(*host, expected) && engineMatches(*host, expected),
                   midiLabel.toRawUTF8());
         }
@@ -564,13 +653,18 @@ void testInstrumentBodyHost(Check&& check)
         }
     }
 
-    // Variant selection is a saved next-note control, just like geometry.
+    // Variant and material selections are saved next-note controls, like geometry.
     // Preserve a sounding note exactly and require the next accepted strike
     // to change, so merely adding inert APVTS metadata cannot pass this test.
     for (int rank = 0; rank < 2; ++rank)
-        for (const auto& shape : std::array<std::array<int, 2>, 4> {{
-                 { body::marimba, body::xylophone }, { body::vibes, body::steelpan },
-                 { body::organ, body::choirAh }, { body::organ, body::choirOo } }})
+        for (const auto& shape : std::array<std::array<int, 3>, 13> {{
+                 { body::marimba, body::xylophone, 0 }, { body::vibes, body::steelpan, 0 },
+                 { body::organ, body::choirAh, 0 }, { body::organ, body::choirOo, 0 },
+                 { body::bell, body::tubular, 1 }, { body::bell, body::gong, 1 },
+                 { body::bell, body::temple, 1 }, { body::bell, body::agogo, 1 },
+                 { body::celesta, body::musicBox, 1 }, { body::tine, body::kalimba, 1 },
+                 { body::steel, body::banjo, 1 }, { body::steel, body::koto, 1 },
+                 { body::nylon, body::harp, 1 } }})
         {
             auto changed = std::make_unique<Cs80AudioProcessor>();
             auto unchanged = std::make_unique<Cs80AudioProcessor>();
@@ -590,7 +684,8 @@ void testInstrumentBodyHost(Check&& check)
                 start.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
                 process(*host, start);
             }
-            changed->setParamValue(bodyVariantParam(rank), static_cast<float>(shape[1]));
+            changed->setParamValue(shape[2] ? bodyMaterialParam(rank) : bodyVariantParam(rank),
+                                   static_cast<float>(shape[1]));
             for (bool nextNote : { false, true })
             {
                 double delta = 0.0, energy = 0.0;
@@ -614,10 +709,10 @@ void testInstrumentBodyHost(Check&& check)
                             energy += x * x + y * y;
                         }
                 }
-                check(finite && energy > 1.0e-8, "variant fixture renders finite audible bodies on both ranks");
+                check(finite && energy > 1.0e-8, "resonator selection fixture renders finite audible bodies on both ranks");
                 check(nextNote ? delta > 1.0e-7 * energy : delta == 0.0,
-                      nextNote ? "each resonator variant audibly changes its next accepted note"
-                               : "each live variant selection leaves its sounding body bit-identical");
+                      nextNote ? "each resonator variant or material audibly changes its next accepted note"
+                               : "each live variant or material selection leaves its sounding body bit-identical");
             }
         }
 
@@ -633,8 +728,10 @@ void testInstrumentBodyHost(Check&& check)
         sound[P_sourcePerformance] = 1.0f;
         sound[P_analogNoise] = sound[P_drift] = sound[P_voiceDispersion] = sound[P_chorusOn] = 0.0f;
         sound[P_fx1Mix] = sound[P_fx2Mix] = sound[P_fx3Mix] = 0.0f;
-        sound[P_body1Model] = (float) body::piano;
+        sound[P_body1Model] = (float) body::bell;
         sound[P_body2Model] = (float) body::tine;
+        sound[P_body1Material] = (float) body::tubular;
+        sound[P_body2Material] = (float) body::kalimba;
         sound[P_body1Mix] = sound[P_body2Mix] = 1.0f;
         enabled->applyParameterValues(sound);
         sound[P_body1Model] = sound[P_body2Model] = 0.0f;

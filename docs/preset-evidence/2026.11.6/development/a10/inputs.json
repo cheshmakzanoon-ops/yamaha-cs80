@@ -1,0 +1,48 @@
+{
+  "baseline_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "worktree_head_at_capture": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "source_sha256": {
+    "src/core/curated/Bells.inc": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/core/CuratedLibraryLevels.inc": "06b59ac0926e50c2c65ec0b0c999eb2b27ac947131337e03a23f3498e3df52bc",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/tools/preset_capture.cpp": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+    "tests/BellMaterialPresetTests.cpp": "fb051105e19a66c57c486702a1370956f6fdc200d829dcabd884c4bc2df58d2a",
+    "tests/MalletPresetRefinementTests.cpp": "f94b35a672ae3f4ae4cc15b733d0ef701e1178f4850240b54c33fe1c7eadc153",
+    "tests/LibraryAuditTests.cpp": "8ce1469c4d41d41df2393fdf9d4053fe3f96b090d5f5de96e25cc15e0059e9e8"
+  },
+  "binaries": {
+    "/workspace/scratch/b9c11dd92abc/baseline-c76/cs80_preset_capture": "f98a04dfe401acf10957e9a13b68bf962361642032e739ac180d627ba5229cf3",
+    "/tmp/cs80-a10-new/cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+    "/tmp/cs80-a10-new/bell-material-presets": "e81f3219f3abf308f581e8e78689f72ac95b4f1c53dfe58f0c8fc254a84cfd60",
+    "/tmp/cs80-a10-new/cs80_mallet_preset_refinement_tests": "491106d92f548426eea449a2f9cc5e13997a219c7b3282759a0e0697a7456482",
+    "/tmp/cs80-a10-new/audit-five": "6ca7f71e56e2e2d938b0ea4f3d921a491c92b6c00bf1d18d8c3490eb545b551d"
+  },
+  "fixture": {
+    "sample_rate": 48000,
+    "notes": [
+      48,
+      60,
+      72
+    ],
+    "velocities": [
+      0.25,
+      0.85
+    ],
+    "pressure": 0,
+    "hold_seconds": 6,
+    "tail_seconds": 1,
+    "rank": "complete patch",
+    "names": [
+      "Tubular Bells",
+      "Gong",
+      "Temple Bell",
+      "Agogo",
+      "Music Box"
+    ]
+  }
+}

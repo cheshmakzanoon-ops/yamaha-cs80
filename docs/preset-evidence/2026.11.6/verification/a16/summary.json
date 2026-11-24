@@ -1,0 +1,15 @@
+{
+  "source_kind": "uncommitted 2026.11.6 development candidate",
+  "positive_checks": 128,
+  "positive_failures": 0,
+  "negative_checks": 128,
+  "negative_failures": 4,
+  "negative_mutation": "Only inside materialContact(), change the isolated body reconstruction weight by +0.10 after layers() returns; production audio and all acceptance thresholds unchanged.",
+  "linked_library_note": "A11 isolated core library, with final Plucked.inc recipes. No bells are rendered by this suite.",
+  "sha256": {
+    "tests/PresetCharacterTests.cpp": "932b6266771ccd218876940c1ff8c4c2b22531332b901dbbacd13302bab2f0c8",
+    "tests/PluckedMaterialPresetTests.cpp": "2869a1728950837ead97128cd69c67f2a25b080c063ef53d7fd1f372a6c46c43",
+    "src/core/curated/Plucked.inc": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+    "/tmp/cs80-a11-new/libcs80_core.a": "63fb97f562bfecdb4a93ec6ee4df58a75cb7118d407b5294531b8a87f045463b"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "assignment": "a05_piano_geometry",
+  "baseline_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "scope": "Isolated baseline source plus exact piano-only patch; whole-source integration belongs to coordinator.",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "compile_flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "baseline_header": {
+    "bytes": 52123,
+    "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa"
+  },
+  "isolated_candidate_header": {
+    "bytes": 52386,
+    "sha256": "1d50ddc81db8679a591d8d4ab1bfba03b6c047aa21fa79c3e396fb56fcda93d3"
+  },
+  "test_source": {
+    "bytes": 10143,
+    "sha256": "f857734f0def4b5ec39bcdbdfdefd4dadee7ed3071dcfa57f98636063e4c0565"
+  },
+  "baseline_negative_control": {
+    "checks": 212,
+    "failures": 75,
+    "exit_code": 1
+  },
+  "candidate_geometry": {
+    "checks": 212,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "candidate_struck_body_dynamics": {
+    "checks": 3439,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "artifacts": {
+    "piano-course-after.log": {
+      "bytes": 249,
+      "sha256": "457b5d2f33977a7e2b5fd048f70dc62c26d7efb71e32a28886a277ab674a1017"
+    },
+    "piano-course-before.log": {
+      "bytes": 4837,
+      "sha256": "11bd4e4a96cc96a998dad008c8f852a872b6cc68eef804e763de5338cfd22cbc"
+    },
+    "piano-only.patch": {
+      "bytes": 2537,
+      "sha256": "b89ca75ed5c837f8634ba8ccbe81f34510e354347b8969b6208d266d85879187"
+    },
+    "struck-body-after.log": {
+      "bytes": 1234,
+      "sha256": "3214f303e43b650a7a65d04bd36e09a7da8e8f7b3696eb6c4431ad7135ccff7e"
+    }
+  }
+}

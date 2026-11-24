@@ -32,6 +32,10 @@ SUSTAINED_C4 = [
     'Covered Horn', 'Muted Trumpet',
 ]
 SUSTAINED_BASS_C4 = ['Solo Cello', 'Bass Clarinet', 'Bassoon']
+MATERIAL_PROFILES = [
+    'Tubular Bells', 'Gong', 'Temple Bell', 'Agogo', 'Music Box',
+    'Banjo', 'Koto', 'Harp', 'Kalimba',
+]
 
 
 def selections():
@@ -96,6 +100,13 @@ def selections():
     groups.append(dict(folder='original-articulation',
                        names=['Frozen Leads 121', 'Soft Leads 128', 'Neon Sequences 174'],
                        velocity=.85, pressure=0, hold=5, tail=1, note=60))
+    # Append matched excerpts for the revised bell, string and tine materials;
+    # the preceding overview and comparison requests stay unchanged.
+    for note in (48, 60, 72):
+        for label, velocity in (('soft', .25), ('firm', .85)):
+            groups.append(dict(folder=f'material-profile-{note}-{label}',
+                               names=list(MATERIAL_PROFILES), velocity=velocity,
+                               pressure=0, hold=3.5, tail=1, note=note))
     return groups
 
 
@@ -201,6 +212,8 @@ def audition_readme(groups, summary, source, revision):
         'The c4 folders share a C4 main-body foundation: the 8-foot presets use MIDI 60; Solo Cello, Bass Clarinet and Bassoon use MIDI 72 for their 16-foot bodies.',
         'These complete presets retain their own upper layers, filters and envelopes; same-foundation comparisons do not isolate resonant size alone.',
         'Clarinet-register folders compare played MIDI keys 60, 64, 68 and 72 at both velocities; Bass Clarinet sounds one octave below Clarinet at those equal keys.',
+        'Material-profile folders compare Tubular Bells, Gong, Temple Bell, Agogo, Music Box, Banjo, Koto, Harp and Kalimba at MIDI 48, 60 and 72, each at velocities 0.25 and 0.85 with pressure zero.',
+        'Their matched 3.5-second holds and one-second key-release excerpts expose each existing voice\'s strike, material spectrum and decay without normalization.',
         '',
         'Tracked sources are checked against the recorded commit before and after capture; the executable hash must also stay unchanged.',
         'Provenance records the executable SHA256, source tree, exact commands and CI run identity when available.',

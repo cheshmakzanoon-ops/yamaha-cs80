@@ -4,6 +4,7 @@
 #include "PluginProcessor.h"
 #include "ArtCommon.h"
 #include "core/InstrumentBody.h"
+#include "core/InstrumentBodyMaterials.h"
 
 #include <atomic>
 #include <cmath>
@@ -104,6 +105,8 @@ juce::String formatParamValue(int parameterIndex, float value)
         case cs80::P_body2Model: return cs80::body::name(juce::roundToInt(value));
         case cs80::P_body1Variant:
         case cs80::P_body2Variant: return cs80::body::variantName(juce::roundToInt(value));
+        case cs80::P_body1Material:
+        case cs80::P_body2Material: return cs80::body::materialName(juce::roundToInt(value));
         default: break;
     }
     if (parameterIndex < cs80::P_numGlobals)

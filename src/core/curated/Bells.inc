@@ -45,15 +45,17 @@ void buildBells(Builder& add)
               .eg(II, 0.001f, 0.23f, 0.0f, 0.13f).feg(II, 0.0f, 0.18f, 0.001f, 0.10f, 0.065f)
               .body(I, body::Model::bell, 0.94f, 0.32f, 0.83f).body(II, body::Model::bell, 0.68f, 0.96f, 0.25f)
               .ring(191.0f, 0.0f, 0.001f, 0.63f, 0.41f).mix(0.25f).contour(-0.02f, -0.19f, -0.025f, 0.08f));
-    add("Tubular Bells", "Bells", { "velocity", "feet-layer", "dual-rank" },
-        "A deep tube-like modal body rings below a brief bright upper strike. Tracked inharmonic modes keep their relationships across the keyboard; the low body continues after the bright strike without an unrelated fixed carrier.",
+    add("Tubular Bells", "Bells", { "velocity", "dual-rank" },
+        "A struck tube carries a weak low spectrum and a bright octave nominal, with the near 2:3:4 upper group suggesting the played pitch. The separate hard contact shares the same tube tuning, then clears to leave its independently decaying metal modes.",
         bell()
-              .feet(I, f16).feet(II, f223).wave(II, false, true, 0.66f).level(II, 0.22f, 0.10f).hpf(I, 20.0f).hpf(II, 560.0f)
-              .lpf(I, 10000.0f, 0.015f).lpf(II, 15000.0f, 0.035f).feg(II, 0.0f, 0.12f, 0.001f, 0.23f, 0.20f)
-              .eg(I, 0.0042f, 9.6f, 0.12f, 6.1f).eg(II, 0.0013f, 0.49f, 0.0f, 0.31f)
-              .body(I, body::Model::bell, 1.0f, 0.65f, 2.60f).body(II, body::Model::bell, 0.93f, 0.91f, 0.52f)
-              .touch(I, 0.015f, 0.88f, 0.0f, 0.0f).touch(II, 0.045f, 0.97f, 0.0f, 0.0f)
-              .ring(137.0f, 0.0f, 0.001f, 1.2f, 0.0f).mix(0.19f).contour(-0.11f, -0.23f, -0.055f, 0.115f));
+              .feet(Both, f8).wave(Both, false, false, 1.0f).level(I, 0.0f, 0.11f).level(II, 0.0f, 0.045f)
+              .hpf(I, 28.0f).hpf(II, 1300.0f).lpf(I, 13500.0f, 0.01f).lpf(II, 16000.0f, 0.01f)
+              .feg(Both, 0.0f, 0.0f, 0.001f, 0.25f, 0.2f)
+              .eg(I, 0.003f, 9.8f, 0.12f, 5.4f).eg(II, 0.001f, 0.24f, 0.0f, 0.14f)
+              .body(I, body::Model::bell, 1.0f, 0.70f, 2.10f).body(II, body::Model::bell, 1.0f, 0.97f, 0.37f)
+              .bodyMaterial(Both, body::tubular).touch(I, 0.0f, 0.98f, 0.0f, 0.0f).touch(II, 0.0f, 1.0f, 0.0f, 0.0f)
+              .ring(137.0f, 0.0f, 0.001f, 1.2f, 0.0f).mix(0.10f).g(P_voiceDispersion, 0.015f).g(P_drift, 0.0f)
+              .contour(-0.055f, -0.12f, -0.025f, 0.08f));
     add("Glockenspiel", "Bells", { "feet-layer", "percussive" },
         "A hard, high-register metal-bar strike excites sparse inharmonic modes that track each key. The brightest modes fall away first above a clear ringing pitch; the upper rank adds a tiny hard-mallet accent.",
         bell()
@@ -73,32 +75,42 @@ void buildBells(Builder& add)
               .body(II, body::Model::celesta, 0.85f, 0.61f, 0.37f).touch(I, 0.0f, 0.89f, 0.0f, 0.0f)
               .touch(II, 0.035f, 0.96f, 0.0f, 0.0f).chorus(0.09f, 0.24f).mix(0.16f).contour(-0.055f, -0.18f, -0.025f, 0.10f));
     add("Music Box", "Bells", { "percussive", "velocity" },
-        "A small bright tine pluck rings into a simple clean tail. Sparse high metal modes decay quickly after the tooth-like attack, keeping close melody notes intelligible without a fixed ring carrier.",
+        "A small plucked comb tooth rings with a clear high pitch and sparse upper resonances near 6.27 times its fundamental. A short same-pitch contact glint lights the attack; the bright overtones fade into the simple mechanical ringing tail.",
         bell()
-              .feet(I, f4).feet(II, f2).wave(II, false, true, 0.30f).pw(II, 0.61f).level(II, 0.18f, 0.06f)
-              .ring(419.0f, 0.0f, 0.001f, 0.5f, 0.0f).hpf(I, 52.0f).hpf(II, 1850.0f).lpf(I, 12500.0f, 0.01f)
-              .lpf(II, 15500.0f, 0.025f).feg(II, 0.0f, 0.09f, 0.001f, 0.055f, 0.035f).eg(I, 0.0012f, 3.3f, 0.0f, 1.85f)
-              .eg(II, 0.001f, 0.095f, 0.0f, 0.055f).body(I, body::Model::celesta, 1.0f, 0.76f, 0.63f)
-              .body(II, body::Model::tine, 0.92f, 0.94f, 0.25f).touch(I, 0.0f, 0.78f, 0.0f, 0.0f)
-              .touch(II, 0.025f, 0.91f, 0.0f, 0.0f).mix(0.095f).contour(-0.025f, -0.24f, -0.01f, 0.10f));
-    add("Gong", "Bells", { "ring-mod", "noise", "dual-rank" },
-        "A deep collection of metal modes blooms beneath a noisy upper clang. The ring sweep animates the impact while unequal modal losses reveal a long, complex low resonance as the noise recedes.",
+              .feet(Both, f4).wave(Both, false, false, 1.0f).level(I, 0.0f, 0.085f).level(II, 0.0f, 0.032f)
+              .hpf(I, 48.0f).hpf(II, 2100.0f).lpf(I, 15000.0f, 0.01f).lpf(II, 17000.0f, 0.01f)
+              .feg(Both, 0.0f, 0.0f, 0.001f, 0.10f, 0.06f)
+              .eg(I, 0.0012f, 4.3f, 0.055f, 2.35f).eg(II, 0.001f, 0.075f, 0.0f, 0.045f)
+              .body(I, body::Model::celesta, 1.0f, 0.77f, 0.93f).body(II, body::Model::celesta, 1.0f, 0.97f, 0.25f)
+              .bodyMaterial(Both, body::musicBox).touch(I, 0.0f, 0.82f, 0.0f, 0.0f).touch(II, 0.0f, 0.97f, 0.0f, 0.0f)
+              .ring(419.0f, 0.0f, 0.001f, 0.5f, 0.0f).mix(0.075f).g(P_voiceDispersion, 0.012f).g(P_drift, 0.0f)
+              .contour(-0.015f, -0.18f, -0.015f, 0.065f));
+    add("Gong", "Bells", { "percussive", "velocity", "dual-rank" },
+        "A low mallet thud opens into a dense, irregular set of plate modes. Delayed upper resonances bloom after the impact, then lose energy at different rates; the same tuned plate supplies the strike and the lingering, shifting aftersound.",
+        // The dense plate needs a brighter main body and a very small separate
+        // contact. Keep the linear touch curve: raising only the VCA floor
+        // would compress soft/firm strikes below the mallet contract.
         bell()
-              .feet(I, f16).feet(II, f4).res(0.08f).level(I, 0.0f, 0.12f).level(II, 0.50f, 0.134146f)
-              .touch(I, 0.0f, 1.0f, 0.0f, 0.0f).touch(II, 0.12f, 1.0f, 0.0f, 0.0f).hpf(I, 20.0f).hpf(II, 540.0f)
-              .lpf(I, 8200.0f, 0.045f).lpf(II, 9400.0f, 0.16f).wave(II, true, false, 0.12f, 0.10f)
-              .feg(II, 0.15f, 0.42f, 0.052f, 1.25f, 0.70f).eg(I, 0.068f, 12.2f, 0.0f, 7.3f).eg(II, 0.012f, 1.35f, 0.0f, 0.85f)
-              .body(I, body::Model::bell, 0.97f, 0.56f, 2.95f).body(II, body::Model::bell, 0.39f, 0.95f, 0.68f)
-              .ring(53.0f, 0.16f, 0.045f, 4.25f, 0.39f).mix(0.30f).contour(-0.14f, -0.28f, -0.065f, 0.11f));
-    add("Temple Bell", "Bells", { "ring-mod", "feet-layer", "dual-rank" },
-        "A deep struck metal body carries slowly separating modal decays under a brief upper clang. The stable key-tracked center survives a restrained low ring movement and a long, calm release.",
+              .feet(Both, f16).wave(Both, false, false, 1.0f).res(0.035f)
+              .level(I, 0.0f, 0.30f).level(II, 0.0f, 0.055f)
+              .touch(I, 0.0f, 1.0f, 0.0f, 0.0f).touch(II, 0.0f, 1.0f, 0.0f, 0.0f)
+              .hpf(I, 20.0f).hpf(II, 330.0f).lpf(I, 13500.0f, 0.01f).lpf(II, 16000.0f, 0.01f)
+              .feg(Both, 0.0f, 0.0f, 0.001f, 0.3f, 0.2f)
+              .eg(I, 0.007f, 13.5f, 0.15f, 7.0f).eg(II, 0.002f, 0.42f, 0.0f, 0.25f)
+              .body(I, body::Model::bell, 1.0f, 1.0f, 2.55f).body(II, body::Model::bell, 1.0f, 0.97f, 0.52f)
+              .bodyMaterial(Both, body::gong).ring(53.0f, 0.0f, 0.001f, 1.0f, 0.0f).mix(0.015f)
+              .g(P_voiceDispersion, 0.012f).g(P_drift, 0.0f).contour(-0.08f, -0.12f, -0.04f, 0.075f));
+    add("Temple Bell", "Bells", { "velocity", "dual-rank" },
+        "A deep struck shell rings with stable close mode pairs and slow metallic beating. Widely separated upper resonances recede from the initial clang, leaving a calm low aftersound; the brief hard contact and the long body share one shell pitch.",
         bell()
-              .feet(I, f16).feet(II, f513).wave(II, false, true, 0.72f).level(II, 0.16f, 0.11f).hpf(I, 20.0f).hpf(II, 410.0f)
-              .lpf(I, 6600.0f, 0.015f).lpf(II, 10200.0f, 0.035f).feg(II, 0.0f, 0.10f, 0.002f, 0.30f, 0.25f)
-              .eg(I, 0.008f, 10.4f, 0.08f, 6.2f).eg(II, 0.0025f, 0.78f, 0.0f, 0.47f)
-              .body(I, body::Model::bell, 1.0f, 0.37f, 2.75f).body(II, body::Model::bell, 0.94f, 0.73f, 0.67f)
-              .touch(I, 0.0f, 0.85f, 0.0f, 0.0f).touch(II, 0.04f, 0.95f, 0.0f, 0.0f).ring(83.0f, 0.025f, 0.012f, 3.4f, 0.035f)
-              .mix(0.20f).contour(-0.12f, -0.24f, -0.06f, 0.10f));
+              .feet(Both, f16).wave(Both, false, false, 1.0f).level(I, 0.0f, 0.115f).level(II, 0.0f, 0.045f)
+              .hpf(I, 20.0f).hpf(II, 440.0f).lpf(I, 11000.0f, 0.01f).lpf(II, 13500.0f, 0.01f)
+              .feg(Both, 0.0f, 0.0f, 0.001f, 0.25f, 0.18f)
+              .eg(I, 0.005f, 11.2f, 0.12f, 6.5f).eg(II, 0.0017f, 0.38f, 0.0f, 0.23f)
+              .body(I, body::Model::bell, 1.0f, 0.44f, 2.25f).body(II, body::Model::bell, 1.0f, 0.90f, 0.46f)
+              .bodyMaterial(Both, body::temple).touch(I, 0.0f, 0.96f, 0.0f, 0.0f).touch(II, 0.0f, 1.0f, 0.0f, 0.0f)
+              .ring(83.0f, 0.0f, 0.001f, 1.0f, 0.0f).mix(0.12f).g(P_voiceDispersion, 0.01f).g(P_drift, 0.0f)
+              .contour(-0.065f, -0.14f, -0.045f, 0.065f));
     add("Marimba", "Bells", { "percussive", "velocity", "dual-rank" },
         "A wooden-bar spectrum carries a soft fundamental and quickly damped higher modes. A separate brief fourth-harmonic mallet knock supplies the strike; hard playing opens the upper wood color without a ring carrier.",
         bell()
@@ -201,16 +213,17 @@ void buildBells(Builder& add)
               .eg(II, 0.001f, 0.18f, 0.0f, 0.065f).body(I, body::Model::reed, 0.60f, 0.84f, 0.57f)
               .body(II, body::Model::bell, 0.72f, 0.98f, 0.25f).bodySize(I, 0.78f).ring(277.0f, 0.0f, 0.001f, 0.55f, 0.24f)
               .mix(0.15f).contour(-0.025f, -0.22f, -0.025f, 0.095f));
-    add("Agogo", "Bells", { "ring-mod", "percussive", "velocity" },
-        "A compact hollow metal clang has a short upper knock and rapidly damping inharmonic modes. A restrained pulse resonance preserves its nasal attack while the tracked body keeps the strike recognizable across notes.",
+    add("Agogo", "Bells", { "percussive", "velocity" },
+        "A small hollow bell opens with a hard contact and several widely spaced metal resonances. Its compact shell damps quickly for repeated strokes; a short same-pitch upper knock adds definition to each crisp metal hit.",
         bell()
-              .feet(I, f4).feet(II, f223).wave(I, false, true, 0.34f).wave(II, false, true, 0.18f).pw(I, 0.61f).pw(II, 0.72f)
-              .level(I, 0.95f, 0.080f).level(II, 0.70f, 0.0854f).touch(I, 0.10f, 1.0f, 0.0f, 0.0f)
-              .touch(II, 0.12f, 1.0f, 0.0f, 0.0f).hpf(I, 240.0f).hpf(II, 1250.0f).lpf(I, 7600.0f, 0.28f)
-              .lpf(II, 11500.0f, 0.16f).feg(I, 0.0f, 0.17f, 0.001f, 0.18f, 0.12f).feg(II, 0.0f, 0.24f, 0.001f, 0.075f, 0.05f)
-              .eg(I, 0.001f, 1.75f, 0.0f, 0.68f).eg(II, 0.001f, 0.115f, 0.0f, 0.07f)
-              .body(I, body::Model::bell, 0.97f, 0.88f, 0.41f).body(II, body::Model::bell, 0.76f, 1.0f, 0.25f)
-              .ring(325.0f, 0.0f, 0.001f, 0.42f, 0.16f).res(0.075f).mix(0.21f).contour(0.025f, -0.25f, -0.015f, 0.11f));
+              .feet(Both, f4).wave(Both, false, false, 1.0f).level(I, 0.0f, 0.095f).level(II, 0.0f, 0.045f)
+              .touch(I, 0.0f, 1.0f, 0.0f, 0.0f).touch(II, 0.0f, 1.0f, 0.0f, 0.0f)
+              .hpf(I, 95.0f).hpf(II, 1400.0f).lpf(I, 12500.0f, 0.015f).lpf(II, 15500.0f, 0.01f)
+              .feg(Both, 0.0f, 0.0f, 0.001f, 0.10f, 0.06f)
+              .eg(I, 0.001f, 1.8f, 0.0f, 0.46f).eg(II, 0.001f, 0.075f, 0.0f, 0.045f)
+              .body(I, body::Model::bell, 1.0f, 0.91f, 0.70f).body(II, body::Model::bell, 1.0f, 1.0f, 0.25f)
+              .bodyMaterial(Both, body::agogo).ring(325.0f, 0.0f, 0.001f, 0.42f, 0.0f).res(0.035f).mix(0.10f)
+              .g(P_voiceDispersion, 0.012f).g(P_drift, 0.0f).contour(0.0f, -0.15f, -0.015f, 0.065f));
     add("Clock Bells", "Bells", { "velocity", "feet-layer", "dual-rank" },
         "Two clear modal bells at 4-foot and 2-2/3-foot pitch sound a true fifth apart. A concise upper impact yields to unequal ringing decays with no fixed-carrier interference.",
         bell()

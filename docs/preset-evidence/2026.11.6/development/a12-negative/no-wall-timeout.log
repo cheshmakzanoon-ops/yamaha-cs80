@@ -1,0 +1,300 @@
+test_actual_urllib_redirect_loop_stops_before_sixth_hop (__main__.DownloadTests.test_actual_urllib_redirect_loop_stops_before_sixth_hop) ... ok
+test_api_fallback_status_is_rejected_on_browser_route (__main__.DownloadTests.test_api_fallback_status_is_rejected_on_browser_route) ... FAIL
+test_api_forbidden_can_use_pinned_browser_route (__main__.DownloadTests.test_api_forbidden_can_use_pinned_browser_route) ... FAIL
+test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) ... 
+  test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 11], bad_hash=False) ... FAIL
+  test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 0], bad_hash=True) ... FAIL
+test_api_forbidden_does_not_increase_attempt_cap (__main__.DownloadTests.test_api_forbidden_does_not_increase_attempt_cap) ... FAIL
+test_api_forbidden_is_route_fallback_not_browser_permission (__main__.DownloadTests.test_api_forbidden_is_route_fallback_not_browser_permission) ... ok
+test_bad_worker_metadata_fails_without_publishing_or_retry (__main__.DownloadTests.test_bad_worker_metadata_fails_without_publishing_or_retry) ... ok
+test_canonical_fallback_request (__main__.DownloadTests.test_canonical_fallback_request) ... ok
+test_first_transfer_success (__main__.DownloadTests.test_first_transfer_success) ... FAIL
+test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) ... 
+  test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[0], bad_hash=True) ... FAIL
+  test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[11], bad_hash=False) ... FAIL
+  test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[7], bad_hash=False) ... FAIL
+test_local_transfer_write_failure_is_not_retryable (__main__.DownloadTests.test_local_transfer_write_failure_is_not_retryable) ... ok
+test_official_pin_and_attempt_bound (__main__.DownloadTests.test_official_pin_and_attempt_bound) ... ok
+test_one_official_transfer (__main__.DownloadTests.test_one_official_transfer) ... ok
+test_redirect_policy (__main__.DownloadTests.test_redirect_policy) ... ok
+test_required_evidence_failure_cannot_report_success (__main__.DownloadTests.test_required_evidence_failure_cannot_report_success) ... ok
+test_response_shape_and_bounded_size (__main__.DownloadTests.test_response_shape_and_bounded_size) ... ok
+test_three_transfer_limit (__main__.DownloadTests.test_three_transfer_limit) ... FAIL
+test_timeout_then_success (__main__.DownloadTests.test_timeout_then_success) ... FAIL
+test_transient_fallback_and_partial_isolation (__main__.DownloadTests.test_transient_fallback_and_partial_isolation) ... FAIL
+test_transient_http_only (__main__.DownloadTests.test_transient_http_only) ... ok
+test_transport_timeout_and_tls (__main__.DownloadTests.test_transport_timeout_and_tls) ... ok
+test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution) ... ok
+
+======================================================================
+FAIL: test_api_fallback_status_is_rejected_on_browser_route (__main__.DownloadTests.test_api_fallback_status_is_rejected_on_browser_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 249, in test_api_fallback_status_is_rejected_on_browser_route
+    calls, sleeps, _ = self.run_download([10, 12], old_file=True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_api_forbidden_can_use_pinned_browser_route (__main__.DownloadTests.test_api_forbidden_can_use_pinned_browser_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 227, in test_api_forbidden_can_use_pinned_browser_route
+    calls, sleeps, record = self.run_download([12, 0], expected_success=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 197, in run_download
+    result = helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 11], bad_hash=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 237, in test_api_forbidden_does_not_hide_browser_denial_or_bad_hash
+    calls, sleeps, record = self.run_download(outcomes, bad_hash=bad_hash, old_file=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 0], bad_hash=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 237, in test_api_forbidden_does_not_hide_browser_denial_or_bad_hash
+    calls, sleeps, record = self.run_download(outcomes, bad_hash=bad_hash, old_file=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_api_forbidden_does_not_increase_attempt_cap (__main__.DownloadTests.test_api_forbidden_does_not_increase_attempt_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 243, in test_api_forbidden_does_not_increase_attempt_cap
+    calls, sleeps, record = self.run_download([12, 10, 12], old_file=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_first_transfer_success (__main__.DownloadTests.test_first_transfer_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 215, in test_first_transfer_success
+    calls, sleeps, _ = self.run_download([0], expected_success=True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 197, in run_download
+    result = helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[0], bad_hash=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 267, in test_integrity_and_permanent_failures_never_retry
+    calls, sleeps, _ = self.run_download(outcomes, bad_hash=bad_hash)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[11], bad_hash=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 267, in test_integrity_and_permanent_failures_never_retry
+    calls, sleeps, _ = self.run_download(outcomes, bad_hash=bad_hash)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) (outcomes=[7], bad_hash=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 267, in test_integrity_and_permanent_failures_never_retry
+    calls, sleeps, _ = self.run_download(outcomes, bad_hash=bad_hash)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_three_transfer_limit (__main__.DownloadTests.test_three_transfer_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 260, in test_three_transfer_limit
+    calls, sleeps, _ = self.run_download([10, "timeout", 10], old_file=True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 202, in run_download
+    helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_timeout_then_success (__main__.DownloadTests.test_timeout_then_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 254, in test_timeout_then_success
+    calls, sleeps, record = self.run_download(["timeout", 0], expected_success=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 197, in run_download
+    result = helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+======================================================================
+FAIL: test_transient_fallback_and_partial_isolation (__main__.DownloadTests.test_transient_fallback_and_partial_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 220, in test_transient_fallback_and_partial_isolation
+    calls, sleeps, record = self.run_download([10, 0], expected_success=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 197, in run_download
+    result = helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/download-pluginval-macos.py", line 124, in download
+    result = runner(command, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-wall-timeout/scripts/test-pluginval-macos-download.py", line 179, in runner
+    self.assertEqual(kwargs, {"capture_output": True, "text": True, "timeout": 60})
+AssertionError: {'capture_output': True, 'text': True, 'timeout': None} != {'capture_output': True, 'text': True, 'timeout': 60}
+- {'capture_output': True, 'text': True, 'timeout': None}
+?                                                   ^^^^
+
++ {'capture_output': True, 'text': True, 'timeout': 60}
+?                                                   ^^
+
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.056s
+
+FAILED (failures=12)

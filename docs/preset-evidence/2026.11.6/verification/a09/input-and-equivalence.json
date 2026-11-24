@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "source_baseline": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "input_sha256": {
+    "src/core/InstrumentBody.h": "59dfdde8eca81ceea6de22f492b9283aa5219fc9bbe360148c940b9df25904dc",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "tests/PluckedMaterialTests.cpp": "8a029c8fffcb7f9463d5ce3137a550f81a0d2ea29ca19b33a77415a554cbf497"
+  },
+  "standard_audio_cases": 108,
+  "standard_audio_identical": true,
+  "commands": [
+    {
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-I/workspace/scratch/b9c11dd92abc/a09-current",
+        "/workspace/scratch/b9c11dd92abc/yamaha-cs80/docs/preset-evidence/2026.11.6/verification/a09/standard-equivalence.cpp",
+        "-o",
+        "/workspace/scratch/b9c11dd92abc/a09-standard-current"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/b9c11dd92abc/a09-standard-current"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-I/workspace/scratch/b9c11dd92abc/a09-untracked",
+        "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/PluckedMaterialTests.cpp",
+        "-o",
+        "/workspace/scratch/b9c11dd92abc/a09-untracked-tests"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "/workspace/scratch/b9c11dd92abc/a09-untracked-tests"
+      ],
+      "exit": 1
+    }
+  ]
+}

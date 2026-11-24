@@ -68,37 +68,43 @@ void buildPlucked(Builder& add)
               .body(I, body::Model::clav, 0.63f, 0.55f, 0.67f).body(II, body::Model::steel, 0.34f, 0.75f, 0.30f)
               .bodySize(I, 1.12f).bodySize(II, 0.95f).touch(I, 0.22f, 0.88f, 0.0f, 0.0f).touch(II, 0.21f, 0.98f, 0.0f, 0.0f)
               .mix(0.23f).res(0.22f).contour(-0.03f, -0.17f, -0.025f, 0.075f));
-    add("Harp", "Plucked", { "sine", "feet-layer", "velocity" },
-        "A long finger-plucked string spectrum carries a rounded fundamental and a clear octave glint. Upper partials damp individually above the open body, allowing soft arpeggios to ring without a static buzzy tail.",
+    add("Harp", "Plucked", { "sine", "velocity", "dual-rank" },
+        "A finger-plucked harp string excites a rounded soundboard response with a broad, softly notched upper spectrum. The short contact rank shares the string's pitch, then yields to a long lower aftersound. Soft arpeggios retain their gentler attack and can ring across key releases.",
         plucked()
-              .wave(I, true, false, 0.78f).wave(II, false, true, 0.46f).feet(II, f4).pw(II, 0.55f).res(0.025f).detune(0.0f)
-              .hpf(I, 25.0f).hpf(II, 180.0f).lpf(I, 7600.0f, 0.015f).lpf(II, 10000.0f, 0.025f)
-              .feg(I, 0.0f, 0.06f, 0.003f, 0.90f, 0.50f).feg(II, 0.0f, 0.08f, 0.0016f, 0.35f, 0.18f)
-              .eg(I, 0.0036f, 10.5f, 0.055f, 2.8f).eg(II, 0.0015f, 1.12f, 0.0f, 0.39f).level(I, 0.18f, 0.08f)
-              .level(II, 0.34f, 0.035f).touch(I, 0.035f, 0.90f, 0.0f, 0.0f).touch(II, 0.04f, 0.96f, 0.0f, 0.0f)
-              .body(I, body::Model::nylon, 1.0f, 0.55f, 2.45f).body(II, body::Model::nylon, 0.96f, 0.72f, 0.60f)
-              .bodySize(I, 1.65f).bodySize(II, 1.18f).mix(0.22f).contour(-0.08f, -0.17f, -0.045f, 0.12f));
+              .wave(Both, false, false, 1.0f).feet(Both, f8).res(0.018f).detune(0.0f)
+              .hpf(I, 22.0f).hpf(II, 360.0f).lpf(I, 11500.0f, 0.01f).lpf(II, 13800.0f, 0.015f)
+              .feg(I, 0.0f, 0.015f, 0.003f, 0.90f, 0.50f).feg(II, 0.0f, 0.025f, 0.0018f, 0.21f, 0.16f)
+              .eg(I, 0.0039f, 11.2f, 0.065f, 2.9f).eg(II, 0.0018f, 0.42f, 0.0f, 0.28f)
+              .level(I, 0.0f, 0.065f).level(II, 0.0f, 0.020f)
+              .touch(I, 0.02f, 0.88f, 0.0f, 0.0f).touch(II, 0.025f, 0.88f, 0.0f, 0.0f)
+              .body(I, body::Model::nylon, 1.0f, 0.56f, 2.05f).body(II, body::Model::nylon, 1.0f, 0.81f, 0.46f)
+              .bodyMaterial(Both, body::harp).bodySize(I, 1.0f).bodySize(II, 1.0f)
+              .mix(0.13f).g(P_voiceDispersion, 0.025f).g(P_drift, 0.004f)
+              .contour(-0.055f, -0.14f, -0.035f, 0.10f));
     add("Koto", "Plucked", { "init-bend", "velocity", "percussive" },
-        "A bright steel-string body has a sharp plectrum edge and a slight initial pitch settling. A notched excitation spectrum and unequal upper-partial damping separate the short pick from the longer ringing string.",
+        "A near-bridge plectrum opens a bright notched string spectrum over the koto's long-board response. A quiet short contact rank shares the played pitch; upper string modes soften before the ringing body. Restrained initial settling leaves the ribbon available for deliberate bends.",
         plucked()
-              .wave(I, false, true, 0.07f).pw(I, 0.78f).wave(II, false, true, 0.0f, 0.025f).pw(II, 0.88f)
-              .level(I, 0.96f, 0.06f).level(II, 0.82f, 0.02f).res(0.10f).hpf(I, 65.0f).hpf(II, 1700.0f).lpf(I, 9200.0f, 0.07f)
-              .lpf(II, 11500.0f, 0.055f).feg(I, 0.0f, 0.18f, 0.0015f, 0.68f, 0.20f)
-              .feg(II, 0.0f, 0.18f, 0.001f, 0.095f, 0.035f).eg(I, 0.002f, 5.3f, 0.035f, 0.52f)
-              .eg(II, 0.001f, 0.12f, 0.0f, 0.035f).body(I, body::Model::steel, 1.0f, 0.86f, 1.18f)
-              .body(II, body::Model::clav, 0.54f, 0.96f, 0.25f).bodySize(I, 1.55f).bodySize(II, 0.65f)
-              .touch(I, 0.10f, 0.88f, 0.0f, 0.0f).touch(II, 0.12f, 1.0f, 0.0f, 0.0f).bend(0.03f).mix(0.19f).g(P_drift, 0.014f)
-              .contour(-0.02f, -0.23f, -0.015f, 0.11f));
-    add("Banjo", "Plucked", { "percussive", "velocity", "noise" },
-        "A bright, rapidly damping plucked spectrum joins a short nasal circuit body. The tiny noisy pick edge marks each strike while upper-partial losses keep the following decay dry and compact.",
+              .wave(Both, false, false, 1.0f).feet(Both, f8).level(I, 0.0f, 0.060f).level(II, 0.0f, 0.018f)
+              .res(0.025f).hpf(I, 24.0f).hpf(II, 1100.0f).lpf(I, 13200.0f, 0.015f).lpf(II, 15000.0f, 0.02f)
+              .feg(I, 0.0f, 0.045f, 0.0015f, 0.64f, 0.28f).feg(II, 0.0f, 0.06f, 0.001f, 0.085f, 0.035f)
+              .eg(I, 0.0018f, 6.4f, 0.045f, 0.92f).eg(II, 0.001f, 0.13f, 0.0f, 0.06f)
+              .body(I, body::Model::steel, 1.0f, 0.76f, 1.35f).body(II, body::Model::steel, 1.0f, 0.96f, 0.28f)
+              .bodyMaterial(Both, body::koto).bodySize(I, 1.0f).bodySize(II, 1.0f)
+              .touch(I, 0.045f, 0.88f, 0.0f, 0.0f).touch(II, 0.065f, 0.94f, 0.0f, 0.0f)
+              .bend(0.006f).mix(0.12f).detune(0.0f).g(P_voiceDispersion, 0.025f).g(P_drift, 0.004f)
+              .contour(-0.035f, -0.19f, -0.02f, 0.095f));
+    add("Banjo", "Plucked", { "percussive", "velocity", "dual-rank" },
+        "A sharp string pluck excites the banjo's membrane-and-bridge response, with a strong low-mid body and a dry bright edge. Fast losses around the head resonance let the sound clear between picked notes; the brief contact rank adds no unrelated clavichord or held oscillator buzz.",
         plucked()
-              .wave(I, false, true, 0.035f).pw(I, 0.84f).pw(II, 0.90f).level(I, 1.0f, 0.065f).level(II, 0.82f, 0.018f)
-              .hpf(I, 110.0f, 0.035f).hpf(II, 1900.0f).lpf(I, 5400.0f, 0.19f).lpf(II, 8900.0f, 0.05f)
-              .feg(I, 0.0f, 0.16f, 0.0015f, 0.21f, 0.07f).feg(II, 0.0f, 0.20f, 0.001f, 0.07f, 0.025f)
-              .eg(I, 0.0018f, 1.75f, 0.0f, 0.11f).eg(II, 0.001f, 0.08f, 0.0f, 0.025f).wave(II, false, true, 0.0f, 0.035f)
-              .body(I, body::Model::steel, 0.84f, 0.92f, 0.28f).body(II, body::Model::clav, 0.22f, 0.96f, 0.25f)
-              .bodySize(I, 0.82f).bodySize(II, 0.71f).touch(I, 0.08f, 0.90f, 0.0f, 0.0f).touch(II, 0.08f, 1.0f, 0.0f, 0.0f)
-              .mix(0.19f).res(0.08f).contour(0.035f, -0.20f, -0.02f, 0.10f));
+              .wave(Both, false, false, 1.0f).feet(Both, f8).level(I, 0.0f, 0.065f).level(II, 0.0f, 0.018f)
+              .hpf(I, 55.0f, 0.0f).hpf(II, 1350.0f).lpf(I, 12800.0f, 0.015f).lpf(II, 15000.0f, 0.02f)
+              .feg(I, 0.0f, 0.025f, 0.0012f, 0.23f, 0.07f).feg(II, 0.0f, 0.035f, 0.001f, 0.06f, 0.025f)
+              .eg(I, 0.0013f, 2.6f, 0.018f, 0.095f).eg(II, 0.001f, 0.075f, 0.0f, 0.035f)
+              .body(I, body::Model::steel, 1.0f, 0.86f, 0.95f).body(II, body::Model::steel, 1.0f, 0.98f, 0.25f)
+              .bodyMaterial(Both, body::banjo).bodySize(I, 1.0f).bodySize(II, 1.0f)
+              .touch(I, 0.035f, 0.91f, 0.0f, 0.0f).touch(II, 0.05f, 0.95f, 0.0f, 0.0f)
+              .mix(0.10f).res(0.025f).detune(0.0f).g(P_voiceDispersion, 0.02f).g(P_drift, 0.003f)
+              .contour(-0.025f, -0.16f, -0.015f, 0.09f));
     add("Mandolin", "Plucked", { "detune", "velocity", "dual-rank" },
         "Two close steel-string courses ring with independent partial losses and a restrained pitch offset. Their bright paired attacks stay compact; repeated strikes create tremolo picking while the paired courses retain gentle beating between strokes.",
         plucked()
@@ -148,15 +154,19 @@ void buildPlucked(Builder& add)
               .body(I, body::Model::steel, 0.99f, 0.28f, 0.25f).body(II, body::Model::clav, 0.31f, 0.82f, 0.25f)
               .bodySize(I, 1.10f).bodySize(II, 0.85f).touch(I, 0.06f, 0.94f, 0.0f, 0.0f).touch(II, 0.10f, 1.0f, 0.0f, 0.0f)
               .mix(0.18f).contour(-0.035f, -0.13f, -0.025f, 0.08f));
-    add("Kalimba", "Plucked", { "sine", "feet-layer", "percussive", "velocity" },
-        "A plucked high-register tine produces a rounded pitched body and a short metallic ping. Sparse upper modes fall away independently after the attack; stronger strikes bring them forward without a held buzz.",
+    add("Kalimba", "Plucked", { "sine", "percussive", "velocity", "dual-rank" },
+        "A thumb-plucked supported tine gives a rounded fundamental and a brief nonharmonic ping, distinct from an electric-piano pickup. Both ranks share the played pitch; the brighter contact fades first while the lower tine continues ringing after key release.",
         plucked()
-              .wave(I, false, false, 0.96f).feet(I, f4).wave(II, false, true, 0.54f).pw(II, 0.5f).feet(II, f2).res(0.025f)
-              .detune(0.0f).level(I, 0.0f, 0.035f).touch(I, 0.0f, 1.0f, 0.0f, 0.0f).hpf(I, 55.0f).hpf(II, 480.0f)
-              .lpf(I, 9800.0f, 0.015f).lpf(II, 12500.0f, 0.035f).feg(I, 0.0f, 0.0f, 0.001f, 0.40f, 0.10f)
-              .feg(II, 0.0f, 0.08f, 0.001f, 0.08f, 0.035f).eg(I, 0.002f, 3.8f, 0.025f, 0.45f).eg(II, 0.001f, 0.16f, 0.0f, 0.045f)
-              .level(II, 0.20f, 0.018f).touch(II, 0.04f, 1.0f, 0.0f, 0.0f).body(I, body::Model::tine, 1.0f, 0.70f, 0.62f)
-              .body(II, body::Model::celesta, 0.91f, 0.87f, 0.27f).mix(0.22f).contour(-0.035f, -0.21f, -0.015f, 0.10f));
+              .wave(Both, false, false, 1.0f).feet(Both, f8).res(0.018f).detune(0.0f)
+              .level(I, 0.0f, 0.035f).level(II, 0.0f, 0.014f).touch(I, 0.0f, 0.90f, 0.0f, 0.0f)
+              .touch(II, 0.015f, 0.94f, 0.0f, 0.0f).hpf(I, 35.0f).hpf(II, 1050.0f)
+              .lpf(I, 13200.0f, 0.01f).lpf(II, 16000.0f, 0.015f)
+              .feg(I, 0.0f, 0.0f, 0.001f, 0.4f, 0.4f).feg(II, 0.0f, 0.015f, 0.001f, 0.09f, 0.07f)
+              .eg(I, 0.0022f, 4.5f, 0.045f, 1.35f).eg(II, 0.001f, 0.15f, 0.0f, 0.085f)
+              .body(I, body::Model::tine, 1.0f, 0.72f, 1.15f).body(II, body::Model::tine, 1.0f, 0.96f, 0.30f)
+              .bodyMaterial(Both, body::kalimba).bodySize(I, 1.0f).bodySize(II, 1.0f)
+              .mix(0.11f).g(P_voiceDispersion, 0.02f).g(P_drift, 0.002f)
+              .contour(-0.025f, -0.17f, -0.015f, 0.09f));
     add("Zither", "Plucked", { "chorus", "velocity", "dual-rank" },
         "Two bright steel-string courses have long unequal body decays and independent upper-partial losses. A restrained pitch offset and shallow chorus add a gentle ensemble shimmer after the clearly plucked onset.",
         plucked()

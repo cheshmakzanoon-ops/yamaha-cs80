@@ -1,6 +1,7 @@
 #include "FactoryPresets.h"
 #include "InstrumentBody.h"
 #include "InstrumentBodyVariants.h"
+#include "InstrumentBodyMaterials.h"
 
 #include <algorithm>
 #include <initializer_list>
@@ -212,6 +213,7 @@ void applyHardwareTone(ParamValues& values, int channel, int toneIndex)
         values[bodyParam(channel, i)] = paramDef(bodyParam(channel, i)).def;
     values[bodySizeParam(channel)] = paramDef(bodySizeParam(channel)).def;
     values[bodyVariantParam(channel)] = paramDef(bodyVariantParam(channel)).def;
+    values[bodyMaterialParam(channel)] = paramDef(bodyMaterialParam(channel)).def;
 
     hardwareTonePatch(values, channel, std::clamp(toneIndex, 0, 10));
 }

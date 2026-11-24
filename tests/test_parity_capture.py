@@ -17,9 +17,10 @@ CAPTURE = None
 # (kas_scan_timing .. unison_detune) and ws5-modern 39 (lfo1_wave ..
 # fx_gain_compensation), instrument bodies 8 (body1_model .. body2_decay),
 # resonant sizes 2 (body1_size .. body2_size), and resonator variants 2
-# (body1_variant .. body2_variant).
+# (body1_variant .. body2_variant), and materials 2
+# (body1_material .. body2_material).
 # A later appended block adds its own count here.
-EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39 + 8 + 2 + 2
+EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39 + 8 + 2 + 2 + 2
 
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},
@@ -46,9 +47,9 @@ def parse_metadata(text):
     return json.loads(text, object_pairs_hook=unique_pairs, parse_constant=invalid_constant)
 
 
-def validate_body_variant_defaults(settings):
-    # Both fixtures leave the appended next-note variants at Standard.
-    for parameter in ('body1_variant', 'body2_variant'):
+def validate_body_selection_defaults(settings):
+    # Both fixtures leave appended next-note variants and materials at Standard.
+    for parameter in ('body1_variant', 'body2_variant', 'body1_material', 'body2_material'):
         assert parameter in settings
         assert type(settings[parameter]) in (int, float) and settings[parameter] == 0
 
@@ -72,7 +73,7 @@ def validate_metadata(metadata):
     assert metadata['settings']['volume'] == .5
     assert metadata['settings']['body1_model'] == metadata['settings']['body2_model'] == 0
     assert metadata['settings']['body1_mix'] == metadata['settings']['body2_mix'] == 0
-    validate_body_variant_defaults(metadata['settings'])
+    validate_body_selection_defaults(metadata['settings'])
     assert metadata['events'] == EXPECTED_EVENTS
     assert metadata['engine_output_processing'] == (
         'parity mode bypasses output DC blocker and output soft clip; '
@@ -153,20 +154,26 @@ class CaptureTests(unittest.TestCase):
         del modified['settings']['parity_mode']
         with self.assertRaises(AssertionError):
             validate_metadata(modified)
-        for parameter in ('body1_variant', 'body2_variant'):
+        for parameter in ('body1_variant', 'body2_variant', 'body1_material', 'body2_material'):
             for mutation in ('nonstandard', 'renamed', 'missing'):
                 modified = copy.deepcopy(self.metadata)
                 if mutation == 'nonstandard':
                     modified['settings'][parameter] = 1
                 elif mutation == 'renamed':
-                    modified['settings']['unknown_variant'] = modified['settings'].pop(parameter)
+                    modified['settings']['unknown_selection'] = modified['settings'].pop(parameter)
                 else:
                     del modified['settings'][parameter]
                 with self.subTest(parameter=parameter, mutation=mutation), self.assertRaises(AssertionError):
                     validate_metadata(modified)
         modified = copy.deepcopy(self.metadata)
+        modified['parameter_count'] = 202
+        del modified['settings']['body1_material'], modified['settings']['body2_material']
+        with self.subTest(mutation='stale_complete_202_parameter_export'), self.assertRaises(AssertionError):
+            validate_metadata(modified)
+        modified = copy.deepcopy(self.metadata)
         modified['parameter_count'] = 200
         del modified['settings']['body1_variant'], modified['settings']['body2_variant']
+        del modified['settings']['body1_material'], modified['settings']['body2_material']
         with self.subTest(mutation='stale_complete_200_parameter_export'), self.assertRaises(AssertionError):
             validate_metadata(modified)
 
@@ -224,7 +231,7 @@ def validate_live_metadata(metadata, default_settings):
     assert metadata['parameter_application'] == 'one full setParams per parameter_batch; old/new are submitted core values'
     assert default_settings['source_performance'] == 0
     assert len(default_settings) == EXPECTED_PARAMETER_COUNT
-    validate_body_variant_defaults(default_settings)
+    validate_body_selection_defaults(default_settings)
     expected_initial = dict(default_settings)
     for name in ('master_sustain', 'key_release', 'sustain_mode', 'sustain_assign'):
         expected_initial[name] = 0
@@ -237,7 +244,7 @@ def validate_live_metadata(metadata, default_settings):
         expected_initial[f'ch{rank}_f_al'] = f32(.8)
     for name in ('initial_settings', 'final_settings'):
         assert set(metadata[name]) == set(default_settings)
-        validate_body_variant_defaults(metadata[name])
+        validate_body_selection_defaults(metadata[name])
         assert all(type(value) in (int, float) and math.isfinite(value)
                    for value in metadata[name].values())
     assert {key: f32(value) for key, value in metadata['initial_settings'].items()} == {
@@ -421,7 +428,7 @@ class LiveCaptureTests(unittest.TestCase):
             mutate(modified)
             with self.subTest(index=index), self.assertRaises(AssertionError):
                 validate_live_metadata(modified, self.default_settings)
-        for parameter in ('body1_variant', 'body2_variant'):
+        for parameter in ('body1_variant', 'body2_variant', 'body1_material', 'body2_material'):
             # Mutate all three maps coherently so replay/key-set equality alone
             # cannot hide a wrong default or a renamed variant ID.
             for mutation in ('nonstandard', 'renamed'):
@@ -431,14 +438,22 @@ class LiveCaptureTests(unittest.TestCase):
                     if mutation == 'nonstandard':
                         settings[parameter] = 1
                     else:
-                        settings['unknown_variant'] = settings.pop(parameter)
+                        settings['unknown_selection'] = settings.pop(parameter)
                 with self.subTest(parameter=parameter, mutation=mutation), self.assertRaises(AssertionError):
                     validate_live_metadata(modified, defaults)
+        modified = copy.deepcopy(self.metadata)
+        defaults = copy.deepcopy(self.default_settings)
+        modified['parameter_count'] = 202
+        for settings in (defaults, modified['initial_settings'], modified['final_settings']):
+            del settings['body1_material'], settings['body2_material']
+        with self.subTest(mutation='stale_complete_202_parameter_export'), self.assertRaises(AssertionError):
+            validate_live_metadata(modified, defaults)
         modified = copy.deepcopy(self.metadata)
         defaults = copy.deepcopy(self.default_settings)
         modified['parameter_count'] = 200
         for settings in (defaults, modified['initial_settings'], modified['final_settings']):
             del settings['body1_variant'], settings['body2_variant']
+            del settings['body1_material'], settings['body2_material']
         with self.subTest(mutation='stale_complete_200_parameter_export'), self.assertRaises(AssertionError):
             validate_live_metadata(modified, defaults)
 

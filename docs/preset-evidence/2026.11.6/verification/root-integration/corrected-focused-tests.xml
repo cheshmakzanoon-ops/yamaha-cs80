@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="6"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="35"
+	timestamp="2026-11-24T02:31:38"
+	>
+	<testcase name="cs80_material_body_tests" classname="cs80_material_body_tests" time="1.26982" status="run">
+		<properties/>
+		<system-out>MATERIAL rate=44100 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=44100 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.05433 kalimba_upper=0.07200 compact_tail=-10.637dB
+MATERIAL rate=44100 note=72 tube_nominal=0.16672 temple_upper=0.07544 music_comb=0.04433 kalimba_upper=0.05792 compact_tail=-16.754dB
+MATERIAL rate=48000 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=48000 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.05433 kalimba_upper=0.07200 compact_tail=-10.637dB
+MATERIAL rate=48000 note=72 tube_nominal=0.16672 temple_upper=0.07544 music_comb=0.04433 kalimba_upper=0.05792 compact_tail=-16.754dB
+MATERIAL rate=96000 note=48 tube_nominal=0.15742 temple_upper=0.10870 music_comb=0.05862 kalimba_upper=0.07994 compact_tail=-10.824dB
+MATERIAL rate=96000 note=60 tube_nominal=0.15783 temple_upper=0.09991 music_comb=0.054...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_bell_material_preset_tests" classname="cs80_bell_material_preset_tests" time="34.2305" status="run">
+		<properties/>
+		<system-out>MATERIAL Tubular Bells  note 48 touch 15.145 dB normalized mode change 94.795 dB
+MATERIAL Tubular Bells  note 60 touch 15.258 dB normalized mode change 114.661 dB
+MATERIAL Tubular Bells  note 72 touch 14.833 dB normalized mode change 129.342 dB
+MATERIAL Gong           note 48 touch 7.447 dB normalized mode change 87.249 dB
+MATERIAL Gong           note 60 touch 7.504 dB normalized mode change 111.745 dB
+MATERIAL Gong           note 72 touch 7.192 dB normalized mode change 126.184 dB
+MATERIAL Temple Bell    note 48 touch 8.896 dB normalized mode change 54.416 dB
+MATERIAL Temple Bell    note 60 touch 8.855 dB normalized mode change 74.510 dB
+MATERIAL Temple Bell    note 72 touch 8.277 dB normalized mode change 91.795 dB
+MATERIAL Agogo          note 48 touch 9.964 dB normalized mode change 104.177 dB
+MATERIAL Agogo          note 60 touch 9.832 dB normalized mode change 119.786 dB
+MATERIAL Agogo          note 72 touch 9.173 dB normalized mode change 135.776 dB
+MATERIAL Music Box      note 48 touch 8.663 dB normali...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_plucked_material_preset_tests" classname="cs80_plucked_material_preset_tests" time="23.8076" status="run">
+		<properties/>
+		<system-out>REGISTER Harp 48 0.25 -44.999898 -6.922088
+REGISTER Harp 48 0.55 -36.781999 -6.925759
+REGISTER Harp 48 0.85 -31.419899 -6.928425
+TOUCH Harp 48 13.579999
+REGISTER Harp 60 0.25 -44.493696 -7.581602
+REGISTER Harp 60 0.55 -36.287561 -7.582623
+REGISTER Harp 60 0.85 -30.933597 -7.583688
+TOUCH Harp 60 13.560098
+REGISTER Harp 72 0.25 -43.156421 -8.389029
+REGISTER Harp 72 0.55 -35.655508 -8.391351
+REGISTER Harp 72 0.85 -30.563147 -8.393083
+TOUCH Harp 72 12.593273
+SHAPE Harp 0.242493317
+PEDAL Harp 14.822757
+REGISTER Koto 48 0.25 -52.503195 -14.252534
+REGISTER Koto 48 0.55 -44.124616 -14.367090
+REGISTER Koto 48 0.85 -38.671237 -14.448009
+TOUCH Koto 48 13.831958
+REGISTER Koto 60 0.25 -53.073050 -16.319047
+REGISTER Koto 60 0.55 -44.667545 -16.435500
+REGISTER Koto 60 0.85 -39.197639 -16.518316
+TOUCH Koto 60 13.875412
+REGISTER Koto 72 0.25 -50.797270 -17.387004
+REGISTER Koto 72 0.55 -43.137814 -17.483027
+REGISTER Koto 72 0.85 -37.957504 -17.550191
+TOUCH Koto 72 12.839766
+SHAPE Koto 0.430294026
+PEDAL Koto 50.920232
+REGISTER ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_character_tests" classname="cs80_preset_character_tests" time="5.12271" status="run">
+		<properties/>
+		<system-out>RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.7 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.7 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.8 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.7 dB relative
+BREATH      Flute  -25.7 dB, Breathy Flute  -18.3 dB air/body
+RECONSTRUCT Sine Bass            0.000-1.200 s error  -143.3 dB relative
+RECONSTRUCT Sine Bass            0.004-0.020 s error  -143.5 dB relative
+RECONSTRUCT Sine Bass            0.800-1.100 s error  -143.3 dB relative
+STRIKE      Sine Bass            onset/body  -21.2 dB, late/body  -137.1 dB
+RECONSTRUCT Upright Pluck        0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Upright Pluck        0.004-0.020 s error  -143.3 dB relative
+RECONSTRUCT Upright Pluck        0.800-1.100 s error  -143.3 dB relative
+STRIKE    ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_amplitude_production_comparison_tests" classname="cs80_amplitude_production_comparison_tests" time="3.15311" status="run">
+		<properties/>
+		<system-out>....................
+----------------------------------------------------------------------
+Ran 20 tests in 3.000s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_production_comparison_tests" classname="cs80_filter_production_comparison_tests" time="4.15552" status="run">
+		<properties/>
+		<system-out>........................
+----------------------------------------------------------------------
+Ran 24 tests in 3.970s
+
+OK
+</system-out>
+	</testcase>
+</testsuite>

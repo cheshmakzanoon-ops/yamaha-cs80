@@ -1001,6 +1001,7 @@ void Engine::buildSettings()
         const bool bodyAllowed = global.renderPolicy == RenderPolicy::sourcePerformance && hardwareSources[ch] == 13;
         r.bodyModel = bodyAllowed ? static_cast<int>(std::lround(params[bodyParam(ch, 0)])) : 0;
         r.bodyVariant = bodyAllowed ? static_cast<int>(std::lround(params[bodyVariantParam(ch)])) : 0;
+        r.bodyMaterial = bodyAllowed ? static_cast<int>(std::lround(params[bodyMaterialParam(ch)])) : 0;
         r.bodyMix = bodyAllowed ? params[bodyParam(ch, 1)] : 0.0f;
         r.bodyBrightness = params[bodyParam(ch, 2)];
         r.bodyDecay = params[bodyParam(ch, 3)];
@@ -1586,7 +1587,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         r.instrumentBody.noteOn(rs.bodyModel, bodyNote, v.velocity,
                                 params[bodyParam(ch, 2)], rs.bodyDecay,
                                 static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu),
-                                rs.bodySize, rs.bodyVariant);
+                                rs.bodySize, rs.bodyVariant, rs.bodyMaterial);
     }
 
     if (! ringKeyDown)

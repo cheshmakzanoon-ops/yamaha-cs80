@@ -184,9 +184,13 @@ void sustainedBreath()
 
 void struckDetail()
 {
+    // Harp and Kalimba now obtain their contact spectrum from their named
+    // material in both ranks, rather than the older unrelated accent layer.
+    // Their full-Engine touch, held decay and gain-independent
+    // material identity are covered by PluckedMaterialPresetTests. Requiring
+    // that former layer to remain >=8% would reintroduce the removed voice.
     struct Case { const char* name; int note; double minimumContribution; };
     for (const auto& test : {
-        Case { "Harp", 60, 0.08 }, Case { "Kalimba", 60, 0.08 },
         Case { "Sine Bass", 48, 0.05 }, Case { "Upright Pluck", 48, 0.05 } })
     {
         const auto voice = layers(preset(test.name), test.note, 0.9f, 1.2);
@@ -207,6 +211,31 @@ void struckDetail()
               std::string(test.name) + ": upper contribution falls by at least 12 dB relative to its body");
         std::printf("STRIKE      %-20s onset/body %6.1f dB, late/body %7.1f dB\n",
                     test.name, db(onset), db(late));
+    }
+}
+
+void materialContact()
+{
+    for (const char* name : { "Harp", "Kalimba" })
+    {
+        const auto voice = layers(preset(name), 60, 0.9f, 1.2);
+        // Preserve the original local reconstruction and absolute audibility
+        // gates. Only the minimum amount of the obsolete unrelated accent is
+        // replaced by the gain-independent material identity tests.
+        checkReconstruction(voice, name, 0.004, 0.020, "the material-contact window");
+        checkReconstruction(voice, name, 0.80, 1.10, "the later held-note window");
+        check(voice.bodyRms(0.004, 0.020) > minimumBodyRms,
+              std::string(name) + ": onset has an audible material body");
+        check(voice.bodyRms(0.80, 1.10) > minimumBodyRms,
+              std::string(name) + ": material body remains after its contact has faded");
+        const double onset = voice.contribution(0.004, 0.020);
+        const double late = voice.contribution(0.80, 1.10);
+        check(onset < 0.5,
+              std::string(name) + ": contact remains quieter than the resonating material body");
+        check(late < 0.25 * onset,
+              std::string(name) + ": contact contribution falls by at least 12 dB relative to its body");
+        std::printf("CONTACT     %-20s onset/body %6.1f dB, late/body %7.1f dB\n",
+                    name, db(onset), db(late));
     }
 }
 
@@ -282,6 +311,7 @@ int main()
     {
         sustainedBreath();
         struckDetail();
+        materialContact();
         stereoEnsembles();
     }
     catch (const std::exception& error)

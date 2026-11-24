@@ -113,6 +113,17 @@ void CentreRow::buildToneSection(float x0)
             button->setDescription((channel == 0 ? juce::String("Channel I") : juce::String("Channel II"))
                 + ": select this voice source with Space or Return. PANEL preserves the main-panel settings.");
             button->setTooltip(fullName + (channel == 0 ? " / CHANNEL I" : " / CHANNEL II"));
+            if (tone < 11)
+            {
+                const auto study = juce::String(channel == 0 ? "Tone I: " : "Tone II: ")
+                                 + cs80::hardwareToneName(tone, channel);
+                const auto help = juce::String("Original CS-80 tone for ")
+                                + (channel == 0 ? "Channel I. " : "Channel II. ")
+                                + "For the revised instrument voicing, choose \"" + study
+                                + "\" in the preset browser.";
+                button->setTooltip(help);
+                button->setDescription(help + " Select this tone with Space or Return.");
+            }
             button->setClickingTogglesState(true);
             button->setRadioGroupId(0x100 + channel);
             button->setWantsKeyboardFocus(true);

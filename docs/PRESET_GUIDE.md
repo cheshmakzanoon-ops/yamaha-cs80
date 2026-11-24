@@ -1,8 +1,8 @@
 # Factory preset guide
 
-The **2026.11.5 factory library** contains **523 existing programs**. Its **521
-musical programs** have been reprogrammed; **Init Patch** and **Init Circuit**
-remain starting points. All names, categories and program addresses keep their
+The **2026.11.6 factory library** contains **523 existing programs**. Its **521
+musical programs** have been reprogrammed since the published 2026.11.4 bank;
+**Init Patch** and **Init Circuit** remain starting points. All names, categories and program addresses keep their
 existing order. No presets have been added or removed.
 
 The same circuit instrument supports optional string, tine, reed, wind and
@@ -13,8 +13,10 @@ resonant size distinguishes related instruments without transposing the note.
 Envelopes, touch, register and effects complete the individual sounds.
 These are authored synthesized interpretations, not samples
 or a demonstrated exact match to an acoustic instrument or physical CS-80.
-The [2026.11.5 revision report](CIRCUIT_LIBRARY_2026_11_5.md) explains the sound
-changes, new controls and evidence. The
+The [2026.11.6 revision report](CIRCUIT_LIBRARY_2026_11_6.md) explains the latest
+piano tuning, moving-pitch resonances and nine material profiles. It retains the
+complete bank programming documented in the
+[2026.11.5 report](CIRCUIT_LIBRARY_2026_11_5.md). The
 [2026.11.4 report](CIRCUIT_LIBRARY_2026_11_4.md) records the preceding filtering
 and resonant-size work. The
 [2026.11.3 instrument-voicing report](CIRCUIT_LIBRARY_2026_11_3.md) documents the
@@ -81,8 +83,19 @@ show just the factory catalogue.
 | [Bells](../src/core/curated/Bells.inc) | 23 | Marimba for rounded mallets; Clock Bells for paired bell tones. |
 | [FX](../src/core/curated/Fx.inc) | 46 | Wind for sustained air; Random Filter for stepped motion. |
 | [Sequences](../src/core/curated/Modern.inc) | 27 | Arp Poly, Arp Bells, Arp Bass and the revoiced Arp Motion. |
-| [Hardware Studies](../src/core/OriginalCircuitLibrary.inc) | 22 | Tone I: E. Piano and Tone II: Bass; panel voicings named after the original tone families. |
+| [Hardware Studies](../src/core/OriginalCircuitLibrary.inc) | 22 | Tone I: E. Piano and Tone II: Bass; enhanced browser voicings named after the original tone families. |
 | [Init](../src/core/OriginalCircuitLibrary.inc) | 2 | Init Patch and Init Circuit provide starting points for programming. |
+
+### Original tone tabs and revised browser programs
+
+A hardware **E. PIANO** tab selects the original CS-80 electrical tone. The
+browser program **Tone I: E. Piano** selects the revised instrument voicing at
+its established address. These are distinct selections within the same circuit
+instrument. Use **Library** for the enhanced named instruments; each original
+tone tab's tooltip points to the corresponding browser program. Optional body
+models operate on PANEL sources and remain disabled on hardware-tone and memory
+paths. The original tone is an electronic interpretation of its label, not an
+acoustic piano model.
 
 ## Hear the differences
 
@@ -129,8 +142,10 @@ partials follow the key; a firm strike brings the upper partial forward.
 **Reed Piano** has a denser even/odd reed spectrum. **Stage Keys** and **Analog
 Piano** use piano-string excitation with separately softening upper partials;
 **Saw Pulse Piano** retains more of its deliberately synthetic circuit edge.
-All decay while the key is held. The bodies have physically motivated features,
-but they are not samples or complete measured acoustic-piano models.
+All decay while the key is held. Repeated piano strikes now keep the same
+string-course tuning while retaining varied hammer phase and contact. The bodies
+have physically motivated features, but they are not samples or complete measured
+acoustic-piano models.
 [Key source](../src/core/curated/Keys.inc) ·
 [Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_5.md#struck-excitation-and-aftersound)
 
@@ -143,12 +158,24 @@ struck onset; it no longer randomly assigns a pad-like swell or portamento.
 **Guitar I / Guitar II / Nylon Pluck / Steel Pluck:** start around MIDI 48–72.
 I gives a warm body and short pick; II is brighter and rings longer. Nylon Pluck
 has a mellow finger transient and a centered, unchorused body. Steel Pluck
-adds a faster-fading octave course. **Harp** pairs a long 8′ body with a shorter
-4′ glint: spread the notes of a chord and vary key release for damping.
+adds a faster-fading octave course. **Harp** now uses its own rounded soundboard
+and finger-contact response in both 8′ ranks. Its quiet contact clears first,
+leaving a longer lower aftersound: spread the notes of a chord and vary key
+release for damping.
 Nylon Pluck now carries independently fading string modes beneath its soft
 finger attack. **Mandolin** keeps its paired-course decay with gentler amplitude motion;
 try repeated picked notes rather than relying on a deep automatic flutter.
 [Plucked source](../src/core/curated/Plucked.inc)
+
+**Banjo / Koto / Kalimba:** try MIDI 48–72. Banjo has a sharp pluck, a membrane
+and bridge response, and rapid upper losses that clear between picked notes.
+Koto uses a near-bridge plectrum spectrum and a longer wooden body response;
+its small initial pitch settle leaves room for deliberate ribbon bends.
+Kalimba uses supported-tine resonances with a brief nonharmonic ping rather than
+an electric-piano pickup spectrum. Both Kalimba ranks now play the MIDI pitch;
+the previous recipe's primary and secondary ranks sounded one and two octaves
+higher. Reloading this factory program therefore changes its register in an
+older arrangement. [Plucked source](../src/core/curated/Plucked.inc)
 
 **Flute / Pan Flute:** try MIDI 60–84. Flute keeps a separate air layer during
 the held note; pressure can bring it forward. Pan Flute's short breath attack
@@ -165,6 +192,11 @@ spectra. **Breathy Flute** carries more air than Flute. Try zero pressure first,
 then add it to hear the authored level, brightness and vibrato response.
 [Wind source](../src/core/curated/Winds.inc)
 
+During bends and vibrato, flute, clarinet, oboe, bassoon and brass harmonics now
+move through body resonances that remain fixed in frequency. Returning to the
+starting pitch restores the starting response. Try a slow ribbon bend on a held
+wind or brass note to hear its tone color change with the harmonics.
+
 **Marimba / Xylophone / Clock Bells:** try Marimba around MIDI 48–72 and the
 higher registrations around MIDI 48–67. Marimba's rounded body outlasts its
 short wooden knock. Xylophone uses a brighter 4′ body and very brief 4′ strike
@@ -177,6 +209,16 @@ lengths. Play single notes first so the two ringing pitches remain easy to hear.
 now follows the fourth harmonic, two octaves above its 8′ body. The upper color
 fades before the body while the existing gentle tremolo continues.
 [Bell source](../src/core/curated/Bells.inc)
+
+**Tubular Bells / Gong / Temple Bell / Agogo / Music Box:** compare single soft
+and firm notes around MIDI 48–72. Tubular Bells has a weak low spectrum and a
+bright octave nominal, with upper modes suggesting the played strike pitch.
+Gong starts with a low thud before its irregular upper plate modes develop.
+Temple Bell instead has stable close mode pairs and slowly beating aftersound.
+Both use 16′ ranks, sounding below the played key. Agogo gives a compact hard
+shell strike, and Music Box a sparse comb-tooth ring; both use 4′ ranks. These
+five programs now use their own materials in both ranks, without an unrelated
+fixed ring carrier. [Bell source](../src/core/curated/Bells.inc)
 
 **Analog Bass / Sine Bass / Sub Bass:** start around MIDI 36–60. Their 16′
 foundations sound an octave below the keys. Analog Bass adds a shorter upper
@@ -223,7 +265,7 @@ in semitone steps, and **Detuned Lead** retains its deliberately broader beating
 
 ### Play ring sweeps as phrases
 
-In **UFO Landing**, **Gong**, **Temple Bell** and **Ring Sweep Bell**, one ring
+In **UFO Landing** and **Ring Sweep Bell**, one ring
 carrier acts on the combined voices. The first held key starts its frequency
 sweep; overlapping notes continue the same sweep. Release all keys and any
 sustain hold before the next attack to start a fresh sweep. Each new note still
@@ -283,8 +325,9 @@ arpeggiator pace does not automatically retime those effects.
 In the host's parameter list, **Instrument body I** and **Instrument body II**
 each provide **Model**, **Mix**, **Brightness** and **Partial decay**. Two
 appended **Resonant size** and two **Variant** parameters control the corresponding
-ranks. Model, partial decay, size and variant are captured on the **next accepted note**; mix and
-brightness remain live. Selecting Off also takes effect on the next note,
+ranks. Two appended **Material** parameters add distinct resonator profiles.
+Model, partial decay, size, variant and material are captured on the **next
+accepted note**; mix and brightness remain live. Selecting Off also takes effect on the next note,
 preserving an already-ringing body. On struck models, a larger Partial decay
 lets the modes ring longer. **Partial decay has no effect on sustained bowed,
 wind, brass or organ models:** their modes do not lose energy while held.
@@ -308,6 +351,23 @@ The existing Xylophone, Steel Drum, Choir Pad and Dark Choir recipes select
 their appropriate variants automatically. These are synthesized vowels and
 material models, not recordings.
 
+Material defaults to **Standard**. Choose a compatible base model and material:
+
+| Base Model | Available Material profiles |
+| --- | --- |
+| Bell | Tubular bell, Gong plate, Temple bell, Agogo bell |
+| Celesta | Music box comb |
+| Tine | Kalimba tine |
+| Steel | Banjo membrane, Koto bridge |
+| Nylon | Harp soundboard |
+
+Unsupported model/material combinations use Standard. These are separate from
+Variant, and do not change either existing selector's automation range. The nine
+existing factory programs select their materials automatically. **Steel** is the
+compatible model ID for Koto; the label is not a claim about the physical strings
+of every koto. New materials use nominal Resonant size **1×**; changing size
+shifts the authored body response where that material uses one.
+
 At a high body mix, changing the rank's saw/pulse waveform may have little
 effect. The body blends with the filtered oscillator and sine signal **before
 the VCA**. A separate linear filter now applies the rank's effective high-pass
@@ -322,7 +382,7 @@ the complete note's articulation.
 
 These excitations are available on **PANEL sources**. Selecting a hardware tone
 or memory source suppresses them, preserving those separate source paths.
-Their twelve saved controls are exposed in the DAW's parameter list and automation
+Their fourteen saved controls are exposed in the DAW's parameter list and automation
 editor. The custom Studio editor and standalone interface do not yet provide
 dedicated body-control widgets.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
@@ -330,7 +390,7 @@ selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path
 
 ## Recalling a revised sound
 
-**2026.11.5 identifies a sound-data revision**, separate from the
+**2026.11.6 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable while the factory voicings change. A session or user
 preset restores its stored controls, so an older project can show a factory
@@ -338,8 +398,8 @@ name while still using its earlier recipe. Save a user copy to retain edits.
 
 To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
 factory entry and explicitly press **LOAD** (or **RELOAD**, if shown). Enter or
-double-click also loads it. Play fresh notes afterward: body model, decay, size and variant take
-effect at note onset. Save the project if you want it to retain the new recipe.
+double-click also loads it. Play fresh notes afterward: body model, decay, size,
+variant and material take effect at note onset. Save the project if you want it to retain the new recipe.
 
 With **Audition** enabled, clicking a row already marked loaded can leave the
 current settings in place. Press **LOAD** (or **RELOAD**, if shown) even if the
@@ -356,15 +416,21 @@ remains separate from factory selection.
 
 Old saved patches without body fields restore both models and mixes to their
 off defaults. **Reload the factory program to hear the new body and voicing**,
-then save your edited copy. The immediately preceding release's **200 core IDs
-and 306 host automation positions are preserved**; two appended variant controls
-bring the totals to **202 and 308**. A preceding body-aware patch without size
-fields defaults both sizes to 1; a patch without variants defaults both to
-Standard. Session, user-preset and A/B recall include all twelve controls.
-Existing body-enabled saved sounds use the revised excitation and articulation
-code, so retaining their parameter values does not freeze their old audio.
-The circuit path with bodies off is preserved.
-[Compatibility details](CIRCUIT_LIBRARY_2026_11_5.md#saved-sessions-and-automation)
+then save your edited copy. The published 2026.11.4 bank's **200 core IDs and
+306 host automation positions** remain in their original order. The 2026.11.5
+source appended two variants; 2026.11.6 appends two materials, bringing the totals
+to **204 core parameters and 310 host positions**. All previous 202 core parameter
+definitions and 308 host positions are preserved. A body-aware patch without
+size fields defaults both sizes to 1; a patch without variants or materials
+defaults each missing selector to Standard. Session, user-preset and A/B recall
+include all fourteen body controls.
+
+Existing body-enabled saved sounds use the revised excitation, tuning and
+articulation code, so retaining their parameter values does not freeze their
+old audio. The new material control defaults preserve the prior Standard paths;
+the separate piano tuning and live wind/brass corrections still apply. Keep the
+earlier binary and a reference bounce if an existing project's exact rendering
+must be retained. [Compatibility details](CIRCUIT_LIBRARY_2026_11_6.md#saved-sessions-and-automation)
 
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
@@ -419,10 +485,10 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.5 roster
-produces **171 WAVs covering 81 existing programs**, totaling **1,033.2 seconds
-(17 minutes 13.2 seconds)** in 40 folders, with the complete 523-program,
-202-parameter inventory, metrics,
+name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.6 roster
+requests **225 WAVs covering 89 existing programs**, totaling **1,276.2 seconds
+(21 minutes 16.2 seconds)** in 46 folders, with the complete 523-program,
+204-parameter inventory, metrics,
 source commit/tree, executable hash, provenance and checksums:
 
 - All 24 keyboard programs at firm velocity 0.85, held for four seconds with
@@ -462,6 +528,9 @@ source commit/tree, executable hash, provenance and checksums:
   one-second release: six files comparing the two vowel voices.
 - Frozen Leads 121, Soft Leads 128 and Neon Sequences 174, with a five-second
   hold and one-second release: three original-address articulation examples.
+- Tubular Bells, Gong, Temple Bell, Agogo, Music Box, Banjo, Koto, Harp and
+  Kalimba at MIDI 48, 60 and 72, each at velocities 0.25 and 0.85 with a
+  3.5-second hold and one-second release: 54 material-profile comparisons.
 
 The matched-foundation examples compare complete presets, including their
 different articulation, filtering and support ranks. They do not isolate the

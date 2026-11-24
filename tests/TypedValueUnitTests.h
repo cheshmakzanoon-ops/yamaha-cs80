@@ -136,6 +136,27 @@ void testTypedValueUnits(Check check)
                   "ambiguous and invalid material variants reject without mutation");
         }
     }
+    for (int parameter : { cs80::P_body1Material, cs80::P_body2Material })
+    {
+        for (int material = 0; material <= cs80::body::maxMaterial; ++material)
+        {
+            const auto shown = cs80::ui::formatParamValue(parameter, (float) material);
+            float parsed = -12345.f;
+            check(shown == cs80::body::materialName(material)
+                      && cs80::ui::parseParamValue(parameter, shown, 0.f, parsed) && parsed == (float) material,
+                  "material selectors display and parse all ten saved choices");
+        }
+        float parsed = -12345.f;
+        check(cs80::ui::parseParamValue(parameter, "  goNg  ", 0.f, parsed)
+                  && parsed == (float) cs80::body::gong,
+              "material names accept unique trimmed case-insensitive prefixes");
+        for (const char* text : { "T", "M", "Banjo junk", "9", "NaN" })
+        {
+            parsed = -12345.f;
+            check(!cs80::ui::parseParamValue(parameter, text, 0.f, parsed) && parsed == -12345.f,
+                  "ambiguous, numeric and malformed material names reject without mutation");
+        }
+    }
     for (int parameter : { cs80::P_body1Decay, cs80::P_body2Decay })
     {
         for (float value : { .25f, .5f, 1.f, 2.f, 4.f })

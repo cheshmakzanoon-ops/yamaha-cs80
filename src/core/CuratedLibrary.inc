@@ -144,6 +144,13 @@ struct Program
         return each(r, [&](int c) { p[bodyVariantParam(c)] = static_cast<float>(variant); });
     }
 
+    // Material choices have their own appended selector; older model and
+    // variant automation never changes meaning as the library gains detail.
+    Program& bodyMaterial(Rank r, body::Material material)
+    {
+        return each(r, [&](int c) { p[bodyMaterialParam(c)] = static_cast<float>(material); });
+    }
+
     // Global controls.
     Program& g(int index, float v) { p[index] = v; return *this; }
     Program& mix(float v) { return g(P_mix, v); }

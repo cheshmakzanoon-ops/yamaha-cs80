@@ -506,6 +506,12 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "body2_variant", 0, "-", "EXT", Basis::modernExtension,
       "Selects rank II's next-note resonator: Xylophone with Marimba, Steelpan with Vibraphone, or Choir ah/oo with Organ. Standard keeps the original body.",
       "Authored modal variants, not sampled instruments. Other model/variant pairs use Standard; older saved sounds default to Standard." },
+    { "body1_material", 0, "-", "EXT", Basis::modernExtension,
+      "Selects rank I's next-note material: tube/gong/temple/agogo with Bell, Music box with Celesta, Kalimba with Tine, Banjo/Koto with Steel, or Harp with Nylon.",
+      "Authored material profiles. Standard and incompatible model/material pairs retain the original body; older saved sounds default to Standard." },
+    { "body2_material", 0, "-", "EXT", Basis::modernExtension,
+      "Selects rank II's next-note material: tube/gong/temple/agogo with Bell, Music box with Celesta, Kalimba with Tine, Banjo/Koto with Steel, or Harp with Nylon.",
+      "Authored material profiles. Standard and incompatible model/material pairs retain the original body; older saved sounds default to Standard." },
 };
 
 inline constexpr int kControlHelpSize = (int) (sizeof(kControlHelp) / sizeof(kControlHelp[0]));

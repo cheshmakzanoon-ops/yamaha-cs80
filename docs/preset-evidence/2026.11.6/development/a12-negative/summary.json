@@ -1,0 +1,147 @@
+[
+  {
+    "case": "candidate",
+    "exit": 0,
+    "expected_outcome": "pass"
+  },
+  {
+    "case": "checksum-bypass",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "unbounded-read",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "unsafe-redirect",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-hop-counter",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "retry-permanent",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-wall-timeout",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "extra-attempt",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-api-403-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "browser-403-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "browser-worker-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "tls-retry",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "false-provenance",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "signed-url-leak",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "weaken-validator",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "remove-au-gui-regression-seed",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "change-au-gui-regression-seed",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "remove-c76-au-gui-regression",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "change-c76-au-gui-seed",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "skip-c76-gui-tests",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "remove-random-gui-step-id",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "skip-old-seed-after-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "skip-c76-seed-after-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "ignore-c76-validator-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "package-after-validator-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-c76-log-upload",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "ignore-fetch-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-step-timeout",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-provenance-upload",
+    "exit": 1,
+    "expected_outcome": "detected"
+  }
+]

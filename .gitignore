@@ -9,3 +9,7 @@ artifacts/
 .DS_Store
 build-compat-gates/
 .claude/
+
+# Python runtime caches are generated locally.
+__pycache__/
+*.py[cod]

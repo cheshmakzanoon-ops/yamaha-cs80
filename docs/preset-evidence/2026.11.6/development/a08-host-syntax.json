@@ -1,0 +1,16 @@
+{
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "juce_source": "/workspace/scratch/c98fb40a9529/juce-validation",
+  "template_instantiation": "tests/InstrumentBodyHostTests.h and tests/TypedValueUnitTests.h",
+  "mode": "-fsyntax-only",
+  "exit_code": 0,
+  "diagnostic_bytes": 0,
+  "runtime_host_test_executed": false,
+  "bound_inputs": {
+    "tests/InstrumentBodyHostTests.h": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+    "tests/TypedValueUnitTests.h": "f5971fcc55bdaa9e78b08ae4829bd7053ad8e3275c02063536152f01c265092c",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/plugin/PluginProcessor.h": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107"
+  },
+  "bound_inputs_description": "Owned header/test inputs remained unchanged during this syntax-only invocation; processor/UI implementations are separate runtime/build gates."
+}

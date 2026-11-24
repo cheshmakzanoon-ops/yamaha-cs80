@@ -1,0 +1,36 @@
+--- a/src/core/InstrumentBody.h
++++ b/src/core/InstrumentBody.h
+@@ -712,23 +712,27 @@
+             for (int slot = 0; slot < 42; ++slot) (void) randomBipolar();
+             // Low bass single strings become coupled courses above the bass.
+             // The doublet keeps a slowly beating aftersound as the prompt
+-            // high modes decay.  Each strike has a bounded private variation.
++            // high modes decay. Its geometry belongs to the instrument, not
++            // the hammer strike: one neighbouring string has one detuning
++            // shared by its partials. Separating string tuning from excitation
++            // follows the string/hammer distinction in Bank & Sujbert, DAFx-02
++            // (reference above); 1.15 cents is an authored voicing choice.
+             // These are authored register contours, so fine tuning across a
+             // nominal course boundary must not cause a split-key timbre step.
+             const double detunePosition = std::clamp((note - 30.0) / 2.0, 0.0, 1.0);
+             const double detuneBlend = detunePosition * detunePosition * (3.0 - 2.0 * detunePosition);
++            const double courseRatio = std::exp2(detuneBlend * 1.15 / 1200.0);
+             const double coursePosition = std::clamp((note - 47.0) / 2.0, 0.0, 1.0);
+             const double courseBlend = coursePosition * coursePosition * (3.0 - 2.0 * coursePosition);
+             const double course = 0.28 + 0.08 * courseBlend;
+             for (int harmonic = 1; harmonic <= 6; ++harmonic)
+             {
+                 const double h = static_cast<double>(harmonic);
+-                // Always reserve the detune draw, even in the undetuned bass,
+-                // keeping course phases and contact noise independent of note.
+-                const double cents = detuneBlend * (1.15 + 0.35 * randomBipolar())
+-                                   * (harmonic % 2 ? 1.0 : -1.0);
++                // Reserve the former detune draw so changing the fixed course
++                // geometry does not reseed strike phases or contact texture.
++                (void) randomBipolar();
+                 const double ratio = h * std::sqrt((1.0 + stiffness * h * h) / (1.0 + stiffness))
+-                                   * std::exp2(cents / 1200.0);
++                                   * courseRatio;
+                 const double dark = course * stringWeight(harmonic, 0.0);
+                 const double bright = course * stringWeight(harmonic, 1.0);
+                 addMode(ratio, dark, bright,

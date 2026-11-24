@@ -1,0 +1,35 @@
+test_actual_urllib_redirect_loop_stops_before_sixth_hop (__main__.DownloadTests.test_actual_urllib_redirect_loop_stops_before_sixth_hop) ... ok
+test_api_fallback_status_is_rejected_on_browser_route (__main__.DownloadTests.test_api_fallback_status_is_rejected_on_browser_route) ... ok
+test_api_forbidden_can_use_pinned_browser_route (__main__.DownloadTests.test_api_forbidden_can_use_pinned_browser_route) ... ok
+test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) ... ok
+test_api_forbidden_does_not_increase_attempt_cap (__main__.DownloadTests.test_api_forbidden_does_not_increase_attempt_cap) ... ok
+test_api_forbidden_is_route_fallback_not_browser_permission (__main__.DownloadTests.test_api_forbidden_is_route_fallback_not_browser_permission) ... ok
+test_bad_worker_metadata_fails_without_publishing_or_retry (__main__.DownloadTests.test_bad_worker_metadata_fails_without_publishing_or_retry) ... ok
+test_canonical_fallback_request (__main__.DownloadTests.test_canonical_fallback_request) ... ok
+test_first_transfer_success (__main__.DownloadTests.test_first_transfer_success) ... ok
+test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) ... ok
+test_local_transfer_write_failure_is_not_retryable (__main__.DownloadTests.test_local_transfer_write_failure_is_not_retryable) ... ok
+test_official_pin_and_attempt_bound (__main__.DownloadTests.test_official_pin_and_attempt_bound) ... ok
+test_one_official_transfer (__main__.DownloadTests.test_one_official_transfer) ... ok
+test_redirect_policy (__main__.DownloadTests.test_redirect_policy) ... ok
+test_required_evidence_failure_cannot_report_success (__main__.DownloadTests.test_required_evidence_failure_cannot_report_success) ... ok
+test_response_shape_and_bounded_size (__main__.DownloadTests.test_response_shape_and_bounded_size) ... ok
+test_three_transfer_limit (__main__.DownloadTests.test_three_transfer_limit) ... ok
+test_timeout_then_success (__main__.DownloadTests.test_timeout_then_success) ... ok
+test_transient_fallback_and_partial_isolation (__main__.DownloadTests.test_transient_fallback_and_partial_isolation) ... ok
+test_transient_http_only (__main__.DownloadTests.test_transient_http_only) ... ok
+test_transport_timeout_and_tls (__main__.DownloadTests.test_transport_timeout_and_tls) ... ok
+test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution) ... FAIL
+
+======================================================================
+FAIL: test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-macos-transfer-negative-k1sjq1qm/no-c76-log-upload/scripts/test-pluginval-macos-download.py", line 364, in test_workflow_gate_unchanged_and_transfer_failure_stops_execution
+    self.assertIn("            pluginval-au-seed-c76-regression.log\n", upload)
+AssertionError: '            pluginval-au-seed-c76-regression.log\n' not found in '\n        if: always()\n        uses: actions/upload-artifact@v5\n        with:\n          name: cs80-pluginval-${{ matrix.runner }}\n          path: |\n            au-payload-before-validation.sha256\n            au-payload-after-validation.sha256\n            pluginval-download.json\n            pluginval-reports\n            pluginval-vst3.log\n            pluginval-au.log\n            pluginval-au-gui.log\n            pluginval-au-seed-regression.log\n          if-no-files-found: warn\n\n'
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.024s
+
+FAILED (failures=1)

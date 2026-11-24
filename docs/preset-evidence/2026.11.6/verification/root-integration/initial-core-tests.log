@@ -1,0 +1,693 @@
+Test project /workspace/scratch/b9c11dd92abc/yamaha-cs80/build-preset
+        Start 159: cs80_instrument_body_engine_tests
+        Start 156: cs80_wind_body_formant_tests
+        Start 153: cs80_vocal_body_tests
+        Start 160: cs80_body_articulation_engine_tests
+  1/219 Test #160: cs80_body_articulation_engine_tests ...........   Passed    4.46 sec
+        Start 151: cs80_struck_body_dynamics_tests
+  2/219 Test #156: cs80_wind_body_formant_tests ..................   Passed    5.27 sec
+        Start 155: cs80_piano_course_geometry_tests
+  3/219 Test #153: cs80_vocal_body_tests .........................   Passed    5.30 sec
+        Start 157: cs80_material_body_tests
+  4/219 Test #157: cs80_material_body_tests ......................   Passed    1.30 sec
+        Start 152: cs80_instrument_body_variant_tests
+  5/219 Test #152: cs80_instrument_body_variant_tests ............   Passed    0.76 sec
+        Start   1: cs80_engine_output_fir_packed_tests
+  6/219 Test   #1: cs80_engine_output_fir_packed_tests ...........   Passed    0.22 sec
+        Start   2: cs80_wsc_held_endpoint_tests
+  7/219 Test   #2: cs80_wsc_held_endpoint_tests ..................   Passed    0.01 sec
+        Start   3: cs80_legacy_sub_lfo_oracle_tests
+  8/219 Test #151: cs80_struck_body_dynamics_tests ...............   Passed    3.14 sec
+        Start   4: cs80_ig00156_batch_tests
+  9/219 Test   #4: cs80_ig00156_batch_tests ......................   Passed    0.01 sec
+        Start   5: cs80_filter_batch_engine_tests
+ 10/219 Test #155: cs80_piano_course_geometry_tests ..............   Passed    2.50 sec
+        Start   6: cs80_filter_batch_scheduling_tests
+ 11/219 Test   #3: cs80_legacy_sub_lfo_oracle_tests ..............   Passed    1.68 sec
+        Start   7: cs80_ig00151_zero_ei_tests
+ 12/219 Test   #7: cs80_ig00151_zero_ei_tests ....................   Passed    0.03 sec
+        Start   8: cs80_event_timeline_tests
+ 13/219 Test   #8: cs80_event_timeline_tests .....................   Passed    0.00 sec
+        Start   9: cs80_pump_until_tests
+ 14/219 Test   #9: cs80_pump_until_tests .........................   Passed    0.00 sec
+        Start  10: cs80_filter_batch_admission_tests
+ 15/219 Test #159: cs80_instrument_body_engine_tests .............   Passed    9.84 sec
+        Start  11: cs80_package_binary_identity_tests
+ 16/219 Test   #6: cs80_filter_batch_scheduling_tests ............   Passed    2.32 sec
+        Start  12: cs80_packaging_notice_tests
+ 17/219 Test  #11: cs80_package_binary_identity_tests ............   Passed    0.25 sec
+        Start  13: cs80_factory_audition_artifact_tests
+ 18/219 Test  #13: cs80_factory_audition_artifact_tests ..........   Passed    0.47 sec
+        Start  14: cs80_ci_juce_provenance_tests
+ 19/219 Test  #14: cs80_ci_juce_provenance_tests .................   Passed    0.68 sec
+        Start  15: cs80_pluginval_windows_download_tests
+ 20/219 Test  #15: cs80_pluginval_windows_download_tests .........   Passed    0.18 sec
+        Start  16: cs80_pluginval_macos_download_tests
+ 21/219 Test  #16: cs80_pluginval_macos_download_tests ...........   Passed    0.18 sec
+        Start  17: cs80_deb_runtime_dependency_tests
+ 22/219 Test  #12: cs80_packaging_notice_tests ...................   Passed    1.55 sec
+        Start  18: cs80_ci_bundle_verification_tests
+ 23/219 Test  #18: cs80_ci_bundle_verification_tests .............   Passed    0.25 sec
+        Start  19: cs80_windows_installer_preflight_tests
+ 24/219 Test  #19: cs80_windows_installer_preflight_tests ........   Passed    0.99 sec
+        Start  20: cs80_parity_harness_tests
+ 25/219 Test   #5: cs80_filter_batch_engine_tests ................   Passed    6.79 sec
+        Start  21: cs80_ui_environment_tests
+ 26/219 Test  #20: cs80_parity_harness_tests .....................   Passed    2.62 sec
+        Start  22: cs80_preset_trash_safety_tests
+ 27/219 Test  #22: cs80_preset_trash_safety_tests ................   Passed    0.67 sec
+        Start  23: cs80_preset_signature_math_tests
+ 28/219 Test  #17: cs80_deb_runtime_dependency_tests .............   Passed    4.97 sec
+        Start  24: cs80_macos_installer_architecture_tests
+ 29/219 Test  #24: cs80_macos_installer_architecture_tests .......   Passed    3.43 sec
+        Start  25: cs80_continuous_voice_circuit_tests
+ 30/219 Test  #25: cs80_continuous_voice_circuit_tests ...........   Passed    0.03 sec
+        Start  26: cs80_continuous_voice_circuit_audit_tests
+ 31/219 Test  #26: cs80_continuous_voice_circuit_audit_tests .....   Passed    0.64 sec
+        Start  27: cs80_lfo_scope_preview_tests
+ 32/219 Test  #27: cs80_lfo_scope_preview_tests ..................   Passed    0.00 sec
+        Start  28: cs80_preset_preview_math_tests
+ 33/219 Test  #28: cs80_preset_preview_math_tests ................   Passed    0.00 sec
+        Start  29: cs80_output_meter_display_tests
+ 34/219 Test  #29: cs80_output_meter_display_tests ...............   Passed    0.00 sec
+        Start  30: cs80_voice_activity_tests
+ 35/219 Test  #30: cs80_voice_activity_tests .....................   Passed    0.00 sec
+        Start  31: cs80_output_meter_tests
+ 36/219 Test  #31: cs80_output_meter_tests .......................   Passed    0.00 sec
+        Start  32: cs80_output_meter_audit_tests
+ 37/219 Test  #32: cs80_output_meter_audit_tests .................   Passed    0.01 sec
+        Start  33: cs80_keyboard_pressure_audit_tests
+ 38/219 Test  #33: cs80_keyboard_pressure_audit_tests ............   Passed    0.00 sec
+        Start  34: cs80_captured_keyboard_events_tests
+ 39/219 Test  #34: cs80_captured_keyboard_events_tests ...........   Passed    0.00 sec
+        Start  35: cs80_keyboard_event_queue_tests
+ 40/219 Test  #35: cs80_keyboard_event_queue_tests ...............   Passed    0.04 sec
+        Start  36: cs80_keyboard_epoch_interleaving_tests
+ 41/219 Test  #10: cs80_filter_batch_admission_tests .............   Passed   12.80 sec
+        Start  37: cs80_parity_mode_tests
+ 42/219 Test  #36: cs80_keyboard_epoch_interleaving_tests ........   Passed    2.32 sec
+        Start  38: cs80_source_performance_tests
+ 43/219 Test  #37: cs80_parity_mode_tests ........................   Passed    4.36 sec
+        Start  39: cs80_source_performance_audit_tests
+ 44/219 Test  #39: cs80_source_performance_audit_tests ...........   Passed    3.21 sec
+        Start  40: cs80_envelope_precision_tests
+ 45/219 Test  #21: cs80_ui_environment_tests .....................   Passed   15.74 sec
+        Start  41: cs80_filter_default_history_tests
+ 46/219 Test  #41: cs80_filter_default_history_tests .............   Passed    0.04 sec
+        Start  42: cs80_filter_default_history_missing_tests
+ 47/219 Test  #42: cs80_filter_default_history_missing_tests .....   Passed    0.01 sec
+        Start  43: cs80_filter_default_history_truncated_tests
+ 48/219 Test  #43: cs80_filter_default_history_truncated_tests ...   Passed    0.00 sec
+        Start  44: cs80_filter_idle_fallback_tests
+ 49/219 Test  #44: cs80_filter_idle_fallback_tests ...............   Passed    0.02 sec
+        Start  45: cs80_filter_idle_fallback_missing_tests
+ 50/219 Test  #45: cs80_filter_idle_fallback_missing_tests .......   Passed    0.01 sec
+        Start  46: cs80_filter_idle_fallback_truncated_tests
+ 51/219 Test  #46: cs80_filter_idle_fallback_truncated_tests .....   Passed    0.01 sec
+        Start  47: cs80_filter_batch_cap_tests
+ 52/219 Test  #47: cs80_filter_batch_cap_tests ...................   Passed    0.05 sec
+        Start  48: cs80_filter_batch_cap_missing_tests
+ 53/219 Test  #48: cs80_filter_batch_cap_missing_tests ...........   Passed    0.01 sec
+        Start  49: cs80_filter_batch_cap_truncated_tests
+ 54/219 Test  #49: cs80_filter_batch_cap_truncated_tests .........   Passed    0.01 sec
+        Start  50: cs80_ig00156_cache_tests
+ 55/219 Test  #50: cs80_ig00156_cache_tests ......................   Passed    0.11 sec
+        Start  51: cs80_ig00156_filter_tests
+ 56/219 Test  #51: cs80_ig00156_filter_tests .....................   Passed    0.46 sec
+        Start  52: cs80_envelope_rc_model_tests
+ 57/219 Test  #52: cs80_envelope_rc_model_tests ..................   Passed    0.24 sec
+        Start  53: cs80_live_envelope_level_tests
+ 58/219 Test  #38: cs80_source_performance_tests .................   Passed    9.80 sec
+        Start  54: cs80_live_envelope_timing_tests
+ 59/219 Test  #54: cs80_live_envelope_timing_tests ...............   Passed    2.04 sec
+        Start  55: cs80_active_tail_continuity_tests
+ 60/219 Test  #53: cs80_live_envelope_level_tests ................   Passed    5.55 sec
+        Start  56: cs80_core_tests
+ 61/219 Test  #23: cs80_preset_signature_math_tests ..............   Passed   21.01 sec
+        Start  57: cs80_voice_release_tests
+ 62/219 Test  #57: cs80_voice_release_tests ......................   Passed    1.59 sec
+        Start  58: cs80_sixteen_voice_release_tests
+ 63/219 Test  #58: cs80_sixteen_voice_release_tests ..............   Passed    4.38 sec
+        Start  59: cs80_unison_glide_tests
+ 64/219 Test  #55: cs80_active_tail_continuity_tests .............   Passed   13.71 sec
+        Start  60: cs80_unison_detune_latch_tests
+ 65/219 Test  #60: cs80_unison_detune_latch_tests ................   Passed    0.19 sec
+        Start  61: cs80_pedal_release_tests
+ 66/219 Test  #56: cs80_core_tests ...............................   Passed   13.22 sec
+        Start  62: cs80_high_resolution_velocity_tests
+ 67/219 Test  #62: cs80_high_resolution_velocity_tests ...........   Passed    0.01 sec
+        Start  63: cs80_controller_reset_tests
+ 68/219 Test  #61: cs80_pedal_release_tests ......................   Passed    1.56 sec
+        Start  64: cs80_experimental_oscillator_tests
+ 69/219 Test  #59: cs80_unison_glide_tests .......................   Passed    8.17 sec
+        Start  65: cs80_source_factory_integration_tests
+ 70/219 Test  #64: cs80_experimental_oscillator_tests ............   Passed   10.23 sec
+        Start  66: cs80_source_factory_tone_tests
+ 71/219 Test  #66: cs80_source_factory_tone_tests ................   Passed    0.12 sec
+        Start  67: cs80_hardware_control_tests
+ 72/219 Test  #67: cs80_hardware_control_tests ...................   Passed    0.01 sec
+        Start  68: cs80_ig00156_reference_tests
+ 73/219 Test  #68: cs80_ig00156_reference_tests ..................   Passed    0.03 sec
+        Start  69: cs80_keyboard_contour_reference_tests
+ 74/219 Test  #69: cs80_keyboard_contour_reference_tests .........   Passed    0.01 sec
+        Start  70: cs80_loaded_control_reference_tests
+ 75/219 Test  #70: cs80_loaded_control_reference_tests ...........   Passed    0.00 sec
+        Start  71: cs80_loaded_control_rank_tests
+ 76/219 Test  #71: cs80_loaded_control_rank_tests ................   Passed    0.01 sec
+        Start  72: cs80_loaded_control_transient_tests
+ 77/219 Test  #72: cs80_loaded_control_transient_tests ...........   Passed    0.02 sec
+        Start  73: cs80_output_tap_integration_tests
+ 78/219 Test  #63: cs80_controller_reset_tests ...................   Passed   13.12 sec
+        Start  74: cs80_output_tap_circuit_tests
+ 79/219 Test  #73: cs80_output_tap_integration_tests .............   Passed    2.62 sec
+        Start  75: cs80_output_taps_tests
+ 80/219 Test  #75: cs80_output_taps_tests ........................   Passed    0.00 sec
+        Start  76: cs80_level_control_tests
+ 81/219 Test  #76: cs80_level_control_tests ......................   Passed    0.18 sec
+        Start  77: cs80_resonance_control_tests
+ 82/219 Test  #77: cs80_resonance_control_tests ..................   Passed    0.06 sec
+        Start  78: cs80_oe2_filters_tests
+ 83/219 Test  #78: cs80_oe2_filters_tests ........................   Passed    0.01 sec
+        Start  79: cs80_stereo_pra_exact_tests
+ 84/219 Test  #79: cs80_stereo_pra_exact_tests ...................   Passed    0.07 sec
+        Start  80: cs80_pra_wah_integration_tests
+ 85/219 Test  #74: cs80_output_tap_circuit_tests .................   Passed    1.78 sec
+        Start  81: cs80_pra_wah_circuit_tests
+ 86/219 Test  #81: cs80_pra_wah_circuit_tests ....................   Passed    1.14 sec
+        Start  82: cs80_pra_wah_tests
+ 87/219 Test  #82: cs80_pra_wah_tests ............................   Passed    0.02 sec
+        Start  83: cs80_bbd_chorus_tests
+ 88/219 Test  #80: cs80_pra_wah_integration_tests ................   Passed    2.65 sec
+        Start  84: cs80_mn3001_packet_tests
+ 89/219 Test  #84: cs80_mn3001_packet_tests ......................   Passed    0.03 sec
+        Start  85: cs80_performance_control_tests
+ 90/219 Test  #83: cs80_bbd_chorus_tests .........................   Passed    1.24 sec
+        Start  86: cs80_validator_diagnostic_selection_tests
+ 91/219 Test  #86: cs80_validator_diagnostic_selection_tests .....   Passed    6.26 sec
+        Start  87: cs80_validator_retry_tests
+ 92/219 Test  #87: cs80_validator_retry_tests ....................   Passed    4.69 sec
+        Start  88: cs80_validator_exit_classification_tests
+ 93/219 Test  #88: cs80_validator_exit_classification_tests ......   Passed    1.04 sec
+        Start  89: cs80_ig00156_nodal_tests
+ 94/219 Test  #85: cs80_performance_control_tests ................   Passed   19.54 sec
+        Start  90: cs80_ig00156_top_octave_tests
+ 95/219 Test  #90: cs80_ig00156_top_octave_tests .................   Passed    2.16 sec
+        Start  91: cs80_oscillator_promotion_tests
+ 96/219 Test  #91: cs80_oscillator_promotion_tests ...............   Passed    7.79 sec
+        Start  92: cs80_ig00151_vca_tests
+ 97/219 Test  #92: cs80_ig00151_vca_tests ........................   Passed    1.49 sec
+        Start  93: cs80_tolerance_drift_tests
+ 98/219 Test  #40: cs80_envelope_precision_tests .................   Passed   68.51 sec
+        Start  94: cs80_fx_loudness_core_tests
+ 99/219 Test  #94: cs80_fx_loudness_core_tests ...................   Passed    0.10 sec
+        Start  95: cs80_fx_loudness_gate_tests
+100/219 Test  #95: cs80_fx_loudness_gate_tests ...................   Passed    0.03 sec
+        Start  96: cs80_arp_rate_lifecycle_tests
+101/219 Test  #96: cs80_arp_rate_lifecycle_tests .................   Passed    0.26 sec
+        Start  97: cs80_arp_pedal_lifecycle_tests
+102/219 Test  #97: cs80_arp_pedal_lifecycle_tests ................   Passed    0.21 sec
+        Start  98: cs80_arp_repeat_lifecycle_tests
+103/219 Test  #98: cs80_arp_repeat_lifecycle_tests ...............   Passed    0.23 sec
+        Start  99: cs80_quiet_fx_rack_tests
+104/219 Test  #99: cs80_quiet_fx_rack_tests ......................   Passed    1.41 sec
+        Start 100: cs80_fx_tape_lifecycle_tests
+105/219 Test #100: cs80_fx_tape_lifecycle_tests ..................   Passed    0.10 sec
+        Start 101: cs80_external_interpolator_tests
+106/219 Test #101: cs80_external_interpolator_tests ..............   Passed    2.86 sec
+        Start 102: cs80_oversampling_tests
+107/219 Test #102: cs80_oversampling_tests .......................   Passed    2.48 sec
+        Start 103: cs80_smoothing_tests
+108/219 Test  #89: cs80_ig00156_nodal_tests ......................   Passed   26.78 sec
+        Start 104: cs80_pitch_bend_range_tests
+109/219 Test  #93: cs80_tolerance_drift_tests ....................   Passed    8.61 sec
+        Start 105: cs80_mpe_member_onset_tests
+110/219 Test #104: cs80_pitch_bend_range_tests ...................   Passed    1.74 sec
+        Start 106: cs80_mpe_timbre_combination_tests
+111/219 Test #103: cs80_smoothing_tests ..........................   Passed    2.74 sec
+        Start 107: cs80_mpe_pressure_combination_tests
+112/219 Test #106: cs80_mpe_timbre_combination_tests .............   Passed    1.32 sec
+        Start 108: cs80_mpe_released_target_tests
+113/219 Test #107: cs80_mpe_pressure_combination_tests ...........   Passed    0.67 sec
+        Start 109: cs80_mpe_master_smoothing_tests
+114/219 Test #105: cs80_mpe_member_onset_tests ...................   Passed    3.53 sec
+        Start 110: cs80_output_listening_tests
+115/219 Test #109: cs80_mpe_master_smoothing_tests ...............   Passed    0.34 sec
+        Start 111: cs80_noise_tests
+116/219 Test #110: cs80_output_listening_tests ...................   Passed    1.70 sec
+        Start 112: cs80_poly_pressure_routing_tests
+117/219 Test #112: cs80_poly_pressure_routing_tests ..............   Passed    1.39 sec
+        Start 113: cs80_host_automation_curve_tests
+118/219 Test #113: cs80_host_automation_curve_tests ..............   Passed    0.58 sec
+        Start 114: cs80_free_running_voice_tests
+119/219 Test #108: cs80_mpe_released_target_tests ................   Passed    4.81 sec
+        Start 115: cs80_kas_scanner_tests
+120/219 Test #111: cs80_noise_tests ..............................   Passed    5.78 sec
+        Start 116: cs80_scanner_ordering_tests
+121/219 Test #116: cs80_scanner_ordering_tests ...................   Passed    1.25 sec
+        Start 117: cs80_scanner_overflow_tests
+122/219 Test #115: cs80_kas_scanner_tests ........................   Passed    2.90 sec
+        Start 118: cs80_keyboard_contour_key_map_tests
+123/219 Test #114: cs80_free_running_voice_tests .................   Passed    5.34 sec
+        Start 119: cs80_touch_circuit_tests
+124/219 Test #117: cs80_scanner_overflow_tests ...................   Passed    2.04 sec
+        Start 120: cs80_mpe_master_bend_routing_tests
+125/219 Test #119: cs80_touch_circuit_tests ......................   Passed    4.47 sec
+        Start 121: cs80_tuning_midi_tests
+126/219 Test #120: cs80_mpe_master_bend_routing_tests ............   Passed    4.54 sec
+        Start 122: cs80_tuning_frequency_domain_tests
+127/219 Test #122: cs80_tuning_frequency_domain_tests ............   Passed    0.00 sec
+        Start 123: cs80_tuning_robustness_tests
+128/219 Test #123: cs80_tuning_robustness_tests ..................   Passed    0.00 sec
+        Start 124: cs80_mts_esp_native_tests
+129/219 Test #124: cs80_mts_esp_native_tests .....................   Passed    0.00 sec
+        Start 125: cs80_mts_esp_integration_tests
+130/219 Test #125: cs80_mts_esp_integration_tests ................   Passed    0.32 sec
+        Start 126: cs80_mts_esp_channel_tests
+131/219 Test #126: cs80_mts_esp_channel_tests ....................   Passed    0.01 sec
+        Start 127: cs80_mts_esp_fallback_tests
+132/219 Test #127: cs80_mts_esp_fallback_tests ...................   Passed    0.00 sec
+        Start 128: cs80_mts_esp_windows_macro_tests
+133/219 Test #128: cs80_mts_esp_windows_macro_tests ..............   Passed    0.00 sec
+        Start 129: cs80_ig00150_sub_tests
+134/219 Test #129: cs80_ig00150_sub_tests ........................   Passed   13.46 sec
+        Start 130: cs80_ring_modulator_circuit_tests
+135/219 Test #118: cs80_keyboard_contour_key_map_tests ...........   Passed   22.86 sec
+        Start 131: cs80_oe2_stereo_chorus_tests
+136/219 Test #131: cs80_oe2_stereo_chorus_tests ..................   Passed    1.09 sec
+        Start 132: cs80_pra_optical_cell_tests
+137/219 Test #130: cs80_ring_modulator_circuit_tests .............   Passed    3.83 sec
+        Start 133: cs80_lfo_random_switching_tests
+138/219 Test #133: cs80_lfo_random_switching_tests ...............   Passed    0.23 sec
+        Start 134: cs80_lfo_random_variable_rate_tests
+139/219 Test #134: cs80_lfo_random_variable_rate_tests ...........   Passed    0.35 sec
+        Start 135: cs80_modern_lfo_tests
+140/219 Test #135: cs80_modern_lfo_tests .........................   Passed    1.55 sec
+        Start 136: cs80_mseg_tests
+141/219 Test #136: cs80_mseg_tests ...............................   Passed    2.31 sec
+        Start 137: cs80_mseg_transport_rate_tests
+142/219 Test #137: cs80_mseg_transport_rate_tests ................   Passed    0.14 sec
+        Start 138: cs80_mono_mseg_routing_tests
+143/219 Test #138: cs80_mono_mseg_routing_tests ..................   Passed    1.06 sec
+        Start 139: cs80_mseg_retrigger_rate_tests
+144/219 Test #121: cs80_tuning_midi_tests ........................   Passed   23.95 sec
+        Start 140: cs80_mseg_combined_interaction_tests
+145/219 Test #140: cs80_mseg_combined_interaction_tests ..........   Passed    0.02 sec
+        Start 141: cs80_mod_matrix_tests
+146/219 Test #132: cs80_pra_optical_cell_tests ...................   Passed    6.65 sec
+        Start 142: cs80_modern_fx_tests
+147/219 Test #139: cs80_mseg_retrigger_rate_tests ................   Passed    0.93 sec
+        Start 143: cs80_delay_line_tests
+148/219 Test #143: cs80_delay_line_tests .........................   Passed    0.05 sec
+        Start 144: cs80_plate_reverb_rate_tests
+149/219 Test #144: cs80_plate_reverb_rate_tests ..................   Passed    5.39 sec
+        Start 145: cs80_tape_echo_time_tests
+150/219 Test #145: cs80_tape_echo_time_tests .....................   Passed    3.21 sec
+        Start 146: cs80_drive_control_cache_tests
+151/219 Test #146: cs80_drive_control_cache_tests ................   Passed    0.32 sec
+        Start 147: cs80_ensemble_rate_cache_tests
+152/219 Test #147: cs80_ensemble_rate_cache_tests ................   Passed    5.53 sec
+        Start 148: cs80_tape_echo_control_cache_tests
+153/219 Test #148: cs80_tape_echo_control_cache_tests ............   Passed   11.43 sec
+        Start 149: cs80_instrument_body_tests
+154/219 Test #141: cs80_mod_matrix_tests .........................   Passed   31.98 sec
+        Start 150: cs80_tine_strike_dynamics_tests
+155/219 Test #149: cs80_instrument_body_tests ....................   Passed    5.65 sec
+        Start 154: cs80_bowed_body_formant_tests
+156/219 Test #150: cs80_tine_strike_dynamics_tests ...............   Passed    1.40 sec
+        Start 158: cs80_plucked_material_tests
+157/219 Test #154: cs80_bowed_body_formant_tests .................   Passed    4.00 sec
+        Start 161: cs80_original_articulation_tests
+158/219 Test #161: cs80_original_articulation_tests ..............   Passed    2.88 sec
+        Start 162: cs80_keyboard_response_tests
+159/219 Test #158: cs80_plucked_material_tests ...................   Passed    8.00 sec
+        Start 163: cs80_mallet_preset_refinement_tests
+160/219 Test #163: cs80_mallet_preset_refinement_tests ...........   Passed   13.73 sec
+        Start 164: cs80_bass_plucked_refinement_tests
+161/219 Test #164: cs80_bass_plucked_refinement_tests ............   Passed   22.16 sec
+        Start 165: cs80_brass_organ_refinement_tests
+162/219 Test #142: cs80_modern_fx_tests ..........................   Passed   80.26 sec
+        Start 166: cs80_wind_string_refinement_tests
+163/219 Test #162: cs80_keyboard_response_tests ..................   Passed   67.46 sec
+        Start 167: cs80_pad_poly_refinement_tests
+164/219 Test #165: cs80_brass_organ_refinement_tests .............   Passed   72.06 sec
+        Start 168: cs80_fx_refinement_tests
+165/219 Test  #65: cs80_source_factory_integration_tests .........   Passed  262.75 sec
+        Start 169: cs80_modern_preset_refinement_tests
+166/219 Test #168: cs80_fx_refinement_tests ......................   Passed   22.08 sec
+        Start 170: cs80_lead_refinement_tests
+167/219 Test #166: cs80_wind_string_refinement_tests .............   Passed   93.52 sec
+        Start 171: cs80_preset_response_coverage_tests
+168/219 Test #171: cs80_preset_response_coverage_tests ...........   Passed    1.81 sec
+        Start 172: cs80_library_audit_tests
+169/219 Test #169: cs80_modern_preset_refinement_tests ...........   Passed   42.31 sec
+        Start 173: cs80_preset_voicing_tests
+170/219 Test #170: cs80_lead_refinement_tests ....................   Passed   39.63 sec
+        Start 174: cs80_preset_character_tests
+171/219 Test #174: cs80_preset_character_tests ...................***Failed    4.96 sec
+RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.7 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.7 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.8 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.7 dB relative
+BREATH      Flute  -25.7 dB, Breathy Flute  -18.3 dB air/body
+RECONSTRUCT Harp                 0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Harp                 0.004-0.020 s error  -144.2 dB relative
+RECONSTRUCT Harp                 0.800-1.100 s error  -143.3 dB relative
+FAIL: Harp: supporting strike is present in the finished onset mix
+STRIKE      Harp                 onset/body  -27.2 dB, late/body  -124.7 dB
+RECONSTRUCT Kalimba              0.000-1.200 s error  -143.5 dB relative
+RECONSTRUCT Kalimba              0.004-0.020 s error  -143.9 dB relative
+RECONSTRUCT Kalimba              0.800-1.100 s error  -143.1 dB relative
+FAIL: Kalimba: supporting strike is present in the finished onset mix
+STRIKE      Kalimba              onset/body  -36.1 dB, late/body  -130.0 dB
+RECONSTRUCT Sine Bass            0.000-1.200 s error  -143.3 dB relative
+RECONSTRUCT Sine Bass            0.004-0.020 s error  -143.5 dB relative
+RECONSTRUCT Sine Bass            0.800-1.100 s error  -143.3 dB relative
+STRIKE      Sine Bass            onset/body  -21.2 dB, late/body  -137.1 dB
+RECONSTRUCT Upright Pluck        0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Upright Pluck        0.004-0.020 s error  -143.3 dB relative
+RECONSTRUCT Upright Pluck        0.800-1.100 s error  -143.3 dB relative
+STRIKE      Upright Pluck        onset/body  -21.5 dB, late/body  -117.7 dB
+STEREO      Noir Swell Brass     side/mid  -20.4 dB, correlation 0.98206, balance +0.16 dB, mono 0.040 / pitch 0.534 dB
+STEREO      Brass Ensemble 16    side/mid  -22.1 dB, correlation 0.98831, balance -0.29 dB, mono 0.027 / pitch 0.108 dB
+STEREO      Neo-Noir Pad         side/mid  -20.0 dB, correlation 0.98113, balance +0.35 dB, mono 0.043 / pitch 0.042 dB
+STEREO      Arctic Pad           side/mid  -24.0 dB, correlation 0.99325, balance +0.42 dB, mono 0.017 / pitch 0.005 dB
+STEREO      Synthwave Chords     side/mid  -19.9 dB, correlation 0.98579, balance +0.97 dB, mono 0.045 / pitch 0.066 dB
+Preset character regressions: 126/128 checks passed; 31.4 seconds generated.
+
+        Start 175: cs80_preset_precision_tests
+172/219 Test #167: cs80_pad_poly_refinement_tests ................   Passed  113.55 sec
+        Start 176: cs80_preset_capture_tests
+173/219 Test #176: cs80_preset_capture_tests .....................   Passed    1.96 sec
+        Start 177: cs80_randomise_tests
+174/219 Test #173: cs80_preset_voicing_tests .....................   Passed   13.41 sec
+        Start 178: cs80_source_factory_boundary_tests
+175/219 Test #178: cs80_source_factory_boundary_tests ............   Passed    0.56 sec
+        Start 179: cs80_memory_panel_tests
+176/219 Test #179: cs80_memory_panel_tests .......................   Passed    0.43 sec
+        Start 180: cs80_memory_panel_ports_tests
+177/219 Test #180: cs80_memory_panel_ports_tests .................   Passed    9.10 sec
+        Start 181: cs80_memory_panel_port_map_tests
+178/219 Test #181: cs80_memory_panel_port_map_tests ..............   Passed    1.06 sec
+        Start 182: cs80_memory_port_map_negative_controls
+179/219 Test #182: cs80_memory_port_map_negative_controls ........   Passed   14.69 sec
+        Start 183: cs80_memory_control_routing_tests
+180/219 Test #183: cs80_memory_control_routing_tests .............   Passed    0.60 sec
+        Start 184: cs80_memory_receiver_truth_tests
+181/219 Test #184: cs80_memory_receiver_truth_tests ..............   Passed    1.27 sec
+        Start 185: cs80_memory_qualification_probe_self_tests
+182/219 Test #185: cs80_memory_qualification_probe_self_tests ....   Passed    0.01 sec
+        Start 186: cs80_memory_verified_diode_tests
+183/219 Test #175: cs80_preset_precision_tests ...................   Passed   41.71 sec
+        Start 187: cs80_memory_centered_log_rational
+184/219 Test #187: cs80_memory_centered_log_rational .............   Passed    0.42 sec
+        Start 188: cs80_memory_interval_extrema
+185/219 Test #188: cs80_memory_interval_extrema ..................   Passed    0.58 sec
+        Start 189: cs80_memory_sparse_update_tests
+186/219 Test #186: cs80_memory_verified_diode_tests ..............   Passed   10.27 sec
+        Start 190: cs80_memory_sparse_negative_controls
+187/219 Test #189: cs80_memory_sparse_update_tests ...............   Passed   15.76 sec
+        Start 191: cs80_memory_routing_negative_controls
+188/219 Test #177: cs80_randomise_tests ..........................   Passed   52.84 sec
+        Start 192: cs80_programmer_control_identity_tests
+189/219 Test #192: cs80_programmer_control_identity_tests ........   Passed    0.00 sec
+        Start 193: cs80_fast_math_tests
+190/219 Test #193: cs80_fast_math_tests ..........................   Passed    0.09 sec
+        Start 194: cs80_evidence_register_tests
+191/219 Test #194: cs80_evidence_register_tests ..................   Passed    0.01 sec
+        Start 195: cs80_midi_learn_tests
+192/219 Test #195: cs80_midi_learn_tests .........................   Passed    0.10 sec
+        Start 196: cs80_render_cli_tests
+193/219 Test #196: cs80_render_cli_tests .........................   Passed    0.66 sec
+        Start 197: cs80_callback_cpu_measurement_tests
+194/219 Test #197: cs80_callback_cpu_measurement_tests ...........   Passed    0.00 sec
+        Start 198: cs80_callback_cpu_benchmark_tests
+195/219 Test #190: cs80_memory_sparse_negative_controls ..........   Passed   15.42 sec
+        Start 199: cs80_benchmark_preflight_tests
+196/219 Test #199: cs80_benchmark_preflight_tests ................   Passed    0.27 sec
+        Start 200: cs80_parity_capture_tests
+197/219 Test #200: cs80_parity_capture_tests .....................   Passed    5.24 sec
+        Start 201: cs80_dsp_probe_tests
+198/219 Test #201: cs80_dsp_probe_tests ..........................   Passed    1.17 sec
+        Start 202: cs80_truth_render_tests
+199/219 Test #202: cs80_truth_render_tests .......................   Passed    1.30 sec
+        Start 203: cs80_ig00156_step_diagnostics_tests
+200/219 Test #203: cs80_ig00156_step_diagnostics_tests ...........   Passed    0.01 sec
+        Start 204: cs80_truth_input_sha256_tests
+201/219 Test #204: cs80_truth_input_sha256_tests .................   Passed    0.01 sec
+        Start 205: cs80_amplitude_production_comparison_tests
+202/219 Test #205: cs80_amplitude_production_comparison_tests ....***Failed    2.05 sec
+...E..E.........E.EE
+======================================================================
+ERROR: test_cleanup_preserves_foreign_and_replaced_inodes (__main__.ComparisonTests.test_cleanup_preserves_foreign_and_replaced_inodes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 345, in test_cleanup_preserves_foreign_and_replaced_inodes
+    with patch.object(C.Owned, 'write', fail), self.assertRaises(OSError): self.render()
+                                                                           ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_amplitude_envelope_production.py", line 235, in render
+    require(meta['source_sha256'] == {path: REF.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_every_metric_recomputes_from_every_csv_row (__main__.ComparisonTests.test_every_metric_recomputes_from_every_csv_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 64, in test_every_metric_recomputes_from_every_csv_row
+    report = self.render()
+             ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_amplitude_envelope_production.py", line 235, in render
+    require(meta['source_sha256'] == {path: REF.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_snapshot_inputs_execute_and_owned_failure_cleanup (__main__.ComparisonTests.test_snapshot_inputs_execute_and_owned_failure_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 324, in test_snapshot_inputs_execute_and_owned_failure_cleanup
+    with patch.object(C, 'execute', mutate): self.render()
+                                             ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_amplitude_envelope_production.py", line 235, in render
+    require(meta['source_sha256'] == {path: REF.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_standalone_artifacts_are_byte_identical (__main__.ComparisonTests.test_standalone_artifacts_are_byte_identical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 94, in test_standalone_artifacts_are_byte_identical
+    self.render()
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_amplitude_envelope_production.py", line 235, in render
+    require(meta['source_sha256'] == {path: REF.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_zero_reference_rms_is_null_and_no_tick_at_zero (__main__.ComparisonTests.test_zero_reference_rms_is_null_and_no_tick_at_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 104, in test_zero_reference_rms_is_null_and_no_tick_at_zero
+    report = self.render(samples=2)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_amplitude_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_amplitude_envelope_production.py", line 235, in render
+    require(meta['source_sha256'] == {path: REF.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+----------------------------------------------------------------------
+Ran 20 tests in 1.869s
+
+FAILED (errors=5)
+
+        Start 206: cs80_filter_production_comparison_tests
+203/219 Test #198: cs80_callback_cpu_benchmark_tests .............   Passed   13.52 sec
+        Start 207: cs80_vca_reference_tests
+204/219 Test #207: cs80_vca_reference_tests ......................   Passed    0.44 sec
+        Start 208: cs80_decimal_conversion_tests
+205/219 Test #208: cs80_decimal_conversion_tests .................   Passed    0.01 sec
+        Start 209: cs80_decimal_conversion_locale_tests
+206/219 Test #206: cs80_filter_production_comparison_tests .......***Failed    3.30 sec
+..EE.E........EF...E.E.E
+======================================================================
+ERROR: test_cleanup_preserves_foreign_and_replaced_inodes (__main__.ComparisonTests.test_cleanup_preserves_foreign_and_replaced_inodes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 428, in test_cleanup_preserves_foreign_and_replaced_inodes
+    with patch.object(C.Owned, 'write', fail), self.assertRaises(OSError): self.render()
+                                                                           ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_equal_targets_reference_immediate_but_no_extra_production_tick (__main__.ComparisonTests.test_equal_targets_reference_immediate_but_no_extra_production_tick)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 248, in test_equal_targets_reference_immediate_but_no_extra_production_tick
+    report = self.render(il='0',al='0',samples=3)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_every_metric_recomputes_from_every_csv_row (__main__.ComparisonTests.test_every_metric_recomputes_from_every_csv_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 64, in test_every_metric_recomputes_from_every_csv_row
+    report = self.render()
+             ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_optional_mapping_is_unchanged_reference_only (__main__.ComparisonTests.test_optional_mapping_is_unchanged_reference_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 104, in test_optional_mapping_is_unchanged_reference_only
+    report = self.render(**mapping)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_snapshot_inputs_execute_and_owned_failure_cleanup (__main__.ComparisonTests.test_snapshot_inputs_execute_and_owned_failure_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 407, in test_snapshot_inputs_execute_and_owned_failure_cleanup
+    with patch.object(C, 'execute', mutate): self.render()
+                                             ^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_standalone_artifacts_are_byte_identical (__main__.ComparisonTests.test_standalone_artifacts_are_byte_identical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 94, in test_standalone_artifacts_are_byte_identical
+    self.render()
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+ERROR: test_zero_reference_rms_is_null_and_no_tick_at_zero (__main__.ComparisonTests.test_zero_reference_rms_is_null_and_no_tick_at_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 139, in test_zero_reference_rms_is_null_and_no_tick_at_zero
+    report = self.render(samples=2)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 52, in render
+    C.render(C.parse(self.args(**changes)))
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/compare_filter_envelope_production.py", line 245, in render
+    require(meta['source_sha256'] == {path: IO.metadata(snapshots['sources/' + path])['sha256'] for path in SOURCES},
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/scripts/render_amplitude_envelope_reference.py", line 27, in require
+    raise ValueError(message)
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+======================================================================
+FAIL: test_reference_artifacts_and_bundle_budget_fail_closed (__main__.ComparisonTests.test_reference_artifacts_and_bundle_budget_fail_closed)
+----------------------------------------------------------------------
+ValueError: Production build/source mismatch; rebuild the helper for this checkout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/tests/test_filter_production_comparison.py", line 131, in test_reference_artifacts_and_bundle_budget_fail_closed
+    with patch.object(C, 'MAX_BYTES', bound), self.assertRaisesRegex(ValueError, 'bundle exceeds'):
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "bundle exceeds" does not match "Production build/source mismatch; rebuild the helper for this checkout"
+
+----------------------------------------------------------------------
+Ran 24 tests in 2.986s
+
+FAILED (failures=1, errors=7)
+
+        Start 210: cs80_float_wav_tests
+207/219 Test #209: cs80_decimal_conversion_locale_tests ..........   Passed    0.01 sec
+        Start 211: cs80_reference_chain_tests
+208/219 Test #210: cs80_float_wav_tests ..........................   Passed    0.23 sec
+        Start 212: cs80_reference_chain_clock_tests
+209/219 Test #191: cs80_memory_routing_negative_controls .........   Passed   16.47 sec
+        Start 213: cs80_amplitude_envelope_reference_tests
+210/219 Test #213: cs80_amplitude_envelope_reference_tests .......   Passed    5.82 sec
+        Start 214: cs80_event_aware_envelope_vca_tests
+211/219 Test #214: cs80_event_aware_envelope_vca_tests ...........   Passed    0.16 sec
+        Start 215: cs80_ring_time_reference_tests
+212/219 Test #215: cs80_ring_time_reference_tests ................   Passed    0.16 sec
+        Start 216: cs80_event_aware_envelope_sine_tests
+213/219 Test #216: cs80_event_aware_envelope_sine_tests ..........   Passed    0.20 sec
+        Start 217: cs80_event_aware_ring_vca_tests
+214/219 Test #217: cs80_event_aware_ring_vca_tests ...............   Passed    0.19 sec
+        Start 218: cs80_event_aware_ring_vca_coincident_tests
+215/219 Test #218: cs80_event_aware_ring_vca_coincident_tests ....   Passed    0.25 sec
+        Start 219: cs80_filter_envelope_reference_tests
+216/219 Test #212: cs80_reference_chain_clock_tests ..............   Passed    8.30 sec
+217/219 Test #211: cs80_reference_chain_tests ....................   Passed   11.07 sec
+218/219 Test #219: cs80_filter_envelope_reference_tests ..........   Passed    7.89 sec
+219/219 Test #172: cs80_library_audit_tests ......................***Failed  337.17 sec
+closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)
+FAIL: level-matched within the library window: Gong -33.190936
+phrase peak max -6.2 dBFS, loudest-window RMS -33.2..-18.0 dBFS, stress peak max -1.5 dBFS
+1 library audit failures
+
+
+98% tests passed, 4 tests failed out of 219
+
+Label Time Summary:
+packaging    =   7.92 sec*proc (5 tests)
+
+Total Test time (real) = 660.12 sec
+
+The following tests FAILED:
+	172 - cs80_library_audit_tests (Failed)
+	174 - cs80_preset_character_tests (Failed)
+	205 - cs80_amplitude_production_comparison_tests (Failed)
+	206 - cs80_filter_production_comparison_tests (Failed)
+Errors while running CTest
