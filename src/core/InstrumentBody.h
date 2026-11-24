@@ -30,6 +30,9 @@
 
 #include "InstrumentBodyVariants.h"
 #include "InstrumentBodyMaterials.h"
+#include "ElectricPickup.h"
+#include "PianoHammer.h"
+#include "InstrumentDamper.h"
 
 #include <algorithm>
 #include <array>
@@ -99,6 +102,7 @@ public:
     void reset() noexcept
     {
         modes = {};
+        pianoHammer.reset();
         count = 0;
         model = off;
         variant = standard;
@@ -113,6 +117,10 @@ public:
         hitEnvelope = 0.0;
         airAmount = hitAmount = 0.0;
         pickupMotion = 0.0;
+        damperStrength = damperSmoothing = 0.0;
+        damperSeconds = -1.0;
+        pickupReleaseLoss = pickupReleaseTarget = 1.0;
+        released = damperMoving = false;
         liveEffort = motionTarget = motionLow = motionSmooth = 0.0;
         motionCountdown = 0;
         expressive = false;
@@ -122,7 +130,8 @@ public:
     }
 
     // brightness is normalized [0,1]; decay scales relative partial losses.
-    // Overall amplitude/decay/damping still comes from the external rank ADSR.
+    // Overall amplitude/decay still comes from the external rank ADSR. The
+    // supported key dampers add only release-colour changes after noteOff.
     void noteOn(int selectedModel, float midiNote, float velocity, float brightness,
                 float decay, std::uint32_t seed, float size = 1.0f,
                 int selectedVariant = standard, int selectedMaterial = defaultMaterial) noexcept
@@ -139,6 +148,12 @@ public:
         initialColour = finiteClamp(brightness, 0.0, 1.0, 0.5);
         decayScale = finiteClamp(decay, 0.25, 4.0, 1.0);
         bodySize = finiteClamp(size, 0.5, 2.5, 1.0);
+        const auto damper = captureDamper(model == piano ? DamperFamily::piano
+            : model == tine && material != kalimba ? DamperFamily::tine
+            : model == reed ? DamperFamily::reed : DamperFamily::none, note);
+        damperStrength = damper.strength;
+        if (damperStrength > 0.0)
+            damperSmoothing = 1.0 - std::exp(-controlPeriod / (sampleRate * damper.contactSeconds));
         // A quill and an organ key do not have a piano hammer's velocity law.
         // Fixed phases also prevent caller seed conventions from leaking
         // velocity into the deliberately touch-independent registrations.
@@ -159,6 +174,7 @@ public:
         // its tine/reed. This bounded additive approximation avoids generating
         // unbandlimited products with a sample-domain distortion function.
         pickupMotion = (model == tine && material != kalimba) || model == reed ? 1.0 : 0.0;
+        if (pickupMotion > 0.0) electricPickup.configure(model == reed, bodySize, strike);
         const double pickupRate = (model == tine ? 0.72 : 1.05) * registerLossScale(0.35);
         pickupLoss = std::exp(-controlPeriod * pickupRate / (sampleRate * decayScale));
 
@@ -180,14 +196,16 @@ public:
         hitCoefficient = std::exp(-1.0 / (sampleRate * hitSeconds()));
         hitEnvelope = 1.0;
         configureExcitation();
+        if (model == piano)
+            pianoHammer.noteOn(sampleRate, outputRate, keyHz, strike, bodySize);
 
         double maximumSum = 0.0;
         if (material >= tubular && material <= kalimba)
             maximumSum = makeMaterialModes();
         else if (model == bell || model == vibes || model == marimba || model == celesta)
             maximumSum = makeBarModes();
-        else if (model == tine)
-            maximumSum = makeTineModes();
+        else if (model == tine || model == reed)
+            maximumSum = makeElectricModes();
         else
             maximumSum = makeHarmonicModes(note);
 
@@ -230,6 +248,38 @@ public:
     }
 
     bool enabled() const noexcept { return model != off; }
+
+    // Only the engine's accepted gate release calls this. CC64-held keys keep
+    // their original modal/pickup losses until the existing pedal policy lets
+    // the gate go. Repeated releases retime without restarting contact.
+    void noteOff(float releaseSeconds) noexcept
+    {
+        if (damperStrength <= 0.0) return;
+        released = true;
+        setRelease(releaseSeconds);
+    }
+
+    // Follow live rank/master/key-release timing without rebuilding a body,
+    // changing phase, restoring lost energy or overriding its amplitude VCA.
+    void setRelease(float releaseSeconds) noexcept
+    {
+        if (!released) return;
+        const double seconds = damperReleaseSeconds(releaseSeconds);
+        if (seconds == damperSeconds) return;
+        damperSeconds = seconds;
+        if (model == piano)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                auto& mode = modes[static_cast<std::size_t>(i)];
+                mode.dampedLoss = mode.naturalLoss
+                    * damperLoss(damperStrength * pianoDamperWeight(mode.ratio), seconds, 1.0 / sampleRate);
+            }
+        }
+        else
+            pickupReleaseTarget = damperLoss(damperStrength, seconds, controlPeriod / sampleRate);
+        damperMoving = true;
+    }
 
     float tick(float frequency, float brightness, float pressure = 0.0f) noexcept
     {
@@ -288,6 +338,11 @@ public:
         }
         hitEnvelope *= hitCoefficient;
         if (hitEnvelope < 1.0e-20) hitEnvelope = 0.0;
+        if (model == piano)
+        {
+            const auto contact = pianoHammer.tick();
+            return static_cast<float>(output * contact.onset + contact.board);
+        }
         onsetMissing *= onsetCoefficient;
         return static_cast<float>(output * (1.0 - onsetMissing));
     }
@@ -306,14 +361,16 @@ private:
         double real = 1.0, imaginary = 0.0;
         double cosine = 1.0, sine = 0.0;
         double envelope = 1.0, loss = 1.0;
+        double naturalLoss = 1.0, dampedLoss = 1.0;
         double gain = 0.0, gainStep = 0.0;
         // Partial-specific onset is evaluated at the control boundary and
         // interpolated by the existing gain ramp, with no extra sample loop.
         double onsetMissing = 0.0, onsetLoss = 0.0;
-        unsigned int pickupPower = 0;
+        unsigned int pickupPower = 0; // EP harmonic index; zero for mechanical modes.
     };
 
     std::array<Mode, maximumModes> modes {};
+    PianoHammer pianoHammer;
     // Fixed-formant history covers the full bank: low choir notes can use
     // 48 modes. Keep it outside Mode rather than enlarging every oscillator.
     std::array<double, maximumModes> bowedResponseInverse {}, bowedResponseGain {};
@@ -322,6 +379,9 @@ private:
     double keyHz = 261.625565, strike = 0.7, initialColour = 0.5, decayScale = 1.0;
     double bodySize = 1.0, contactVariation = 1.0, pluckOffset = 0.0;
     double pickupMotion = 0.0, pickupLoss = 1.0;
+    ElectricPickup electricPickup;
+    double damperStrength = 0.0, damperSmoothing = 0.0, damperSeconds = -1.0;
+    double pickupReleaseLoss = 1.0, pickupReleaseTarget = 1.0;
     double clarinetRegister = 0.0, bowedMiddleScale = 1.0, bowedBridgeScale = 1.0;
     double liveEffort = 0.0, effortCoefficient = 0.014;
     double motionTarget = 0.0, motionLow = 0.0, motionSmooth = 0.0, motionCoefficient = 0.001;
@@ -341,6 +401,7 @@ private:
     bool sustained = false;
     bool expressive = false;
     bool transientControls = false, gainRamping = false;
+    bool released = false, damperMoving = false;
 
     bool vocal() const noexcept { return variant == choirAh || variant == choirOo; }
 
@@ -459,7 +520,8 @@ private:
         }
         switch (model)
         {
-            case piano: hitAmount = 0.009 + 0.018 * strike * strike; break;
+            // Piano contact now drives its finite hammer/board response.
+            case piano: break;
             case tine: hitAmount = 0.003 + 0.006 * strike; break;
             case reed: hitAmount = 0.004 + 0.007 * strike; break;
             case clav: hitAmount = 0.014; break;
@@ -493,6 +555,7 @@ private:
         // knob, while the authored register law still damps the whole body.
         const double lossScale = ratio < 1.05 ? std::pow(decayScale, 0.35) : decayScale;
         m.loss = std::exp(-std::max(lossPerSecond, 0.0) / (sampleRate * lossScale));
+        m.naturalLoss = m.dampedLoss = m.loss;
         m.onsetMissing = onsetSeconds > 0.0 ? 1.0 : 0.0;
         m.onsetLoss = onsetSeconds > 0.0
             ? std::exp(-controlPeriod / (sampleRate * onsetSeconds * contactVariation)) : 0.0;
@@ -857,7 +920,7 @@ private:
             double partialAttack = 0.0;
             if (!sustained)
             {
-                partialAttack = (model == piano ? 0.00045 + 0.0017 / std::sqrt(h)
+                partialAttack = (model == piano ? pianoHammer.onsetScale() * (0.00045 + 0.0017 / std::sqrt(h))
                                                : 0.00030 + 0.00075 / std::sqrt(h));
                 // Every principal piano partial supplies prompt sound. Keep
                 // the low-course loss unchanged without letting h7+ outlast
@@ -930,46 +993,46 @@ private:
                 const double bright = course * stringWeight(harmonic, 1.0);
                 addMode(ratio, dark, bright,
                         0.70 * stringLoss(harmonic) + 0.12 * (h - 1.0),
-                        0.12 * randomBipolar(), 0.0035 / std::sqrt(h));
+                        0.12 * randomBipolar(), pianoHammer.onsetScale() * 0.0035 / std::sqrt(h));
                 includeBound(harmonic, course, dark, bright);
             }
         }
         return maximumSum;
     }
 
-    double makeTineModes() noexcept
+    double makeElectricModes() noexcept
     {
-        // Fundamental + pickup odd harmonics, with a brief inharmonic tine
-        // bending component.  A reed model uses a separate dense even/odd law.
-        const double edge = 0.20 + 0.80 * strike * strike;
-        const double loss = registerLossScale(0.38);
-        const double bellRegister = std::clamp(std::pow(keyHz / 261.625565, 0.18), 0.72, 1.35);
-        // Keep actual and maximum excitation together, so adding or changing
-        // a mode updates its headroom bound as well. The maximum always uses
-        // edge = 1; its sum/order is identical to the former full-strike sum.
-        // No compensation depends on the current strike's spectral content.
-        struct Weight { double actual, maximum; };
-        const auto fixed = [](double value) { return Weight {value, value}; };
-        const auto excited = [edge](double value, double registerWeight = 1.0)
+        // A single mechanical excursion drives phase-related electrical
+        // harmonics. Geometry and live colour act in the pickup, not through
+        // separately chosen modal spectra or independently damped harmonics.
+        // The rank VCA and the existing fundamental loss still own common
+        // amplitude; the dimensionless excursion controls harmonic ratios.
+        const bool capacitive = model == reed;
+        const double loss = registerLossScale(capacitive ? 0.35 : 0.38);
+        double maximumSum = electricPickup.fullStrikeBound();
+        for (int harmonic = 1; harmonic <= ElectricPickup::harmonicCount; ++harmonic)
         {
-            return Weight {value * edge * registerWeight, value * registerWeight};
-        };
-        double maximumSum = 0.0;
-        const auto add = [&](double ratio, Weight dark, Weight bright, double damping,
-                             double phase, double onset, unsigned int pickup = 0)
+            addMode(static_cast<double>(harmonic), 1.0, 1.0,
+                    (capacitive ? 0.36 : 0.18) * loss, 0.0,
+                    capacitive ? 0.00105 : 0.0013,
+                    static_cast<unsigned int>(harmonic));
+            // Pickup harmonics inherit the fundamental's common envelope.
+            // Their relative decay comes only from shrinking excursion, so
+            // the decay control cannot impose a second unrelated loss law.
+            modes[static_cast<std::size_t>(count - 1)].loss = modes[0].loss;
+        }
+        if (!capacitive)
         {
-            addMode(ratio, dark.actual, bright.actual, damping, phase, onset, pickup);
-            maximumSum += std::max(dark.maximum, bright.maximum);
-        };
-        add(1.0, fixed(1.0), fixed(1.0), 0.18 * loss, 0.0, 0.0013);
-        add(2.0, fixed(0.012), excited(0.025), 1.10 * loss, 0.0, 0.00065, 1);
-        add(3.0, excited(0.105), excited(0.62), 0.95 * loss, 0.0, 0.00045, 2);
-        add(5.0, excited(0.020), excited(0.17), 1.85 * loss, 0.0, 0.00035, 3);
-        add(7.0, excited(0.004), excited(0.055), 3.10 * loss, 0.0, 0.00030, 4);
-        add(9.0, fixed(0.0), excited(0.009), 4.30 * loss, 0.0, 0.00025, 4);
-        add(6.267, excited(0.008, bellRegister), excited(0.062, bellRegister), 9.0 * loss, 0.0, 0.0003);
-        add(17.55, fixed(0.0), excited(0.012, bellRegister), 19.0 * loss, 0.0, 0.0002);
-        add(1.00048, fixed(0.07), fixed(0.07), 0.11 * loss, 0.08, 0.0022);
+            // Preserve the tine's brief mechanical bending components and
+            // slowly beating companion. These are not pickup harmonics.
+            const double edge = 0.20 + 0.80 * strike * strike;
+            const double bellRegister = std::clamp(std::pow(keyHz / 261.625565, 0.18), 0.72, 1.35);
+            addMode(6.267, 0.008 * edge * bellRegister, 0.062 * edge * bellRegister,
+                    9.0 * loss, 0.0, 0.0003);
+            addMode(17.55, 0.0, 0.012 * edge * bellRegister, 19.0 * loss, 0.0, 0.0002);
+            addMode(1.00048, 0.07, 0.07, 0.11 * loss, 0.08, 0.0022);
+            maximumSum += 0.074 * bellRegister + 0.07;
+        }
         return maximumSum;
     }
 
@@ -1225,8 +1288,35 @@ private:
         return maximumSum;
     }
 
+    void advanceDamper() noexcept
+    {
+        if (!damperMoving) return;
+        damperMoving = false;
+        const auto approach = [this](double& current, double target)
+        {
+            const double difference = target - current;
+            if (std::abs(difference) < 1.0e-12) current = target;
+            else
+            {
+                current += damperSmoothing * difference;
+                damperMoving = true;
+            }
+        };
+        if (model == piano)
+            for (int i = 0; i < count; ++i)
+            {
+                auto& mode = modes[static_cast<std::size_t>(i)];
+                approach(mode.loss, mode.dampedLoss);
+            }
+        else
+            approach(pickupReleaseLoss, pickupReleaseTarget);
+    }
+
     void updateControls(double frequency, float brightness, float pressure) noexcept
     {
+        // This precedes the held-colour fast path: settled piano onsets can
+        // have no remaining spectral controls but still need damper contact.
+        advanceDamper();
         frequency = std::clamp(frequency, 0.01, 0.49 * sampleRate);
         double motion = 0.0;
         if (expressive)
@@ -1261,8 +1351,13 @@ private:
             return;
 
         pickupMotion *= pickupLoss;
+        if (released && model != piano)
+            pickupMotion *= pickupReleaseLoss;
         if (pickupMotion < 1.0e-8) pickupMotion = 0.0;
         transientControls = pickupMotion > 0.0;
+        const bool electric = (model == tine && material != kalimba) || model == reed;
+        ElectricPickup::Spectrum pickupCoefficients;
+        if (electric) pickupCoefficients = electricPickup.coefficients(colour, pickupMotion);
         if (tracksFormants() && pitchChanged)
         {
             // tick() accepts float pitch. Returning to that exact onset pitch
@@ -1329,9 +1424,8 @@ private:
                 if (m.onsetMissing < 1.0e-8) m.onsetMissing = 0.0;
                 transientControls = transientControls || m.onsetMissing > 0.0;
                 double pickup = 1.0;
-                const double excursion = 0.28 + 0.72 * pickupMotion;
-                for (unsigned int power = 0; power < m.pickupPower; ++power)
-                    pickup *= excursion;
+                if (electric && m.pickupPower > 0)
+                    pickup = pickupCoefficients[static_cast<std::size_t>(m.pickupPower - 1)];
                 double target = (m.dark + colour * (m.bright - m.dark))
                               * antialias * (1.0 - m.onsetMissing) * pickup;
                 if (tracksFormants())

@@ -21,7 +21,7 @@ The library keeps all **523 names, categories and program addresses**, including
 the two initialization programs. No presets were added. This revision refines
 instrument-body filtering, attacks, releases, register balance and playing
 response; the continuation also corrects tine dynamics and bowed-body motion.
-The 2026.11.7 source candidate described below is still awaiting native and
+The 2026.11.8 source candidate described below is still awaiting native and
 archive qualification; these download links identify the published 2026.11.4 build.
 
 | Platform | Included formats | Verified installation download |
@@ -99,7 +99,19 @@ on-screen key to try pressure.
   not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Instrument voicing revision — 2026.11.7
+## Current sound development — 2026.11.8
+
+The continuation adds velocity- and register-dependent piano contact, separate
+magnetic and capacitive electric-piano pickup responses, and instrument-specific
+release damping that follows the existing pedal and release controls. All 523
+program identities and 204 parameter IDs remain intact. The new catalogue guard
+also freezes the curated names, categories and order. Programming and independent
+recorded-reference review are continuing; the installation links above will move
+to this source after its native builds and actual archives qualify.
+
+See the [2026.11.8 development and evidence report](docs/CIRCUIT_LIBRARY_2026_11_8.md).
+
+## Previous instrument voicing revision — 2026.11.7
 
 The cumulative revision changes sound controls in **all 521 existing musical
 factory programs** relative to the published 2026.11.4 bank. The

@@ -176,12 +176,13 @@ void flutter()
 
 void defaultStream()
 {
-    // Golden output fingerprints captured from the unmodified header. These
+    // Golden output fingerprints for the unchanged noise models. These
     // exercise public PCM, including note-on draws, onset and contact decay.
+    // Piano now uses finite hammer-driven radiation; its contact-rate and
+    // onset contracts are covered here and in PianoHammerContactTests.
     struct Case { int model; std::uint64_t hash; };
     constexpr Case cases[] = {
         {flute, 0x741fa1bfadfb90b0ULL},
-        {piano, 0xc86def2df355d73fULL},
         {steel, 0x43898cb5b1e5ababULL}
     };
     for (const auto item : cases)

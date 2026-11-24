@@ -384,10 +384,14 @@ void Engine::refreshEnvelopeTimes() noexcept
             auto& rank = voice.ranks[ch];
             const auto& settings = rankSettings[ch];
             if (voice.active)
+            {
+                const float release = std::max({settings.vR * rank.bodyArticulation.release, global.keyRelease, performanceRelease})
+                                    * global.envTimeScale * rank.tol.ampEnvTime;
                 rank.aenv.setTimes(std::max(0.001f, settings.vA * rank.bodyArticulation.attack * global.envTimeScale * rank.tol.ampEnvTime),
                                    std::max(0.001f, settings.vD * rank.bodyArticulation.decay * global.envTimeScale * rank.tol.ampEnvTime),
-                                   std::max({settings.vR * rank.bodyArticulation.release, global.keyRelease, performanceRelease})
-                                       * global.envTimeScale * rank.tol.ampEnvTime);
+                                   release);
+                rank.instrumentBody.setRelease(release);
+            }
             rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale * rank.tol.filterEnvTime),
                                std::max(0.001f, settings.fD * global.envTimeScale * rank.tol.filterEnvTime),
                                std::max({settings.fR, global.keyRelease, performanceRelease})
@@ -1620,12 +1624,14 @@ void Engine::releaseVoice(Voice& v)
         // software extensions; the exact potentiometer law remains unmeasured.
         // An assigned, plugged and open footswitch disables only this term.
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
-        r.aenv.setRelease(std::max({rs.vR * r.bodyArticulation.release, global.keyRelease, performanceRelease})
-                          * global.envTimeScale * r.tol.ampEnvTime);
+        const float release = std::max({rs.vR * r.bodyArticulation.release, global.keyRelease, performanceRelease})
+                            * global.envTimeScale * r.tol.ampEnvTime;
+        r.aenv.setRelease(release);
         r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
                           * global.envTimeScale * r.tol.filterEnvTime);
         r.aenv.noteOff();
         r.fenv.noteOff();
+        r.instrumentBody.noteOff(release);
     }
     bool anyHeld = false;
     for (const auto& voice : voices)
@@ -1899,7 +1905,9 @@ void Engine::cancelSustainTails()
             const auto& rs = rankSettings[ch];
             // setRelease keeps stage, value and elapsed stage time, so the
             // bent fast-release window is not restarted.
-            r.aenv.setRelease(std::max(rs.vR * r.bodyArticulation.release, global.keyRelease) * global.envTimeScale * r.tol.ampEnvTime);
+            const float release = std::max(rs.vR * r.bodyArticulation.release, global.keyRelease) * global.envTimeScale * r.tol.ampEnvTime;
+            r.aenv.setRelease(release);
+            r.instrumentBody.setRelease(release);
             r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale * r.tol.filterEnvTime);
         }
     }
