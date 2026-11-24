@@ -1,0 +1,685 @@
+{
+  "scope": "Focused matched touch controls for the three almost-gain-only single-gesture comparisons. No listening/realism score.",
+  "window": "4.0\u20134.5 seconds of a 5-second held complete factory note; pressure zero; 0.25 and0.85 velocity.",
+  "executable_sha256": {
+    "before": "adaa07ffc8f59c3dbe67e802bf49bd7690669fa3e5560aa106a6484befdd1742",
+    "after": "f859d99a29d02258271f66b9e4c7d65dcd04dad67af8ed261821ed1389064f5e"
+  },
+  "helper_sha256": "d635f6a0e2ff0fffbd7e41dce1b9e304745ed27286875c4f24b7c92da397f2d5",
+  "programs": [
+    {
+      "name": "Noise Pad",
+      "note": 60,
+      "sample_rate": 48000,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "levels": {
+        "soft": {
+          "velocity": 0.25,
+          "late_held_rms_dbfs": {
+            "before": -29.817553014308285,
+            "after": -33.71753991489
+          },
+          "comparison": {
+            "index": 294,
+            "name": "Noise Pad",
+            "category": "Pads",
+            "settings": {
+              "note": "60",
+              "sample_rate": "48000",
+              "velocity": "0.25",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "840d7d4172a9c4ea4fd35a5fed87aa91cf583b9b20634a35df5f77fa759968be",
+            "after_wav_sha256": "d6ac7793b8974ac830467e261a98925f439f17025ba6f914f74307f0617af7cd",
+            "before_pcm_sha256": "8f9f04d57c34171ddca55f55a8a246be78137ba7e1e86bda62c9c8c8d9a02473",
+            "after_pcm_sha256": "786513d1f6fdf877148f0119af65ff3ab16c3dc3fcd20fc008f44a7302c11bf1",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -22.187102759917202,
+              "rms_dbfs": -30.49495330203476,
+              "early_rms_dbfs": -37.186000925621066,
+              "body_rms_dbfs": -29.814169095302503,
+              "tail_rms_dbfs": -45.15334256883622,
+              "late_held_relative_to_early_db": 7.371831830318563,
+              "release_tail_relative_to_late_held_db": -15.339173473533716
+            },
+            "after": {
+              "peak_dbfs": -26.091482494334954,
+              "rms_dbfs": -34.39497369968493,
+              "early_rms_dbfs": -41.085725125831715,
+              "body_rms_dbfs": -33.71405967822199,
+              "tail_rms_dbfs": -49.05240981519651,
+              "late_held_relative_to_early_db": 7.371665447609725,
+              "release_tail_relative_to_late_held_db": -15.338350136974526
+            },
+            "raw_difference_rms_dbfs": -39.32686022815052,
+            "both_silent": false,
+            "rms_change_db": -3.90002039765017,
+            "equal_rms_residual": 0.003149403675411983,
+            "waveform_correlation": 0.9999950406282446,
+            "averaged_spectral_hellinger": 0.0017644119016344563,
+            "before_averaged_centroid_hz": 358.90363165258424,
+            "after_averaged_centroid_hz": 358.5735153154387
+          }
+        },
+        "firm": {
+          "velocity": 0.85,
+          "late_held_rms_dbfs": {
+            "before": -26.722226600858164,
+            "after": -26.802378779323355
+          },
+          "comparison": {
+            "index": 294,
+            "name": "Noise Pad",
+            "category": "Pads",
+            "settings": {
+              "note": "60",
+              "sample_rate": "48000",
+              "velocity": "0.8500000238",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "0d25442ae5bcde92efcafaeb2434829fb8b91dba556e42ecd0a22be4ea22fdfd",
+            "after_wav_sha256": "e1b1ebf2d80346bc114cacb064a3622fe9f55828a10354b35bfcc7553160517d",
+            "before_pcm_sha256": "c4fb26a4189fcb7f4e88d4d306202cfc9274f4b40632a5e38afe40e1c429a61e",
+            "after_pcm_sha256": "1b533fd45c06499ad1710797d618d5d6f4c4198fbd29a6b6aec5c5e741e5553d",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -19.01996123003222,
+              "rms_dbfs": -27.40290181389385,
+              "early_rms_dbfs": -34.08952488207254,
+              "body_rms_dbfs": -26.719289209640657,
+              "tail_rms_dbfs": -42.039029561995925,
+              "late_held_relative_to_early_db": 7.370235672431885,
+              "release_tail_relative_to_late_held_db": -15.319740352355268
+            },
+            "after": {
+              "peak_dbfs": -19.098763968684338,
+              "rms_dbfs": -27.483041609462482,
+              "early_rms_dbfs": -34.169718816014274,
+              "body_rms_dbfs": -26.799450603047795,
+              "tail_rms_dbfs": -42.1191539747401,
+              "late_held_relative_to_early_db": 7.370268212966476,
+              "release_tail_relative_to_late_held_db": -15.319703371692306
+            },
+            "raw_difference_rms_dbfs": -68.12977128181916,
+            "both_silent": false,
+            "rms_change_db": -0.08013979556863683,
+            "equal_rms_residual": 0.0004951730212212362,
+            "waveform_correlation": 0.9999998774018396,
+            "averaged_spectral_hellinger": 0.000316415790296496,
+            "before_averaged_centroid_hz": 361.9081680534605,
+            "after_averaged_centroid_hz": 361.97657616070614
+          }
+        }
+      },
+      "before_soft_firm_db": 3.0953264134501204,
+      "after_soft_firm_db": 6.915161135566642
+    },
+    {
+      "name": "Ether Pad",
+      "note": 60,
+      "sample_rate": 48000,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "levels": {
+        "soft": {
+          "velocity": 0.25,
+          "late_held_rms_dbfs": {
+            "before": -28.793629832708937,
+            "after": -33.22564039532848
+          },
+          "comparison": {
+            "index": 306,
+            "name": "Ether Pad",
+            "category": "Pads",
+            "settings": {
+              "note": "60",
+              "sample_rate": "48000",
+              "velocity": "0.25",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "52cd4fdd73fefad96a71fe50a4daacce76297a415a323fa406306b044c385091",
+            "after_wav_sha256": "de063be61b335b25e73a3bd5271ee17c590b418bb59494a33e4bee5e23877535",
+            "before_pcm_sha256": "6f3d2ad6c7383802bb7de3f59c49d5259de15a11aa048c892cdfea914fc9a750",
+            "after_pcm_sha256": "092ac42460b0a26dc420509299d96e752072a1b35cbbdf3ac70dc655bc61c0d4",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -25.334438870905554,
+              "rms_dbfs": -29.532907735597398,
+              "early_rms_dbfs": -37.57011079607332,
+              "body_rms_dbfs": -28.78481173783132,
+              "tail_rms_dbfs": -40.9293239792209,
+              "late_held_relative_to_early_db": 8.785299058242002,
+              "release_tail_relative_to_late_held_db": -12.144512241389574
+            },
+            "after": {
+              "peak_dbfs": -29.81606598972473,
+              "rms_dbfs": -33.96500262837244,
+              "early_rms_dbfs": -42.00209673800168,
+              "body_rms_dbfs": -33.21683248503271,
+              "tail_rms_dbfs": -45.36118061794714,
+              "late_held_relative_to_early_db": 8.785264252968974,
+              "release_tail_relative_to_late_held_db": -12.14434813291443
+            },
+            "raw_difference_rms_dbfs": -37.49897274506821,
+            "both_silent": false,
+            "rms_change_db": -4.432094892775037,
+            "equal_rms_residual": 0.0019245657434465106,
+            "waveform_correlation": 0.9999981480233495,
+            "averaged_spectral_hellinger": 0.0011326853693044742,
+            "before_averaged_centroid_hz": 262.2167220536927,
+            "after_averaged_centroid_hz": 262.0872500038554
+          }
+        },
+        "firm": {
+          "velocity": 0.85,
+          "late_held_rms_dbfs": {
+            "before": -26.143657518873013,
+            "after": -26.404296358215596
+          },
+          "comparison": {
+            "index": 306,
+            "name": "Ether Pad",
+            "category": "Pads",
+            "settings": {
+              "note": "60",
+              "sample_rate": "48000",
+              "velocity": "0.8500000238",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "1361de5de423796162deacf9f85548c99d185e9b79782c5a5ca152c3ca739e35",
+            "after_wav_sha256": "c306a79ed4486632d47335b25efe4fe354c97f04d00b83b70849dd0136b5fa5d",
+            "before_pcm_sha256": "102161090bd2d9a181e8081c33d565e66ef1cac489e61ca5dbaf462e3f6dfcdd",
+            "after_pcm_sha256": "de53335c740585d980a18681470046e3b81e0325c430ca08e12e0abe04197906",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -22.719804977117203,
+              "rms_dbfs": -26.882967872423595,
+              "early_rms_dbfs": -34.920094716625684,
+              "body_rms_dbfs": -26.13483967116547,
+              "tail_rms_dbfs": -38.27947198509985,
+              "late_held_relative_to_early_db": 8.78525504546021,
+              "release_tail_relative_to_late_held_db": -12.144632313934384
+            },
+            "after": {
+              "peak_dbfs": -22.97978985991239,
+              "rms_dbfs": -27.143607348985164,
+              "early_rms_dbfs": -35.180752202350504,
+              "body_rms_dbfs": -26.39547888540075,
+              "tail_rms_dbfs": -38.54010161968998,
+              "late_held_relative_to_early_db": 8.785273316949754,
+              "release_tail_relative_to_late_held_db": -12.144622734289225
+            },
+            "raw_difference_rms_dbfs": -57.468424615917534,
+            "both_silent": false,
+            "rms_change_db": -0.2606394765615715,
+            "equal_rms_residual": 6.336334360902246e-05,
+            "waveform_correlation": 0.9999999979925435,
+            "averaged_spectral_hellinger": 1.6692879634592937e-05,
+            "before_averaged_centroid_hz": 262.1278534550169,
+            "after_averaged_centroid_hz": 262.1300517475544
+          }
+        }
+      },
+      "before_soft_firm_db": 2.6499723138359244,
+      "after_soft_firm_db": 6.821344037112887
+    },
+    {
+      "name": "Sub Bass",
+      "note": 48,
+      "sample_rate": 48000,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "levels": {
+        "soft": {
+          "velocity": 0.25,
+          "late_held_rms_dbfs": {
+            "before": -33.080744277762705,
+            "after": -34.9770609043815
+          },
+          "comparison": {
+            "index": 407,
+            "name": "Sub Bass",
+            "category": "Bass",
+            "settings": {
+              "note": "48",
+              "sample_rate": "48000",
+              "velocity": "0.25",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "7faa2f2c19a8ba79763bb7f8291b9d91b2573af1c920f75b07df0f8c8d357a37",
+            "after_wav_sha256": "cf56754ed75fa5c49f30b5838bd008845d062f3a59f77eb3dee60b8c979f491b",
+            "before_pcm_sha256": "5090c495251be84286593d1adf8a1759cb435e0d9212ef5821951caf29e4ac27",
+            "after_pcm_sha256": "bb459831f62099ca81ac035e645c2f9723e6a5e0410363d89ebadceda5655764",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -30.025757576326413,
+              "rms_dbfs": -33.87219467724983,
+              "early_rms_dbfs": -33.31823903151159,
+              "body_rms_dbfs": -33.09360722814923,
+              "tail_rms_dbfs": -154.61395087984832,
+              "late_held_relative_to_early_db": 0.22463180336235897,
+              "release_tail_relative_to_late_held_db": -121.52034365169908
+            },
+            "after": {
+              "peak_dbfs": -31.90182077147174,
+              "rms_dbfs": -35.76853160252321,
+              "early_rms_dbfs": -35.21508816653784,
+              "body_rms_dbfs": -34.98992385128361,
+              "tail_rms_dbfs": -156.5099617506233,
+              "late_held_relative_to_early_db": 0.2251643152542193,
+              "release_tail_relative_to_late_held_db": -121.5200378993397
+            },
+            "raw_difference_rms_dbfs": -48.02101164503266,
+            "both_silent": false,
+            "rms_change_db": -1.8963369252733762,
+            "equal_rms_residual": 0.0009609273100154756,
+            "waveform_correlation": 0.9999995383093523,
+            "averaged_spectral_hellinger": 8.537357288698081e-05,
+            "before_averaged_centroid_hz": 65.48238467173441,
+            "after_averaged_centroid_hz": 65.48234126225809
+          }
+        },
+        "firm": {
+          "velocity": 0.85,
+          "late_held_rms_dbfs": {
+            "before": -25.626050057556498,
+            "after": -25.595855422146492
+          },
+          "comparison": {
+            "index": 407,
+            "name": "Sub Bass",
+            "category": "Bass",
+            "settings": {
+              "note": "48",
+              "sample_rate": "48000",
+              "velocity": "0.8500000238",
+              "pressure": "0",
+              "hold_seconds": "5",
+              "tail_seconds": "1",
+              "rank": "0"
+            },
+            "frames": 288000,
+            "before_wav_sha256": "d5ffc0ed06f894ec95f34bfea6d52e57ee804a7d28e3812f8531c625e91c0852",
+            "after_wav_sha256": "3fa9e737ad3f33c85a40d02e3edd3e53a7696f742474ad14f19bcde40da2c5d6",
+            "before_pcm_sha256": "0f8f5b6dc493f8190b2ad5f9f51bd47cbaa7df3ea12f0475a0f66c37290832ea",
+            "after_pcm_sha256": "4cb02182a8815e454070193c805c2785ae30f934a2b217d2855cd8d24bb6d63e",
+            "exact_pcm_equal": false,
+            "changed_float32_bit_patterns": 576000,
+            "before": {
+              "peak_dbfs": -22.550329716886676,
+              "rms_dbfs": -26.417521155227814,
+              "early_rms_dbfs": -25.864087534500793,
+              "body_rms_dbfs": -25.638913013994497,
+              "tail_rms_dbfs": -147.15911326292786,
+              "late_held_relative_to_early_db": 0.22517452050629505,
+              "release_tail_relative_to_late_held_db": -121.52020024893335
+            },
+            "after": {
+              "peak_dbfs": -22.510240807072982,
+              "rms_dbfs": -26.387333438014018,
+              "early_rms_dbfs": -25.8340739063108,
+              "body_rms_dbfs": -25.608718378147152,
+              "tail_rms_dbfs": -147.12887857614314,
+              "late_held_relative_to_early_db": 0.22535552816364862,
+              "release_tail_relative_to_late_held_db": -121.520160197996
+            },
+            "raw_difference_rms_dbfs": -75.50329759027578,
+            "both_silent": false,
+            "rms_change_db": 0.030187717213797913,
+            "equal_rms_residual": 0.00047030201231210107,
+            "waveform_correlation": 0.9999998894080087,
+            "averaged_spectral_hellinger": 4.529744349233233e-05,
+            "before_averaged_centroid_hz": 65.48234014381711,
+            "after_averaged_centroid_hz": 65.48231632605396
+          }
+        }
+      },
+      "before_soft_firm_db": 7.454694220206207,
+      "after_soft_firm_db": 9.38120548223501
+    }
+  ],
+  "commands": [
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/294-before-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Noise Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/294-after-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Noise Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/294-before-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Noise Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/294-after-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Noise Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/306-before-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Ether Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/306-after-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Ether Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/306-before-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Ether Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/306-after-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Ether Pad"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/407-before-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Sub Bass"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/407-after-soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Sub Bass"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "before",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/407-before-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Sub Bass"
+      ],
+      "exit": 0
+    },
+    {
+      "version": "after",
+      "command": [
+        "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+        "--library",
+        "all",
+        "--out",
+        "/tmp/cs80-a33/touch/407-after-firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "5",
+        "--tail",
+        "1",
+        "--preset",
+        "Sub Bass"
+      ],
+      "exit": 0
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "scope": "Three exact affected API access expressions against the pinned JUCE8.0.11 declarations; no native plugin runtime is claimed.",
+  "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "results": [
+    {
+      "stage": "before",
+      "returncode": 1,
+      "source_sha256": "403e559d989aca5a730fb9079dc750bdfda98f4d1b2164dbf37a1e9766b2b081",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-fsyntax-only",
+        "-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
+        "-DJUCE_STANDALONE_APPLICATION=1",
+        "-DJUCE_USE_CURL=0",
+        "-I../juce-validation/modules",
+        "docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp"
+      ],
+      "log": "docs/preset-evidence/2026.11.5/development/host-choice-access/before.log"
+    },
+    {
+      "stage": "after",
+      "returncode": 0,
+      "source_sha256": "a40656345bee47efcb4b34fee42122b30c16a83f529dba2afd0227e5edc8d010",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-fsyntax-only",
+        "-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
+        "-DJUCE_STANDALONE_APPLICATION=1",
+        "-DJUCE_USE_CURL=0",
+        "-I../juce-validation/modules",
+        "docs/preset-evidence/2026.11.5/development/host-choice-access/after.cpp"
+      ],
+      "log": "docs/preset-evidence/2026.11.5/development/host-choice-access/after.log"
+    }
+  ]
+}

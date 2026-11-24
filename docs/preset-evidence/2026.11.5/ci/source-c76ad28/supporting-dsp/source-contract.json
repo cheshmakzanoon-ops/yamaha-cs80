@@ -1,0 +1,67 @@
+{
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "source_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "run_id": 45351731746,
+  "run_attempt": 1,
+  "files": [
+    {
+      "path": ".github/workflows/dsp-measurements.yml",
+      "bytes": 11756,
+      "sha256": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964"
+    },
+    {
+      "path": "src/tools/dsp_probe.cpp",
+      "bytes": 8318,
+      "sha256": "08f0f30a9b5ad3a96589ef9e98ebe1905033ee5bf6cba3d500e9cd689aba6e66"
+    },
+    {
+      "path": "src/tools/parity_capture.cpp",
+      "bytes": 15829,
+      "sha256": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051"
+    },
+    {
+      "path": "src/tools/compatibility_probe.cpp",
+      "bytes": 7600,
+      "sha256": "2cd8023e119f7663fcc973b6384fef740a59f56c174a80e972c947212a08a3b5"
+    },
+    {
+      "path": "src/tools/source_factory_compatibility_probe.cpp",
+      "bytes": 5030,
+      "sha256": "079cc78b1822c345d4b490597bbac8991e63da880d1fac3c2140dc253ee4862a"
+    },
+    {
+      "path": "src/tools/source_factory_circuit_compatibility_probe.cpp",
+      "bytes": 4515,
+      "sha256": "acd7f8070be66d1e662ee4c6f53885bb70498e9572315c092ce08d82ac353065"
+    },
+    {
+      "path": "scripts/analyze_dsp.py",
+      "bytes": 15551,
+      "sha256": "eadfcb62ccaaa31830bc1bff026deabf921b27db1bacc7a49c21a582bbf98b2d"
+    },
+    {
+      "path": "scripts/parity_harness.py",
+      "bytes": 13577,
+      "sha256": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105"
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "bytes": 26831,
+      "sha256": "53fbfc69eb98b4e39d9fe2675c2a5974ac0e9964279ee85a5f92371b234b2113"
+    },
+    {
+      "path": "tests/test_parity_harness.py",
+      "bytes": 9986,
+      "sha256": "cb05352e8abedfee5137631ba58da2b883e27ab6974b97180a5d351d20a8124b"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f"
+    }
+  ],
+  "scope": "Exact-source review inputs only. Original execution, actual artifact bytes and all job outcomes remain required.",
+  "juce_scope": "Supporting jobs build core-only targets with CS80_BUILD_PLUGIN=OFF or standalone Python fixtures. They do not build JUCE plugins or supply native JUCE provenance; native qualification owns that separate gate.",
+  "prior_run_status": "Original 09af run is superseded after an actual metadata-test failure. Its checkpoint and failure history are preserved separately and are not accepted as replacement-run evidence.",
+  "source_equivalence_required": false
+}

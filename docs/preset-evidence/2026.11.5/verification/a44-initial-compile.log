@@ -1,0 +1,46 @@
+docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp: In function ‘int main(int, char**)’:
+docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:58:29: error: ‘begin’ was not declared in this scope
+   58 |             for(float value:values) settings << ',' << value;
+      |                             ^~~~~~
+docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:58:29: note: suggested alternatives:
+In file included from /usr/include/c++/14/array:44,
+                 from /tmp/cs80-a44/source/src/core/Dsp.h:4,
+                 from /tmp/cs80-a44/source/src/core/Engine.h:3,
+                 from docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:3:
+/usr/include/c++/14/bits/range_access.h:114:37: note:   ‘std::begin’
+  114 |   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&) noexcept;
+      |                                     ^~~~~
+In file included from /usr/include/c++/14/bits/ranges_algobase.h:38,
+                 from /usr/include/c++/14/bits/ranges_algo.h:38,
+                 from /usr/include/c++/14/algorithm:63,
+                 from /tmp/cs80-a44/source/src/core/Dsp.h:3:
+/usr/include/c++/14/bits/ranges_base.h:487:47: note:   ‘std::ranges::_Cpo::begin’
+  487 |     inline constexpr ranges::__access::_Begin begin{};
+      |                                               ^~~~~
+In file included from /usr/include/c++/14/filesystem:53,
+                 from docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:9:
+/usr/include/c++/14/bits/fs_dir.h:608:3: note:   ‘std::filesystem::__cxx11::begin’
+  608 |   begin(recursive_directory_iterator __iter) noexcept
+      |   ^~~~~
+In file included from /usr/include/c++/14/bits/stl_iterator_base_types.h:71,
+                 from /usr/include/c++/14/bits/stl_algobase.h:65,
+                 from /usr/include/c++/14/algorithm:60:
+/usr/include/c++/14/bits/iterator_concepts.h:1007:10: note:   ‘std::ranges::__access::begin’
+ 1007 |     void begin() = delete;
+      |          ^~~~~
+docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:58:29: error: ‘end’ was not declared in this scope
+   58 |             for(float value:values) settings << ',' << value;
+      |                             ^~~~~~
+docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp:58:29: note: suggested alternatives:
+/usr/include/c++/14/bits/range_access.h:116:37: note:   ‘std::end’
+  116 |   template<typename _Tp> const _Tp* end(const valarray<_Tp>&) noexcept;
+      |                                     ^~~
+/usr/include/c++/14/bits/ranges_base.h:488:45: note:   ‘std::ranges::_Cpo::end’
+  488 |     inline constexpr ranges::__access::_End end{};
+      |                                             ^~~
+/usr/include/c++/14/bits/fs_dir.h:613:3: note:   ‘std::filesystem::__cxx11::end’
+  613 |   end(recursive_directory_iterator) noexcept
+      |   ^~~
+/usr/include/c++/14/bits/ranges_base.h:138:10: note:   ‘std::ranges::__access::end’
+  138 |     void end() = delete;
+      |          ^~~

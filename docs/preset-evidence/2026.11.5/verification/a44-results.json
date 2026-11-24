@@ -1,0 +1,1075 @@
+{
+  "schema": 1,
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "scope": "Bounded long-window software audio behavior. Signal statistics are not acoustic-realism or listening-preference scores; native plugin qualification is separate.",
+  "source_inventory_sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193",
+  "sample_rate": 48000,
+  "render_cases": 13,
+  "distinct_existing_programs": 7,
+  "stereo_frames": 17280000,
+  "seconds": 360,
+  "records": [
+    {
+      "case": "wind-moving",
+      "program": "Wind",
+      "host_index": 484,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -23.53670798935567,
+      "rms_dbfs": -39.91578018558058,
+      "active_at_end": 1,
+      "pcm_sha256": "2752539b4c4b4a913f4433d33e243df96cf6ee34cf2b568805f28317a08ae45d",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "00063ec5d2ee4be0443873162ec6aee0a084c3d10cb6eebf7f06f6a87285e994",
+      "parameter_vector_sha256": "63db084060269040a68b82a9d1b408abe1b5ce2a29eb1b916c36092bc8d42c4f"
+    },
+    {
+      "case": "wind-flat",
+      "program": "Wind",
+      "host_index": 484,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -26.417789154022802,
+      "rms_dbfs": -40.85556511883023,
+      "active_at_end": 1,
+      "pcm_sha256": "fb0cb92e02b2cb1250d0d6effbee28a4d9e64bff971a10b6d859097733dacc33",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "00063ec5d2ee4be0443873162ec6aee0a084c3d10cb6eebf7f06f6a87285e994",
+      "parameter_vector_sha256": "6d2c08f31b67a3877130d17a9bc9338d08ebd7723d8001cc1195b51f9fd0c3d6"
+    },
+    {
+      "case": "wind-periodic-control",
+      "program": "Wind",
+      "host_index": 484,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -26.022617829464654,
+      "rms_dbfs": -40.828199623883144,
+      "active_at_end": 1,
+      "pcm_sha256": "7e03cc2e75b1158e1e303cf96408ff27d276e0912f8acaace8a60e7e9ba99cee",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "00063ec5d2ee4be0443873162ec6aee0a084c3d10cb6eebf7f06f6a87285e994",
+      "parameter_vector_sha256": "32f87a6c99fa1c9d4a318de0e74341af1f0d755bfb8bdd23d4a4a25a41950bbd"
+    },
+    {
+      "case": "rain-moving",
+      "program": "Rain",
+      "host_index": 492,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -23.537132933534185,
+      "rms_dbfs": -37.958711142398904,
+      "active_at_end": 1,
+      "pcm_sha256": "da195bb8465436b56eda925c001071b36b316480bd610280bef282a653252240",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "7c122af3752c24d696384dd38726b6560b82a646c88286c5e0cfe9eba4cf0f78",
+      "parameter_vector_sha256": "f7e03e13e79f0a579628894ab547d756b0df73d9e2382638ffa40e0c3a15e08b"
+    },
+    {
+      "case": "rain-flat",
+      "program": "Rain",
+      "host_index": 492,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -23.757851195336535,
+      "rms_dbfs": -37.9666283390322,
+      "active_at_end": 1,
+      "pcm_sha256": "21b6b06b588076103805f506d2094f5e2d68f49efd0361cf7d9bd22d1c759f91",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "7c122af3752c24d696384dd38726b6560b82a646c88286c5e0cfe9eba4cf0f78",
+      "parameter_vector_sha256": "176bbfe4ccb8a1ba4f8f88eb9c2d84694ad5fd8736934244dc2dfc951decaa9a"
+    },
+    {
+      "case": "rain-fine-flat",
+      "program": "Rain",
+      "host_index": 492,
+      "seconds": 36,
+      "frames": 1728000,
+      "pressure": 0.0,
+      "peak_dbfs": -23.534623438524616,
+      "rms_dbfs": -37.940514350152405,
+      "active_at_end": 1,
+      "pcm_sha256": "4d3936ec5193dfa5ebd12a620fa8eefdf2eccb88bc7a236e675453e6a6918677",
+      "pcm_bytes": 13824000,
+      "trace_sha256": "7c122af3752c24d696384dd38726b6560b82a646c88286c5e0cfe9eba4cf0f78",
+      "parameter_vector_sha256": "50065b2098e2446fbb919a60cd9d4778fa26f22979a859a1bba14c201b032767"
+    },
+    {
+      "case": "surf-repeated",
+      "program": "Surf",
+      "host_index": 485,
+      "seconds": 40,
+      "frames": 1920000,
+      "pressure": 0.0,
+      "peak_dbfs": -25.208728476294233,
+      "rms_dbfs": -51.780125346078485,
+      "active_at_end": 0,
+      "pcm_sha256": "ff56a9179cc2b56d41b1d23c89e068dd2c1d8ac9c1623d6c0812d748ab2d711b",
+      "pcm_bytes": 15360000,
+      "trace_sha256": "e354526f6870572d2796d9e95dcad86a18a8da1fbe16ff18049dbbb666ee11e5",
+      "parameter_vector_sha256": "c30352de6eae1c19f8597fd14e7a0eb9347f2b37364bcd08fd9247c2fc7356d6"
+    },
+    {
+      "case": "thunder-repeated",
+      "program": "Thunder",
+      "host_index": 491,
+      "seconds": 40,
+      "frames": 1920000,
+      "pressure": 0.0,
+      "peak_dbfs": -26.295259691227464,
+      "rms_dbfs": -54.775642622620786,
+      "active_at_end": 0,
+      "pcm_sha256": "afe62b81c3e9cf5f02a0906bb2e85ae52b00bd0f01ef48a3958b2d45dae81473",
+      "pcm_bytes": 15360000,
+      "trace_sha256": "e354526f6870572d2796d9e95dcad86a18a8da1fbe16ff18049dbbb666ee11e5",
+      "parameter_vector_sha256": "9352aacaed72ebab4118ba5ef24c7b8009b3b5ba74aba87a56b2d9b32e1037e4"
+    },
+    {
+      "case": "helicopter-soft-pressure",
+      "program": "Helicopter",
+      "host_index": 493,
+      "seconds": 12,
+      "frames": 576000,
+      "pressure": 0.0,
+      "peak_dbfs": -19.720129050101495,
+      "rms_dbfs": -28.151754176057096,
+      "active_at_end": 1,
+      "pcm_sha256": "b8d615bad29f626944fa5f8a9d3e6c999972393d024c477cda45c66a7f30d868",
+      "pcm_bytes": 4608000,
+      "trace_sha256": "61f2c7ebbd405dd9012a4069829b6f47e1bf025a404c0c8a70452ef314ce75c3",
+      "parameter_vector_sha256": "51a4187f757d7b50f9729f421fbfb7d486acc1ccf7d6bc3546f8013f2e4838f1"
+    },
+    {
+      "case": "helicopter-full-pressure",
+      "program": "Helicopter",
+      "host_index": 493,
+      "seconds": 12,
+      "frames": 576000,
+      "pressure": 1.0,
+      "peak_dbfs": -17.409546916771312,
+      "rms_dbfs": -26.000982298119126,
+      "active_at_end": 1,
+      "pcm_sha256": "3db70d66e59f61b8b874f74ad92460f7b2222e5430028bf5465c8f19ef6c27ae",
+      "pcm_bytes": 4608000,
+      "trace_sha256": "30ea16ba3d6882fdc8e52d6f5d97eebb31e2dc4abfcdd4e123d7e9ee3de1c90c",
+      "parameter_vector_sha256": "51a4187f757d7b50f9729f421fbfb7d486acc1ccf7d6bc3546f8013f2e4838f1"
+    },
+    {
+      "case": "siren-soft-pressure",
+      "program": "Siren",
+      "host_index": 482,
+      "seconds": 12,
+      "frames": 576000,
+      "pressure": 0.0,
+      "peak_dbfs": -23.25094882769781,
+      "rms_dbfs": -26.600451289335588,
+      "active_at_end": 1,
+      "pcm_sha256": "d313b95bd0927f6a56d2fcbecef0b212c6a5fcadad93b37125293f87c1f0d294",
+      "pcm_bytes": 4608000,
+      "trace_sha256": "1d86288990d618e7813828ee6ab6e1e2952f2b398114524d651e7b29029859cd",
+      "parameter_vector_sha256": "a028e3548a86fa477e05581238c48ced5580635ee625f10d910c93b3e38075ef"
+    },
+    {
+      "case": "siren-full-pressure",
+      "program": "Siren",
+      "host_index": 482,
+      "seconds": 12,
+      "frames": 576000,
+      "pressure": 1.0,
+      "peak_dbfs": -20.900236139827935,
+      "rms_dbfs": -24.218567962798737,
+      "active_at_end": 1,
+      "pcm_sha256": "43ab49b5c67cd30c6265a700ed719ee7660602faf06b968fbcc8384301d67703",
+      "pcm_bytes": 4608000,
+      "trace_sha256": "d65e2e50bac9df876f5245fb818f1f1bbe84908dd9a508bc2421e345e039712b",
+      "parameter_vector_sha256": "a028e3548a86fa477e05581238c48ced5580635ee625f10d910c93b3e38075ef"
+    },
+    {
+      "case": "clockwork-long",
+      "program": "Clockwork",
+      "host_index": 496,
+      "seconds": 16,
+      "frames": 768000,
+      "pressure": 0.0,
+      "peak_dbfs": -14.871012299329022,
+      "rms_dbfs": -36.80555884872922,
+      "active_at_end": 0,
+      "pcm_sha256": "12576152089b263363f63d11aafd02778b273036c4ea2e4eca4f0fb567753fe4",
+      "pcm_bytes": 6144000,
+      "trace_sha256": "762a26763a1905459c3a5eb983f8b95330b7a96a12827dabe2a346c0626ad494",
+      "parameter_vector_sha256": "b2a94e4e2a1b6fc95a9cad72d781dc75718c107f3f9a5933e12c153cabddfb24"
+    }
+  ],
+  "weather": {
+    "wind": {
+      "window_seconds": 0.025,
+      "start_seconds": 12,
+      "end_seconds": 36,
+      "window_level_difference_std_db": 1.4073924107986744,
+      "range_db": [
+        -1.8925309998526614,
+        4.046534834197437
+      ],
+      "nominal_07_hz_lag": {
+        "lag_seconds": 1.4285714285714286,
+        "lagged_difference_rms_db": 0.8227909522631404,
+        "correlation": 0.8342737497732113
+      },
+      "stereo": {
+        "correlation": 0.9995895567024328,
+        "side_to_mid_db": -33.48102576297865
+      },
+      "periodic_positive_control": {
+        "description": "Only modern LFO2 amplitude is enabled, retaining factory depth but using a nominal 0.7 Hz triangle; all other modern LFO depths are zero.",
+        "window_level_difference_std_db": 0.7364399298758668,
+        "lag_seconds": 1.4285714285714286,
+        "lagged_difference_rms_db": 0.0075746149226387244,
+        "correlation": 0.9999473694823994
+      }
+    },
+    "rain": {
+      "window_seconds": 0.025,
+      "start_seconds": 12,
+      "end_seconds": 36,
+      "window_level_difference_std_db": 0.37189984455608627,
+      "range_db": [
+        -1.1518667850233124,
+        1.0395888552645152
+      ],
+      "nominal_07_hz_lag": {
+        "lag_seconds": 1.4285714285714286,
+        "lagged_difference_rms_db": 0.5043733987923039,
+        "correlation": 0.08963416701889372
+      },
+      "stereo": {
+        "correlation": 0.9995047974651706,
+        "side_to_mid_db": -31.460849023212184
+      },
+      "fine_continuity": {
+        "scope": "Only LFO1 depth is removed in the control; slower filter/amplitude trajectories remain identical.",
+        "start_seconds": 0.2,
+        "end_seconds": 36,
+        "window_seconds": 0.002,
+        "window_level_difference_std_db": 0.29716277963771054,
+        "largest_adjacent_window_change_db": 0.060950872943183645,
+        "p99_adjacent_window_change_db": 0.04326631715947443
+      }
+    }
+  },
+  "repeated_one_shots": {
+    "surf": {
+      "note_on_seconds": [
+        0,
+        16
+      ],
+      "note_off_seconds": [
+        12,
+        28
+      ],
+      "seconds": 40,
+      "engine_reset_between_notes": false,
+      "episodes": [
+        {
+          "onset_seconds": 0,
+          "crest_window_start_seconds": 1.6,
+          "crest_window_rms_dbfs": -38.98431181118097,
+          "late_held_relative_to_crest_db": -59.5657989409687,
+          "crack_upper_energy_share": 0.37333366355001385,
+          "roll_upper_energy_share": 0.46932290035161417
+        },
+        {
+          "onset_seconds": 16,
+          "crest_window_start_seconds": 1.6,
+          "crest_window_rms_dbfs": -38.78070057372838,
+          "late_held_relative_to_crest_db": -60.268783562769286,
+          "crack_upper_energy_share": 0.3937564659827402,
+          "roll_upper_energy_share": 0.46427823662493145
+        }
+      ]
+    },
+    "thunder": {
+      "note_on_seconds": [
+        0,
+        16
+      ],
+      "note_off_seconds": [
+        12,
+        28
+      ],
+      "seconds": 40,
+      "engine_reset_between_notes": false,
+      "episodes": [
+        {
+          "onset_seconds": 0,
+          "crest_window_start_seconds": 0.2,
+          "crest_window_rms_dbfs": -38.19749961287104,
+          "late_held_relative_to_crest_db": -60.257319449899995,
+          "crack_upper_energy_share": 0.37166338787555925,
+          "roll_upper_energy_share": 0.06073437975921667
+        },
+        {
+          "onset_seconds": 16,
+          "crest_window_start_seconds": 0.1,
+          "crest_window_rms_dbfs": -38.115196673539515,
+          "late_held_relative_to_crest_db": -60.31454981109283,
+          "crack_upper_energy_share": 0.3815018270456821,
+          "roll_upper_energy_share": 0.05400533042413144
+        }
+      ]
+    }
+  },
+  "intentional_periodic_effects": {
+    "helicopter": {
+      "soft-pressure": {
+        "pressure": 0,
+        "positive_crossings_after_2_seconds": 115,
+        "positive_crossing_times_seconds": [
+          2.005333333333333,
+          2.0906666666666665,
+          2.176,
+          2.2613333333333334,
+          2.352,
+          2.437333333333333,
+          2.522666666666667,
+          2.6133333333333333,
+          2.6986666666666665,
+          2.784,
+          2.8746666666666667,
+          2.96,
+          3.0453333333333332,
+          3.1306666666666665,
+          3.2213333333333334,
+          3.3066666666666666,
+          3.392,
+          3.482666666666667,
+          3.568,
+          3.6533333333333333,
+          3.744,
+          3.8293333333333335,
+          3.9146666666666667,
+          4.005333333333334,
+          4.0906666666666665,
+          4.176,
+          4.261333333333333,
+          4.352,
+          4.437333333333333,
+          4.522666666666667,
+          4.613333333333333,
+          4.698666666666667,
+          4.784,
+          4.874666666666666,
+          4.96,
+          5.045333333333334,
+          5.1306666666666665,
+          5.221333333333333,
+          5.306666666666667,
+          5.392,
+          5.482666666666667,
+          5.568,
+          5.653333333333333,
+          5.744,
+          5.8293333333333335,
+          5.914666666666666,
+          6.005333333333334,
+          6.0906666666666665,
+          6.176,
+          6.261333333333333,
+          6.352,
+          6.437333333333333,
+          6.522666666666667,
+          6.613333333333333,
+          6.698666666666667,
+          6.784,
+          6.874666666666666,
+          6.96,
+          7.045333333333334,
+          7.1306666666666665,
+          7.221333333333333,
+          7.306666666666667,
+          7.392,
+          7.482666666666667,
+          7.568,
+          7.653333333333333,
+          7.744,
+          7.8293333333333335,
+          7.914666666666666,
+          8.005333333333333,
+          8.090666666666667,
+          8.176,
+          8.261333333333333,
+          8.352,
+          8.437333333333333,
+          8.522666666666666,
+          8.613333333333333,
+          8.698666666666666,
+          8.784,
+          8.874666666666666,
+          8.96,
+          9.045333333333334,
+          9.130666666666666,
+          9.221333333333334,
+          9.306666666666667,
+          9.392,
+          9.482666666666667,
+          9.568,
+          9.653333333333334,
+          9.744,
+          9.829333333333333,
+          9.914666666666667,
+          10.005333333333333,
+          10.090666666666667,
+          10.176,
+          10.261333333333333,
+          10.352,
+          10.437333333333333,
+          10.522666666666666,
+          10.613333333333333,
+          10.698666666666666,
+          10.784,
+          10.874666666666666,
+          10.96,
+          11.045333333333334,
+          11.130666666666666,
+          11.221333333333334,
+          11.306666666666667,
+          11.392,
+          11.482666666666667,
+          11.568,
+          11.653333333333334,
+          11.744,
+          11.829333333333333,
+          11.914666666666667
+        ],
+        "measured_sub_cycle_hz": 11.504305705059203,
+        "cycle_period_cv": 0.02806976277805231,
+        "final_rate_readout_hz": 11.5,
+        "trace_sampling_seconds": 0.005333333333333333,
+        "audio_power_variance_fraction_at_sub_fundamental": 0.9662311449181263
+      },
+      "full-pressure": {
+        "pressure": 1,
+        "positive_crossings_after_2_seconds": 137,
+        "positive_crossing_times_seconds": [
+          2.005333333333333,
+          2.08,
+          2.1546666666666665,
+          2.224,
+          2.2986666666666666,
+          2.3733333333333335,
+          2.448,
+          2.517333333333333,
+          2.592,
+          2.6666666666666665,
+          2.7413333333333334,
+          2.816,
+          2.8853333333333335,
+          2.96,
+          3.034666666666667,
+          3.1093333333333333,
+          3.1786666666666665,
+          3.2533333333333334,
+          3.328,
+          3.4026666666666667,
+          3.477333333333333,
+          3.546666666666667,
+          3.6213333333333333,
+          3.696,
+          3.7706666666666666,
+          3.84,
+          3.9146666666666667,
+          3.989333333333333,
+          4.064,
+          4.133333333333334,
+          4.208,
+          4.282666666666667,
+          4.357333333333333,
+          4.432,
+          4.501333333333333,
+          4.576,
+          4.650666666666667,
+          4.725333333333333,
+          4.794666666666667,
+          4.8693333333333335,
+          4.944,
+          5.018666666666666,
+          5.093333333333334,
+          5.1626666666666665,
+          5.237333333333333,
+          5.312,
+          5.386666666666667,
+          5.456,
+          5.530666666666667,
+          5.605333333333333,
+          5.68,
+          5.754666666666667,
+          5.824,
+          5.898666666666666,
+          5.973333333333334,
+          6.048,
+          6.117333333333334,
+          6.192,
+          6.266666666666667,
+          6.341333333333333,
+          6.416,
+          6.485333333333333,
+          6.56,
+          6.634666666666667,
+          6.709333333333333,
+          6.778666666666667,
+          6.8533333333333335,
+          6.928,
+          7.002666666666666,
+          7.072,
+          7.1466666666666665,
+          7.221333333333333,
+          7.296,
+          7.370666666666667,
+          7.44,
+          7.514666666666667,
+          7.589333333333333,
+          7.664,
+          7.733333333333333,
+          7.808,
+          7.882666666666666,
+          7.957333333333334,
+          8.032,
+          8.101333333333333,
+          8.176,
+          8.250666666666667,
+          8.325333333333333,
+          8.394666666666666,
+          8.469333333333333,
+          8.544,
+          8.618666666666666,
+          8.693333333333333,
+          8.762666666666666,
+          8.837333333333333,
+          8.912,
+          8.986666666666666,
+          9.056,
+          9.130666666666666,
+          9.205333333333334,
+          9.28,
+          9.354666666666667,
+          9.424,
+          9.498666666666667,
+          9.573333333333334,
+          9.648,
+          9.717333333333332,
+          9.792,
+          9.866666666666667,
+          9.941333333333333,
+          10.016,
+          10.085333333333333,
+          10.16,
+          10.234666666666667,
+          10.309333333333333,
+          10.378666666666666,
+          10.453333333333333,
+          10.528,
+          10.602666666666666,
+          10.672,
+          10.746666666666666,
+          10.821333333333333,
+          10.896,
+          10.970666666666666,
+          11.04,
+          11.114666666666666,
+          11.189333333333334,
+          11.264,
+          11.333333333333334,
+          11.408,
+          11.482666666666667,
+          11.557333333333334,
+          11.632,
+          11.701333333333332,
+          11.776,
+          11.850666666666667,
+          11.925333333333333,
+          11.994666666666667
+        ],
+        "measured_sub_cycle_hz": 13.61452215696743,
+        "cycle_period_cv": 0.030460548479649612,
+        "final_rate_readout_hz": 13.6113396,
+        "trace_sampling_seconds": 0.005333333333333333,
+        "audio_power_variance_fraction_at_sub_fundamental": 0.9861438445830422
+      }
+    },
+    "siren": {
+      "soft-pressure": {
+        "pressure": 0,
+        "positive_crossings_after_2_seconds": 7,
+        "positive_crossing_times_seconds": [
+          2.8586666666666667,
+          4.288,
+          5.717333333333333,
+          7.1466666666666665,
+          8.576,
+          10.005333333333333,
+          11.429333333333334
+        ],
+        "measured_sub_cycle_hz": 0.700062227753578,
+        "cycle_period_cv": 0.0013914548708769182,
+        "final_rate_readout_hz": 0.699999988,
+        "trace_sampling_seconds": 0.005333333333333333
+      },
+      "full-pressure": {
+        "pressure": 1,
+        "positive_crossings_after_2_seconds": 8,
+        "positive_crossing_times_seconds": [
+          2.490666666666667,
+          3.728,
+          4.965333333333334,
+          6.2026666666666666,
+          7.44,
+          8.672,
+          9.909333333333333,
+          11.146666666666667
+        ],
+        "measured_sub_cycle_hz": 0.8086876155268024,
+        "cycle_period_cv": 0.001509235824265585,
+        "final_rate_readout_hz": 0.808804333,
+        "trace_sampling_seconds": 0.005333333333333333
+      }
+    }
+  },
+  "clockwork": {
+    "full_ticks_measured": 60,
+    "rate_hz": 6,
+    "first_tick_number": 6,
+    "last_tick_number": 65,
+    "within_tick_body_relative_to_onset_db_range": [
+      -17.85356223779401,
+      -17.295030247810146
+    ],
+    "between_tick_relative_to_onset_db_range": [
+      -67.21968880642662,
+      -55.18170123077428
+    ],
+    "ordinary_note_off_seconds": 12,
+    "end_active_voices": 0
+  },
+  "checks": [
+    {
+      "passed": true,
+      "check": "Thirteen complete diagnostic cases and settings"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "wind-moving: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "wind-flat: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "wind-periodic-control: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "rain-moving: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "rain-flat: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "rain-fine-flat: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "surf-repeated: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "thunder-repeated: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: exact factory vector or explicitly scoped causal-control vector"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: existing host identity"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: exact frame count"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: all samples finite"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: all samples below full scale"
+    },
+    {
+      "passed": true,
+      "check": "clockwork-long: independent PCM peak/RMS match probe"
+    },
+    {
+      "passed": true,
+      "check": "wind: long-window authored modulation remains observable"
+    },
+    {
+      "passed": true,
+      "check": "rain: long-window authored modulation remains observable"
+    },
+    {
+      "passed": true,
+      "check": "Wind: former-period mismatch remains much larger than an intentionally periodic whole-patch control"
+    },
+    {
+      "passed": true,
+      "check": "Rain: fine random modulation stays continuous over the extended sampled trajectory"
+    },
+    {
+      "passed": true,
+      "check": "surf: note at 0 s decays during the held key instead of repeating"
+    },
+    {
+      "passed": true,
+      "check": "surf: note at 0 s retains a delayed crest"
+    },
+    {
+      "passed": true,
+      "check": "surf: note at 16 s decays during the held key instead of repeating"
+    },
+    {
+      "passed": true,
+      "check": "surf: note at 16 s retains a delayed crest"
+    },
+    {
+      "passed": true,
+      "check": "surf: ordinary final key release retires all voices"
+    },
+    {
+      "passed": true,
+      "check": "thunder: note at 0 s decays during the held key instead of repeating"
+    },
+    {
+      "passed": true,
+      "check": "thunder: note at 0 s restores crack-to-rumble spectral contrast"
+    },
+    {
+      "passed": true,
+      "check": "thunder: note at 16 s decays during the held key instead of repeating"
+    },
+    {
+      "passed": true,
+      "check": "thunder: note at 16 s restores crack-to-rumble spectral contrast"
+    },
+    {
+      "passed": true,
+      "check": "thunder: ordinary final key release retires all voices"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-soft-pressure: intentional modulation stays cyclic over the longer hold"
+    },
+    {
+      "passed": true,
+      "check": "helicopter-full-pressure: intentional modulation stays cyclic over the longer hold"
+    },
+    {
+      "passed": true,
+      "check": "helicopter: pressure accelerates the sustained periodic modulation"
+    },
+    {
+      "passed": true,
+      "check": "siren-soft-pressure: intentional modulation stays cyclic over the longer hold"
+    },
+    {
+      "passed": true,
+      "check": "siren-full-pressure: intentional modulation stays cyclic over the longer hold"
+    },
+    {
+      "passed": true,
+      "check": "siren: pressure accelerates the sustained periodic modulation"
+    },
+    {
+      "passed": true,
+      "check": "Clockwork: all sixty late-held ticks decay before their gate ends"
+    },
+    {
+      "passed": true,
+      "check": "Clockwork: all sixty late-held gaps remain strongly attenuated"
+    },
+    {
+      "passed": true,
+      "check": "Clockwork: ordinary key-up stops generated notes and retires voices"
+    }
+  ],
+  "checks_passed": 102,
+  "checks_failed": 0,
+  "limitations": [
+    "One deterministic noise trajectory per case and one played note/register; not an exhaustive random/physical environment test.",
+    "Weather LFOs still draw new targets at authored fixed update rates; the tested trajectories do not repeat each update period.",
+    "Stereo measurements describe the authored narrow image; they are not spatial recordings.",
+    "No production code or preset changed by A44."
+  ]
+}

@@ -1,0 +1,242 @@
+﻿2026-11-24T09:36:33.4342371Z Current runner version: '2.338.2'
+2026-11-24T09:36:33.4360821Z ##[group]Runner Image Provisioner
+2026-11-24T09:36:33.4361374Z Hosted Compute Agent
+2026-11-24T09:36:33.4361815Z Version: 20261111.635
+2026-11-24T09:36:33.4362219Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-24T09:36:33.4362696Z Build Date: 2026-11-11T01:49:01Z
+2026-11-24T09:36:33.4363147Z Worker ID: {50b359b7-557f-4b10-822b-a73b7210e342}
+2026-11-24T09:36:33.4363576Z Region: centralus
+2026-11-24T09:36:33.4363912Z Cloud: Azure
+2026-11-24T09:36:33.4364291Z ##[endgroup]
+2026-11-24T09:36:33.4365371Z ##[group]Operating System
+2026-11-24T09:36:33.4365928Z Ubuntu
+2026-11-24T09:36:33.4366268Z 24.04.5
+2026-11-24T09:36:33.4366603Z LTS
+2026-11-24T09:36:33.4366967Z ##[endgroup]
+2026-11-24T09:36:33.4367340Z ##[group]Runner Image
+2026-11-24T09:36:33.4367732Z Image: ubuntu-24.04
+2026-11-24T09:36:33.4368098Z Version: 20261116.376.1
+2026-11-24T09:36:33.4369206Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-24T09:36:33.4370128Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-24T09:36:33.4370728Z ##[endgroup]
+2026-11-24T09:36:33.4371387Z ##[group]GITHUB_TOKEN Permissions
+2026-11-24T09:36:33.4372827Z Contents: read
+2026-11-24T09:36:33.4373219Z Metadata: read
+2026-11-24T09:36:33.4373550Z ##[endgroup]
+2026-11-24T09:36:33.4374948Z Secret source: Actions
+2026-11-24T09:36:33.4375503Z Cache mode: write
+2026-11-24T09:36:33.4376369Z Prepare workflow directory
+2026-11-24T09:36:33.4627148Z Prepare all required actions
+2026-11-24T09:36:33.4671429Z Getting action download info
+2026-11-24T09:36:33.6898754Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-24T09:36:33.8557308Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-24T09:36:34.1117848Z Complete job name: Source circuit V1 and audio V2 compatibility
+2026-11-24T09:36:34.1654811Z ##[group]Run actions/checkout@v5
+2026-11-24T09:36:34.1655239Z with:
+2026-11-24T09:36:34.1655510Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T09:36:34.1657896Z   token: ***
+2026-11-24T09:36:34.1658140Z   ssh-strict: true
+2026-11-24T09:36:34.1658390Z   ssh-user: git
+2026-11-24T09:36:34.1658642Z   persist-credentials: true
+2026-11-24T09:36:34.1658917Z   clean: true
+2026-11-24T09:36:34.1659172Z   sparse-checkout-cone-mode: true
+2026-11-24T09:36:34.1659467Z   fetch-depth: 1
+2026-11-24T09:36:34.1659714Z   fetch-tags: false
+2026-11-24T09:36:34.1659967Z   show-progress: true
+2026-11-24T09:36:34.1660218Z   lfs: false
+2026-11-24T09:36:34.1660448Z   submodules: false
+2026-11-24T09:36:34.1660703Z   set-safe-directory: true
+2026-11-24T09:36:34.1660991Z   allow-unsafe-pr-checkout: false
+2026-11-24T09:36:34.1661357Z env:
+2026-11-24T09:36:34.1661627Z   SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+2026-11-24T09:36:34.1662059Z   SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+2026-11-24T09:36:34.1662424Z ##[endgroup]
+2026-11-24T09:36:34.4100342Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T09:36:34.4102080Z ##[group]Getting Git version info
+2026-11-24T09:36:34.4102597Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T09:36:34.4103284Z [command]/usr/bin/git version
+2026-11-24T09:36:34.4187053Z git version 2.56.1
+2026-11-24T09:36:34.4200781Z ##[endgroup]
+2026-11-24T09:36:34.4211637Z Temporarily overriding HOME='/home/runner/work/_temp/4d8cbd5d-6e55-4030-8c4d-63e3cd9a1143' before making global git config changes
+2026-11-24T09:36:34.4213176Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T09:36:34.4215362Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T09:36:34.4274239Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-24T09:36:34.4276993Z ##[group]Initializing the repository
+2026-11-24T09:36:34.4280277Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T09:36:34.4387200Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-24T09:36:34.4387806Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-24T09:36:34.4388388Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-24T09:36:34.4388845Z hint: call:
+2026-11-24T09:36:34.4389252Z hint:
+2026-11-24T09:36:34.4389609Z hint: 	git config --global init.defaultBranch <name>
+2026-11-24T09:36:34.4389976Z hint:
+2026-11-24T09:36:34.4390319Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-24T09:36:34.4390863Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-24T09:36:34.4391300Z hint:
+2026-11-24T09:36:34.4391560Z hint: 	git branch -m <name>
+2026-11-24T09:36:34.4391944Z hint:
+2026-11-24T09:36:34.4392453Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-24T09:36:34.4396846Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-24T09:36:34.4406454Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T09:36:34.4458219Z ##[endgroup]
+2026-11-24T09:36:34.4458978Z ##[group]Disabling automatic garbage collection
+2026-11-24T09:36:34.4460903Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-24T09:36:34.4489943Z ##[endgroup]
+2026-11-24T09:36:34.4490658Z ##[group]Setting up auth
+2026-11-24T09:36:34.4494828Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T09:36:34.4528625Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T09:36:34.4896653Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T09:36:34.4945835Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T09:36:34.5158002Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T09:36:34.5195864Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T09:36:34.5392610Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-24T09:36:34.5436637Z ##[endgroup]
+2026-11-24T09:36:34.5437144Z ##[group]Fetching the repository
+2026-11-24T09:36:34.5445954Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcc3c8e055223fe4f786ca162ff46076c33471c8:refs/remotes/origin/main
+2026-11-24T09:36:39.9323806Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T09:36:39.9328568Z  * [new ref]         fcc3c8e055223fe4f786ca162ff46076c33471c8 -> origin/main
+2026-11-24T09:36:39.9336357Z ##[endgroup]
+2026-11-24T09:36:39.9338194Z ##[group]Determining the checkout info
+2026-11-24T09:36:39.9341637Z ##[endgroup]
+2026-11-24T09:36:39.9358936Z [command]/usr/bin/git sparse-checkout disable
+2026-11-24T09:36:39.9568877Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-24T09:36:39.9654748Z ##[group]Checking out the ref
+2026-11-24T09:36:39.9657033Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-24T09:36:40.6702865Z Switched to a new branch 'main'
+2026-11-24T09:36:40.6706176Z branch 'main' set up to track 'origin/main'.
+2026-11-24T09:36:40.6756010Z ##[endgroup]
+2026-11-24T09:36:40.6810347Z [command]/usr/bin/git log -1 --format=%H
+2026-11-24T09:36:40.6845211Z fcc3c8e055223fe4f786ca162ff46076c33471c8
+2026-11-24T09:36:40.7042610Z ##[group]Run git fetch --depth=1 origin "$SOURCE_V1" "$SOURCE_AUDIO_V2"
+2026-11-24T09:36:40.7043153Z [36;1mgit fetch --depth=1 origin "$SOURCE_V1" "$SOURCE_AUDIO_V2"[0m
+2026-11-24T09:36:40.7043389Z [36;1mgit worktree add --detach source-v1 "$SOURCE_V1"[0m
+2026-11-24T09:36:40.7043622Z [36;1mgit worktree add --detach source-audio-v2 "$SOURCE_AUDIO_V2"[0m
+2026-11-24T09:36:40.7044026Z [36;1mc++ -O2 -std=c++20 -Isource-v1/src src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-v1-probe[0m
+2026-11-24T09:36:40.7044476Z [36;1mc++ -O2 -std=c++20 -Isrc src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-current-probe[0m
+2026-11-24T09:36:40.7044785Z [36;1mfor source in source-audio-v2 .; do[0m
+2026-11-24T09:36:40.7045126Z [36;1m  cmake -S "$source" -B "$source/build-source-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF[0m
+2026-11-24T09:36:40.7045540Z [36;1m  cmake --build "$source/build-source-compat" --target cs80_core --parallel 2[0m
+2026-11-24T09:36:40.7046019Z [36;1mdone[0m
+2026-11-24T09:36:40.7046378Z [36;1mc++ -O2 -std=c++20 -Isource-audio-v2/src src/tools/source_factory_compatibility_probe.cpp source-audio-v2/build-source-compat/libcs80_core.a -o source-audio-v2-probe[0m
+2026-11-24T09:36:40.7046935Z [36;1mc++ -O2 -std=c++20 -Isrc src/tools/source_factory_compatibility_probe.cpp build-source-compat/libcs80_core.a -o source-current-probe[0m
+2026-11-24T09:36:40.7066979Z shell: /usr/bin/bash -e {0}
+2026-11-24T09:36:40.7067134Z env:
+2026-11-24T09:36:40.7067278Z   SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+2026-11-24T09:36:40.7067513Z   SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+2026-11-24T09:36:40.7067730Z ##[endgroup]
+2026-11-24T09:36:43.6021561Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T09:36:43.6022025Z  * branch            22d6a32c48c85f9b813506edcd856f73f4293c2d -> FETCH_HEAD
+2026-11-24T09:36:43.6022477Z  * branch            00ceccfacb3cb9845436701da01c4387d53a361a -> FETCH_HEAD
+2026-11-24T09:36:43.6042639Z Preparing worktree (detached HEAD 22d6a32)
+2026-11-24T09:36:43.6343641Z HEAD is now at 22d6a32 Preserve experimental oscillator model and reproducible failed integration gates
+2026-11-24T09:36:43.6369457Z Preparing worktree (detached HEAD 00ceccf)
+2026-11-24T09:36:43.7883239Z HEAD is now at 00ceccf audio: bounded-error tan in the nodal stage clock (CPU pass)
+2026-11-24T09:36:45.2235496Z -- The C compiler identification is GNU 13.3.0
+2026-11-24T09:36:45.2854326Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-24T09:36:45.3015444Z -- Detecting C compiler ABI info
+2026-11-24T09:36:45.3782569Z -- Detecting C compiler ABI info - done
+2026-11-24T09:36:45.3894986Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-24T09:36:45.3906582Z -- Detecting C compile features
+2026-11-24T09:36:45.3906979Z -- Detecting C compile features - done
+2026-11-24T09:36:45.4132286Z -- Detecting CXX compiler ABI info
+2026-11-24T09:36:45.4717615Z -- Detecting CXX compiler ABI info - done
+2026-11-24T09:36:45.4833220Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-24T09:36:45.4835625Z -- Detecting CXX compile features
+2026-11-24T09:36:45.4841155Z -- Detecting CXX compile features - done
+2026-11-24T09:36:45.4938510Z -- Configuring done (0.4s)
+2026-11-24T09:36:45.5031505Z -- Generating done (0.0s)
+2026-11-24T09:36:45.5034005Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/source-audio-v2/build-source-compat
+2026-11-24T09:36:45.5236527Z [ 33%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-24T09:36:45.5237355Z [ 66%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-24T09:36:50.7855837Z [100%] Linking CXX static library libcs80_core.a
+2026-11-24T09:36:51.5061856Z [100%] Built target cs80_core
+2026-11-24T09:36:51.5460880Z -- The C compiler identification is GNU 13.3.0
+2026-11-24T09:36:51.5847127Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-24T09:36:51.5900634Z -- Detecting C compiler ABI info
+2026-11-24T09:36:51.6322036Z -- Detecting C compiler ABI info - done
+2026-11-24T09:36:51.6427395Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-24T09:36:51.6429425Z -- Detecting C compile features
+2026-11-24T09:36:51.6432230Z -- Detecting C compile features - done
+2026-11-24T09:36:51.6512971Z -- Detecting CXX compiler ABI info
+2026-11-24T09:36:51.6975321Z -- Detecting CXX compiler ABI info - done
+2026-11-24T09:36:51.7116800Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-24T09:36:51.7121142Z -- Detecting CXX compile features
+2026-11-24T09:36:51.7125112Z -- Detecting CXX compile features - done
+2026-11-24T09:36:51.7202476Z -- Configuring done (0.2s)
+2026-11-24T09:36:51.7372235Z -- Generating done (0.0s)
+2026-11-24T09:36:51.7377086Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build-source-compat
+2026-11-24T09:36:51.7585499Z [ 20%] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-24T09:36:51.7590586Z [ 40%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-24T09:36:51.7785521Z [ 60%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-24T09:36:58.7940612Z [ 80%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-24T09:37:00.1957067Z [100%] Linking CXX static library libcs80_core.a
+2026-11-24T09:37:00.2777816Z [100%] Built target cs80_core
+2026-11-24T09:37:01.9193746Z ##[group]Run mkdir -p artifacts/source-factory-compatibility
+2026-11-24T09:37:01.9194186Z [36;1mmkdir -p artifacts/source-factory-compatibility[0m
+2026-11-24T09:37:01.9194611Z [36;1m./source-circuit-v1-probe artifacts/source-factory-compatibility/circuit-v1.bin[0m
+2026-11-24T09:37:01.9194976Z [36;1m./source-circuit-current-probe artifacts/source-factory-compatibility/circuit-current.bin[0m
+2026-11-24T09:37:01.9195409Z [36;1mcmp artifacts/source-factory-compatibility/circuit-v1.bin artifacts/source-factory-compatibility/circuit-current.bin[0m
+2026-11-24T09:37:01.9212684Z shell: /usr/bin/bash -e {0}
+2026-11-24T09:37:01.9212824Z env:
+2026-11-24T09:37:01.9212978Z   SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+2026-11-24T09:37:01.9213184Z   SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+2026-11-24T09:37:01.9213365Z ##[endgroup]
+2026-11-24T09:37:01.9307711Z ##[group]Run ./source-audio-v2-probe artifacts/source-factory-compatibility/audio-v2.bin
+2026-11-24T09:37:01.9308071Z [36;1m./source-audio-v2-probe artifacts/source-factory-compatibility/audio-v2.bin[0m
+2026-11-24T09:37:01.9308395Z [36;1m./source-current-probe artifacts/source-factory-compatibility/audio-current.bin[0m
+2026-11-24T09:37:01.9308797Z [36;1mcmp artifacts/source-factory-compatibility/audio-v2.bin artifacts/source-factory-compatibility/audio-current.bin[0m
+2026-11-24T09:37:01.9309238Z [36;1msha256sum artifacts/source-factory-compatibility/*.bin > artifacts/source-factory-compatibility/SHA256SUMS[0m
+2026-11-24T09:37:01.9310140Z [36;1mprintf '{"circuit_baseline":"%s","audio_baseline":"%s","candidate":"%s","source_tones":7,"circuit_values":16632,"sample_rates":[44100,48000,96000,192000],"v1_circuit_bytes_unchanged":true,"v2_audio_and_numeric_state_bytes_unchanged":true,"model_metadata_excluded":true,"analog_evidence":false}\n' "$SOURCE_V1" "$SOURCE_AUDIO_V2" "$GITHUB_SHA" > artifacts/source-factory-compatibility/report.json[0m
+2026-11-24T09:37:01.9310950Z [36;1mc++ --version > artifacts/source-factory-compatibility/compiler.txt[0m
+2026-11-24T09:37:01.9325899Z shell: /usr/bin/bash -e {0}
+2026-11-24T09:37:01.9326032Z env:
+2026-11-24T09:37:01.9326169Z   SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+2026-11-24T09:37:01.9326377Z   SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+2026-11-24T09:37:01.9326553Z ##[endgroup]
+2026-11-24T09:37:09.8697401Z ##[group]Run actions/upload-artifact@v5
+2026-11-24T09:37:09.8697584Z with:
+2026-11-24T09:37:09.8697803Z   name: cs80-source-factory-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8
+2026-11-24T09:37:09.8698294Z   path: artifacts/source-factory-compatibility/report.json
+artifacts/source-factory-compatibility/SHA256SUMS
+artifacts/source-factory-compatibility/compiler.txt
+
+2026-11-24T09:37:09.8698842Z   if-no-files-found: error
+2026-11-24T09:37:09.8698977Z   compression-level: 6
+2026-11-24T09:37:09.8699102Z   overwrite: false
+2026-11-24T09:37:09.8699228Z   include-hidden-files: false
+2026-11-24T09:37:09.8699363Z env:
+2026-11-24T09:37:09.8699493Z   SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+2026-11-24T09:37:09.8699699Z   SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+2026-11-24T09:37:09.8699878Z ##[endgroup]
+2026-11-24T09:37:09.9839864Z (node:2350) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T09:37:09.9840471Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T09:37:09.9914147Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-24T09:37:09.9915281Z The least common ancestor is /home/runner/work/yamaha-cs80/yamaha-cs80/artifacts/source-factory-compatibility. This will be the root directory of the artifact
+2026-11-24T09:37:09.9916044Z With the provided path, there will be 3 files uploaded
+2026-11-24T09:37:09.9916455Z Artifact name is valid!
+2026-11-24T09:37:09.9916667Z Root directory input is valid!
+2026-11-24T09:37:10.2652250Z Beginning upload of artifact content to blob storage
+2026-11-24T09:37:10.2822402Z (node:2350) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-24T09:37:10.4511480Z Uploaded bytes 985
+2026-11-24T09:37:10.4943304Z Finished uploading artifact content to blob storage!
+2026-11-24T09:37:10.4943814Z SHA256 digest of uploaded artifact zip is 953e3e06ca6ab1db2cdbc5932dc6e199c8c36de7c2e2ea5d4ae15634c26fc157
+2026-11-24T09:37:10.4945436Z Finalizing artifact upload
+2026-11-24T09:37:10.8555238Z Artifact cs80-source-factory-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8.zip successfully finalized. Artifact ID 14906339367
+2026-11-24T09:37:10.8556378Z Artifact cs80-source-factory-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8 has been successfully uploaded! Final size is 985 bytes. Artifact ID is 14906339367
+2026-11-24T09:37:10.8560316Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45366603724/artifacts/14906339367
+2026-11-24T09:37:10.8744809Z Post job cleanup.
+2026-11-24T09:37:10.9306409Z [command]/usr/bin/git version
+2026-11-24T09:37:10.9340821Z git version 2.56.1
+2026-11-24T09:37:10.9364261Z Temporarily overriding HOME='/home/runner/work/_temp/b5e402e4-23b9-4b16-9b75-4d95844a12ba' before making global git config changes
+2026-11-24T09:37:10.9364978Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T09:37:10.9368481Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-24T09:37:10.9401088Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T09:37:10.9432468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-24T09:37:10.9654851Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T09:37:10.9906753Z http.https://github.com/.extraheader
+2026-11-24T09:37:10.9927776Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-24T09:37:10.9968137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-24T09:37:11.0183854Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T09:37:11.0221949Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-24T09:37:11.0582628Z Cleaning up orphan processes
+2026-11-24T09:37:11.0839286Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/qualify-windows.py",
+    "--downloads",
+    "../ci-c76-windows-downloads"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"status\": \"windows_platform_qualified\", \"native\": {\"registered\": 244, \"passed\": 242, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips\": 11, \"lanes\": 2, \"artifacts\": [{\"id\": 14903717361, \"name\": \"cs80-windows-install-bundle\"}, {\"id\": 14902949639, \"name\": \"cs80-windows-vst3\"}, {\"id\": 14904251198, \"name\": \"cs80-windows-test-evidence\"}, {\"id\": 14903484339, \"name\": \"cs80-pluginval-windows\"}]}\n",
+  "stderr": "",
+  "observed_at_utc": "2026-11-24T08:55:50.829984+00:00"
+}

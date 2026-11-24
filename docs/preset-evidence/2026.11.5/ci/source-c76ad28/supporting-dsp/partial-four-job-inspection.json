@@ -1,0 +1,1175 @@
+{
+  "schema": 2,
+  "reviewer": "A46, distinct worker 46 of 60",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "source_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "reviewed_at_utc": "2026-11-24T08:21:59.769106+00:00",
+  "status": "partial",
+  "conclusion": null,
+  "supporting_scope_qualified": false,
+  "native_release_qualified": false,
+  "run": {
+    "id": 45351731746,
+    "name": "DSP numerical measurements",
+    "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "run_attempt": 1,
+    "status": "in_progress",
+    "conclusion": null,
+    "created_at": "2026-11-24T07:55:17Z",
+    "run_started_at": "2026-11-24T07:55:17Z",
+    "updated_at": "2026-11-24T08:08:52Z",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746"
+  },
+  "api_inputs": [
+    {
+      "path": "run-initial-api.json",
+      "bytes": 13874,
+      "sha256": "f14e89cd69e0db61e938c0f3185f3511788814a0d9ae1ec4cc9173d79f2cb703"
+    },
+    {
+      "path": "jobs-initial-api.json",
+      "bytes": 12161,
+      "sha256": "6d5620ed6c60bdd7823840d6b9bed2b2c1c4ecb921bb5a834e0da8ea570286c9"
+    },
+    {
+      "path": "artifacts-initial-api.json",
+      "bytes": 4542,
+      "sha256": "cc6631b56834cb042b1f87c62981fd0332da8ac67d5013e43bbfea901c7c7385"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 138299681079,
+      "name": "Default-off raw audio versus shipped baseline",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T08:05:31Z",
+      "completed_at": "2026-11-24T08:09:33Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746/job/138299681079",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T08:05:32Z",
+          "completed_at": "2026-11-24T08:05:32Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T08:05:32Z",
+          "completed_at": "2026-11-24T08:05:39Z"
+        },
+        {
+          "name": "Build both revisions with the same compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T08:05:39Z",
+          "completed_at": "2026-11-24T08:06:11Z"
+        },
+        {
+          "name": "Require byte-identical default and noisy-reassignment traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T08:06:11Z",
+          "completed_at": "2026-11-24T08:09:31Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T08:09:31Z",
+          "completed_at": "2026-11-24T08:09:32Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T08:09:32Z",
+          "completed_at": "2026-11-24T08:09:32Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T08:09:32Z",
+          "completed_at": "2026-11-24T08:09:32Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "legacy-job.log",
+        "bytes": 19253,
+        "sha256": "51528a8c86ed1b27b884935f38fd45c1e9ffee5fb0a6d6951868990f6703a624"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": []
+    },
+    {
+      "id": 138299680844,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T08:05:30Z",
+      "completed_at": "2026-11-24T08:06:35Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746/job/138299680844",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T08:05:30Z",
+          "completed_at": "2026-11-24T08:05:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T08:05:33Z",
+          "completed_at": "2026-11-24T08:05:42Z"
+        },
+        {
+          "name": "Build immutable circuit and audio checkpoints with one compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T08:05:42Z",
+          "completed_at": "2026-11-24T08:06:23Z"
+        },
+        {
+          "name": "Require unchanged seven-tone V1 circuit numerics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T08:06:23Z",
+          "completed_at": "2026-11-24T08:06:23Z"
+        },
+        {
+          "name": "Require unchanged source-audio V2 and numerical history",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T08:06:23Z",
+          "completed_at": "2026-11-24T08:06:32Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T08:06:32Z",
+          "completed_at": "2026-11-24T08:06:33Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-24T08:06:33Z",
+          "completed_at": "2026-11-24T08:06:33Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-24T08:06:33Z",
+          "completed_at": "2026-11-24T08:06:33Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "source-job.log",
+        "bytes": 20944,
+        "sha256": "0bd9b15b43a283e147819a46ebd75ee39fc6b4fd4a8f5997a1a207c5a49203c0"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": []
+    },
+    {
+      "id": 138299681076,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T08:08:51Z",
+      "completed_at": "2026-11-24T08:09:06Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746/job/138299681076",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T08:08:52Z",
+          "completed_at": "2026-11-24T08:08:53Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T08:08:53Z",
+          "completed_at": "2026-11-24T08:09:00Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T08:09:00Z",
+          "completed_at": "2026-11-24T08:09:00Z"
+        },
+        {
+          "name": "Test comparison failures and provenance gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T08:09:00Z",
+          "completed_at": "2026-11-24T08:09:02Z"
+        },
+        {
+          "name": "Compare deterministic synthetic stand-in traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T08:09:02Z",
+          "completed_at": "2026-11-24T08:09:03Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T08:09:03Z",
+          "completed_at": "2026-11-24T08:09:04Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T08:09:04Z",
+          "completed_at": "2026-11-24T08:09:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-24T08:09:04Z",
+          "completed_at": "2026-11-24T08:09:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-24T08:09:04Z",
+          "completed_at": "2026-11-24T08:09:04Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "synthetic-job.log",
+        "bytes": 16134,
+        "sha256": "23e55312cc50cabb4b9623adefe8a56ec0ad8dffa1154e8bfe5553539dd73e7c"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": [
+        22
+      ]
+    },
+    {
+      "id": 138299680648,
+      "name": "measure",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T08:02:10Z",
+      "completed_at": "2026-11-24T08:03:21Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746/job/138299680648",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T08:02:11Z",
+          "completed_at": "2026-11-24T08:02:13Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T08:02:13Z",
+          "completed_at": "2026-11-24T08:02:24Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T08:02:24Z",
+          "completed_at": "2026-11-24T08:02:24Z"
+        },
+        {
+          "name": "Install pinned numerical plotting tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T08:02:24Z",
+          "completed_at": "2026-11-24T08:02:35Z"
+        },
+        {
+          "name": "Build standalone numerical probe",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T08:02:35Z",
+          "completed_at": "2026-11-24T08:03:03Z"
+        },
+        {
+          "name": "Measure and enforce regression bounds",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T08:03:03Z",
+          "completed_at": "2026-11-24T08:03:08Z"
+        },
+        {
+          "name": "Export actual-engine candidate with exact-source provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-24T08:03:08Z",
+          "completed_at": "2026-11-24T08:03:11Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-24T08:03:11Z",
+          "completed_at": "2026-11-24T08:03:13Z"
+        },
+        {
+          "name": "Upload live envelope candidate trace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-24T08:03:13Z",
+          "completed_at": "2026-11-24T08:03:15Z"
+        },
+        {
+          "name": "Upload source-traceable graphs and raw traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T08:03:15Z",
+          "completed_at": "2026-11-24T08:03:19Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-24T08:03:19Z",
+          "completed_at": "2026-11-24T08:03:19Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-24T08:03:19Z",
+          "completed_at": "2026-11-24T08:03:19Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-24T08:03:19Z",
+          "completed_at": "2026-11-24T08:03:19Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "measure-job.log",
+        "bytes": 35148,
+        "sha256": "30e7cd24b68e99223daf451f4eb71496ce4479d68fca33324ef93c64e960fdbd"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": [
+        13
+      ]
+    },
+    {
+      "id": 138299680788,
+      "name": "sanitizers",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-24T08:03:29Z",
+      "completed_at": null,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746/job/138299680788",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T08:03:30Z",
+          "completed_at": "2026-11-24T08:03:32Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T08:03:32Z",
+          "completed_at": "2026-11-24T08:03:44Z"
+        },
+        {
+          "name": "Configure ASan and UBSan core build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T08:03:44Z",
+          "completed_at": "2026-11-24T08:03:51Z"
+        },
+        {
+          "name": "Build instrument and circuit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T08:03:51Z",
+          "completed_at": "2026-11-24T08:10:14Z"
+        },
+        {
+          "name": "Run sanitizer and validator-fixture tests",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 5,
+          "started_at": "2026-11-24T08:10:14Z",
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "pending",
+          "conclusion": null,
+          "number": 10,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    }
+  ],
+  "actual_artifact_inspections": [
+    {
+      "kind": "legacy",
+      "artifact_id": 14901531465,
+      "name": "cs80-legacy-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 29436,
+      "sha256": "103468a71330dd05313b6dca62f39fe2f993737f9712ed786524deaa7517e336",
+      "created_at": "2026-11-24T08:09:31Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299681079,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:09:32.0073138Z Artifact cs80-legacy-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14901531465",
+        "size": "2026-11-24T08:09:32.0075451Z Artifact cs80-legacy-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 29436 bytes. Artifact ID is 14901531465",
+        "digest": "2026-11-24T08:09:31.6688674Z SHA256 digest of uploaded artifact zip is 103468a71330dd05313b6dca62f39fe2f993737f9712ed786524deaa7517e336"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T08:09:31Z",
+        "completed_at": "2026-11-24T08:09:32Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 4,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 548,
+          "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+        },
+        {
+          "path": "baseline-corpus.txt",
+          "bytes": 277637,
+          "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 392,
+          "sha256": "41625a0ae377fe1e8fe6bd15ee9f1e925d8988d9b01b3f155f5b76baa2a99fcc"
+        }
+      ],
+      "checks": {
+        "report": {
+          "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "candidate": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+          "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "corpus_parameters": 137,
+          "default_off_byte_identical": true,
+          "legacy_programs": 222,
+          "sample_rates": [
+            44100,
+            48000,
+            96000
+          ],
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_comparison_binaries_distributed": false,
+        "byte_comparison_basis": "Successful original unsuppressed cmp steps and retained digest report. No local raw comparison claimed.",
+        "csv_scan": {
+          "files": 0,
+          "finite_numeric_cells": 0,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "source",
+      "artifact_id": 14901590818,
+      "name": "cs80-source-factory-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 985,
+      "sha256": "f985dd3923a377d61b9fbb15d05093a3ed1732e7c5b742157643941ee3569b37",
+      "created_at": "2026-11-24T08:06:33Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299680844,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:06:33.2273918Z Artifact cs80-source-factory-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14901590818",
+        "size": "2026-11-24T08:06:33.2274862Z Artifact cs80-source-factory-compatibility-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 985 bytes. Artifact ID is 14901590818",
+        "digest": "2026-11-24T08:06:32.8762609Z SHA256 digest of uploaded artifact zip is f985dd3923a377d61b9fbb15d05093a3ed1732e7c5b742157643941ee3569b37"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T08:06:32Z",
+        "completed_at": "2026-11-24T08:06:33Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 3,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 486,
+          "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 400,
+          "sha256": "05440a7dfdc715ced2c8bf771264587539720af7cca95388b1f5ed41640da1a3"
+        }
+      ],
+      "checks": {
+        "report": {
+          "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+          "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+          "candidate": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+          "source_tones": 7,
+          "circuit_values": 16632,
+          "sample_rates": [
+            44100,
+            48000,
+            96000,
+            192000
+          ],
+          "v1_circuit_bytes_unchanged": true,
+          "v2_audio_and_numeric_state_bytes_unchanged": true,
+          "model_metadata_excluded": true,
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_comparison_binaries_distributed": false,
+        "byte_comparison_basis": "Successful original unsuppressed cmp steps and retained digest report. No local raw comparison claimed.",
+        "csv_scan": {
+          "files": 0,
+          "finite_numeric_cells": 0,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "synthetic",
+      "artifact_id": 14900839011,
+      "name": "cs80-synthetic-comparison-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 198613,
+      "sha256": "d98b7eeaad3a2f15a5843e3c85ab0b13da2a84b19529e9dc24435f199e385d75",
+      "created_at": "2026-11-24T08:09:03Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299681076,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:09:04.1110344Z Artifact cs80-synthetic-comparison-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14900839011",
+        "size": "2026-11-24T08:09:04.1112026Z Artifact cs80-synthetic-comparison-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 198613 bytes. Artifact ID is 14900839011",
+        "digest": "2026-11-24T08:09:03.7565457Z SHA256 digest of uploaded artifact zip is d98b7eeaad3a2f15a5843e3c85ab0b13da2a84b19529e9dc24435f199e385d75"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T08:09:03Z",
+        "completed_at": "2026-11-24T08:09:04Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 10,
+      "entry_inventory": [
+        {
+          "path": "envelope-candidate.csv",
+          "bytes": 92826,
+          "sha256": "4c17cbb27c835772f4c2f62b6d642c832e53eb06182bc2fde780d76df2dab24b"
+        },
+        {
+          "path": "envelope-reference.csv",
+          "bytes": 42423,
+          "sha256": "41b8f42d8c445c2da3a3955d19bf2b5751eba10f532f180a271ad2d9957d0adc"
+        },
+        {
+          "path": "filter-candidate.csv",
+          "bytes": 104968,
+          "sha256": "d80ea4f18ad4480d855f18db1163c621e16c63f98725620c4be737c137fd7923"
+        },
+        {
+          "path": "filter-reference.csv",
+          "bytes": 104535,
+          "sha256": "10cc8f3fde450cb8df8116252045aa442bebba9b080952c1a9424505636ebbcd"
+        },
+        {
+          "path": "manifest.json",
+          "bytes": 4367,
+          "sha256": "6775e4c763e666e7bd05231a320e89c3c2930fe132bb22fd7a45795960f054d0"
+        },
+        {
+          "path": "oscillator-candidate.csv",
+          "bytes": 104771,
+          "sha256": "ffa762c74ebc27893fa6e0cce2e653b69a3800a11bba538c7d60320b07356ab6"
+        },
+        {
+          "path": "oscillator-reference.csv",
+          "bytes": 102391,
+          "sha256": "a274e4cfa0127573d8d719cf76666b8024d154e6c79398ab0cc424045fd82b59"
+        },
+        {
+          "path": "output-candidate.csv",
+          "bytes": 105754,
+          "sha256": "566ad6a77224b52d5e885952dc194f0350b687d3219b4ff7eedebb162875d876"
+        },
+        {
+          "path": "output-reference.csv",
+          "bytes": 105338,
+          "sha256": "5a87936b1cacd09280f63a551cf2aa0c5cbad09c6cbfd8882c671ae3838bef41"
+        },
+        {
+          "path": "report.json",
+          "bytes": 5286,
+          "sha256": "2fff25768d102330bcb5f5b0dc1d31ad2a1f6944f1dd4a5685e8a62d6b505756"
+        }
+      ],
+      "checks": {
+        "report_passed": true,
+        "trace_hashes_matched": 8,
+        "source_hashes_matched": 1,
+        "analog_evidence": false,
+        "csv_scan": {
+          "files": 8,
+          "finite_numeric_cells": 66040,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "candidate",
+      "artifact_id": 14900009973,
+      "name": "cs80-engine-candidate-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 1438001,
+      "sha256": "12448d7d5bb8129712c7489474e9582a745d557dba976ea8590a0d33bd81166d",
+      "created_at": "2026-11-24T08:03:13Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299680648,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:03:13.3486929Z Artifact cs80-engine-candidate-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14900009973",
+        "size": "2026-11-24T08:03:13.3488376Z Artifact cs80-engine-candidate-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 1438001 bytes. Artifact ID is 14900009973",
+        "digest": "2026-11-24T08:03:12.8990546Z SHA256 digest of uploaded artifact zip is 12448d7d5bb8129712c7489474e9582a745d557dba976ea8590a0d33bd81166d"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-24T08:03:11Z",
+        "completed_at": "2026-11-24T08:03:13Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 8,
+      "entry_inventory": [
+        {
+          "path": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "e7ce1535f2b4fccc3186c7421f49466d1a61057e376e58cea6af11f7fc62bf2d"
+        },
+        {
+          "path": "SHA256SUMS",
+          "bytes": 568,
+          "sha256": "a982482b644140d91f66c3f9aef3ebcfcf8c242d9caa5ae166f733304afcf8a0"
+        },
+        {
+          "path": "SOURCE_SHA256SUMS",
+          "bytes": 1397,
+          "sha256": "d73f7b0fa7dc368af53a27052acabe3b6dc7200acc0071efbba6c9978dee2351"
+        },
+        {
+          "path": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "path": "capture.json",
+          "bytes": 6564,
+          "sha256": "10582feea05e593f414ca0fa6947314c05c64ff076e74f8760a9b6ed845582b2"
+        },
+        {
+          "path": "left.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        },
+        {
+          "path": "provenance.json",
+          "bytes": 98,
+          "sha256": "63b32ff0b04637fbefab20512a543b5b9c2b0b2d1a0f78277a6aaa59ae64d2ff"
+        },
+        {
+          "path": "right.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        }
+      ],
+      "checks": {
+        "manifest_checksums_matched": 7,
+        "source_hashes_matched": 15,
+        "binary_digest_declarations": {
+          "build-probe/cs80_parity_capture": "8d258d3005498faae914047826184d4c57e513d501d81e740233c9d914ad5c01"
+        },
+        "binary_distributed": false,
+        "analog_evidence": false,
+        "actual_capture": {
+          "parameter_count": 202,
+          "parameter_id_source": "src/core/Params.h",
+          "parameter_id_source_sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+          "parameter_maps_checked": [
+            "settings"
+          ],
+          "standard_body_variants": {
+            "body1_variant": 0,
+            "body2_variant": 0
+          },
+          "fixture_id": "w0-engine-stimulus-v1",
+          "fixture_event_count": 6,
+          "channels": [
+            {
+              "path": "left.csv",
+              "frames": 96000,
+              "peak_absolute_sample": 0.0369719639
+            },
+            {
+              "path": "right.csv",
+              "frames": 96000,
+              "peak_absolute_sample": 0.0369719639
+            }
+          ],
+          "sample_rate_hz": 48000,
+          "internal_sample_rate_hz": 96000,
+          "latency_samples": 67,
+          "latency_compensated": false,
+          "scope": "Actual core fixtures with instrument bodies disabled, not factory-program listening or a physical-instrument comparison."
+        },
+        "csv_scan": {
+          "files": 2,
+          "finite_numeric_cells": 384000,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "live-adr",
+      "artifact_id": 14901087142,
+      "name": "cs80-engine-live-adr-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 1454428,
+      "sha256": "77cbc1c527369a2d0e9afc0c756b28010a51db09451866385e1e410689439238",
+      "created_at": "2026-11-24T08:03:15Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299680648,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:03:15.4221808Z Artifact cs80-engine-live-adr-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14901087142",
+        "size": "2026-11-24T08:03:15.4223098Z Artifact cs80-engine-live-adr-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 1454428 bytes. Artifact ID is 14901087142",
+        "digest": "2026-11-24T08:03:15.0046282Z SHA256 digest of uploaded artifact zip is 77cbc1c527369a2d0e9afc0c756b28010a51db09451866385e1e410689439238"
+      },
+      "upload_step": {
+        "name": "Upload live envelope candidate trace",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-24T08:03:13Z",
+        "completed_at": "2026-11-24T08:03:15Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 9,
+      "entry_inventory": [
+        {
+          "path": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "e7ce1535f2b4fccc3186c7421f49466d1a61057e376e58cea6af11f7fc62bf2d"
+        },
+        {
+          "path": "SHA256SUMS",
+          "bytes": 654,
+          "sha256": "f101f8edc858396d6d0aedffe5959b07a2b5b232daf8106cd510827318adde43"
+        },
+        {
+          "path": "SOURCE_SHA256SUMS",
+          "bytes": 1397,
+          "sha256": "d73f7b0fa7dc368af53a27052acabe3b6dc7200acc0071efbba6c9978dee2351"
+        },
+        {
+          "path": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "path": "capture.json",
+          "bytes": 11654,
+          "sha256": "f38e37727c0ed731a2db0c6fbeb0da8d036a80e88dd1e9450a7972f0813c6784"
+        },
+        {
+          "path": "envelope-events.csv",
+          "bytes": 2404,
+          "sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c"
+        },
+        {
+          "path": "left.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        },
+        {
+          "path": "provenance.json",
+          "bytes": 98,
+          "sha256": "63b32ff0b04637fbefab20512a543b5b9c2b0b2d1a0f78277a6aaa59ae64d2ff"
+        },
+        {
+          "path": "right.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        }
+      ],
+      "checks": {
+        "manifest_checksums_matched": 8,
+        "source_hashes_matched": 15,
+        "binary_digest_declarations": {
+          "build-probe/cs80_parity_capture": "8d258d3005498faae914047826184d4c57e513d501d81e740233c9d914ad5c01"
+        },
+        "binary_distributed": false,
+        "analog_evidence": false,
+        "actual_capture": {
+          "parameter_count": 202,
+          "parameter_id_source": "src/core/Params.h",
+          "parameter_id_source_sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+          "parameter_maps_checked": [
+            "initial_settings",
+            "final_settings"
+          ],
+          "standard_body_variants": {
+            "body1_variant": 0,
+            "body2_variant": 0
+          },
+          "fixture_id": "live-adr-v1",
+          "fixture_event_count": 5,
+          "channels": [
+            {
+              "path": "left.csv",
+              "frames": 96000,
+              "peak_absolute_sample": 0.03128317
+            },
+            {
+              "path": "right.csv",
+              "frames": 96000,
+              "peak_absolute_sample": 0.03128317
+            }
+          ],
+          "sample_rate_hz": 48000,
+          "internal_sample_rate_hz": 96000,
+          "latency_samples": 67,
+          "latency_compensated": false,
+          "scope": "Actual core fixtures with instrument bodies disabled, not factory-program listening or a physical-instrument comparison."
+        },
+        "csv_scan": {
+          "files": 3,
+          "finite_numeric_cells": 384360,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "dsp",
+      "artifact_id": 14901286103,
+      "name": "cs80-dsp-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "bytes": 8505895,
+      "sha256": "6e57f7331d455b4864f6519b1174d606546d3c27c0581699aaf74bfcdcce6cd5",
+      "created_at": "2026-11-24T08:03:18Z",
+      "expires_at": "2027-02-22T07:55:18Z",
+      "producer_job_id": 138299680648,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T08:03:19.1085937Z Artifact cs80-dsp-c76ad288e02fbeca48f39652bf4fcdd99837f793.zip successfully finalized. Artifact ID 14901286103",
+        "size": "2026-11-24T08:03:19.1086925Z Artifact cs80-dsp-c76ad288e02fbeca48f39652bf4fcdd99837f793 has been successfully uploaded! Final size is 8505895 bytes. Artifact ID is 14901286103",
+        "digest": "2026-11-24T08:03:18.6730953Z SHA256 digest of uploaded artifact zip is 6e57f7331d455b4864f6519b1174d606546d3c27c0581699aaf74bfcdcce6cd5"
+      },
+      "upload_step": {
+        "name": "Upload source-traceable graphs and raw traces",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-24T08:03:15Z",
+        "completed_at": "2026-11-24T08:03:19Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 26,
+      "entry_inventory": [
+        {
+          "path": "decimator-impulse.csv",
+          "bytes": 9588,
+          "sha256": "fb3861f5a79241f3567f0111f73e5085dbbbf5b850f5f949b02490b59cc82326"
+        },
+        {
+          "path": "decimator-tones.csv",
+          "bytes": 228,
+          "sha256": "8f3265efbbbc1ad2cf040f8e8cd4a9df4493492442a7cbe27150f1b3cd89aa93"
+        },
+        {
+          "path": "decimator.json",
+          "bytes": 79,
+          "sha256": "c02d9e8f1852998523cb95a57fbd4ade5dbccef95ba06c273a3f5c2e26d3b6d0"
+        },
+        {
+          "path": "filter-envelope-192000.csv",
+          "bytes": 84979,
+          "sha256": "57c9d9b1ed66352326d07b31c3a3c21c33c7fc9811877a2d1ab1983bc0809fed"
+        },
+        {
+          "path": "filter-envelope-44100.csv",
+          "bytes": 84878,
+          "sha256": "b6790076bc33b5a3f0e9aa384f3477138f3c1103866b170a4685888b954e235b"
+        },
+        {
+          "path": "filter-envelope-48000.csv",
+          "bytes": 85088,
+          "sha256": "ed4827cd7eb9ae79191238a3a6b20d1b82fcc3aa9238ffd278e22108d4af8384"
+        },
+        {
+          "path": "filter-envelope-96000.csv",
+          "bytes": 85110,
+          "sha256": "c136936d09d4c1cc057c6a00083912de66818566783a19f301e6d063992b8234"
+        },
+        {
+          "path": "measurements.json",
+          "bytes": 6312,
+          "sha256": "e93938bd70726b84a58111632f9ce4805133de999799f4109644c528a8048f79"
+        },
+        {
+          "path": "oscillator-151.csv",
+          "bytes": 5857683,
+          "sha256": "cdd5815b8d0ae7018ce63dfe680e0e842357fa28c494d3ed3e2555e3654c98b6"
+        },
+        {
+          "path": "oscillator-3001.csv",
+          "bytes": 5974106,
+          "sha256": "e315d2f9ff3bd79ce621cf372ee4ade95a6cdcdab19530a9435d67ded5e27d45"
+        },
+        {
+          "path": "oscillator-6001.csv",
+          "bytes": 6099446,
+          "sha256": "b70ac197820c6f4456198a3f818b308dadc676839021d6846b589aa169c9a5ff"
+        },
+        {
+          "path": "oscillator-601.csv",
+          "bytes": 5875938,
+          "sha256": "6689c8dbce85f3b89e51dc4adeb3afcd3421b41d55f208a0dcf705fdc563d961"
+        },
+        {
+          "path": "plots/decimator-response-latency.png",
+          "bytes": 362158,
+          "sha256": "fad782a2890cd903739e7c5d6df3c66751f3f2d06c6c42e7f324b1c2d269b1c9"
+        },
+        {
+          "path": "plots/decimator-response-latency.svg",
+          "bytes": 227851,
+          "sha256": "53f9b4fc82862879af2300bc964b8624abe7d5c7e373bfb66b34e57e9e03b45e"
+        },
+        {
+          "path": "plots/filter-envelope-rate-comparison.png",
+          "bytes": 88060,
+          "sha256": "9c602320dc037f414906841d4bd5334b7ed8e08cbb150e16eb8f51e48e4a4844"
+        },
+        {
+          "path": "plots/filter-envelope-rate-comparison.svg",
+          "bytes": 65047,
+          "sha256": "b4f77b7791d0cc9d52be9612238a690faa2398e604c01d0162ab0cf885e40718"
+        },
+        {
+          "path": "plots/oscillator-alias-comparison.png",
+          "bytes": 83637,
+          "sha256": "674bd5cc6682fcfa9b1d7e36539a7bee2c813dae462c1e02e97f89333d6e9103"
+        },
+        {
+          "path": "plots/oscillator-alias-comparison.svg",
+          "bytes": 63618,
+          "sha256": "31edc6aec834968080ed0fbd8250adda646483831251cb1dc3be02da8c6bfc20"
+        },
+        {
+          "path": "plots/oscillator-waveform-spectrum.png",
+          "bytes": 230988,
+          "sha256": "797054832c4100a6bd841013c14ccc22ba232f8562fc5b0d3e1d9c45df92929d"
+        },
+        {
+          "path": "plots/oscillator-waveform-spectrum.svg",
+          "bytes": 605308,
+          "sha256": "1ae0c09c82082208729d32701ef800e24b57bf031a6b43309c277d3787da9582"
+        },
+        {
+          "path": "plots/ring-frequency-envelope.png",
+          "bytes": 163184,
+          "sha256": "2d4041a157d355c4e6073679b772250aee1fabf04857ebbc3021c63f51786b38"
+        },
+        {
+          "path": "plots/ring-frequency-envelope.svg",
+          "bytes": 90259,
+          "sha256": "cd287c8a3c16d2e7e4fe51247a13a425b131ab8918014cdbcc80ab89c6cf95c3"
+        },
+        {
+          "path": "probe.json",
+          "bytes": 105,
+          "sha256": "bb39a04905115e1eef08fe88063688ec66700192c4e832058bf58b4c05a6e065"
+        },
+        {
+          "path": "ring-200.csv",
+          "bytes": 65547,
+          "sha256": "ff01eb07563e95064a784f60c1d924f03b4d833b04cbc9d804434e081a731130"
+        },
+        {
+          "path": "ring-40.csv",
+          "bytes": 62480,
+          "sha256": "d5bf59b8fd470289f0ce8b16773f483696a16c53b56e78aee82546b0edaab3f5"
+        },
+        {
+          "path": "ring-7.csv",
+          "bytes": 90202,
+          "sha256": "ec9c7eeaee13f14ae91081b4a7f065730770790b22973814e46e0ddd45e21ed0"
+        }
+      ],
+      "checks": {
+        "comparative_regression_passed": true,
+        "probe_failures": 0,
+        "source_hashes_matched": 5,
+        "analysis_working_tree_status": [],
+        "scope": "Software numerical references; no physical-instrument comparison.",
+        "csv_scan": {
+          "files": 13,
+          "finite_numeric_cells": 2180246,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    }
+  ],
+  "source_contract": {
+    "path": "source-contract.json",
+    "bytes": 2618,
+    "sha256": "c3a5bb585020cdde68db31c1f8a4539835be39f1423b36edd3aca7cb05333e08"
+  },
+  "inspection_script": {
+    "path": "inspect_supporting.py",
+    "bytes": 30017,
+    "sha256": "53269f0ae51f02ca4a679a86ed8561b00ac0edc2478cd80a045abd34da5b20df"
+  },
+  "scope_limits": [
+    "Supporting DSP workflow only; does not qualify native plugin packages or pluginval.",
+    "Core-only/Python jobs do not provide JUCE plugin provenance; native qualification owns that gate.",
+    "Synthetic and numerical references are software fixtures, not physical CS-80 or acoustic-instrument measurements.",
+    "Compatibility artifacts retain reports/digests and a legacy corpus, not raw comparison binaries; original successful cmp steps provide comparison evidence.",
+    "Trace and compatibility artifacts contain tool-defined corpora, not per-program listening evaluations of all 523 factory entries.",
+    "Sanitizer CTest executions remain separate from native counts; suppressed nested Python skips are unknown.",
+    "Original API step times have second precision; fractional log times are compared within that same final second.",
+    "Acquisition uses authenticated GitHub tools; no public unauthenticated download-route claim is made."
+  ]
+}

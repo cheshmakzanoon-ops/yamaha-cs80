@@ -1,0 +1,146 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "native_release_qualified": false,
+  "analog_evidence": false,
+  "filter_matrix": {
+    "jobs": [
+      {
+        "id": 138349816079,
+        "name": "g++ / batch OFF",
+        "ctest_executions": 4,
+        "log_sha256": "3980474d43370a94c5b84c8d99b22178f24f417171ddd704b9896663dfa6870d"
+      },
+      {
+        "id": 138349816440,
+        "name": "g++ / batch DEFAULT",
+        "ctest_executions": 4,
+        "log_sha256": "5f98fc130e6cc78659a5e7f7d02d9eaae117bc8aa480fd2ef2a0d87bc908985b"
+      },
+      {
+        "id": 138349816488,
+        "name": "clang++ / batch ON",
+        "ctest_executions": 4,
+        "log_sha256": "eb127548e896f7c73c179b4d013c9dc789cd9ce54cf182005f8f2435b0b79493"
+      },
+      {
+        "id": 138349816511,
+        "name": "clang++ / batch OFF",
+        "ctest_executions": 4,
+        "log_sha256": "1c3d8b2052adb8d91118ffdf0bbaa7ad101eb3d8db0f1d33b54ad114e63151d9"
+      },
+      {
+        "id": 138349816607,
+        "name": "g++ / batch ON",
+        "ctest_executions": 4,
+        "log_sha256": "c231bdc0c477b9498c988c6041f125b9c2c049a1f9034c922dc023b7af5390c7"
+      },
+      {
+        "id": 138349816652,
+        "name": "clang++ / batch DEFAULT",
+        "ctest_executions": 4,
+        "log_sha256": "9fe6bac93c09b2139fca233ca92c45ddbd348ead8625c35ce3d7eea7760b6960"
+      }
+    ],
+    "registered_executions": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "artifacts": [
+    {
+      "id": 14906817736,
+      "name": "cs80-dsp-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 8505876,
+      "sha256": "aecaf160a64a9af168fbb8738e5ceb9e7e62e5151db19796389a27e0c3f3e900",
+      "producer_job": 138349815996,
+      "upload_attempt_bound": true,
+      "members": 26,
+      "verified_inner_checksums": 0,
+      "source_hashes_verified": 5
+    },
+    {
+      "id": 14908055011,
+      "name": "cs80-engine-candidate-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 1438011,
+      "sha256": "1931edd4d837413bacbb0be0c408aa720b90217561d1d2cae90c58769658a038",
+      "producer_job": 138349815996,
+      "upload_attempt_bound": true,
+      "members": 8,
+      "verified_inner_checksums": 7,
+      "source_hashes_verified": 15,
+      "parameter_count": 204,
+      "executable_hash_recorded_only": true,
+      "source_manifest_is_partial": true
+    },
+    {
+      "id": 14906404653,
+      "name": "cs80-engine-live-adr-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 1454442,
+      "sha256": "7d2521f112cad42d3b6e0e5bd33b065298e3c9900a81cfb1430d6871226603b7",
+      "producer_job": 138349815996,
+      "upload_attempt_bound": true,
+      "members": 9,
+      "verified_inner_checksums": 8,
+      "source_hashes_verified": 15,
+      "parameter_count": 204,
+      "executable_hash_recorded_only": true,
+      "source_manifest_is_partial": true
+    },
+    {
+      "id": 14907385925,
+      "name": "cs80-synthetic-comparison-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 198613,
+      "sha256": "25891ba7265d014cacc1e61cf9229edbfaecefee9d8cfb5bfe85c4b9beea7333",
+      "producer_job": 138349815609,
+      "upload_attempt_bound": true,
+      "members": 10,
+      "verified_inner_checksums": 8,
+      "stages_passed": 4
+    },
+    {
+      "id": 14906339367,
+      "name": "cs80-source-factory-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 985,
+      "sha256": "953e3e06ca6ab1db2cdbc5932dc6e199c8c36de7c2e2ea5d4ae15634c26fc157",
+      "producer_job": 138349816091,
+      "upload_attempt_bound": true,
+      "members": 3,
+      "verified_inner_checksums": 0,
+      "omitted_raw_trace_members": [
+        "artifacts/source-factory-compatibility/audio-current.bin",
+        "artifacts/source-factory-compatibility/audio-v2.bin",
+        "artifacts/source-factory-compatibility/circuit-current.bin",
+        "artifacts/source-factory-compatibility/circuit-v1.bin"
+      ],
+      "raw_comparison_scope": "Original successful cmp steps and equal recorded digest pairs; omitted raw traces are not independently rehashed."
+    },
+    {
+      "id": 14905979921,
+      "name": "cs80-legacy-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "bytes": 29436,
+      "sha256": "971ba0f43650041a1dcd89e82ed230ea44adf147b33af5bc57032b179b934dd4",
+      "producer_job": 138349815994,
+      "upload_attempt_bound": true,
+      "members": 4,
+      "verified_inner_checksums": 1,
+      "omitted_raw_trace_members": [
+        "artifacts/compatibility/baseline-default.f32",
+        "artifacts/compatibility/baseline-tails.f32",
+        "artifacts/compatibility/current-default.f32",
+        "artifacts/compatibility/current-tails.f32"
+      ],
+      "raw_comparison_scope": "Original successful cmp steps and equal recorded digest pairs; omitted raw traces are not independently rehashed."
+    }
+  ],
+  "sanitizer": {
+    "id": 138349816087,
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "head_sha": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "original_log_verified": true,
+    "registered_ctest_executions": 222,
+    "original_log_sha256": "6d114a3e343f1b28b44a058a2810d525ac34e3456f6d007f856569029cea98cb"
+  },
+  "dsp_workflow_complete": true,
+  "supporting_qualification_complete": true
+}

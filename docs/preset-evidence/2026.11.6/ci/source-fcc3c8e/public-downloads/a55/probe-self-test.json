@@ -1,0 +1,157 @@
+{
+  "scope": "Synthetic mock response and metadata rejection checks only; no network or release qualification.",
+  "public_route_verified": false,
+  "release_qualified": false,
+  "probe_path": "docs/preset-evidence/2026.11.5/verification/a57-probe-public-artifact.py",
+  "probe_sha256": "ca863189b395c2952253de8f4b64538dd045f497db39b2bfcd12b40fd81bc06f",
+  "case_count": 19,
+  "all_cases_passed": true,
+  "cases": [
+    {
+      "case": "complete matching synthetic body",
+      "expected_acceptance": true,
+      "observed_acceptance": true,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": null
+    },
+    {
+      "case": "HTTP 403",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Forbidden"
+    },
+    {
+      "case": "HTTP 200 HTML login wall",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Public response size/hash differs from authenticated artifact metadata"
+    },
+    {
+      "case": "truncated body",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Public response size/hash differs from authenticated artifact metadata"
+    },
+    {
+      "case": "oversized body",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Response exceeds expected artifact size"
+    },
+    {
+      "case": "same-size wrong bytes",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Public response size/hash differs from authenticated artifact metadata"
+    },
+    {
+      "case": "HTTP 206 partial response",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Full GET must return HTTP200"
+    },
+    {
+      "case": "HTTP 200 with Content-Range",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Unexpected partial body"
+    },
+    {
+      "case": "Content-Length mismatch",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": true,
+      "rejection_reason": "Content-Length differs from artifact API"
+    },
+    {
+      "case": "artifact explicitly expired",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Artifact reported expired"
+    },
+    {
+      "case": "artifact expiry elapsed",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Artifact expiry has passed or lacks timezone"
+    },
+    {
+      "case": "artifact wrong name",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Artifact name mismatch"
+    },
+    {
+      "case": "artifact wrong source",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Artifact source/run mismatch"
+    },
+    {
+      "case": "artifact wrong run",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Artifact source/run mismatch"
+    },
+    {
+      "case": "run wrong attempt",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Run ID/attempt mismatch"
+    },
+    {
+      "case": "run wrong repository",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Run repository/source mismatch"
+    },
+    {
+      "case": "artifact digest absent",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "passed": true,
+      "mock_get_attempted": false,
+      "rejection_reason": "Missing or invalid API digest"
+    },
+    {
+      "case": "non-HTTPS redirect",
+      "passed": true,
+      "rejection_reason": "Unexpected non-HTTPS or credential-bearing redirect"
+    },
+    {
+      "case": "credential-bearing redirect",
+      "passed": true,
+      "rejection_reason": "Unexpected non-HTTPS or credential-bearing redirect"
+    }
+  ]
+}

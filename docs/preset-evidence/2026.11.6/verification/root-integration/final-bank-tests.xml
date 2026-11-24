@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="2"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="412"
+	timestamp="2026-11-24T02:33:12"
+	>
+	<testcase name="cs80_preset_response_2026_11_6_comparison_tests" classname="cs80_preset_response_2026_11_6_comparison_tests" time="6.27011" status="run">
+		<properties/>
+		<system-out>test_allowed_tags_description_and_musical_volume_edits (__main__.ContractTests.test_allowed_tags_description_and_musical_volume_edits) ... ok
+test_cli_failure_preserves_existing_report_and_input_bytes (__main__.ContractTests.test_cli_failure_preserves_existing_report_and_input_bytes) ... ok
+test_cli_valid_report_and_failed_comparison_are_atomic (__main__.ContractTests.test_cli_valid_report_and_failed_comparison_are_atomic) ... ok
+test_identity_and_inventory_mutations_are_rejected (__main__.ContractTests.test_identity_and_inventory_mutations_are_rejected) ... ok
+test_json_ambiguity_and_nonfinite_numbers_are_rejected (__main__.ContractTests.test_json_ambiguity_and_nonfinite_numbers_are_rejected) ... ok
+test_valid_cumulative_coverage (__main__.ContractTests.test_valid_cumulative_coverage) ... ok
+test_volume_or_new_material_does_not_qualify_as_prior_sound_edit (__main__.ContractTests.test_volume_or_new_material_does_not_qualify_as_prior_sound_edit) ... ok
+
+---------------------------------------------------------...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_library_audit_tests" classname="cs80_library_audit_tests" time="406.581" status="run">
+		<properties/>
+		<system-out>closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)
+phrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS
+library audit passed: 301 curated + 222 original circuit programs
+</system-out>
+	</testcase>
+</testsuite>

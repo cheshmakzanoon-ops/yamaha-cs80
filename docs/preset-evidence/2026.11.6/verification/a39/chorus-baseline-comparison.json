@@ -1,0 +1,413 @@
+{
+  "baseline_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "candidate_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "baseline_executable_sha256": "f98a04dfe401acf10957e9a13b68bf962361642032e739ac180d627ba5229cf3",
+  "additional_captures": 6,
+  "additional_seconds": 13.2,
+  "scope": "The preceding .5 source has the identical Electric Piano II recipe and chorus behavior.",
+  "all_six_sample_identical": true,
+  "measurements": [
+    {
+      "note": 48,
+      "velocity": 0.25,
+      "baseline_wav_sha256": "b5395de24b48ed7030b05c4ee1f5b86a12cce9df14467f6fd87818823952626f",
+      "candidate_wav_sha256": "b5395de24b48ed7030b05c4ee1f5b86a12cce9df14467f6fd87818823952626f",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -43.32819039343683,
+          "mono_loss_db": 0.0004791480086826962,
+          "left_right_balance_db": -0.10713811826033495,
+          "uncentered_channel_correlation": 0.99985541334177,
+          "side_mid_ratio_db": -39.57290666174237,
+          "dominant_hz": 132.3076923076923,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.05154025649801445,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00018190349818749817
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -39.03487785151711,
+            "qualified_energy": true,
+            "mono_loss_db": 2.8089859775606048
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -48.53366825428523,
+          "mono_loss_db": 0.0011693681495936357,
+          "left_right_balance_db": -0.10764817617466405,
+          "uncentered_channel_correlation": 0.9995383170443435,
+          "side_mid_ratio_db": -35.69774580988762,
+          "dominant_hz": 130.0,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.01588187743288916,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00018356822254414062
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -33.88878269626497,
+            "qualified_energy": true,
+            "mono_loss_db": 3.061227601522204
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.83275431887024,
+          "mono_loss_db": 2.8855669961567108,
+          "left_right_balance_db": 0.00273992280806309,
+          "uncentered_channel_correlation": 0.029137246983034985,
+          "side_mid_ratio_db": -0.253154556260288,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.093591468752187,
+            "qualified_energy": true,
+            "mono_loss_db": 3.9800452708519156
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.6394686694471035,
+            "qualified_energy": true,
+            "mono_loss_db": 2.9902114594301117
+          }
+        }
+      }
+    },
+    {
+      "note": 48,
+      "velocity": 0.85,
+      "baseline_wav_sha256": "703285d6680c3e4e68f7321fe104e0beea169c9129d8b59e48e092e6f96b14b4",
+      "candidate_wav_sha256": "703285d6680c3e4e68f7321fe104e0beea169c9129d8b59e48e092e6f96b14b4",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -33.5523634870298,
+          "mono_loss_db": 0.00022021406198645925,
+          "left_right_balance_db": -0.10796177144480734,
+          "uncentered_channel_correlation": 0.9999758303681184,
+          "side_mid_ratio_db": -42.94928252897216,
+          "dominant_hz": 132.3076923076923,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.37961257002112164,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00018382059808764458
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -44.575134556385585,
+            "qualified_energy": true,
+            "mono_loss_db": 0.8614011120391335
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -38.9698702235349,
+          "mono_loss_db": 0.0002970934162535065,
+          "left_right_balance_db": -0.10829276868332433,
+          "uncentered_channel_correlation": 0.9999408998232813,
+          "side_mid_ratio_db": -41.64876429012355,
+          "dominant_hz": 130.0,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.12985185008269873,
+            "qualified_energy": true,
+            "mono_loss_db": 0.0001864333257727327
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -43.41295336910706,
+            "qualified_energy": true,
+            "mono_loss_db": 3.030938703790256
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.10218889118235,
+          "mono_loss_db": 2.2937393288771806,
+          "left_right_balance_db": -0.04960820477906189,
+          "uncentered_channel_correlation": 0.17938918274875829,
+          "side_mid_ratio_db": -1.5751727685248615,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.103704418295766,
+            "qualified_energy": true,
+            "mono_loss_db": 3.9799679148394107
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.6496338742749951,
+            "qualified_energy": true,
+            "mono_loss_db": 2.9902112803946714
+          }
+        }
+      }
+    },
+    {
+      "note": 60,
+      "velocity": 0.25,
+      "baseline_wav_sha256": "101266e8feed0fb7eb64d0374d168daca5941e4394d2d4ef78be2b8d9cf70211",
+      "candidate_wav_sha256": "101266e8feed0fb7eb64d0374d168daca5941e4394d2d4ef78be2b8d9cf70211",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -39.5595117828138,
+          "mono_loss_db": 0.00019874512339084486,
+          "left_right_balance_db": -0.07183471780789476,
+          "uncentered_channel_correlation": 0.9999426723925828,
+          "side_mid_ratio_db": -43.394778930742184,
+          "dominant_hz": 261.5384615384615,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.016699304254681954,
+            "qualified_energy": true,
+            "mono_loss_db": 7.580904378002028e-05
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -35.78093215248708,
+            "qualified_energy": true,
+            "mono_loss_db": 0.43208915667412584
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -45.2898449218216,
+          "mono_loss_db": 0.0005386586785018174,
+          "left_right_balance_db": -0.07063627994953157,
+          "uncentered_channel_correlation": 0.9997850130444093,
+          "side_mid_ratio_db": -39.06443716914332,
+          "dominant_hz": 261.6666666666667,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.0054654007236409645,
+            "qualified_energy": true,
+            "mono_loss_db": 7.353509032671836e-05
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -36.8400831888936,
+            "qualified_energy": true,
+            "mono_loss_db": 2.818373345227859
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.8155461808402,
+          "mono_loss_db": 2.8692507508878657,
+          "left_right_balance_db": 0.025335444044440898,
+          "uncentered_channel_correlation": 0.033011079664356645,
+          "side_mid_ratio_db": -0.2868335949784344,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.093743898644142,
+            "qualified_energy": true,
+            "mono_loss_db": 3.980078234062319
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.6396023862354622,
+            "qualified_energy": true,
+            "mono_loss_db": 2.9902146991879537
+          }
+        }
+      }
+    },
+    {
+      "note": 60,
+      "velocity": 0.85,
+      "baseline_wav_sha256": "13fd1cb58dbdb59afbce1a49f95710481a4a569ab40a94127f4bdb22194b552f",
+      "candidate_wav_sha256": "13fd1cb58dbdb59afbce1a49f95710481a4a569ab40a94127f4bdb22194b552f",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -29.99086876419064,
+          "mono_loss_db": 9.332062420293677e-05,
+          "left_right_balance_db": -0.07287739660757578,
+          "uncentered_channel_correlation": 0.9999922221577298,
+          "side_mid_ratio_db": -46.67802010654409,
+          "dominant_hz": 261.5384615384615,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.14316982479356455,
+            "qualified_energy": true,
+            "mono_loss_db": 7.436669636123597e-05
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -26.995881057931474,
+            "qualified_energy": true,
+            "mono_loss_db": 0.006257798587349078
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -35.80814128750514,
+          "mono_loss_db": 0.00012677017554260008,
+          "left_right_balance_db": -0.07135406248071499,
+          "uncentered_channel_correlation": 0.9999753618685349,
+          "side_mid_ratio_db": -45.34760881729481,
+          "dominant_hz": 261.6666666666667,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.04323354117863551,
+            "qualified_energy": true,
+            "mono_loss_db": 7.327469947566973e-05
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -39.01226141894969,
+            "qualified_energy": true,
+            "mono_loss_db": 0.4041667265956308
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.00649878938091,
+          "mono_loss_db": 2.228037585541473,
+          "left_right_balance_db": 0.011218212154720587,
+          "uncentered_channel_correlation": 0.19736427660467878,
+          "side_mid_ratio_db": -1.7370766280554113,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.10351367429408,
+            "qualified_energy": true,
+            "mono_loss_db": 3.980074070325299
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.649375493098342,
+            "qualified_energy": true,
+            "mono_loss_db": 2.990214642624695
+          }
+        }
+      }
+    },
+    {
+      "note": 72,
+      "velocity": 0.25,
+      "baseline_wav_sha256": "dd5277813a183be6db1845b8b1f9827aa3e7d7713c760d6a2f866e173f3223f4",
+      "candidate_wav_sha256": "dd5277813a183be6db1845b8b1f9827aa3e7d7713c760d6a2f866e173f3223f4",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -42.09492327653878,
+          "mono_loss_db": 0.0003622914945871877,
+          "left_right_balance_db": -0.08805534914472087,
+          "uncentered_channel_correlation": 0.9998845443810324,
+          "side_mid_ratio_db": -40.787080583462895,
+          "dominant_hz": 523.076923076923,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.055327358379271704,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00014151391868080023
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -18.981477312504346,
+            "qualified_energy": true,
+            "mono_loss_db": 0.01560063309986898
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -49.24876870942135,
+          "mono_loss_db": 0.0013237055166617705,
+          "left_right_balance_db": -0.09358189146400521,
+          "uncentered_channel_correlation": 0.9994485088408764,
+          "side_mid_ratio_db": -35.15926745573719,
+          "dominant_hz": 523.3333333333334,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.0153628090840752,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00017097862103410366
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -24.615112689447596,
+            "qualified_energy": true,
+            "mono_loss_db": 0.32724886973595274
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.9146010203059,
+          "mono_loss_db": 2.964141511961576,
+          "left_right_balance_db": 0.017898050629915622,
+          "uncentered_channel_correlation": 0.010685079155584079,
+          "side_mid_ratio_db": -0.09281275354897717,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.092929829879317,
+            "qualified_energy": true,
+            "mono_loss_db": 3.980058202022443
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.6387969281874233,
+            "qualified_energy": true,
+            "mono_loss_db": 2.990210760761335
+          }
+        }
+      }
+    },
+    {
+      "note": 72,
+      "velocity": 0.85,
+      "baseline_wav_sha256": "4972dfc9390dc076203239307a31a25ab0e9cce17282b4f4919934aa3f6520da",
+      "candidate_wav_sha256": "4972dfc9390dc076203239307a31a25ab0e9cce17282b4f4919934aa3f6520da",
+      "sample_identical": true,
+      "maximum_absolute_sample_difference": 0.0,
+      "baseline_windows": {
+        "onset": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -32.63294033619345,
+          "mono_loss_db": 0.0001673694513419812,
+          "left_right_balance_db": -0.08813277472090764,
+          "uncentered_channel_correlation": 0.9999743988397749,
+          "side_mid_ratio_db": -44.14099750543268,
+          "dominant_hz": 523.076923076923,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.4577566654062564,
+            "qualified_energy": true,
+            "mono_loss_db": 0.0001446089730439666
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -9.998516571245485,
+            "qualified_energy": true,
+            "mono_loss_db": 0.00034189598925399235
+          }
+        },
+        "held": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -40.08174093988414,
+          "mono_loss_db": 0.00029958526151687434,
+          "left_right_balance_db": -0.0924029497363747,
+          "uncentered_channel_correlation": 0.9999186199036847,
+          "side_mid_ratio_db": -41.61248888277241,
+          "dominant_hz": 523.3333333333334,
+          "dominant_band": {
+            "relative_stereo_power_db": -0.12424179984955297,
+            "qualified_energy": true,
+            "mono_loss_db": 0.000163568285909263
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -15.49856233575279,
+            "qualified_energy": true,
+            "mono_loss_db": 0.004779205986487808
+          }
+        },
+        "release": {
+          "qualified_energy": true,
+          "stereo_rms_dbfs": -81.74857906790884,
+          "mono_loss_db": 2.807676548294274,
+          "left_right_balance_db": 0.0016276428181444644,
+          "uncentered_channel_correlation": 0.04776127063625667,
+          "side_mid_ratio_db": -0.41516499370223897,
+          "dominant_hz": 3892.727272727273,
+          "dominant_band": {
+            "relative_stereo_power_db": -16.09723726687963,
+            "qualified_energy": true,
+            "mono_loss_db": 3.9800199614706377
+          },
+          "upper_band": {
+            "relative_stereo_power_db": -0.6431064509964564,
+            "qualified_energy": true,
+            "mono_loss_db": 2.9901883621802625
+          }
+        }
+      }
+    }
+  ]
+}

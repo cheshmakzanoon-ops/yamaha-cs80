@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+    "--inputs",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/native-validator-inputs.json",
+    "--out",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/native-validator-observations.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"status\": \"parsed_evidence_not_release_qualified\", \"native_totals\": {\"registered\": 244, \"passed\": 242, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips_total\": 11, \"validator_totals\": {\"required_lanes\": 2, \"validation_invocations\": 2, \"validation_retries\": 0}, \"all_requested_observations_green\": true}\n",
+  "stderr": "",
+  "observed_at_utc": "2026-11-24T08:55:23.035568+00:00"
+}

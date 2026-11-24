@@ -1,0 +1,162 @@
+{
+  "schema": 2,
+  "status": "distributed_vst3_matches_validator_input",
+  "release_qualified": false,
+  "native_validation_passed": null,
+  "verified_at_utc": "2026-11-24T08:55:23.214687+00:00",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "revision": "2026.11.5",
+  "run_id": 45351731801,
+  "attempt": 1,
+  "run_context": {
+    "id": 45351731801,
+    "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "run_attempt": 1,
+    "status_observed": "in_progress",
+    "conclusion_observed": null,
+    "artifact_attempt_binding_verified": false,
+    "scope": "Supplied run API context only; authenticity, original step outcomes and artifact upload-attempt binding remain external gates."
+  },
+  "source_revision": {
+    "file": "src/core/FactoryPresets.h",
+    "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+    "revision": "2026.11.5",
+    "source_pinned": true
+  },
+  "manifest_attempt_declared": null,
+  "platform": "windows",
+  "architecture": "x86_64",
+  "installation_artifact": {
+    "artifact_id": 14903717361,
+    "name": "cs80-windows-install-bundle",
+    "file": "install.zip",
+    "bytes": 6387912,
+    "sha256": "0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f"
+  },
+  "validator_input_artifact": {
+    "artifact_id": 14902949639,
+    "name": "cs80-windows-vst3",
+    "file": "vst3.zip",
+    "bytes": 3198055,
+    "sha256": "bd3c04ba2c168eade18c5103ce8eb2a13eb80a6da06fe9b2e4bae52067f70fff"
+  },
+  "validator_container_sidecars": [
+    {
+      "path": "CS-80 Reference.exp",
+      "type": "file",
+      "bytes": 968,
+      "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+      "format_check": {
+        "format": "AMD64 COFF object",
+        "sections": 2,
+        "symbols": 14
+      },
+      "included_in_vst3_payload_comparison": false
+    },
+    {
+      "path": "CS-80 Reference.lib",
+      "type": "file",
+      "bytes": 2266,
+      "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+      "format_check": {
+        "format": "COFF import archive",
+        "archive_members": 9,
+        "coff_object_members": 3,
+        "short_import_members": 3
+      },
+      "included_in_vst3_payload_comparison": false
+    }
+  ],
+  "validator_container_contract": {
+    "workflow_path": ".github/workflows/build.yml",
+    "workflow_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "workflow_source_pinned": true,
+    "uploaded_directory": "build/CS80Reference_artefacts/Release/VST3",
+    "download_directory": "vst3",
+    "selected_plugin": "vst3\\CS-80 Reference.vst3",
+    "required_command_logs": [
+      "pluginval-windows-seed-regression.log",
+      "pluginval-windows.log"
+    ],
+    "consumer_log": {
+      "file": "validator-job.log",
+      "bytes": 46234,
+      "sha256": "6df4f4b51d1c1636223a5f17ef2f5cced48adf9e3a093db4f94cb28e34d91d8f",
+      "artifact_download_identity_matched": true,
+      "started_validation_paths": [
+        "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3",
+        "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3"
+      ]
+    },
+    "excluded_container_paths": [
+      "CS-80 Reference.exp",
+      "CS-80 Reference.lib"
+    ],
+    "exclusion_rationale": "The committed workflow uploads the whole VST3 output directory, including the MSVC export object and import library. Both actual consumer invocations explicitly select its CS-80 Reference.vst3 subdirectory. Only this exact, format-checked top-level compiler sidecar pair is recorded separately; every member inside the selected bundle remains subject to strict equality."
+  },
+  "inner_archive": {
+    "file": "cs80-reference-windows-x86_64-c76ad288e02f.zip",
+    "bytes": 6382596,
+    "sha256": "c6566e21954aaaa33f9252a7c9b332f8c2edd3a0915bfee547f9927cc72acb06"
+  },
+  "payload_tree_sha256": "0346a6862755b18af6b0c414af1bd8ad4a750c3104a05f28d8b6e9e8d4298fc1",
+  "payload_entries": 6,
+  "files": 2,
+  "symlinks": 0,
+  "file_bytes": 7377015,
+  "members": [
+    {
+      "path": "CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "type": "file",
+      "bytes": 1143,
+      "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/x86_64-win",
+      "type": "directory"
+    },
+    {
+      "path": "CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "type": "file",
+      "bytes": 7375872,
+      "sha256": "6503825833f5ef1cc9150bddb69ecef111dd0ba7717c0e7c2ec604bd6c37ee87"
+    }
+  ],
+  "source_checker_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "checker_sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741",
+  "scope": "Complete selected VST3 bundle file bytes, resources, directory topology and symbolic-link targets. Only the exact Windows top-level .exp/.lib compiler pair can be recorded separately, with format, source-workflow and actual consumer-log checks. Parent directories are inferred when Actions ZIP omits directory records. Archive timestamps, ownership and permission normalization are not compared.",
+  "remaining_qualification": "Authentic API/download metadata, artifact producer/upload/attempt binding, and successful original native job/step/pluginval exits remain separate requirements. Run-context matching does not establish artifact-attempt binding: current artifact metadata and bundle manifests do not identify an attempt. No binary executed by this checker.",
+  "metadata_input_snapshots": {
+    "installation_api": {
+      "file": "install-api.json",
+      "bytes": 799,
+      "sha256": "3d005c93c684e5550ed886c6e3e001497f8a0c5eb50deaff118b097b5898547e"
+    },
+    "validator_api": {
+      "file": "vst3-api.json",
+      "bytes": 789,
+      "sha256": "154b7a55d68436c5676120aa976d439966dbc8f73b64f2e9fbddeaacab5acc0c"
+    },
+    "run_api": {
+      "file": "run-attempt-final-api.json",
+      "bytes": 13843,
+      "sha256": "899a5f63ac146d12102e32fcce64c81686e0a3759fd05bafa16c8f4651929944"
+    }
+  }
+}

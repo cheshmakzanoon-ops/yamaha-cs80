@@ -1,0 +1,481 @@
+{
+  "render_count": 90,
+  "rate": 48000,
+  "note": 60,
+  "pressure": 0,
+  "velocities": [
+    0.25,
+    0.85
+  ],
+  "hold_seconds": 1.4,
+  "tail_seconds": 0.6,
+  "raw_audio_written": false,
+  "nonfinite": 0,
+  "samples_over_full_scale": 0,
+  "worst_peak_dbfs": -22.31490924,
+  "quill_programs": [
+    {
+      "name": "Bright Keys 107",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08050083999999913,
+      "full_soft_firm_db": 0.08062513000000138,
+      "firm_peak_dbfs": -27.15929374,
+      "firm_body_from_onset_db": -13.661867450000003,
+      "soft_peak_dbfs": -27.23472848
+    },
+    {
+      "name": "Dark Keys 108",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08302388999999977,
+      "full_soft_firm_db": 0.0831256900000028,
+      "firm_peak_dbfs": -29.24319721,
+      "firm_body_from_onset_db": -22.06063492,
+      "soft_peak_dbfs": -29.32314829
+    },
+    {
+      "name": "Harpsichord I",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08050460999999842,
+      "full_soft_firm_db": 0.08063117999999747,
+      "firm_peak_dbfs": -27.4291361,
+      "firm_body_from_onset_db": -12.936829079999995,
+      "soft_peak_dbfs": -27.50884961
+    },
+    {
+      "name": "Harpsichord II",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.11028524999999689,
+      "full_soft_firm_db": 0.11003175999999826,
+      "firm_peak_dbfs": -26.84974264,
+      "firm_body_from_onset_db": -12.659969709999999,
+      "soft_peak_dbfs": -26.95453773
+    },
+    {
+      "name": "Lute Harpsichord",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08302212000000253,
+      "full_soft_firm_db": 0.0831227400000003,
+      "firm_peak_dbfs": -28.74288796,
+      "firm_body_from_onset_db": -22.29466223,
+      "soft_peak_dbfs": -28.8223053
+    }
+  ],
+  "minimum_nonquill_onset_contrast": 8.159703780000001,
+  "maximum_nonquill_onset_contrast": 10.969099120000003,
+  "programs": [
+    {
+      "name": "Analog Piano",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.63967358,
+      "full_soft_firm_db": 9.510721849999996,
+      "firm_peak_dbfs": -27.14894045,
+      "firm_body_from_onset_db": -14.214418789999996,
+      "soft_peak_dbfs": -37.25760452
+    },
+    {
+      "name": "Bright Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.92473106,
+      "full_soft_firm_db": 8.883825640000005,
+      "firm_peak_dbfs": -24.97831472,
+      "firm_body_from_onset_db": -9.388634629999999,
+      "soft_peak_dbfs": -34.16795511
+    },
+    {
+      "name": "Amber Keys 97",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.66417293,
+      "full_soft_firm_db": 9.569308380000003,
+      "firm_peak_dbfs": -28.54663613,
+      "firm_body_from_onset_db": -8.33454279,
+      "soft_peak_dbfs": -38.42887802
+    },
+    {
+      "name": "Velvet Keys 98",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.919790060000004,
+      "full_soft_firm_db": 9.58060296,
+      "firm_peak_dbfs": -27.429181,
+      "firm_body_from_onset_db": -15.8809909,
+      "soft_peak_dbfs": -39.14363626
+    },
+    {
+      "name": "Distant Keys 99",
+      "quill_main": false,
+      "onset_soft_firm_db": 10.15284776,
+      "full_soft_firm_db": 10.090528480000003,
+      "firm_peak_dbfs": -28.54905489,
+      "firm_body_from_onset_db": -10.28166255,
+      "soft_peak_dbfs": -39.36511245
+    },
+    {
+      "name": "Neon Keys 100",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.581801480000003,
+      "full_soft_firm_db": 9.463150320000004,
+      "firm_peak_dbfs": -27.17188975,
+      "firm_body_from_onset_db": -15.333509490000004,
+      "soft_peak_dbfs": -37.18069455
+    },
+    {
+      "name": "Hollow Keys 101",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.62967897,
+      "full_soft_firm_db": 8.609639469999998,
+      "firm_peak_dbfs": -28.6401414,
+      "firm_body_from_onset_db": -18.826868060000002,
+      "soft_peak_dbfs": -37.80423723
+    },
+    {
+      "name": "Golden Keys 102",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.082625230000005,
+      "full_soft_firm_db": 8.920294330000004,
+      "firm_peak_dbfs": -29.12459674,
+      "firm_body_from_onset_db": -8.416473870000004,
+      "soft_peak_dbfs": -39.00157215
+    },
+    {
+      "name": "Frozen Keys 103",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.059610649999996,
+      "full_soft_firm_db": 8.983406340000002,
+      "firm_peak_dbfs": -23.68424889,
+      "firm_body_from_onset_db": -11.790311299999999,
+      "soft_peak_dbfs": -33.88988352
+    },
+    {
+      "name": "Electric Keys 104",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.594399900000003,
+      "full_soft_firm_db": 9.540828269999999,
+      "firm_peak_dbfs": -25.29151292,
+      "firm_body_from_onset_db": -9.45033741,
+      "soft_peak_dbfs": -34.87583458
+    },
+    {
+      "name": "Midnight Keys 105",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.826163179999998,
+      "full_soft_firm_db": 8.810567879999994,
+      "firm_peak_dbfs": -24.9236168,
+      "firm_body_from_onset_db": -7.992386370000002,
+      "soft_peak_dbfs": -33.72676941
+    },
+    {
+      "name": "Slow Keys 106",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.845526679999999,
+      "full_soft_firm_db": 9.406077410000002,
+      "firm_peak_dbfs": -24.67445321,
+      "firm_body_from_onset_db": -8.774303000000003,
+      "soft_peak_dbfs": -35.2372328
+    },
+    {
+      "name": "Bright Keys 107",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08050083999999913,
+      "full_soft_firm_db": 0.08062513000000138,
+      "firm_peak_dbfs": -27.15929374,
+      "firm_body_from_onset_db": -13.661867450000003,
+      "soft_peak_dbfs": -27.23472848
+    },
+    {
+      "name": "Dark Keys 108",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08302388999999977,
+      "full_soft_firm_db": 0.0831256900000028,
+      "firm_peak_dbfs": -29.24319721,
+      "firm_body_from_onset_db": -22.06063492,
+      "soft_peak_dbfs": -29.32314829
+    },
+    {
+      "name": "Wide Keys 109",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.910421859999996,
+      "full_soft_firm_db": 8.874868060000004,
+      "firm_peak_dbfs": -25.01169379,
+      "firm_body_from_onset_db": -8.64010162,
+      "soft_peak_dbfs": -34.21045151
+    },
+    {
+      "name": "Soft Keys 110",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.928114230000002,
+      "full_soft_firm_db": 8.890812490000002,
+      "firm_peak_dbfs": -22.33405812,
+      "firm_body_from_onset_db": -6.631676779999996,
+      "soft_peak_dbfs": -31.64927895
+    },
+    {
+      "name": "Amber Keys 111",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.815916389999998,
+      "full_soft_firm_db": 8.743359689999998,
+      "firm_peak_dbfs": -28.32083316,
+      "firm_body_from_onset_db": -8.662152409999997,
+      "soft_peak_dbfs": -36.55131442
+    },
+    {
+      "name": "Velvet Keys 112",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.084568700000002,
+      "full_soft_firm_db": 9.056751380000001,
+      "firm_peak_dbfs": -24.69690728,
+      "firm_body_from_onset_db": -14.03665003,
+      "soft_peak_dbfs": -34.7079045
+    },
+    {
+      "name": "Distant Keys 113",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.842912919999996,
+      "full_soft_firm_db": 8.834184750000006,
+      "firm_peak_dbfs": -26.92143689,
+      "firm_body_from_onset_db": -8.467798809999998,
+      "soft_peak_dbfs": -35.97077908
+    },
+    {
+      "name": "Neon Keys 114",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.874077539999995,
+      "full_soft_firm_db": 8.895797129999998,
+      "firm_peak_dbfs": -23.39146698,
+      "firm_body_from_onset_db": -29.539405089999995,
+      "soft_peak_dbfs": -32.98586048
+    },
+    {
+      "name": "Electric Piano I",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.690407360000002,
+      "full_soft_firm_db": 9.585323960000004,
+      "firm_peak_dbfs": -28.43042976,
+      "firm_body_from_onset_db": -9.016097300000006,
+      "soft_peak_dbfs": -38.4579011
+    },
+    {
+      "name": "Electric Piano II",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.586424140000002,
+      "full_soft_firm_db": 9.535889749999996,
+      "firm_peak_dbfs": -25.3169192,
+      "firm_body_from_onset_db": -8.509330279999997,
+      "soft_peak_dbfs": -34.87551799
+    },
+    {
+      "name": "Tine Piano",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.779140230000003,
+      "full_soft_firm_db": 9.362414970000003,
+      "firm_peak_dbfs": -24.68023197,
+      "firm_body_from_onset_db": -10.129418489999999,
+      "soft_peak_dbfs": -35.27717368
+    },
+    {
+      "name": "Clavichord I",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.705805009999999,
+      "full_soft_firm_db": 8.690184819999999,
+      "firm_peak_dbfs": -28.07547276,
+      "firm_body_from_onset_db": -17.452156170000002,
+      "soft_peak_dbfs": -37.14644776
+    },
+    {
+      "name": "Clavichord II",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.625821209999998,
+      "full_soft_firm_db": 8.607600259999998,
+      "firm_peak_dbfs": -28.64946546,
+      "firm_body_from_onset_db": -20.578108989999997,
+      "soft_peak_dbfs": -37.80693343
+    },
+    {
+      "name": "Funky Clavichord",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.876122420000002,
+      "full_soft_firm_db": 8.901905460000002,
+      "firm_peak_dbfs": -23.4240304,
+      "firm_body_from_onset_db": -27.08266125,
+      "soft_peak_dbfs": -33.05071611
+    },
+    {
+      "name": "Harpsichord I",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08050460999999842,
+      "full_soft_firm_db": 0.08063117999999747,
+      "firm_peak_dbfs": -27.4291361,
+      "firm_body_from_onset_db": -12.936829079999995,
+      "soft_peak_dbfs": -27.50884961
+    },
+    {
+      "name": "Harpsichord II",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.11028524999999689,
+      "full_soft_firm_db": 0.11003175999999826,
+      "firm_peak_dbfs": -26.84974264,
+      "firm_body_from_onset_db": -12.659969709999999,
+      "soft_peak_dbfs": -26.95453773
+    },
+    {
+      "name": "Lute Harpsichord",
+      "quill_main": true,
+      "onset_soft_firm_db": 0.08302212000000253,
+      "full_soft_firm_db": 0.0831227400000003,
+      "firm_peak_dbfs": -28.74288796,
+      "firm_body_from_onset_db": -22.29466223,
+      "soft_peak_dbfs": -28.8223053
+    },
+    {
+      "name": "Toy Piano",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.86839586,
+      "full_soft_firm_db": 8.803405100000006,
+      "firm_peak_dbfs": -24.56143469,
+      "firm_body_from_onset_db": -17.357335299999995,
+      "soft_peak_dbfs": -34.71222847
+    },
+    {
+      "name": "Honky Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.42124339,
+      "full_soft_firm_db": 9.375583140000003,
+      "firm_peak_dbfs": -25.54388675,
+      "firm_body_from_onset_db": -17.853641780000004,
+      "soft_peak_dbfs": -35.74717754
+    },
+    {
+      "name": "Vibes Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.92951699,
+      "full_soft_firm_db": 8.89237301,
+      "firm_peak_dbfs": -22.31490924,
+      "firm_body_from_onset_db": -6.9648343399999995,
+      "soft_peak_dbfs": -31.65772692
+    },
+    {
+      "name": "Celesta",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.107633680000003,
+      "full_soft_firm_db": 9.073630780000002,
+      "firm_peak_dbfs": -24.47666696,
+      "firm_body_from_onset_db": -14.064314880000001,
+      "soft_peak_dbfs": -34.58195295
+    },
+    {
+      "name": "Saw Pulse Piano",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.132316509999995,
+      "full_soft_firm_db": 8.957792169999998,
+      "firm_peak_dbfs": -29.17880349,
+      "firm_body_from_onset_db": -8.91678907,
+      "soft_peak_dbfs": -39.28525785
+    },
+    {
+      "name": "Soft Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.807943029999997,
+      "full_soft_firm_db": 9.48818482,
+      "firm_peak_dbfs": -27.31897769,
+      "firm_body_from_onset_db": -15.921983149999996,
+      "soft_peak_dbfs": -38.69429799
+    },
+    {
+      "name": "Chorus Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.907726509999996,
+      "full_soft_firm_db": 8.873093599999997,
+      "firm_peak_dbfs": -25.0419007,
+      "firm_body_from_onset_db": -8.915211040000003,
+      "soft_peak_dbfs": -34.22811529
+    },
+    {
+      "name": "Stage Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.682380420000001,
+      "full_soft_firm_db": 9.546585989999997,
+      "firm_peak_dbfs": -27.17117233,
+      "firm_body_from_onset_db": -14.671931559999997,
+      "soft_peak_dbfs": -37.35735398
+    },
+    {
+      "name": "Velocity Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 10.969099120000003,
+      "full_soft_firm_db": 10.743234600000001,
+      "firm_peak_dbfs": -27.99511085,
+      "firm_body_from_onset_db": -16.03634883,
+      "soft_peak_dbfs": -40.1703679
+    },
+    {
+      "name": "Dulcimer",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.812029449999997,
+      "full_soft_firm_db": 8.806329640000001,
+      "firm_peak_dbfs": -26.85804176,
+      "firm_body_from_onset_db": -8.481244509999996,
+      "soft_peak_dbfs": -35.86110391
+    },
+    {
+      "name": "Reed Piano",
+      "quill_main": false,
+      "onset_soft_firm_db": 10.141284570000003,
+      "full_soft_firm_db": 10.082222129999998,
+      "firm_peak_dbfs": -28.45046467,
+      "firm_body_from_onset_db": -10.30080118,
+      "soft_peak_dbfs": -39.27612032
+    },
+    {
+      "name": "Glass Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.060020640000001,
+      "full_soft_firm_db": 8.981873239999999,
+      "firm_peak_dbfs": -23.66523156,
+      "firm_body_from_onset_db": -13.509104409999996,
+      "soft_peak_dbfs": -33.88581161
+    },
+    {
+      "name": "Tremolo Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.84650006,
+      "full_soft_firm_db": 8.822571359999998,
+      "firm_peak_dbfs": -24.84689251,
+      "firm_body_from_onset_db": -8.719319950000003,
+      "soft_peak_dbfs": -33.76811862
+    },
+    {
+      "name": "Contour Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.840626969999995,
+      "full_soft_firm_db": 8.758787569999996,
+      "firm_peak_dbfs": -28.33338392,
+      "firm_body_from_onset_db": -9.36985223,
+      "soft_peak_dbfs": -36.55320396
+    },
+    {
+      "name": "Pressure Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 8.159703780000001,
+      "full_soft_firm_db": 7.9794766899999985,
+      "firm_peak_dbfs": -28.48314575,
+      "firm_body_from_onset_db": -11.570885169999997,
+      "soft_peak_dbfs": -38.07285737
+    },
+    {
+      "name": "LFO Pan Keys",
+      "quill_main": false,
+      "onset_soft_firm_db": 9.36553765,
+      "full_soft_firm_db": 9.269735259999997,
+      "firm_peak_dbfs": -26.5761374,
+      "firm_body_from_onset_db": -7.686641720000004,
+      "soft_peak_dbfs": -36.4386536
+    }
+  ],
+  "inspected_file_sha256": {
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/curated/Keys.inc": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+    "build-preset/cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+    "build-preset/cs80_keyboard_response_tests": "ffb05708864c925d56fded46a38efce6a87a767271e749822d89b7b55eecc07e",
+    "build-preset/cs80_struck_body_dynamics_tests": "b9ad5f09d12feb856d55ccab3fc62c4de5b702eebeb7e10ad1f6b2b1881f84f1",
+    "build-preset/cs80_piano_course_geometry_tests": "5320bfc7c54339b5c3f3084252b9951416fd58bf638fe6ca95ef73be9e2e9ccc"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "scope": "One historical2026.11.4 Windows artifact public-route control; no current2026.11.5 native/package acceptance",
+  "historical_control_accepted": true,
+  "artifact_id": 14856804857,
+  "artifact_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "artifact_run_id": 45246863788,
+  "artifact_name": "cs80-windows-install-bundle",
+  "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+  "public_get_status": 200,
+  "bytes": 6361027,
+  "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+  "fresh_authenticated_api_size_hash_match": true,
+  "local_retained_zip_rehash_match": true,
+  "credentials_supplied_by_probe": false,
+  "signed_query_retained": false,
+  "head_request_status": 404,
+  "range_get_status": 206,
+  "head_is_not_a_valid_get_availability_gate": true,
+  "download_completed_at_utc": "2026-11-24T07:59:46.218095+00:00",
+  "expiry_utc": "2027-02-21T19:14:35Z",
+  "expiry_America_Halifax": "2027-02-21T15:14:35-04:00",
+  "expiry_zone_abbreviation": "AST",
+  "native_package_qualified_here": false,
+  "current_release_public_routes_qualified": false,
+  "api_acquisition": {
+    "tool": "mcp__codex_apps__github_fetch_workflow_run_artifacts",
+    "run_id": 45246863788,
+    "selected_artifact_id": 14856804857,
+    "observation_window_utc": [
+      "2026-11-24T07:59:33Z",
+      "2026-11-24T07:59:57Z"
+    ]
+  },
+  "input_files": [
+    {
+      "path": "a57-route-control-artifact-api.json",
+      "sha256": "065fca522dde216211a5d7c26881cdf38a91dd38c1a0b4f94de1f723b05b72cf"
+    },
+    {
+      "path": "a57-public-route-control.json",
+      "sha256": "2f94e7d466b0bf82601f5db80238e88780234a8a3878d157523a5c3557b4f500"
+    },
+    {
+      "path": "a57-public-route-control-full.json",
+      "sha256": "49b12fa4319c8a005f7a96c8774faaf8291763bfce8c2d2036af27073048f604"
+    }
+  ]
+}

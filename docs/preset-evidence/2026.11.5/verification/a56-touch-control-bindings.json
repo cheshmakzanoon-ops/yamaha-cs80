@@ -1,0 +1,62 @@
+{
+  "worker": 56,
+  "scope": "Existing same-engine touch evidence input and result reconciliation; no new audio rendering.",
+  "six_complete_202_value_vectors_match_final_or_zero_extended_baseline": true,
+  "common_master_is_explicitly_0_5": true,
+  "programs": [
+    {
+      "name": "Noise Pad",
+      "old_controls": {
+        "common_master_contrast_db": 3.095326416,
+        "complete_patch_contrast_db": 3.0953264134501204,
+        "absolute_difference_db": 2.549879418722867e-09
+      },
+      "new_controls": {
+        "common_master_contrast_db": 6.915161137,
+        "complete_patch_contrast_db": 6.915161135566642,
+        "absolute_difference_db": 1.4333583209236167e-09
+      }
+    },
+    {
+      "name": "Ether Pad",
+      "old_controls": {
+        "common_master_contrast_db": 2.649972307,
+        "complete_patch_contrast_db": 2.6499723138359244,
+        "absolute_difference_db": 6.835924271086924e-09
+      },
+      "new_controls": {
+        "common_master_contrast_db": 6.821344033,
+        "complete_patch_contrast_db": 6.821344037112887,
+        "absolute_difference_db": 4.11288691992695e-09
+      }
+    },
+    {
+      "name": "Sub Bass",
+      "old_controls": {
+        "common_master_contrast_db": 7.45469421,
+        "complete_patch_contrast_db": 7.454694220206207,
+        "absolute_difference_db": 1.0206206546570229e-08
+      },
+      "new_controls": {
+        "common_master_contrast_db": 9.381205479,
+        "complete_patch_contrast_db": 9.38120548223501,
+        "absolute_difference_db": 3.2350104817169267e-09
+      }
+    }
+  ],
+  "inputs": {
+    "verification/a33-touch-equal-trim.cpp": {
+      "bytes": 11149,
+      "sha256": "89e813e0a5d93519d0149b005ad34a1744e7cb20f13432d6f9b4b109332ae815"
+    },
+    "verification/a33-touch-equal-trim.log": {
+      "bytes": 376,
+      "sha256": "776defb8e9436f722d575fdda40c51c61e2182f296e7bb0b9278efd16eb9c456"
+    },
+    "verification/a33-touch-controls.json": {
+      "bytes": 22130,
+      "sha256": "205c4035ae72a53f130565884fe19285bbb9f69d8971f263a3b6b0667a61d24b"
+    }
+  },
+  "quality_score": false
+}

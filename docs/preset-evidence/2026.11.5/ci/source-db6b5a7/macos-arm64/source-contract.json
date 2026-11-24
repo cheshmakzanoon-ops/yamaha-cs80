@@ -1,0 +1,80 @@
+{
+  "worker": "a50",
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "producer_job_id": 138282948529,
+  "target": "macos-arm64",
+  "runner": "macos-15",
+  "files": {
+    ".github/workflows/build.yml": {
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79"
+    },
+    "CMakeLists.txt": {
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f",
+      "git_blob": "f0875e30885046497c24acecf037ac53eb152f69"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+      "git_blob": "d65dbb6de2f47abd682eae2fdab51a27363f5797"
+    },
+    "scripts/verify-ci-juce-source.cmake": {
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+      "git_blob": "6ab74336ad65d1edc17a957b49208ac3c1d81ca9"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    "scripts/verify-ci-bundle.py": {
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "git_blob": "fc6a8d091e2e647c723976cf21710b37d50f3897"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "git_blob": "d6a37c684e02b897eb93eaa24dcb89289702704d"
+    }
+  },
+  "required_new_tests": [
+    "cs80_struck_body_dynamics_tests",
+    "cs80_instrument_body_variant_tests",
+    "cs80_vocal_body_tests",
+    "cs80_body_articulation_engine_tests",
+    "cs80_original_articulation_tests",
+    "cs80_keyboard_response_tests",
+    "cs80_mallet_preset_refinement_tests",
+    "cs80_bass_plucked_refinement_tests",
+    "cs80_brass_organ_refinement_tests",
+    "cs80_wind_string_refinement_tests",
+    "cs80_pad_poly_refinement_tests",
+    "cs80_fx_refinement_tests",
+    "cs80_modern_preset_refinement_tests",
+    "cs80_lead_refinement_tests",
+    "cs80_preset_response_coverage_tests"
+  ],
+  "provisional_registered_count": 266,
+  "scope": "Source contract only; no passing native test, validator lane, artifact or platform qualification inferred.",
+  "code_review": {
+    "native_ctest_exit_unsuppressed": true,
+    "all_four_validators_set_euo_pipefail": true,
+    "strictness": 10,
+    "version": "1.0.4",
+    "programs_expected": 523,
+    "seeded_au_gui": "0x2b4eef5",
+    "au_signed_before_copy": true,
+    "whole_au_diff_before_and_after_validation": true,
+    "no_intervening_build_between_validation_and_packaging": true,
+    "all_runtime_lanes_required_before_package": true,
+    "continue_on_error": false,
+    "artifact_evidence_uploads_run_always_and_are_not_success_proof": true
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "summary": {
+    "programs": 523,
+    "stereo_frames_per_version": 103153374,
+    "seconds_per_version": 2149.028625,
+    "all_samples_finite_and_within_full_scale": true,
+    "exact_pcm_equal": [
+      "Init Patch",
+      "Electric Leads 136",
+      "Pressure Lead",
+      "Init Circuit"
+    ],
+    "both_silent": [
+      "Electric Leads 136",
+      "Pressure Lead"
+    ],
+    "changed_raw_pcm": 519,
+    "audible_comparisons": 521,
+    "equal_rms_residual_above_0_001": 516,
+    "averaged_spectral_hellinger_above_0_01": 188,
+    "rms_change_db": {
+      "min": -9.623121436457147,
+      "median": -0.9877233725954357,
+      "max": 3.177715759605417
+    },
+    "equal_rms_residual": {
+      "min": 0.0,
+      "median": 0.04090451793606999,
+      "max": 1.5656811107921647
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.0,
+      "median": 0.005597779826674445,
+      "max": 0.7549173622779995
+    },
+    "highest_before_peak_dbfs": -13.537388218538613,
+    "highest_after_peak_dbfs": -13.40001374848623
+  },
+  "pressure_summary": {
+    "programs": 2,
+    "stereo_frames_per_version": 384000,
+    "seconds_per_version": 8.0,
+    "all_samples_finite_and_within_full_scale": true,
+    "exact_pcm_equal": [],
+    "both_silent": [],
+    "changed_raw_pcm": 2,
+    "audible_comparisons": 2,
+    "equal_rms_residual_above_0_001": 2,
+    "averaged_spectral_hellinger_above_0_01": 2,
+    "rms_change_db": {
+      "min": 0.38506690141986055,
+      "median": 0.3904800403664878,
+      "max": 0.3958931793131151
+    },
+    "equal_rms_residual": {
+      "min": 0.09892733942846024,
+      "median": 0.09969761406632985,
+      "max": 0.10046788870419945
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.015083269131098134,
+      "median": 0.015323975832858933,
+      "max": 0.015564682534619732
+    },
+    "highest_before_peak_dbfs": -15.774491121596377,
+    "highest_after_peak_dbfs": -15.876493973479226
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "schema": 1,
+  "review": "A45 factory reload and saved-session user path",
+  "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "status": "source_contract_review_complete",
+  "production_blocker_found": false,
+  "native_execution_performed": false,
+  "release_qualified": false,
+  "scope": "Source and committed-inventory inspection only. Existing test assertions are mapped, not reported as newly executed passes. No UI, DAW, native product, shared build or audio probe was run by A45.",
+  "inventory_observations": {
+    "program_count": 523,
+    "core_parameter_count": 202,
+    "fresh_program": {
+      "host_index": 222,
+      "name": "Brass Swell I"
+    },
+    "initialization_programs": [
+      {
+        "host_index": 43,
+        "name": "Init Patch"
+      },
+      {
+        "host_index": 522,
+        "name": "Init Circuit"
+      }
+    ],
+    "matrix_amount_parameters": [
+      "mod1_amount",
+      "mod2_amount",
+      "mod3_amount",
+      "mod4_amount",
+      "mod5_amount",
+      "mod6_amount",
+      "mod7_amount",
+      "mod8_amount",
+      "mod9_amount",
+      "mod10_amount",
+      "mod11_amount",
+      "mod12_amount",
+      "mod13_amount",
+      "mod14_amount",
+      "mod15_amount",
+      "mod16_amount"
+    ],
+    "matrix_amount_values_inspected": 8368,
+    "nonzero_matrix_amounts": []
+  },
+  "source_observations": [
+    {
+      "id": "fresh_instance",
+      "finding": "Constructor calls applyFreshInstancePatch; curated index 0 resolves to host 222 Brass Swell I. A later host/session restore can replace it.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::Cs80AudioProcessor",
+        "src/plugin/PluginProcessor.cpp::applyFreshInstancePatch",
+        "tests/ProgramLibraryHostTests.h::testProgramLibraryHost"
+      ]
+    },
+    {
+      "id": "stable_catalogue",
+      "finding": "523 existing entries; original 0\u2013221 and later 222\u2013522. Factory browsing is distinct from user files.",
+      "anchors": [
+        "src/core/FactoryPresets.cpp::programLibrary",
+        "src/plugin/PresetBrowser.cpp::refresh"
+      ]
+    },
+    {
+      "id": "session_recall",
+      "finding": "setStateInformation restores normalized serialized controls, name/index and A/B data; it never calls loadFactoryPreset to substitute current factory values.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::setStateInformation",
+        "src/plugin/PluginProcessor.cpp::setPresetMetadata"
+      ]
+    },
+    {
+      "id": "explicit_load",
+      "finding": "LOAD, list Enter, search Enter and double-click reach loadSelected/loadEntry/loadFactoryPreset without an already-loaded short circuit.",
+      "anchors": [
+        "src/plugin/PresetBrowser.cpp::loadSelected",
+        "src/plugin/PresetBrowser.cpp::loadEntry",
+        "src/plugin/PluginProcessor.cpp::loadFactoryPreset"
+      ]
+    },
+    {
+      "id": "audition_guard",
+      "finding": "Automatic audition skips a row already identified as loaded, protecting live edits; search/filter/restore selection does not audition.",
+      "anchors": [
+        "src/plugin/PresetBrowser.cpp::selectedRowsChanged",
+        "src/plugin/PresetBrowser.cpp::listBoxItemClicked",
+        "src/plugin/PresetBrowser.cpp::setAudition",
+        "tests/PresetClickTests.h"
+      ]
+    },
+    {
+      "id": "origin_not_name",
+      "finding": "Serialized session recall has unknown runtime origin; syncLoaded uses exact runtime origin and factory index/file, never a name guess. LOAD may be shown instead of RELOAD for an old same-name session.",
+      "anchors": [
+        "src/plugin/PresetOrigin.h",
+        "src/plugin/PresetBrowser.cpp::syncLoaded",
+        "src/plugin/PresetBrowser.cpp::updateLoadLabel",
+        "tests/PresetIdentityTests.h"
+      ]
+    },
+    {
+      "id": "user_name_collision",
+      "finding": "A same-name saved user patch stays a separate file; FACTORY LIBRARY avoids selecting that saved recipe by mistake.",
+      "anchors": [
+        "src/plugin/PresetBrowser.cpp::loadEntry",
+        "src/plugin/PluginProcessor.cpp::loadUserPreset",
+        "tests/PresetIdentityTests.h"
+      ]
+    },
+    {
+      "id": "panel_sources",
+      "finding": "Factory recall calls applyValues with resetSources=true, selecting PANEL on both ranks so saved hardware/memory selection cannot suppress the new factory bodies.",
+      "anchors": [
+        "src/plugin/PluginProcessor.h::applyValues",
+        "src/plugin/PluginProcessor.cpp::applyValues",
+        "src/plugin/PluginProcessor.cpp::resetHardwareSources"
+      ]
+    },
+    {
+      "id": "setup_retention",
+      "finding": "Factory recall preserves physical setup/session parameters while replacing sound parameters, including all 12 body controls. It is not a reset of the entire instrument or host.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::isPhysicalSetupParameter",
+        "src/plugin/PluginProcessor.cpp::applyValues",
+        "tests/InstrumentBodyHostTests.h"
+      ]
+    },
+    {
+      "id": "next_note",
+      "finding": "Body model, decay, size, variant and articulation are captured at accepted note onset; body mix and brightness remain live. Existing voices are not rebuilt just by loading or editing selectors.",
+      "anchors": [
+        "src/core/Engine.cpp::startVoice",
+        "src/core/Engine.cpp::processInternalSample",
+        "tests/InstrumentBodyHostTests.h"
+      ]
+    },
+    {
+      "id": "pre_body_defaults",
+      "finding": "Missing body fields use declared defaults: models/mixes 0, brightness 0.5, decay 1, sizes 1, variants 0. They do not inherit the receiving live body.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::normaliseRestoredState",
+        "src/core/Params.h",
+        "tests/InstrumentBodyHostTests.h"
+      ]
+    },
+    {
+      "id": "preceding_variants",
+      "finding": "A prior size-aware ten-control patch retains those fields and defaults only the two absent variants to Standard, whether session or user preset.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::normaliseRestoredState",
+        "src/plugin/PluginProcessor.cpp::loadUserPreset",
+        "tests/InstrumentBodyHostTests.h"
+      ]
+    },
+    {
+      "id": "inactive_ab",
+      "finding": "An inactive saved A/B slot completes missing fields from their declared defaults independently of the live slot; toggling A/B recalls its saved sound rather than the newest factory recipe.",
+      "anchors": [
+        "src/plugin/PluginProcessorLibrary.cpp::readLibraryState",
+        "src/plugin/PluginProcessorLibrary.cpp::recallAbSnapshot",
+        "tests/InstrumentBodyHostTests.h"
+      ]
+    },
+    {
+      "id": "revert",
+      "finding": "REVERT restores the captured opening sound, including saved controls/sources/memories/modern configuration; it can restore an older recipe.",
+      "anchors": [
+        "src/plugin/PresetBrowser.cpp::captureOpening",
+        "src/plugin/PresetBrowser.cpp::revertToOpening",
+        "src/plugin/PluginProcessor.cpp::restorePresetBrowserSound",
+        "tests/PresetRevertTests.h"
+      ]
+    },
+    {
+      "id": "retained_modern_routes",
+      "finding": "Factory recall need not erase stored MSEG shapes/routing: all 16 factory matrix amounts are zero in every 523-program vector, and ModernLayer::rebuild excludes zero-amount slots.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::applyValues",
+        "src/core/Engine.cpp::buildSettings",
+        "src/core/ModernLayer.h::rebuild",
+        "docs/preset-evidence/2026.11.5/inventory.json"
+      ]
+    },
+    {
+      "id": "thread_and_controllers",
+      "finding": "GUI recall publishes APVTS controls for the next audio block; normal program recall retains held keys/controller ownership and host automation rather than resetting them. Fresh notes and an unautomated comparison instance avoid conflating these with factory data.",
+      "anchors": [
+        "src/plugin/PluginProcessor.cpp::applyValues",
+        "src/plugin/PluginProcessorLibrary.cpp::handleProgramChange"
+      ]
+    },
+    {
+      "id": "documentation",
+      "finding": "The committed installation and preset guides explain explicit loading, same-name saved controls, REVERT and next-note variants. Follow-up review corrected two stale current .4 revision labels in the installation guide to .5 and clarified LOAD (or RELOAD); the separate guide review records the authorized documentation edit.",
+      "anchors": [
+        "docs/INSTALL_AND_QUICKSTART.md::Update, uninstall, or report a problem",
+        "docs/PRESET_GUIDE.md::Recalling a revised sound"
+      ]
+    }
+  ],
+  "native_cases_to_consult": [
+    "cs80_modern_recall_host_tests",
+    "cs80_preset_click_tests",
+    "cs80_preset_identity_tests",
+    "cs80_preset_refresh_tests",
+    "cs80_preset_revert_tests",
+    "cs80_preset_file_recall_tests",
+    "cs80_ui_smoke"
+  ],
+  "source_files": [
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "bytes": 94932,
+      "sha256": "662baff4e7217f65f47a31846096ebd48b4610fe3d6d07b797a1db4dc56fe387",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "bytes": 28198,
+      "sha256": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.cpp",
+      "bytes": 22323,
+      "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.cpp",
+      "bytes": 183655,
+      "sha256": "793bbec4b4b19323deb3f6f1174b7bfc471a1dab16b896cefd718100d3589860",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.h",
+      "bytes": 14210,
+      "sha256": "22d677aab5242a30073308904fc9c555086114b4060d3961c28a788d95052d8d",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/plugin/PresetOrigin.h",
+      "bytes": 807,
+      "sha256": "f1021eeeaed1bfa4a1f84ffff706d0e6a28c0ab16730668b4475ec6a7199003a",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168522,
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/core/ModernLayer.h",
+      "bytes": 26497,
+      "sha256": "8bba54f736e0215d3ce8c7be457990ffe0242c1322ba47faf6beae3d36a808d8",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "bytes": 25409,
+      "sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 10882,
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "bytes": 37112,
+      "sha256": "f7ffbd3d14bab241b2a1611c377fc17d0b52bc5476fc8ee2883bf3e11fab1331",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/ProgramLibraryHostTests.h",
+      "bytes": 25512,
+      "sha256": "c7d5c2481fd0a6a1efcbcdac2b9961b02f387420d1a93ec9409e129fcc2d4a30",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/PresetClickTests.h",
+      "bytes": 8174,
+      "sha256": "d1eda112adcc0ce436f9d584c320588249af09368146db417cb8e0be192eab3d",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/PresetIdentityTests.h",
+      "bytes": 20758,
+      "sha256": "4952c4b440caade1f3c424f860f4e3caf20f4b3e5b8631c741615446be947380",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/PresetRevertTests.h",
+      "bytes": 43335,
+      "sha256": "94f7bb9b1121a1793f31f10d5b22f606c79a71c8e958e3b0162b2512af9153f3",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "tests/PresetRefreshTests.h",
+      "bytes": 10573,
+      "sha256": "4c9dcb815feb38636d0f969d03f744b27e67f0e66e3ddd0d450a81036564b2be",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "bytes": 219887,
+      "sha256": "a5e27f34099d242236fc5202bdf91ad01e6396ab4410f1c8ef44e47901565491",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 16978,
+      "sha256": "fd361870e3b8d28e0ec1986495516cb56f4c72790c1341421525ce0624e1bcff",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 29599,
+      "sha256": "03a80493147fd7d403a417bbbba26fe51c0523d5e98641ea2c119d9491d8c483",
+      "working_copy_matches_source_at_review": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+      "working_copy_matches_source_at_review": true
+    }
+  ],
+  "documentation_followup": {
+    "record": "verification/a45-bundled-guide-review.json",
+    "edited_path": "docs/INSTALL_AND_QUICKSTART.md",
+    "note": "Input hashes below identify the initial exact committed source review. The later authorized guide-only correction changes the working installation guide; code contracts remain pinned to that reviewed source."
+  }
+}

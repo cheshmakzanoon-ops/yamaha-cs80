@@ -1,0 +1,248 @@
+{
+  "scope": "26 original-bank Brass + Delay Brass; complementary to32 authored Brass in runtime suite",
+  "capture_count": 54,
+  "rate": 48000,
+  "note": 60,
+  "velocities": [
+    0.25,
+    0.85
+  ],
+  "pressure": 0,
+  "hold_seconds": 2,
+  "tail_seconds": 0.3,
+  "nonfinite_samples": 0,
+  "samples_over_full_scale": 0,
+  "minimum_touch_contrast_db": 7.2831490100000025,
+  "maximum_touch_contrast_db": 9.662944240000002,
+  "maximum_peak_dbfs": -17.38273667,
+  "minimum_soft_peak_dbfs": -40.86215517,
+  "hashes": {
+    "src/core/curated/Brass.inc": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "tests/BrassOrganRefinementTests.cpp": "d1fa9f639e5e4e3159e23434a3cb7dd6e345e4286aef7bd12c7e5bf9e3b40c00",
+    "tests/WindBodyFormantTests.cpp": "dcd6b35b30ae3a9f9a71c430a4d926340efe17305a3e5b98e721fd1da1fc51c8",
+    "build-preset/cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+    "build-preset/cs80_brass_organ_refinement_tests": "151e9361b8c66c6764edc628a0aa856cb38a65e71b048e0587a375c75d8b77b4",
+    "build-preset/cs80_wind_body_formant_tests": "c5f6be361ea4567809ebeb2084e4f4e9cd0ebc8f78ab42cc0598c1466bb50059"
+  },
+  "programs": [
+    {
+      "name": "Replicant Brass",
+      "whole_capture_firm_minus_soft_db": 7.487311210000001,
+      "soft_peak_dbfs": -25.34005345,
+      "firm_peak_dbfs": -17.38273667,
+      "soft_rms_dbfs": -36.42735236,
+      "firm_rms_dbfs": -28.94004115
+    },
+    {
+      "name": "Runner Brass",
+      "whole_capture_firm_minus_soft_db": 7.4901818800000015,
+      "soft_peak_dbfs": -29.8499666,
+      "firm_peak_dbfs": -22.56953639,
+      "soft_rms_dbfs": -43.07588332,
+      "firm_rms_dbfs": -35.58570144
+    },
+    {
+      "name": "French Horn",
+      "whole_capture_firm_minus_soft_db": 8.114727019999997,
+      "soft_peak_dbfs": -40.74901618,
+      "firm_peak_dbfs": -31.2476864,
+      "soft_rms_dbfs": -48.18390615,
+      "firm_rms_dbfs": -40.06917913
+    },
+    {
+      "name": "Breathing Brass",
+      "whole_capture_firm_minus_soft_db": 8.365834119999995,
+      "soft_peak_dbfs": -33.9543255,
+      "firm_peak_dbfs": -25.20553687,
+      "soft_rms_dbfs": -45.57849449,
+      "firm_rms_dbfs": -37.21266037
+    },
+    {
+      "name": "Amber Brass 1",
+      "whole_capture_firm_minus_soft_db": 8.072999500000002,
+      "soft_peak_dbfs": -30.74575573,
+      "firm_peak_dbfs": -22.98239857,
+      "soft_rms_dbfs": -40.38891324,
+      "firm_rms_dbfs": -32.31591374
+    },
+    {
+      "name": "Velvet Brass 2",
+      "whole_capture_firm_minus_soft_db": 8.083075610000002,
+      "soft_peak_dbfs": -40.86215517,
+      "firm_peak_dbfs": -31.45722585,
+      "soft_rms_dbfs": -48.30592299,
+      "firm_rms_dbfs": -40.22284738
+    },
+    {
+      "name": "Distant Brass 3",
+      "whole_capture_firm_minus_soft_db": 7.852097229999998,
+      "soft_peak_dbfs": -34.87992354,
+      "firm_peak_dbfs": -27.07890427,
+      "soft_rms_dbfs": -45.80550822,
+      "firm_rms_dbfs": -37.95341099
+    },
+    {
+      "name": "Neon Brass 4",
+      "whole_capture_firm_minus_soft_db": 9.269242179999999,
+      "soft_peak_dbfs": -37.89921887,
+      "firm_peak_dbfs": -28.1358231,
+      "soft_rms_dbfs": -51.61650418,
+      "firm_rms_dbfs": -42.347262
+    },
+    {
+      "name": "Hollow Brass 5",
+      "whole_capture_firm_minus_soft_db": 8.66737552,
+      "soft_peak_dbfs": -37.29345896,
+      "firm_peak_dbfs": -27.5866389,
+      "soft_rms_dbfs": -50.07659404,
+      "firm_rms_dbfs": -41.40921852
+    },
+    {
+      "name": "Golden Brass 6",
+      "whole_capture_firm_minus_soft_db": 8.572725470000002,
+      "soft_peak_dbfs": -37.85970482,
+      "firm_peak_dbfs": -28.30851863,
+      "soft_rms_dbfs": -49.21690871,
+      "firm_rms_dbfs": -40.64418324
+    },
+    {
+      "name": "Frozen Brass 7",
+      "whole_capture_firm_minus_soft_db": 9.332233500000001,
+      "soft_peak_dbfs": -37.56967711,
+      "firm_peak_dbfs": -28.64452949,
+      "soft_rms_dbfs": -48.42640953,
+      "firm_rms_dbfs": -39.09417603
+    },
+    {
+      "name": "Electric Brass 8",
+      "whole_capture_firm_minus_soft_db": 9.662944240000002,
+      "soft_peak_dbfs": -28.73671833,
+      "firm_peak_dbfs": -18.63190382,
+      "soft_rms_dbfs": -38.97915107,
+      "firm_rms_dbfs": -29.31620683
+    },
+    {
+      "name": "Midnight Brass 9",
+      "whole_capture_firm_minus_soft_db": 7.863844190000002,
+      "soft_peak_dbfs": -39.12976969,
+      "firm_peak_dbfs": -28.99931003,
+      "soft_rms_dbfs": -49.40353273,
+      "firm_rms_dbfs": -41.53968854
+    },
+    {
+      "name": "Slow Brass 10",
+      "whole_capture_firm_minus_soft_db": 8.334549930000001,
+      "soft_peak_dbfs": -36.78886923,
+      "firm_peak_dbfs": -28.48634628,
+      "soft_rms_dbfs": -50.8534902,
+      "firm_rms_dbfs": -42.51894027
+    },
+    {
+      "name": "Bright Brass 11",
+      "whole_capture_firm_minus_soft_db": 8.938474370000002,
+      "soft_peak_dbfs": -27.63283032,
+      "firm_peak_dbfs": -18.41423994,
+      "soft_rms_dbfs": -39.73599689,
+      "firm_rms_dbfs": -30.79752252
+    },
+    {
+      "name": "Dark Brass 12",
+      "whole_capture_firm_minus_soft_db": 9.207651779999999,
+      "soft_peak_dbfs": -37.13233204,
+      "firm_peak_dbfs": -27.3847485,
+      "soft_rms_dbfs": -51.5606668,
+      "firm_rms_dbfs": -42.35301502
+    },
+    {
+      "name": "Wide Brass 13",
+      "whole_capture_firm_minus_soft_db": 8.46260599,
+      "soft_peak_dbfs": -35.60642807,
+      "firm_peak_dbfs": -27.25568986,
+      "soft_rms_dbfs": -48.2943171,
+      "firm_rms_dbfs": -39.83171111
+    },
+    {
+      "name": "Soft Brass 14",
+      "whole_capture_firm_minus_soft_db": 8.097565519999996,
+      "soft_peak_dbfs": -40.80791798,
+      "firm_peak_dbfs": -31.37516063,
+      "soft_rms_dbfs": -48.25779558,
+      "firm_rms_dbfs": -40.16023006
+    },
+    {
+      "name": "Amber Brass 15",
+      "whole_capture_firm_minus_soft_db": 8.670406310000004,
+      "soft_peak_dbfs": -32.91872726,
+      "firm_peak_dbfs": -24.05129802,
+      "soft_rms_dbfs": -45.62340437,
+      "firm_rms_dbfs": -36.95299806
+    },
+    {
+      "name": "Velvet Brass 16",
+      "whole_capture_firm_minus_soft_db": 7.571932350000001,
+      "soft_peak_dbfs": -27.26362159,
+      "firm_peak_dbfs": -19.22590692,
+      "soft_rms_dbfs": -36.94074002,
+      "firm_rms_dbfs": -29.36880767
+    },
+    {
+      "name": "Distant Brass 17",
+      "whole_capture_firm_minus_soft_db": 7.511428590000001,
+      "soft_peak_dbfs": -29.92351898,
+      "firm_peak_dbfs": -22.55869434,
+      "soft_rms_dbfs": -42.78194069,
+      "firm_rms_dbfs": -35.2705121
+    },
+    {
+      "name": "Neon Brass 18",
+      "whole_capture_firm_minus_soft_db": 8.281314090000002,
+      "soft_peak_dbfs": -35.30307017,
+      "firm_peak_dbfs": -27.6573869,
+      "soft_rms_dbfs": -55.36180361,
+      "firm_rms_dbfs": -47.08048952
+    },
+    {
+      "name": "Hollow Brass 19",
+      "whole_capture_firm_minus_soft_db": 8.148028840000002,
+      "soft_peak_dbfs": -27.4119519,
+      "firm_peak_dbfs": -18.81448082,
+      "soft_rms_dbfs": -38.36221288,
+      "firm_rms_dbfs": -30.21418404
+    },
+    {
+      "name": "Golden Brass 20",
+      "whole_capture_firm_minus_soft_db": 9.176222639999999,
+      "soft_peak_dbfs": -37.31145519,
+      "firm_peak_dbfs": -28.89144639,
+      "soft_rms_dbfs": -48.48653889,
+      "firm_rms_dbfs": -39.31031625
+    },
+    {
+      "name": "Frozen Brass 21",
+      "whole_capture_firm_minus_soft_db": 8.41571614,
+      "soft_peak_dbfs": -32.85641194,
+      "firm_peak_dbfs": -24.0159474,
+      "soft_rms_dbfs": -45.27122599,
+      "firm_rms_dbfs": -36.85550985
+    },
+    {
+      "name": "Electric Brass 22",
+      "whole_capture_firm_minus_soft_db": 8.912018280000005,
+      "soft_peak_dbfs": -36.50896642,
+      "firm_peak_dbfs": -28.08900551,
+      "soft_rms_dbfs": -62.94193734,
+      "firm_rms_dbfs": -54.02991906
+    },
+    {
+      "name": "Delay Brass",
+      "whole_capture_firm_minus_soft_db": 7.2831490100000025,
+      "soft_peak_dbfs": -35.37911031,
+      "firm_peak_dbfs": -27.00455935,
+      "soft_rms_dbfs": -49.19318877,
+      "firm_rms_dbfs": -41.91003976
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "reviewer": "A54",
+  "scope": "Current capture parameter-contract repair and focused actual-engine capture tests; no native release qualification.",
+  "production_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "original_failed_execution": {
+    "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+    "run_id": 45344888536,
+    "attempt": 1,
+    "job_id": 138277054911,
+    "failed_step": "Export actual-engine candidate with exact-source provenance",
+    "preceding_numerical_bounds_step": "success",
+    "test_methods": 13,
+    "failures": 3,
+    "test_source_identical_to_db6b": true,
+    "retained_log": "docs/preset-evidence/2026.11.5/ci/source-09af535/measure-failed-original.log",
+    "retained_log_sha256": "5b7c9f5f827dfd66afd6b184264b197dbedd13b50f9e635f1761e0e2ddb43884"
+  },
+  "correction": {
+    "path": "tests/test_parity_capture.py",
+    "old_parameter_count": 200,
+    "new_parameter_count": 202,
+    "explicit_block_counts": [
+      139,
+      1,
+      2,
+      9,
+      39,
+      8,
+      2,
+      2
+    ],
+    "variant_ids": [
+      "body1_variant",
+      "body2_variant"
+    ],
+    "required_variant_default": 0,
+    "default_fixture_checked": true,
+    "live_initial_final_and_default_maps_checked": true,
+    "no_removed_assertions": true,
+    "new_negative_mutation_cases": 12,
+    "new_default_mutation_cases": 7,
+    "new_live_mutation_cases": 5,
+    "test_method_count_unchanged": 13,
+    "byte_unchanged_validation_functions": [
+      "parse_metadata",
+      "read_samples",
+      "f32",
+      "read_live_probes",
+      "half_ulp32",
+      "validate_live_probes"
+    ],
+    "pre_sha256": "f0e878d69d1faf1f3965d733775a994b2ed1e11868f4a2e9c2691e10a21ca89e",
+    "post_sha256": "53fbfc69eb98b4e39d9fe2675c2a5974ac0e9964279ee85a5f92371b234b2113",
+    "pre_git_blob": "930a2132b9c4aac0f7dd27fabecbb35d16af35ad",
+    "post_git_blob": "da4473d44c7a6fc8d96a47079d23828ba23a0595"
+  },
+  "local_execution": {
+    "build_command": "cmake --build build-preset --target cs80_parity_capture --parallel 2",
+    "build_exit_code": 0,
+    "test_command": "python3 tests/test_parity_capture.py --capture build-preset/cs80_parity_capture -v",
+    "test_exit_code": 0,
+    "test_methods_passed": 13,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 4.126,
+    "capture_executable": "build-preset/cs80_parity_capture",
+    "capture_executable_sha256": "e205d281aeaada6c14f257899419fd4a90698a343e66810ba0eb04945bd8d5bb",
+    "scope": "Fresh local core capture target, no JUCE/native plugin execution."
+  },
+  "sibling_audit": {
+    "roots": [
+      "tests",
+      "scripts",
+      "src",
+      ".github",
+      "CMakeLists.txt"
+    ],
+    "extensions": [
+      ".py",
+      ".cpp",
+      ".h",
+      ".cmake",
+      ".yml",
+      ".sh",
+      "CMakeLists.txt"
+    ],
+    "literal_200_306_matches": 222,
+    "files_with_matches": 76,
+    "additional_current_total_defects_found": 0,
+    "changed_executable_files": [
+      "tests/test_parity_capture.py"
+    ],
+    "preserved_historical_contracts": [
+      "compare-preset-audio.py explicitly compares 2026.11.3/198 to2026.11.4/200",
+      "compare-preset-refinement.py compares198 to200",
+      "compare-factory-revisions.py compares190 to198",
+      "compare-preset-response.py compares old200 to current202",
+      "InstrumentBodyHostTests.h and ParameterStateChildIndexTests.cpp retain published200-core/306-host prefix assertions",
+      "compatibility_probe.cpp exports immutable137-parameter baseline corpus and loads it by ID into current defaults"
+    ],
+    "other_matches": "HTTP200, source calibration frequencies, event sample indices, iteration counts, visual dimensions, zoom percentages and historical render counts."
+  },
+  "production_audio_or_factory_data_changed": false,
+  "native_qualified": false,
+  "release_qualified": false
+}

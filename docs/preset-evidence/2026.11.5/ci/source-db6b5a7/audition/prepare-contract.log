@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "status": "prepared_pending_actual_archive",
+  "accepted_archive_content": false,
+  "release_qualified": false,
+  "source_commit": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "source_tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "library_revision": "2026.11.5",
+  "source_files": {
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 18446,
+      "sha256": "352e9a666630f6186847b6a7773ddeea482390b3524cba191e9d666296192381"
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    }
+  },
+  "expected_inventory_sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+  "expected_inventory_source_path": "docs/preset-evidence/2026.11.5/inventory.json",
+  "expected": {
+    "wav_count": 171,
+    "selected_program_count": 81,
+    "audio_seconds": 1033.2,
+    "folder_count": 40,
+    "regular_files": 216,
+    "checksums": 215,
+    "parameters": 202,
+    "programs": 523,
+    "stereo_frames": 49593600
+  }
+}

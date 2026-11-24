@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "scope": "Public-download acceptance only; package contents, producer attempt binding, native tests, validator payloads and listening remain independent gates.",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "run_id": 45366603800,
+  "attempt_context": 1,
+  "public_downloads_qualified": false,
+  "release_qualified": false,
+  "expected_route_count": 5,
+  "verified_route_count": 1,
+  "metadata_observation_utc_minute": "2026-11-24T10:35Z",
+  "metadata_authenticity": "Artifact entries fetched using the authenticated GitHub workflow-artifacts connector; original run JSON fetched using the GitHub repository fetch connector. Retained source snapshots remain required inputs.",
+  "metadata_files": {
+    "run_api": "run-api.json",
+    "artifact_list_api": "artifacts-api.json"
+  },
+  "artifacts": [
+    {
+      "role": "macos_arm64",
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "artifact_id": 14910025415,
+      "artifact_api": "14910025415-api.json",
+      "public_get_receipt": "14910025415-public-full-get.json",
+      "state": "public_route_verified",
+      "expected_bytes": 14986588,
+      "expected_sha256": "c08e83380b0403b03f11684d2cc8e9f88dd2ebd78f217be7d7940952a2143e61",
+      "expires_at_utc": "2027-02-22T09:35:13Z",
+      "expires_at_local": "2027-02-22T05:35:13-04:00",
+      "expiry_timezone": "America/Halifax"
+    },
+    {
+      "role": "macos_x86_64",
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "artifact_id": null,
+      "artifact_api": null,
+      "public_get_receipt": null,
+      "state": "pending_actual_artifact"
+    },
+    {
+      "role": "windows_x86_64",
+      "artifact_name": "cs80-windows-install-bundle",
+      "artifact_id": null,
+      "artifact_api": null,
+      "public_get_receipt": null,
+      "state": "pending_actual_artifact"
+    },
+    {
+      "role": "linux_x86_64",
+      "artifact_name": "cs80-linux-install-bundle",
+      "artifact_id": null,
+      "artifact_api": null,
+      "public_get_receipt": null,
+      "state": "pending_actual_artifact"
+    },
+    {
+      "role": "curated_audition",
+      "artifact_name": "cs80-curated-preset-audition-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "artifact_id": null,
+      "artifact_api": null,
+      "public_get_receipt": null,
+      "state": "pending_actual_artifact",
+      "separate_content_gate": "Actual archive must qualify with 225 WAV files / 89 programs / 46 folders; source configuration is not an archive result."
+    }
+  ],
+  "all_five_minimum_expiry_utc": null,
+  "all_five_minimum_expiry_local": null,
+  "expiry_timezone": "America/Halifax",
+  "acceptance_requirements": [
+    "Use exactly these five source-bound artifact names and distinct actual artifact IDs; no replacement with test/validator/debug artifacts.",
+    "Acquire authentic artifact/run metadata; verify repository IDs, full source SHA, run ID and attempt context.",
+    "Bind each artifact to its original upload and producer attempt through original job logs as a separate gate; artifact API alone lacks producing attempt.",
+    "Reject expired artifacts or expiry timestamps at/before observation; calculate minimum only after all five authentic entries exist.",
+    "Use the unchanged parameterized probe for a new complete unauthenticated GET of each nightly.link artifact route. Never supply Authorization, Cookie or Range.",
+    "Require HTTP 200 without Content-Range; actual full body bytes and SHA256 must equal the authenticated API size and digest. Reject login/error/wrong/truncated bodies.",
+    "Retain only sanitized redirect endpoints with query_redacted; never retain presigned URL queries, cookies or tokens.",
+    "Require five successful new receipts bound to their exact API input hashes before marking aggregate public_downloads_qualified.",
+    "Report minimum expires_at across all five in UTC and America/Halifax. These are expiring Actions artifacts, not permanent release assets.",
+    "Keep release_qualified false here; overall native, packaging, payload binding, audition and final publication gates are external."
+  ],
+  "native_workflow_snapshot": {
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "pending": "Other three installation artifacts plus the actual audition artifact have no IDs in this snapshot. Do not publish replacement links from this partial result."
+}

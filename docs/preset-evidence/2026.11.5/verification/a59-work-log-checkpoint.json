@@ -1,0 +1,908 @@
+{
+  "baseline": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "requested_agents": 60,
+  "max_concurrent_workers": 3,
+  "existing_programs": 523,
+  "musical_programs": 521,
+  "new_presets": 0,
+  "status": "All 60 actual assignments started; implementation and scoped review contributions retained. Exact-source native/DSP/package/audition/publication qualification and final worker follow-ups remain pending.",
+  "workers": [
+    {
+      "number": 1,
+      "task": "a01_release_audit",
+      "status": "completed",
+      "canonical_task": "/root/a01_release_audit",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 2,
+      "task": "a02_acoustic_research",
+      "status": "completed",
+      "canonical_task": "/root/a02_acoustic_research",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 3,
+      "task": "a03_bank_inventory",
+      "status": "completed",
+      "canonical_task": "/root/a03_bank_inventory",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 4,
+      "task": "a04_body_dsp_audit",
+      "status": "completed",
+      "canonical_task": "/root/a04_body_dsp_audit",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 5,
+      "task": "a05_articulation_audit",
+      "status": "completed",
+      "canonical_task": "/root/a05_articulation_audit",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 6,
+      "task": "a06_recipe_audit",
+      "status": "completed",
+      "canonical_task": "/root/a06_recipe_audit",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "conversational findings; no separately authored retained report",
+      "evidence_paths": []
+    },
+    {
+      "number": 7,
+      "task": "a07_strike_normalization",
+      "status": "completed",
+      "canonical_task": "/root/a07_strike_normalization",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a07.md"
+      ]
+    },
+    {
+      "number": 8,
+      "task": "a08_body_articulation",
+      "status": "completed",
+      "canonical_task": "/root/a08_body_articulation",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a08.md"
+      ]
+    },
+    {
+      "number": 9,
+      "task": "a09_variant_host_contract",
+      "status": "completed",
+      "canonical_task": "/root/a09_variant_host_contract",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a09.md"
+      ]
+    },
+    {
+      "number": 10,
+      "task": "a10_mallet_variants",
+      "status": "completed",
+      "canonical_task": "/root/a10_mallet_variants",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a10.md"
+      ]
+    },
+    {
+      "number": 11,
+      "task": "a11_original_finishes",
+      "status": "completed",
+      "canonical_task": "/root/a11_original_finishes",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a11.md"
+      ]
+    },
+    {
+      "number": 12,
+      "task": "a12_mallet_recipes",
+      "status": "completed",
+      "canonical_task": "/root/a12_mallet_recipes",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a12.md"
+      ]
+    },
+    {
+      "number": 13,
+      "task": "a13_winds_strings",
+      "status": "completed",
+      "canonical_task": "/root/a13_winds_strings",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a13.md"
+      ]
+    },
+    {
+      "number": 14,
+      "task": "a14_brass_organ",
+      "status": "completed",
+      "canonical_task": "/root/a14_brass_organ",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a14.md"
+      ]
+    },
+    {
+      "number": 15,
+      "task": "a15_bass_plucked",
+      "status": "completed",
+      "canonical_task": "/root/a15_bass_plucked",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a15.md"
+      ]
+    },
+    {
+      "number": 16,
+      "task": "a16_vocal_resonators",
+      "status": "completed",
+      "canonical_task": "/root/a16_vocal_resonators",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a16.md"
+      ]
+    },
+    {
+      "number": 17,
+      "task": "a17_pads_polysynth",
+      "status": "completed",
+      "canonical_task": "/root/a17_pads_polysynth",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a17.md"
+      ]
+    },
+    {
+      "number": 18,
+      "task": "a18_natural_fx",
+      "status": "completed",
+      "canonical_task": "/root/a18_natural_fx",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a18.md"
+      ]
+    },
+    {
+      "number": 19,
+      "task": "a19_modern_recipes",
+      "status": "completed",
+      "canonical_task": "/root/a19_modern_recipes",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a19.md"
+      ]
+    },
+    {
+      "number": 20,
+      "task": "a20_lead_recipes",
+      "status": "completed",
+      "canonical_task": "/root/a20_lead_recipes",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a20.md"
+      ]
+    },
+    {
+      "number": 21,
+      "task": "a21_host_abi_review",
+      "status": "completed",
+      "canonical_task": "/root/a21_host_abi_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a21.md"
+      ]
+    },
+    {
+      "number": 22,
+      "task": "a22_bank_coverage_review",
+      "status": "completed",
+      "canonical_task": "/root/a22_bank_coverage_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a22.md"
+      ]
+    },
+    {
+      "number": 23,
+      "task": "a23_dsp_edge_review",
+      "status": "completed",
+      "canonical_task": "/root/a23_dsp_edge_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a23.md"
+      ]
+    },
+    {
+      "number": 24,
+      "task": "a24_release_gates_review",
+      "status": "completed",
+      "canonical_task": "/root/a24_release_gates_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a24.md"
+      ]
+    },
+    {
+      "number": 25,
+      "task": "a25_documentation_identity",
+      "status": "completed",
+      "canonical_task": "/root/a25_documentation_identity",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a25.md"
+      ]
+    },
+    {
+      "number": 26,
+      "task": "a26_audition_verifier",
+      "status": "completed",
+      "canonical_task": "/root/a26_audition_verifier",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a26.md"
+      ]
+    },
+    {
+      "number": 27,
+      "task": "a27_ui_fixture_review",
+      "status": "completed",
+      "canonical_task": "/root/a27_ui_fixture_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a27.md"
+      ]
+    },
+    {
+      "number": 28,
+      "task": "a28_keyboard_edges",
+      "status": "completed",
+      "canonical_task": "/root/a28_keyboard_edges",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a28.md"
+      ]
+    },
+    {
+      "number": 29,
+      "task": "a29_mallet_spectral_review",
+      "status": "completed",
+      "canonical_task": "/root/a29_mallet_spectral_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a29.md"
+      ]
+    },
+    {
+      "number": 30,
+      "task": "a30_wind_identity_review",
+      "status": "completed",
+      "canonical_task": "/root/a30_wind_identity_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a30.md"
+      ]
+    },
+    {
+      "number": 31,
+      "task": "a31_brass_string_balance",
+      "status": "completed",
+      "canonical_task": "/root/a31_brass_string_balance",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a31.md"
+      ]
+    },
+    {
+      "number": 32,
+      "task": "a32_bass_mallet_balance",
+      "status": "completed",
+      "canonical_task": "/root/a32_bass_mallet_balance",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a32.md"
+      ]
+    },
+    {
+      "number": 33,
+      "task": "a33_full_bank_audio",
+      "status": "completed",
+      "canonical_task": "/root/a33_full_bank_audio",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a33.md"
+      ]
+    },
+    {
+      "number": 34,
+      "task": "a34_audition_verifier_review",
+      "status": "completed",
+      "canonical_task": "/root/a34_audition_verifier_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a34.md"
+      ]
+    },
+    {
+      "number": 35,
+      "task": "a35_native_parser_review",
+      "status": "completed",
+      "canonical_task": "/root/a35_native_parser_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a35.md"
+      ]
+    },
+    {
+      "number": 36,
+      "task": "a36_payload_binding_helper",
+      "status": "completed",
+      "canonical_task": "/root/a36_payload_binding_helper",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a36.md"
+      ]
+    },
+    {
+      "number": 37,
+      "task": "a37_macos_binding_helper",
+      "status": "completed",
+      "canonical_task": "/root/a37_macos_binding_helper",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a37.md"
+      ]
+    },
+    {
+      "number": 38,
+      "task": "a38_organ_response_review",
+      "status": "completed",
+      "canonical_task": "/root/a38_organ_response_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a38.md"
+      ]
+    },
+    {
+      "number": 39,
+      "task": "a39_string_articulation_review",
+      "status": "completed",
+      "canonical_task": "/root/a39_string_articulation_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a39.md"
+      ]
+    },
+    {
+      "number": 40,
+      "task": "a40_pad_choir_review",
+      "status": "completed",
+      "canonical_task": "/root/a40_pad_choir_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a40.md"
+      ]
+    },
+    {
+      "number": 41,
+      "task": "a41_install_archive_helper",
+      "status": "completed",
+      "canonical_task": "/root/a41_install_archive_helper",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a41.md"
+      ]
+    },
+    {
+      "number": 42,
+      "task": "a42_lead_phrase_review",
+      "status": "completed",
+      "canonical_task": "/root/a42_lead_phrase_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a42.md"
+      ]
+    },
+    {
+      "number": 43,
+      "task": "a43_sequence_phrase_review",
+      "status": "completed",
+      "canonical_task": "/root/a43_sequence_phrase_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a43.md"
+      ]
+    },
+    {
+      "number": 44,
+      "task": "a44_environmental_fx_review",
+      "status": "completed",
+      "canonical_task": "/root/a44_environmental_fx_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a44.md"
+      ]
+    },
+    {
+      "number": 45,
+      "task": "a45_factory_reload_review",
+      "status": "completed",
+      "canonical_task": "/root/a45_factory_reload_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a45.md"
+      ]
+    },
+    {
+      "number": 46,
+      "task": "a46_supporting_dsp_qualification",
+      "status": "checkpoint complete; final-source DSP qualification pending",
+      "canonical_task": "/root/a46_supporting_dsp_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained original09af partial checkpoint; not final-source acceptance",
+      "evidence_paths": [
+        "ci/source-09af535/supporting-dsp/checkpoint.md"
+      ]
+    },
+    {
+      "number": 47,
+      "task": "a47_filter_ci_qualification",
+      "status": "checkpoint complete; final filter results and c76 input equivalence pending",
+      "canonical_task": "/root/a47_filter_ci_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a47.md"
+      ]
+    },
+    {
+      "number": 48,
+      "task": "a48_screenshot_qualification",
+      "status": "original09af screenshot qualification complete; c76 input equivalence pending",
+      "canonical_task": "/root/a48_screenshot_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a48.md"
+      ]
+    },
+    {
+      "number": 49,
+      "task": "a49_windows_native_qualification",
+      "status": "checkpoint complete; replacement Windows qualification pending",
+      "canonical_task": "/root/a49_windows_native_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a49.md"
+      ]
+    },
+    {
+      "number": 50,
+      "task": "a50_macos_arm_native_qualification",
+      "status": "checkpoint complete; replacement Apple Silicon qualification pending",
+      "canonical_task": "/root/a50_macos_arm_native_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a50.md"
+      ]
+    },
+    {
+      "number": 51,
+      "task": "a51_macos_intel_native_qualification",
+      "status": "checkpoint complete; replacement Intel Mac qualification pending",
+      "canonical_task": "/root/a51_macos_intel_native_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a51.md"
+      ]
+    },
+    {
+      "number": 52,
+      "task": "a52_linux_native_qualification",
+      "status": "checkpoint complete; replacement Linux qualification pending",
+      "canonical_task": "/root/a52_linux_native_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a52.md"
+      ]
+    },
+    {
+      "number": 53,
+      "task": "a53_actual_audition_qualification",
+      "status": "checkpoint complete; replacement audition qualification pending",
+      "canonical_task": "/root/a53_actual_audition_qualification",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a53.md"
+      ]
+    },
+    {
+      "number": 54,
+      "task": "a54_capture_parameter_contract_fix",
+      "status": "completed",
+      "canonical_task": "/root/a54_capture_parameter_contract_fix",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a54.md"
+      ]
+    },
+    {
+      "number": 55,
+      "task": "a55_release_claims_editorial_review",
+      "status": "completed",
+      "canonical_task": "/root/a55_release_claims_editorial_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a55.md"
+      ]
+    },
+    {
+      "number": 56,
+      "task": "a56_final_continuity_accounting_review",
+      "status": "completed",
+      "canonical_task": "/root/a56_final_continuity_accounting_review",
+      "started": true,
+      "contribution_phase": "completed",
+      "final_release_follow_up_required": false,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a56.md"
+      ]
+    },
+    {
+      "number": 57,
+      "task": "a57_download_route_review",
+      "status": "historical public-route control complete; current artifact routes and retention mapping pending",
+      "canonical_task": "/root/a57_download_route_review",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored review",
+      "evidence_paths": [
+        "reviews/a57.md"
+      ]
+    },
+    {
+      "number": 58,
+      "task": "a58_release_gate_adversarial_review",
+      "status": "working; final release-gate reconciliation pending",
+      "canonical_task": "/root/a58_release_gate_adversarial_review",
+      "started": true,
+      "contribution_phase": "working",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "active assignment; authored review pending",
+      "evidence_paths": []
+    },
+    {
+      "number": 59,
+      "task": "a59_team_and_evidence_ledger",
+      "status": "checkpoint complete; final completion-ledger follow-up pending",
+      "canonical_task": "/root/a59_team_and_evidence_ledger",
+      "started": true,
+      "contribution_phase": "checkpoint",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "retained authored checkpoint review",
+      "evidence_paths": [
+        "reviews/a59.md",
+        "verification/a59-source-history-check.json"
+      ]
+    },
+    {
+      "number": 60,
+      "task": "a60_final_publication_review",
+      "status": "working; final staged-publication review pending",
+      "canonical_task": "/root/a60_final_publication_review",
+      "started": true,
+      "contribution_phase": "working",
+      "final_release_follow_up_required": true,
+      "evidence_kind": "active assignment; authored review pending",
+      "evidence_paths": []
+    }
+  ],
+  "source_commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "native_build_run_id": 45351731801,
+  "source_history": [
+    {
+      "commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "tree": "ffec7e5d062ccc6761fff9080405769d5002513a",
+      "native_run_id": 45341783399,
+      "attempt": 1,
+      "native_run_conclusion": "failure",
+      "producer_conclusions": {
+        "failure": 4
+      },
+      "separate_validator_conclusions": {
+        "skipped": 2
+      },
+      "qualification": "not qualified",
+      "reason": "All four native producer builds failed on three new calls to private JUCE choice overrides. The fix retained assertions and expected values through the public ranged-parameter interface. Later long-held chord review separately corrected two output trims.",
+      "evidence": [
+        "ci/source-6094bce/failure-summary.json",
+        "ci/source-6094bce/run-final-api.json",
+        "ci/source-6094bce/jobs-final-api.json"
+      ]
+    },
+    {
+      "commit": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "tree": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+      "scope": "Final production DSP and factory sound data; includes public JUCE access correction and two pad output ceilings.",
+      "native_run_id": 45344888485,
+      "attempt": 1,
+      "native_run_conclusion": "cancelled",
+      "producer_conclusions": {
+        "cancelled": 4
+      },
+      "separate_validator_conclusions": {
+        "skipped": 2
+      },
+      "dsp_run_id": 45344888536,
+      "dsp_run_conclusion": "cancelled",
+      "dsp_job_conclusions": {
+        "success": 3,
+        "failure": 1,
+        "cancelled": 1
+      },
+      "dsp_failure_detail": "Numerical bounds passed; the measure job then failed 3 of 13 metadata tests because the capture fixture still expected 200 parameters. Its export/upload steps were skipped. The sanitizer job was cancelled.",
+      "retained_supporting_runs": {
+        "filter": 45344888479,
+        "screenshots": 45344888473
+      },
+      "qualification": "native and overall DSP unqualified; scoped successful supporting observations retain their original source",
+      "evidence": [
+        "ci/source-09af535/native-superseded-summary.json",
+        "ci/source-09af535/dsp-superseded-run-final-api.json",
+        "ci/source-09af535/dsp-superseded-jobs-final-api.json",
+        "ci/source-09af535/measure-failed-original.log"
+      ]
+    },
+    {
+      "commit": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+      "scope": "Only docs/INSTALL_AND_QUICKSTART.md and docs/PRESET_GUIDE.md differ from 09af.",
+      "native_run_id": 45346719693,
+      "attempt": 1,
+      "native_run_conclusion": "cancelled",
+      "producer_conclusions": {
+        "failure": 1,
+        "cancelled": 3
+      },
+      "separate_validator_conclusions": {
+        "skipped": 2
+      },
+      "actual_failed_producer": {
+        "job_id": 138282948529,
+        "target": "macOS arm64",
+        "step": "Test",
+        "failed_ctest": "cs80_parity_capture_tests",
+        "registered_ctests": 266,
+        "failed_ctests": 1,
+        "internal_metadata_tests_failed": 3,
+        "internal_metadata_tests_run": 13,
+        "passed_ctests": 263,
+        "formal_skipped_ctests": 2
+      },
+      "qualification": "not qualified",
+      "reason": "Apple Silicon completed with the capture-metadata CTest as its sole failed CTest; other native producers were cancelled when the strict test-contract fix was pushed.",
+      "evidence": [
+        "ci/source-db6b5a7/superseded-run-final-api.json",
+        "ci/source-db6b5a7/superseded-jobs-final-api.json",
+        "ci/source-db6b5a7/macos-arm64-test-failed-original.log"
+      ]
+    },
+    {
+      "commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+      "scope": "Only tests/test_parity_capture.py differs from db6b: explicit 202 count, both Standard variant defaults and 12 strict additional mutation cases. Production DSP, factory data, parameter definitions, build scripts and workflows unchanged.",
+      "qualification": "pending actual final-source execution and archive qualification",
+      "native_run_id": 45351731801,
+      "native_attempt": 1,
+      "dsp_run_id": 45351731746,
+      "dsp_attempt": 1,
+      "evidence": [
+        "ci/source-c76ad28/source-context.json",
+        "reviews/a54.md",
+        "verification/a56-final-source-extension.json"
+      ]
+    }
+  ],
+  "supporting_dsp_run_id": 45351731746,
+  "schema": 2,
+  "observed_at_utc": "2026-11-24T08:14:03.038343+00:00",
+  "actual_distinct_agents_started": 60,
+  "previous_project_agents_counted": 0,
+  "all_agent_final_follow_ups_completed": false,
+  "contribution_phase_counts": {
+    "completed": 48,
+    "checkpoint": 10,
+    "working": 2
+  },
+  "worker_status_scope": "A completed worker contribution is not a passing whole-release gate. Checkpoint and expected-roster records remain unaccepted until their explicit final evidence requirements are met.",
+  "final_follow_up_tasks": [
+    "a46_supporting_dsp_qualification",
+    "a47_filter_ci_qualification",
+    "a48_screenshot_qualification",
+    "a49_windows_native_qualification",
+    "a50_macos_arm_native_qualification",
+    "a51_macos_intel_native_qualification",
+    "a52_linux_native_qualification",
+    "a53_actual_audition_qualification",
+    "a57_download_route_review",
+    "a58_release_gate_adversarial_review",
+    "a59_team_and_evidence_ledger",
+    "a60_final_publication_review"
+  ]
+}

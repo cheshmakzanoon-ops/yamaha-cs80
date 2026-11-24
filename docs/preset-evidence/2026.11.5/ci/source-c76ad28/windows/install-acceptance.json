@@ -1,0 +1,289 @@
+{
+  "schema": 2,
+  "status": "artifact_bytes_verified",
+  "release_qualified": false,
+  "native_validation_passed": null,
+  "artifact_attempt_binding_verified": false,
+  "verified_at_utc": "2026-11-24T08:54:06.677702+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "source_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "preset_library_revision": "2026.11.5",
+  "run_id": 45351731801,
+  "run_attempt": 1,
+  "run_context": {
+    "id": 45351731801,
+    "run_attempt": 1,
+    "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "repository_id": 1436742091,
+    "status_observed": "in_progress",
+    "conclusion_observed": null,
+    "artifact_attempt_binding_verified": false,
+    "scope": "Supplied API context only. Original successful upload/job records must bind the artifact to the attempt."
+  },
+  "manifest_attempt_declared": null,
+  "target": "windows-x86_64",
+  "artifact": {
+    "id": 14903717361,
+    "name": "cs80-windows-install-bundle",
+    "size_in_bytes": 6387912,
+    "digest": "sha256:0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f",
+    "created_at": "2026-11-24T08:51:46Z",
+    "expires_at": "2027-02-22T07:55:18Z",
+    "workflow_run": {
+      "id": 45351731801,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793"
+    }
+  },
+  "outer_zip": {
+    "file": "install.zip",
+    "bytes": 6387912,
+    "sha256": "0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-windows-x86_64-c76ad288e02f.manifest.json",
+      "cs80-reference-windows-x86_64-c76ad288e02f.zip"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-windows-x86_64-c76ad288e02f.zip",
+    "bytes": 6382596,
+    "sha256": "c6566e21954aaaa33f9252a7c9b332f8c2edd3a0915bfee547f9927cc72acb06"
+  },
+  "manifest_sha256": "713574cb1787370207e7d06e9b2ac75385540a50ca96fe6128fb7b70031f5b5c",
+  "checksum_manifest_sha256": "d624e43c6270c32479f8a44880449d14abf575f241bb8d34432c42f12dd70db9",
+  "inventory_entries": 20,
+  "inventory": [
+    {
+      "mode": "0o777",
+      "path": "Standalone/CS-80 Reference.exe",
+      "sha256": "d6820861d777a646ba4503fb2fbcadd85de30708bb5c9478b5d3565a73e88535",
+      "size": 7577088,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+      "size": 1143,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "sha256": "6503825833f5ef1cc9150bddb69ecef111dd0ba7717c0e7c2ec604bd6c37ee87",
+      "size": 7375872,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "DISTRIBUTION_STATUS.md",
+      "sha256": "405c700243f90037af61cbef90b77bc7a9c8c1675095921dcbd4c7c18214baf8",
+      "size": 39277,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "28a062538c4ce03e1f091ce8adef46633bcd653950b6e320f4babb1f695b834e",
+      "size": 17862,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "LICENSE",
+      "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+      "size": 35184,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "PRESET_GUIDE.md",
+      "sha256": "33fd2e700d0089f36e279f62b775e0e9c076222aacd244e9e0d6b79edd6e6e2a",
+      "size": 35903,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "SOURCE.txt",
+      "sha256": "3ae9d2760857a81ad2f0f4c64ef9243a9809b655d7d7002ba40d40f2ccd58ec8",
+      "size": 404,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "evidence/juce-provenance.txt",
+      "sha256": "a2a2d2ddaed333eb07120d645c81eaed04d08d864ebecfcaf46b0914ab921083",
+      "size": 585,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-OFL.txt",
+      "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+      "size": 4470,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-SOURCE.txt",
+      "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+      "size": 1010,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/JUCE-LICENSE.md",
+      "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+      "size": 5038,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/MTS-ESP-LICENSE.txt",
+      "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+      "size": 666,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "sha256": "773ec3c805a88806812048182c3b0fa90b4bc18012ea4dc131e01ba3729bd337",
+      "size": 1444,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-Copyright.txt",
+      "sha256": "f06bad318a967a790be27cc90235573a2548a2125f6c54b6129d1c802ed201a8",
+      "size": 1338,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-SOURCE.txt",
+      "sha256": "0afbd154bd05bb26fd9d6fc2db195da5b7347b5cdde10dd39d320a6c3cfbbe2c",
+      "size": 682,
+      "type": "file"
+    }
+  ],
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "bytes": 7375872,
+      "sha256": "6503825833f5ef1cc9150bddb69ecef111dd0ba7717c0e7c2ec604bd6c37ee87",
+      "mode": "0o666",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x2022"
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference.exe",
+      "bytes": 7577088,
+      "sha256": "d6820861d777a646ba4503fb2fbcadd85de30708bb5c9478b5d3565a73e88535",
+      "mode": "0o777",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "role": "standalone",
+      "header_check": "PASS",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x22"
+      }
+    }
+  ],
+  "inner_checker": {
+    "result": "integrity and declared source consistency verified",
+    "commit": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "platform": "windows",
+    "architecture": "x86_64",
+    "files": 20,
+    "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+  },
+  "source_contract_files": {
+    "scripts/verify-ci-bundle.py": {
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/verify-ci-juce-source.cmake": {
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10"
+    }
+  },
+  "source_scripts_loaded_from_commit": true,
+  "signing_status": "not inspected; no release signing/notarization performed by this helper",
+  "scope": "Exact outer bytes, complete inner inventory/checksums, source/revision/run declarations, JUCE provenance and native header architecture/roles. No product executed.",
+  "remaining_gates": [
+    "Authenticate API receipts and downloaded bytes through the original GitHub acquisition.",
+    "Bind the exact artifact ID/digest/size/timestamps to the original successful upload step and reviewed run attempt; artifact and current manifest do not identify the attempt.",
+    "Require all original native configure/JUCE-source/build/Test/package jobs and steps, full expected CTest rosters and reviewed skips for the same source/run/attempt.",
+    "Require all 13 original pluginval lanes, version/strictness/program count/seeds, unsuppressed original zero exits and any eligible preserved Linux retries.",
+    "Bind every distributed VST3/AU bundle to the actual validated payload using the separate Windows/Linux and macOS binding evidence.",
+    "Verify the actual audition archive, remaining platforms and current download availability before publication."
+  ],
+  "limits": [
+    "Receipts are caller supplied and not authenticated by this offline checker.",
+    "A matching run attempt in supplied context is not artifact-upload attempt binding.",
+    "Native headers establish advertised architecture and image role, not runtime validity or exclusive universal-binary slices.",
+    "No DAW compatibility, installation workflow, signing/notarization, listening quality or acoustic equivalence is inferred."
+  ],
+  "input_metadata": {
+    "artifact_api": {
+      "file": "install-api.json",
+      "bytes": 799,
+      "sha256": "3d005c93c684e5550ed886c6e3e001497f8a0c5eb50deaff118b097b5898547e"
+    },
+    "run_api": {
+      "file": "run-attempt-producer-complete-api.json",
+      "bytes": 13843,
+      "sha256": "899a5f63ac146d12102e32fcce64c81686e0a3759fd05bafa16c8f4651929944"
+    }
+  },
+  "checker_sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+}

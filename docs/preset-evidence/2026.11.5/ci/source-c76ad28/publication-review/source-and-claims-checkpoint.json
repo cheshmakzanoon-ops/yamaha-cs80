@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "worker": 60,
+  "observed_at_utc": "2026-11-24T08:10:38.689480+00:00",
+  "expected_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "expected_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "authenticated_main_ref_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "index_has_staged_changes": false,
+  "uncommitted_production_test_script_workflow_changes": [],
+  "db6b_to_c76_complete_diff": [
+    "tests/test_parity_capture.py"
+  ],
+  "source_history": [
+    {
+      "source": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+      "tree": "70592d6711dbc39e3bbc4f0adc47f1d21d87b0da",
+      "subject": "docs: publish qualified 2026.11.4 builds and 60-agent review [skip ci]"
+    },
+    {
+      "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "tree": "ffec7e5d062ccc6761fff9080405769d5002513a",
+      "subject": "Refine all existing factory voices for expressive instrument response"
+    },
+    {
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "tree": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+      "subject": "Fix native host choice checks and reserve slow pad headroom"
+    },
+    {
+      "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+      "subject": "Align bundled installation guides with factory revision 2026.11.5"
+    },
+    {
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+      "subject": "test: include saved resonator variants in capture metadata contract"
+    }
+  ],
+  "coverage_observations": {
+    "ordered_identities": 523,
+    "changed_musical_programs": 521,
+    "unchanged_init_programs": [
+      "Init Circuit",
+      "Init Patch"
+    ],
+    "updated_tag_lists": 14,
+    "body_enabled": 272,
+    "circuit_only": 251,
+    "inventory_sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+    "inventory_bytes_equal_committed_source": true
+  },
+  "front_matter_state": "Working README intentionally retains the qualified .4 download block until actual .5 qualification. Its new .5 voicing section is not a published .5 artifact acceptance.",
+  "inputs": [
+    {
+      "path": "README.md",
+      "bytes": 18867,
+      "sha256": "d28dc5a1e0a04a75b2c75167f4608775133535ca0e3c9cacb0cf0db78ebbd2f6"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_5.md",
+      "bytes": 19185,
+      "sha256": "c6070c66a8f2d93e8a182c5fc1dce598e908d91f4fc5764f4f4cbc7f98a0cc58"
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 17256,
+      "sha256": "e1e80b30ae88096e200a80c27072f8db8c415757220a44b795fad815ae22f330"
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 29669,
+      "sha256": "3f26239ef7bc4ec9b11abb3c02471146bba7d0e97ce3c2cf1f469b8b3ab45993"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 34833,
+      "sha256": "6901d86d292d74b6a26ae3738e3cdceefdb39b8187ed9ce0ecb50c7c8682d411"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/parameter-coverage.json",
+      "bytes": 331202,
+      "sha256": "502697b2d6b12b168f1ea274a0534f0503266cb9b5b2149e709aa57160d7635b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a56-final-source-extension.json",
+      "bytes": 3348,
+      "sha256": "6b5dbc594996ccce3cc23c187df2212ed7079be476a9a4c4fec39db218c1cba5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a57-final-download-mapping-contract.json",
+      "bytes": 5076,
+      "sha256": "2f0d311a4209bb115151975563d735d10708ab8385dab02cdfb7cd65df3626b4"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a54.md",
+      "bytes": 5239,
+      "sha256": "23e9040acb262c1c09db5159a883f500e81018b783ce60463ff477386495c616"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a55.md",
+      "bytes": 10281,
+      "sha256": "a415fd7bf2c9e6b0675e02dbcaae609a3252f8746cbe6205a343fec9d14b9c58"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a56.md",
+      "bytes": 12258,
+      "sha256": "22dcfcc54f4af69ea20c1bc4d545641f9b10ed5cee0ddca83416ec6188cb872a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a57.md",
+      "bytes": 7197,
+      "sha256": "0b16bf253c1b145b763da3a249ddf84e9d06e354aab577ad8a6564a0ad704f52"
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    },
+    {
+      "path": ".github/workflows/screenshots.yml",
+      "bytes": 4285,
+      "sha256": "9dc37c0d6bc4c38acbe6ae1bdea64e0276f0b200c27f4636a00af4efb7c62fb9"
+    },
+    {
+      "path": ".github/workflows/dsp-measurements.yml",
+      "bytes": 11756,
+      "sha256": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964"
+    },
+    {
+      "path": ".github/workflows/filter-batch.yml",
+      "bytes": 2016,
+      "sha256": "b50a8d9567b3cad086956ec1f99b6d218df8e126e8b781743a43adacfed8362d"
+    }
+  ],
+  "input_hash_scope": "Observed working/source bytes at this checkpoint. Later authorized edits to working publication documents are expected and require fresh final review; these hashes are not asserted to remain current.",
+  "preparation_review_complete": true,
+  "final_publication_review_complete": false,
+  "release_qualified": false,
+  "external_mutations_performed": false
+}

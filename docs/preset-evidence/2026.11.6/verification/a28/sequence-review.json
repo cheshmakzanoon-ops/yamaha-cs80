@@ -1,0 +1,2868 @@
+{
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "preset_revision": "2026.11.6",
+  "scope": "Local complete-preset phrase/lifecycle and declared scheduling review; no native build, listening approval or acoustic-equivalence evidence.",
+  "input": {
+    "file": "sequence-phrase-raw.jsonl",
+    "bytes": 545463,
+    "sha256": "dc79a72b7a3b44534846150b45de375460d324b6d76fb99de2c06a4c1c336469",
+    "committed_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50"
+  },
+  "render_method": {
+    "rate": 48000,
+    "hold_seconds": 12,
+    "tail_seconds": 4,
+    "block_frames": 64,
+    "observation_resolution_ms": 1.3333333333333333,
+    "timing_tolerance_ms": 2.6666666666666665,
+    "source_notes_velocities": [
+      [
+        55,
+        0.65
+      ],
+      [
+        48,
+        0.25
+      ],
+      [
+        52,
+        0.95
+      ]
+    ],
+    "parameter_overrides": [],
+    "main_transport_bpm": 60,
+    "tempo_control": {
+      "initial_bpm": 60,
+      "new_bpm": 180,
+      "at_seconds": 6
+    },
+    "sample_digest": "FNV-1a64 over little-endian float32 sample representations; descriptive, not a cryptographic artifact identity"
+  },
+  "counts": {
+    "programs": 27,
+    "numbered_original_sequences": 22,
+    "other_original_sequence": 1,
+    "modern_arps": 4,
+    "renders": 31,
+    "stereo_frames": 23808000,
+    "checks": 420,
+    "failures": 0
+  },
+  "programs": [
+    {
+      "type": "program",
+      "name": "Arp Motion",
+      "index": 42,
+      "scenario": "constant_tempo",
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 192,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.350244809,
+      "held_rms_dbfs": -28.664182176,
+      "first_tail_rms_dbfs": -105.371824231,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "751e5172efa06cc9",
+      "onsets": 96,
+      "complete_gate_widths": 96,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_width_error_ms": 0.8333333333333387,
+      "mean_spacing_hz": 8.000224567707164,
+      "final_tail_below_held_db": -77.422011537
+    },
+    {
+      "type": "program",
+      "name": "Amber Sequences 157",
+      "index": 200,
+      "scenario": "constant_tempo",
+      "rate_hz": 4,
+      "mode": 0,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.37130157,
+      "held_rms_dbfs": -29.032130363,
+      "first_tail_rms_dbfs": -105.275742853,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "35cc328dcb3a0ed0",
+      "onsets": 48,
+      "complete_gate_widths": 48,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55
+      ],
+      "max_spacing_error_ms": 0.6666666666666765,
+      "max_gate_width_error_ms": 1.0000000000000009,
+      "mean_spacing_hz": 3.9997730625212755,
+      "final_tail_below_held_db": -77.05406335
+    },
+    {
+      "type": "program",
+      "name": "Velvet Sequences 158",
+      "index": 201,
+      "scenario": "constant_tempo",
+      "rate_hz": 3,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 74,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.79110345,
+      "held_rms_dbfs": -35.05310362,
+      "first_tail_rms_dbfs": -45.713035403,
+      "final_tail_rms_dbfs": -96.737109405,
+      "pcm_fnv64": "0108f245bb0f9c5c",
+      "onsets": 37,
+      "complete_gate_widths": 36,
+      "declared_sequence_length": 10,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.3333333333332975,
+      "max_gate_width_error_ms": 1.333333333333353,
+      "mean_spacing_hz": 3.0010003334444817,
+      "final_tail_below_held_db": -61.684005785
+    },
+    {
+      "type": "program",
+      "name": "Distant Sequences 159",
+      "index": 202,
+      "scenario": "constant_tempo",
+      "rate_hz": 2.5,
+      "mode": 1,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 62,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.532073433,
+      "held_rms_dbfs": -32.234936066,
+      "first_tail_rms_dbfs": -47.837501653,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "58c62d6aeacff1e5",
+      "onsets": 31,
+      "complete_gate_widths": 30,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 1.333333333333353,
+      "max_gate_width_error_ms": 2.7755575615628914e-14,
+      "mean_spacing_hz": 2.501389660922735,
+      "final_tail_below_held_db": -267.765063934
+    },
+    {
+      "type": "program",
+      "name": "Neon Sequences 160",
+      "index": 203,
+      "scenario": "constant_tempo",
+      "rate_hz": 8,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 192,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.560402135,
+      "held_rms_dbfs": -30.138970555,
+      "first_tail_rms_dbfs": -104.823552742,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "4c9d21d67a8a3766",
+      "onsets": 96,
+      "complete_gate_widths": 96,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": null,
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_width_error_ms": 1.083333333333332,
+      "mean_spacing_hz": 8.000224567707164,
+      "final_tail_below_held_db": -75.947223158
+    },
+    {
+      "type": "program",
+      "name": "Hollow Sequences 161",
+      "index": 204,
+      "scenario": "constant_tempo",
+      "rate_hz": 5,
+      "mode": 2,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 120,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.3062809,
+      "held_rms_dbfs": -27.666645706,
+      "first_tail_rms_dbfs": -103.801205725,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "687a028a5df539ce",
+      "onsets": 60,
+      "complete_gate_widths": 60,
+      "declared_sequence_length": 4,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 1.3877787807814457e-14,
+      "mean_spacing_hz": 5.0,
+      "final_tail_below_held_db": -78.419548007
+    },
+    {
+      "type": "program",
+      "name": "Golden Sequences 162",
+      "index": 205,
+      "scenario": "constant_tempo",
+      "rate_hz": 6,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 144,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.76396072,
+      "held_rms_dbfs": -34.060574103,
+      "first_tail_rms_dbfs": -47.17983118,
+      "final_tail_rms_dbfs": -96.737018975,
+      "pcm_fnv64": "55b25b22090ff584",
+      "onsets": 72,
+      "complete_gate_widths": 72,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 0.6666666666666765,
+      "mean_spacing_hz": 6.0,
+      "final_tail_below_held_db": -62.676444872
+    },
+    {
+      "type": "program",
+      "name": "Frozen Sequences 163",
+      "index": 206,
+      "scenario": "constant_tempo",
+      "rate_hz": 3.5,
+      "mode": 1,
+      "octaves": 3,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 86,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -22.022724412,
+      "held_rms_dbfs": -34.315405059,
+      "first_tail_rms_dbfs": -52.738955183,
+      "final_tail_rms_dbfs": -96.736840173,
+      "pcm_fnv64": "ff9b09c5f64340e5",
+      "onsets": 43,
+      "complete_gate_widths": 42,
+      "declared_sequence_length": 9,
+      "observed_note_range": [
+        48,
+        79
+      ],
+      "expected_mode_note_order": [
+        79,
+        76,
+        72,
+        67,
+        64,
+        60,
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 0.9523809523809823,
+      "max_gate_width_error_ms": 0.9523809523809545,
+      "mean_spacing_hz": 3.500388932103567,
+      "final_tail_below_held_db": -62.421435114000005
+    },
+    {
+      "type": "program",
+      "name": "Electric Sequences 164",
+      "index": 207,
+      "scenario": "constant_tempo",
+      "rate_hz": 7,
+      "mode": 4,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 168,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -12.536047659,
+      "held_rms_dbfs": -30.372863724,
+      "first_tail_rms_dbfs": -90.356923105,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "ffc8dcc912e74b13",
+      "onsets": 84,
+      "complete_gate_widths": 84,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        55,
+        48,
+        52
+      ],
+      "max_spacing_error_ms": 1.14285714285714,
+      "max_gate_width_error_ms": 1.142857142857154,
+      "mean_spacing_hz": 6.999887552007197,
+      "final_tail_below_held_db": -269.627136276
+    },
+    {
+      "type": "program",
+      "name": "Midnight Sequences 165",
+      "index": 208,
+      "scenario": "constant_tempo",
+      "rate_hz": 3,
+      "mode": 2,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 74,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.892919127,
+      "held_rms_dbfs": -28.571490557,
+      "first_tail_rms_dbfs": -52.574162729,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "20edbff6883475c9",
+      "onsets": 37,
+      "complete_gate_widths": 36,
+      "declared_sequence_length": 4,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.3333333333332975,
+      "max_gate_width_error_ms": 1.333333333333353,
+      "mean_spacing_hz": 3.0010003334444817,
+      "final_tail_below_held_db": -77.514703156
+    },
+    {
+      "type": "program",
+      "name": "Slow Sequences 166",
+      "index": 209,
+      "scenario": "constant_tempo",
+      "rate_hz": 2,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 50,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.918203929,
+      "held_rms_dbfs": -34.743883947,
+      "first_tail_rms_dbfs": -50.169216788,
+      "final_tail_rms_dbfs": -96.737432024,
+      "pcm_fnv64": "e565ae97231ded04",
+      "onsets": 25,
+      "complete_gate_widths": 24,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.333333333333353,
+      "max_gate_width_error_ms": 0.6666666666667043,
+      "mean_spacing_hz": 2.0013342228152102,
+      "final_tail_below_held_db": -61.993548077
+    },
+    {
+      "type": "program",
+      "name": "Bright Sequences 167",
+      "index": 210,
+      "scenario": "constant_tempo",
+      "rate_hz": 8,
+      "mode": 1,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 192,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.784839354,
+      "held_rms_dbfs": -28.575055376,
+      "first_tail_rms_dbfs": -104.836601637,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "5e77788e58320699",
+      "onsets": 96,
+      "complete_gate_widths": 96,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        67,
+        64,
+        60,
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_width_error_ms": 0.8333333333333387,
+      "mean_spacing_hz": 8.000224567707164,
+      "final_tail_below_held_db": -77.511138337
+    },
+    {
+      "type": "program",
+      "name": "Dark Sequences 168",
+      "index": 211,
+      "scenario": "constant_tempo",
+      "rate_hz": 4.5,
+      "mode": 2,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 108,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -14.533155076,
+      "held_rms_dbfs": -30.468267189,
+      "first_tail_rms_dbfs": -97.2480408,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "3cc233feb9358f44",
+      "onsets": 54,
+      "complete_gate_widths": 54,
+      "declared_sequence_length": 4,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.8888888888888835,
+      "max_gate_width_error_ms": 0.8888888888888835,
+      "mean_spacing_hz": 4.50016981772897,
+      "final_tail_below_held_db": -269.531732811
+    },
+    {
+      "type": "program",
+      "name": "Wide Sequences 169",
+      "index": 212,
+      "scenario": "constant_tempo",
+      "rate_hz": 5.5,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 132,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.834043727,
+      "held_rms_dbfs": -31.253361095,
+      "first_tail_rms_dbfs": -105.92775966,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "0eb7245995d7c5e3",
+      "onsets": 66,
+      "complete_gate_widths": 66,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": null,
+      "max_spacing_error_ms": 0.8484848484848484,
+      "max_gate_width_error_ms": 0.8484848484848484,
+      "mean_spacing_hz": 5.499774368231047,
+      "final_tail_below_held_db": -74.832832618
+    },
+    {
+      "type": "program",
+      "name": "Soft Sequences 170",
+      "index": 213,
+      "scenario": "constant_tempo",
+      "rate_hz": 3.25,
+      "mode": 4,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 80,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -23.531750223,
+      "held_rms_dbfs": -35.086755931,
+      "first_tail_rms_dbfs": -46.205952764,
+      "final_tail_rms_dbfs": -96.737030048,
+      "pcm_fnv64": "5b876b8dc7ede6ac",
+      "onsets": 40,
+      "complete_gate_widths": 39,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        55,
+        48,
+        52
+      ],
+      "max_spacing_error_ms": 1.0256410256410664,
+      "max_gate_width_error_ms": 1.1282051282051064,
+      "mean_spacing_hz": 3.250722382751723,
+      "final_tail_below_held_db": -61.650274116999995
+    },
+    {
+      "type": "program",
+      "name": "Amber Sequences 171",
+      "index": 214,
+      "scenario": "constant_tempo",
+      "rate_hz": 4.25,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 102,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.449065066,
+      "held_rms_dbfs": -30.615744591,
+      "first_tail_rms_dbfs": -103.465975043,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "00e9a7619475a213",
+      "onsets": 51,
+      "complete_gate_widths": 51,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 0.7058823529411673,
+      "max_gate_width_error_ms": 0.8627450980392415,
+      "mean_spacing_hz": 4.249773345421578,
+      "final_tail_below_held_db": -269.384255409
+    },
+    {
+      "type": "program",
+      "name": "Velvet Sequences 172",
+      "index": 215,
+      "scenario": "constant_tempo",
+      "rate_hz": 3.75,
+      "mode": 2,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 92,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.711686735,
+      "held_rms_dbfs": -28.953979496,
+      "first_tail_rms_dbfs": -62.874690941,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "34653e2cbc4d41b5",
+      "onsets": 46,
+      "complete_gate_widths": 45,
+      "declared_sequence_length": 4,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.333333333333353,
+      "max_gate_width_error_ms": 1.333333333333353,
+      "mean_spacing_hz": 3.750416712968108,
+      "final_tail_below_held_db": -77.132214217
+    },
+    {
+      "type": "program",
+      "name": "Distant Sequences 173",
+      "index": 216,
+      "scenario": "constant_tempo",
+      "rate_hz": 2.75,
+      "mode": 1,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 68,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.510356236,
+      "held_rms_dbfs": -31.326894507,
+      "first_tail_rms_dbfs": -47.730479663,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "6a7ad758098aa503",
+      "onsets": 34,
+      "complete_gate_widths": 33,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        67,
+        64,
+        60,
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 0.9696969696969537,
+      "max_gate_width_error_ms": 1.0909090909090868,
+      "mean_spacing_hz": 2.7512227656736323,
+      "final_tail_below_held_db": -74.75929920600001
+    },
+    {
+      "type": "program",
+      "name": "Neon Sequences 174",
+      "index": 217,
+      "scenario": "constant_tempo",
+      "rate_hz": 9,
+      "mode": 4,
+      "octaves": 3,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 216,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.905846017,
+      "held_rms_dbfs": -28.423472379,
+      "first_tail_rms_dbfs": -105.148923585,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "a78afbc3749d67a7",
+      "onsets": 108,
+      "complete_gate_widths": 108,
+      "declared_sequence_length": 9,
+      "observed_note_range": [
+        48,
+        79
+      ],
+      "expected_mode_note_order": [
+        55,
+        48,
+        52,
+        67,
+        60,
+        64,
+        79,
+        72,
+        76
+      ],
+      "max_spacing_error_ms": 0.8888888888888974,
+      "max_gate_width_error_ms": 0.8888888888888835,
+      "mean_spacing_hz": 8.999663563978917,
+      "final_tail_below_held_db": -77.662721334
+    },
+    {
+      "type": "program",
+      "name": "Hollow Sequences 175",
+      "index": 218,
+      "scenario": "constant_tempo",
+      "rate_hz": 5.25,
+      "mode": 2,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 126,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.797743567,
+      "held_rms_dbfs": -32.168116026,
+      "first_tail_rms_dbfs": -46.600915021,
+      "final_tail_rms_dbfs": -96.737141031,
+      "pcm_fnv64": "df7c31e7dbad632b",
+      "onsets": 63,
+      "complete_gate_widths": 63,
+      "declared_sequence_length": 4,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 1.14285714285714,
+      "max_gate_width_error_ms": 1.142857142857126,
+      "mean_spacing_hz": 5.250084678785142,
+      "final_tail_below_held_db": -64.56902500499999
+    },
+    {
+      "type": "program",
+      "name": "Golden Sequences 176",
+      "index": 219,
+      "scenario": "constant_tempo",
+      "rate_hz": 6.25,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 150,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -12.779378131,
+      "held_rms_dbfs": -30.046328821,
+      "first_tail_rms_dbfs": -92.993306305,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "af8b603f4b5ef48f",
+      "onsets": 75,
+      "complete_gate_widths": 75,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 0.7999999999999952,
+      "mean_spacing_hz": 6.25,
+      "final_tail_below_held_db": -269.953671179
+    },
+    {
+      "type": "program",
+      "name": "Frozen Sequences 177",
+      "index": 220,
+      "scenario": "constant_tempo",
+      "rate_hz": 4.75,
+      "mode": 1,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 114,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.955447077,
+      "held_rms_dbfs": -28.508569089,
+      "first_tail_rms_dbfs": -105.110423563,
+      "final_tail_rms_dbfs": -106.164720655,
+      "pcm_fnv64": "7017bd66e609ccbc",
+      "onsets": 57,
+      "complete_gate_widths": 57,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        67,
+        64,
+        60,
+        55,
+        52,
+        48
+      ],
+      "max_spacing_error_ms": 1.192982456140329,
+      "max_gate_width_error_ms": 0.771929824561382,
+      "mean_spacing_hz": 4.750056548292242,
+      "final_tail_below_held_db": -77.65615156599999
+    },
+    {
+      "type": "program",
+      "name": "Electric Sequences 178",
+      "index": 221,
+      "scenario": "constant_tempo",
+      "rate_hz": 7.5,
+      "mode": 3,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 180,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.626198055,
+      "held_rms_dbfs": -31.029658467,
+      "first_tail_rms_dbfs": -105.906292841,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "5cf44a7dd1700196",
+      "onsets": 90,
+      "complete_gate_widths": 90,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": null,
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 0.0,
+      "mean_spacing_hz": 7.5,
+      "final_tail_below_held_db": -75.056535246
+    },
+    {
+      "type": "program",
+      "name": "Arp Poly",
+      "index": 508,
+      "scenario": "constant_tempo",
+      "rate_hz": 8,
+      "mode": 0,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 192,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.593210558,
+      "held_rms_dbfs": -28.489281908,
+      "first_tail_rms_dbfs": -103.994082669,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "1fab6d5a8c0bdf3a",
+      "onsets": 96,
+      "complete_gate_widths": 96,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67
+      ],
+      "max_spacing_error_ms": 1.0000000000000009,
+      "max_gate_width_error_ms": 0.8333333333333387,
+      "mean_spacing_hz": 8.000224567707164,
+      "final_tail_below_held_db": -77.596911805
+    },
+    {
+      "type": "program",
+      "name": "Arp Bells",
+      "index": 509,
+      "scenario": "constant_tempo",
+      "rate_hz": 4,
+      "mode": 2,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 96,
+      "max_held": 1,
+      "max_active": 2,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -21.399523565,
+      "held_rms_dbfs": -34.260874184,
+      "first_tail_rms_dbfs": -53.482698754,
+      "final_tail_rms_dbfs": -96.737374218,
+      "pcm_fnv64": "21aa53c1b693fa4a",
+      "onsets": 48,
+      "complete_gate_widths": 48,
+      "declared_sequence_length": 10,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55,
+        60,
+        64,
+        67,
+        64,
+        60,
+        55,
+        52
+      ],
+      "max_spacing_error_ms": 0.6666666666666765,
+      "max_gate_width_error_ms": 1.0000000000000009,
+      "mean_spacing_hz": 3.9997730625212755,
+      "final_tail_below_held_db": -62.476500034
+    },
+    {
+      "type": "program",
+      "name": "Arp Bass",
+      "index": 510,
+      "scenario": "constant_tempo",
+      "rate_hz": 6,
+      "mode": 0,
+      "octaves": 1,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 144,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.106574405,
+      "held_rms_dbfs": -30.206596074,
+      "first_tail_rms_dbfs": -96.797633912,
+      "final_tail_rms_dbfs": -300.0,
+      "pcm_fnv64": "6309a0b6f550e8f7",
+      "onsets": 72,
+      "complete_gate_widths": 72,
+      "declared_sequence_length": 3,
+      "observed_note_range": [
+        48,
+        55
+      ],
+      "expected_mode_note_order": [
+        48,
+        52,
+        55
+      ],
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 0.6666666666666765,
+      "mean_spacing_hz": 6.0,
+      "final_tail_below_held_db": -269.793403926
+    },
+    {
+      "type": "program",
+      "name": "Random Arp",
+      "index": 518,
+      "scenario": "constant_tempo",
+      "rate_hz": 6,
+      "mode": 3,
+      "octaves": 2,
+      "frames": 768000,
+      "block_frames": 64,
+      "events": 144,
+      "max_held": 1,
+      "max_active": 1,
+      "tail_held_observations": 0,
+      "final_active": 0,
+      "nonfinite": 0,
+      "clipped": 0,
+      "peak_dbfs": -13.578339911,
+      "held_rms_dbfs": -32.056423356,
+      "first_tail_rms_dbfs": -105.472584029,
+      "final_tail_rms_dbfs": -106.086193713,
+      "pcm_fnv64": "4b6c58335634952a",
+      "onsets": 72,
+      "complete_gate_widths": 72,
+      "declared_sequence_length": 6,
+      "observed_note_range": [
+        48,
+        67
+      ],
+      "expected_mode_note_order": null,
+      "max_spacing_error_ms": 0.0,
+      "max_gate_width_error_ms": 0.3333333333333244,
+      "mean_spacing_hz": 6.0,
+      "final_tail_below_held_db": -74.02977035699999
+    }
+  ],
+  "tempo_controls": [
+    {
+      "name": "Arp Poly",
+      "same_trace": true,
+      "same_pcm_fnv64": true,
+      "digest": "1fab6d5a8c0bdf3a",
+      "scope": "64-bit digest equality plus exact telemetry/metric equality; no retained PCM byte-comparison is asserted."
+    },
+    {
+      "name": "Arp Bells",
+      "same_trace": true,
+      "same_pcm_fnv64": true,
+      "digest": "21aa53c1b693fa4a",
+      "scope": "64-bit digest equality plus exact telemetry/metric equality; no retained PCM byte-comparison is asserted."
+    },
+    {
+      "name": "Arp Bass",
+      "same_trace": true,
+      "same_pcm_fnv64": true,
+      "digest": "6309a0b6f550e8f7",
+      "scope": "64-bit digest equality plus exact telemetry/metric equality; no retained PCM byte-comparison is asserted."
+    },
+    {
+      "name": "Random Arp",
+      "same_trace": true,
+      "same_pcm_fnv64": true,
+      "digest": "4b6c58335634952a",
+      "scope": "64-bit digest equality plus exact telemetry/metric equality; no retained PCM byte-comparison is asserted."
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "label": "only recognized raw record types"
+    },
+    {
+      "passed": true,
+      "label": "all 27 existing sequence-category programs exactly once"
+    },
+    {
+      "passed": true,
+      "label": "four actual modern arp tempo controls"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Arp Motion: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 157: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 158: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 159: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 160: random mode actually visits multiple admitted notes"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 161: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 162: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 163: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 164: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Midnight Sequences 165: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Slow Sequences 166: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Bright Sequences 167: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Dark Sequences 168: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Wide Sequences 169: random mode actually visits multiple admitted notes"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Soft Sequences 170: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Amber Sequences 171: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Velvet Sequences 172: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Distant Sequences 173: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Neon Sequences 174: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Hollow Sequences 175: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Golden Sequences 176: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Frozen Sequences 177: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Electric Sequences 178: random mode actually visits multiple admitted notes"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: entire ascending/descending/up-down/played-order phrase follows declared mode"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: existing address retained"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: arp on/rate/mode/octaves and both footage settings equal baseline"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: rendered settings equal committed inventory"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: complete sixteen-second telemetry accounted"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: all complete-patch samples finite and below full scale"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: one generated held note and bounded physical voices"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: ordinary final key release stops all generated notes and retires voices"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: late phrase remains audible"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: final tail falls at least 40 dB below late held phrase"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: first generated note starts within one observed block"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: at least two sequence-lengths observed"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: each onset spacing agrees with authored rate within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: each complete held gate agrees with 58% or random 45% duty within two observation blocks"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: generated pitch belongs to authored octave set and retains source channel/velocity"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: random mode actually visits multiple admitted notes"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: tempo60-to180 change preserves complete observed note/gate trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: tempo60-to180 control has same complete stereo sample digest"
+    },
+    {
+      "passed": true,
+      "label": "Arp Poly: tempo control has same energy and lifecycle observations"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: tempo60-to180 change preserves complete observed note/gate trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: tempo60-to180 control has same complete stereo sample digest"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bells: tempo control has same energy and lifecycle observations"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: tempo60-to180 change preserves complete observed note/gate trace"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: tempo60-to180 control has same complete stereo sample digest"
+    },
+    {
+      "passed": true,
+      "label": "Arp Bass: tempo control has same energy and lifecycle observations"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: tempo60-to180 change preserves complete observed note/gate trace"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: tempo60-to180 control has same complete stereo sample digest"
+    },
+    {
+      "passed": true,
+      "label": "Random Arp: tempo control has same energy and lifecycle observations"
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Trace times are callback-boundary observations of held state, not sample-exact acoustic onset measurements.",
+    "Rates are free-running Hz and are not host-tempo synchronized.",
+    "Mode/order/octave and finite/headroom observations protect preserved behavior; they are not new improvements or a quality score.",
+    "Final output tails can include intentional delay and existing noise after all generated voices have retired.",
+    "Only this three-key gesture and the indicated twelve-second hold are tested."
+  ]
+}

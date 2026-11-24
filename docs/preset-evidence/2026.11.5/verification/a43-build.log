@@ -1,0 +1,4 @@
+Exact-source isolated build
+g++ -O3 -DNDEBUG -std=c++20 -ffp-contract=off -I/tmp/cs80-a43/src docs/preset-evidence/2026.11.5/verification/a43-sequence-phrase-probe.cpp /tmp/cs80-a43/libcs80_core.a -pthread -o /tmp/cs80-a43/sequence-phrase-probe
+
+exit=0

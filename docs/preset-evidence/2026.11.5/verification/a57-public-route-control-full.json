@@ -1,0 +1,29 @@
+{
+  "scope": "Historical .4 Windows artifact14856804857 public-route control only; no current-release acceptance",
+  "requested_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+  "method": "GET",
+  "started_at": "2026-11-24T07:59:33.109612+00:00",
+  "credentials_supplied": false,
+  "max_bytes": 20971520,
+  "full_archive_received": true,
+  "public_route_qualified": false,
+  "status": 200,
+  "final_endpoint": {
+    "scheme": "https",
+    "host": "productionresultssa9.blob.core.windows.net",
+    "path": "/actions-results/f01aefd8-37eb-8a51-beab-c334bb21eff5/workflow-job-run-f00e7343-84ee-56d8-9841-7eb255749bb5/artifacts/5e1937f844a178147f21017b52aa112644e9c9b28266c7029c264c1494850ff3.zip",
+    "query_redacted": true
+  },
+  "headers": {
+    "content-length": "6361027",
+    "content-type": "application/zip",
+    "last-modified": "Mon, 23 Nov 2026 19:54:17 GMT",
+    "etag": "\"0x8DF499B8F127BB1\"",
+    "server": "envoy",
+    "content-disposition": "attachment; filename=\"cs80-windows-install-bundle.zip\""
+  },
+  "bytes": 6361027,
+  "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+  "archive_path": "/workspace/scratch/c98fb40a9529/a57-route-control-downloads/old-windows-route-control.zip",
+  "completed_at": "2026-11-24T07:59:46.218095+00:00"
+}

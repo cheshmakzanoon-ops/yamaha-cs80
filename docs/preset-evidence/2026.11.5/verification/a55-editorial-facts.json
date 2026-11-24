@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "evidence_kind": "editorial_source_and_retained_record_review",
+  "worker": 55,
+  "observed_at_utc": "2026-11-24T07:59:07.931505+00:00",
+  "local_head_at_recording": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "scope": "Working documentation snapshot, before final native/package publication. Source and data review only; no listening, fresh audio render, native test, package or release acceptance.",
+  "shared_documents_edited": false,
+  "production_files_edited": false,
+  "new_renders_executed": 0,
+  "new_native_tests_executed": 0,
+  "release_qualified": false,
+  "inventory_facts": {
+    "programs": 523,
+    "core_parameters": 202,
+    "last_two_ids": [
+      "body1_variant",
+      "body2_variant"
+    ],
+    "init_programs": [
+      {
+        "name": "Init Patch",
+        "host_index": 43
+      },
+      {
+        "name": "Init Circuit",
+        "host_index": 522
+      }
+    ],
+    "categories": {
+      "Bass": 50,
+      "Bells": 23,
+      "Brass": 59,
+      "FX": 46,
+      "Hardware Studies": 22,
+      "Init": 2,
+      "Keys": 45,
+      "Leads": 56,
+      "Organ": 15,
+      "Pads": 63,
+      "Plucked": 17,
+      "Polysynth": 25,
+      "Sequences": 27,
+      "Strings": 59,
+      "Winds": 14
+    },
+    "later_collection_modern_tag_count": 26
+  },
+  "coverage_record_facts": {
+    "validation": {
+      "passed": true,
+      "ordered_program_identities_preserved": 523,
+      "ordered_program_tags_preserved": 509,
+      "updated_program_tags": 14,
+      "original_parameter_ids_preserved": 200,
+      "parameter_comparison_precision": "IEEE-754 binary32",
+      "appended_parameter_ids": [
+        "body1_variant",
+        "body2_variant"
+      ],
+      "musical_programs_changed": 521,
+      "unchanged_initialization_programs": [
+        "Init Circuit",
+        "Init Patch"
+      ],
+      "duplicate_non_volume_vectors": 0
+    },
+    "program_count": 523,
+    "body_enabled": 272,
+    "circuit_only": 251,
+    "active_model_count": 19,
+    "represented_variant_selection_count": 5
+  },
+  "audio_accounting_facts": {
+    "actual_main_source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+    "actual_two_pad_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+    "main_stereo_frames_per_version": 103153374,
+    "main_seconds_per_version": 2149.028625,
+    "zero_pressure_musical_changes": 519,
+    "pressure_gesture_changes": 2,
+    "musical_programs_with_changed_output": 521,
+    "unchanged_main_comparisons": 521,
+    "new_two_pad_comparisons": 2,
+    "all_523_freshly_rendered_by_final_binary": false
+  },
+  "measurement_scope_corrections": [
+    {
+      "claim": "maximum eight-note stress peak is -1.5 dBFS",
+      "qualification_needed": "Nominal one-second eight-note audit at 44.1 kHz, full velocity and pressure; 256-frame blocks render 44,288 frames. The separate 12-second upper-chord test applies only to Cathedral Pad and Golden Pads 66 at 48 kHz.",
+      "classification": "wording scope correction"
+    },
+    {
+      "claim": "Rain maximum two-millisecond modulation jump falls from 1.1204 to 0.0407 dB",
+      "qualification_needed": "A18 uses a 2.5-second render at 44.1 kHz, measured from 0.2 to 2.5 seconds. A44 measures 0.2 to 36 seconds at 48 kHz and finds a maximum of 0.060951 dB. The two maxima have different windows.",
+      "classification": "wording scope correction"
+    },
+    {
+      "claim": "finite, unclipped samples throughout",
+      "qualification_needed": "Prefer finite samples within full-scale bounds; the retained sample bound check does not assert absence of every internal saturating process.",
+      "classification": "precision improvement"
+    }
+  ],
+  "pending_publication_facts": [
+    "Replace .4 download/artifact/source/count/expiry information only from actual accepted replacement records.",
+    "Record the original 09af capture-metadata failure and minimal correction without claiming numerical bounds failed.",
+    "Replace provisional db6b final-source wording and complete the actual 60-worker ledger only when those outcomes exist.",
+    "Keep expected audition roster distinct from actual accepted archive.",
+    "Do not claim all tags unchanged: 14 tag lists changed; names/categories/addresses remain preserved."
+  ],
+  "inputs": [
+    {
+      "path": "README.md",
+      "bytes": 18867,
+      "sha256": "d28dc5a1e0a04a75b2c75167f4608775133535ca0e3c9cacb0cf0db78ebbd2f6"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_5.md",
+      "bytes": 17529,
+      "sha256": "518c88d372949af56e86078bf0c56216bc7a092fce3c391c953240e26eb13742"
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 17256,
+      "sha256": "e1e80b30ae88096e200a80c27072f8db8c415757220a44b795fad815ae22f330"
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 29669,
+      "sha256": "3f26239ef7bc4ec9b11abb3c02471146bba7d0e97ce3c2cf1f469b8b3ab45993"
+    },
+    {
+      "path": "docs/TEAM_REVIEW_2026_11_5.md",
+      "bytes": 10976,
+      "sha256": "9d18b0a2d71797e260bb69fc36cb346f8d86d3f4a26e1c1e780783d70334c5a7"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/parameter-coverage.json",
+      "bytes": 331202,
+      "sha256": "502697b2d6b12b168f1ea274a0534f0503266cb9b5b2149e709aa57160d7635b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/keyboard-response-comparison.json",
+      "bytes": 8276,
+      "sha256": "d62257c412e13001a368f5879ea35b111be0a45a19fa9618b7da6f7bd96e9a1f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/final-library-audit.log",
+      "bytes": 49527,
+      "sha256": "daa98f33d276dafe7a9bf9e91a35ddfe03947be60aa2b453576d98dd0de5bc39"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json",
+      "bytes": 4183,
+      "sha256": "91b2f92f2a5656bfc0e1aa74e110279246640b88a53fc48e5a52f176bce1e4e5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-audio-supplement.json",
+      "bytes": 5569,
+      "sha256": "d615de6ec6ca7cdb21ca84fc725c8641cbb75612f744a71cddea05ede18bd4a6"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/long-pad-headroom/inventory-delta.json",
+      "bytes": 579,
+      "sha256": "46e9d5e84130696d49eea677e3f53ee054bb6697a4c375cb793abff2398f5af8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a07.md",
+      "bytes": 3575,
+      "sha256": "843b2a97e9eb6c559f6a139e4c514eaca1ee7fb1746da3900baaa37ae9967e8b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a08.md",
+      "bytes": 5197,
+      "sha256": "7ffd26173e3bb17c719a20e4a1ba625330d85493138ad7d33f2598f9aeb4a19b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a16.md",
+      "bytes": 6177,
+      "sha256": "bb7cb08ea0420db87b819c9caea5fb2891e7aeb02d852f1d22b152c6d8dbb7e4"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a18.md",
+      "bytes": 11360,
+      "sha256": "c8d1068d14733c7e0a481c052991d2f2d2a429477d695f227cd2d2305b6c146d"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a33.md",
+      "bytes": 9257,
+      "sha256": "ea90b7598e5193c09c4a55461cfd97b226a3c579b4881f1dd5fa2d3fd5a00732"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a44.md",
+      "bytes": 10448,
+      "sha256": "a9d9efbb5e68b9245abdd10085da09393289ac8fd7ab5b10118d5c508b736bbb"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a45.md",
+      "bytes": 12282,
+      "sha256": "668d4255084075990effd3d5d135698fd1734586be66509fbd71a8c740fd62b3"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/measure-failed-original.log",
+      "bytes": 29877,
+      "sha256": "5b7c9f5f827dfd66afd6b184264b197dbedd13b50f9e635f1761e0e2ddb43884"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/dsp-jobs-measure-failed-api.json",
+      "bytes": 12161,
+      "sha256": "310b4adb0942085182068941be3f35f8179fbcc70f6ecd8cad2c3473125fc6f6"
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "bytes": 1259,
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce"
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 52123,
+      "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa"
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "bytes": 22560,
+      "sha256": "988e9718d8ad892b1c2d3aa860eedf4ebf2b5fc899c3df8cda081271392f37c3"
+    },
+    {
+      "path": "tests/LibraryAuditTests.cpp",
+      "bytes": 23330,
+      "sha256": "477c7c859d17a909cd23787ffdf4408a14ed235eea49c60e65375588fb76078c"
+    },
+    {
+      "path": "tests/PadPolyRefinementTests.cpp",
+      "bytes": 7957,
+      "sha256": "f2242323ffef26cc996b1721445b066eb0f1688a13ba04bb9a5cd8ec850f819e"
+    },
+    {
+      "path": "tests/FxRefinementTests.cpp",
+      "bytes": 9384,
+      "sha256": "c9fe660b0003f3eac8cc366129b10a1cd8fb29c3a40e83a792498126e78c045d"
+    }
+  ]
+}

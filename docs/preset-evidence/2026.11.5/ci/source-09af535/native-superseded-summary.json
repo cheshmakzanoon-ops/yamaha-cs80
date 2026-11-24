@@ -1,0 +1,47 @@
+{
+  "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "native_run_id": 45344888485,
+  "attempt": 1,
+  "native_conclusion": "cancelled",
+  "qualified": false,
+  "reason": "Superseded by final source db6b5a7, which corrects only two bundled Markdown guides. No audio, test, workflow, packaging-script or other code difference.",
+  "jobs": [
+    {
+      "id": 138276946261,
+      "name": "Windows / VST3 + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138276946609,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138276946796,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138276947171,
+      "name": "Linux / VST3 + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138282955863,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138282956167,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "conclusion": "skipped"
+    }
+  ],
+  "supporting_runs_not_relabelled_or_replaced": {
+    "dsp": 45344888536,
+    "filter": 45344888479,
+    "screenshots": 45344888473
+  },
+  "complete_supporting_test_input_equivalence_to_final_source": false,
+  "exception": "Two packaging fixtures consume the revised guides. Their final-source native executions are required separately."
+}

@@ -1,0 +1,527 @@
+{
+  "source_commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "scope": "Bounded local Engine long-held chord safety and source-level choir/pad identity review",
+  "native_release_qualified": false,
+  "acoustic_equivalence_established": false,
+  "sample_rate": 48000,
+  "notes": [
+    36,
+    43,
+    48,
+    55,
+    60,
+    64,
+    67,
+    72
+  ],
+  "velocity": 1.0,
+  "hold_seconds": 20,
+  "tail_seconds": 12,
+  "pressure_timeline": [
+    {
+      "start_seconds": 0,
+      "value": 0
+    },
+    {
+      "start_seconds": 4,
+      "value": 1
+    },
+    {
+      "start_seconds": 8,
+      "value": 0
+    },
+    {
+      "start_seconds": 12,
+      "value": 1
+    }
+  ],
+  "factory_controls_overridden": false,
+  "audio_normalization": false,
+  "all_notes_off_reset_or_mute": false,
+  "stereo_frames": 10752000,
+  "checks": 686,
+  "failures": 0,
+  "long_chord_programs": [
+    {
+      "name": "Choir Pad",
+      "peak_dbfs": -6.303948056,
+      "max_one_second_rms_dbfs": -19.966465861,
+      "held_18_to_20_seconds_rms_dbfs": -21.424642085489623,
+      "tail_30_to_32_seconds_rms_dbfs": -81.90017060816993,
+      "tail_relative_to_held_db": -60.47552852268031,
+      "zero_active_voices_observed_by_seconds_after_key_up": 3,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Dark Choir",
+      "peak_dbfs": -5.335562693,
+      "max_one_second_rms_dbfs": -15.12365794,
+      "held_18_to_20_seconds_rms_dbfs": -17.002943754202093,
+      "tail_30_to_32_seconds_rms_dbfs": -81.95060601944635,
+      "tail_relative_to_held_db": -64.94766226524426,
+      "zero_active_voices_observed_by_seconds_after_key_up": 3,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Slow Pad",
+      "peak_dbfs": -3.489895614,
+      "max_one_second_rms_dbfs": -15.638566956,
+      "held_18_to_20_seconds_rms_dbfs": -16.520448386784675,
+      "tail_30_to_32_seconds_rms_dbfs": -82.1896103051348,
+      "tail_relative_to_held_db": -65.66916191835013,
+      "zero_active_voices_observed_by_seconds_after_key_up": 6,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Evolving Pad",
+      "peak_dbfs": -3.089677029,
+      "max_one_second_rms_dbfs": -15.256237989,
+      "held_18_to_20_seconds_rms_dbfs": -16.04108772097979,
+      "tail_30_to_32_seconds_rms_dbfs": -82.40543736351312,
+      "tail_relative_to_held_db": -66.36434964253333,
+      "zero_active_voices_observed_by_seconds_after_key_up": 7,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Cathedral Pad",
+      "peak_dbfs": -0.435907023,
+      "max_one_second_rms_dbfs": -13.427753893,
+      "held_18_to_20_seconds_rms_dbfs": -13.429753109631733,
+      "tail_30_to_32_seconds_rms_dbfs": -83.11591884114972,
+      "tail_relative_to_held_db": -69.68616573151799,
+      "zero_active_voices_observed_by_seconds_after_key_up": 9,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Arctic Pad",
+      "peak_dbfs": -3.11629259,
+      "max_one_second_rms_dbfs": -18.7149937,
+      "held_18_to_20_seconds_rms_dbfs": -19.34749959796325,
+      "tail_30_to_32_seconds_rms_dbfs": -81.807028389005,
+      "tail_relative_to_held_db": -62.45952879104175,
+      "zero_active_voices_observed_by_seconds_after_key_up": 5,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    },
+    {
+      "name": "Pressure Pad",
+      "peak_dbfs": -3.748791373,
+      "max_one_second_rms_dbfs": -15.430901681,
+      "held_18_to_20_seconds_rms_dbfs": -16.061230585078324,
+      "tail_30_to_32_seconds_rms_dbfs": -81.63607532162551,
+      "tail_relative_to_held_db": -65.57484473654719,
+      "zero_active_voices_observed_by_seconds_after_key_up": 4,
+      "all_finite": true,
+      "clipped_samples": 0,
+      "active_voices_at_end": 0
+    }
+  ],
+  "pad_identity_count": 30,
+  "pad_identities_match_preceding_release": true,
+  "pad_identities": [
+    {
+      "host_index": 282,
+      "name": "Slow Pad",
+      "category": "Pads",
+      "tags": [
+        "pwm",
+        "chorus",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 283,
+      "name": "Ring Drift Pad",
+      "category": "Pads",
+      "tags": [
+        "ring-mod",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 284,
+      "name": "Choir Pad",
+      "category": "Pads",
+      "tags": [
+        "resonance",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 285,
+      "name": "Dark Choir",
+      "category": "Pads",
+      "tags": [
+        "resonance",
+        "feet-layer"
+      ]
+    },
+    {
+      "host_index": 286,
+      "name": "Sweep Pad",
+      "category": "Pads",
+      "tags": [
+        "brilliance-swell",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 287,
+      "name": "Breathing Pad",
+      "category": "Pads",
+      "tags": [
+        "sub-mod",
+        "pwm"
+      ]
+    },
+    {
+      "host_index": 288,
+      "name": "Glass Pad",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "sine",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 289,
+      "name": "Warm Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "sine"
+      ]
+    },
+    {
+      "host_index": 290,
+      "name": "Wide Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "detune",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 291,
+      "name": "Octave Pad",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 292,
+      "name": "Fifth Pad",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 293,
+      "name": "Evolving Pad",
+      "category": "Pads",
+      "tags": [
+        "sub-mod",
+        "pwm",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 294,
+      "name": "Noise Pad",
+      "category": "Pads",
+      "tags": [
+        "noise",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 295,
+      "name": "Pressure Pad",
+      "category": "Pads",
+      "tags": [
+        "aftertouch",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 296,
+      "name": "Sine Pad",
+      "category": "Pads",
+      "tags": [
+        "sine",
+        "feet-layer",
+        "aftertouch"
+      ]
+    },
+    {
+      "host_index": 297,
+      "name": "Hollow Pad",
+      "category": "Pads",
+      "tags": [
+        "pwm",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 298,
+      "name": "Resonant Pad",
+      "category": "Pads",
+      "tags": [
+        "resonance",
+        "brilliance-swell",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 299,
+      "name": "Pulse Pad",
+      "category": "Pads",
+      "tags": [
+        "pwm",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 300,
+      "name": "Tremolo Pad",
+      "category": "Pads",
+      "tags": [
+        "tremolo",
+        "sub-mod",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 301,
+      "name": "Neo-Noir Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "ring-mod",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 302,
+      "name": "Rain Pad",
+      "category": "Pads",
+      "tags": [
+        "modern",
+        "lfo",
+        "noise"
+      ]
+    },
+    {
+      "host_index": 303,
+      "name": "Cathedral Pad",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "sine",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 304,
+      "name": "Shimmer Pad",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "pwm",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 305,
+      "name": "Low Drone",
+      "category": "Pads",
+      "tags": [
+        "feet-layer",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 306,
+      "name": "Ether Pad",
+      "category": "Pads",
+      "tags": [
+        "noise",
+        "sine",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 307,
+      "name": "Velvet Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 308,
+      "name": "Analog Haze",
+      "category": "Pads",
+      "tags": [
+        "detune",
+        "pwm",
+        "chorus"
+      ]
+    },
+    {
+      "host_index": 309,
+      "name": "Bowed Glass",
+      "category": "Pads",
+      "tags": [
+        "ring-mod",
+        "sine",
+        "feet-layer"
+      ]
+    },
+    {
+      "host_index": 310,
+      "name": "Night Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "dual-rank"
+      ]
+    },
+    {
+      "host_index": 311,
+      "name": "Arctic Pad",
+      "category": "Pads",
+      "tags": [
+        "chorus",
+        "feet-layer",
+        "dual-rank"
+      ]
+    }
+  ],
+  "compiled_choir_recipe_parameters": [
+    {
+      "name": "Choir Pad",
+      "host_index": 284,
+      "parameters": {
+        "ch1_feet": 1,
+        "ch2_feet": 1,
+        "body1_model": 15,
+        "body2_model": 15,
+        "body1_variant": 3,
+        "body2_variant": 3,
+        "body1_mix": 1,
+        "body2_mix": 1,
+        "body1_size": 1.01999998,
+        "body2_size": 0.949999988,
+        "body1_brightness": 0.519999981,
+        "body2_brightness": 0.589999974,
+        "ch1_v_a": 0.180000007,
+        "ch2_v_a": 0.310000002,
+        "ch1_v_s": 0.949999988,
+        "ch2_v_s": 0.730000019,
+        "ch1_v_r": 1.54999995,
+        "ch2_v_r": 1.70000005,
+        "ch1_v_level": 0.180000007,
+        "ch2_v_level": 0.119999997,
+        "ch1_init_level": 0.939999998,
+        "ch2_init_level": 0.800000012,
+        "ch1_after_brill": 0.140000001,
+        "ch2_after_brill": 0.180000007,
+        "ch1_after_level": 0.409999996,
+        "ch2_after_level": 0.460000008,
+        "ch1_hpf_cutoff": 55,
+        "ch2_hpf_cutoff": 90,
+        "ch1_lpf_cutoff": 7200,
+        "ch2_lpf_cutoff": 7800,
+        "chorus_depth": 0.140000001,
+        "chorus_speed": 0.230000004,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004
+      }
+    },
+    {
+      "name": "Dark Choir",
+      "host_index": 285,
+      "parameters": {
+        "ch1_feet": 0,
+        "ch2_feet": 1,
+        "body1_model": 15,
+        "body2_model": 15,
+        "body1_variant": 4,
+        "body2_variant": 4,
+        "body1_mix": 1,
+        "body2_mix": 1,
+        "body1_size": 1.13999999,
+        "body2_size": 1.02999997,
+        "body1_brightness": 0.340000004,
+        "body2_brightness": 0.439999998,
+        "ch1_v_a": 0.310000002,
+        "ch2_v_a": 0.529999971,
+        "ch1_v_s": 0.959999979,
+        "ch2_v_s": 0.649999976,
+        "ch1_v_r": 2.29999995,
+        "ch2_v_r": 1.89999998,
+        "ch1_v_level": 0.219999999,
+        "ch2_v_level": 0.119999997,
+        "ch1_init_level": 0.879999995,
+        "ch2_init_level": 0.75999999,
+        "ch1_after_brill": 0.100000001,
+        "ch2_after_brill": 0.140000001,
+        "ch1_after_level": 0.419999987,
+        "ch2_after_level": 0.439999998,
+        "ch1_hpf_cutoff": 35,
+        "ch2_hpf_cutoff": 65,
+        "ch1_lpf_cutoff": 5200,
+        "ch2_lpf_cutoff": 6500,
+        "chorus_depth": 0.100000001,
+        "chorus_speed": 0.200000003,
+        "drift": 0,
+        "voice_dispersion": 0.0250000004
+      }
+    }
+  ],
+  "input_sha256": {
+    "src/core/InstrumentBody.h": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/Engine.cpp": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+    "src/core/Engine.h": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+    "src/core/Params.h": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+    "src/core/FactoryPresets.h": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+    "src/core/curated/Pads.inc": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+    "src/plugin/PluginProcessor.cpp": "662baff4e7217f65f47a31846096ebd48b4610fe3d6d07b797a1db4dc56fe387",
+    "tests/InstrumentBodyHostTests.h": "f7ffbd3d14bab241b2a1611c377fc17d0b52bc5476fc8ee2883bf3e11fab1331",
+    "tests/VocalBodyTests.cpp": "961cf7475090f44d7c50bddf4e587f28b34ade1b211a16e98c5b79eb4f8cded7",
+    "tests/PadPolyRefinementTests.cpp": "f2ab2b90c0b7d584f8ca84b821d6fb43c46083b5852bcb8cd02b88c441ebdcc6",
+    "build-preset/libcs80_core.a": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8",
+    "docs/preset-evidence/2026.11.5/inventory.json": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193",
+    "docs/preset-evidence/2026.11.5/baseline/inventory.json": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "docs/preset-evidence/2026.11.5/verification/a40-long-chord-probe.cpp": "37a5e892718cfeb3404163e99487b7c22c6f45ed3e08fc53a3db20581aa91724",
+    "docs/preset-evidence/2026.11.5/verification/a40-long-chord-probe.log": "5f78a9436999ae2517cad23c75080df9e47b8132d8aa85c2794a51c5c8ab1bdf",
+    "docs/preset-evidence/2026.11.5/verification/a40-long-chord-windows.csv": "268b08441743dcc03428143ba34591cbb314020a3bbff0752091f6b58eab2488"
+  },
+  "limits": [
+    "Seven selected long-chord cases, not every pad or arbitrary performance event sequence.",
+    "One local Linux core build at 48 kHz; native plugin/host qualification is separate.",
+    "Long-tail numerical and voice-lifecycle evidence does not establish perceptual realism.",
+    "Vowel centers are authored broad resonances; real singers, consonants and words are not modeled.",
+    "Old-state restore findings are source/test-contract review, not an independent native APVTS execution."
+  ]
+}

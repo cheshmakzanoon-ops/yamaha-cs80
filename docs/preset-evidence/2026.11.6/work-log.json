@@ -1,6 +1,6 @@
 {
   "requested_distinct_agents": 60,
-  "actual_assigned": 18,
+  "actual_assigned": 60,
   "maximum_concurrent_workers": 3,
   "coordinator": "/root",
   "prior_cycle_agents_counted": 0,
@@ -88,13 +88,236 @@
     {
       "number": 17,
       "task": "/root/a17_keys_family",
-      "status": "in_progress"
+      "status": "completed"
     },
     {
       "number": 18,
       "task": "/root/a18_strings_family",
+      "status": "completed"
+    },
+    {
+      "number": 19,
+      "task": "/root/a19_brass_family",
+      "status": "completed"
+    },
+    {
+      "number": 20,
+      "task": "/root/a20_winds_family",
+      "status": "completed"
+    },
+    {
+      "number": 21,
+      "task": "/root/a21_bass_family",
+      "status": "completed"
+    },
+    {
+      "number": 22,
+      "task": "/root/a22_bells_family",
+      "status": "completed"
+    },
+    {
+      "number": 23,
+      "task": "/root/a23_plucked_family",
+      "status": "completed"
+    },
+    {
+      "number": 24,
+      "task": "/root/a24_organ_family",
+      "status": "completed"
+    },
+    {
+      "number": 25,
+      "task": "/root/a25_pads_family",
+      "status": "completed"
+    },
+    {
+      "number": 26,
+      "task": "/root/a26_polysynth_family",
+      "status": "completed"
+    },
+    {
+      "number": 27,
+      "task": "/root/a27_leads_family",
+      "status": "completed"
+    },
+    {
+      "number": 28,
+      "task": "/root/a28_sequences_family",
+      "status": "completed"
+    },
+    {
+      "number": 29,
+      "task": "/root/a29_fx_family",
+      "status": "completed"
+    },
+    {
+      "number": 30,
+      "task": "/root/a30_hardware_studies",
+      "status": "completed"
+    },
+    {
+      "number": 31,
+      "task": "/root/a31_realtime_cost",
+      "status": "completed"
+    },
+    {
+      "number": 32,
+      "task": "/root/a32_material_extremes",
+      "status": "completed"
+    },
+    {
+      "number": 33,
+      "task": "/root/a33_strike_variation",
+      "status": "completed"
+    },
+    {
+      "number": 34,
+      "task": "/root/a34_state_compatibility",
+      "status": "completed"
+    },
+    {
+      "number": 35,
+      "task": "/root/a35_material_routing",
+      "status": "completed"
+    },
+    {
+      "number": 36,
+      "task": "/root/a36_control_experience",
+      "status": "completed"
+    },
+    {
+      "number": 37,
+      "task": "/root/a37_causal_material_review",
+      "status": "completed"
+    },
+    {
+      "number": 38,
+      "task": "/root/a38_note_lifecycle",
+      "status": "completed"
+    },
+    {
+      "number": 39,
+      "task": "/root/a39_stereo_translation",
+      "status": "completed"
+    },
+    {
+      "number": 40,
+      "task": "/root/a40_supporting_ci",
+      "status": "completed",
+      "preparation_complete": true
+    },
+    {
+      "number": 41,
+      "task": "/root/a41_document_precision",
+      "status": "completed"
+    },
+    {
+      "number": 42,
+      "task": "/root/a42_realism_scope",
+      "status": "completed"
+    },
+    {
+      "number": 43,
+      "task": "/root/a43_source_freeze",
+      "status": "completed",
+      "followup": "Preparing source195fb62 freeze and exact code equivalence"
+    },
+    {
+      "number": 44,
+      "task": "/root/a44_test_gate_audit",
+      "status": "completed"
+    },
+    {
+      "number": 45,
+      "task": "/root/a45_au_validation_review",
+      "status": "completed"
+    },
+    {
+      "number": 46,
+      "task": "/root/a46_windows_package",
+      "status": "awaiting_corrected_source_ci",
+      "preparation_complete": true,
+      "original_run": "Windows test fixture checksum failure; no installation artifact"
+    },
+    {
+      "number": 47,
+      "task": "/root/a47_macos_arm_package",
+      "status": "completed"
+    },
+    {
+      "number": 48,
+      "task": "/root/a48_macos_intel_package",
+      "status": "awaiting_ci",
+      "preparation_complete": true
+    },
+    {
+      "number": 49,
+      "task": "/root/a49_linux_package",
+      "status": "awaiting_ci",
+      "preparation_complete": true
+    },
+    {
+      "number": 50,
+      "task": "/root/a50_audition_archive",
+      "status": "awaiting_ci",
+      "preparation_complete": true
+    },
+    {
+      "number": 51,
+      "task": "/root/a51_validator_binding",
+      "status": "completed"
+    },
+    {
+      "number": 52,
+      "task": "/root/a52_native_parser",
+      "status": "completed"
+    },
+    {
+      "number": 53,
+      "task": "/root/a53_packaged_user_docs",
+      "status": "completed"
+    },
+    {
+      "number": 54,
+      "task": "/root/a54_cross_platform_consistency",
+      "status": "completed"
+    },
+    {
+      "number": 55,
+      "task": "/root/a55_public_downloads",
+      "status": "awaiting_ci",
+      "preparation_complete": true
+    },
+    {
+      "number": 56,
+      "task": "/root/a56_inventory_acceptance",
+      "status": "awaiting_ci",
+      "preparation_complete": true
+    },
+    {
+      "number": 57,
+      "task": "/root/a57_team_record",
+      "status": "in_progress",
+      "preparation_complete": true
+    },
+    {
+      "number": 58,
+      "task": "/root/a58_windows_failure_fix",
+      "status": "completed"
+    },
+    {
+      "number": 59,
+      "task": "/root/a59_response_coverage",
       "status": "in_progress"
+    },
+    {
+      "number": 60,
+      "task": "/root/a60_windows_evidence_review",
+      "status": "completed"
     }
   ],
-  "status": "ongoing; release acceptance pending"
+  "status": "ongoing; release acceptance pending",
+  "current_source": "195fb620ca13d03ac25a2eac7849e87f1059a184",
+  "current_native_run": 45377816325,
+  "prior_source_outcome": "fcc3c8e: Apple Silicon and supporting CI qualified; Windows failed immutable-fixture newline authentication; no all-platform publication"
 }

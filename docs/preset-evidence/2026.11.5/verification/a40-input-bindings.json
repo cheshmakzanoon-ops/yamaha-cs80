@@ -1,0 +1,99 @@
+{
+  "source_commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "audio_core_sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8",
+  "audio_core_snapshot_verified": true,
+  "source_input_comparisons": [
+    {
+      "path": "src/core/InstrumentBody.h",
+      "recorded_worktree_sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+      "source6094_sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "recorded_worktree_sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "source6094_sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "recorded_worktree_sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "source6094_sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/Engine.h",
+      "recorded_worktree_sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+      "source6094_sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/Params.h",
+      "recorded_worktree_sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+      "source6094_sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "recorded_worktree_sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "source6094_sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "recorded_worktree_sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "source6094_sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "recorded_worktree_sha256": "662baff4e7217f65f47a31846096ebd48b4610fe3d6d07b797a1db4dc56fe387",
+      "source6094_sha256": "662baff4e7217f65f47a31846096ebd48b4610fe3d6d07b797a1db4dc56fe387",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": false
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "recorded_worktree_sha256": "f7ffbd3d14bab241b2a1611c377fc17d0b52bc5476fc8ee2883bf3e11fab1331",
+      "source6094_sha256": "dc9e7b25394d3276209df4ea50aa90fccbe55f03c6063bf142800b5d49969faa",
+      "matches_source6094": false,
+      "native_or_host_execution_claimed": false
+    },
+    {
+      "path": "tests/VocalBodyTests.cpp",
+      "recorded_worktree_sha256": "961cf7475090f44d7c50bddf4e587f28b34ade1b211a16e98c5b79eb4f8cded7",
+      "source6094_sha256": "961cf7475090f44d7c50bddf4e587f28b34ade1b211a16e98c5b79eb4f8cded7",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "tests/PadPolyRefinementTests.cpp",
+      "recorded_worktree_sha256": "f2ab2b90c0b7d584f8ca84b821d6fb43c46083b5852bcb8cd02b88c441ebdcc6",
+      "source6094_sha256": "f2ab2b90c0b7d584f8ca84b821d6fb43c46083b5852bcb8cd02b88c441ebdcc6",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "recorded_worktree_sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193",
+      "source6094_sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/baseline/inventory.json",
+      "recorded_worktree_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "source6094_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "matches_source6094": true,
+      "native_or_host_execution_claimed": null
+    }
+  ],
+  "qualification_note": "The independently measured audio uses the immutable source6094 core. The recorded InstrumentBodyHostTests.h hash includes the parent concurrent test-only access correction; it was reviewed, not compiled or executed by A40. Preserve the original review-results JSON and this explicit binding clarification."
+}

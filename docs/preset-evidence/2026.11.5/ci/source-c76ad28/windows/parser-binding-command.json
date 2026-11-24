@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/bind-parser-archives.py",
+    "--repo",
+    ".",
+    "--source",
+    "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "--run-id",
+    "45351731801",
+    "--attempt",
+    "1",
+    "--target",
+    "windows-x86_64",
+    "--observations",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/native-validator-observations.json",
+    "--native-zip",
+    "../ci-c76-windows-downloads/test-evidence.zip",
+    "--native-api",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/test-evidence-api.json",
+    "--validator-zip",
+    "../ci-c76-windows-downloads/pluginval.zip",
+    "--validator-api",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/pluginval-api.json",
+    "--out",
+    "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/parser-archive-binding.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"status\": \"parser_archive_and_member_input_binding_verified\", \"target\": \"windows-x86_64\", \"archives_bound\": 2, \"release_qualified\": false}\n",
+  "stderr": "",
+  "observed_at_utc": "2026-11-24T08:55:50.325092+00:00"
+}

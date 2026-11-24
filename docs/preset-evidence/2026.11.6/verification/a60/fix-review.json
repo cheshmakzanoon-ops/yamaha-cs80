@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "scoped_checkout_fix_review_passed",
+  "native_windows_after_fix_qualified": false,
+  "release_qualified": false,
+  "original_failed_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "attributes": {
+    "sha256": "2e282213e917d805d7fc9659b46dca165d69923b90e3b8fab6f4315de10e8f07",
+    "bytes": 204,
+    "sole_effective_rule": "docs/preset-evidence/2026.11.5/baseline/inventory.json -text"
+  },
+  "frozen_inputs_unchanged": {
+    "docs/preset-evidence/2026.11.5/baseline/inventory.json": {
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "bytes": 704822
+    },
+    "scripts/compare-preset-response-2026-11-6.py": {
+      "sha256": "f6f84bf7f262cd4b79ea37df79373e072df684ae765668e21e2817fc67213c70",
+      "bytes": 18692
+    },
+    "scripts/test-compare-preset-response-2026-11-6.py": {
+      "sha256": "d59c298d2917fb9d67becc27836d4397a85b3af825a28e158c07627285471898",
+      "bytes": 11960
+    }
+  },
+  "independent_exercise": {
+    "core_autocrlf": "true",
+    "core_eol": "crlf",
+    "actual_checkout": true,
+    "baseline_bytes_identical": true,
+    "baseline_text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+    "comparator_text_attribute": "scripts/compare-preset-response-2026-11-6.py: text: unspecified",
+    "returncode": 0,
+    "existing_contract_test_groups": 7,
+    "log_sha256": "547118fce9b6e33896221219421d459faf5c67d810b7314813c6dec850aaff66"
+  },
+  "reviewed_a58_result": {
+    "path": "docs/preset-evidence/2026.11.6/verification/a58/checkout-regression.json",
+    "sha256": "caa35ac360244be40ae5e1b2a2b73ca9f70ca1ac84bf76f8a2311a1236e74cec",
+    "fixed_checkout_modes": 6,
+    "changed_byte_controls_rejected": 4
+  },
+  "limitations": [
+    "This local Git checkout exercise is not execution on Windows.",
+    "The original native failure remains failed; fresh native and validator runs are required.",
+    "No audio quality, plugin runtime, or public artifact acceptance follows from this correction."
+  ]
+}

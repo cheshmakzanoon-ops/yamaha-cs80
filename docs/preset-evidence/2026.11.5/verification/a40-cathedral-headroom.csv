@@ -1,0 +1,11 @@
+kind,trim,scenario,volume,velocity,pressure,hold_seconds,peak_dbfs,late_rms_dbfs,clipped,nonfinite,peak_second
+AUDIT,source_6094,volume=0.862999976,phrase_peak_dbfs=-4.659951801,window_rms_dbfs=-17.998728652,one_second_stress_dbfs=-4.958154209,finite=1
+CHORD,source_6094,wide_full,0.862999976,1.00,1.00,12,-1.404184495,-15.516542482,0,0,4.095854167
+CHORD,source_6094,close_middle_full,0.862999976,1.00,1.00,12,-0.972402496,-14.546518070,0,0,8.006916667
+CHORD,source_6094,close_upper_full,0.862999976,1.00,1.00,12,-0.237805006,-12.787590152,0,0,7.449750000
+CHORD,source_6094,wide_velocity_08,0.862999976,0.80,1.00,12,-2.488591297,-16.608330365,0,0,4.095854167
+CHORD,source_6094,wide_pressure_zero,0.862999976,1.00,0.00,12,-3.850143533,-17.962040655,0,0,4.095875000
+AUDIT,proposed_0685,volume=0.685000002,phrase_peak_dbfs=-6.666355862,window_rms_dbfs=-20.005132879,one_second_stress_dbfs=-6.964558715,finite=1
+CHORD,proposed_0685,wide_full,0.685000002,1.00,1.00,12,-3.410589384,-17.522946691,0,0,4.095854167
+CHORD,proposed_0685,close_middle_full,0.685000002,1.00,1.00,12,-2.974850789,-16.552922277,0,0,8.006916667
+CHORD,proposed_0685,close_upper_full,0.685000002,1.00,1.00,12,-1.333909416,-14.793612755,0,0,7.449750000

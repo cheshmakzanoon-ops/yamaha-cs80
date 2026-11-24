@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "status": "prepared_pending_actual_archive",
+  "accepted_archive_content": false,
+  "release_qualified": false,
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_tree": "74e3cbd3e5f9a2cd75135d4de67bf24ff0066b18",
+  "library_revision": "2026.11.6",
+  "source_files": {
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 19414,
+      "sha256": "692322b8722698c0da7cf164ffc50808b1e78ce341685898b599b06870a9d944"
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    }
+  },
+  "expected_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "expected_inventory_source_path": null,
+  "expected": {
+    "wav_count": 225,
+    "selected_program_count": 89,
+    "audio_seconds": 1276.2,
+    "folder_count": 46,
+    "regular_files": 276,
+    "checksums": 275,
+    "parameters": 204,
+    "programs": 523,
+    "stereo_frames": 61257600,
+    "raw_audio_bytes": 490060800
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "artifact_id": 14906817736,
+    "name": "cs80-dsp-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "bytes": 8505876,
+    "sha256": "aecaf160a64a9af168fbb8738e5ceb9e7e62e5151db19796389a27e0c3f3e900",
+    "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "workflow_run": 45366603724,
+    "members": [
+      "decimator-impulse.csv",
+      "decimator-tones.csv",
+      "decimator.json",
+      "filter-envelope-192000.csv",
+      "filter-envelope-44100.csv",
+      "filter-envelope-48000.csv",
+      "filter-envelope-96000.csv",
+      "measurements.json",
+      "oscillator-151.csv",
+      "oscillator-3001.csv",
+      "oscillator-6001.csv",
+      "oscillator-601.csv",
+      "plots/decimator-response-latency.png",
+      "plots/decimator-response-latency.svg",
+      "plots/filter-envelope-rate-comparison.png",
+      "plots/filter-envelope-rate-comparison.svg",
+      "plots/oscillator-alias-comparison.png",
+      "plots/oscillator-alias-comparison.svg",
+      "plots/oscillator-waveform-spectrum.png",
+      "plots/oscillator-waveform-spectrum.svg",
+      "plots/ring-frequency-envelope.png",
+      "plots/ring-frequency-envelope.svg",
+      "probe.json",
+      "ring-200.csv",
+      "ring-40.csv",
+      "ring-7.csv"
+    ]
+  },
+  {
+    "artifact_id": 14906339367,
+    "name": "cs80-source-factory-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "bytes": 985,
+    "sha256": "953e3e06ca6ab1db2cdbc5932dc6e199c8c36de7c2e2ea5d4ae15634c26fc157",
+    "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "workflow_run": 45366603724,
+    "members": [
+      "report.json",
+      "SHA256SUMS",
+      "compiler.txt"
+    ]
+  },
+  {
+    "artifact_id": 14905979921,
+    "name": "cs80-legacy-compatibility-fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "bytes": 29436,
+    "sha256": "971ba0f43650041a1dcd89e82ed230ea44adf147b33af5bc57032b179b934dd4",
+    "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "workflow_run": 45366603724,
+    "members": [
+      "report.json",
+      "SHA256SUMS",
+      "baseline-corpus.txt",
+      "compiler.txt"
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "producer_job": 138282948529,
+  "qualified": false,
+  "artifact": {
+    "id": 14900566066,
+    "bytes": 81210,
+    "sha256": "67fecf28b8dcd553b482a81f12beb1342fb89dd499959e2f7e4c42c4f5c29efa"
+  },
+  "members": [
+    "Testing/Temporary/LastTest.log",
+    "ctest-results.xml",
+    "ci-juce-provenance.txt"
+  ],
+  "registered_cases": 266,
+  "failed": [
+    "cs80_parity_capture_tests"
+  ],
+  "formal_skips": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "passed": 263,
+  "original_scope": "Failed db6b Apple Silicon native suite; original log records only capture-schema current-count failure. Not accepted as replacement native evidence."
+}

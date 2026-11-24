@@ -1,0 +1,104 @@
+{
+  "job_id": 138276946182,
+  "name": "g++ / batch OFF",
+  "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "attempt": 1,
+  "status": "completed",
+  "conclusion": "success",
+  "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/job/138276946182",
+  "started_at": "2026-11-24T07:15:35Z",
+  "completed_at": "2026-11-24T07:16:36Z",
+  "compiler_identification": "GNU 13.3.0",
+  "requested_mode": "OFF",
+  "cache_mode": "OFF",
+  "source_declared_backend": "scalar",
+  "observed_clang_fallback_message": false,
+  "actual_accelerated_group_count": null,
+  "nested_admission_profile_skips": null,
+  "suppressed_stdout_scope": "ctest --output-on-failure hides successful test stdout. Internal accelerated-group totals and admission-profile skips are unknown, not inferred as zero.",
+  "gate_steps": [
+    {
+      "name": "Configure core only",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T07:15:46Z",
+      "completed_at": "2026-11-24T07:15:53Z"
+    },
+    {
+      "name": "Build focused qualification tests",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T07:15:53Z",
+      "completed_at": "2026-11-24T07:16:21Z"
+    },
+    {
+      "name": "Exactness and scheduling gates",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T07:16:21Z",
+      "completed_at": "2026-11-24T07:16:35Z"
+    }
+  ],
+  "original_command_groups": [
+    {
+      "command_group": "##[group]Run test ! -e build-filter-batch/CMakeCache.txt",
+      "observed_at": "2026-11-24T07:15:46.116689+00:00",
+      "api_step": "Configure core only"
+    },
+    {
+      "command_group": "##[group]Run cmake --build build-filter-batch --parallel 2 --target cs80_ig00156_batch_tests cs80_filter_batch_engine_tests cs80_filter_batch_scheduling_tests",
+      "observed_at": "2026-11-24T07:15:53.143871+00:00",
+      "api_step": "Build focused qualification tests"
+    },
+    {
+      "command_group": "##[group]Run ctest --test-dir build-filter-batch --output-on-failure -R '^cs80_(ig00156_batch_tests|filter_batch_engine_tests|filter_batch_scheduling_tests|filter_batch_admission_tests)$'",
+      "observed_at": "2026-11-24T07:16:21.259278+00:00",
+      "api_step": "Exactness and scheduling gates"
+    }
+  ],
+  "ctest_cases": [
+    {
+      "ordinal": 1,
+      "registration": 4,
+      "name": "cs80_ig00156_batch_tests",
+      "status": "passed",
+      "seconds": 0.01
+    },
+    {
+      "ordinal": 2,
+      "registration": 5,
+      "name": "cs80_filter_batch_engine_tests",
+      "status": "passed",
+      "seconds": 4.68
+    },
+    {
+      "ordinal": 3,
+      "registration": 6,
+      "name": "cs80_filter_batch_scheduling_tests",
+      "status": "passed",
+      "seconds": 1.44
+    },
+    {
+      "ordinal": 4,
+      "registration": 10,
+      "name": "cs80_filter_batch_admission_tests",
+      "status": "passed",
+      "seconds": 6.73
+    }
+  ],
+  "ctest_counts": {
+    "registered_in_filter_selection": 4,
+    "passed": 4,
+    "failed": 0,
+    "formal_skipped": 0
+  },
+  "original_exit_basis": "Three original successful API steps and their timestamped direct commands under bash -e. The final direct CTest command is unsuppressed and its four real cases pass. No workflow continue-on-error or retry exists.",
+  "log": {
+    "path": "job-138276946182.log",
+    "bytes": 15892,
+    "sha256": "20eeb282853e817618f4944e1f6cbe486d0d2e319708bd583bbca8c7f8d0f3ce"
+  }
+}

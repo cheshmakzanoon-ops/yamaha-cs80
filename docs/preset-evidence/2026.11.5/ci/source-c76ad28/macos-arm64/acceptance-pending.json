@@ -1,0 +1,85 @@
+{
+  "worker": "a50",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "run_id": 45351731801,
+  "attempt": 1,
+  "producer_job_id": 138299557178,
+  "target": "macos-arm64",
+  "observed_at_utc": "2026-11-24T08:35:16Z",
+  "status": "source_contract_and_a58_f1_preparation_complete_native_test_pending",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "native_tests_passed": null,
+  "pluginval_lanes_passed": null,
+  "install_artifact_accepted": false,
+  "original_job_status": "in_progress",
+  "original_job_conclusion": null,
+  "active_steps": [
+    {
+      "name": "Test",
+      "status": "in_progress",
+      "conclusion": null,
+      "number": 7,
+      "started_at": "2026-11-24T08:08:35Z",
+      "completed_at": null
+    }
+  ],
+  "completed_successful_steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-24T07:59:24Z",
+      "completed_at": "2026-11-24T07:59:25Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T07:59:25Z",
+      "completed_at": "2026-11-24T07:59:35Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T07:59:35Z",
+      "completed_at": "2026-11-24T07:59:35Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T07:59:35Z",
+      "completed_at": "2026-11-24T08:00:52Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T08:00:52Z",
+      "completed_at": "2026-11-24T08:00:55Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T08:00:55Z",
+      "completed_at": "2026-11-24T08:08:35Z"
+    }
+  ],
+  "target_artifacts_observed": [],
+  "artifact_observation_utc": "2026-11-24T08:33:57Z",
+  "a58_f1_actual_check_run": false,
+  "a58_f1_binder_closure_prepared": true,
+  "old_db6b_files_preserved": true,
+  "next_action": "Reactivate A50 when the producer completes and actual install, pluginval and test-evidence archives are available. Run actual A41/A37/native parser/A58 binding, then original-execution binder.",
+  "scope": "Original running-state observations plus prepared source verification only; no passing native results, artifact bytes or platform acceptance asserted."
+}

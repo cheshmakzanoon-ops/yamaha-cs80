@@ -1,0 +1,364 @@
+{
+  "schema": 1,
+  "status": "platform_qualified",
+  "platform_qualified": true,
+  "release_qualified": false,
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_tree": "74e3cbd3e5f9a2cd75135d4de67bf24ff0066b18",
+  "factory_revision": "2026.11.6",
+  "run_id": 45366603800,
+  "run_attempt": 1,
+  "job_id": 138349816955,
+  "target": "macos-arm64",
+  "native_counts": {
+    "registered": 273,
+    "passed": 271,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": 5,
+  "skip_review": {
+    "formal": [
+      {
+        "test": "cs80_filter_batch_cap_tests",
+        "basis": "Actual SKIP message: AVX2 unavailable or disabled; no SIMD qualification on ARM."
+      },
+      {
+        "test": "cs80_stereo_pra_exact_tests",
+        "basis": "Source explicitly returns 77 outside the admitted Linux x86-64 GCC 14.2/SSE2 specialization; Apple Clang/ARM is outside that predicate."
+      }
+    ],
+    "nested": [
+      {
+        "suite": "cs80_package_binary_identity_tests",
+        "count": 1,
+        "basis": "Native Windows junction fixture is guarded by os.name == nt."
+      },
+      {
+        "suite": "cs80_packaging_notice_tests",
+        "count": 1,
+        "basis": "Actual verbose reason: Native Linux amd64, Debian packaging tools and cc required."
+      },
+      {
+        "suite": "cs80_windows_installer_preflight_tests",
+        "count": 2,
+        "basis": "Native directory-junction and native Inno Setup compilation fixtures require Windows."
+      },
+      {
+        "suite": "cs80_render_cli_tests",
+        "count": 1,
+        "basis": "Address-space-cap branch is conditional. Compact unittest output does not retain its exact reason; no claim that this skipped memory-cap case executed."
+      }
+    ]
+  },
+  "roster": {
+    "method": "Preserve all 266 prior same-platform registrations; exact source CMake diff only adds seven. Prior outcomes are not reused.",
+    "prior_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+    "prior_roster": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/contents-test-evidence/ctest-results.xml",
+      "bytes": 127602,
+      "sha256": "568a9cbc65bcdeb1fb352a2d2bc5e1891fa8e22e88373a89e824f04bd0b88330"
+    },
+    "added": [
+      "cs80_bell_material_preset_tests",
+      "cs80_material_body_tests",
+      "cs80_piano_course_geometry_tests",
+      "cs80_plucked_material_preset_tests",
+      "cs80_plucked_material_tests",
+      "cs80_preset_response_2026_11_6_comparison_tests",
+      "cs80_wind_body_formant_tests"
+    ],
+    "removed": [],
+    "all_expected_family_tests_passed": [
+      "cs80_struck_body_dynamics_tests",
+      "cs80_instrument_body_variant_tests",
+      "cs80_vocal_body_tests",
+      "cs80_body_articulation_engine_tests",
+      "cs80_original_articulation_tests",
+      "cs80_keyboard_response_tests",
+      "cs80_mallet_preset_refinement_tests",
+      "cs80_bass_plucked_refinement_tests",
+      "cs80_brass_organ_refinement_tests",
+      "cs80_wind_string_refinement_tests",
+      "cs80_pad_poly_refinement_tests",
+      "cs80_fx_refinement_tests",
+      "cs80_modern_preset_refinement_tests",
+      "cs80_lead_refinement_tests",
+      "cs80_preset_response_coverage_tests",
+      "cs80_piano_course_geometry_tests",
+      "cs80_wind_body_formant_tests",
+      "cs80_material_body_tests",
+      "cs80_plucked_material_tests",
+      "cs80_bell_material_preset_tests",
+      "cs80_plucked_material_preset_tests",
+      "cs80_preset_response_2026_11_6_comparison_tests"
+    ],
+    "expanded_body_host_phase_executed": true
+  },
+  "validator_invocations": 5,
+  "validation_retries": 0,
+  "validator_original_normal_exits": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "uploads": [
+    {
+      "kind": "install",
+      "artifact_id": 14910025415,
+      "name": "cs80-macos-15-install-bundle",
+      "bytes": 14986588,
+      "sha256": "c08e83380b0403b03f11684d2cc8e9f88dd2ebd78f217be7d7940952a2143e61",
+      "created_at": "2026-11-24T10:07:35Z",
+      "expires_at": "2027-02-22T09:35:13Z",
+      "upload_step": "Upload native macOS install bundle",
+      "original_success_timestamp": "2026-11-24T10:07:34.7988370Z",
+      "original_api_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-24T10:07:32Z",
+        "completed_at": "2026-11-24T10:07:34Z"
+      }
+    },
+    {
+      "kind": "native",
+      "artifact_id": 14909506446,
+      "name": "cs80-macos-15-test-evidence",
+      "bytes": 84310,
+      "sha256": "f049c902309a520f953850dc8fbafdb659f616f04bac1fa08060e414ad2b8492",
+      "created_at": "2026-11-24T10:07:38Z",
+      "expires_at": "2027-02-22T09:35:13Z",
+      "upload_step": "Upload test and JUCE source evidence",
+      "original_success_timestamp": "2026-11-24T10:07:37.6458840Z",
+      "original_api_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-24T10:07:36Z",
+        "completed_at": "2026-11-24T10:07:37Z"
+      }
+    },
+    {
+      "kind": "validator",
+      "artifact_id": 14910405103,
+      "name": "cs80-pluginval-macos-15",
+      "bytes": 12772,
+      "sha256": "b7bb8f97b4d484cd71e719f87b24c31eb9e7e20686f837c259460f8ce3b93de7",
+      "created_at": "2026-11-24T10:07:36Z",
+      "expires_at": "2027-02-22T09:35:13Z",
+      "upload_step": "Upload pluginval reports",
+      "original_success_timestamp": "2026-11-24T10:07:36.1466270Z",
+      "original_api_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T10:07:34Z",
+        "completed_at": "2026-11-24T10:07:36Z"
+      }
+    }
+  ],
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 14606928,
+      "sha256": "850f177f869f989fd357c4164556ed4bf83b472afdb7d05e9046831f19184414",
+      "mode": "0o755",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    },
+    {
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 14329184,
+      "sha256": "26d5bc104d5e528edef21ce48feab143fa52b73590c50c44fae2f4f8202b953d",
+      "mode": "0o755",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14161776,
+      "sha256": "de7fafbb5f463905ad3be85c26e6f753280eeec032b832032a191c936b33d567",
+      "mode": "0o755",
+      "platform": "macos",
+      "architecture": "arm64",
+      "role": "standalone",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "arm64",
+        "cpu_type": "0x100000c"
+      }
+    }
+  ],
+  "inventory_entries": 39,
+  "packaged_guides": [
+    {
+      "source": "docs/INSTALL_AND_QUICKSTART.md",
+      "member": "cs80-reference-macos-arm64-fcc3c8e05522/INSTALL_AND_QUICKSTART.md",
+      "bytes": 18518,
+      "sha256": "4dff675cec1928b95dd0be5d99c0accf1f0ee6c65d2aebd887c0d8dbe9aa6245"
+    },
+    {
+      "source": "docs/PRESET_GUIDE.md",
+      "member": "cs80-reference-macos-arm64-fcc3c8e05522/PRESET_GUIDE.md",
+      "bytes": 40396,
+      "sha256": "84da55c497fbbaf22da2d4b8e50ee3e789d2f1978b1e36f0f46cf48ef63a5749"
+    },
+    {
+      "source": "docs/CI_DISTRIBUTION_STATUS.md",
+      "member": "cs80-reference-macos-arm64-fcc3c8e05522/DISTRIBUTION_STATUS.md",
+      "bytes": 39277,
+      "sha256": "bf02a8f0e396cdcf9dd85f33e48afed0821ce2b6c5fc8cb659db29c06d3e63c4"
+    }
+  ],
+  "juce": {
+    "checked_at": "2026-11-24T09:36:36Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "workflow_run": "45366603800",
+    "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "whole_au_directory_comparisons_passed": true,
+  "au_signing_before_copy_verified": true,
+  "au_packaged_executable_sha256": "26d5bc104d5e528edef21ce48feab143fa52b73590c50c44fae2f4f8202b953d",
+  "vst3_binding": "Same source-controlled build path is validated and subsequently packaged in the original successful job, without intervening rebuild or mutation command. This is ordered path binding, not a separate before/after VST3 tree hash.",
+  "original_ctest_normal_exit": 0,
+  "ctest_exit_basis": "Authenticated successful original unfiltered CTest step plus complete matching JUnit/LastTest and original terminal result.",
+  "inputs": {
+    "run-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/run-api.json",
+      "bytes": 14072,
+      "sha256": "e9cc574a3b387d6413246a1fb34ca9fd0855aac35cee96bc6b98a246c1ab811a"
+    },
+    "jobs-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/jobs-api.json",
+      "bytes": 14194,
+      "sha256": "8979a6953c5de0f5b3831dd199c3631f73811f5d35b15786d928a9050b931577"
+    },
+    "job-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/job-api.json",
+      "bytes": 5977,
+      "sha256": "e161035b9b44596f6521dc3e1b397849c2113fc6db55137a0eba32fff1088227"
+    },
+    "artifacts-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/artifacts-api.json",
+      "bytes": 2177,
+      "sha256": "d6501246f3184c17de304dfae40969a0c0c50d7c1da66e6fa5903ec6c0a64e9b"
+    },
+    "install-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/install-api.json",
+      "bytes": 801,
+      "sha256": "a80436fcb8d19f5b83debd5cc632b817f624208bf250f971556e9037c69f4ae6"
+    },
+    "native-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/native-api.json",
+      "bytes": 797,
+      "sha256": "a9962dc7cda466564b19a9c7f5993c43cab3a5feff25b7f156579d8960bda074"
+    },
+    "validator-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/validator-api.json",
+      "bytes": 793,
+      "sha256": "4ad8f6aa402cf2a0914cf1d42202f872f2eb4de658d6e28a5cdef6ce7c5621b7"
+    },
+    "installation-byte-inspection.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/installation-byte-inspection.json",
+      "bytes": 14173,
+      "sha256": "9056cfa245d31c61ace9cf419611f7f1ffe12864affb0dd64b1682a7c334796a"
+    },
+    "payload-byte-binding.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/payload-byte-binding.json",
+      "bytes": 17567,
+      "sha256": "dbb955cd7337376670b6f2ae35159d17afcc103b8870328bcdd91038843854a5"
+    },
+    "native-observations.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/native-observations.json",
+      "bytes": 106304,
+      "sha256": "a655e60957afa3a1ecbdd07bdc1e81a9c1b6fa93dd8d60c22e05f33d8ff8d526"
+    },
+    "parser-archive-binding.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/parser-archive-binding.json",
+      "bytes": 6591,
+      "sha256": "2189fe3e85d703b94f3eaa57427e5afe4e25e565a6a0c4708bbd20bf84d546e2"
+    }
+  },
+  "a45_gui_qualification": {
+    "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-gui/a45/gui-qualification.json",
+    "bytes": 8272,
+    "sha256": "91f11f95aac1407c4b0835524112329322c295e938a12bc396e20791a0c907ed"
+  },
+  "original_job_log": {
+    "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-gui/a45/original-producer-job.log",
+    "bytes": 252689,
+    "sha256": "7dd3b00778cc8a7399844ce87b248c4659bae839effac31a43052720906ef3af"
+  },
+  "source_files": {
+    "CMakeLists.txt": {
+      "bytes": 219552,
+      "sha256": "136e8b7b6d75057eeefc291246a0a4ad2a198a5d0b0e8ffd7335327823c4db33"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/verify-ci-juce-source.cmake": {
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4"
+    }
+  },
+  "verifier": {
+    "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-arm64/qualify_platform.py",
+    "bytes": 17542,
+    "sha256": "94a7a4ec264ec79806b91284f9712d084a74a6f3f2b2fedad838022ab6555972"
+  },
+  "remaining_release_gates": [
+    "Other native platforms and all fifteen global validator lanes.",
+    "Actual audition inventory/WAV acceptance and public download qualification.",
+    "Final cross-platform aggregate and publication."
+  ],
+  "limits": [
+    "No downloaded Mac binary executed by this Linux inspection.",
+    "Standalone is compiled, header/inventory checked and covered by native processor/UI tests; no separate end-user launch assessment is claimed.",
+    "No publisher signing/notarization or measured acoustic equivalence is claimed.",
+    "Byte-inspection helpers retain their original limited false qualification flags."
+  ]
+}

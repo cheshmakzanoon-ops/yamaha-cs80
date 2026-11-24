@@ -1,0 +1,42 @@
+{
+  "versions": {
+    "published_4": {
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "parameters": 200,
+      "header_sha256": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+      "metadata_sha256": "d2d184368427265868bc5c3092e7a97ab074fbecfffa07faa8e059d43f2a7a88"
+    },
+    "preceding_5": {
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "parameters": 202,
+      "header_sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+      "metadata_sha256": "18ec27058906a7e427dac94be0aff4929e2bdcb344b2060c295f8e2eeadf5798"
+    },
+    "candidate_6": {
+      "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "parameters": 204,
+      "header_sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "metadata_sha256": "b07bada2f17d45f8e2fda9c95187a751357d2b98d9767afb021896927818c3ec"
+    }
+  },
+  "normalization_probes_per_parameter": 513,
+  "published_200_prefix_identical": true,
+  "preceding_202_prefix_identical": true,
+  "preceding_host_layout_after_removing_only_new_append_is_byte_identical": true,
+  "prior_model_names_and_variant_metadata_identical": true,
+  "host_material_append_au_hint": 19,
+  "old_host_layout_sha256": "cdb0a6f06a4dfd7c3a9748e748eb29f5b011c085bdde1b1ab5d90e300008fac3",
+  "new_append_sha256": "ea3abbbd761cfd9f80d9facb7bb4fc562581b6dcfcce6b898de84dcbf845ed22",
+  "bound_current_inputs": {
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/plugin/PluginProcessor.cpp": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+    "src/plugin/PluginProcessorLibrary.cpp": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+    "src/plugin/PluginProcessor.h": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+    "src/plugin/ParameterStateChildIndex.h": "87f660dfb47ecfd35955aa5758f9aa5bb7b6847de1cd582eede5490fa444e7b2",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "tests/InstrumentBodyHostTests.h": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+    "tests/ParameterStateChildIndexTests.cpp": "772c1afb4b96338aa9f881abb2f6ea0c186cb141876d2094d5bfef4af3107c36"
+  },
+  "scope": "Core metadata and exact layout source; no actual APVTS, processor, GUI or native AU execution."
+}

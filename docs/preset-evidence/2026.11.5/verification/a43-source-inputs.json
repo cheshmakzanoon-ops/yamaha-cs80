@@ -1,0 +1,89 @@
+{
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "core_sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8",
+  "frozen_headers": "git archive exact source src (core plus its reference/experimental dependencies)",
+  "files": [
+    {
+      "path": "src/core/Engine.h",
+      "bytes": 40894,
+      "sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33"
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168522,
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10"
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 10882,
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352"
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "bytes": 30936,
+      "sha256": "a4606e3090ed2a2cd42031ed5f98c5224cb64cc4235f537634979828961e2205"
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "bytes": 20705,
+      "sha256": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc"
+    },
+    {
+      "path": "src/core/ModernLayer.h",
+      "bytes": 26497,
+      "sha256": "8bba54f736e0215d3ce8c7be457990ffe0242c1322ba47faf6beae3d36a808d8"
+    },
+    {
+      "path": "tests/OriginalArticulationTests.cpp",
+      "bytes": 8299,
+      "sha256": "f5f46eb85a82361de84eb0cb29c8bf40b73c7bcd34848e3b5ce752450edb62c7"
+    },
+    {
+      "path": "tests/ModernPresetRefinementTests.cpp",
+      "bytes": 12396,
+      "sha256": "8a9a62c13bc06192aa1ddd5754fcba55c1ec260af339ff85ab35318864d19991"
+    },
+    {
+      "path": "tests/ArpRateLifecycleTests.cpp",
+      "bytes": 4508,
+      "sha256": "606cef205f42e242ad693d425ef80e5ad997b2d5a77c3ca672a040e80cfcc6e6"
+    },
+    {
+      "path": "tests/ArpRepeatLifecycleTests.cpp",
+      "bytes": 4250,
+      "sha256": "0d531dbd6633a9b9a0f08278326b4e00fa5562e4ab89f7388ba553ab4dc8eec5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193"
+    }
+  ],
+  "src_archive_sha256": "706d6fd824fc340d7d2dca086b75a1180df2cf00029b2b333e0878b5000391bb",
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "private_executable": {
+    "path": "/tmp/cs80-a43/sequence-phrase-probe",
+    "bytes": 1083680,
+    "sha256": "4941e08f4d1accf36fcf4cddabb8589e62d91f5de68a65282b3518e1ffd55f63"
+  },
+  "probe_sha256": "243878fe42afa7cfca940bdb6215bb2836ff9763fb0d1d2b7e086c7943cef9bf",
+  "arpeggiator_implementation_byte_equal_to_baseline": true,
+  "arp_implementation_range": "rememberHeldKey through updateArpeggiator, ending before wakeIdleVoice",
+  "arp_implementation_snippets": {
+    "baseline": {
+      "source": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+      "bytes": 6096,
+      "sha256": "a3ff6f2586a652f2c5cf0eaa1986e7223c48f6596def765fa3f082bf3f9d847f"
+    },
+    "reviewed": {
+      "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "bytes": 6096,
+      "sha256": "a3ff6f2586a652f2c5cf0eaa1986e7223c48f6596def765fa3f082bf3f9d847f"
+    }
+  }
+}

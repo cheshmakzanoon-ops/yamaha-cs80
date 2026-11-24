@@ -1,0 +1,45 @@
+{
+  "scope": "Synthetic offline verifier tests; no actual .6 native archive was inspected by A51",
+  "native_release_qualified": false,
+  "candidate_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "candidate_native_run": 45366603800,
+  "candidate_attempt": 1,
+  "test_methods_passed": 22,
+  "failed": 0,
+  "additional_negative_mutations_rejected": 9,
+  "required_macos_lanes": 5,
+  "fixed_seeds": [
+    "0x2b4eef5",
+    "0x3c99748"
+  ],
+  "files": {
+    "docs/preset-evidence/2026.11.6/verification/a51/verify-macos-binding.py": {
+      "bytes": 24265,
+      "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a51/test-macos-binding.py": {
+      "bytes": 18053,
+      "sha256": "2b86da72c1de20f7f5afab48fc3cd750d8073e2a45d9fc7f00a12bd92047a0fa"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a51/tests.log": {
+      "bytes": 2505,
+      "sha256": "d2d7876599c7242c039814084c97bcc80d1623bb2adbcbc7431d32d667565551"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a51/USAGE.md": {
+      "bytes": 6078,
+      "sha256": "3e6546dbe8d113b1cc9ce4589b8173d7818f6ff9ae448b51cbfaffc6661c694c"
+    },
+    "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py": {
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741"
+    },
+    "docs/preset-evidence/2026.11.5/verification/a37-verify-macos-binding.py": {
+      "bytes": 23492,
+      "sha256": "214a15276244a6ebfd57f66c66ccbef9678f2435ae2b9c9ca43aadbc92a8eda2"
+    },
+    "docs/preset-evidence/2026.11.5/verification/a37-test-macos-binding.py": {
+      "bytes": 15689,
+      "sha256": "19044605402b282e97ed684255c3ce40f396c866445d5ebab5d1113ba67065fa"
+    }
+  }
+}

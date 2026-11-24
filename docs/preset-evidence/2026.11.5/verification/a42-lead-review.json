@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "status": "bounded_phrase_and_controller_review_complete_no_production_correction_recommended",
+  "release_qualified": false,
+  "native_validation_passed": null,
+  "initial_probe": {
+    "checks": 1374,
+    "failures": 392,
+    "renders": 25,
+    "ownership_checks": 634,
+    "stereo_frames": 9480000,
+    "max_peak_dbfs": -12.413652907,
+    "passed_assertions": 982,
+    "failed_assertion_groups": {
+      "incorrect_non_mpe_pressure_inheritance_assumption": 390,
+      "premature_near_zero_pressure_release_assumption": 2
+    },
+    "retained_log": "a42-lead-phrase-probe.log",
+    "all_note_ownership_checks_passed": true,
+    "all_render_safety_and_retirement_checks_passed": true
+  },
+  "followup_probe": {
+    "checks": 118,
+    "failures": 0,
+    "renders": 4,
+    "ownership_checks": 14,
+    "stereo_frames": 1539840,
+    "max_peak_dbfs": -17.999855476,
+    "retained_log": "a42-lead-pressure-followup.log",
+    "notes_checked_for_pressure_reset": 24
+  },
+  "combined_rendered_stereo_frames": 11019840,
+  "combined_rendered_seconds": 229.58,
+  "initial_render_cases": [
+    {
+      "case": "Velocity Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -17.28001682,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Velocity Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -14.613291214,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Brass Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -21.225361138,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Brass Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -17.313666601,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Reed Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -22.279745919,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Reed Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -21.314452738,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Whistle Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -22.60503911,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Whistle Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -17.448771259,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Fifth Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -15.955743825,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Fifth Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -13.936301438,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Octave Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -16.093233915,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Octave Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -13.021424149,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Glide Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -16.564942158,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Glide Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -12.413652907,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Glissando Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -16.886143224,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Glissando Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -14.006824737,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Noir Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -15.77538635,
+      "final_window_rms_dbfs": -82.289324077,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Noir Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -16.719408932,
+      "final_window_rms_dbfs": -82.289324077,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Ribbon Glide Lead repeat",
+      "seconds": 8.0,
+      "peak_dbfs": -15.905601788,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Ribbon Glide Lead overlap",
+      "seconds": 8.0,
+      "peak_dbfs": -12.624795938,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Pressure Lead poly-pressure two keys",
+      "seconds": 8.0,
+      "peak_dbfs": -19.169064107,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Pressure Lead poly-pressure one-key control",
+      "seconds": 8.0,
+      "peak_dbfs": -19.241797492,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Electric Leads 136 poly-pressure two keys",
+      "seconds": 8.0,
+      "peak_dbfs": -18.813694952,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Electric Leads 136 poly-pressure one-key control",
+      "seconds": 8.0,
+      "peak_dbfs": -18.968271963,
+      "final_window_rms_dbfs": -300.0,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    },
+    {
+      "case": "Ribbon Glide Lead ribbon return",
+      "seconds": 5.5,
+      "peak_dbfs": -18.254041387,
+      "final_window_rms_dbfs": -273.835644468,
+      "final_active": 0,
+      "final_held": 0,
+      "samples_at_or_over_full_scale": 0
+    }
+  ],
+  "poly_pressure_comparisons": [
+    {
+      "program": "Pressure Lead",
+      "initial_unpressed_rms_dbfs": -300.0,
+      "first_pressed_rms_dbfs": -27.245281916,
+      "first_pressure_off_0_5_to_0_9s_rms_dbfs": -78.509334896,
+      "second_pressed_rms_dbfs": -25.979363161,
+      "second_pressure_off_0_4_to_0_75s_rms_dbfs": -68.707580224,
+      "relative_rms_residual_vs_one_key": 0.0,
+      "maximum_sample_difference_vs_one_key": 0.0
+    },
+    {
+      "program": "Electric Leads 136",
+      "initial_unpressed_rms_dbfs": -300.0,
+      "first_pressed_rms_dbfs": -27.121485895,
+      "first_pressure_off_0_5_to_0_9s_rms_dbfs": -78.374588536,
+      "second_pressed_rms_dbfs": -25.853322553,
+      "second_pressure_off_0_4_to_0_75s_rms_dbfs": -68.536280987,
+      "relative_rms_residual_vs_one_key": 0.0,
+      "maximum_sample_difference_vs_one_key": 0.0
+    }
+  ],
+  "ribbon_return": {
+    "before_hz": 261.573010926,
+    "positive_hz": 340.041023431,
+    "center_hz": 261.530931923,
+    "negative_hz": 196.18315025,
+    "final_hz": 261.570108042,
+    "first_return_cents": -0.278524385,
+    "second_return_cents": -0.019212987
+  },
+  "settled_pressure_release": [
+    {
+      "program": "Pressure Lead",
+      "first_dbfs": -27.245281916,
+      "first_settled_dbfs": -121.279569675,
+      "first_change_db": -94.03428776,
+      "second_dbfs": -25.991299927,
+      "second_settled_dbfs": -168.030685165,
+      "second_change_db": -142.039385238
+    },
+    {
+      "program": "Electric Leads 136",
+      "first_dbfs": -27.121485895,
+      "first_settled_dbfs": -121.156647049,
+      "first_change_db": -94.035161155,
+      "second_dbfs": -25.863054128,
+      "second_settled_dbfs": -167.787347029,
+      "second_change_db": -141.924292901
+    }
+  ],
+  "data_review": {
+    "existing_lead_programs": 56,
+    "identity_and_both_footages_preserved": true,
+    "shared_lead_initializer_byte_identical": true,
+    "evidence": "a42-lead-identity.json"
+  },
+  "causal_source_review": "a42-pressure-source-contract.json",
+  "initial_assumption_resolution": [
+    "390 pressure-telemetry failures assumed a non-MPE new note inherits a previous channel-pressure event. Existing source resets per-note pressure on ordinary note-on; subsequent channel events update it. The bounded follow-up measures this unchanged contract on 24 accepted/reused notes.",
+    "2 early near-zero-output assertions assumed pressure-off is an immediate mute. The unchanged TWS aftertouch path has a 100 ms low-pass. Both programs fade 94 dB after 1.0\u20131.4 seconds and more than 141 dB after 1.5\u20132.0 seconds while keys remain held. Initial failures stay retained rather than relabeled as passed."
+  ],
+  "limits": [
+    "Behavioral local Engine renders, not a listening preference or acoustic-equivalence result.",
+    "Source6094 core was snapshotted privately before later pad-only trim changes; no final native artifact is bound.",
+    "No production file, shared build, workflow, commit or remote ref was changed.",
+    "Initial diagnostic process exited1; its392 failed assumptions remain part of the evidence."
+  ]
+}

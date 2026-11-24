@@ -1,0 +1,339 @@
+{
+  "schema": 1,
+  "scope": "Independent reconciliation of already retained original API/log bytes and exact Git source history; no new remote acquisition, execution or release acceptance.",
+  "original_runs": [
+    {
+      "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "run_id": 45341783399,
+      "attempt": 1,
+      "run_conclusion": "failure",
+      "job_conclusion_counts": {
+        "failure": 4,
+        "skipped": 2
+      },
+      "jobs": [
+        {
+          "id": 138266899984,
+          "name": "Windows / VST3 + Standalone",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Build"
+          ]
+        },
+        {
+          "id": 138266900245,
+          "name": "Linux / VST3 + Standalone",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Build"
+          ]
+        },
+        {
+          "id": 138266900270,
+          "name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Build"
+          ]
+        },
+        {
+          "id": 138266900439,
+          "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Build"
+          ]
+        },
+        {
+          "id": 138274302281,
+          "name": "pluginval / Windows VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        },
+        {
+          "id": 138274890456,
+          "name": "pluginval / Linux VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        }
+      ],
+      "api_files": [
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-6094bce/run-final-api.json",
+          "bytes": 14292,
+          "sha256": "9b8061a6bb057f725909d1b80be13bdf9f7ee7406243d7c534549b42e5fee640"
+        },
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-6094bce/jobs-final-api.json",
+          "bytes": 17451,
+          "sha256": "356fbb68163fc3a3f0fa8a162884182d782450d0f7081ad4e1dd0049f9013531"
+        }
+      ]
+    },
+    {
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888485,
+      "attempt": 1,
+      "run_conclusion": "cancelled",
+      "job_conclusion_counts": {
+        "cancelled": 4,
+        "skipped": 2
+      },
+      "jobs": [
+        {
+          "id": 138276946261,
+          "name": "Windows / VST3 + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138276946609,
+          "name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138276946796,
+          "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138276947171,
+          "name": "Linux / VST3 + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138282955863,
+          "name": "pluginval / Linux VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        },
+        {
+          "id": 138282956167,
+          "name": "pluginval / Windows VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        }
+      ],
+      "api_files": [
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/native-superseded-run-api.json",
+          "bytes": 14176,
+          "sha256": "b3eff228e0ff500b01bb9a917fb3076194a38ab80470264d00ab6a7c178fce29"
+        },
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/native-superseded-jobs-api.json",
+          "bytes": 8984,
+          "sha256": "1ea8acd7c6b3053c4c18a5ec685e308491c4a5c42fbd1791088ef709ca0edc10"
+        }
+      ]
+    },
+    {
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "attempt": 1,
+      "run_conclusion": "cancelled",
+      "job_conclusion_counts": {
+        "success": 3,
+        "cancelled": 1,
+        "failure": 1
+      },
+      "jobs": [
+        {
+          "id": 138277054372,
+          "name": "Default-off raw audio versus shipped baseline",
+          "conclusion": "success",
+          "failed_steps": []
+        },
+        {
+          "id": 138277054625,
+          "name": "sanitizers",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138277054685,
+          "name": "Source circuit V1 and audio V2 compatibility",
+          "conclusion": "success",
+          "failed_steps": []
+        },
+        {
+          "id": 138277054786,
+          "name": "Synthetic reference comparison (not hardware evidence)",
+          "conclusion": "success",
+          "failed_steps": []
+        },
+        {
+          "id": 138277054911,
+          "name": "measure",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Export actual-engine candidate with exact-source provenance"
+          ]
+        }
+      ],
+      "api_files": [
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/dsp-superseded-run-final-api.json",
+          "bytes": 14207,
+          "sha256": "82c56a98ed75b669cd83aa5444c947c3b9e91b6094bd766cb8c8da58ccbc25a0"
+        },
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/dsp-superseded-jobs-final-api.json",
+          "bytes": 12404,
+          "sha256": "f0d93055bff9db62f4c630597e784a5d89c7e40aa726de310ca46d0eb6a1ffb9"
+        }
+      ]
+    },
+    {
+      "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "run_id": 45346719693,
+      "attempt": 1,
+      "run_conclusion": "cancelled",
+      "job_conclusion_counts": {
+        "cancelled": 3,
+        "failure": 1,
+        "skipped": 2
+      },
+      "jobs": [
+        {
+          "id": 138282948362,
+          "name": "Linux / VST3 + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138282948529,
+          "name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Test"
+          ]
+        },
+        {
+          "id": 138282948648,
+          "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138282948726,
+          "name": "Windows / VST3 + Standalone",
+          "conclusion": "cancelled",
+          "failed_steps": []
+        },
+        {
+          "id": 138299606710,
+          "name": "pluginval / Windows VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        },
+        {
+          "id": 138299675393,
+          "name": "pluginval / Linux VST3 (strictness 10)",
+          "conclusion": "skipped",
+          "failed_steps": []
+        }
+      ],
+      "api_files": [
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/superseded-run-final-api.json",
+          "bytes": 13923,
+          "sha256": "1e17c79fe6791ff2ba5cbdbf6146242ae1fb3d8c7dfef2b2dbe80e8e005c133a"
+        },
+        {
+          "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/superseded-jobs-final-api.json",
+          "bytes": 17463,
+          "sha256": "d9d948c2500c5f5cff52ebd7e2938cbaffe6995ff0a1979e97b6a5e7b7222206"
+        }
+      ]
+    }
+  ],
+  "measure_failure": {
+    "job_id": 138277054911,
+    "numerical_bounds": "success",
+    "capture_export": "failure",
+    "internal_test_methods": 13,
+    "failed_internal_methods": 3,
+    "log": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/measure-failed-original.log",
+      "bytes": 29877,
+      "sha256": "5b7c9f5f827dfd66afd6b184264b197dbedd13b50f9e635f1761e0e2ddb43884"
+    }
+  },
+  "apple_silicon_failure": {
+    "job_id": 138282948529,
+    "registered_ctests": 266,
+    "failed_ctests": [
+      "cs80_parity_capture_tests"
+    ],
+    "capture_internal_failed_methods": 3,
+    "log": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/macos-arm64-test-failed-original.log",
+      "bytes": 182906,
+      "sha256": "936840e86a9fcbad62f0acae1456e19d1f248df1ef7a4e2c46af268ac2e97a3a"
+    },
+    "passed_ctests": 263,
+    "formal_skips": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "junit_file": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/failed-arm-native/ctest-results.xml",
+      "bytes": 130231,
+      "sha256": "f9760a17a89a301e9caf3cbb89978c3c9739210ba996289ffba763b4f9ed65c9"
+    }
+  },
+  "source_chain": [
+    {
+      "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "tree": "ffec7e5d062ccc6761fff9080405769d5002513a"
+    },
+    {
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "tree": "d18ddfb7766b622af346f55fe78a59d041adffc5"
+    },
+    {
+      "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "tree": "fee5d145866135a4c9afb1c22afd375042e4e86f"
+    },
+    {
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00"
+    }
+  ],
+  "source_diffs": [
+    {
+      "from": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+      "to": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "changed_paths": [
+        "docs/preset-evidence/2026.11.5/inventory.json",
+        "docs/preset-evidence/2026.11.5/parameter-coverage.json",
+        "src/core/CuratedLibraryLevels.inc",
+        "src/core/OriginalCircuitLevels.inc",
+        "tests/InstrumentBodyHostTests.h",
+        "tests/LibraryAuditTests.cpp",
+        "tests/PadPolyRefinementTests.cpp"
+      ]
+    },
+    {
+      "from": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "to": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "changed_paths": [
+        "docs/INSTALL_AND_QUICKSTART.md",
+        "docs/PRESET_GUIDE.md"
+      ]
+    },
+    {
+      "from": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+      "to": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "changed_paths": [
+        "tests/test_parity_capture.py"
+      ]
+    }
+  ],
+  "final_candidate_native_acceptance": "pending",
+  "final_candidate_dsp_acceptance": "pending"
+}

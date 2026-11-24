@@ -1,0 +1,928 @@
+{
+  "scope": "Local development captures; no native-release or acoustic-equivalence claim",
+  "matching_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_hashes": {
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/core/curated/Plucked.inc": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc"
+  },
+  "capture_executable_sha256_before_and_after": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+  "baseline_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+  "current_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "program_count": 17,
+  "programs": [
+    {
+      "name": "Guitar I",
+      "host_index": 388,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "body_controls": {
+        "body1_model": 6,
+        "body1_mix": 1,
+        "body1_brightness": 0.479999989,
+        "body1_decay": 1.17999995,
+        "body2_model": 6,
+        "body2_mix": 0.419999987,
+        "body2_brightness": 0.660000026,
+        "body2_decay": 0.270000011,
+        "body1_size": 1.03999996,
+        "body2_size": 0.939999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Guitar II",
+      "host_index": 389,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.689999998,
+        "body1_decay": 1.38,
+        "body2_model": 7,
+        "body2_mix": 0.569999993,
+        "body2_brightness": 0.879999995,
+        "body2_decay": 0.319999993,
+        "body1_size": 0.910000026,
+        "body2_size": 0.879999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Funky Pluck I",
+      "host_index": 390,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 4,
+        "body1_mix": 0.720000029,
+        "body1_brightness": 0.720000029,
+        "body1_decay": 0.379999995,
+        "body2_model": 4,
+        "body2_mix": 0.310000002,
+        "body2_brightness": 0.910000026,
+        "body2_decay": 0.25,
+        "body1_size": 0.879999995,
+        "body2_size": 0.75999999,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Funky Pluck II",
+      "host_index": 391,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 4,
+        "body1_mix": 0.629999995,
+        "body1_brightness": 0.550000012,
+        "body1_decay": 0.670000017,
+        "body2_model": 7,
+        "body2_mix": 0.340000004,
+        "body2_brightness": 0.75,
+        "body2_decay": 0.300000012,
+        "body1_size": 1.12,
+        "body2_size": 0.949999988,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Harp",
+      "host_index": 392,
+      "changed_prior_nonvolume_controls": [
+        "mix",
+        "resonance",
+        "voice_dispersion",
+        "drift",
+        "ch1_saw",
+        "ch1_sine",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_al",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_pw",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay",
+        "body1_size",
+        "body2_size"
+      ],
+      "body_controls": {
+        "body1_model": 6,
+        "body1_mix": 1,
+        "body1_brightness": 0.560000002,
+        "body1_decay": 2.04999995,
+        "body2_model": 6,
+        "body2_mix": 1,
+        "body2_brightness": 0.810000002,
+        "body2_decay": 0.460000008,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 9,
+        "body2_material": 9
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Koto",
+      "host_index": 393,
+      "changed_prior_nonvolume_controls": [
+        "mix",
+        "resonance",
+        "init_bend",
+        "voice_dispersion",
+        "drift",
+        "ch1_pulse",
+        "ch1_sine",
+        "ch1_pw",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_al",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_noise",
+        "ch2_pw",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_vcf_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_model",
+        "body2_mix",
+        "body2_decay",
+        "body1_size",
+        "body2_size"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.75999999,
+        "body1_decay": 1.35000002,
+        "body2_model": 7,
+        "body2_mix": 1,
+        "body2_brightness": 0.959999979,
+        "body2_decay": 0.280000001,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 8,
+        "body2_material": 8
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Banjo",
+      "host_index": 394,
+      "changed_prior_nonvolume_controls": [
+        "mix",
+        "resonance",
+        "voice_dispersion",
+        "drift",
+        "ch1_pulse",
+        "ch1_sine",
+        "ch1_pw",
+        "ch1_hpf_cutoff",
+        "ch1_hpf_res",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_noise",
+        "ch2_pw",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_vcf_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_model",
+        "body2_mix",
+        "body2_brightness",
+        "body1_size",
+        "body2_size"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.860000014,
+        "body1_decay": 0.949999988,
+        "body2_model": 7,
+        "body2_mix": 1,
+        "body2_brightness": 0.980000019,
+        "body2_decay": 0.25,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 7,
+        "body2_material": 7
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Mandolin",
+      "host_index": 395,
+      "changed_prior_nonvolume_controls": [
+        "sub_vca",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_r",
+        "ch2_v_level",
+        "body1_mix",
+        "body2_mix"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.790000021,
+        "body1_decay": 0.680000007,
+        "body2_model": 7,
+        "body2_mix": 1,
+        "body2_brightness": 0.709999979,
+        "body2_decay": 0.589999974,
+        "body1_size": 0.670000017,
+        "body2_size": 0.689999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Drone Pluck",
+      "host_index": 396,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 0.550000012,
+        "body1_brightness": 0.579999983,
+        "body1_decay": 1.75999999,
+        "body2_model": 7,
+        "body2_mix": 0.610000014,
+        "body2_brightness": 0.879999995,
+        "body2_decay": 0.270000011,
+        "body1_size": 1.32000005,
+        "body2_size": 0.870000005,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Nylon Pluck",
+      "host_index": 397,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 6,
+        "body1_mix": 1,
+        "body1_brightness": 0.400000006,
+        "body1_decay": 1.04999995,
+        "body2_model": 6,
+        "body2_mix": 0.239999995,
+        "body2_brightness": 0.660000026,
+        "body2_decay": 0.25,
+        "body1_size": 1.14999998,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Steel Pluck",
+      "host_index": 398,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.730000019,
+        "body1_decay": 1.5,
+        "body2_model": 7,
+        "body2_mix": 0.959999979,
+        "body2_brightness": 0.790000021,
+        "body2_decay": 0.879999995,
+        "body1_size": 0.959999979,
+        "body2_size": 0.790000021,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        3
+      ]
+    },
+    {
+      "name": "Muted Pluck",
+      "host_index": 399,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 0.99000001,
+        "body1_brightness": 0.280000001,
+        "body1_decay": 0.25,
+        "body2_model": 4,
+        "body2_mix": 0.310000002,
+        "body2_brightness": 0.819999993,
+        "body2_decay": 0.25,
+        "body1_size": 1.10000002,
+        "body2_size": 0.850000024,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Kalimba",
+      "host_index": 400,
+      "changed_prior_nonvolume_controls": [
+        "mix",
+        "resonance",
+        "voice_dispersion",
+        "drift",
+        "ch1_sine",
+        "ch1_feet",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_pw",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_high",
+        "body1_brightness",
+        "body1_decay",
+        "body2_model",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "body_controls": {
+        "body1_model": 2,
+        "body1_mix": 1,
+        "body1_brightness": 0.720000029,
+        "body1_decay": 1.14999998,
+        "body2_model": 2,
+        "body2_mix": 1,
+        "body2_brightness": 0.959999979,
+        "body2_decay": 0.300000012,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 6,
+        "body2_material": 6
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Zither",
+      "host_index": 401,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_level",
+        "body1_mix",
+        "body2_mix"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.810000002,
+        "body1_decay": 2.04999995,
+        "body2_model": 7,
+        "body2_mix": 1,
+        "body2_brightness": 0.730000019,
+        "body2_decay": 1.26999998,
+        "body1_size": 1.22000003,
+        "body2_size": 1.19000006,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Dulcimer Pluck",
+      "host_index": 402,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.790000021,
+        "body1_decay": 1.30999994,
+        "body2_model": 7,
+        "body2_mix": 0.910000026,
+        "body2_brightness": 0.920000017,
+        "body2_decay": 0.379999995,
+        "body1_size": 1.35000002,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        3
+      ]
+    },
+    {
+      "name": "Pressure Pluck",
+      "host_index": 403,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "body_controls": {
+        "body1_model": 6,
+        "body1_mix": 0.600000024,
+        "body1_brightness": 0.550000012,
+        "body1_decay": 1.48000002,
+        "body2_model": 7,
+        "body2_mix": 0.620000005,
+        "body2_brightness": 0.839999974,
+        "body2_decay": 0.280000001,
+        "body1_size": 1.13,
+        "body2_size": 0.899999976,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Stereo Delay Pluck",
+      "host_index": 514,
+      "changed_prior_nonvolume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "body_controls": {
+        "body1_model": 7,
+        "body1_mix": 1,
+        "body1_brightness": 0.540000021,
+        "body1_decay": 1.08000004,
+        "body2_model": 7,
+        "body2_mix": 0.680000007,
+        "body2_brightness": 0.779999971,
+        "body2_decay": 0.280000001,
+        "body1_size": 1.12,
+        "body2_size": 0.920000017,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      },
+      "footage_indexes": [
+        1,
+        3
+      ]
+    }
+  ],
+  "capture_count": 52,
+  "capture_names": [
+    "Guitar I",
+    "Guitar II",
+    "Funky Pluck I",
+    "Funky Pluck II",
+    "Mandolin",
+    "Drone Pluck",
+    "Nylon Pluck",
+    "Steel Pluck",
+    "Muted Pluck",
+    "Zither",
+    "Dulcimer Pluck",
+    "Pressure Pluck",
+    "Stereo Delay Pluck"
+  ],
+  "notes": [
+    48,
+    72
+  ],
+  "velocities": [
+    0.25,
+    0.85
+  ],
+  "sample_rate": 48000,
+  "hold_seconds": 1.2,
+  "tail_seconds": 0.4,
+  "pressure": 0,
+  "generated_seconds": 83.2,
+  "all_finite_and_below_full_scale": true,
+  "maximum_peak_dbfs": -22.46921981,
+  "minimum_onset_touch_db": 7.7620131699999995,
+  "maximum_onset_touch_db": 9.542280480000002,
+  "measurements": [
+    {
+      "name": "Guitar I",
+      "note": 48,
+      "onset_touch_db": 8.947815920000004,
+      "firm_body_dbfs": -42.52287688,
+      "firm_tail_dbfs": -60.01516524
+    },
+    {
+      "name": "Guitar II",
+      "note": 48,
+      "onset_touch_db": 9.277827899999998,
+      "firm_body_dbfs": -43.01433338,
+      "firm_tail_dbfs": -58.72232698
+    },
+    {
+      "name": "Funky Pluck I",
+      "note": 48,
+      "onset_touch_db": 8.982271760000003,
+      "firm_body_dbfs": -69.94835411,
+      "firm_tail_dbfs": -102.6038109
+    },
+    {
+      "name": "Funky Pluck II",
+      "note": 48,
+      "onset_touch_db": 8.628603179999999,
+      "firm_body_dbfs": -49.99925611,
+      "firm_tail_dbfs": -70.79447966
+    },
+    {
+      "name": "Mandolin",
+      "note": 48,
+      "onset_touch_db": 9.211744349999996,
+      "firm_body_dbfs": -51.0277926,
+      "firm_tail_dbfs": -72.4827714
+    },
+    {
+      "name": "Drone Pluck",
+      "note": 48,
+      "onset_touch_db": 8.402500719999999,
+      "firm_body_dbfs": -37.24105255,
+      "firm_tail_dbfs": -45.37174691
+    },
+    {
+      "name": "Nylon Pluck",
+      "note": 48,
+      "onset_touch_db": 8.866584630000002,
+      "firm_body_dbfs": -41.38798253,
+      "firm_tail_dbfs": -57.96872266
+    },
+    {
+      "name": "Steel Pluck",
+      "note": 48,
+      "onset_touch_db": 9.16631049,
+      "firm_body_dbfs": -42.04986846,
+      "firm_tail_dbfs": -55.94348244
+    },
+    {
+      "name": "Muted Pluck",
+      "note": 48,
+      "onset_touch_db": 9.542280480000002,
+      "firm_body_dbfs": -142.1776969,
+      "firm_tail_dbfs": -176.0597141
+    },
+    {
+      "name": "Zither",
+      "note": 48,
+      "onset_touch_db": 9.047346910000002,
+      "firm_body_dbfs": -41.83928906,
+      "firm_tail_dbfs": -47.61961421
+    },
+    {
+      "name": "Dulcimer Pluck",
+      "note": 48,
+      "onset_touch_db": 9.212676510000001,
+      "firm_body_dbfs": -43.14678007,
+      "firm_tail_dbfs": -52.735711
+    },
+    {
+      "name": "Pressure Pluck",
+      "note": 48,
+      "onset_touch_db": 8.722706930000001,
+      "firm_body_dbfs": -50.91003115,
+      "firm_tail_dbfs": -60.4289019
+    },
+    {
+      "name": "Stereo Delay Pluck",
+      "note": 48,
+      "onset_touch_db": 9.262179920000001,
+      "firm_body_dbfs": -43.72404684,
+      "firm_tail_dbfs": -54.99052017
+    },
+    {
+      "name": "Guitar I",
+      "note": 72,
+      "onset_touch_db": 8.10475207,
+      "firm_body_dbfs": -44.25855307,
+      "firm_tail_dbfs": -63.29742309
+    },
+    {
+      "name": "Guitar II",
+      "note": 72,
+      "onset_touch_db": 8.25099281,
+      "firm_body_dbfs": -43.71075367,
+      "firm_tail_dbfs": -60.75051465
+    },
+    {
+      "name": "Funky Pluck I",
+      "note": 72,
+      "onset_touch_db": 8.249924189999994,
+      "firm_body_dbfs": -75.34276639,
+      "firm_tail_dbfs": -112.4922572
+    },
+    {
+      "name": "Funky Pluck II",
+      "note": 72,
+      "onset_touch_db": 7.99978286,
+      "firm_body_dbfs": -52.63725511,
+      "firm_tail_dbfs": -75.49066344
+    },
+    {
+      "name": "Mandolin",
+      "note": 72,
+      "onset_touch_db": 8.000568860000001,
+      "firm_body_dbfs": -52.610589,
+      "firm_tail_dbfs": -70.37910421
+    },
+    {
+      "name": "Drone Pluck",
+      "note": 72,
+      "onset_touch_db": 7.7620131699999995,
+      "firm_body_dbfs": -37.44858359,
+      "firm_tail_dbfs": -45.89062451
+    },
+    {
+      "name": "Nylon Pluck",
+      "note": 72,
+      "onset_touch_db": 8.09004638,
+      "firm_body_dbfs": -43.28119784,
+      "firm_tail_dbfs": -61.3835931
+    },
+    {
+      "name": "Steel Pluck",
+      "note": 72,
+      "onset_touch_db": 8.070197630000003,
+      "firm_body_dbfs": -42.55451076,
+      "firm_tail_dbfs": -57.66858467
+    },
+    {
+      "name": "Muted Pluck",
+      "note": 72,
+      "onset_touch_db": 8.66789171,
+      "firm_body_dbfs": -136.9584672,
+      "firm_tail_dbfs": -176.3558376
+    },
+    {
+      "name": "Zither",
+      "note": 72,
+      "onset_touch_db": 7.898262799999998,
+      "firm_body_dbfs": -41.66844102,
+      "firm_tail_dbfs": -47.84603687
+    },
+    {
+      "name": "Dulcimer Pluck",
+      "note": 72,
+      "onset_touch_db": 8.083861030000001,
+      "firm_body_dbfs": -44.3962243,
+      "firm_tail_dbfs": -55.10170454
+    },
+    {
+      "name": "Pressure Pluck",
+      "note": 72,
+      "onset_touch_db": 8.05213475,
+      "firm_body_dbfs": -51.75757122,
+      "firm_tail_dbfs": -61.4403251
+    },
+    {
+      "name": "Stereo Delay Pluck",
+      "note": 72,
+      "onset_touch_db": 8.133064769999997,
+      "firm_body_dbfs": -41.2941959,
+      "firm_tail_dbfs": -52.66857995
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "source_before": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "source_after": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "changed_object_members": [
+    "FactoryPresets.cpp.o"
+  ],
+  "members": [
+    {
+      "member": "Engine.cpp.o",
+      "before_sha256": "d2da23ad245482081ac4d1ff323d8767c2dc275347b7b59069dfe58b8fe81016",
+      "after_sha256": "d2da23ad245482081ac4d1ff323d8767c2dc275347b7b59069dfe58b8fe81016",
+      "identical": true
+    },
+    {
+      "member": "EngineWscHeld.cpp.o",
+      "before_sha256": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+      "after_sha256": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+      "identical": true
+    },
+    {
+      "member": "FactoryPresets.cpp.o",
+      "before_sha256": "262709bab312a30e5b5a6885f6a36be8411572d3f46f877a4d85c5e852825204",
+      "after_sha256": "e8ed64bb79faa4470a2c515436075fbdd3a495f37f1fc067220607d6323d0224",
+      "identical": false
+    },
+    {
+      "member": "Ig00156Batch.cpp.o",
+      "before_sha256": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266",
+      "after_sha256": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266",
+      "identical": true
+    }
+  ],
+  "scope": "Every core object except the preset-data object is byte-identical. The separately checked complete factory inventory differs in only the two listed output trims."
+}

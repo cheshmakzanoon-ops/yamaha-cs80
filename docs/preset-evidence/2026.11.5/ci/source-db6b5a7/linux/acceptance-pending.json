@@ -1,0 +1,19 @@
+{
+  "worker": "a52",
+  "status": "checkpoint_pending_superseding_source",
+  "accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "producer_job_id": 138282948362,
+  "observed_job_status": "in_progress",
+  "observed_step": "Install build dependencies",
+  "step_started_at": "2026-11-24T07:28:46Z",
+  "native_counts": null,
+  "validator_lanes_passed": null,
+  "artifacts_qualified": [],
+  "reason": "Coordinator reported stale EXPECTED_PARAMETER_COUNT=200 in supporting tests/test_parity_capture.py and is preparing a corrected source. This checkpoint remains attributed to db6b and qualifies no replacement source.",
+  "next_work": "Rebind all original APIs, logs and artifacts to the explicit replacement source/run/attempt; derive native results; inspect all Linux retries; run A41, A36 and the unchanged native parser; independently reconcile external gates."
+}

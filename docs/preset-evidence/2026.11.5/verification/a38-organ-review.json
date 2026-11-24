@@ -1,0 +1,1705 @@
+{
+  "schema": "cs80-a38-organ-review-v1",
+  "source_commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "release_qualified": false,
+  "native_validation_claimed": false,
+  "methods": {
+    "versions": "Each probe is compiled against its matching source headers and existing full core static archive.",
+    "phrase": "2.2 s; four notes [48,55,60,64] at 0 s, four notes [50,57,62,65] at 0.5 s; first off at 0.54 s; second off at 0.98 s; first chord repeated at 1.1 s, released 1.6 s.",
+    "velocity": "Reference 0.2/0.9/0.2 versus swapped 0.9/0.2/0.9; compare all float samples.",
+    "pressure": "Reference pressure zero versus pressure 1 at 0.25/1.3 s, zero at 0.75/1.5 s; all other events unchanged.",
+    "tail": "1.8-2.0 s RMS relative to held 1.3-1.5 s; includes named native chorus/tremolo.",
+    "registration": "MIDI60; mix endpoint isolates a rank; 0.5-1.1 s Hann projection at explicit nominal frequencies compared with 0.5,1,1.5,2,4 times the keyboard pitch. This is line-presence evidence, not a complete pitch estimator.",
+    "pressure_stop": "MIDI60, velocity0.7, pressure0/1, full mix and each isolated rank; 0.5-1.0 s RMS; projection compares 2f/f changes.",
+    "render_count_per_version": 67,
+    "frames_per_version": 6307200,
+    "seconds_per_version": 131.4,
+    "limits": "No reference organ recordings or listening study; these checks establish routing, registrations, chord keying and numerical integrity, not acoustic indistinguishability. The diagnostic limits are review sanity bounds, not newly introduced production release gates."
+  },
+  "checks": [
+    {
+      "check": "explicit before/after revisions",
+      "passed": true
+    },
+    {
+      "check": "matched 48 kHz output",
+      "passed": true
+    },
+    {
+      "check": "all 17 existing organ identities",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: full phrase has headroom",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: all three chord segments audible",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: final tail clears below -60 dBFS",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: final tail falls over 40 dB below held chord",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: swapped velocities leave exact PCM unchanged",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: pressure follows the authored route",
+      "passed": true
+    },
+    {
+      "check": "ten separate register paths inspected",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 1: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 1: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 1: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 2: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 2: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4 rank 2: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 1: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 1: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 1: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 2: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 2: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8 rank 2: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 1: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 1: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 1: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 2: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 2: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ rank 2: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 1: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 1: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 1: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 2: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 2: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Church Organ rank 2: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 1: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 1: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 1: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 2: named fundamental present",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 2: expected line dominates other tested footage lines",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ rank 2: isolated rank has headroom",
+      "passed": true
+    },
+    {
+      "check": "complete patch and both rank pressure controls",
+      "passed": true
+    },
+    {
+      "check": "modern organ: complete-patch pressure level increases",
+      "passed": true
+    },
+    {
+      "check": "modern organ: pressure brings upper stop forward in full patch",
+      "passed": true
+    },
+    {
+      "check": "modern organ: isolated lower stop is pressure invariant",
+      "passed": true
+    },
+    {
+      "check": "modern organ: isolated upper stop responds to pressure",
+      "passed": true
+    },
+    {
+      "check": "modern pressure rank 0: headroom",
+      "passed": true
+    },
+    {
+      "check": "modern pressure rank 1: headroom",
+      "passed": true
+    },
+    {
+      "check": "modern pressure rank 2: headroom",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Tone I: Organ 1: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Tone II: Organ 2: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 8+4: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Flute Organ 16+8: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Percussive Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Reed Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Church Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Chapel Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Theatre Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Tremolo Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Mellow Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Bright Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Pipe Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Combo Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Fifth Organ: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Organ Vibrato: ordinary organ material retained",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: published stop pitches/body registrations preserved",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: no strike-velocity routes",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: straight stop tuning",
+      "passed": true
+    },
+    {
+      "check": "Tremolo LFO Organ: ordinary organ material retained",
+      "passed": true
+    }
+  ],
+  "check_count": 212,
+  "failures": [],
+  "phrase_comparison": [
+    {
+      "name": "Tone I: Organ 1",
+      "before_tail_relative_db": -63.02985855,
+      "after_tail_relative_db": -67.226821223,
+      "after_peak_dbfs": -15.142895782,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Tone II: Organ 2",
+      "before_tail_relative_db": -64.077830966,
+      "after_tail_relative_db": -66.847441699,
+      "after_peak_dbfs": -13.735364708,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Flute Organ 8+4",
+      "before_tail_relative_db": -62.633521584,
+      "after_tail_relative_db": -66.728831573,
+      "after_peak_dbfs": -15.166154166,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Flute Organ 16+8",
+      "before_tail_relative_db": -60.568859318,
+      "after_tail_relative_db": -62.568223895,
+      "after_peak_dbfs": -16.049633761,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Percussive Organ",
+      "before_tail_relative_db": -74.277646297,
+      "after_tail_relative_db": -77.690395488,
+      "after_peak_dbfs": -10.143148784,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Reed Organ",
+      "before_tail_relative_db": -64.39994087,
+      "after_tail_relative_db": -66.989418604,
+      "after_peak_dbfs": -14.218517458,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Church Organ",
+      "before_tail_relative_db": -55.617738955,
+      "after_tail_relative_db": -60.711508032,
+      "after_peak_dbfs": -15.42885234,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Chapel Organ",
+      "before_tail_relative_db": -55.750685787,
+      "after_tail_relative_db": -60.084655279,
+      "after_peak_dbfs": -19.159529043,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Theatre Organ",
+      "before_tail_relative_db": -54.638858799,
+      "after_tail_relative_db": -54.576918682,
+      "after_peak_dbfs": -15.440916585,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Tremolo Organ",
+      "before_tail_relative_db": -53.824086986,
+      "after_tail_relative_db": -53.832187382,
+      "after_peak_dbfs": -14.887211106,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Mellow Organ",
+      "before_tail_relative_db": -60.882401068,
+      "after_tail_relative_db": -64.337277159,
+      "after_peak_dbfs": -16.081503796,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Bright Organ",
+      "before_tail_relative_db": -65.019591638,
+      "after_tail_relative_db": -70.83317042,
+      "after_peak_dbfs": -15.035787232,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Pipe Organ",
+      "before_tail_relative_db": -59.622874336,
+      "after_tail_relative_db": -60.813756851,
+      "after_peak_dbfs": -16.291733936,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Combo Organ",
+      "before_tail_relative_db": -64.894044534,
+      "after_tail_relative_db": -66.13758323,
+      "after_peak_dbfs": -6.819170556,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Fifth Organ",
+      "before_tail_relative_db": -62.6383405,
+      "after_tail_relative_db": -65.725417157,
+      "after_peak_dbfs": -15.217361248,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Organ Vibrato",
+      "before_tail_relative_db": -64.266875152,
+      "after_tail_relative_db": -67.766115192,
+      "after_peak_dbfs": -14.286604682,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": true
+    },
+    {
+      "name": "Tremolo LFO Organ",
+      "before_tail_relative_db": -65.449663282,
+      "after_tail_relative_db": -73.215251433,
+      "after_peak_dbfs": -18.008478155,
+      "velocity_exact_pcm_equal": true,
+      "unrouted_pressure_exact_pcm_equal": false
+    }
+  ],
+  "final_registration": [
+    {
+      "name": "Flute Organ 8+4",
+      "rank": 1,
+      "expected_ratio": 1.0,
+      "expected_hz": 261.625565301,
+      "expected_line_dbfs": -34.753372086,
+      "fundamental_over_other_tested_footages_db": 10.266621278,
+      "peak_dbfs": -28.552868799
+    },
+    {
+      "name": "Flute Organ 8+4",
+      "rank": 2,
+      "expected_ratio": 2.0,
+      "expected_hz": 523.251130601,
+      "expected_line_dbfs": -26.550437978,
+      "fundamental_over_other_tested_footages_db": 22.950800647,
+      "peak_dbfs": -23.404355498
+    },
+    {
+      "name": "Flute Organ 16+8",
+      "rank": 1,
+      "expected_ratio": 0.5,
+      "expected_hz": 130.81278265,
+      "expected_line_dbfs": -36.82180687,
+      "fundamental_over_other_tested_footages_db": 7.500540838,
+      "peak_dbfs": -30.291578133
+    },
+    {
+      "name": "Flute Organ 16+8",
+      "rank": 2,
+      "expected_ratio": 1.0,
+      "expected_hz": 261.625565301,
+      "expected_line_dbfs": -27.202151337,
+      "fundamental_over_other_tested_footages_db": 19.406371554,
+      "peak_dbfs": -23.758808813
+    },
+    {
+      "name": "Chapel Organ",
+      "rank": 1,
+      "expected_ratio": 1.0,
+      "expected_hz": 261.625565301,
+      "expected_line_dbfs": -36.611588629,
+      "fundamental_over_other_tested_footages_db": 7.774481987,
+      "peak_dbfs": -30.295994978
+    },
+    {
+      "name": "Chapel Organ",
+      "rank": 2,
+      "expected_ratio": 4.0,
+      "expected_hz": 1046.502261202,
+      "expected_line_dbfs": -32.846087718,
+      "fundamental_over_other_tested_footages_db": 166.561415895,
+      "peak_dbfs": -29.886145822
+    },
+    {
+      "name": "Church Organ",
+      "rank": 1,
+      "expected_ratio": 0.5,
+      "expected_hz": 130.81278265,
+      "expected_line_dbfs": -35.473738449,
+      "fundamental_over_other_tested_footages_db": 4.704073905,
+      "peak_dbfs": -26.47788674
+    },
+    {
+      "name": "Church Organ",
+      "rank": 2,
+      "expected_ratio": 2.0,
+      "expected_hz": 523.251130601,
+      "expected_line_dbfs": -31.485322403,
+      "fundamental_over_other_tested_footages_db": 14.322138431,
+      "peak_dbfs": -27.583780361
+    },
+    {
+      "name": "Fifth Organ",
+      "rank": 1,
+      "expected_ratio": 1.0,
+      "expected_hz": 261.625565301,
+      "expected_line_dbfs": -34.09883658,
+      "fundamental_over_other_tested_footages_db": 10.86096675,
+      "peak_dbfs": -27.95396104
+    },
+    {
+      "name": "Fifth Organ",
+      "rank": 2,
+      "expected_ratio": 1.5,
+      "expected_hz": 392.438347951,
+      "expected_line_dbfs": -27.499533777,
+      "fundamental_over_other_tested_footages_db": 123.613566909,
+      "peak_dbfs": -24.338438271
+    }
+  ],
+  "modern_pressure_before": [
+    {
+      "rank": 0,
+      "gain_db": 0.283016363,
+      "max_absolute_difference": 0.00168882729486,
+      "octave_to_root_change_db": 0.973169163,
+      "peak_dbfs": -30.942418533
+    },
+    {
+      "rank": 1,
+      "gain_db": 0.0,
+      "max_absolute_difference": 0,
+      "octave_to_root_change_db": 0.0,
+      "peak_dbfs": -30.323963252
+    },
+    {
+      "rank": 2,
+      "gain_db": 2.820931241,
+      "max_absolute_difference": 0.00767648778856,
+      "octave_to_root_change_db": 3.094983781,
+      "peak_dbfs": -28.725987001
+    }
+  ],
+  "modern_pressure_after": [
+    {
+      "rank": 0,
+      "gain_db": 0.617579991,
+      "max_absolute_difference": 0.00265039782971,
+      "octave_to_root_change_db": 1.642176622,
+      "peak_dbfs": -30.366008937
+    },
+    {
+      "rank": 1,
+      "gain_db": 0.0,
+      "max_absolute_difference": 0,
+      "octave_to_root_change_db": 0.0,
+      "peak_dbfs": -30.343386122
+    },
+    {
+      "rank": 2,
+      "gain_db": 4.117758183,
+      "max_absolute_difference": 0.0120472600684,
+      "octave_to_root_change_db": 4.475085514,
+      "peak_dbfs": -27.742287501
+    }
+  ],
+  "recipe_changes": [
+    {
+      "index": 14,
+      "name": "Tone I: Organ 1",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00999999978,
+          "after": 0.0179999992
+        },
+        "ch1_v_r": {
+          "before": 0.0705000013,
+          "after": 0.0375999995
+        },
+        "ch2_v_a": {
+          "before": 0.0160000008,
+          "after": 0.00899999961
+        },
+        "ch2_v_r": {
+          "before": 0.0488799997,
+          "after": 0.0281999987
+        }
+      }
+    },
+    {
+      "index": 15,
+      "name": "Tone II: Organ 2",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0390000008,
+          "after": 0.0260000005
+        },
+        "ch1_v_r": {
+          "before": 0.0820000023,
+          "after": 0.0500000007
+        },
+        "ch2_v_a": {
+          "before": 0.0219999999,
+          "after": 0.0350000001
+        },
+        "ch2_v_r": {
+          "before": 0.100000001,
+          "after": 0.0649999976
+        }
+      }
+    },
+    {
+      "index": 360,
+      "name": "Flute Organ 8+4",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00999999978,
+          "after": 0.0179999992
+        },
+        "ch1_v_r": {
+          "before": 0.075000003,
+          "after": 0.0399999991
+        },
+        "ch2_v_a": {
+          "before": 0.0160000008,
+          "after": 0.00899999961
+        },
+        "ch2_v_r": {
+          "before": 0.0520000011,
+          "after": 0.0299999993
+        }
+      }
+    },
+    {
+      "index": 361,
+      "name": "Flute Organ 16+8",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0240000002,
+          "after": 0.0320000015
+        },
+        "ch1_v_r": {
+          "before": 0.119999997,
+          "after": 0.0649999976
+        },
+        "ch2_v_a": {
+          "before": 0.0120000001,
+          "after": 0.0140000004
+        },
+        "ch2_v_r": {
+          "before": 0.0799999982,
+          "after": 0.0379999988
+        }
+      }
+    },
+    {
+      "index": 362,
+      "name": "Percussive Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00400000019,
+          "after": 0.00200000009
+        },
+        "ch1_v_r": {
+          "before": 0.0480000004,
+          "after": 0.0219999999
+        },
+        "ch2_v_d": {
+          "before": 0.819999993,
+          "after": 0.680000007
+        },
+        "ch2_v_r": {
+          "before": 0.0520000011,
+          "after": 0.0219999999
+        }
+      }
+    },
+    {
+      "index": 363,
+      "name": "Reed Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0219999999,
+          "after": 0.0350000001
+        },
+        "ch1_v_r": {
+          "before": 0.100000001,
+          "after": 0.0649999976
+        },
+        "ch2_v_a": {
+          "before": 0.0390000008,
+          "after": 0.0260000005
+        },
+        "ch2_v_r": {
+          "before": 0.0820000023,
+          "after": 0.0500000007
+        }
+      }
+    },
+    {
+      "index": 364,
+      "name": "Church Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0549999997,
+          "after": 0.0599999987
+        },
+        "ch1_v_r": {
+          "before": 0.25999999,
+          "after": 0.135000005
+        },
+        "ch2_v_a": {
+          "before": 0.0379999988,
+          "after": 0.0219999999
+        },
+        "ch2_v_r": {
+          "before": 0.170000002,
+          "after": 0.0850000009
+        }
+      }
+    },
+    {
+      "index": 365,
+      "name": "Chapel Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0450000018,
+          "after": 0.0299999993
+        },
+        "ch1_v_r": {
+          "before": 0.180000007,
+          "after": 0.075000003
+        },
+        "ch2_v_a": {
+          "before": 0.0610000007,
+          "after": 0.0179999992
+        },
+        "ch2_v_r": {
+          "before": 0.109999999,
+          "after": 0.0450000018
+        }
+      }
+    },
+    {
+      "index": 366,
+      "name": "Theatre Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0120000001,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0250000004,
+          "after": 0.0219999999
+        },
+        "ch1_v_r": {
+          "before": 0.115000002,
+          "after": 0.0549999997
+        },
+        "ch2_v_a": {
+          "before": 0.0179999992,
+          "after": 0.0120000001
+        },
+        "ch2_v_r": {
+          "before": 0.0920000002,
+          "after": 0.0450000018
+        }
+      }
+    },
+    {
+      "index": 367,
+      "name": "Tremolo Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0179999992,
+          "after": 0.0260000005
+        },
+        "ch1_v_r": {
+          "before": 0.109999999,
+          "after": 0.0599999987
+        },
+        "ch2_v_a": {
+          "before": 0.00899999961,
+          "after": 0.00600000005
+        },
+        "ch2_v_r": {
+          "before": 0.0599999987,
+          "after": 0.0320000015
+        }
+      }
+    },
+    {
+      "index": 368,
+      "name": "Mellow Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0199999996,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.00600000005,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0130000003,
+          "after": 0.0179999992
+        },
+        "ch1_v_r": {
+          "before": 0.104999997,
+          "after": 0.0549999997
+        }
+      }
+    },
+    {
+      "index": 369,
+      "name": "Bright Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00449999981,
+          "after": 0.00350000011
+        },
+        "ch1_v_r": {
+          "before": 0.0500000007,
+          "after": 0.0260000005
+        },
+        "ch2_v_a": {
+          "before": 0.00600000005,
+          "after": 0.00249999994
+        },
+        "ch2_v_r": {
+          "before": 0.0320000015,
+          "after": 0.0199999996
+        }
+      }
+    },
+    {
+      "index": 370,
+      "name": "Pipe Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.0419999994,
+          "after": 0.0500000007
+        },
+        "ch1_v_r": {
+          "before": 0.219999999,
+          "after": 0.119999997
+        },
+        "ch2_v_a": {
+          "before": 0.0219999999,
+          "after": 0.0140000004
+        },
+        "ch2_v_r": {
+          "before": 0.129999995,
+          "after": 0.0649999976
+        }
+      }
+    },
+    {
+      "index": 371,
+      "name": "Combo Organ",
+      "changed_controls": {
+        "detune": {
+          "before": 0.180000007,
+          "after": 0
+        },
+        "volume": {
+          "before": 0.754999995,
+          "after": 0.75
+        },
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00249999994,
+          "after": 0.00179999997
+        },
+        "ch1_v_r": {
+          "before": 0.0320000015,
+          "after": 0.0179999992
+        },
+        "ch2_v_a": {
+          "before": 0.00400000019,
+          "after": 0.00249999994
+        },
+        "ch2_v_r": {
+          "before": 0.0250000004,
+          "after": 0.0140000004
+        }
+      }
+    },
+    {
+      "index": 372,
+      "name": "Fifth Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00899999961,
+          "after": 0.0160000008
+        },
+        "ch1_v_r": {
+          "before": 0.0649999976,
+          "after": 0.0399999991
+        },
+        "ch2_v_a": {
+          "before": 0.0140000004,
+          "after": 0.00999999978
+        },
+        "ch2_v_r": {
+          "before": 0.0480000004,
+          "after": 0.0299999993
+        }
+      }
+    },
+    {
+      "index": 373,
+      "name": "Organ Vibrato",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00800000038,
+          "after": 0.0120000001
+        },
+        "ch1_v_r": {
+          "before": 0.0700000003,
+          "after": 0.0399999991
+        },
+        "ch2_v_a": {
+          "before": 0.0120000001,
+          "after": 0.00700000022
+        },
+        "ch2_v_r": {
+          "before": 0.0480000004,
+          "after": 0.0260000005
+        }
+      }
+    },
+    {
+      "index": 521,
+      "name": "Tremolo LFO Organ",
+      "changed_controls": {
+        "voice_dispersion": {
+          "before": 0.0399999991,
+          "after": 0
+        },
+        "drift": {
+          "before": 0.0149999997,
+          "after": 0
+        },
+        "ch1_v_a": {
+          "before": 0.00800000038,
+          "after": 0.0120000001
+        },
+        "ch1_v_r": {
+          "before": 0.0549999997,
+          "after": 0.0280000009
+        },
+        "ch2_v_a": {
+          "before": 0.0160000008,
+          "after": 0.00899999961
+        },
+        "ch2_v_r": {
+          "before": 0.0419999994,
+          "after": 0.0219999999
+        },
+        "ch2_after_level": {
+          "before": 0.140000001,
+          "after": 0.219999999
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a38-organ-probe.cpp",
+      "bytes": 6528,
+      "sha256": "d26f3e9197e12fc4d684723f084184ee7a21bcd156c90060db546f0dc5447f4f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a38-review-organ.py",
+      "bytes": 7615,
+      "sha256": "2ade663b9352f689f0e3aab5d95cc3e7e266d4d9126ba202b53824a5fa34ea6a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a38-organ-baseline.json",
+      "bytes": 7378,
+      "sha256": "d6e5ebaf4f11234900811060e55b6edb601684ae82d065d60310ae26c96fd29b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a38-organ-final.json",
+      "bytes": 7379,
+      "sha256": "5dd01227d9397a0dc0f132b88f679935ace2bfe16e8490fe495c4093e257c359"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/baseline/inventory.json",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193"
+    },
+    {
+      "path": "build-preset/libcs80_core.a",
+      "bytes": 1691342,
+      "sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8"
+    },
+    {
+      "path": "/workspace/scratch/c98fb40a9529/baseline-build/libcs80_core.a",
+      "bytes": 1659742,
+      "sha256": "306f0d8b48f0c6f9375203d1dd76899859aecd27b3d621ae016213561c923c89"
+    }
+  ]
+}

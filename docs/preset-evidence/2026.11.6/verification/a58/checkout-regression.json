@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "evidence_kind": "local_git_checkout_regression",
+  "interpretation": "Git newline conversion exercised locally; not a native Windows rerun or release qualification.",
+  "historical_failed_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "baseline_path": "docs/preset-evidence/2026.11.5/baseline/inventory.json",
+  "original_baseline": {
+    "bytes": 704822,
+    "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "lf": 1,
+    "crlf": 0
+  },
+  "exact_crlf_digest_matches_windows_failure": true,
+  "original_scripts_unchanged": {
+    "scripts/compare-preset-response-2026-11-6.py": "f6f84bf7f262cd4b79ea37df79373e072df684ae765668e21e2817fc67213c70",
+    "scripts/test-compare-preset-response-2026-11-6.py": "d59c298d2917fb9d67becc27836d4397a85b3af825a28e158c07627285471898"
+  },
+  "attributes_sha256": "2e282213e917d805d7fc9659b46dca165d69923b90e3b8fab6f4315de10e8f07",
+  "original_failure_reproduced": {
+    "label": "before-autocrlf-true-eol-crlf",
+    "configuration": {
+      "core_autocrlf": "true",
+      "core_eol": "crlf"
+    },
+    "checked_out_baseline": {
+      "bytes": 704823,
+      "sha256": "072f6692ec360248b8edf104452f2c59272be028495d3949b1e6523895311e59",
+      "lf": 1,
+      "crlf": 1
+    },
+    "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unspecified",
+    "test_returncode": 1,
+    "contract_test_groups": 7,
+    "log_sha256": "94e66b3af6f1be7960364ab7a7547aec19086c48dee08b256c1142f107e9c719"
+  },
+  "fixed_checkout_cases": [
+    {
+      "label": "fixed-autocrlf-true-eol-lf",
+      "configuration": {
+        "core_autocrlf": "true",
+        "core_eol": "lf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "f1453868955f6323997419d0b10349cf26b5b08bd91d6cd7aa41c6a6c355bc66"
+    },
+    {
+      "label": "fixed-autocrlf-true-eol-crlf",
+      "configuration": {
+        "core_autocrlf": "true",
+        "core_eol": "crlf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "8969432ec0f13a09d9abd52b190101d8f8e4afdd6bbe835c9e725fccdc654867"
+    },
+    {
+      "label": "fixed-autocrlf-false-eol-lf",
+      "configuration": {
+        "core_autocrlf": "false",
+        "core_eol": "lf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "92a6ce4a707f8b89e53280e66c172f889cf107d84e5bfd90f6a0a35553e178dd"
+    },
+    {
+      "label": "fixed-autocrlf-false-eol-crlf",
+      "configuration": {
+        "core_autocrlf": "false",
+        "core_eol": "crlf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "1c0d533e43dc6ca4660f2e27151cf6398f366b236a7c3354ea66700c731c4958"
+    },
+    {
+      "label": "fixed-autocrlf-input-eol-lf",
+      "configuration": {
+        "core_autocrlf": "input",
+        "core_eol": "lf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "726c0a53966e22dc2876995087e8a8f2137d649f9eaf8519a4f4850ecb307fed"
+    },
+    {
+      "label": "fixed-autocrlf-input-eol-crlf",
+      "configuration": {
+        "core_autocrlf": "input",
+        "core_eol": "crlf"
+      },
+      "checked_out_baseline": {
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "lf": 1,
+        "crlf": 0
+      },
+      "text_attribute": "docs/preset-evidence/2026.11.5/baseline/inventory.json: text: unset",
+      "test_returncode": 0,
+      "contract_test_groups": 7,
+      "log_sha256": "3b9490e2eee0859595b6b408ba0844a55bbcd98a00eb5653e0a795ab1f9d804d"
+    }
+  ],
+  "negative_authentication": {
+    "candidate_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+    "controls": [
+      {
+        "label": "trailing-LF-to-CRLF",
+        "input": {
+          "bytes": 704823,
+          "sha256": "072f6692ec360248b8edf104452f2c59272be028495d3949b1e6523895311e59",
+          "lf": 1,
+          "crlf": 1
+        },
+        "returncode": 1,
+        "rejected_by_raw_byte_pin": true,
+        "input_and_report_unchanged": true
+      },
+      {
+        "label": "remove-trailing-LF",
+        "input": {
+          "bytes": 704821,
+          "sha256": "e3f8cf8eb73ac9adeef40bea0e31e0db4041cc371f5984d6fb864c4caac4b6b3",
+          "lf": 0,
+          "crlf": 0
+        },
+        "returncode": 1,
+        "rejected_by_raw_byte_pin": true,
+        "input_and_report_unchanged": true
+      },
+      {
+        "label": "add-whitespace",
+        "input": {
+          "bytes": 704823,
+          "sha256": "308900f0344890fee125e60ab2b8b13f5163f42a609c94592aaf0f177eb9f134",
+          "lf": 1,
+          "crlf": 0
+        },
+        "returncode": 1,
+        "rejected_by_raw_byte_pin": true,
+        "input_and_report_unchanged": true
+      },
+      {
+        "label": "semantic-parameter-mutation",
+        "input": {
+          "bytes": 817233,
+          "sha256": "efb603b8dd7b888da3ae2c21180d2b8765b8aafdc2fbeb113b4c6d0b818db17b",
+          "lf": 0,
+          "crlf": 0
+        },
+        "returncode": 1,
+        "rejected_by_raw_byte_pin": true,
+        "input_and_report_unchanged": true
+      }
+    ]
+  },
+  "actual_windows_ci_after_fix": "pending"
+}

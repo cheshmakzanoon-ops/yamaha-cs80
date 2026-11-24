@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "pending_actual_linux_native_and_validator_artifacts",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "observed_at_utc": "2026-11-24T10:32:23.499410+00:00",
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "run_id": 45366603800,
+  "attempt": 1,
+  "producer_job_id": 138349816508,
+  "producer_status": "in_progress",
+  "active_step": "Test",
+  "test_started_at": "2026-11-24T09:45:59Z",
+  "present_expected_artifacts": [],
+  "expected_registered_count_pending_actual": 609,
+  "actual_native_counts": null,
+  "actual_validator_lanes": null,
+  "actual_payload_identity": null,
+  "completed_scope": "Source and retained-roster preparation; authenticated current checkpoint only.",
+  "blocking_evidence": "Original Test, capture, package and uploads are unfinished; Linux validator job and artifact are absent.",
+  "checkpoint_integrity": [
+    {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/run-checkpoint-api.json",
+      "bytes": 15400,
+      "sha256": "0297c79a2609b818d3d7d3222181e0ab6f4ff85b62e118bce2b0934312a64e66"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/jobs-checkpoint-api.json",
+      "bytes": 21464,
+      "sha256": "41f501ccf31cbaa872ae5a6b0379aab24a980221764b3fb868114f665de7a145"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/artifacts-checkpoint-api.json",
+      "bytes": 2499,
+      "sha256": "9de96f139d37e601f356b2115e06f9a8aa4d752f6a505f38573f1c1d498d9f01"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/preparation-contract.json",
+      "bytes": 40342,
+      "sha256": "d8f4329e982585a392aa0a4b171b121ff6f822e82ff16c09dab5b9511de65e2c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/parser-inputs-template.json",
+      "bytes": 3037,
+      "sha256": "5a30d90ceedba9e1c16cd4c95feae7b819b11dcda7ab15e6b3486231deb49090"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "exit_code": 1,
+  "mutated_program": "Arp Motion",
+  "old_velocity": 0.25,
+  "new_velocity": 0.99,
+  "checks": 420,
+  "expected_failures": [
+    {
+      "passed": false,
+      "label": "Arp Motion: generated pitch belongs to authored octave set and retains source channel/velocity"
+    }
+  ]
+}

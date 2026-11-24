@@ -1,0 +1,144 @@
+{
+  "source_executed": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "native_release_source_compared": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "execution_relabelled": false,
+  "native_run_qualified": false,
+  "run_id": 45344888473,
+  "run_attempt": 1,
+  "job_id": 138276946587,
+  "run_and_job_conclusion": "success",
+  "artifact": {
+    "id": 14899141895,
+    "node_id": "MDg6QXJ0aWZhY3QxNDg5OTE0MTg5NQ==",
+    "name": "cs80-panel-09af5358d34a7ea431de7e8a42e35dae66e52159",
+    "size_in_bytes": 62122094,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14899141895",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14899141895/zip",
+    "expired": false,
+    "digest": "sha256:68607e5e17942d4930d7d2cb560846e8ac7d0f0c2f347c988f1dcc3718230a86",
+    "created_at": "2026-11-24T07:28:28Z",
+    "updated_at": "2026-11-24T07:28:28Z",
+    "expires_at": "2027-02-22T07:02:14Z",
+    "workflow_run": {
+      "id": 45344888473,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159"
+    }
+  },
+  "actual_zip": {
+    "bytes": 62122094,
+    "sha256": "68607e5e17942d4930d7d2cb560846e8ac7d0f0c2f347c988f1dcc3718230a86"
+  },
+  "producer_upload_bound": true,
+  "producer_upload_step": {
+    "name": "Publish screenshot evidence",
+    "status": "completed",
+    "conclusion": "success",
+    "number": 8,
+    "started_at": "2026-11-24T07:28:24Z",
+    "completed_at": "2026-11-24T07:28:28Z"
+  },
+  "provenance": {
+    "commit": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+    "run": "45344888473",
+    "renderer": "JUCE software, actual plugin editor"
+  },
+  "file_count": 73,
+  "png_count": 70,
+  "top_level_png_count": 66,
+  "all_archive_entries_reviewed": true,
+  "all_pngs_decoded": true,
+  "exact_expected_roster_passed": true,
+  "top_level_png_checksums_passed": true,
+  "ui_smoke": "UI SMOKE TEST PASSED",
+  "core_reported_checks_passed": 11556,
+  "smoke_reported_phase_count": 33,
+  "smoke_reported_phases": [
+    "JUCE initialization",
+    "host metadata",
+    "output meter host",
+    "source performance host",
+    "ws3 keyboard/tuning host",
+    "preset recall host",
+    "instrument body host identity and recall",
+    "preset file host",
+    "session schema host",
+    "session undo host",
+    "engine I/O host",
+    "editor initial size",
+    "external input host",
+    "circuit performance and retired policy host",
+    "keyboard and expression host",
+    "live envelope and factory source host",
+    "editor, state and automation",
+    "source performance captures",
+    "preset save and panic",
+    "program library, Program Change, A/B and randomise",
+    "pressure ownership and UI readiness",
+    "original panel editor (ws7)",
+    "studio views",
+    "ring curve gestures",
+    "studio interaction",
+    "studio MIDI learn",
+    "studio undo and redo",
+    "studio learning tools",
+    "studio tab order, hit targets and contrast",
+    "modern modulation and FX layer",
+    "modern layer integer state ranges",
+    "modern layer page painting and interaction",
+    "integration wiring (pages, toolbar, library, undo)"
+  ],
+  "smoke_last_reported_total_seconds": 76.555288,
+  "original_capture_exit_code": 0,
+  "exit_code_evidence": "Successful original capture API step plus unchanged source wrapper/capture exit-status propagation; no retry.",
+  "no_failed_assertions_in_full_smoke_log": true,
+  "golden_refresh_used": false,
+  "goldens": [
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "candidate_sha256": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+      "source_golden_sha256": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+      "all_rgb_pixels_equal": true,
+      "all_pixels_equal": true,
+      "outside_mask_changed_fraction": 0.0,
+      "worst_8x8_block_mean": 0.0,
+      "masked_rectangle": [
+        1118,
+        0,
+        342,
+        48
+      ],
+      "unchanged_limits_passed": true
+    },
+    {
+      "size": [
+        1120,
+        700
+      ],
+      "candidate_sha256": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+      "source_golden_sha256": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+      "all_rgb_pixels_equal": true,
+      "all_pixels_equal": true,
+      "outside_mask_changed_fraction": 0.0,
+      "worst_8x8_block_mean": 0.0,
+      "masked_rectangle": [
+        783,
+        0,
+        239,
+        34
+      ],
+      "unchanged_limits_passed": true
+    }
+  ],
+  "producer_log_sha256": "7942d5c1383d7994869a285edbd6199c6251ea64fdca381d575b390deb2f60a4",
+  "artifact_smoke_log_sha256": "f03da36547e7e96e1bd25e0f21a53269935cb257d96b96d39b528862764500e9",
+  "main_guard_skipped_gallery_publication": true,
+  "main_guard_original_log_message": "Newer code is already on main; keeping this run's screenshots as artifacts only.",
+  "gallery_is_not_golden_coverage": true,
+  "scope": "Actual 09af screenshot/UI artifact qualification; identical repository UI inputs at db6b. No native plugin package or acoustic-quality claim. Only two fixture candidates are golden comparisons; the other rendered gallery images are not golden tests."
+}

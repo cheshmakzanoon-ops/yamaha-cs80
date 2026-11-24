@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/b9c11dd92abc/yamaha-cs80/docs/preset-evidence/2026.11.6/verification/a53/audit_packaged_docs.py", line 52, in <module>
+    and manifest['system'] == 'macos', 'manifest source and advertised native platform')
+        ~~~~~~~~^^^^^^^^^^
+KeyError: 'system'

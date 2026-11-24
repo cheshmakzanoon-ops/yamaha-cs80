@@ -1,0 +1,1056 @@
+{
+  "schema": "cs80.a39.bowed-string-lifetime-review/v1",
+  "source_commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "baseline_commit": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "revision": "2026.11.5",
+  "native_release_qualified": false,
+  "scope": "Nine existing curated string recipes, selected whole-preset lifetime and note-ownership checks. Not a full-family perceptual equivalence test.",
+  "method": {
+    "sample_rate_hz": 44100,
+    "block_frames": 113,
+    "master_override": false,
+    "factory_effects_retained_in_initial_probe": true,
+    "long_hold_seconds": 12,
+    "long_release_seconds": 4,
+    "single_played_notes": [
+      48,
+      84
+    ],
+    "section_notes": [
+      48,
+      52,
+      55,
+      59,
+      62,
+      65,
+      69,
+      72
+    ],
+    "long_velocity": 0.8,
+    "pressure_events": [
+      {
+        "at_seconds": 5,
+        "value": 0.9
+      },
+      {
+        "at_seconds": 8,
+        "value": 0
+      }
+    ],
+    "ownership_check_ms_after_event": 10,
+    "repeated_strokes": 12,
+    "overlapping_steps": 13,
+    "caveat": "RMS audibility thresholds and 6 dB sustained-return bound are private behavioral diagnostics, not a perceptual or physical-instrument quality score."
+  },
+  "initial_probe": {
+    "checks": 560,
+    "failures": 5,
+    "renders": 28,
+    "stereo_frames": 16105320,
+    "max_peak_dbfs": -11.955853047,
+    "exit_code": 1,
+    "failed_assertions": [
+      "Bowed Swell Strings note 48: released tail is over 40 dB below held body",
+      "Swell Strings note 48: released tail is over 40 dB below held body",
+      "Swell Strings note 84: released tail is over 40 dB below held body",
+      "Marcato Strings repeated note 60: no remaining sounding bow after all note-offs",
+      "Marcato Strings overlapping line from 55: overlapped phrase finishes without a stuck bow"
+    ],
+    "long_bows": [
+      {
+        "program": "Solo Violin",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -24.274194578,
+        "earlier_unpressed_rms_dbfs": -37.231732773,
+        "pressed_rms_dbfs": -34.365494884,
+        "late_unpressed_rms_dbfs": -37.23456987,
+        "returned_minus_earlier_db": -0.002837097,
+        "released_relative_to_held_db": -300.0,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Solo Violin",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -24.079201772,
+        "earlier_unpressed_rms_dbfs": -34.591667538,
+        "pressed_rms_dbfs": -31.543980657,
+        "late_unpressed_rms_dbfs": -34.59117106,
+        "returned_minus_earlier_db": 0.000496478,
+        "released_relative_to_held_db": -300.0,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Solo Cello",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -25.040496975,
+        "earlier_unpressed_rms_dbfs": -36.032747683,
+        "pressed_rms_dbfs": -32.862178768,
+        "late_unpressed_rms_dbfs": -36.058315495,
+        "returned_minus_earlier_db": -0.025567812,
+        "released_relative_to_held_db": -300.0,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Solo Cello",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -24.493915865,
+        "earlier_unpressed_rms_dbfs": -35.002008854,
+        "pressed_rms_dbfs": -31.600957197,
+        "late_unpressed_rms_dbfs": -35.000576328,
+        "returned_minus_earlier_db": 0.001432525,
+        "released_relative_to_held_db": -300.0,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Chamber Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -26.75809962,
+        "earlier_unpressed_rms_dbfs": -40.453244983,
+        "pressed_rms_dbfs": -37.92736535,
+        "late_unpressed_rms_dbfs": -42.619659679,
+        "returned_minus_earlier_db": -2.166414696,
+        "released_relative_to_held_db": -60.234455027,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Chamber Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -26.119806547,
+        "earlier_unpressed_rms_dbfs": -37.346593429,
+        "pressed_rms_dbfs": -35.223677164,
+        "late_unpressed_rms_dbfs": -37.342206116,
+        "returned_minus_earlier_db": 0.004387313,
+        "released_relative_to_held_db": -65.51190859,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Slow Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -24.774392705,
+        "earlier_unpressed_rms_dbfs": -39.620091824,
+        "pressed_rms_dbfs": -37.444378229,
+        "late_unpressed_rms_dbfs": -40.275414551,
+        "returned_minus_earlier_db": -0.655322727,
+        "released_relative_to_held_db": -41.740723912,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Slow Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -21.890896695,
+        "earlier_unpressed_rms_dbfs": -35.486464138,
+        "pressed_rms_dbfs": -33.488279391,
+        "late_unpressed_rms_dbfs": -35.292343713,
+        "returned_minus_earlier_db": 0.194120425,
+        "released_relative_to_held_db": -46.723794753,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Bowed Swell Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -25.214957731,
+        "earlier_unpressed_rms_dbfs": -44.042830823,
+        "pressed_rms_dbfs": -38.112634085,
+        "late_unpressed_rms_dbfs": -43.388582943,
+        "returned_minus_earlier_db": 0.654247879,
+        "released_relative_to_held_db": -38.622301027,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Bowed Swell Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -23.179304394,
+        "earlier_unpressed_rms_dbfs": -38.676278712,
+        "pressed_rms_dbfs": -33.509597386,
+        "late_unpressed_rms_dbfs": -39.045907377,
+        "returned_minus_earlier_db": -0.369628665,
+        "released_relative_to_held_db": -42.964976593,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Tutti Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -23.690213901,
+        "earlier_unpressed_rms_dbfs": -39.097641013,
+        "pressed_rms_dbfs": -38.69901259,
+        "late_unpressed_rms_dbfs": -39.314829573,
+        "returned_minus_earlier_db": -0.21718856,
+        "released_relative_to_held_db": -42.617414494,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Tutti Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -22.619785598,
+        "earlier_unpressed_rms_dbfs": -35.602758673,
+        "pressed_rms_dbfs": -33.970422488,
+        "late_unpressed_rms_dbfs": -35.841297341,
+        "returned_minus_earlier_db": -0.238538668,
+        "released_relative_to_held_db": -46.090946726,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Marcato Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -30.156371817,
+        "earlier_unpressed_rms_dbfs": -41.950163276,
+        "pressed_rms_dbfs": -40.028347852,
+        "late_unpressed_rms_dbfs": -41.912613005,
+        "returned_minus_earlier_db": 0.03755027,
+        "released_relative_to_held_db": -40.036409129,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Marcato Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -27.763068338,
+        "earlier_unpressed_rms_dbfs": -36.37230654,
+        "pressed_rms_dbfs": -34.31431248,
+        "late_unpressed_rms_dbfs": -36.289147094,
+        "returned_minus_earlier_db": 0.083159447,
+        "released_relative_to_held_db": -45.659875041,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Swell Strings",
+        "note_count": 1,
+        "lowest_played_note": 48,
+        "peak_dbfs": -24.040497281,
+        "earlier_unpressed_rms_dbfs": -53.80436827,
+        "pressed_rms_dbfs": -36.447775692,
+        "late_unpressed_rms_dbfs": -54.337967639,
+        "returned_minus_earlier_db": -0.533599369,
+        "released_relative_to_held_db": -27.87876089,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Swell Strings",
+        "note_count": 1,
+        "lowest_played_note": 84,
+        "peak_dbfs": -20.906382863,
+        "earlier_unpressed_rms_dbfs": -54.433249695,
+        "pressed_rms_dbfs": -32.387624348,
+        "late_unpressed_rms_dbfs": -54.238867432,
+        "returned_minus_earlier_db": 0.194382263,
+        "released_relative_to_held_db": -27.977861097,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Chamber Strings",
+        "note_count": 8,
+        "lowest_played_note": 48,
+        "peak_dbfs": -14.055218564,
+        "earlier_unpressed_rms_dbfs": -28.712529716,
+        "pressed_rms_dbfs": -27.483954047,
+        "late_unpressed_rms_dbfs": -29.733663636,
+        "returned_minus_earlier_db": -1.02113392,
+        "released_relative_to_held_db": -73.12045107,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Slow Strings",
+        "note_count": 8,
+        "lowest_played_note": 48,
+        "peak_dbfs": -12.216273487,
+        "earlier_unpressed_rms_dbfs": -27.511819606,
+        "pressed_rms_dbfs": -25.608666409,
+        "late_unpressed_rms_dbfs": -27.22926742,
+        "returned_minus_earlier_db": 0.282552186,
+        "released_relative_to_held_db": -54.786871044,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Bowed Swell Strings",
+        "note_count": 8,
+        "lowest_played_note": 48,
+        "peak_dbfs": -14.505898243,
+        "earlier_unpressed_rms_dbfs": -30.877683981,
+        "pressed_rms_dbfs": -26.306937115,
+        "late_unpressed_rms_dbfs": -31.906017026,
+        "returned_minus_earlier_db": -1.028333045,
+        "released_relative_to_held_db": -50.104866946,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Tutti Strings",
+        "note_count": 8,
+        "lowest_played_note": 48,
+        "peak_dbfs": -11.955853047,
+        "earlier_unpressed_rms_dbfs": -26.225545781,
+        "pressed_rms_dbfs": -24.384894647,
+        "late_unpressed_rms_dbfs": -26.935104203,
+        "returned_minus_earlier_db": -0.709558422,
+        "released_relative_to_held_db": -54.997139864,
+        "final_active": 0,
+        "final_held": 0
+      }
+    ],
+    "repeated_strokes": [
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 1,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -43.216573699,
+        "firm_rms_dbfs": -34.815577992,
+        "contrast_db": 8.400995707
+      },
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 2,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -42.909320993,
+        "firm_rms_dbfs": -34.764928199,
+        "contrast_db": 8.144392793
+      },
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 3,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -43.258880117,
+        "firm_rms_dbfs": -34.858991102,
+        "contrast_db": 8.399889016
+      },
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 4,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -43.065367784,
+        "firm_rms_dbfs": -34.845841132,
+        "contrast_db": 8.219526653
+      },
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 5,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -43.043687908,
+        "firm_rms_dbfs": -34.999505328,
+        "contrast_db": 8.04418258
+      },
+      {
+        "program": "Solo Violin",
+        "note": 60,
+        "pair": 6,
+        "peak_dbfs": -25.675756107,
+        "soft_rms_dbfs": -43.329877533,
+        "firm_rms_dbfs": -35.13980263,
+        "contrast_db": 8.190074903
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 1,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.386933956,
+        "firm_rms_dbfs": -34.568039518,
+        "contrast_db": 7.818894438
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 2,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.134274627,
+        "firm_rms_dbfs": -34.313816854,
+        "contrast_db": 7.820457772
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 3,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.149250899,
+        "firm_rms_dbfs": -34.295034522,
+        "contrast_db": 7.854216376
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 4,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.21928458,
+        "firm_rms_dbfs": -34.494423176,
+        "contrast_db": 7.724861404
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 5,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.12045437,
+        "firm_rms_dbfs": -34.336584248,
+        "contrast_db": 7.783870121
+      },
+      {
+        "program": "Solo Cello",
+        "note": 60,
+        "pair": 6,
+        "peak_dbfs": -27.081803184,
+        "soft_rms_dbfs": -42.309333332,
+        "firm_rms_dbfs": -34.307626371,
+        "contrast_db": 8.001706961
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 1,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -43.932959932,
+        "firm_rms_dbfs": -37.576659796,
+        "contrast_db": 6.356300136
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 2,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -43.806559514,
+        "firm_rms_dbfs": -37.067257796,
+        "contrast_db": 6.739301718
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 3,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -43.752194866,
+        "firm_rms_dbfs": -36.929717706,
+        "contrast_db": 6.82247716
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 4,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -44.047102798,
+        "firm_rms_dbfs": -37.112332747,
+        "contrast_db": 6.934770052
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 5,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -43.932692051,
+        "firm_rms_dbfs": -37.574820865,
+        "contrast_db": 6.357871186
+      },
+      {
+        "program": "Spiccato Strings",
+        "note": 60,
+        "pair": 6,
+        "peak_dbfs": -28.958104112,
+        "soft_rms_dbfs": -43.809863523,
+        "firm_rms_dbfs": -37.074594351,
+        "contrast_db": 6.735269172
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 1,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -44.531789065,
+        "firm_rms_dbfs": -33.383840613,
+        "contrast_db": 11.147948452
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 2,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -43.280567895,
+        "firm_rms_dbfs": -34.095806628,
+        "contrast_db": 9.184761267
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 3,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -42.632007233,
+        "firm_rms_dbfs": -34.994979476,
+        "contrast_db": 7.637027757
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 4,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -41.191742009,
+        "firm_rms_dbfs": -36.002679177,
+        "contrast_db": 5.189062832
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 5,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -43.006033733,
+        "firm_rms_dbfs": -33.673237417,
+        "contrast_db": 9.332796316
+      },
+      {
+        "program": "Marcato Strings",
+        "note": 60,
+        "pair": 6,
+        "peak_dbfs": -27.075417351,
+        "soft_rms_dbfs": -41.685824932,
+        "firm_rms_dbfs": -33.896744428,
+        "contrast_db": 7.789080504
+      }
+    ],
+    "overlapping_lines": [
+      {
+        "program": "Solo Violin",
+        "first_note": 55,
+        "peak_dbfs": -21.831788967,
+        "minimum_step_rms_dbfs": -36.945986698,
+        "maximum_step_rms_dbfs": -35.543737411,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Solo Cello",
+        "first_note": 55,
+        "peak_dbfs": -23.319348384,
+        "minimum_step_rms_dbfs": -36.039006523,
+        "maximum_step_rms_dbfs": -34.346732269,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Spiccato Strings",
+        "first_note": 55,
+        "peak_dbfs": -28.885618563,
+        "minimum_step_rms_dbfs": -42.924076131,
+        "maximum_step_rms_dbfs": -40.964916021,
+        "final_active": 0,
+        "final_held": 0
+      },
+      {
+        "program": "Marcato Strings",
+        "first_note": 55,
+        "peak_dbfs": -24.684647214,
+        "minimum_step_rms_dbfs": -40.538100504,
+        "maximum_step_rms_dbfs": -35.193605235,
+        "final_active": 0,
+        "final_held": 0
+      }
+    ]
+  },
+  "causal_followup": {
+    "checks": 69,
+    "failures": 0,
+    "renders": 12,
+    "stereo_frames": 3175200,
+    "max_peak_dbfs": -30.454436454,
+    "exit_code": 0,
+    "floors": [
+      {
+        "program": "Bowed Swell Strings",
+        "chorus_only_bypass": false,
+        "released_rms_dbfs": -82.335425972,
+        "never_played_rms_dbfs": -82.335425972,
+        "released_minus_idle_db": -0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      },
+      {
+        "program": "Bowed Swell Strings",
+        "chorus_only_bypass": true,
+        "released_rms_dbfs": -102.982587559,
+        "never_played_rms_dbfs": -102.982587559,
+        "released_minus_idle_db": 0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      },
+      {
+        "program": "Swell Strings",
+        "chorus_only_bypass": false,
+        "released_rms_dbfs": -82.130445612,
+        "never_played_rms_dbfs": -82.130445612,
+        "released_minus_idle_db": 0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      },
+      {
+        "program": "Swell Strings",
+        "chorus_only_bypass": true,
+        "released_rms_dbfs": -102.982587559,
+        "never_played_rms_dbfs": -102.982587559,
+        "released_minus_idle_db": 0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      },
+      {
+        "program": "Marcato Strings",
+        "chorus_only_bypass": false,
+        "released_rms_dbfs": -82.033736379,
+        "never_played_rms_dbfs": -82.033736379,
+        "released_minus_idle_db": 0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      },
+      {
+        "program": "Marcato Strings",
+        "chorus_only_bypass": true,
+        "released_rms_dbfs": -102.982587559,
+        "never_played_rms_dbfs": -102.982587559,
+        "released_minus_idle_db": 0.0,
+        "released_final_active": 0,
+        "idle_final_active": 0
+      }
+    ],
+    "chorus_bypass": [
+      {
+        "program": "Bowed Swell Strings",
+        "chorus_only_bypass_minus_factory_floor_db": -20.647161587
+      },
+      {
+        "program": "Swell Strings",
+        "chorus_only_bypass_minus_factory_floor_db": -20.852141947
+      },
+      {
+        "program": "Marcato Strings",
+        "chorus_only_bypass_minus_factory_floor_db": -20.94885118
+      }
+    ],
+    "bbd_source_identical_to_baseline": true,
+    "unchanged_factory_floor_controls": [
+      {
+        "program": "Bowed Swell Strings",
+        "baseline_equals_current": true,
+        "values": {
+          "chorus_on": 1,
+          "chorus_speed": 0.230000004,
+          "chorus_depth": 0.330000013,
+          "chorus_mode": 0,
+          "analog_noise": 0.0120000001,
+          "volume": 1
+        }
+      },
+      {
+        "program": "Swell Strings",
+        "baseline_equals_current": true,
+        "values": {
+          "chorus_on": 1,
+          "chorus_speed": 0.25999999,
+          "chorus_depth": 0.300000012,
+          "chorus_mode": 0,
+          "analog_noise": 0.0120000001,
+          "volume": 1
+        }
+      },
+      {
+        "program": "Marcato Strings",
+        "baseline_equals_current": true,
+        "values": {
+          "chorus_on": 1,
+          "chorus_speed": 0.349999994,
+          "chorus_depth": 0.140000001,
+          "chorus_mode": 0,
+          "analog_noise": 0.0120000001,
+          "volume": 1
+        }
+      }
+    ],
+    "conclusion": "Five retained initial release-floor assertions are explained by the existing chorus output floor. Every affected released output equals its independent never-played floor at the reported precision; all voices are retired. No production DSP, preset or threshold was modified."
+  },
+  "selected_recipe_changes": [
+    {
+      "name": "Bowed Swell Strings",
+      "host_index": 273,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.550000012,
+          "after": 0.200000003
+        },
+        "ch1_init_level": {
+          "before": 0.219999999,
+          "after": 0.439999998
+        },
+        "ch1_after_level": {
+          "before": 0.219999999,
+          "after": 0.460000008
+        },
+        "ch2_v_level": {
+          "before": 0.5,
+          "after": 0.150000006
+        },
+        "ch2_init_level": {
+          "before": 0.180000007,
+          "after": 0.379999995
+        },
+        "ch2_after_level": {
+          "before": 0.180000007,
+          "after": 0.379999995
+        }
+      }
+    },
+    {
+      "name": "Chamber Strings",
+      "host_index": 267,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.550000012,
+          "after": 0.170000002
+        },
+        "ch1_init_level": {
+          "before": 0.340000004,
+          "after": 0.779999971
+        },
+        "ch1_after_level": {
+          "before": 0.219999999,
+          "after": 0.270000011
+        },
+        "ch2_v_level": {
+          "before": 0.400000006,
+          "after": 0.119999997
+        },
+        "ch2_init_level": {
+          "before": 0.239999995,
+          "after": 0.699999988
+        },
+        "ch2_after_level": {
+          "before": 0.180000007,
+          "after": 0.239999995
+        }
+      }
+    },
+    {
+      "name": "Marcato Strings",
+      "host_index": 280,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "mix": {
+          "before": 0.219999999,
+          "after": 0.100000001
+        },
+        "ch1_hpf_cutoff": {
+          "before": 70,
+          "after": 20
+        },
+        "ch1_v_level": {
+          "before": 0.370000005,
+          "after": 0.100000001
+        },
+        "ch1_init_level": {
+          "before": 1,
+          "after": 0.949999988
+        },
+        "ch1_after_level": {
+          "before": 0.159999996,
+          "after": 0.230000004
+        },
+        "ch2_v_level": {
+          "before": 0.239999995,
+          "after": 0.0549999997
+        },
+        "ch2_init_level": {
+          "before": 0.949999988,
+          "after": 0.980000019
+        },
+        "ch2_after_level": {
+          "before": 0.0799999982,
+          "after": 0.100000001
+        }
+      }
+    },
+    {
+      "name": "Slow Strings",
+      "host_index": 255,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.550000012,
+          "after": 0.239999995
+        },
+        "ch1_init_level": {
+          "before": 0.340000004,
+          "after": 0.579999983
+        },
+        "ch1_after_level": {
+          "before": 0.219999999,
+          "after": 0.280000001
+        },
+        "ch2_v_level": {
+          "before": 0.5,
+          "after": 0.180000007
+        },
+        "ch2_init_level": {
+          "before": 0.280000001,
+          "after": 0.519999981
+        },
+        "ch2_after_level": {
+          "before": 0.180000007,
+          "after": 0.239999995
+        }
+      }
+    },
+    {
+      "name": "Solo Cello",
+      "host_index": 264,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.449999988,
+          "after": 0.109999999
+        },
+        "ch1_init_level": {
+          "before": 0.600000024,
+          "after": 0.860000014
+        },
+        "ch1_after_level": {
+          "before": 0.300000012,
+          "after": 0.400000006
+        },
+        "ch2_v_level": {
+          "before": 0.25,
+          "after": 0.0450000018
+        },
+        "ch2_init_level": {
+          "before": 0.899999976,
+          "after": 0.939999998
+        }
+      }
+    },
+    {
+      "name": "Solo Violin",
+      "host_index": 263,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.439999998,
+          "after": 0.0949999988
+        },
+        "ch1_init_level": {
+          "before": 0.639999986,
+          "after": 0.879999995
+        },
+        "ch1_after_level": {
+          "before": 0.280000001,
+          "after": 0.379999995
+        },
+        "ch2_v_level": {
+          "before": 0.239999995,
+          "after": 0.0350000001
+        },
+        "ch2_init_level": {
+          "before": 0.899999976,
+          "after": 0.970000029
+        }
+      }
+    },
+    {
+      "name": "Spiccato Strings",
+      "host_index": 272,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "mix": {
+          "before": 0.140000001,
+          "after": 0.0500000007
+        },
+        "ch1_hpf_cutoff": {
+          "before": 75,
+          "after": 20
+        },
+        "ch1_v_d": {
+          "before": 0.300000012,
+          "after": 0.649999976
+        },
+        "ch1_v_level": {
+          "before": 1,
+          "after": 0.200000003
+        },
+        "ch2_v_level": {
+          "before": 0.899999976,
+          "after": 0.0350000001
+        }
+      }
+    },
+    {
+      "name": "Swell Strings",
+      "host_index": 266,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.275000006,
+          "after": 0.150000006
+        },
+        "ch1_after_level": {
+          "before": 0.8125,
+          "after": 0.899999976
+        },
+        "ch2_v_level": {
+          "before": 0.200000003,
+          "after": 0.100000001
+        },
+        "ch2_after_level": {
+          "before": 0.6875,
+          "after": 0.800000012
+        }
+      }
+    },
+    {
+      "name": "Tutti Strings",
+      "host_index": 279,
+      "identity_unchanged": true,
+      "changed_existing_nonvolume_controls": {
+        "ch1_v_level": {
+          "before": 0.75,
+          "after": 0.170000002
+        },
+        "ch1_init_level": {
+          "before": 0.319999993,
+          "after": 0.819999993
+        },
+        "ch1_after_level": {
+          "before": 0.140000001,
+          "after": 0.25999999
+        },
+        "ch2_v_level": {
+          "before": 0.620000005,
+          "after": 0.119999997
+        },
+        "ch2_init_level": {
+          "before": 0.360000014,
+          "after": 0.850000024
+        },
+        "ch2_after_level": {
+          "before": 0.119999997,
+          "after": 0.239999995
+        }
+      }
+    }
+  ],
+  "source_files": [
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/curated/Strings.inc",
+      "sha256": "0c36b00a0e3e430fbe32a1e399eabc1003d55eb02c6d94208afc5f6effeb5b17",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/BodyArticulation.h",
+      "sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+      "equals_pinned_source": true
+    },
+    {
+      "path": "src/core/BbdChorus.h",
+      "sha256": "380733392e63e8ae9b183ad6816f9f626702824875928a9ef689321a25f4d0f2",
+      "equals_pinned_source": true
+    }
+  ],
+  "inputs_and_probes": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "bytes": 708553,
+      "sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/baseline/inventory.json",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/local-core-artifacts.json",
+      "bytes": 478,
+      "sha256": "b5bd764b9682d83d2c147277b7b7b0e6b7c97a0d5b2018bd1102aa6727995e65"
+    },
+    {
+      "path": "build-preset/libcs80_core.a",
+      "bytes": 1691342,
+      "sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a39-string-floor-probe.cpp",
+      "bytes": 2389,
+      "sha256": "c98e74c4f0755a354040e222de9c51793cf158f37cc60fd7a69e28d15f523db9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a39-string-lifetime-probe.cpp",
+      "bytes": 9228,
+      "sha256": "255c24ad2b7a0be6150ba0defa5ff603294c9d3469890516a3a129ab17208373"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a39-string-floor-probe.log",
+      "bytes": 643,
+      "sha256": "ddc3654bad355ff40c855f1abb9e6362aac2164d7d2a70a3b8cc89475628947f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a39-string-lifetime-probe.log",
+      "bytes": 4928,
+      "sha256": "f178e9c23648abbcc2fff58998ce0ee8cf9f818e9cba02d2e09f08972b86f5ae"
+    },
+    {
+      "path": "/workspace/scratch/c98fb40a9529/a39-string-review/probe",
+      "bytes": 1120936,
+      "sha256": "cb9a7f44b2bbd70a42df376f3407f8af658589863575a44ceaf82be3c35c611e",
+      "retained_in_repository": false
+    },
+    {
+      "path": "/workspace/scratch/c98fb40a9529/a39-string-review/floor-probe",
+      "bytes": 1125200,
+      "sha256": "01305c0d92757ae188764187b8ab2d1e4ae2ab93962b5ffb712bac4a8ce5c3ea",
+      "retained_in_repository": false
+    }
+  ]
+}

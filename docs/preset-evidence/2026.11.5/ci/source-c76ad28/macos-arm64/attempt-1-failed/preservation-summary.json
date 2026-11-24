@@ -1,0 +1,204 @@
+{
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "run_id": 45351731801,
+  "attempt": 1,
+  "producer_job_id": 138299557178,
+  "job_conclusion": "failure",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "actual_artifacts_preserved": [
+    {
+      "artifact": {
+        "id": 14903471382,
+        "name": "cs80-macos-15-test-evidence",
+        "size_in_bytes": 80433,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14903471382",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14903471382/zip",
+        "expired": false,
+        "created_at": "2026-11-24T08:37:23Z",
+        "expires_at": "2027-02-22T07:55:18Z",
+        "updated_at": "2026-11-24T08:37:23Z",
+        "digest": "sha256:6900bb29e3d926d53802f9ebced7ebe0c0925cd67e26d29fe379ddc1ffb3f9ba",
+        "workflow_run": {
+          "id": 45351731801,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793"
+        }
+      },
+      "original_zip": {
+        "path": "/workspace/scratch/c98fb40a9529/ci-c76-macos-arm64-downloads/attempt-1-failed/test-evidence.zip",
+        "bytes": 80433,
+        "sha256": "6900bb29e3d926d53802f9ebced7ebe0c0925cd67e26d29fe379ddc1ffb3f9ba"
+      },
+      "lossless_preservation": {
+        "path": "test-evidence.zip.base64",
+        "bytes": 108656,
+        "sha256": "4bfa1cd04a2e109f07371e1380c227afc26951b38556eb7ec3a639339a646921",
+        "decoded_bytes_verified": true
+      },
+      "original_upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T08:37:22Z",
+        "completed_at": "2026-11-24T08:37:23Z"
+      },
+      "logged_upload_at": "2026-11-24T08:37:23.7600590Z",
+      "original_upload_attempt_bound": true,
+      "all_members": {
+        "archive": "test-evidence.zip",
+        "bytes": 80433,
+        "sha256": "6900bb29e3d926d53802f9ebced7ebe0c0925cd67e26d29fe379ddc1ffb3f9ba",
+        "members": [
+          {
+            "path": "ctest-results.xml",
+            "type": "file",
+            "bytes": 127602,
+            "sha256": "568a9cbc65bcdeb1fb352a2d2bc5e1891fa8e22e88373a89e824f04bd0b88330",
+            "crc32": "91425cd0",
+            "mode": "0o100644"
+          },
+          {
+            "path": "Testing/Temporary/LastTest.log",
+            "type": "file",
+            "bytes": 368123,
+            "sha256": "c41ef1f979a337f86726e93c255bd3629d6b7028754c53eead9e83550507eea3",
+            "crc32": "ecbf958f",
+            "mode": "0o100644"
+          },
+          {
+            "path": "ci-juce-provenance.txt",
+            "type": "file",
+            "bytes": 612,
+            "sha256": "ede63e174fe9d1a8a3f385e6d2704634cc9791a5c7eb2a2ea162d805c5f6a1f0",
+            "crc32": "848d18a9",
+            "mode": "0o100644"
+          }
+        ],
+        "all_member_bytes_crc_and_hashes_checked": true
+      }
+    },
+    {
+      "artifact": {
+        "id": 14903346660,
+        "name": "cs80-pluginval-macos-15",
+        "size_in_bytes": 6433,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14903346660",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14903346660/zip",
+        "expired": false,
+        "created_at": "2026-11-24T08:37:22Z",
+        "expires_at": "2027-02-22T07:55:18Z",
+        "updated_at": "2026-11-24T08:37:22Z",
+        "digest": "sha256:2c88144dbabd2d437795f2c75365704e7e82d58ffc7896716f7898d6bc21bd85",
+        "workflow_run": {
+          "id": 45351731801,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "c76ad288e02fbeca48f39652bf4fcdd99837f793"
+        }
+      },
+      "original_zip": {
+        "path": "/workspace/scratch/c98fb40a9529/ci-c76-macos-arm64-downloads/attempt-1-failed/pluginval.zip",
+        "bytes": 6433,
+        "sha256": "2c88144dbabd2d437795f2c75365704e7e82d58ffc7896716f7898d6bc21bd85"
+      },
+      "lossless_preservation": {
+        "path": "pluginval.zip.base64",
+        "bytes": 8693,
+        "sha256": "357333176506cbb32d15de7598c32279b5fcc50e69bd6b80eb4b54628265fa30",
+        "decoded_bytes_verified": true
+      },
+      "original_upload_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18,
+        "started_at": "2026-11-24T08:37:20Z",
+        "completed_at": "2026-11-24T08:37:22Z"
+      },
+      "logged_upload_at": "2026-11-24T08:37:22.1742240Z",
+      "original_upload_attempt_bound": true,
+      "all_members": {
+        "archive": "pluginval.zip",
+        "bytes": 6433,
+        "sha256": "2c88144dbabd2d437795f2c75365704e7e82d58ffc7896716f7898d6bc21bd85",
+        "members": [
+          {
+            "path": "au-payload-before-validation.sha256",
+            "type": "file",
+            "bytes": 378,
+            "sha256": "bda2485d27194eb881329a29a55071984e1cedb42eadd3ab5474e93e77181d1f",
+            "crc32": "454eaa94",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-download.json",
+            "type": "file",
+            "bytes": 694,
+            "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+            "crc32": "77c5a213",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-reports/cs80-au-gui",
+            "type": "file",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "crc32": "00000000",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-reports/cs80-au",
+            "type": "file",
+            "bytes": 7214,
+            "sha256": "01e89120ab5e2e6f428637b3ad0b828616890e6a9b94d513400ac6b5f16ce4ad",
+            "crc32": "1003ad69",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-reports/cs80-vst3",
+            "type": "file",
+            "bytes": 7272,
+            "sha256": "e295f7c4822bc6f21d2c19c5cf94ba097570117eb574ec12f3343be5909f4fb2",
+            "crc32": "0b50bf06",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-vst3.log",
+            "type": "file",
+            "bytes": 7399,
+            "sha256": "baa40b268f0eee63e8dcd233835a6258a1122408b934182f8e4d3ca772879338",
+            "crc32": "b143435a",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-au.log",
+            "type": "file",
+            "bytes": 7308,
+            "sha256": "b1bb51a93e7fe5c9175cda7b046cd1f853b746f0db3895ade4667d608bfa03e1",
+            "crc32": "7cbe8de0",
+            "mode": "0o100644"
+          },
+          {
+            "path": "pluginval-au-gui.log",
+            "type": "file",
+            "bytes": 5862,
+            "sha256": "61bc1e30441e90e24408f38de6656478ef2ab4897f0730928ab9ba836768b741",
+            "crc32": "db2c30e1",
+            "mode": "0o100644"
+          }
+        ],
+        "all_member_bytes_crc_and_hashes_checked": true
+      }
+    }
+  ],
+  "original_producer_log": {
+    "bytes": 222996,
+    "sha256": "fd381feec6c18ace447722f1e9da1d0917d45a0f80070e0d95edb8b31af05c9a"
+  },
+  "scope": "Exact original failed attempt archives, API receipts, every member and upload bindings preserved before any same-name artifact replacement; not platform acceptance."
+}

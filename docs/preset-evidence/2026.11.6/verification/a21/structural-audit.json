@@ -1,0 +1,767 @@
+{
+  "program_count": 50,
+  "body_enabled": 20,
+  "programs": [
+    {
+      "name": "Dry Bass",
+      "host_index": 33,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Resonant Bass",
+      "host_index": 34,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Bass Stack",
+      "host_index": 35,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Amber Bass 75",
+      "host_index": 118,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.5
+        }
+      ]
+    },
+    {
+      "name": "Velvet Bass 76",
+      "host_index": 119,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 6,
+          "mix": 0.519999981
+        }
+      ]
+    },
+    {
+      "name": "Distant Bass 77",
+      "host_index": 120,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.370000005
+        }
+      ]
+    },
+    {
+      "name": "Neon Bass 78",
+      "host_index": 121,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Hollow Bass 79",
+      "host_index": 122,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Golden Bass 80",
+      "host_index": 123,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_noise",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "mix": 0.680000007
+        }
+      ]
+    },
+    {
+      "name": "Frozen Bass 81",
+      "host_index": 124,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_lpf_cutoff",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Electric Bass 82",
+      "host_index": 125,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "mix",
+        "ch1_sine",
+        "ch1_hpf_cutoff",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_decay"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.629999995
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "mix": 0.360000014
+        }
+      ]
+    },
+    {
+      "name": "Midnight Bass 83",
+      "host_index": 126,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_lpf_cutoff",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_lpf_cutoff",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_v_d",
+        "ch2_v_r",
+        "kbd_brilliance_high"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Slow Bass 84",
+      "host_index": 127,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.949999988
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "mix": 0.479999989
+        }
+      ]
+    },
+    {
+      "name": "Bright Bass 85",
+      "host_index": 128,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Dark Bass 86",
+      "host_index": 129,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Wide Bass 87",
+      "host_index": 130,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch1_pan",
+        "ch2_f_al",
+        "ch2_v_level",
+        "ch2_pan"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Soft Bass 88",
+      "host_index": 131,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.5
+        }
+      ]
+    },
+    {
+      "name": "Amber Bass 89",
+      "host_index": 132,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 2,
+          "model": 14,
+          "mix": 0.620000005
+        }
+      ]
+    },
+    {
+      "name": "Velvet Bass 90",
+      "host_index": 133,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_lpf_cutoff",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch2_lpf_cutoff",
+        "ch2_f_r",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "kbd_brilliance_high"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Distant Bass 91",
+      "host_index": 134,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 8,
+          "mix": 0.600000024
+        }
+      ]
+    },
+    {
+      "name": "Neon Bass 92",
+      "host_index": 135,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Hollow Bass 93",
+      "host_index": 136,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Golden Bass 94",
+      "host_index": 137,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Frozen Bass 95",
+      "host_index": 138,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.280000001
+        }
+      ]
+    },
+    {
+      "name": "Electric Bass 96",
+      "host_index": 139,
+      "collection": "original",
+      "changed_prior_non_volume_controls": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Analog Bass",
+      "host_index": 404,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Resonance Bass",
+      "host_index": 405,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Sine Bass",
+      "host_index": 406,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Sub Bass",
+      "host_index": 407,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Pluck Bass",
+      "host_index": 408,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.949999988
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "mix": 0.479999989
+        }
+      ]
+    },
+    {
+      "name": "Fretless Glide",
+      "host_index": 409,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 8,
+          "mix": 0.600000024
+        }
+      ]
+    },
+    {
+      "name": "Funk Bass",
+      "host_index": 410,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "mix",
+        "ch1_sine",
+        "ch1_hpf_cutoff",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_decay"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.629999995
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "mix": 0.360000014
+        }
+      ]
+    },
+    {
+      "name": "Brass Bass",
+      "host_index": 411,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 2,
+          "model": 14,
+          "mix": 0.620000005
+        }
+      ]
+    },
+    {
+      "name": "Octave Bass",
+      "host_index": 412,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Pulse Bass",
+      "host_index": 413,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Round Bass",
+      "host_index": 414,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.5
+        }
+      ]
+    },
+    {
+      "name": "Velocity Bass",
+      "host_index": 415,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Rubber Bass",
+      "host_index": 416,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.280000001
+        }
+      ]
+    },
+    {
+      "name": "Dark Bass",
+      "host_index": 417,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.370000005
+        }
+      ]
+    },
+    {
+      "name": "Bright Bass",
+      "host_index": 418,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Picked Bass",
+      "host_index": 419,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_noise",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "mix": 0.680000007
+        }
+      ]
+    },
+    {
+      "name": "Upright Pluck",
+      "host_index": 420,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 6,
+          "mix": 0.519999981
+        }
+      ]
+    },
+    {
+      "name": "Fifth Bass",
+      "host_index": 421,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Pedal Bass",
+      "host_index": 422,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_a",
+        "ch1_v_r",
+        "ch2_v_a",
+        "ch2_v_r"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Squelch Bass",
+      "host_index": 423,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Ring Bass",
+      "host_index": 424,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Sub Wobble Bass",
+      "host_index": 425,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Pressure Bass",
+      "host_index": 426,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 8,
+          "mix": 0.280000001
+        }
+      ]
+    },
+    {
+      "name": "Contour Bass",
+      "host_index": 427,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    },
+    {
+      "name": "Drive Bass",
+      "host_index": 519,
+      "collection": "curated",
+      "changed_prior_non_volume_controls": [
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_r",
+        "ch2_v_level"
+      ],
+      "active_bodies": []
+    }
+  ]
+}

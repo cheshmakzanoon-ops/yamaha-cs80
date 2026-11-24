@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-24T10:26:29Z",
+  "status": "pending_original_native_test_and_artifacts",
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "run_id": 45366603800,
+  "run_attempt": 1,
+  "producer_job_id": 138349817061,
+  "target": "macos-x86_64",
+  "producer_status": "in_progress",
+  "producer_conclusion": null,
+  "current_step": {
+    "name": "Test",
+    "status": "in_progress",
+    "conclusion": null,
+    "number": 7,
+    "started_at": "2026-11-24T09:50:55Z",
+    "completed_at": null
+  },
+  "actual_intel_artifacts": [],
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "next_action": "After original producer completion, re-fetch authentic final run/jobs/artifacts, original job log, and actual three Intel ZIPs; qualify without substituting another target or rerun.",
+  "preparation_contract": {
+    "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-x86_64/preparation-contract.json",
+    "bytes": 16086,
+    "sha256": "765de569f783f4b4ddcc895380c04344b93c81eb3a187dfa9818afc4fb4cf7b1"
+  }
+}

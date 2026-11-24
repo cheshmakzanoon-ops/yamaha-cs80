@@ -64,7 +64,7 @@ decays while the key is held. Mixed circuit ranks keep zero sustain unless the
 existing voice deliberately includes a held bed. Short key release is separate
 from held-body decay.
 
-At MIDI 60, using identical 25% and 85% velocity gestures, the current
+At MIDI 60, using identical 25% and 85% velocity gestures, the earlier
 uncalibrated development captures show:
 
 | Existing voice | Previous soft-to-firm range | Revised range | Previous late body relative to onset | Revised late body |
@@ -147,8 +147,10 @@ and retain their own instrument-aware finishes and program identities.
 Wind, Rain, Surf and Thunder no longer share a generic periodic amplitude
 shape. Wind uses independent smooth random gusts; Surf separates its surge,
 spray and draining foam; Thunder separates a broadband crack and an irregular
-low roll. Rain's measured maximum two-millisecond modulation jump falls from
-1.1204 to 0.0407 dB. Clockwork retriggers short decaying ticks, retaining its
+low roll. In A18's 2.5-second fixture (analysis from 0.2 to 2.5 seconds), Rain's maximum
+two-millisecond modulation jump falls from 1.1204 to 0.0407 dB. A44's longer
+0.2–36-second analysis measures 0.060951 dB; these are window-specific
+observations, not a universal bound. Clockwork retriggers short decaying ticks, retaining its
 deliberate clock rate. Named mechanical, alarm, siren and helicopter effects
 keep their intentional periodic character.
 
@@ -202,7 +204,10 @@ circuit-only excitation, including the two Init programs.
 
 The complete level audit passes all **301 curated plus 222 original** programs.
 Its loudest-window RMS spans **−29.9 to −18.0 dBFS**, maximum phrase peak is
-**−4.5 dBFS**, and maximum eight-note stress peak is **−1.5 dBFS** (rounded).
+**−6.2 dBFS**, and the maximum eight-note stress peak in its nominal
+one-second, 44.1 kHz audit window is **−1.5 dBFS** (rounded), at full velocity
+and pressure. This bank-wide short-window result is separate from the two
+12-second upper-chord measurements below.
 The first integrated audit found 17 voices below the existing −30 dBFS floor;
 their corrected body, rank and playing-effort balances pass without changing
 the acceptance thresholds. The initial failure log is retained. Eight affected
@@ -215,7 +220,7 @@ family/cross-bank suites pass again after the fixes; the preceding complete
 [Brass/string corrections](preset-evidence/2026.11.5/reviews/a31.md) ·
 [Bass/metallic-key corrections](preset-evidence/2026.11.5/reviews/a32.md)
 
-All 523 programs have also been captured at exactly the preceding bank's
+At source `6094bce`, all 523 programs were captured at exactly the preceding bank's
 note, sample rate, velocity, pressure, hold and release conditions. The capture
 executable stayed unchanged across all 40 condition groups. Those local
 development renders and their metrics are separate from the clean-source
@@ -223,9 +228,106 @@ development renders and their metrics are separate from the clean-source
 [Matched-condition metrics](preset-evidence/2026.11.5/development/all-program-metrics.csv) ·
 [Capture conditions and executable hash](preset-evidence/2026.11.5/development/matched-capture-manifest.json)
 
+
+The independent comparison inspected **103,153,374 stereo frames per version**
+(35 minutes 49.028625 seconds), with finite samples within full-scale bounds
+throughout. Both
+initialization programs retain exactly the same PCM. All 519 musical programs
+audible at zero pressure have changed PCM. Pressure Lead and Electric Leads
+136 are intentionally silent without pressure; matched pressure-one supplements
+are audible and changed, accounting for all 521 musical programs.
+
+After equal-RMS normalization, 516 of the 519 audible main captures have a
+residual above 0.001; the two pressure supplements also exceed that descriptive
+threshold. These measurements identify changed signals, not better sound.
+Noise Pad, Ether Pad and Sub Bass are close to gain-only changes at the single
+main-capture velocity. Their independently measured soft-to-firm contrasts
+change from 3.095 to 6.915 dB, 2.650 to 6.821 dB and 7.455 to 9.381 dB,
+respectively. A same-engine comparison with a common master setting reproduces
+those contrasts within 0.00000002 dB, separating the playing-response changes
+from output-trim calibration.
+[Complete PCM and playing-response review](preset-evidence/2026.11.5/reviews/a33.md) ·
+[Per-program observations](preset-evidence/2026.11.5/verification/a33-matched-bank-audio.json)
+
+
+### Corrections after the first native build
+
+The first native run at `6094bce` failed to compile the host-test executable on
+all four targets. Three new assertions called JUCE choice overrides through a
+class where those methods are private. Source
+[`09af535`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/09af5358d34a7ea431de7e8a42e35dae66e52159)
+uses the existing public ranged-parameter interface. The same assertions and
+expected values remain. An isolated check against the pinned JUCE headers
+reproduces the old access errors and compiles the corrected expressions; it is
+not a substitute for the fresh native matrix.
+[Original failed native run](preset-evidence/2026.11.5/ci/source-6094bce/run-final-api.json) ·
+[Public-interface compilation check](preset-evidence/2026.11.5/development/host-choice-access/results.json)
+
+The longer pad review also found narrow margin after a slow chord's complete
+bloom. Cathedral Pad and Golden Pads 66 now have output trims of 0.650. Their
+12-second dense upper chords peak at **−1.789 and −1.688 dBFS**, respectively,
+while their unchanged audit phrases reach **−20.461 and −20.374 dBFS** RMS.
+Their body, envelope and controller parameters are unchanged. The calibration
+routine preserves both measured ceilings. A musical regression rejects both
+preceding trims; the complete revised pad/poly suite passes **315 checks**.
+[Independent long-chord review](preset-evidence/2026.11.5/reviews/a40.md) ·
+[Original failed headroom regression](preset-evidence/2026.11.5/development/long-pad-headroom/before.log) ·
+[Corrected complete pad suite](preset-evidence/2026.11.5/development/long-pad-headroom/after-complete-pad-suite.log)
+
+Those are the only two factory control values changed after the complete
+6094bce PCM comparison. All other 523-by-202 values and identities were checked,
+and every core object except the preset-data object is byte-identical. New
+matched captures of both corrected pads remain changed from the preceding
+published library. The final accounting combines those two captures with the
+unchanged inputs/core objects for the other 521 entries; it does not relabel
+all older captures as fresh final-executable renders.
+[Final bank audio accounting](preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json)
+
+### Capture metadata contract correction
+
+The original 09af supporting numerical job passed its numerical regression
+bounds, then failed three of thirteen capture-metadata tests because the
+fixture still expected 200 controls. The completed db6b Apple Silicon native
+suite independently reported the same capture test as its only failed CTest
+among 266 registrations. These original failures remain in the evidence;
+neither run qualifies the replacement packages.
+
+Source `c76ad288e02fbeca48f39652bf4fcdd99837f793` changes only
+`tests/test_parity_capture.py` from db6b. The explicit block sum now includes
+the two appended controls, and both variant IDs must retain Standard defaults
+in the fixed and live fixtures. Twelve additional mutation cases reject
+missing, renamed, nonstandard or coherently stale exports. All thirteen test
+methods pass locally. No production DSP, recipe, parameter definition, event
+requirement, waveform bound or numerical tolerance changed.
+[Original supporting failure](preset-evidence/2026.11.5/ci/source-09af535/measure-failed-original.log) ·
+[Original Apple Silicon failure](preset-evidence/2026.11.5/ci/source-db6b5a7/macos-arm64-test-failed-original.log) ·
+[Correction and sibling-contract review](preset-evidence/2026.11.5/reviews/a54.md)
+
+### Original Apple Silicon GUI validation failure
+
+The first c76 Apple Silicon execution passed **264 of 266 native CTests**, with
+zero failures, two formal skips and five separately counted nested Python
+skips. All fifteen new preset/body/response cases and the corrected capture
+case passed. Its VST3 and headless AU validations completed at strictness 10.
+The subsequent AU GUI invocation, seed `0x3c99748`, aborted during Editor
+Automation with an `AppleParavirtCommandBuffer.mm` assertion and original
+process exit 9. The required fixed-seed GUI lane and installation packaging
+were skipped, so this attempt produced no accepted Apple Silicon installer.
+
+The exact two original archives, all eleven members and original upload/log
+records are retained. The graphics-path assertion does not by itself establish
+crash ownership. A replacement needs its own complete native, validator and
+payload qualification; a fresh random seed does not reproduce the failed
+seed. GitHub rejected the initial job-only rerun request because the other
+jobs in the workflow were still running. That response started no new attempt.
+[Original failed attempt](preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/failure-summary.json) ·
+[Exact original archive preservation](preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/preservation-summary.json) ·
+[Original rerun-request response](preset-evidence/2026.11.5/ci/source-c76ad28/rerun-request-while-running.json)
+
 Local implementation checks are recorded under
-[preset-evidence/2026.11.5](preset-evidence/2026.11.5/). The requested 60 distinct
-agent assignments are being carried out in batches of three workers; the
-[work log](preset-evidence/2026.11.5/work-log.json) records actual assignments.
-Native Windows x64, macOS arm64, macOS x86-64 and Linux x86-64 qualification,
-validator evidence, archive hashes and final download publication are pending.
+[preset-evidence/2026.11.5](preset-evidence/2026.11.5/). All requested **60 distinct
+agents have been assigned work**, in batches of at most three workers alongside
+the coordinator. The [work log](preset-evidence/2026.11.5/work-log.json) records
+actual assignments and outstanding qualification follow-ups. Native Windows
+x64, macOS arm64, macOS x86-64 and Linux x86-64 qualification, validator
+evidence, archive hashes and final download publication are pending.

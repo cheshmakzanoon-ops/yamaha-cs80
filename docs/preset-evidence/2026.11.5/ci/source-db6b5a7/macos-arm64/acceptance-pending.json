@@ -1,0 +1,81 @@
+{
+  "worker": "a50",
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "producer_job_id": 138282948529,
+  "target": "macos-arm64",
+  "observed_at_utc": "2026-11-24T07:45:37Z",
+  "status": "source_contract_review_complete_native_test_pending",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "native_tests_passed": null,
+  "pluginval_lanes_passed": null,
+  "install_artifact_accepted": false,
+  "observed_original_job_status": "in_progress",
+  "observed_original_job_conclusion": null,
+  "completed_successful_steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-24T07:20:17Z",
+      "completed_at": "2026-11-24T07:20:18Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T07:20:18Z",
+      "completed_at": "2026-11-24T07:20:28Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T07:20:28Z",
+      "completed_at": "2026-11-24T07:20:29Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T07:20:29Z",
+      "completed_at": "2026-11-24T07:21:45Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T07:21:45Z",
+      "completed_at": "2026-11-24T07:21:46Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T07:21:46Z",
+      "completed_at": "2026-11-24T07:28:27Z"
+    }
+  ],
+  "active_steps": [
+    {
+      "name": "Test",
+      "status": "in_progress",
+      "conclusion": null,
+      "number": 7,
+      "started_at": "2026-11-24T07:28:27Z",
+      "completed_at": null
+    }
+  ],
+  "available_target_artifacts": [],
+  "artifact_observation_utc": "2026-11-24T07:44:48Z",
+  "next_action": "Acquire actual final producer logs and all three archives after native Test and four pluginval lanes complete; run A41, A37, historical native parser and original execution binder.",
+  "scope": "Prepared source contracts and actual pending API observations only. No observed passing native CTest counts, validator lanes, artifact bytes or platform acceptance."
+}

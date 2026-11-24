@@ -1,0 +1,35 @@
+{
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "baseline": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "sections": [
+    {
+      "section": "local_pressure_reset",
+      "same_as_baseline": true,
+      "sha256": "94bf063271825bdefdc1c18b980424a6030e1d11a581e2de5e5117d4c12b8126",
+      "source": "    v.pressure = 0.0f;\n    v.notePressureRaw = 0.0f;\n    v.noteTimbreRaw = 0.0f;\n    v.timbre = 0.0f;\n    v.mpeBend = 0.0f;\n    if (const auto* initial = memberExpressionFor(midiChannel))\n    {\n        const float negotiated = mpeZones.memberRange(initial->role == MpeZoneLayout::Role::upperMember);\n        const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;\n        v.mpeBend = initial->bend * range;\n        v.notePressureRaw = initial->pressure;\n        v.noteTimbreRaw = initial->timbre;\n    }\n"
+    },
+    {
+      "section": "pressure_target",
+      "same_as_baseline": true,
+      "sha256": "a3b41e0b08d613dbd1817d4fb3669f7ff9219ea689aa6ca10b63cc24adaefee6",
+      "source": "float Engine::pressureTarget(const Voice& voice) const noexcept\n{\n    float raw = voice.notePressureRaw;\n    if (global.mpe && mpeZones.role(voice.midiChannel) != MpeZoneLayout::Role::none)\n    {\n        // Match event routing, including an own-channel manager distinct\n        // from a conventional-origin voice's captured manager identity.\n        for (int zone = 0; zone < 2; ++zone)\n        {\n            const int channel = zone == 0 ? 1 : 16;\n            const auto expected = zone == 0 ? MpeZoneLayout::Role::lowerMaster\n                                           : MpeZoneLayout::Role::upperMaster;\n            if (mpeZones.role(channel) == expected\n                && (isZoneMaster(voice, channel) || voice.midiChannel == channel))\n                raw = std::max(raw, managerPressure[(size_t) zone]);\n        }\n    }\n    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)\n        raw = applyPressureCurve(raw, global.pressureCurve, global.pressureThreshold);\n    return raw;\n}\n\n"
+    },
+    {
+      "section": "poly_pressure",
+      "same_as_baseline": true,
+      "sha256": "a51a363a1e268f0c648f22dd2572583abba88124bdf4323006da7808f33975f2",
+      "source": "void Engine::polyPressure(int midiNote, float pressure, int midiChannel)\n{\n    if (! std::isfinite(pressure)) return;\n    pressure = clampf(pressure, 0.0f, 1.0f);\n    for (auto& v : voices)\n        if (v.active && v.note == midiNote\n            && (midiChannel <= 0 || v.midiChannel == midiChannel))\n        {\n            // The authorized per-key/UI API supplies this note's local input.\n            v.notePressureRaw = pressure;\n            v.pressure = pressureTarget(v);\n        }\n}\n\n"
+    },
+    {
+      "section": "channel_pressure",
+      "same_as_baseline": true,
+      "sha256": "44325a59517bef3fedfb609f09e037cd30a9c6caf0f3d27025fe6e265647da7d",
+      "source": "void Engine::applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices)\n{\n    if (midiChannel < 0 || midiChannel > 16 || ! std::isfinite(pressure)) return;\n    pressure = clampf(pressure, 0.0f, 1.0f);\n    auto* initial = memberExpressionFor(midiChannel);\n    if (initial != nullptr) initial->pressure = pressure;\n    const auto role = mpeZones.role(midiChannel);\n    const bool manager = global.mpe && (role == MpeZoneLayout::Role::lowerMaster\n                                     || role == MpeZoneLayout::Role::upperMaster);\n    if (manager)\n        managerPressure[role == MpeZoneLayout::Role::upperMaster ? 1 : 0] = pressure;\n    const bool heldOnly = initial != nullptr && !resetReleasedVoices;\n    // Preserve the existing shared matrix tap, independent of note combination.\n    lastChannelPressure = (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)\n        ? applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold) : pressure;\n    for (auto& v : voices)\n        if (v.active && (!heldOnly || v.held)\n            && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))\n        {\n            if (!manager) v.notePressureRaw = pressure;\n            v.pressure = pressureTarget(v);\n        }\n}\n\n"
+    }
+  ],
+  "touch_circuit": {
+    "path": "src/core/TouchCircuit.h",
+    "same_as_baseline": true,
+    "sha256": "bcf51fbdf0781c68258d85b4646e5208c86d2fda69ce4084fdec482ab09e68ff"
+  }
+}

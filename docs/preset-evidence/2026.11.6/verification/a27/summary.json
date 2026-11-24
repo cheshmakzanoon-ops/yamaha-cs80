@@ -1,0 +1,180 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_hashes": {
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/FactoryPresets.h": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+    "src/core/curated/Leads.inc": "022dc22a0e45660680accd8856a44e77cd7ac09e3d4c1267cd5f0aa11cf7c9f4",
+    "tests/LeadRefinementTests.cpp": "c27ede973f6d104178f84ef9ed3c7d6e710e7187714b4125fae34c7213cfb40a",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "src/tools/preset_capture.cpp": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+  },
+  "capture_executable_sha256": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+  "scope": "local complete-Engine evidence; not native installation qualification",
+  "program_count": 56,
+  "original_count": 24,
+  "curated_count": 32,
+  "body_enabled": 6,
+  "changed_control_range": [
+    5,
+    37
+  ],
+  "complementary_programs": 26,
+  "captures": 55,
+  "audio_seconds": 99,
+  "note": 67,
+  "rate": 48000,
+  "hold_seconds": 1.3,
+  "tail_seconds": 0.5,
+  "all_finite_unclipped": true,
+  "maximum_peak_dbfs": -15.87649397,
+  "ordinary_contrast_range_db": [
+    4.83877335,
+    9.883078959999999
+  ],
+  "electric_leads_136": {
+    "zero_pressure_peak_dbfs": -240.0,
+    "pressure_03_to_1_body_span_db": 10.638965040000002,
+    "fixed_full_pressure_velocity_difference_db": 0.0
+  },
+  "programs": [
+    {
+      "name": "Ribbon Lead",
+      "onset_touch_db": 8.584060530000002,
+      "firm_peak_dbfs": -18.01711146
+    },
+    {
+      "name": "Metal Lead",
+      "onset_touch_db": 8.903651109999998,
+      "firm_peak_dbfs": -17.34457331
+    },
+    {
+      "name": "Amber Leads 115",
+      "onset_touch_db": 9.50930658,
+      "firm_peak_dbfs": -23.68562081
+    },
+    {
+      "name": "Velvet Leads 116",
+      "onset_touch_db": 8.469222040000002,
+      "firm_peak_dbfs": -19.66228242
+    },
+    {
+      "name": "Distant Leads 117",
+      "onset_touch_db": 8.737971129999998,
+      "firm_peak_dbfs": -23.94460675
+    },
+    {
+      "name": "Neon Leads 118",
+      "onset_touch_db": 9.424067789999999,
+      "firm_peak_dbfs": -18.57381366
+    },
+    {
+      "name": "Hollow Leads 119",
+      "onset_touch_db": 8.682668449999998,
+      "firm_peak_dbfs": -21.29476085
+    },
+    {
+      "name": "Golden Leads 120",
+      "onset_touch_db": 9.286033210000003,
+      "firm_peak_dbfs": -17.76186362
+    },
+    {
+      "name": "Frozen Leads 121",
+      "onset_touch_db": 9.637684449999998,
+      "firm_peak_dbfs": -24.05900026
+    },
+    {
+      "name": "Electric Leads 122",
+      "onset_touch_db": 9.326496189999997,
+      "firm_peak_dbfs": -17.77758345
+    },
+    {
+      "name": "Midnight Leads 123",
+      "onset_touch_db": 8.097181779999996,
+      "firm_peak_dbfs": -26.65183496
+    },
+    {
+      "name": "Slow Leads 124",
+      "onset_touch_db": 8.781677479999995,
+      "firm_peak_dbfs": -17.68949856
+    },
+    {
+      "name": "Bright Leads 125",
+      "onset_touch_db": 9.376582800000001,
+      "firm_peak_dbfs": -16.15510822
+    },
+    {
+      "name": "Dark Leads 126",
+      "onset_touch_db": 8.413668700000002,
+      "firm_peak_dbfs": -26.1348206
+    },
+    {
+      "name": "Wide Leads 127",
+      "onset_touch_db": 8.719541070000002,
+      "firm_peak_dbfs": -17.21469016
+    },
+    {
+      "name": "Soft Leads 128",
+      "onset_touch_db": 9.301482099999998,
+      "firm_peak_dbfs": -23.5625536
+    },
+    {
+      "name": "Amber Leads 129",
+      "onset_touch_db": 8.926737680000002,
+      "firm_peak_dbfs": -22.987381
+    },
+    {
+      "name": "Velvet Leads 130",
+      "onset_touch_db": 4.83877335,
+      "firm_peak_dbfs": -23.59958309
+    },
+    {
+      "name": "Distant Leads 131",
+      "onset_touch_db": 8.668956739999999,
+      "firm_peak_dbfs": -19.65483651
+    },
+    {
+      "name": "Neon Leads 132",
+      "onset_touch_db": 9.883078959999999,
+      "firm_peak_dbfs": -17.98105887
+    },
+    {
+      "name": "Hollow Leads 133",
+      "onset_touch_db": 9.305555440000003,
+      "firm_peak_dbfs": -20.9372165
+    },
+    {
+      "name": "Golden Leads 134",
+      "onset_touch_db": 8.840195879999996,
+      "firm_peak_dbfs": -16.66188701
+    },
+    {
+      "name": "Frozen Leads 135",
+      "onset_touch_db": 9.61437823,
+      "firm_peak_dbfs": -18.86331659
+    },
+    {
+      "name": "Drive Lead",
+      "onset_touch_db": 8.058291049999998,
+      "firm_peak_dbfs": -19.29136497
+    },
+    {
+      "name": "Space Lead",
+      "onset_touch_db": 7.965065299999999,
+      "firm_peak_dbfs": -16.41519157
+    }
+  ],
+  "lead_test_executable_sha256": "80877ee368b7bb1c2c6db363990b6843015c3428d5b1d7a5d647dcc34a3af1ad",
+  "lead_regression": {
+    "checks": 234,
+    "failures": 0,
+    "rate": 44100,
+    "primary_programs": 30,
+    "coverage_note": "30 core curated lead recipes, plus focused register/pressure/interval/gesture cases"
+  }
+}

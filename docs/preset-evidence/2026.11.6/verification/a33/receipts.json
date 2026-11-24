@@ -1,0 +1,45 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_sha256": {
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/curated/Keys.inc": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+    "src/core/curated/Plucked.inc": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+    "src/core/curated/Bells.inc": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499"
+  },
+  "source_bytes_match_commit": true,
+  "execution_scope": "Local standalone complete-Engine and direct body probes; no native host or listening assessment.",
+  "inputs_and_executables": {
+    "build-preset/libcs80_core.a": {
+      "bytes": 1735386,
+      "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583"
+    },
+    "/tmp/cs80-a33-strikes": {
+      "bytes": 1130504,
+      "sha256": "b3dd603abfbcfacec49dd8f3a4b5edd8f5f8080a70f88dac46fcb90fffc00461"
+    },
+    "/tmp/cs80-a33-body": {
+      "bytes": 547616,
+      "sha256": "3bcb1667e418ef7f927592a5bfaf8b36a9f0088372a15ab1bdc7fba9cf497a61"
+    },
+    "/tmp/cs80-a33-course": {
+      "bytes": 72000,
+      "sha256": "0712bcffaec93be2931bf3a340c984461dbbed962f7d8dac44547cdefe2f0749"
+    }
+  },
+  "retained_evidence_sha256": {
+    "repeated-strikes.cpp": "249db293449a00036969aaff95a0a73f5d365c493b4a2bae30f9377c7f95885b",
+    "engine-seed-piano-course.cpp": "05af85ed5810c26d238b4a099272ca021cce9263c7994f240fb80d28dc05d2e4",
+    "initial-body-seed-control.log": "9e394e273de01062f7926c70f99777bcb93e40cd52b5a77b36ca5863c3e27879",
+    "engine-seed-piano-course.log": "17bdf5c990eb2c1a9e631649d46c0c9ec123123c7ab6f9e1ee97801aa0ed8329",
+    "initial-repeated-strikes.log": "273746368e2562f6d80094208d1c4be586b1bff0df223cb00471029ab581bc00",
+    "repeated-strikes.log": "ff892ebbea2f2cc2b0a2461c30132d8ac852572de381f28f2ad6e2460602ef7c",
+    "body-seed-control.cpp": "768451e0b486df493432969674828e50038ba76179d14fb15607827be0a5d099",
+    "body-seed-control.log": "bea648eea513dc40d481c64f881db3af4572079f684792607298e356ce19764b"
+  }
+}

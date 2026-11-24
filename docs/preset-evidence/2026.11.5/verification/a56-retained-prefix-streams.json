@@ -1,0 +1,26 @@
+{
+  "origin": "A21 previously compiled and executed this probe against separate frozen/current Params.h files. A56 copied the same probe text and inspected its existing streams; no new compilation or execution occurred.",
+  "probe_sha256": "eda55409ae1b39ebd9e0145d2e22ffc68c754998648e5cb5a458f7b178d810e1",
+  "files": {
+    "baseline.tsv": {
+      "bytes": 939492,
+      "sha256": "2632fd6788f95e94627ba5d9b176a85e93c008e198b50b23a3151e96c4fed70d"
+    },
+    "current.tsv": {
+      "bytes": 948961,
+      "sha256": "9d836e9eaf638e7444363c45a8c50363710e321ddf12dcc950c5a30e0555ae28"
+    },
+    "baseline/Params.h": {
+      "bytes": 24749,
+      "sha256": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b"
+    },
+    "current/Params.h": {
+      "bytes": 25409,
+      "sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20"
+    },
+    "summary.json": {
+      "bytes": 691,
+      "sha256": "b031f876c05c32f7e916f247121e4af890339db8dbec8f66a989ea91daf2bae5"
+    }
+  }
+}

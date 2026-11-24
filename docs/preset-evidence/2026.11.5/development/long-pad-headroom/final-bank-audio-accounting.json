@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "source_before": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "source_after": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "release_qualified": false,
+  "scope": "Composed local bank accounting, not a claim that all523 clips were freshly rendered by the final executable. Source6094 supplies521 unchanged-vector/core-object comparisons; the final source supplies exact matched new captures for the two changed volume values. Pressure supplements belong to unchanged source6094 voices. All native and perceptual qualification remains separate.",
+  "inputs": {
+    "complete6094_comparison": {
+      "path": "verification/a33-matched-bank-audio.json",
+      "bytes": 1036051,
+      "sha256": "ffd703c9df2ef5ef6439004625a79c17e77a5f99467ecf5d5d82620cc25a8da0"
+    },
+    "final_two_pad_supplement": {
+      "path": "development/long-pad-headroom/final-audio-supplement.json",
+      "bytes": 5569,
+      "sha256": "d615de6ec6ca7cdb21ca84fc725c8641cbb75612f744a71cddea05ede18bd4a6"
+    },
+    "all_control_differences": {
+      "path": "development/long-pad-headroom/inventory-delta.json",
+      "bytes": 579,
+      "sha256": "46e9d5e84130696d49eea677e3f53ee054bb6697a4c375cb793abff2398f5af8"
+    },
+    "core_object_equivalence": {
+      "path": "development/long-pad-headroom/core-object-equivalence.json",
+      "bytes": 1407,
+      "sha256": "661ccab044f2544e0296c4418d1daf828fd3bbed3167cf32101f7a413918045d"
+    },
+    "final_inventory": {
+      "path": "inventory.json",
+      "bytes": 708553,
+      "sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1"
+    }
+  },
+  "unchanged_main_comparisons_from6094": 521,
+  "new_main_comparisons_from09af535": 2,
+  "new_main_programs": [
+    "Golden Pads 66",
+    "Cathedral Pad"
+  ],
+  "musical_programs_with_changed_output": 521,
+  "zero_pressure_musical_changes": 519,
+  "pressure_gesture_changes": 2,
+  "exact_initialization_programs": [
+    "Init Patch",
+    "Init Circuit"
+  ],
+  "main_summary": {
+    "programs": 523,
+    "stereo_frames_per_version": 103153374,
+    "seconds_per_version": 2149.028625,
+    "all_samples_finite_and_within_full_scale": true,
+    "exact_pcm_equal": [
+      "Init Patch",
+      "Electric Leads 136",
+      "Pressure Lead",
+      "Init Circuit"
+    ],
+    "both_silent": [
+      "Electric Leads 136",
+      "Pressure Lead"
+    ],
+    "changed_raw_pcm": 519,
+    "audible_comparisons": 521,
+    "equal_rms_residual_above_0_001": 516,
+    "averaged_spectral_hellinger_above_0_01": 188,
+    "rms_change_db": {
+      "min": -9.623121436457147,
+      "median": -1.003743485926541,
+      "max": 3.177715759605417
+    },
+    "equal_rms_residual": {
+      "min": 0.0,
+      "median": 0.04090451793606999,
+      "max": 1.5656811107921647
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.0,
+      "median": 0.005597779826674445,
+      "max": 0.7549173622779995
+    },
+    "highest_before_peak_dbfs": -13.537388218538613,
+    "highest_after_peak_dbfs": -13.40001374848623
+  },
+  "pressure_summary": {
+    "programs": 2,
+    "stereo_frames_per_version": 384000,
+    "seconds_per_version": 8.0,
+    "all_samples_finite_and_within_full_scale": true,
+    "exact_pcm_equal": [],
+    "both_silent": [],
+    "changed_raw_pcm": 2,
+    "audible_comparisons": 2,
+    "equal_rms_residual_above_0_001": 2,
+    "averaged_spectral_hellinger_above_0_01": 2,
+    "rms_change_db": {
+      "min": 0.38506690141986055,
+      "median": 0.3904800403664878,
+      "max": 0.3958931793131151
+    },
+    "equal_rms_residual": {
+      "min": 0.09892733942846024,
+      "median": 0.09969761406632985,
+      "max": 0.10046788870419945
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.015083269131098134,
+      "median": 0.015323975832858933,
+      "max": 0.015564682534619732
+    },
+    "highest_before_peak_dbfs": -15.774491121596377,
+    "highest_after_peak_dbfs": -15.876493973479226
+  },
+  "limits": [
+    "Changed PCM and spectrum are descriptive observations, not perceptual quality scores.",
+    "No claim of acoustic-recording or physical-CS80 indistinguishability is made.",
+    "Native audition archives are independently captured from the exact final clean source."
+  ]
+}

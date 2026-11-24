@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "worker": 56,
+  "prior_reviewed_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "final_candidate_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "final_candidate_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "complete_git_diff": [
+    "tests/test_parity_capture.py"
+  ],
+  "unchanged_objects": [
+    {
+      "path": "src",
+      "db6b_git_object": "cc009cba99fbde5ef5b5af717ca8ac40cdeb5867",
+      "c76ad_git_object": "cc009cba99fbde5ef5b5af717ca8ac40cdeb5867",
+      "identical": true
+    },
+    {
+      "path": "scripts",
+      "db6b_git_object": "5665785ff025c8611147ec6d79f39a2dc244b772",
+      "c76ad_git_object": "5665785ff025c8611147ec6d79f39a2dc244b772",
+      "identical": true
+    },
+    {
+      "path": "assets",
+      "db6b_git_object": "7158ccc1e8ca73ffaf4194367c03d333e36f6808",
+      "c76ad_git_object": "7158ccc1e8ca73ffaf4194367c03d333e36f6808",
+      "identical": true
+    },
+    {
+      "path": "CMakeLists.txt",
+      "db6b_git_object": "f0875e30885046497c24acecf037ac53eb152f69",
+      "c76ad_git_object": "f0875e30885046497c24acecf037ac53eb152f69",
+      "identical": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/inventory.json",
+      "db6b_git_object": "77dbd4b608c9f768705123b808108b92253bde14",
+      "c76ad_git_object": "77dbd4b608c9f768705123b808108b92253bde14",
+      "identical": true
+    },
+    {
+      "path": "src/tools/preset_capture.cpp",
+      "db6b_git_object": "f23ee3860f8ec7fac36369132086b2511d411ff6",
+      "c76ad_git_object": "f23ee3860f8ec7fac36369132086b2511d411ff6",
+      "identical": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "db6b_git_object": "9f9b38ff55d8e8045bee704b2a8398e631451c9c",
+      "c76ad_git_object": "9f9b38ff55d8e8045bee704b2a8398e631451c9c",
+      "identical": true
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "db6b_git_object": "f58a8b37ffa292818841335c08595976a59ecd41",
+      "c76ad_git_object": "f58a8b37ffa292818841335c08595976a59ecd41",
+      "identical": true
+    },
+    {
+      "path": "tests/ParameterStateChildIndexTests.cpp",
+      "db6b_git_object": "91bc288799090425a14a257f0d18c81008cc9139",
+      "c76ad_git_object": "91bc288799090425a14a257f0d18c81008cc9139",
+      "identical": true
+    },
+    {
+      "path": "tests/TypedValueUnitTests.h",
+      "db6b_git_object": "a0d013a1e0c8370c8f060b8477da07d393e8363b",
+      "c76ad_git_object": "a0d013a1e0c8370c8f060b8477da07d393e8363b",
+      "identical": true
+    }
+  ],
+  "accounting_review_sha256": "7202ef43f87833e16a8b95fb8cb615da1dd9257aef4da8d7dca082f09be9bc9f",
+  "inventory_sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+  "source_continuity_verified": true,
+  "original_render_sources_preserved": {
+    "full523": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+    "two_final_pad_replacements": "09af5358d34a7ea431de7e8a42e35dae66e52159"
+  },
+  "native_run_required": 45351731801,
+  "supporting_dsp_run_required": 45351731746,
+  "attempt": 1,
+  "native_results_inspected": false,
+  "release_qualified": false,
+  "scope": "The single Python test-contract correction changes no production, factory, capture implementation or inventory bytes. Existing local rendered evidence can inform the same sound data; native execution/provenance must belong to the final candidate independently."
+}

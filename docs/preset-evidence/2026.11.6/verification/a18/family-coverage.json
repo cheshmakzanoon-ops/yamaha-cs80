@@ -1,0 +1,4045 @@
+{
+  "programs": 59,
+  "original": 28,
+  "curated": 31,
+  "body_enabled": 49,
+  "circuit_only": 10,
+  "min_nonvolume_edits": 4,
+  "max_nonvolume_edits": 8,
+  "candidate_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "baseline_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+  "program_rows": [
+    {
+      "host_index": 26,
+      "name": "Cinema Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch1_pan": [
+          -0.415905714,
+          -0.409147829
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.620000005
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ],
+        "ch2_pan": [
+          0.224094197,
+          0.230852172
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5,
+        "mix": 0.409999996,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.93599993,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.75,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 1.24800003,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.04999995,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.620000005,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.74000001,
+        "body1_brightness": 0.576224148,
+        "body1_decay": 1.12973189,
+        "body2_model": 9,
+        "body2_mix": 0.479999989,
+        "body2_brightness": 0.706224144,
+        "body2_decay": 1.02702892,
+        "body1_size": 1.20000005,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 27,
+      "name": "Glass Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_f_al": [
+          0.100000001,
+          0.128000006
+        ],
+        "ch2_v_level": [
+          0.319999993,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.219999999,
+          0.550000012
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.180000007
+        ]
+      },
+      "current_controls": {
+        "detune": 2.5,
+        "mix": 0.129999995,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.845999956,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.75,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.560000002,
+        "ch2_v_d": 1.31599998,
+        "ch2_v_s": 0.360000014,
+        "ch2_v_r": 1.20000005,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.550000012,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.180000007,
+        "body1_model": 9,
+        "body1_mix": 0.639999986,
+        "body1_brightness": 0.671113491,
+        "body1_decay": 0.958797574,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 28,
+      "name": "Distant Oceans",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_hpf_cutoff": [
+          420,
+          260
+        ],
+        "ch1_v_level": [
+          0.962499976,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.5,
+          0.74000001
+        ],
+        "ch1_after_level": [
+          0.319999993,
+          0.379999995
+        ],
+        "ch2_hpf_cutoff": [
+          380,
+          260
+        ],
+        "ch2_v_level": [
+          0.875,
+          0.150000006
+        ],
+        "ch2_init_level": [
+          0.4375,
+          0.680000007
+        ],
+        "ch2_after_level": [
+          0.349999994,
+          0.319999993
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.425766438,
+        "ch1_v_d": 1.39999998,
+        "ch1_v_s": 0.910000026,
+        "ch1_v_r": 1.76399994,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0399999991,
+        "ch1_init_level": 0.74000001,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.379999995,
+        "ch2_v_a": 0.59134227,
+        "ch2_v_d": 1.79999995,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 2.14199996,
+        "ch2_v_level": 0.150000006,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.680000007,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.319999993,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.179175824,
+        "body1_decay": 1.39999998,
+        "body2_model": 9,
+        "body2_mix": 0.449999988,
+        "body2_brightness": 0.289175838,
+        "body2_decay": 1.29999995,
+        "body1_size": 1.60000002,
+        "body2_size": 1.35000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 29,
+      "name": "Dry Ensemble",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.170000002
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.779999971
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.270000011
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.239999995,
+          0.699999988
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 1.39999998,
+        "mix": 0.330000013,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0799999982,
+        "ch1_v_d": 0.749000013,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.469999999,
+        "ch1_v_level": 0.170000002,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.779999971,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.270000011,
+        "ch2_v_a": 0.104999997,
+        "ch2_v_d": 0.856000066,
+        "ch2_v_s": 0.819999993,
+        "ch2_v_r": 0.394799978,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.699999988,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.920000017,
+        "body1_brightness": 0.555125415,
+        "body1_decay": 1.09943676,
+        "body2_model": 9,
+        "body2_mix": 0.75,
+        "body2_brightness": 0.605125368,
+        "body2_decay": 0.994728506,
+        "body1_size": 1.08000004,
+        "body2_size": 1.24000001,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 66,
+      "name": "Amber Strings 23",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.170000002
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.779999971
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.270000011
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.239999995,
+          0.699999988
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 1.39999998,
+        "mix": 0.330000013,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0799999982,
+        "ch1_v_d": 0.769999981,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.5,
+        "ch1_v_level": 0.170000002,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.779999971,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.270000011,
+        "ch2_v_a": 0.104999997,
+        "ch2_v_d": 0.880000055,
+        "ch2_v_s": 0.819999993,
+        "ch2_v_r": 0.419999987,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.699999988,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.920000017,
+        "body1_brightness": 0.508506536,
+        "body1_decay": 1.12030506,
+        "body2_model": 9,
+        "body2_mix": 0.75,
+        "body2_brightness": 0.558506489,
+        "body2_decay": 1.01360941,
+        "body1_size": 1.08000004,
+        "body2_size": 1.24000001,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 67,
+      "name": "Velvet Strings 24",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.239999995,
+          0.560000002
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.319999993
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.129999995
+        ],
+        "ch2_init_level": [
+          0.239999995,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.25999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3.20000005,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.318585485,
+        "ch1_v_d": 1.5,
+        "ch1_v_s": 0.920000017,
+        "ch1_v_r": 1.90400004,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0500000007,
+        "ch1_init_level": 0.560000002,
+        "ch1_after_brill": 0.119999997,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.477878243,
+        "ch2_v_d": 1.89999998,
+        "ch2_v_s": 0.829999983,
+        "ch2_v_r": 2.352,
+        "ch2_v_level": 0.129999995,
+        "ch2_init_brill": 0.0500000007,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.25999999,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.221113503,
+        "body1_decay": 1.5,
+        "body2_model": 9,
+        "body2_mix": 0.439999998,
+        "body2_brightness": 0.341113508,
+        "body2_decay": 1.35000002,
+        "body1_size": 1.54999995,
+        "body2_size": 1.29999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 68,
+      "name": "Distant Strings 25",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.962499976,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.5,
+          0.74000001
+        ],
+        "ch1_after_level": [
+          0.319999993,
+          0.379999995
+        ],
+        "ch2_v_level": [
+          0.875,
+          0.150000006
+        ],
+        "ch2_init_level": [
+          0.4375,
+          0.680000007
+        ],
+        "ch2_after_level": [
+          0.349999994,
+          0.319999993
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.425766438,
+        "ch1_v_d": 1.39999998,
+        "ch1_v_s": 0.910000026,
+        "ch1_v_r": 1.76399994,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0399999991,
+        "ch1_init_level": 0.74000001,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.379999995,
+        "ch2_v_a": 0.59134227,
+        "ch2_v_d": 1.79999995,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 2.14199996,
+        "ch2_v_level": 0.150000006,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.680000007,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.319999993,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.179175824,
+        "body1_decay": 1.39999998,
+        "body2_model": 9,
+        "body2_mix": 0.449999988,
+        "body2_brightness": 0.289175838,
+        "body2_decay": 1.29999995,
+        "body1_size": 1.60000002,
+        "body2_size": 1.35000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 69,
+      "name": "Neon Strings 26",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "mix": [
+          0.219999999,
+          0.100000001
+        ],
+        "ch1_hpf_cutoff": [
+          70,
+          20
+        ],
+        "ch1_v_level": [
+          0.370000005,
+          0.100000001
+        ],
+        "ch1_init_level": [
+          1,
+          0.949999988
+        ],
+        "ch1_after_level": [
+          0.159999996,
+          0.230000004
+        ],
+        "ch2_v_level": [
+          0.239999995,
+          0.0549999997
+        ],
+        "ch2_init_level": [
+          0.949999988,
+          0.980000019
+        ],
+        "ch2_after_level": [
+          0.0799999982,
+          0.100000001
+        ]
+      },
+      "current_controls": {
+        "detune": 2,
+        "mix": 0.100000001,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0128954705,
+        "ch1_v_d": 0.227500007,
+        "ch1_v_s": 0.600000024,
+        "ch1_v_r": 0.180000007,
+        "ch1_v_level": 0.100000001,
+        "ch1_init_brill": 0.219999999,
+        "ch1_init_level": 0.949999988,
+        "ch1_after_brill": 0.119999997,
+        "ch1_after_level": 0.230000004,
+        "ch2_v_a": 0.00360000017,
+        "ch2_v_d": 0.126612023,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0549999997,
+        "ch2_v_level": 0.0549999997,
+        "ch2_init_brill": 0.319999993,
+        "ch2_init_level": 0.980000019,
+        "ch2_after_brill": 0.0599999987,
+        "ch2_after_level": 0.100000001,
+        "body1_model": 9,
+        "body1_mix": 0.899999976,
+        "body1_brightness": 0.632852435,
+        "body1_decay": 0.797199607,
+        "body2_model": 9,
+        "body2_mix": 0.550000012,
+        "body2_brightness": 0.883892655,
+        "body2_decay": 0.637854517,
+        "body1_size": 1.10000002,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 70,
+      "name": "Hollow Strings 27",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_f_al": [
+          0.159999996,
+          0.150399998
+        ],
+        "ch1_v_level": [
+          0.680000007,
+          0.280000001
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.239999995
+        ],
+        "ch2_f_al": [
+          0.129999995,
+          0.122199997
+        ],
+        "ch2_v_level": [
+          0.449999988,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.25999999,
+          0.560000002
+        ],
+        "ch2_after_level": [
+          0.150000006,
+          0.200000003
+        ]
+      },
+      "current_controls": {
+        "detune": 3.79999995,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.219999999,
+        "ch1_v_d": 1.13,
+        "ch1_v_s": 0.819999993,
+        "ch1_v_r": 1,
+        "ch1_v_level": 0.280000001,
+        "ch1_init_brill": 0.0500000007,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.0799999982,
+        "ch1_after_level": 0.239999995,
+        "ch2_v_a": 0.319999993,
+        "ch2_v_d": 1.35600007,
+        "ch2_v_s": 0.680000007,
+        "ch2_v_r": 0.920000017,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.560000002,
+        "ch2_after_brill": 0.0599999987,
+        "ch2_after_level": 0.200000003,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 71,
+      "name": "Golden Strings 28",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.620000005
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5,
+        "mix": 0.409999996,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.963,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.704999983,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 1.28400016,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 0.986999929,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.620000005,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.74000001,
+        "body1_brightness": 0.585125387,
+        "body1_decay": 1.15179098,
+        "body2_model": 9,
+        "body2_mix": 0.479999989,
+        "body2_brightness": 0.715125382,
+        "body2_decay": 1.04708266,
+        "body1_size": 1.20000005,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 72,
+      "name": "Frozen Strings 29",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.319999993,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.219999999,
+          0.550000012
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.180000007
+        ]
+      },
+      "current_controls": {
+        "detune": 2.5,
+        "mix": 0.129999995,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 1.09800005,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.862499952,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.560000002,
+        "ch2_v_d": 1.70800006,
+        "ch2_v_s": 0.360000014,
+        "ch2_v_r": 1.38,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.550000012,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.180000007,
+        "body1_model": 9,
+        "body1_mix": 0.639999986,
+        "body1_brightness": 0.610180616,
+        "body1_decay": 1.14478695,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 73,
+      "name": "Electric Strings 30",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_a": [
+          0.0268799998,
+          0.0218400005
+        ],
+        "ch1_v_r": [
+          0.519999981,
+          0.379999995
+        ],
+        "ch2_v_a": [
+          0.0461999997,
+          0.0361200012
+        ],
+        "ch2_v_r": [
+          0.649999976,
+          0.460000008
+        ]
+      },
+      "current_controls": {
+        "detune": 1.20000005,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0218400005,
+        "ch1_v_d": 0.615999997,
+        "ch1_v_s": 0.985000014,
+        "ch1_v_r": 0.379999995,
+        "ch1_v_level": 0.720000029,
+        "ch1_init_brill": 0,
+        "ch1_init_level": 0,
+        "ch1_after_brill": 0.0799999982,
+        "ch1_after_level": 0.100000001,
+        "ch2_v_a": 0.0361200012,
+        "ch2_v_d": 0.791999996,
+        "ch2_v_s": 0.970000029,
+        "ch2_v_r": 0.460000008,
+        "ch2_v_level": 0.660000026,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0,
+        "ch2_after_brill": 0.0799999982,
+        "ch2_after_level": 0.100000001,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 74,
+      "name": "Midnight Strings 31",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.150000006
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.800000012
+        ],
+        "ch1_after_level": [
+          0.239999995,
+          0.319999993
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.100000001
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.74000001
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 2.29999995,
+        "mix": 0.25,
+        "chorus_on": 1,
+        "ch1_v_a": 0.109999999,
+        "ch1_v_d": 1.22100008,
+        "ch1_v_s": 0.930000007,
+        "ch1_v_r": 0.583000004,
+        "ch1_v_level": 0.150000006,
+        "ch1_init_brill": 0.0799999982,
+        "ch1_init_level": 0.800000012,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.0700000003,
+        "ch2_v_d": 0.666000009,
+        "ch2_v_s": 0.479999989,
+        "ch2_v_r": 0.33919996,
+        "ch2_v_level": 0.100000001,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.74000001,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.939999998,
+        "body1_brightness": 0.410793722,
+        "body1_decay": 1.3956064,
+        "body2_model": 9,
+        "body2_mix": 0.449999988,
+        "body2_brightness": 0.530793726,
+        "body2_decay": 1.07354343,
+        "body1_size": 2.04999995,
+        "body2_size": 1.89999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 75,
+      "name": "Slow Strings 32",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.239999995
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.579999983
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 1.13575852,
+        "ch1_v_d": 2.6400001,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.972,
+        "ch1_v_level": 0.239999995,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.579999983,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 1.5366143,
+        "ch2_v_d": 3.16800022,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 2.43599987,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.779999971,
+        "body1_brightness": 0.429713279,
+        "body1_decay": 1.69090152,
+        "body2_model": 9,
+        "body2_mix": 0.419999987,
+        "body2_brightness": 0.529713333,
+        "body2_decay": 1.50973344,
+        "body1_size": 1.25,
+        "body2_size": 1.08000004,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 76,
+      "name": "Bright Strings 33",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.119999997
+        ],
+        "ch1_init_level": [
+          0.379999995,
+          0.860000014
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.300000012
+        ],
+        "ch2_v_level": [
+          0.419999987,
+          0.0799999982
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.899999976
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 2.79999995,
+        "mix": 0.200000003,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0599999987,
+        "ch1_v_d": 0.657999992,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.379999995,
+        "ch1_v_level": 0.119999997,
+        "ch1_init_brill": 0.140000001,
+        "ch1_init_level": 0.860000014,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.300000012,
+        "ch2_v_a": 0.100000001,
+        "ch2_v_d": 0.611000001,
+        "ch2_v_s": 0.639999986,
+        "ch2_v_r": 0.319999993,
+        "ch2_v_level": 0.0799999982,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.899999976,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.771113515,
+        "body1_decay": 0.862917781,
+        "body2_model": 9,
+        "body2_mix": 0.439999998,
+        "body2_brightness": 0.851113498,
+        "body2_decay": 0.767038047,
+        "body1_size": 1,
+        "body2_size": 0.939999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 77,
+      "name": "Dark Strings 34",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.74000001
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.300000012
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.140000001
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.649999976
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.19999981,
+        "mix": 0.310000002,
+        "chorus_on": 1,
+        "ch1_v_a": 0.180000007,
+        "ch1_v_d": 1.10000002,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.854999959,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.74000001,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.300000012,
+        "ch2_v_a": 0.300000012,
+        "ch2_v_d": 1.5,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.08000004,
+        "ch2_v_level": 0.140000001,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.649999976,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.75999999,
+        "body1_brightness": 0.376793921,
+        "body1_decay": 1.14999998,
+        "body2_model": 9,
+        "body2_mix": 0.479999989,
+        "body2_brightness": 0.546793938,
+        "body2_decay": 1,
+        "body1_size": 1.29999995,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 78,
+      "name": "Wide Strings 35",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.660000026
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch1_pan": [
+          -0.49648726,
+          -0.481788188
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.159999996
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.600000024
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ],
+        "ch2_pan": [
+          0.143512681,
+          0.158211783
+        ]
+      },
+      "current_controls": {
+        "detune": 5.80000019,
+        "mix": 0.479999989,
+        "chorus_on": 1,
+        "ch1_v_a": 0.25,
+        "ch1_v_d": 1.35199988,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 1.25,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.660000026,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 0.319999993,
+        "ch2_v_d": 1.76800001,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.25,
+        "ch2_v_level": 0.159999996,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.600000024,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.579999983,
+        "body1_brightness": 0.62622416,
+        "body1_decay": 1.23243475,
+        "body2_model": 9,
+        "body2_mix": 0.469999999,
+        "body2_brightness": 0.676224172,
+        "body2_decay": 1.12973189,
+        "body1_size": 1.27999997,
+        "body2_size": 1.08000004,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 79,
+      "name": "Soft Strings 36",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.439999998,
+          0.0949999988
+        ],
+        "ch1_init_level": [
+          0.639999986,
+          0.879999995
+        ],
+        "ch1_after_level": [
+          0.280000001,
+          0.379999995
+        ],
+        "ch2_f_al": [
+          0.0799999982,
+          0.0671999976
+        ],
+        "ch2_v_level": [
+          0.239999995,
+          0.0350000001
+        ],
+        "ch2_init_level": [
+          0.899999976,
+          0.970000029
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.0900000036,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0267642811,
+        "ch1_v_d": 0.657199979,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.144999996,
+        "ch1_v_level": 0.0949999988,
+        "ch1_init_brill": 0.159999996,
+        "ch1_init_level": 0.879999995,
+        "ch1_after_brill": 0.200000003,
+        "ch1_after_level": 0.379999995,
+        "ch2_v_a": 0.00300000003,
+        "ch2_v_d": 0.101644911,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0350000001,
+        "ch2_v_level": 0.0350000001,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0.970000029,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 0.980000019,
+        "body1_brightness": 0.602215648,
+        "body1_decay": 0.936376393,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 80,
+      "name": "Amber Strings 37",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.219999999,
+          0.439999998
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.460000008
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.150000006
+        ],
+        "ch2_init_level": [
+          0.180000007,
+          0.379999995
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.379999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.550000012,
+        "ch1_v_d": 1.98000002,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.60000002,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0599999987,
+        "ch1_init_level": 0.439999998,
+        "ch1_after_brill": 0.25,
+        "ch1_after_level": 0.460000008,
+        "ch2_v_a": 0.800000012,
+        "ch2_v_d": 2.42000008,
+        "ch2_v_s": 0.819999993,
+        "ch2_v_r": 2,
+        "ch2_v_level": 0.150000006,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.379999995,
+        "ch2_after_brill": 0.200000003,
+        "ch2_after_level": 0.379999995,
+        "body1_model": 9,
+        "body1_mix": 0.860000014,
+        "body1_brightness": 0.398506552,
+        "body1_decay": 1.38704431,
+        "body2_model": 9,
+        "body2_mix": 0.560000002,
+        "body2_brightness": 0.58850652,
+        "body2_decay": 1.22700083,
+        "body1_size": 1.29999995,
+        "body2_size": 1.10000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 81,
+      "name": "Velvet Strings 38",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.275000006,
+          0.150000006
+        ],
+        "ch1_after_level": [
+          0.8125,
+          0.899999976
+        ],
+        "ch2_v_level": [
+          0.200000003,
+          0.100000001
+        ],
+        "ch2_after_level": [
+          0.6875,
+          0.800000012
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.318585485,
+        "ch1_v_d": 1.29999995,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.3440001,
+        "ch1_v_level": 0.150000006,
+        "ch1_init_brill": 0,
+        "ch1_init_level": 0,
+        "ch1_after_brill": 0.25999999,
+        "ch1_after_level": 0.899999976,
+        "ch2_v_a": 0.477878243,
+        "ch2_v_d": 1.70000005,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.68000007,
+        "ch2_v_level": 0.100000001,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0,
+        "ch2_after_brill": 0.200000003,
+        "ch2_after_level": 0.800000012,
+        "body1_model": 9,
+        "body1_mix": 0.819999993,
+        "body1_brightness": 0.40111351,
+        "body1_decay": 1.20000005,
+        "body2_model": 9,
+        "body2_mix": 0.360000014,
+        "body2_brightness": 0.491113514,
+        "body2_decay": 1.10000002,
+        "body1_size": 1.25,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 82,
+      "name": "Distant Strings 39",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.319999993
+        ],
+        "ch2_f_al": [
+          0.119999997,
+          0.0960000008
+        ],
+        "ch2_v_level": [
+          0.219999999,
+          0.0799999982
+        ],
+        "ch2_init_level": [
+          0.349999994,
+          0.639999986
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.109999999,
+        "chorus_on": 1,
+        "ch1_v_a": 0.141922146,
+        "ch1_v_d": 1,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 1.00800002,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.0240000002,
+        "ch2_v_d": 0.300000012,
+        "ch2_v_s": 0.0900000036,
+        "ch2_v_r": 0.184500009,
+        "ch2_v_level": 0.0799999982,
+        "ch2_init_brill": 0.0599999987,
+        "ch2_init_level": 0.639999986,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.899999976,
+        "body1_brightness": 0.469175845,
+        "body1_decay": 1.14999998,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1.20000005,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 83,
+      "name": "Neon Strings 40",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "mix": [
+          0.140000001,
+          0.0500000007
+        ],
+        "ch1_hpf_cutoff": [
+          75,
+          20
+        ],
+        "ch1_v_d": [
+          0.273000032,
+          0.591499984
+        ],
+        "ch1_v_level": [
+          1,
+          0.200000003
+        ],
+        "ch2_v_level": [
+          0.899999976,
+          0.0350000001
+        ]
+      },
+      "current_controls": {
+        "detune": 1,
+        "mix": 0.0500000007,
+        "chorus_on": 0,
+        "ch1_v_a": 0.00598718273,
+        "ch1_v_d": 0.591499984,
+        "ch1_v_s": 0,
+        "ch1_v_r": 0.0649999976,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.219999999,
+        "ch1_init_level": 1,
+        "ch1_after_brill": 0,
+        "ch1_after_level": 0,
+        "ch2_v_a": 0.00269999984,
+        "ch2_v_d": 0.107133247,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0399999991,
+        "ch2_v_level": 0.0350000001,
+        "ch2_init_brill": 0.280000001,
+        "ch2_init_level": 1,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 1,
+        "body1_brightness": 0.712852418,
+        "body1_decay": 0.609623194,
+        "body2_model": 9,
+        "body2_mix": 0.550000012,
+        "body2_brightness": 0.873892665,
+        "body2_decay": 0.49065733,
+        "body1_size": 1.04999995,
+        "body2_size": 0.930000007,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 84,
+      "name": "Hollow Strings 41",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_f_al": [
+          0.0799999982,
+          0.0751999989
+        ],
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.620000005
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.270000011
+        ],
+        "ch2_f_al": [
+          0.159999996,
+          0.150399998
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.189999998
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.579999983
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.230000004
+        ]
+      },
+      "current_controls": {
+        "detune": 2.79999995,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.109999999,
+        "ch1_v_d": 1.01699996,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.600000024,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.620000005,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.270000011,
+        "ch2_v_a": 0.230000004,
+        "ch2_v_d": 1.29949999,
+        "ch2_v_s": 0.75,
+        "ch2_v_r": 0.879999995,
+        "ch2_v_level": 0.189999998,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.579999983,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.230000004,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 85,
+      "name": "Golden Strings 42",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.75,
+          0.170000002
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.819999993
+        ],
+        "ch1_after_level": [
+          0.140000001,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.620000005,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.360000014,
+          0.850000024
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 3.29999995,
+        "mix": 0.370000005,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0700000003,
+        "ch1_v_d": 0.963,
+        "ch1_v_s": 0.930000007,
+        "ch1_v_r": 0.54519999,
+        "ch1_v_level": 0.170000002,
+        "ch1_init_brill": 0.129999995,
+        "ch1_init_level": 0.819999993,
+        "ch1_after_brill": 0.170000002,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.0949999988,
+        "ch2_v_d": 1.07000005,
+        "ch2_v_s": 0.860000014,
+        "ch2_v_r": 0.695600033,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.100000001,
+        "ch2_init_level": 0.850000024,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.595125377,
+        "body1_decay": 1.09943676,
+        "body2_model": 9,
+        "body2_mix": 0.639999986,
+        "body2_brightness": 0.745125413,
+        "body2_decay": 0.942374349,
+        "body1_size": 1.95000005,
+        "body2_size": 1.10000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 86,
+      "name": "Frozen Strings 43",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.479999989,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.639999986
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 1.20000005,
+        "mix": 0.200000003,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 1.09800005,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.862499952,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 1.403,
+        "ch2_v_s": 0.699999988,
+        "ch2_v_r": 0.977500021,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.639999986,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.74000001,
+        "body1_brightness": 0.490180582,
+        "body1_decay": 1.31650496,
+        "body2_model": 9,
+        "body2_mix": 0.460000008,
+        "body2_brightness": 0.630180597,
+        "body2_decay": 1.20202625,
+        "body1_size": 1.17999995,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 87,
+      "name": "Electric Strings 44",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_f_al": [
+          0.109999999,
+          0.134200007
+        ],
+        "ch1_v_level": [
+          0.550000012,
+          0.239999995
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.560000002
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_f_al": [
+          0.140000001,
+          0.1708
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5999999,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.117599994,
+        "ch1_v_d": 1.14399993,
+        "ch1_v_s": 0.920000017,
+        "ch1_v_r": 1.10000002,
+        "ch1_v_level": 0.239999995,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.560000002,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.226799995,
+        "ch2_v_d": 1.40799999,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.35000002,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 88,
+      "name": "Midnight Strings 45",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.449999988,
+          0.109999999
+        ],
+        "ch1_init_level": [
+          0.600000024,
+          0.860000014
+        ],
+        "ch1_after_level": [
+          0.300000012,
+          0.400000006
+        ],
+        "ch2_f_al": [
+          0.0799999982,
+          0.0623999946
+        ],
+        "ch2_v_level": [
+          0.25,
+          0.0450000018
+        ],
+        "ch2_init_level": [
+          0.899999976,
+          0.939999998
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.100000001,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0450000018,
+        "ch1_v_d": 0.999000013,
+        "ch1_v_s": 0.939999998,
+        "ch1_v_r": 0.222599983,
+        "ch1_v_level": 0.109999999,
+        "ch1_init_brill": 0.119999997,
+        "ch1_init_level": 0.860000014,
+        "ch1_after_brill": 0.200000003,
+        "ch1_after_level": 0.400000006,
+        "ch2_v_a": 0.00800000038,
+        "ch2_v_d": 0.175040826,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0563749969,
+        "ch2_v_level": 0.0450000018,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0.939999998,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 0.99000001,
+        "body1_brightness": 0.38079372,
+        "body1_decay": 1.4492836,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 2.0999999,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 89,
+      "name": "Slow Strings 46",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.419999987,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.720000029
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3.5,
+        "mix": 0.300000012,
+        "chorus_on": 1,
+        "ch1_v_a": 0.213789821,
+        "ch1_v_d": 1.32000005,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 1.04399991,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 0.320684731,
+        "ch2_v_d": 1.58400011,
+        "ch2_v_s": 0.720000029,
+        "ch2_v_r": 0.986000001,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.720000029,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.579999983,
+        "body1_brightness": 0.499713272,
+        "body1_decay": 1.32856548,
+        "body2_model": 9,
+        "body2_mix": 0.400000006,
+        "body2_brightness": 0.649713337,
+        "body2_decay": 1.2077868,
+        "body1_size": 1.15999997,
+        "body2_size": 1.01999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 254,
+      "name": "Ensemble Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.620000005
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5,
+        "mix": 0.409999996,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.75,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 1.20000005,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.04999995,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.620000005,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.74000001,
+        "body1_brightness": 0.569999993,
+        "body1_decay": 1.10000002,
+        "body2_model": 9,
+        "body2_mix": 0.479999989,
+        "body2_brightness": 0.699999988,
+        "body2_decay": 1,
+        "body1_size": 1.20000005,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 255,
+      "name": "Slow Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.239999995
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.579999983
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.850000024,
+        "ch1_v_d": 2,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.70000005,
+        "ch1_v_level": 0.239999995,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.579999983,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 1.14999998,
+        "ch2_v_d": 2.4000001,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 2.0999999,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.779999971,
+        "body1_brightness": 0.449999988,
+        "body1_decay": 1.39999998,
+        "body2_model": 9,
+        "body2_mix": 0.419999987,
+        "body2_brightness": 0.550000012,
+        "body2_decay": 1.25,
+        "body1_size": 1.25,
+        "body2_size": 1.08000004,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 256,
+      "name": "Violins",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.119999997
+        ],
+        "ch1_init_level": [
+          0.379999995,
+          0.860000014
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.300000012
+        ],
+        "ch2_v_level": [
+          0.419999987,
+          0.0799999982
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.899999976
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 2.79999995,
+        "mix": 0.200000003,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0599999987,
+        "ch1_v_d": 0.699999988,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.379999995,
+        "ch1_v_level": 0.119999997,
+        "ch1_init_brill": 0.140000001,
+        "ch1_init_level": 0.860000014,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.300000012,
+        "ch2_v_a": 0.100000001,
+        "ch2_v_d": 0.649999976,
+        "ch2_v_s": 0.639999986,
+        "ch2_v_r": 0.319999993,
+        "ch2_v_level": 0.0799999982,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.899999976,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.720000029,
+        "body1_decay": 0.899999976,
+        "body2_model": 9,
+        "body2_mix": 0.439999998,
+        "body2_brightness": 0.800000012,
+        "body2_decay": 0.800000012,
+        "body1_size": 1,
+        "body2_size": 0.939999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 257,
+      "name": "Cellos",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.150000006
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.800000012
+        ],
+        "ch1_after_level": [
+          0.239999995,
+          0.319999993
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.100000001
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.74000001
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 2.29999995,
+        "mix": 0.25,
+        "chorus_on": 1,
+        "ch1_v_a": 0.109999999,
+        "ch1_v_d": 1.10000002,
+        "ch1_v_s": 0.930000007,
+        "ch1_v_r": 0.550000012,
+        "ch1_v_level": 0.150000006,
+        "ch1_init_brill": 0.0799999982,
+        "ch1_init_level": 0.800000012,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.0700000003,
+        "ch2_v_d": 0.600000024,
+        "ch2_v_s": 0.479999989,
+        "ch2_v_r": 0.319999993,
+        "ch2_v_level": 0.100000001,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.74000001,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.939999998,
+        "body1_brightness": 0.5,
+        "body1_decay": 1.29999995,
+        "body2_model": 9,
+        "body2_mix": 0.449999988,
+        "body2_brightness": 0.620000005,
+        "body2_decay": 1,
+        "body1_size": 2.04999995,
+        "body2_size": 1.89999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 258,
+      "name": "Octave Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.419999987,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.720000029
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3.5,
+        "mix": 0.300000012,
+        "chorus_on": 1,
+        "ch1_v_a": 0.159999996,
+        "ch1_v_d": 1,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.899999976,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 0.239999995,
+        "ch2_v_d": 1.20000005,
+        "ch2_v_s": 0.720000029,
+        "ch2_v_r": 0.850000024,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.720000029,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.579999983,
+        "body1_brightness": 0.519999981,
+        "body1_decay": 1.10000002,
+        "body2_model": 9,
+        "body2_mix": 0.400000006,
+        "body2_brightness": 0.670000017,
+        "body2_decay": 1,
+        "body1_size": 1.15999997,
+        "body2_size": 1.01999998,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 259,
+      "name": "PWM Strings",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.620000005
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.270000011
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.189999998
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.579999983
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.230000004
+        ]
+      },
+      "current_controls": {
+        "detune": 2.79999995,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.109999999,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.600000024,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.620000005,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.270000011,
+        "ch2_v_a": 0.230000004,
+        "ch2_v_d": 1.14999998,
+        "ch2_v_s": 0.75,
+        "ch2_v_r": 0.879999995,
+        "ch2_v_level": 0.189999998,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.579999983,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.230000004,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 260,
+      "name": "Thin Strings",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.680000007,
+          0.280000001
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.239999995
+        ],
+        "ch2_v_level": [
+          0.449999988,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.25999999,
+          0.560000002
+        ],
+        "ch2_after_level": [
+          0.150000006,
+          0.200000003
+        ]
+      },
+      "current_controls": {
+        "detune": 3.79999995,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.219999999,
+        "ch1_v_d": 1,
+        "ch1_v_s": 0.819999993,
+        "ch1_v_r": 1,
+        "ch1_v_level": 0.280000001,
+        "ch1_init_brill": 0.0500000007,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.0799999982,
+        "ch1_after_level": 0.239999995,
+        "ch2_v_a": 0.319999993,
+        "ch2_v_d": 1.20000005,
+        "ch2_v_s": 0.680000007,
+        "ch2_v_r": 0.920000017,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.560000002,
+        "ch2_after_brill": 0.0599999987,
+        "ch2_after_level": 0.200000003,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 261,
+      "name": "Dark Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.962499976,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.5,
+          0.74000001
+        ],
+        "ch1_after_level": [
+          0.319999993,
+          0.379999995
+        ],
+        "ch2_v_level": [
+          0.875,
+          0.150000006
+        ],
+        "ch2_init_level": [
+          0.4375,
+          0.680000007
+        ],
+        "ch2_after_level": [
+          0.349999994,
+          0.319999993
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.360000014,
+        "ch1_v_d": 1.39999998,
+        "ch1_v_s": 0.910000026,
+        "ch1_v_r": 1.39999998,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0399999991,
+        "ch1_init_level": 0.74000001,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.379999995,
+        "ch2_v_a": 0.5,
+        "ch2_v_d": 1.79999995,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.70000005,
+        "ch2_v_level": 0.150000006,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.680000007,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.319999993,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.25,
+        "body1_decay": 1.39999998,
+        "body2_model": 9,
+        "body2_mix": 0.449999988,
+        "body2_brightness": 0.360000014,
+        "body2_decay": 1.29999995,
+        "body1_size": 1.60000002,
+        "body2_size": 1.35000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 262,
+      "name": "Tremolo Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.779999971
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.100000001
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.899999976
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0799999982,
+        "ch1_v_d": 0.800000012,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.5,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.779999971,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25,
+        "ch2_v_a": 0.0549999997,
+        "ch2_v_d": 0.340000004,
+        "ch2_v_s": 0.600000024,
+        "ch2_v_r": 0.200000003,
+        "ch2_v_level": 0.100000001,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.899999976,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.649999976,
+        "body1_brightness": 0.540000021,
+        "body1_decay": 0.800000012,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1.14999998,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 263,
+      "name": "Solo Violin",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.439999998,
+          0.0949999988
+        ],
+        "ch1_init_level": [
+          0.639999986,
+          0.879999995
+        ],
+        "ch1_after_level": [
+          0.280000001,
+          0.379999995
+        ],
+        "ch2_v_level": [
+          0.239999995,
+          0.0350000001
+        ],
+        "ch2_init_level": [
+          0.899999976,
+          0.970000029
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.0900000036,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0240000002,
+        "ch1_v_d": 0.620000005,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 0.144999996,
+        "ch1_v_level": 0.0949999988,
+        "ch1_init_brill": 0.159999996,
+        "ch1_init_level": 0.879999995,
+        "ch1_after_brill": 0.200000003,
+        "ch1_after_level": 0.379999995,
+        "ch2_v_a": 0.00300000003,
+        "ch2_v_d": 0.100000001,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0350000001,
+        "ch2_v_level": 0.0350000001,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0.970000029,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 0.980000019,
+        "body1_brightness": 0.649999976,
+        "body1_decay": 0.899999976,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 264,
+      "name": "Solo Cello",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.449999988,
+          0.109999999
+        ],
+        "ch1_init_level": [
+          0.600000024,
+          0.860000014
+        ],
+        "ch1_after_level": [
+          0.300000012,
+          0.400000006
+        ],
+        "ch2_v_level": [
+          0.25,
+          0.0450000018
+        ],
+        "ch2_init_level": [
+          0.899999976,
+          0.939999998
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.100000001,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0450000018,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.939999998,
+        "ch1_v_r": 0.209999993,
+        "ch1_v_level": 0.109999999,
+        "ch1_init_brill": 0.119999997,
+        "ch1_init_level": 0.860000014,
+        "ch1_after_brill": 0.200000003,
+        "ch1_after_level": 0.400000006,
+        "ch2_v_a": 0.00800000038,
+        "ch2_v_d": 0.170000002,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0549999997,
+        "ch2_v_level": 0.0450000018,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0.939999998,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 0.99000001,
+        "body1_brightness": 0.469999999,
+        "body1_decay": 1.35000002,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 2.0999999,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 265,
+      "name": "Pizzicato Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.200000003,
+          0.0700000003
+        ],
+        "ch1_init_level": [
+          0.879999995,
+          0.949999988
+        ],
+        "ch2_v_level": [
+          0.0799999982,
+          0.0299999993
+        ],
+        "ch2_init_level": [
+          0.550000012,
+          0.970000029
+        ]
+      },
+      "current_controls": {
+        "detune": 0.800000012,
+        "mix": 0.140000001,
+        "chorus_on": 0,
+        "ch1_v_a": 0.00120000006,
+        "ch1_v_d": 1.60000002,
+        "ch1_v_s": 0,
+        "ch1_v_r": 0.209999993,
+        "ch1_v_level": 0.0700000003,
+        "ch1_init_brill": 0.219999999,
+        "ch1_init_level": 0.949999988,
+        "ch1_after_brill": 0,
+        "ch1_after_level": 0,
+        "ch2_v_a": 0.00100000005,
+        "ch2_v_d": 0.129999995,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0450000018,
+        "ch2_v_level": 0.0299999993,
+        "ch2_init_brill": 0.280000001,
+        "ch2_init_level": 0.970000029,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 6,
+        "body1_mix": 0.959999979,
+        "body1_brightness": 0.49000001,
+        "body1_decay": 0.629999995,
+        "body2_model": 7,
+        "body2_mix": 0.540000021,
+        "body2_brightness": 0.720000029,
+        "body2_decay": 0.400000006,
+        "body1_size": 1.25,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 266,
+      "name": "Swell Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.275000006,
+          0.150000006
+        ],
+        "ch1_after_level": [
+          0.8125,
+          0.899999976
+        ],
+        "ch2_v_level": [
+          0.200000003,
+          0.100000001
+        ],
+        "ch2_after_level": [
+          0.6875,
+          0.800000012
+        ]
+      },
+      "current_controls": {
+        "detune": 5.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.280000001,
+        "ch1_v_d": 1.29999995,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.20000005,
+        "ch1_v_level": 0.150000006,
+        "ch1_init_brill": 0,
+        "ch1_init_level": 0,
+        "ch1_after_brill": 0.25999999,
+        "ch1_after_level": 0.899999976,
+        "ch2_v_a": 0.419999987,
+        "ch2_v_d": 1.70000005,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.5,
+        "ch2_v_level": 0.100000001,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0,
+        "ch2_after_brill": 0.200000003,
+        "ch2_after_level": 0.800000012,
+        "body1_model": 9,
+        "body1_mix": 0.819999993,
+        "body1_brightness": 0.460000008,
+        "body1_decay": 1.20000005,
+        "body2_model": 9,
+        "body2_mix": 0.360000014,
+        "body2_brightness": 0.550000012,
+        "body2_decay": 1.10000002,
+        "body1_size": 1.25,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 267,
+      "name": "Chamber Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.170000002
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.779999971
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.270000011
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.239999995,
+          0.699999988
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 1.39999998,
+        "mix": 0.330000013,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0799999982,
+        "ch1_v_d": 0.699999988,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.5,
+        "ch1_v_level": 0.170000002,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.779999971,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.270000011,
+        "ch2_v_a": 0.104999997,
+        "ch2_v_d": 0.800000012,
+        "ch2_v_s": 0.819999993,
+        "ch2_v_r": 0.419999987,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.699999988,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.920000017,
+        "body1_brightness": 0.540000021,
+        "body1_decay": 1.04999995,
+        "body2_model": 9,
+        "body2_mix": 0.75,
+        "body2_brightness": 0.589999974,
+        "body2_decay": 0.949999988,
+        "body1_size": 1.08000004,
+        "body2_size": 1.24000001,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 268,
+      "name": "Wide Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.219999999
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.660000026
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.159999996
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.600000024
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 5.80000019,
+        "mix": 0.479999989,
+        "chorus_on": 1,
+        "ch1_v_a": 0.25,
+        "ch1_v_d": 1.29999995,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 1.25,
+        "ch1_v_level": 0.219999999,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.660000026,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 0.319999993,
+        "ch2_v_d": 1.70000005,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.25,
+        "ch2_v_level": 0.159999996,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.600000024,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.579999983,
+        "body1_brightness": 0.620000005,
+        "body1_decay": 1.20000005,
+        "body2_model": 9,
+        "body2_mix": 0.469999999,
+        "body2_brightness": 0.670000017,
+        "body2_decay": 1.10000002,
+        "body1_size": 1.27999997,
+        "body2_size": 1.08000004,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 269,
+      "name": "Crystal Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.319999993,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.219999999,
+          0.550000012
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.180000007
+        ]
+      },
+      "current_controls": {
+        "detune": 2.5,
+        "mix": 0.129999995,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.75,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.560000002,
+        "ch2_v_d": 1.39999998,
+        "ch2_v_s": 0.360000014,
+        "ch2_v_r": 1.20000005,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.550000012,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.180000007,
+        "body1_model": 9,
+        "body1_mix": 0.639999986,
+        "body1_brightness": 0.620000005,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 270,
+      "name": "Fifth Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.680000007
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.479999989,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.639999986
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 1.20000005,
+        "mix": 0.200000003,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.75,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.680000007,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 1.14999998,
+        "ch2_v_s": 0.699999988,
+        "ch2_v_r": 0.850000024,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.639999986,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.74000001,
+        "body1_brightness": 0.5,
+        "body1_decay": 1.14999998,
+        "body2_model": 9,
+        "body2_mix": 0.460000008,
+        "body2_brightness": 0.639999986,
+        "body2_decay": 1.04999995,
+        "body1_size": 1.17999995,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 271,
+      "name": "Analog Orchestra",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.239999995
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.620000005
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.159999996
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.680000007
+        ],
+        "ch2_after_level": [
+          0.140000001,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3.20000005,
+        "mix": 0.280000001,
+        "chorus_on": 1,
+        "ch1_v_a": 0.25,
+        "ch1_v_d": 1.39999998,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.20000005,
+        "ch1_v_level": 0.239999995,
+        "ch1_init_brill": 0.140000001,
+        "ch1_init_level": 0.620000005,
+        "ch1_after_brill": 0.219999999,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.310000002,
+        "ch2_v_d": 1.5,
+        "ch2_v_s": 0.720000029,
+        "ch2_v_r": 1.14999998,
+        "ch2_v_level": 0.159999996,
+        "ch2_init_brill": 0.100000001,
+        "ch2_init_level": 0.680000007,
+        "ch2_after_brill": 0.159999996,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 272,
+      "name": "Spiccato Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "mix": [
+          0.140000001,
+          0.0500000007
+        ],
+        "ch1_hpf_cutoff": [
+          75,
+          20
+        ],
+        "ch1_v_d": [
+          0.300000012,
+          0.649999976
+        ],
+        "ch1_v_level": [
+          1,
+          0.200000003
+        ],
+        "ch2_v_level": [
+          0.899999976,
+          0.0350000001
+        ]
+      },
+      "current_controls": {
+        "detune": 1,
+        "mix": 0.0500000007,
+        "chorus_on": 0,
+        "ch1_v_a": 0.00650000013,
+        "ch1_v_d": 0.649999976,
+        "ch1_v_s": 0,
+        "ch1_v_r": 0.0649999976,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.219999999,
+        "ch1_init_level": 1,
+        "ch1_after_brill": 0,
+        "ch1_after_level": 0,
+        "ch2_v_a": 0.00300000003,
+        "ch2_v_d": 0.109999999,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0399999991,
+        "ch2_v_level": 0.0350000001,
+        "ch2_init_brill": 0.280000001,
+        "ch2_init_level": 1,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0,
+        "body1_model": 9,
+        "body1_mix": 1,
+        "body1_brightness": 0.680000007,
+        "body1_decay": 0.649999976,
+        "body2_model": 9,
+        "body2_mix": 0.550000012,
+        "body2_brightness": 0.850000024,
+        "body2_decay": 0.5,
+        "body1_size": 1.04999995,
+        "body2_size": 0.930000007,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 273,
+      "name": "Bowed Swell Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.219999999,
+          0.439999998
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.460000008
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.150000006
+        ],
+        "ch2_init_level": [
+          0.180000007,
+          0.379999995
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.379999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.550000012,
+        "ch1_v_d": 1.79999995,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.60000002,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0599999987,
+        "ch1_init_level": 0.439999998,
+        "ch1_after_brill": 0.25,
+        "ch1_after_level": 0.460000008,
+        "ch2_v_a": 0.800000012,
+        "ch2_v_d": 2.20000005,
+        "ch2_v_s": 0.819999993,
+        "ch2_v_r": 2,
+        "ch2_v_level": 0.150000006,
+        "ch2_init_brill": 0.0399999991,
+        "ch2_init_level": 0.379999995,
+        "ch2_after_brill": 0.200000003,
+        "ch2_after_level": 0.379999995,
+        "body1_model": 9,
+        "body1_mix": 0.860000014,
+        "body1_brightness": 0.430000007,
+        "body1_decay": 1.29999995,
+        "body2_model": 9,
+        "body2_mix": 0.560000002,
+        "body2_brightness": 0.620000005,
+        "body2_decay": 1.14999998,
+        "body1_size": 1.29999995,
+        "body2_size": 1.10000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 274,
+      "name": "Synth Strings Saw",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.239999995
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.560000002
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 4.5999999,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.140000001,
+        "ch1_v_d": 1.29999995,
+        "ch1_v_s": 0.920000017,
+        "ch1_v_r": 1.10000002,
+        "ch1_v_level": 0.239999995,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.560000002,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.270000011,
+        "ch2_v_d": 1.60000002,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.35000002,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 275,
+      "name": "String Machine",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_a": [
+          0.0320000015,
+          0.0260000005
+        ],
+        "ch1_v_r": [
+          0.519999981,
+          0.379999995
+        ],
+        "ch2_v_a": [
+          0.0549999997,
+          0.0430000015
+        ],
+        "ch2_v_r": [
+          0.649999976,
+          0.460000008
+        ]
+      },
+      "current_controls": {
+        "detune": 1.20000005,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0260000005,
+        "ch1_v_d": 0.699999988,
+        "ch1_v_s": 0.985000014,
+        "ch1_v_r": 0.379999995,
+        "ch1_v_level": 0.720000029,
+        "ch1_init_brill": 0,
+        "ch1_init_level": 0,
+        "ch1_after_brill": 0.0799999982,
+        "ch1_after_level": 0.100000001,
+        "ch2_v_a": 0.0430000015,
+        "ch2_v_d": 0.899999976,
+        "ch2_v_s": 0.970000029,
+        "ch2_v_r": 0.460000008,
+        "ch2_v_level": 0.660000026,
+        "ch2_init_brill": 0,
+        "ch2_init_level": 0,
+        "ch2_after_brill": 0.0799999982,
+        "ch2_after_level": 0.100000001,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 276,
+      "name": "Contour Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.180000007
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.74000001
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.300000012
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.140000001
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.649999976
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 4.19999981,
+        "mix": 0.310000002,
+        "chorus_on": 1,
+        "ch1_v_a": 0.180000007,
+        "ch1_v_d": 1.10000002,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.949999988,
+        "ch1_v_level": 0.180000007,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.74000001,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.300000012,
+        "ch2_v_a": 0.300000012,
+        "ch2_v_d": 1.5,
+        "ch2_v_s": 0.800000012,
+        "ch2_v_r": 1.20000005,
+        "ch2_v_level": 0.140000001,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.649999976,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.75999999,
+        "body1_brightness": 0.49000001,
+        "body1_decay": 1.14999998,
+        "body2_model": 9,
+        "body2_mix": 0.479999989,
+        "body2_brightness": 0.660000026,
+        "body2_decay": 1,
+        "body1_size": 1.29999995,
+        "body2_size": 1.04999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 277,
+      "name": "Ring Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.230000004
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.620000005
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.280000001
+        ],
+        "ch2_v_level": [
+          0.5,
+          0.180000007
+        ],
+        "ch2_init_level": [
+          0.280000001,
+          0.550000012
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.230000004
+        ]
+      },
+      "current_controls": {
+        "detune": 3,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.280000001,
+        "ch1_v_d": 1.29999995,
+        "ch1_v_s": 0.899999976,
+        "ch1_v_r": 1.20000005,
+        "ch1_v_level": 0.230000004,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.620000005,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.280000001,
+        "ch2_v_a": 0.449999988,
+        "ch2_v_d": 1.70000005,
+        "ch2_v_s": 0.839999974,
+        "ch2_v_r": 1.5,
+        "ch2_v_level": 0.180000007,
+        "ch2_init_brill": 0.0799999982,
+        "ch2_init_level": 0.550000012,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.230000004,
+        "body1_model": 9,
+        "body1_mix": 0.579999983,
+        "body1_brightness": 0.550000012,
+        "body1_decay": 1.20000005,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1.22000003,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 278,
+      "name": "Velvet Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.239999995,
+          0.560000002
+        ],
+        "ch1_after_level": [
+          0.180000007,
+          0.319999993
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.129999995
+        ],
+        "ch2_init_level": [
+          0.239999995,
+          0.519999981
+        ],
+        "ch2_after_level": [
+          0.180000007,
+          0.25999999
+        ]
+      },
+      "current_controls": {
+        "detune": 3.20000005,
+        "mix": 0.419999987,
+        "chorus_on": 1,
+        "ch1_v_a": 0.280000001,
+        "ch1_v_d": 1.5,
+        "ch1_v_s": 0.920000017,
+        "ch1_v_r": 1.70000005,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.0500000007,
+        "ch1_init_level": 0.560000002,
+        "ch1_after_brill": 0.119999997,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.419999987,
+        "ch2_v_d": 1.89999998,
+        "ch2_v_s": 0.829999983,
+        "ch2_v_r": 2.0999999,
+        "ch2_v_level": 0.129999995,
+        "ch2_init_brill": 0.0500000007,
+        "ch2_init_level": 0.519999981,
+        "ch2_after_brill": 0.119999997,
+        "ch2_after_level": 0.25999999,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.280000001,
+        "body1_decay": 1.5,
+        "body2_model": 9,
+        "body2_mix": 0.439999998,
+        "body2_brightness": 0.400000006,
+        "body2_decay": 1.35000002,
+        "body1_size": 1.54999995,
+        "body2_size": 1.29999995,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 279,
+      "name": "Tutti Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.75,
+          0.170000002
+        ],
+        "ch1_init_level": [
+          0.319999993,
+          0.819999993
+        ],
+        "ch1_after_level": [
+          0.140000001,
+          0.25999999
+        ],
+        "ch2_v_level": [
+          0.620000005,
+          0.119999997
+        ],
+        "ch2_init_level": [
+          0.360000014,
+          0.850000024
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.239999995
+        ]
+      },
+      "current_controls": {
+        "detune": 3.29999995,
+        "mix": 0.370000005,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0700000003,
+        "ch1_v_d": 0.899999976,
+        "ch1_v_s": 0.930000007,
+        "ch1_v_r": 0.579999983,
+        "ch1_v_level": 0.170000002,
+        "ch1_init_brill": 0.129999995,
+        "ch1_init_level": 0.819999993,
+        "ch1_after_brill": 0.170000002,
+        "ch1_after_level": 0.25999999,
+        "ch2_v_a": 0.0949999988,
+        "ch2_v_d": 1,
+        "ch2_v_s": 0.860000014,
+        "ch2_v_r": 0.74000001,
+        "ch2_v_level": 0.119999997,
+        "ch2_init_brill": 0.100000001,
+        "ch2_init_level": 0.850000024,
+        "ch2_after_brill": 0.140000001,
+        "ch2_after_level": 0.239999995,
+        "body1_model": 9,
+        "body1_mix": 0.839999974,
+        "body1_brightness": 0.579999983,
+        "body1_decay": 1.04999995,
+        "body2_model": 9,
+        "body2_mix": 0.639999986,
+        "body2_brightness": 0.730000019,
+        "body2_decay": 0.899999976,
+        "body1_size": 1.95000005,
+        "body2_size": 1.10000002,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 280,
+      "name": "Marcato Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "mix": [
+          0.219999999,
+          0.100000001
+        ],
+        "ch1_hpf_cutoff": [
+          70,
+          20
+        ],
+        "ch1_v_level": [
+          0.370000005,
+          0.100000001
+        ],
+        "ch1_init_level": [
+          1,
+          0.949999988
+        ],
+        "ch1_after_level": [
+          0.159999996,
+          0.230000004
+        ],
+        "ch2_v_level": [
+          0.239999995,
+          0.0549999997
+        ],
+        "ch2_init_level": [
+          0.949999988,
+          0.980000019
+        ],
+        "ch2_after_level": [
+          0.0799999982,
+          0.100000001
+        ]
+      },
+      "current_controls": {
+        "detune": 2,
+        "mix": 0.100000001,
+        "chorus_on": 1,
+        "ch1_v_a": 0.0140000004,
+        "ch1_v_d": 0.25,
+        "ch1_v_s": 0.600000024,
+        "ch1_v_r": 0.180000007,
+        "ch1_v_level": 0.100000001,
+        "ch1_init_brill": 0.219999999,
+        "ch1_init_level": 0.949999988,
+        "ch1_after_brill": 0.119999997,
+        "ch1_after_level": 0.230000004,
+        "ch2_v_a": 0.00400000019,
+        "ch2_v_d": 0.129999995,
+        "ch2_v_s": 0,
+        "ch2_v_r": 0.0549999997,
+        "ch2_v_level": 0.0549999997,
+        "ch2_init_brill": 0.319999993,
+        "ch2_init_level": 0.980000019,
+        "ch2_after_brill": 0.0599999987,
+        "ch2_after_level": 0.100000001,
+        "body1_model": 9,
+        "body1_mix": 0.899999976,
+        "body1_brightness": 0.600000024,
+        "body1_decay": 0.850000024,
+        "body2_model": 9,
+        "body2_mix": 0.550000012,
+        "body2_brightness": 0.860000014,
+        "body2_decay": 0.649999976,
+        "body1_size": 1.10000002,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 281,
+      "name": "Air Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_level": [
+          0.550000012,
+          0.200000003
+        ],
+        "ch1_init_level": [
+          0.340000004,
+          0.699999988
+        ],
+        "ch1_after_level": [
+          0.219999999,
+          0.319999993
+        ],
+        "ch2_v_level": [
+          0.219999999,
+          0.0799999982
+        ],
+        "ch2_init_level": [
+          0.349999994,
+          0.639999986
+        ],
+        "ch2_after_level": [
+          0.119999997,
+          0.219999999
+        ]
+      },
+      "current_controls": {
+        "detune": 0,
+        "mix": 0.109999999,
+        "chorus_on": 1,
+        "ch1_v_a": 0.119999997,
+        "ch1_v_d": 1,
+        "ch1_v_s": 0.879999995,
+        "ch1_v_r": 0.800000012,
+        "ch1_v_level": 0.200000003,
+        "ch1_init_brill": 0.100000001,
+        "ch1_init_level": 0.699999988,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.319999993,
+        "ch2_v_a": 0.0240000002,
+        "ch2_v_d": 0.300000012,
+        "ch2_v_s": 0.0900000036,
+        "ch2_v_r": 0.180000007,
+        "ch2_v_level": 0.0799999982,
+        "ch2_init_brill": 0.0599999987,
+        "ch2_init_level": 0.639999986,
+        "ch2_after_brill": 0,
+        "ch2_after_level": 0.219999999,
+        "body1_model": 9,
+        "body1_mix": 0.899999976,
+        "body1_brightness": 0.540000021,
+        "body1_decay": 1.14999998,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1.20000005,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 506,
+      "name": "Phaser Strings",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "ch1_v_r": [
+          0.540000021,
+          0.430000007
+        ],
+        "ch1_v_level": [
+          0.519999981,
+          0.075000003
+        ],
+        "ch1_init_level": [
+          0.469999999,
+          1
+        ],
+        "ch2_v_r": [
+          0.850000024,
+          0.649999976
+        ],
+        "ch2_v_level": [
+          0.379999995,
+          0.0649999976
+        ],
+        "ch2_init_level": [
+          0.439999998,
+          0.839999974
+        ]
+      },
+      "current_controls": {
+        "detune": 1.89999998,
+        "mix": 0.284999996,
+        "chorus_on": 0,
+        "ch1_v_a": 0.0890000015,
+        "ch1_v_d": 1.70000005,
+        "ch1_v_s": 0.949999988,
+        "ch1_v_r": 0.430000007,
+        "ch1_v_level": 0.075000003,
+        "ch1_init_brill": 0.0850000009,
+        "ch1_init_level": 1,
+        "ch1_after_brill": 0.159999996,
+        "ch1_after_level": 0.239999995,
+        "ch2_v_a": 0.219999999,
+        "ch2_v_d": 2.0999999,
+        "ch2_v_s": 0.620000005,
+        "ch2_v_r": 0.649999976,
+        "ch2_v_level": 0.0649999976,
+        "ch2_init_brill": 0.129999995,
+        "ch2_init_level": 0.839999974,
+        "ch2_after_brill": 0.25,
+        "ch2_after_level": 0.270000011,
+        "body1_model": 9,
+        "body1_mix": 0.720000029,
+        "body1_brightness": 0.639999986,
+        "body1_decay": 1.17999995,
+        "body2_model": 9,
+        "body2_mix": 0.310000002,
+        "body2_brightness": 0.779999971,
+        "body2_decay": 1.04999995,
+        "body1_size": 1.08000004,
+        "body2_size": 0.959999979,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 513,
+      "name": "PWM LFO Strings",
+      "body_enabled": false,
+      "changed_prior_nonvolume": {
+        "ch1_v_r": [
+          0.790000021,
+          0.620000005
+        ],
+        "ch1_v_level": [
+          0.5,
+          0.0900000036
+        ],
+        "ch1_init_level": [
+          0.419999987,
+          0.910000026
+        ],
+        "ch2_v_r": [
+          1.14999998,
+          0.899999976
+        ],
+        "ch2_v_level": [
+          0.400000006,
+          0.075000003
+        ],
+        "ch2_init_level": [
+          0.430000007,
+          0.819999993
+        ]
+      },
+      "current_controls": {
+        "detune": 0.850000024,
+        "mix": 0.319999993,
+        "chorus_on": 0,
+        "ch1_v_a": 0.109999999,
+        "ch1_v_d": 1.89999998,
+        "ch1_v_s": 0.959999979,
+        "ch1_v_r": 0.620000005,
+        "ch1_v_level": 0.0900000036,
+        "ch1_init_brill": 0.0700000003,
+        "ch1_init_level": 0.910000026,
+        "ch1_after_brill": 0.170000002,
+        "ch1_after_level": 0.230000004,
+        "ch2_v_a": 0.280000001,
+        "ch2_v_d": 2.4000001,
+        "ch2_v_s": 0.569999993,
+        "ch2_v_r": 0.899999976,
+        "ch2_v_level": 0.075000003,
+        "ch2_init_brill": 0.109999999,
+        "ch2_init_level": 0.819999993,
+        "ch2_after_brill": 0.230000004,
+        "ch2_after_level": 0.280000001,
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1,
+        "body1_size": 1,
+        "body2_size": 1,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    },
+    {
+      "host_index": 516,
+      "name": "Ensemble Plus",
+      "body_enabled": true,
+      "changed_prior_nonvolume": {
+        "fx1_mix": [
+          0.209999993,
+          0.170000002
+        ],
+        "ch1_v_r": [
+          0.930000007,
+          0.779999971
+        ],
+        "ch1_v_level": [
+          0.910000026,
+          0.119999997
+        ],
+        "ch1_init_level": [
+          0.620000005,
+          1
+        ],
+        "ch2_v_r": [
+          1.27999997,
+          1.04999995
+        ],
+        "ch2_v_level": [
+          0.752499998,
+          0.075000003
+        ],
+        "ch2_init_level": [
+          0.709999979,
+          0.980000019
+        ]
+      },
+      "current_controls": {
+        "detune": 1.10000002,
+        "mix": 0.389999986,
+        "chorus_on": 1,
+        "ch1_v_a": 0.100000001,
+        "ch1_v_d": 2,
+        "ch1_v_s": 0.949999988,
+        "ch1_v_r": 0.779999971,
+        "ch1_v_level": 0.119999997,
+        "ch1_init_brill": 0.0799999982,
+        "ch1_init_level": 1,
+        "ch1_after_brill": 0.180000007,
+        "ch1_after_level": 0.340000004,
+        "ch2_v_a": 0.25999999,
+        "ch2_v_d": 2.4000001,
+        "ch2_v_s": 0.629999995,
+        "ch2_v_r": 1.04999995,
+        "ch2_v_level": 0.075000003,
+        "ch2_init_brill": 0.119999997,
+        "ch2_init_level": 0.980000019,
+        "ch2_after_brill": 0.25,
+        "ch2_after_level": 0.449999988,
+        "body1_model": 9,
+        "body1_mix": 0.75999999,
+        "body1_brightness": 0.529999971,
+        "body1_decay": 1.27999997,
+        "body2_model": 9,
+        "body2_mix": 0.419999987,
+        "body2_brightness": 0.720000029,
+        "body2_decay": 1.08000004,
+        "body1_size": 1.14999998,
+        "body2_size": 0.959999979,
+        "body1_variant": 0,
+        "body2_variant": 0,
+        "body1_material": 0,
+        "body2_material": 0
+      }
+    }
+  ]
+}

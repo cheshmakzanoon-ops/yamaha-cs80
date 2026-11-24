@@ -1,0 +1,157 @@
+{
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "inputs": [
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": ".github/workflows/dsp-measurements.yml",
+      "bytes": 11756,
+      "sha256": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": ".github/workflows/filter-batch.yml",
+      "bytes": 2016,
+      "sha256": "b50a8d9567b3cad086956ec1f99b6d218df8e126e8b781743a43adacfed8362d",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": ".github/workflows/screenshots.yml",
+      "bytes": 4285,
+      "sha256": "9dc37c0d6bc4c38acbe6ae1bdea64e0276f0b200c27f4636a00af4efb7c62fb9",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "scripts/run-pluginval-linux.sh",
+      "bytes": 2542,
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "scripts/run-pluginval-with-core.py",
+      "bytes": 7044,
+      "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "scripts/download-pluginval-windows.py",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "scripts/download-pluginval-macos.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+      "bytes": 17824,
+      "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/windows/qualify-windows.py",
+      "bytes": 20714,
+      "sha256": "bdfcd1f29270c263e199eeaf15a719a9985d87f9e8e16b72b7f4771d79a4d2d9",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/macos-arm64/qualify-macos-arm64.py",
+      "bytes": 22216,
+      "sha256": "b79fa95285069389390f069d5061cf80f179c0a985c0f88318273471f85e59cc",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/macos-x86_64/qualify-macos-x86_64.py",
+      "bytes": 22311,
+      "sha256": "9761daae9f67b77ec95d69277a93bc76441396aadfd034ebd746ce2c01822935",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/linux/bind-linux-original-evidence.py",
+      "bytes": 10631,
+      "sha256": "070881cfabee768dd41aa32010c59945195ac9838b322eeb177d0bbfff3fc190",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-db6b5a7/audition/bind-audition-upload.py",
+      "bytes": 11678,
+      "sha256": "fcb982f2ad706a15a983de1d534ac4fe088c9567d2c176d4de822231186f6ff6",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a37-verify-macos-binding.py",
+      "bytes": 23492,
+      "sha256": "214a15276244a6ebfd57f66c66ccbef9678f2435ae2b9c9ca43aadbc92a8eda2",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+      "in_compiled_source_tree": false,
+      "matches_compiled_source_bytes": null,
+      "scope": "Retained verification/preparation input; not part of compiled product"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/verify-audition-archive.py",
+      "bytes": 32502,
+      "sha256": "1dad81d5daf81900d36bfeaf6b18da5e85db04e88ef6a63613cc72c5f30a0583",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a35-native-input-template.json",
+      "bytes": 3543,
+      "sha256": "d9eaa1cebfbc4d7a365eef541a01b0863f5e1ab3b61df94ba82e7251806f84e8",
+      "in_compiled_source_tree": true,
+      "matches_compiled_source_bytes": true,
+      "scope": "Committed source input"
+    }
+  ]
+}

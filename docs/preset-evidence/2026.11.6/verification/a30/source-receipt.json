@@ -1,0 +1,72 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "files": [
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/InstrumentBodyMaterials.h",
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/core/SourceFactoryTones.h",
+      "sha256": "fc209693b74d22dcc05b4dc9882591c5f70992d1b32724cac7dbf423a4aeaf12",
+      "matches_committed_source": true
+    },
+    {
+      "path": "src/plugin/CentreRow.cpp",
+      "sha256": "bc580ee0fd5a2fd22745d6d55d0d4b04559cd2cdb0ad4f8301c7880efdaccd9d",
+      "matches_committed_source": true
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+      "matches_committed_source": true
+    },
+    {
+      "path": "build-preset/libcs80_core.a",
+      "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583"
+    },
+    {
+      "path": "build-preset/cs80_preset_capture",
+      "sha256": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057"
+    },
+    {
+      "path": "build-preset/cs80_source_factory_tone_tests",
+      "sha256": "266e89a5edeb0fc4dfe8f8219529683762242c04369babfae3dfb88e3f898345"
+    },
+    {
+      "path": "/tmp/cs80-a30-routing",
+      "sha256": "3dbdb88a8f58d025c4f7939c1bc1a30b65ca28b364783e5d6410ceb65a33e5f8"
+    }
+  ],
+  "scope": "Read-only shared local build and independent core probe; not an installed native product or complete host GUI qualification."
+}

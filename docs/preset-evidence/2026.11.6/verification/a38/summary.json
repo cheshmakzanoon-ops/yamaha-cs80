@@ -1,0 +1,113 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "sample_rate": 48000,
+  "checks": 1629,
+  "failures": 0,
+  "generated_seconds": 122.22,
+  "maximum_absolute_sample": 0.233249992132,
+  "maximum_peak_dbfs": -12.64356724462209,
+  "maximum_retirement_seconds": 9.0,
+  "maximum_settled_panic_rms": 6.3726953951e-06,
+  "rows": [
+    {
+      "name": "Tubular Bells",
+      "overlap_release_seconds": 6.75,
+      "over_capacity_release_seconds": 6.75,
+      "expression_release_seconds": 6.75,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00201525282047,
+      "second_quarter_second_panic_rms": 4.56169111288e-06
+    },
+    {
+      "name": "Gong",
+      "overlap_release_seconds": 8.75,
+      "over_capacity_release_seconds": 9.0,
+      "expression_release_seconds": 9.0,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00298158689353,
+      "second_quarter_second_panic_rms": 3.53406286341e-06
+    },
+    {
+      "name": "Temple Bell",
+      "overlap_release_seconds": 8.25,
+      "over_capacity_release_seconds": 8.5,
+      "expression_release_seconds": 8.25,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00331005798704,
+      "second_quarter_second_panic_rms": 4.58627543846e-06
+    },
+    {
+      "name": "Agogo",
+      "overlap_release_seconds": 0.5,
+      "over_capacity_release_seconds": 0.75,
+      "expression_release_seconds": 0.75,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00102328189139,
+      "second_quarter_second_panic_rms": 3.16530150115e-06
+    },
+    {
+      "name": "Music Box",
+      "overlap_release_seconds": 2.75,
+      "over_capacity_release_seconds": 3.0,
+      "expression_release_seconds": 2.75,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00192459612383,
+      "second_quarter_second_panic_rms": 4.97912012117e-06
+    },
+    {
+      "name": "Banjo",
+      "overlap_release_seconds": 0.25,
+      "over_capacity_release_seconds": 0.25,
+      "expression_release_seconds": 0.25,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.000924765600577,
+      "second_quarter_second_panic_rms": 3.8020636163e-06
+    },
+    {
+      "name": "Koto",
+      "overlap_release_seconds": 1.25,
+      "over_capacity_release_seconds": 1.25,
+      "expression_release_seconds": 1.25,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00139682661767,
+      "second_quarter_second_panic_rms": 4.05762662677e-06
+    },
+    {
+      "name": "Harp",
+      "overlap_release_seconds": 3.75,
+      "over_capacity_release_seconds": 3.75,
+      "expression_release_seconds": 3.75,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00311981626592,
+      "second_quarter_second_panic_rms": 6.14763519775e-06
+    },
+    {
+      "name": "Kalimba",
+      "overlap_release_seconds": 1.75,
+      "over_capacity_release_seconds": 1.75,
+      "expression_release_seconds": 1.75,
+      "panic_settling_observation_starts_seconds": 0.25,
+      "first_quarter_second_panic_rms": 0.00310779065275,
+      "second_quarter_second_panic_rms": 6.3726953951e-06
+    }
+  ],
+  "negative_control_status": "expected failure",
+  "native_qualification": false,
+  "physical_or_listening_equivalence": false,
+  "negative_control": {
+    "omitted_event": "first preset, MIDI CC64 pedal-up before observer; cleanup after failed observation",
+    "checks": 1629,
+    "failures": 1,
+    "process_exit": 1,
+    "failed_check": "FAIL: Tubular Bells: pedal-up clears every sustained onset"
+  },
+  "original_process_exit": 0,
+  "panic_scope": "Observed first and second quarter-second output windows for these nine 48 kHz fixtures; no universal panic-silence deadline is asserted.",
+  "log_hashes": {
+    "lifecycle.log": "0508dbffd78822e710107c58079e412a2bf6e18e91172d8620e1013d9278fddf",
+    "group-latency-only-window-failed.log": "b4c3de19239e75c87078126ab863c79a2b18f84a03856bb01c2b8739e11cdbca",
+    "initial-panic-window-failed.log": "7baad2d4ac74159d2e50e095ff10e31888a579843822b04ffafb3e015dccda57",
+    "missing-pedal-up-negative.log": "dc7ecc5160f1f6d6ef8e2354d86042a0ee5119b3c246c15516bd2902ae992317",
+    "initial-negative-with-short-drain.log": "d6ab6f8af250459a90b726c10c1c3dacf99f68207b36f1ee9686c5927ea9fc3f"
+  }
+}

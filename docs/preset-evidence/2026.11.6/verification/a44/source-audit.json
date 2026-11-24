@@ -1,0 +1,159 @@
+{
+  "baseline": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "candidate": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "scope": "Static source audit; no new audio/native execution",
+  "unchanged_files": {
+    "tests/MalletPresetRefinementTests.cpp": {
+      "sha256": "f94b35a672ae3f4ae4cc15b733d0ef701e1178f4850240b54c33fe1c7eadc153",
+      "bytes": 7236
+    },
+    "tests/BassPluckedRefinementTests.cpp": {
+      "sha256": "eee24f778c9e6a5a7394c0c9b30a5952ab310f9850b2a829c384f8a8e1e63234",
+      "bytes": 6285
+    },
+    "src/core/CuratedLibraryLevels.inc": {
+      "sha256": "06b59ac0926e50c2c65ec0b0c999eb2b27ac947131337e03a23f3498e3df52bc",
+      "bytes": 9959
+    },
+    "scripts/compare-preset-response.py": {
+      "sha256": "c37e1a7b7d98a96b565df5785b7903b3be687be91ffd2f7b80b98a2dd0af03ff",
+      "bytes": 20335
+    }
+  },
+  "inputs": {
+    "CMakeLists.txt": {
+      "sha256": "136e8b7b6d75057eeefc291246a0a4ad2a198a5d0b0e8ffd7335327823c4db33",
+      "bytes": 219552
+    },
+    ".github/workflows/build.yml": {
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb",
+      "bytes": 35354
+    },
+    "tests/LibraryAuditTests.cpp": {
+      "sha256": "8ce1469c4d41d41df2393fdf9d4053fe3f96b090d5f5de96e25cc15e0059e9e8",
+      "bytes": 23378
+    },
+    "tests/PresetCharacterTests.cpp": {
+      "sha256": "932b6266771ccd218876940c1ff8c4c2b22531332b901dbbacd13302bab2f0c8",
+      "bytes": 15144
+    },
+    "tests/PianoCourseGeometryTests.cpp": {
+      "sha256": "f857734f0def4b5ec39bcdbdfdefd4dadee7ed3071dcfa57f98636063e4c0565",
+      "bytes": 10143
+    },
+    "tests/WindBodyFormantTests.cpp": {
+      "sha256": "dcd6b35b30ae3a9f9a71c430a4d926340efe17305a3e5b98e721fd1da1fc51c8",
+      "bytes": 6242
+    },
+    "tests/MaterialBodyTests.cpp": {
+      "sha256": "66eb731a3a3352c83f3cb5518d31aa0008f67b6d63c0ec3345298ccf799cfe8d",
+      "bytes": 11811
+    },
+    "tests/PluckedMaterialTests.cpp": {
+      "sha256": "8a029c8fffcb7f9463d5ce3137a550f81a0d2ea29ca19b33a77415a554cbf497",
+      "bytes": 9914
+    },
+    "tests/BellMaterialPresetTests.cpp": {
+      "sha256": "fb051105e19a66c57c486702a1370956f6fdc200d829dcabd884c4bc2df58d2a",
+      "bytes": 8292
+    },
+    "tests/PluckedMaterialPresetTests.cpp": {
+      "sha256": "2869a1728950837ead97128cd69c67f2a25b080c063ef53d7fd1f372a6c46c43",
+      "bytes": 6609
+    },
+    "tests/InstrumentBodyHostTests.h": {
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+      "bytes": 43689
+    },
+    "scripts/compare-preset-response-2026-11-6.py": {
+      "sha256": "f6f84bf7f262cd4b79ea37df79373e072df684ae765668e21e2817fc67213c70",
+      "bytes": 18692
+    },
+    "scripts/test-compare-preset-response-2026-11-6.py": {
+      "sha256": "d59c298d2917fb9d67becc27836d4397a85b3af825a28e158c07627285471898",
+      "bytes": 11960
+    },
+    "scripts/capture-factory-auditions.py": {
+      "sha256": "692322b8722698c0da7cf164ffc50808b1e78ce341685898b599b06870a9d944",
+      "bytes": 19414
+    },
+    "scripts/test-capture-factory-auditions.py": {
+      "sha256": "49e92bb3f14ba50ae7e0a73bc1d0bb436533a850bcb1e4664b6b2ea1b8a20418",
+      "bytes": 28278
+    },
+    "scripts/test-pluginval-macos-download.py": {
+      "sha256": "315e68bbdf3b169a0c60d17418e5381dc35c37f7063547e4a32fba956dafe35c",
+      "bytes": 23761
+    },
+    "scripts/test-pluginval-macos-download-negative.py": {
+      "sha256": "c89b06169774269a3009e153b27171d45e365b04678e35238721a27a1cd23164",
+      "bytes": 6389
+    }
+  },
+  "new_registrations": {
+    "cs80_preset_response_2026_11_6_comparison_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 30
+    },
+    "cs80_piano_course_geometry_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 60
+    },
+    "cs80_wind_body_formant_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 60
+    },
+    "cs80_material_body_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 120
+    },
+    "cs80_plucked_material_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 120
+    },
+    "cs80_bell_material_preset_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 180
+    },
+    "cs80_plucked_material_preset_tests": {
+      "conditional_scope": [
+        "CS80_BUILD_TESTS"
+      ],
+      "timeout_seconds": 180
+    }
+  },
+  "library_audit_change": "Only the two appended Material selectors join the integer-value classifier",
+  "unchanged_mac_command_bodies": {
+    "Validate VST3 with pluginval": "b84bf41e18503fc04ef7b90a4b2ee0f7c3d04de4e89d0c18e403bf34772158cb",
+    "Validate AU with pluginval": "0ef60a6b1ecf7494b3caefaa476d03625eff98b2e542d25469fdc1d80c7521e3",
+    "Validate AU with pluginval GUI": "0d0f3fce59c355a450f9456ff3baaa6f99e1ae41f2054e408815232c9172de6f",
+    "Validate AU GUI fixed-seed regression": "3a2c3530c1c56dd4f0434839dfa7c90c37cb50d2b5228827d7448ad9f91bae33"
+  },
+  "mac_gates": {
+    "lanes_per_mac": 5,
+    "previous_four_commands_unchanged": true,
+    "fixed_lanes_run_after_attempted_random_gui": true,
+    "new_lane_failure_not_ignored": true,
+    "packaging_has_no_status_override": true
+  },
+  "character_change": "Retire only the 8% unrelated-accent minimum for Harp/Kalimba; restore reconstruction, body floors, contact ceiling and relative decay",
+  "audition_budget_change": {
+    "old_raw_audio_budget": 480000000,
+    "new_raw_audio_budget": 500000000,
+    "configured_raw_audio_bytes": 490060800,
+    "scope": "Fixture storage budget, not an audio quality or clipping limit"
+  },
+  "status": "source-audit-passed"
+}

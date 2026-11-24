@@ -1,0 +1,40 @@
+{
+  "reviewer": "A54",
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/reviews/a54.md",
+      "bytes": 5239,
+      "sha256": "23e9040acb262c1c09db5159a883f500e81018b783ce60463ff477386495c616"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/capture-parameter-contract/build.log",
+      "bytes": 141,
+      "sha256": "7fa1b09ed186bc7632c25350f29579bacd455d77ced9fb9c472901292121fb9b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/capture-parameter-contract/capture-tests.log",
+      "bytes": 1494,
+      "sha256": "6671daf6894dcaf74a3a0a8ae7c105c22009948e31ad079595256973397a0521"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/capture-parameter-contract/current-200-306-search.log",
+      "bytes": 25801,
+      "sha256": "e8e57632b00aa9c364d2df22297c5e6eaa57687bed9e64c388913a77dfda894b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/capture-parameter-contract/results.json",
+      "bytes": 3822,
+      "sha256": "2ba1adce1173621543cb622c592dbfb86f142a23571981bc7af4c8d1a3b76b23"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/development/capture-parameter-contract/test-contract.patch",
+      "bytes": 6176,
+      "sha256": "df395eca2d61e3a1eb70195b297db3aa3c5a2eee15bdb493a5b3858728ef5203"
+    }
+  ],
+  "source_test": {
+    "path": "tests/test_parity_capture.py",
+    "sha256": "53fbfc69eb98b4e39d9fe2675c2a5974ac0e9964279ee85a5f92371b234b2113"
+  },
+  "scope": "Evidence identities, excluding this self-referential manifest. Original failed CI log/API are retained in source-09af535 and identified by results.json."
+}

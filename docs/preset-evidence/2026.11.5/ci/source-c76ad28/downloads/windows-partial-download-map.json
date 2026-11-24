@@ -1,0 +1,78 @@
+{
+  "status": "Partial actual public-route evidence: Windows only; all five target acceptance and minimum expiry pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "native_run_id": 45351731801,
+  "attempt_model": "Select and bind each artifact to its actual producer job/attempt; independently bind Windows/Linux consumer job/attempt. No single global attempt is assigned.",
+  "release_qualified": false,
+  "targets": [
+    {
+      "target": "windows-x86_64",
+      "expected_artifact_name": "cs80-windows-install-bundle",
+      "selected_producer_job_id": 138299557166,
+      "selected_producer_attempt": 1,
+      "actual_artifact_id": 14903717361,
+      "actual_api_bytes": 6387912,
+      "actual_api_sha256": "0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14903717361.zip",
+      "public_get_size_hash_verified": true,
+      "public_get_receipt": "windows-attempt1-public-get.json",
+      "public_route_acceptance": "windows-public-route-acceptance.json",
+      "actual_expires_at": "2027-02-22T07:55:18Z",
+      "original_upload_attempt_binding_acceptance": null,
+      "platform_acceptance": null
+    },
+    {
+      "target": "macos-arm64",
+      "expected_artifact_name": "cs80-macos-15-install-bundle",
+      "selected_producer_job_id": null,
+      "selected_producer_attempt": null,
+      "actual_artifact_id": null,
+      "public_get_size_hash_verified": null,
+      "actual_expires_at": null,
+      "original_upload_attempt_binding_acceptance": null,
+      "platform_acceptance": null,
+      "note": "Original attempt1 failed; replacement job/attempt/artifact remain unknown. Do not substitute its successful partial lanes."
+    },
+    {
+      "target": "macos-x86_64",
+      "expected_artifact_name": "cs80-macos-15-intel-install-bundle",
+      "selected_producer_job_id": 138299557267,
+      "selected_producer_attempt": 1,
+      "actual_artifact_id": null,
+      "public_get_size_hash_verified": null,
+      "actual_expires_at": null,
+      "original_upload_attempt_binding_acceptance": null,
+      "platform_acceptance": null
+    },
+    {
+      "target": "linux-x86_64",
+      "expected_artifact_name": "cs80-linux-install-bundle",
+      "selected_producer_job_id": 138299557138,
+      "selected_producer_attempt": 1,
+      "actual_artifact_id": null,
+      "public_get_size_hash_verified": null,
+      "actual_expires_at": null,
+      "original_upload_attempt_binding_acceptance": null,
+      "platform_acceptance": null
+    },
+    {
+      "target": "factory-audition",
+      "expected_artifact_name": "cs80-curated-preset-audition-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "selected_producer_job_id": 138299557138,
+      "selected_producer_attempt": 1,
+      "actual_artifact_id": null,
+      "public_get_size_hash_verified": null,
+      "actual_expires_at": null,
+      "original_upload_attempt_binding_acceptance": null,
+      "content_acceptance": null
+    }
+  ],
+  "all_five_public_routes_verified": false,
+  "earliest_advertised_expiry_utc": null,
+  "earliest_advertised_expiry_America_Halifax": null,
+  "attempt_rule": "Use the run API for the selected producing attempt, together with the original upload identity/time binding. A later aggregate workflow attempt must not relabel unchanged attempt1 artifacts. Public-route equality alone does not bind production attempt.",
+  "mixed_attempt_contract_reference": "../release-gate-audit/mixed-attempt-supplement.json",
+  "frozen_preparation_contract": "../../../verification/a57-final-download-mapping-contract.json",
+  "fallback_artifacts_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801#artifacts"
+}

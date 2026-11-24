@@ -1,0 +1,87 @@
+{
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "source_tree": "ffec7e5d062ccc6761fff9080405769d5002513a",
+  "frozen_core": {
+    "path": "/tmp/cs80-a44/libcs80_core.a",
+    "bytes": 1691342,
+    "sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8"
+  },
+  "core_source_archive": {
+    "sha256": "868e36505667f4eaed71722fc392d438d2a966c5fb11688d7be415a3555d9a28",
+    "bytes": 1310720
+  },
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "scope": "Exact committed source headers and frozen linked core; no native plugin build.",
+  "full_source_archive": {
+    "sha256": "706d6fd824fc340d7d2dca086b75a1180df2cf00029b2b333e0878b5000391bb",
+    "bytes": 3747840
+  },
+  "initial_private_compile_issue": "A core-only snapshot lacked reference/KeyboardContour.h. The frozen snapshot was expanded to all src files at the same commit before compilation; no repository source was changed.",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-DNDEBUG",
+    "-std=c++20",
+    "-I/tmp/cs80-a44/source/src",
+    "docs/preset-evidence/2026.11.5/verification/a44-fx-long-probe.cpp",
+    "/tmp/cs80-a44/libcs80_core.a",
+    "-pthread",
+    "-o",
+    "/tmp/cs80-a44/probe"
+  ],
+  "build_return_code": 0,
+  "private_compile_correction": "The first full-source diagnostic compile used range iteration on ParamValues, which supports indexed access. The private probe was corrected to iterate all P_numParams indexed values before any audio was rendered.",
+  "probe": {
+    "bytes": 1103344,
+    "sha256": "8e668024dadf34967bdd5585bc3a1f56c7f206980c2e5fe80bf144b517857946"
+  },
+  "probe_source_sha256": "6f7ec6bdd39053d94b609aca279996b09505ba889fee267220e0dbda5b4997c5",
+  "analysis_runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "analysis_command": [
+    "python3",
+    "docs/preset-evidence/2026.11.5/verification/a44-analyze-fx.py"
+  ],
+  "analysis_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "source_files": {
+    "src/core/Engine.cpp": {
+      "bytes": 168522,
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588"
+    },
+    "src/core/Engine.h": {
+      "bytes": 40894,
+      "sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33"
+    },
+    "src/core/ModulationLfo.h": {
+      "bytes": 5320,
+      "sha256": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400"
+    },
+    "src/core/curated/Fx.inc": {
+      "bytes": 24328,
+      "sha256": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3"
+    },
+    "src/core/CuratedLibrary.inc": {
+      "bytes": 10754,
+      "sha256": "eb326f1956ec171af2564dae3d13072eb31f311ae558d3842bec1283ee8c4eb4"
+    },
+    "src/core/CuratedLibraryLevels.inc": {
+      "bytes": 9880,
+      "sha256": "85515d0554dd13b4c7a1c26439e645bfe9008aebd79d4f31547800706d7c3392"
+    },
+    "src/core/FactoryPresets.cpp": {
+      "bytes": 10882,
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10"
+    }
+  },
+  "frozen_core_hash_still_matches": true
+}

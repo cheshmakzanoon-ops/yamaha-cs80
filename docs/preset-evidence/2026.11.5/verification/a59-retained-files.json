@@ -1,0 +1,38 @@
+{
+  "worker": 59,
+  "scope": "Immutable A59 checkpoint outputs. Evolving docs/TEAM_REVIEW_2026_11_5.md and work-log.json are explicitly excluded; exact earlier checkpoint copies are retained instead. Later coordinator status notices may update the mutable originals without changing these outputs.",
+  "path_base": "docs/preset-evidence/2026.11.5",
+  "files": [
+    {
+      "path": "reviews/a59.md",
+      "bytes": 5052,
+      "sha256": "4e73cf17eb9958f16ba4d4c914cbb87bfba7ad5699877d1c3765fb5e57bf1916"
+    },
+    {
+      "path": "verification/a59-review-retained-evidence.py",
+      "bytes": 7018,
+      "sha256": "d96f0bc1fbec26bb95d55204ea329954d398c8402cb01477001fa0d49b6086c9"
+    },
+    {
+      "path": "verification/a59-source-history-check.json",
+      "bytes": 10326,
+      "sha256": "136a5861cf9e8b53d294410e39e348d7b3a9dc58510adbde63dfce0a8c35549e"
+    },
+    {
+      "path": "verification/a59-integrity-checkpoint.json",
+      "bytes": 182736,
+      "sha256": "46ae3d70ec49d237f1d691d28f1724b9b47f738437c988a868b1dc002df6aff9"
+    },
+    {
+      "path": "verification/a59-team-review-checkpoint.md.txt",
+      "bytes": 19807,
+      "sha256": "88deb87898d593c3bbf481cf162ace162ec5766ad760709e28a205ad5d6ce37b"
+    },
+    {
+      "path": "verification/a59-work-log-checkpoint.json",
+      "bytes": 29880,
+      "sha256": "c519b41c8f44b2b511e33caaa721a618439dd8107b170a3d707499cd006de2d9"
+    }
+  ],
+  "whole_release_qualified": false
+}

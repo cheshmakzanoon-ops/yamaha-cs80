@@ -1,0 +1,36 @@
+{
+  "scope": "Synthetic preparation and parser/archive identity semantics only; no native artifact or release acceptance",
+  "synthetic_test_methods": 7,
+  "failures": 0,
+  "required_validator_lanes": 15,
+  "native_registered_counts": "not assumed",
+  "parser_sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+  "historical_parser_sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+  "release_qualified": false,
+  "files": {
+    "USAGE.md": {
+      "bytes": 7132,
+      "sha256": "4c737e8607a4628a8d973d1b549605c35f813257ab18c0a140efbd7ce07f1cb0"
+    },
+    "bind-parser-archives.py": {
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+    },
+    "inputs-template.json": {
+      "bytes": 3738,
+      "sha256": "e3a7faab1945114ca89538b595829a79e69c591114f1d5dab159d371ed7656c7"
+    },
+    "parse-native-evidence.py": {
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+    },
+    "test-evidence.py": {
+      "bytes": 10247,
+      "sha256": "33d6912cd08bce634e1337f754d314515502bfc2f706b167d02d6ec478e03567"
+    },
+    "tests.log": {
+      "bytes": 896,
+      "sha256": "269af62a9f96ec363ba1631acc0967cc39c63f72b65a9e8f5d0b765d4f658edf"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "worker": 60,
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "native_run_id": 45351731801,
+  "dsp_run_id": 45351731746,
+  "attempt": 1,
+  "requirements": [
+    {
+      "id": "native_original_execution",
+      "requirement": "All six actual native producer/consumer jobs at source c76ad288, run 45351731801, attempt 1 succeed. Require exact full roster, all 15 added tests, explicit formal/nested skip accounting and JUCE 8.0.11 c352e2489000ffeb9e397051377d75eef2efe641 provenance.",
+      "observed_complete": false
+    },
+    {
+      "id": "validator_original_execution",
+      "requirement": "All 13 original pluginval 1.0.4 strictness 10 lanes validate 523 programs. Require one start per final console/report, exact fixed seeds, expected GUI coverage, unsuppressed original exits and every Linux retry eligibility/attempt record.",
+      "observed_complete": false
+    },
+    {
+      "id": "actual_archive_identity",
+      "requirement": "Every native and validator parser archive record must match the actual ZIP/API SHA-256 and byte count. Require A58 archive-binding gap closure; raw helper release_qualified: false fields remain unchanged.",
+      "observed_complete": false
+    },
+    {
+      "id": "install_payload_identity",
+      "requirement": "All four real install ZIPs pass complete inventories/checksums/source/run/revision/native-architecture checks. Bind complete Windows/Linux VST3 payloads to validator input artifacts, and both Mac complete AU comparisons plus unchanged VST3 validation/package paths.",
+      "observed_complete": false
+    },
+    {
+      "id": "audition",
+      "requirement": "A53 accepts the actual final-source 171-WAV archive and complete 523-by-202 inventory, with sample/metric/roster checks and original capture/upload source/run/attempt binding. Source expectations alone do not pass this gate.",
+      "observed_complete": false
+    },
+    {
+      "id": "supporting_dsp",
+      "requirement": "Actual c76ad288 DSP run 45351731746 attempt 1 passes its required jobs and artifact inspection. Preserve original 09af failures and superseded outcomes.",
+      "observed_complete": false
+    },
+    {
+      "id": "supporting_filter_ui",
+      "requirement": "Original 09af filter and screenshot executions remain attributed to 09af. Require refreshed relevant-input equivalence to c76; explicitly account for changed guides and unconsumed parity-capture Python fixture.",
+      "observed_complete": false
+    },
+    {
+      "id": "five_public_downloads",
+      "requirement": "A57 full unauthenticated GET receipts for all four actual install IDs and actual audition ID match their fresh authenticated API sizes/hashes. Derive the minimum actual expiry over all five, converted with America/Halifax and retained UTC.",
+      "observed_complete": false
+    },
+    {
+      "id": "claims_and_team",
+      "requirement": "Preserve 523 ordered identities/no new presets, 521 changed musical programs/two Init, 14 changed tag lists, scoped signal-measurement limits and LOAD/RELOAD instructions. Record 60 actually started workers and honest completion scopes, including first six conversational findings.",
+      "observed_complete": false
+    },
+    {
+      "id": "publication_index",
+      "requirement": "Final explicit staged manifest contains reviewed documentation/evidence only, no production/test/build/workflow changes, no historical .4 modifications, no caches/binary downloads. Compare exact index blobs, modes and expected tree; include all linked new evidence.",
+      "observed_complete": false
+    },
+    {
+      "id": "leased_publication",
+      "requirement": "Re-read remote main immediately before creation, preserve its exact tree/ancestry, use that SHA as parent and expected_sha, force: false, and include [skip ci] in the final commit message. Verify every uploaded blob and final tree against the staged manifest.",
+      "observed_complete": false
+    },
+    {
+      "id": "post_push_readback",
+      "requirement": "Confirm actual remote commit/tree and exact final README URLs/IDs. Identify c76ad288 as compiled source and final documentation commit separately. Source-time bundled guides are immutable; online records describe completed qualification.",
+      "observed_complete": false
+    }
+  ],
+  "authorized_publication": "User explicitly authorized committing/pushing main and updating all system download links. This technical review does not add a user approval step.",
+  "expected_advertised_targets": [
+    "windows-x86_64",
+    "macos-arm64",
+    "macos-x86_64",
+    "linux-x86_64",
+    "factory-audition"
+  ],
+  "compiled_source_is_not_later_documentation_commit": true,
+  "preparation_only": true,
+  "final_signoff": false,
+  "release_qualified": false
+}

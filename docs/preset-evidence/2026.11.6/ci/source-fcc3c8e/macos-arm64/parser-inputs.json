@@ -1,0 +1,67 @@
+{
+  "_template_status": "Actual single-platform inputs; final cross-platform completeness remains external.",
+  "provenance": {
+    "factory_revision": "2026.11.6",
+    "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "tree": "74e3cbd3e5f9a2cd75135d4de67bf24ff0066b18",
+    "run_id": 45366603800,
+    "attempt": 1
+  },
+  "native": [
+    {
+      "target": "macos-arm64",
+      "archive": "/workspace/scratch/b9c11dd92abc/native-artifacts/14909506446.zip"
+    }
+  ],
+  "validators": [
+    {
+      "target": "macos-arm64",
+      "archive": "/workspace/scratch/b9c11dd92abc/native-artifacts/14910405103.zip"
+    }
+  ],
+  "_external_reconciliation_not_enforced_by_parser": {
+    "all_new_tests_must_be_present_and_passed": [
+      "cs80_struck_body_dynamics_tests",
+      "cs80_instrument_body_variant_tests",
+      "cs80_vocal_body_tests",
+      "cs80_body_articulation_engine_tests",
+      "cs80_original_articulation_tests",
+      "cs80_keyboard_response_tests",
+      "cs80_mallet_preset_refinement_tests",
+      "cs80_bass_plucked_refinement_tests",
+      "cs80_brass_organ_refinement_tests",
+      "cs80_wind_string_refinement_tests",
+      "cs80_pad_poly_refinement_tests",
+      "cs80_fx_refinement_tests",
+      "cs80_modern_preset_refinement_tests",
+      "cs80_lead_refinement_tests",
+      "cs80_preset_response_coverage_tests",
+      "cs80_piano_course_geometry_tests",
+      "cs80_wind_body_formant_tests",
+      "cs80_material_body_tests",
+      "cs80_plucked_material_tests",
+      "cs80_bell_material_preset_tests",
+      "cs80_plucked_material_preset_tests",
+      "cs80_preset_response_2026_11_6_comparison_tests"
+    ],
+    "require_juce_source": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "require_juce_version": "8.0.11",
+    "parser_release_qualified_must_remain_false": true,
+    "external_gates": [
+      "Authentic API artifact ID/name/bytes/SHA256/source/run/expiry; original upload step binds reviewed attempt.",
+      "All six original jobs and required build/test/validator/package/upload steps succeeded for one exact source/run/attempt.",
+      "Compare actual JUnit test names/counts and explicitly review all skips, disabled cases and unknowns.",
+      "Require JUCE provenance even though the parser tolerates a missing provenance file.",
+      "Review original exits and every Linux retry against source-pinned wrapper eligibility; diagnostic reruns cannot replace original lanes.",
+      "Match complete Linux/Windows packaged VST3 bundles to the original validator inputs; verify Mac VST3 paths and AU before/after bundle identity.",
+      "Verify actual installation archive integrity and actual audition acceptance separately."
+    ],
+    "registered_counts": "Read actual CTest/JUnit inventories; do not guess from a prior release.",
+    "expected_validator_lanes": {
+      "linux-x86_64": 3,
+      "windows-x86_64": 2,
+      "macos-arm64": 5,
+      "macos-x86_64": 5
+    }
+  }
+}

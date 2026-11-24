@@ -1,0 +1,1394 @@
+{
+  "run_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "release_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "scope": "All src/core files, the continuous-circuit header, full CMake definition, filter workflow, four test entrypoints, the Python admission compiler probe, and their transitive quoted repository includes. No claim is made about other suites that consume the changed guides.",
+  "run_source_tree": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+  "release_source_tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "input_count": 93,
+  "all_relevant_inputs_identical": true,
+  "inputs": [
+    {
+      "path": ".github/workflows/filter-batch.yml",
+      "bytes": 2016,
+      "sha256": "b50a8d9567b3cad086956ec1f99b6d218df8e126e8b781743a43adacfed8362d",
+      "git_blob": "e56e10f7b248c8182fd9f077b561daadb53149c6",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f",
+      "git_blob": "f0875e30885046497c24acecf037ac53eb152f69",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/AdsrRcReconstruction.inc",
+      "bytes": 2118,
+      "sha256": "5f20c167a9f4b24d050117ecf721fae1acba3942494b645a70f26b0e5aabbaf2",
+      "git_blob": "c6dba84f9e3eb3ea66d3be5b62087917e526168c",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/BbdChorus.h",
+      "bytes": 16609,
+      "sha256": "380733392e63e8ae9b183ad6816f9f626702824875928a9ef689321a25f4d0f2",
+      "git_blob": "42d326b3a68ea9148f02ab5d89db58fd1b884cdd",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/BodyArticulation.h",
+      "bytes": 3326,
+      "sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7",
+      "git_blob": "d2ab182f14fa74e16bad31a2afa73bdff1d0d12a",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ControllerCurves.h",
+      "bytes": 1673,
+      "sha256": "53f22bdaa8d65e1e18d2f7507a528c845599a712e691277d4919771865834419",
+      "git_blob": "c9578e38fe333971cad083bac94c351257fb3e06",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "bytes": 10754,
+      "sha256": "eb326f1956ec171af2564dae3d13072eb31f311ae558d3842bec1283ee8c4eb4",
+      "git_blob": "2363fbcf4318f16d7c70375206cf4224fc79401d",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/CuratedLibraryLevels.inc",
+      "bytes": 9959,
+      "sha256": "06b59ac0926e50c2c65ec0b0c999eb2b27ac947131337e03a23f3498e3df52bc",
+      "git_blob": "33b30fbe4e9a48605434b2448577fcf02bed87eb",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Dsp.h",
+      "bytes": 53006,
+      "sha256": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+      "git_blob": "186899c309369e6279de4b117cd3d88211fffec6",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168522,
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "git_blob": "d105b8bdb7fb36709622313f0f06f6263fdfd7fe",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "bytes": 40894,
+      "sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+      "git_blob": "82c0f990b2f434ef437dfe9cba993d67072cef0a",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/EngineOutputFir.cpp.inc",
+      "bytes": 8615,
+      "sha256": "e54935f55318754f6865814441f94e4c85720cb634d6f9772ec1906580725859",
+      "git_blob": "d399c4a94c1938068a9bebf21f431fc360ee2e71",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/EngineOutputFir.h",
+      "bytes": 1573,
+      "sha256": "5df33ce77143e492b31a79cd8e64f9b42691f0d8cdf9c09632de6378637a99d8",
+      "git_blob": "eb744bab67c3e78ef2e70f4d03905ae353b9414e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/EngineStereoPra.cpp.inc",
+      "bytes": 4295,
+      "sha256": "8d6acd0c8c56cabfd91c8ad0d3fb22a8f5a84fb14a94fb863e54cbcd9338d0da",
+      "git_blob": "a196491554d41aa00ebb075d202df9866542c1eb",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/EngineWscHeld.cpp",
+      "bytes": 2514,
+      "sha256": "ca86927a97437307756edaf357cffad7809ebbda6d395cbab6c2d22023515e10",
+      "git_blob": "421c07364ebedf30cdafc8c34b936d4e72a8461b",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/EngineWscHeld.h",
+      "bytes": 2584,
+      "sha256": "00c73159fbe830aa2080caf8b8fc8adf08fc8d23faeab8faab2d2ccfd066aed0",
+      "git_blob": "196bbdb872e209deebceb5525950e60e5b980d27",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ExpressionOptics.h",
+      "bytes": 2992,
+      "sha256": "396434daacc44a493cf9f393399bcf02d1395717b80296d154e6632a8e2fa094",
+      "git_blob": "33ff96468a11177f5ce450ad0e67ab1726c68ce0",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ExternalModulationInterpolator.h",
+      "bytes": 5307,
+      "sha256": "1dbd2e6ef7413fe15d8722ae89c9e0d5c10388382f3706d3b3fa1214ee10d0d2",
+      "git_blob": "45951229cfbc044e0afc14c6e1ddd963d8fa5205",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 10882,
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352",
+      "git_blob": "7f5e1ed72d2b58b474014383b375b083cd2aa4ab",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "git_blob": "d6a37c684e02b897eb93eaa24dcb89289702704d",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FactoryToneHypotheses.h",
+      "bytes": 16275,
+      "sha256": "4e5f50e5ce8bdcf8596ae637fe1b20b6cd0806dcf8a16512976b6021a72c989f",
+      "git_blob": "99e38e95a685e88419a977ca563664153e47397b",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FastMath.h",
+      "bytes": 1620,
+      "sha256": "a8e87ed8e4d19a03dc99327036f401cd5d2e49c6ca8e3a5356a33d4689347ea0",
+      "git_blob": "7c81bfa3632044b6c10d781e500e83de0c690c92",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FilterEnvRcReconstruction.inc",
+      "bytes": 2329,
+      "sha256": "648e22701eb70b449625a43131938d1ae5a0e9bff19a783100f37aadda71c530",
+      "git_blob": "e915df0630584a0bde870affd338be60a450e365",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FxLoudness.h",
+      "bytes": 4907,
+      "sha256": "855f157f9c4a59d2c64a04143f21d3585e6fedfef6f8d462d46798e06643e695",
+      "git_blob": "9464c31c3e0210bc0f45cfe32640bdbdff42cbf6",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FxModels.h",
+      "bytes": 38786,
+      "sha256": "b2cd5a53030e76d3ff6378404168adcc5d873a9a2820da3bf6bf0f1df1625282",
+      "git_blob": "6063328c321120f900f148a25c58f74f6f44d027",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FxOversampler.h",
+      "bytes": 7553,
+      "sha256": "30aaba544136e5626f902d29147ca5f20c047895ca58c27286242bcdfb58c1c9",
+      "git_blob": "35760d31fffd74a060ef74f59f202c146b94bb7e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/FxSlot.h",
+      "bytes": 6863,
+      "sha256": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe",
+      "git_blob": "c67bff49aec32873517b1e3cbb8f18bdae196188",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/HardwareControl.h",
+      "bytes": 20864,
+      "sha256": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+      "git_blob": "99603e66979fc7bf6d79c14607f331dd587a61ee",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/HeadphoneAmpCircuit.h",
+      "bytes": 2853,
+      "sha256": "a3429931f921efc1349b7cf5e0c53fefcc658c04d140028cfee5ee6047137caf",
+      "git_blob": "b4086cdfae26e529968f221e74c5d513e61ab722",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/HeterogeneousSourceCutoff.h",
+      "bytes": 7846,
+      "sha256": "b515470be907dd4097b5d52bd40b2555e6a3b736eba842b8cc2aea074b5e27d9",
+      "git_blob": "33a1bd974255d7a21ab47302c5480e468f35ff97",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Ig00156Batch.cpp",
+      "bytes": 21447,
+      "sha256": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c",
+      "git_blob": "30715be2a1bc5d65828e451609fb4efa935e8f24",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Ig00156Batch.h",
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985",
+      "git_blob": "0b23b30b1fed1e909a14a2361794d5f819f758e6",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Ig00156Filter.h",
+      "bytes": 16054,
+      "sha256": "140f703f69e856b9c117405ca5d6fff58b756f6acc54c39a1a0417fee8c17a05",
+      "git_blob": "fc885797b2b46566b77488babfdcac38bce23a6e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Ig00156RootFallback.h",
+      "bytes": 3187,
+      "sha256": "311be1754f56a63646e0c98f468ea0ca21932bb21c4823ce2c2c1cfdb92f4eed",
+      "git_blob": "55ceac556ce6ce69f4f91161cbe8908578774363",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 52123,
+      "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa",
+      "git_blob": "61b3da5c0c2b6a139ce67fcba4631e2449a0395b",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/InstrumentBodyFilter.h",
+      "bytes": 3648,
+      "sha256": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+      "git_blob": "78f8c68ada4e9e8e925fed614c1e72e0a08bbaa6",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "bytes": 1259,
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "git_blob": "fc5d7744967c6836e44bf8705ac95b57a197f69f",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/KasScanner.h",
+      "bytes": 6993,
+      "sha256": "534984c36aa24780d0034c50dae469a73dec49404a5c8487e0a0327a3b728bdb",
+      "git_blob": "0d0c164d4a3cb9fcae7efb4d122026d9724fcec9",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/KbcContour.h",
+      "bytes": 4607,
+      "sha256": "4ba34af5fe85dcaf92e7fe16c3bc35cac866ef002cb4b5301226be1ab08a1164",
+      "git_blob": "74aec94f879a68c6a5c51c38dc4c3362177bcd65",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/MasterControllerSmoothing.cpp.inc",
+      "bytes": 6406,
+      "sha256": "9d86517a0d72d743ea8d35efefb7483a9421a388c922091d2b48ed055f92ba42",
+      "git_blob": "4906b1a63fee258d143fd19100d26a5a06e0fe67",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/MemoryPanels.h",
+      "bytes": 7688,
+      "sha256": "de38f98a1f6084f99387e574f1e1c29042afe42297e52ff7505c370e4e8c5614",
+      "git_blob": "eead80d454c38bf25b4f3f2a6e8220141429c492",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ModMatrix.h",
+      "bytes": 8973,
+      "sha256": "2ac2a9e1099a851103d9bd7c9dce1f957d930d50fddbf034a92628e91d077e15",
+      "git_blob": "b6555c91e01cf12801e123e6488c8867a147e8bc",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ModernLayer.h",
+      "bytes": 26497,
+      "sha256": "8bba54f736e0215d3ce8c7be457990ffe0242c1322ba47faf6beae3d36a808d8",
+      "git_blob": "f91c21392e47f012bb22b6e917c65982d3ca1be0",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ModulationLfo.h",
+      "bytes": 5320,
+      "sha256": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400",
+      "git_blob": "0848ea0764646db8e01c8616cff820f472404b90",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/MpeZones.h",
+      "bytes": 8257,
+      "sha256": "ed6ba594d7d0ad09ff8e79bf5e79d5487f7449d84aa5b824132620c16fc533e0",
+      "git_blob": "c4351819eced42d050e853a874306e553ab08a09",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Mseg.h",
+      "bytes": 11822,
+      "sha256": "d8769094216200673a8a029c1691ec25778a2e69b834cbbcc5e2c36400a4a27f",
+      "git_blob": "f81d33a9d002082ccfc149169650dbedb382c011",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/NoiseSource.h",
+      "bytes": 9002,
+      "sha256": "5d96d45c64c86cedc944562e1f25e59a49d9689f04dd3787d5333f3ce95e5662",
+      "git_blob": "627dd728d0dabe67100313657c5170d837be45d7",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLevels.inc",
+      "bytes": 8301,
+      "sha256": "d869a3f1963eefb4f6bc31a37d0553e478ebdd21f262f57c20b5059c9ccab96a",
+      "git_blob": "a36fe38af527f48ffe298fe467897cc5948482fd",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "bytes": 30936,
+      "sha256": "a4606e3090ed2a2cd42031ed5f98c5224cb64cc4235f537634979828961e2205",
+      "git_blob": "30ca7cfb23cf8da0faa1359983eeda71fb7bde00",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/OriginalSubOscillator.h",
+      "bytes": 6412,
+      "sha256": "8e16f584b376f8aad3a9ef45a02af17b28ff8d9ca747bb20d201ef1a62ffa69d",
+      "git_blob": "8b09dc638af1a655889d6e2ef92075be91d65606",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/OutputTapCircuit.h",
+      "bytes": 12277,
+      "sha256": "899ad229e061731b8ef97470070a2dd3df34581f215c078718fcd87455320259",
+      "git_blob": "ef5b20a3d63a6069bf0b4f31f50ba31612446b1a",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Oversampling.h",
+      "bytes": 4384,
+      "sha256": "1c18c536c22c128c968e2c9c20b082087134bbd255d3b70e3500d6e718d2d646",
+      "git_blob": "5b5af9a1ebb7b36ffed9ca93a2d93a737e5d0a00",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "bytes": 25409,
+      "sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20",
+      "git_blob": "9f9b38ff55d8e8045bee704b2a8398e631451c9c",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/PerformanceControls.h",
+      "bytes": 5741,
+      "sha256": "4b73f4c466fbdc9a86352d090709044dccb6daa8292ed86c184969c36d25abb3",
+      "git_blob": "c2e8258b089eb41b58f9ff7aa4e76637c90a25ef",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/PraWahCircuit.h",
+      "bytes": 5234,
+      "sha256": "3ef574d749c2ee466b0b8cd701c4ec37b933f6a503191220c493c986c67be5d4",
+      "git_blob": "3b71b5d1bb36939ebfd57dfdd9ab50892a1c784e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/PraWahSolve.inc",
+      "bytes": 1525,
+      "sha256": "a44533d7bea38e5b2cf8e51e9c234aef28653d36820de8f414907cdb9cedc643",
+      "git_blob": "9956e15e3dbb9f14a05d28df8f1cfc14fe26c001",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Randomise.h",
+      "bytes": 8831,
+      "sha256": "ca6893d5973019842681ed412395a5f875e85e844b387cb282abb8f4943140d1",
+      "git_blob": "d9616a8520d9ebd2f1d0cbc03ff4ff0e7127c99e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ReconstructedOscillator.h",
+      "bytes": 32372,
+      "sha256": "ae3f9b5e158bc1defd155fb19c486e9f9fd45dadeebc1b30cbbaa6c0354aa0fe",
+      "git_blob": "e8bf147d995fb3c8f8db9ea4b26d1f388f07ffa4",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ReleaseOrder.h",
+      "bytes": 899,
+      "sha256": "624944b144369b233c9076231fc06da6b4d9f55abc01ee5cf26a14c7946fdf84",
+      "git_blob": "e211337c57ea3672c3c7e4c60d7a7c73173bacaa",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/RingModulatorCircuit.h",
+      "bytes": 3554,
+      "sha256": "9e2ee4b2fb13f515c7f83360f4392fac8460d443078c425e27a5072a3fbdf630",
+      "git_blob": "4d8899e1ddbe46ae0f9029ebc450dbab026dc7a1",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/SharedUniformReceivers.cpp.inc",
+      "bytes": 6844,
+      "sha256": "433f68b63b4007e25c3f0c1dcb15a56111094bbdcc5f3379ba1d1f651208441a",
+      "git_blob": "e97943f243935de741cb25364c8281f0b26b303d",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Smoothing.h",
+      "bytes": 5610,
+      "sha256": "3513a5073bbe4862f517165838dcb829e6277eff0601fb7e2800d4302c5830ec",
+      "git_blob": "659481dacd3868cd8fb9ed632f6ab2d0c0059d88",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/SourceFactoryTones.h",
+      "bytes": 44400,
+      "sha256": "fc209693b74d22dcc05b4dc9882591c5f70992d1b32724cac7dbf423a4aeaf12",
+      "git_blob": "b56c84af915cbfe1a16e55de24afa537945f1b66",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/ToleranceModel.h",
+      "bytes": 10443,
+      "sha256": "d6ca531134ecc7c6600f12a7664004fc1ee03d2ec815f007888d53a3716892cf",
+      "git_blob": "e341bf545b8e83d6d00858036ffccea9e672db25",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/TouchBusNewton.cpp.inc",
+      "bytes": 3508,
+      "sha256": "29ecff4bd8b5d5297a3d90799f45a562bd003f1aa4ecf2ef757a1428040f603f",
+      "git_blob": "68e98b83edcea815e64edac07a911b0fa1301045",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/TouchCircuit.h",
+      "bytes": 7420,
+      "sha256": "bcf51fbdf0781c68258d85b4646e5208c86d2fda69ce4084fdec482ab09e68ff",
+      "git_blob": "080b435f90f04cfddd9a161e91421e0bf37ca639",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Tuning.h",
+      "bytes": 15589,
+      "sha256": "a8e29077b22c5211b3b1507d094144671125ad68cedb1ac3ae1e96f786e4ada5",
+      "git_blob": "76e6b8aa49d01ebb095f3768057ace011e100579",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/UniformSourceCutoff.h",
+      "bytes": 5981,
+      "sha256": "e62cf9f9329ed8bf7c2378615d6a53c6b2cec6ea23216a6c68281cb834172a31",
+      "git_blob": "2c1e959cffb5d987dbda12e4832513168e625301",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/Vca.h",
+      "bytes": 4587,
+      "sha256": "0264ffb4947bf84fd405bd8c467ac68a4ce19b677ae03dd0e06002d5c92da11f",
+      "git_blob": "d0dda3b206826c79bccb58ca48b5760d2ea9a13b",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/VoiceModes.h",
+      "bytes": 2813,
+      "sha256": "406f954e1e2111c55b8c932ae8edd0cc75d0f580c75274121f766ed6ac192d5f",
+      "git_blob": "803a68e20740124a952d1074c942539b750b85b1",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/WscActiveSegments.inc",
+      "bytes": 4887,
+      "sha256": "9ec014223e13b0bfe045886f4b2a21afd2a213f43cf88da2b9bde09c1be00717",
+      "git_blob": "3dc608b83f3c496a64cc0adada163326ffc25593",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/WscAdvanceSegment.inc",
+      "bytes": 1420,
+      "sha256": "73666f1b7c2c4f7137b0c15dbcf22395663d579f510e4208706ef50d463832e4",
+      "git_blob": "b467c5afbf855d29c49d120fa8ffb028469f2bc7",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/WscNextBranchEvent.inc",
+      "bytes": 4277,
+      "sha256": "1b7e79059f4bed0bd522305e5a3f5408aa8b2f1dd4583cb31223062282d60b15",
+      "git_blob": "2e1704a3e83ce43e5045ebc81839af2b2e314feb",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Bass.inc",
+      "bytes": 22113,
+      "sha256": "ae22d2c220127be965640beda4ad8b9a566761f45aa7d24286ca080f10b48248",
+      "git_blob": "695059e04cdbc515032172ea4e5cd8e89b596846",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "bytes": 22560,
+      "sha256": "988e9718d8ad892b1c2d3aa860eedf4ebf2b5fc899c3df8cda081271392f37c3",
+      "git_blob": "d0ef4bcbfcb35fa640e3ec1686d740e253b7ff85",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Brass.inc",
+      "bytes": 31902,
+      "sha256": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+      "git_blob": "e64ad31756f0be6cc32ef10e1c35df188e302ad0",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "bytes": 24328,
+      "sha256": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3",
+      "git_blob": "177b8a13974f61ec40081a74b114d86d5e24b9a5",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Keys.inc",
+      "bytes": 26759,
+      "sha256": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+      "git_blob": "dc44f26b4e5590d40b84d218119f33d445faa711",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Leads.inc",
+      "bytes": 27537,
+      "sha256": "022dc22a0e45660680accd8856a44e77cd7ac09e3d4c1267cd5f0aa11cf7c9f4",
+      "git_blob": "9250c792d6cb913c7c49e47059c90b775b27d06e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "bytes": 20705,
+      "sha256": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+      "git_blob": "d4ae1b5cc362c5ad3c025dc316700ddf61bcb6ac",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Organ.inc",
+      "bytes": 11428,
+      "sha256": "b49954a3f04ba7aecead9cd3be97bd5d0cba7fec5ad88c9305567e982a3b089b",
+      "git_blob": "00d876c056f1ca28dcd788070c9a5fed2c93d22a",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "bytes": 28629,
+      "sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "git_blob": "a18fc81f4f8011f14cc49e721ebf67c92626e39d",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "bytes": 18437,
+      "sha256": "75f26ae8d44a31e0a5c6d349ec15e2a80fdd5e2cee5d53cf85403ab20951a21f",
+      "git_blob": "8ddc747fa1e044a36490e72f42bd6d09fbb4c3d0",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Polysynth.inc",
+      "bytes": 21946,
+      "sha256": "2ea34eefa62aeaaca600bd65038446eb2d812aaab8b5d43dd8d3903815044649",
+      "git_blob": "d63f42cf65022192d17bf23878fc60d9eacc9f8e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Strings.inc",
+      "bytes": 40886,
+      "sha256": "0c36b00a0e3e430fbe32a1e399eabc1003d55eb02c6d94208afc5f6effeb5b17",
+      "git_blob": "96a302c6f46c73bdbd476b4ea5d71cef37281298",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/core/curated/Winds.inc",
+      "bytes": 21289,
+      "sha256": "97aec97d480995a3db46b00dc9ca16e678397bd38996a86a93c05ac4aa678420",
+      "git_blob": "3e3e71709c5c0aec20950f5c038680a0ad801526",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/experimental/ContinuousVoiceCircuit.h",
+      "bytes": 24349,
+      "sha256": "eacaf50c914c965ead4369b06fcfd5bd51dd63263dad5ac1f04a67a461f38e33",
+      "git_blob": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "src/reference/KeyboardContour.h",
+      "bytes": 2865,
+      "sha256": "4d4934ff71900622b9a83da3f8a07285dda63ec9ca030584460870ff9e6c51e9",
+      "git_blob": "b0edd53ad986b8c4792cf78d706f84c0637642d7",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "tests/FilterBatchEngineTests.cpp",
+      "bytes": 9851,
+      "sha256": "7432317444846a50c1025301cd51e89b4c8e21d5dd02fb731a5e1a406499015e",
+      "git_blob": "2fdddd8a4a22b8aabbc13656174f5de5f872e1bc",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "tests/FilterBatchSchedulingTests.cpp",
+      "bytes": 6797,
+      "sha256": "80cfdb4597d9452774b0fa36df5a2785b4c76c1059fcdc8e1747323184195852",
+      "git_blob": "a5653dc49639096b56d39e79fef150fbad1a5803",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "tests/Ig00156BatchAdmissionProbe.cpp",
+      "bytes": 2827,
+      "sha256": "10f7664f98842bbfaa3e3eb7c9a2e82b05064eb18d12ac9193a74d5932b1339f",
+      "git_blob": "780013b01e7fd9aa2cf982e3ca4591bf621d2e5c",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "tests/Ig00156BatchTests.cpp",
+      "bytes": 20391,
+      "sha256": "e162790e0df3c8ce086bd361503b6238430cb04d068dcc3102e831f067e3ce11",
+      "git_blob": "4cc75fd6a25bcdc9751f7762c0c5f9d4916de855",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    },
+    {
+      "path": "tests/test_filter_batch_admission.py",
+      "bytes": 8296,
+      "sha256": "2b6c4d2a835dffe00ef2ff1d6fa88303b4730ed7b209850b70734d451ec5dbde",
+      "git_blob": "b98ce3fbcdf055975f64e673881b1344980ea43e",
+      "mode": "100644",
+      "same_bytes_and_mode": true
+    }
+  ],
+  "quoted_include_edges": [
+    {
+      "includer": "src/core/BbdChorus.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/BodyArticulation.h",
+      "include": "InstrumentBody.h",
+      "resolved": "src/core/InstrumentBody.h"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Brass.inc",
+      "resolved": "src/core/curated/Brass.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Strings.inc",
+      "resolved": "src/core/curated/Strings.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Pads.inc",
+      "resolved": "src/core/curated/Pads.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Polysynth.inc",
+      "resolved": "src/core/curated/Polysynth.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Keys.inc",
+      "resolved": "src/core/curated/Keys.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Organ.inc",
+      "resolved": "src/core/curated/Organ.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Winds.inc",
+      "resolved": "src/core/curated/Winds.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Plucked.inc",
+      "resolved": "src/core/curated/Plucked.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Bass.inc",
+      "resolved": "src/core/curated/Bass.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Leads.inc",
+      "resolved": "src/core/curated/Leads.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Bells.inc",
+      "resolved": "src/core/curated/Bells.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Fx.inc",
+      "resolved": "src/core/curated/Fx.inc"
+    },
+    {
+      "includer": "src/core/CuratedLibrary.inc",
+      "include": "curated/Modern.inc",
+      "resolved": "src/core/curated/Modern.inc"
+    },
+    {
+      "includer": "src/core/Dsp.h",
+      "include": "AdsrRcReconstruction.inc",
+      "resolved": "src/core/AdsrRcReconstruction.inc"
+    },
+    {
+      "includer": "src/core/Dsp.h",
+      "include": "AdsrRcReconstruction.inc",
+      "resolved": "src/core/AdsrRcReconstruction.inc"
+    },
+    {
+      "includer": "src/core/Dsp.h",
+      "include": "FilterEnvRcReconstruction.inc",
+      "resolved": "src/core/FilterEnvRcReconstruction.inc"
+    },
+    {
+      "includer": "src/core/Dsp.h",
+      "include": "FilterEnvRcReconstruction.inc",
+      "resolved": "src/core/FilterEnvRcReconstruction.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "Engine.h",
+      "resolved": "src/core/Engine.h"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "EngineWscHeld.h",
+      "resolved": "src/core/EngineWscHeld.h"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "RingModulatorCircuit.h",
+      "resolved": "src/core/RingModulatorCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "EngineOutputFir.cpp.inc",
+      "resolved": "src/core/EngineOutputFir.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "UniformSourceCutoff.h",
+      "resolved": "src/core/UniformSourceCutoff.h"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "EngineStereoPra.cpp.inc",
+      "resolved": "src/core/EngineStereoPra.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "TouchBusNewton.cpp.inc",
+      "resolved": "src/core/TouchBusNewton.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "TouchBusNewton.cpp.inc",
+      "resolved": "src/core/TouchBusNewton.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "SharedUniformReceivers.cpp.inc",
+      "resolved": "src/core/SharedUniformReceivers.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "MasterControllerSmoothing.cpp.inc",
+      "resolved": "src/core/MasterControllerSmoothing.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.cpp",
+      "include": "MasterControllerSmoothing.cpp.inc",
+      "resolved": "src/core/MasterControllerSmoothing.cpp.inc"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "EngineOutputFir.h",
+      "resolved": "src/core/EngineOutputFir.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ModernLayer.h",
+      "resolved": "src/core/ModernLayer.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ModulationLfo.h",
+      "resolved": "src/core/ModulationLfo.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Ig00156Filter.h",
+      "resolved": "src/core/Ig00156Filter.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Ig00156Batch.h",
+      "resolved": "src/core/Ig00156Batch.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ReconstructedOscillator.h",
+      "resolved": "src/core/ReconstructedOscillator.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Vca.h",
+      "resolved": "src/core/Vca.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "OriginalSubOscillator.h",
+      "resolved": "src/core/OriginalSubOscillator.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ExternalModulationInterpolator.h",
+      "resolved": "src/core/ExternalModulationInterpolator.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Params.h",
+      "resolved": "src/core/Params.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "PerformanceControls.h",
+      "resolved": "src/core/PerformanceControls.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "PraWahCircuit.h",
+      "resolved": "src/core/PraWahCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "BbdChorus.h",
+      "resolved": "src/core/BbdChorus.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "FxSlot.h",
+      "resolved": "src/core/FxSlot.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "OutputTapCircuit.h",
+      "resolved": "src/core/OutputTapCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "HeadphoneAmpCircuit.h",
+      "resolved": "src/core/HeadphoneAmpCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ExpressionOptics.h",
+      "resolved": "src/core/ExpressionOptics.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "NoiseSource.h",
+      "resolved": "src/core/NoiseSource.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Oversampling.h",
+      "resolved": "src/core/Oversampling.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Smoothing.h",
+      "resolved": "src/core/Smoothing.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "SourceFactoryTones.h",
+      "resolved": "src/core/SourceFactoryTones.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "KasScanner.h",
+      "resolved": "src/core/KasScanner.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "KbcContour.h",
+      "resolved": "src/core/KbcContour.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "TouchCircuit.h",
+      "resolved": "src/core/TouchCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "Tuning.h",
+      "resolved": "src/core/Tuning.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "MpeZones.h",
+      "resolved": "src/core/MpeZones.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ReleaseOrder.h",
+      "resolved": "src/core/ReleaseOrder.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ControllerCurves.h",
+      "resolved": "src/core/ControllerCurves.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "experimental/ContinuousVoiceCircuit.h",
+      "resolved": "src/experimental/ContinuousVoiceCircuit.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "ToleranceModel.h",
+      "resolved": "src/core/ToleranceModel.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "InstrumentBody.h",
+      "resolved": "src/core/InstrumentBody.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "InstrumentBodyFilter.h",
+      "resolved": "src/core/InstrumentBodyFilter.h"
+    },
+    {
+      "includer": "src/core/Engine.h",
+      "include": "BodyArticulation.h",
+      "resolved": "src/core/BodyArticulation.h"
+    },
+    {
+      "includer": "src/core/EngineOutputFir.cpp.inc",
+      "include": "EngineOutputFir.h",
+      "resolved": "src/core/EngineOutputFir.h"
+    },
+    {
+      "includer": "src/core/EngineOutputFir.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/EngineStereoPra.cpp.inc",
+      "include": "PraWahSolve.inc",
+      "resolved": "src/core/PraWahSolve.inc"
+    },
+    {
+      "includer": "src/core/EngineWscHeld.cpp",
+      "include": "EngineWscHeld.h",
+      "resolved": "src/core/EngineWscHeld.h"
+    },
+    {
+      "includer": "src/core/EngineWscHeld.cpp",
+      "include": "WscNextBranchEvent.inc",
+      "resolved": "src/core/WscNextBranchEvent.inc"
+    },
+    {
+      "includer": "src/core/EngineWscHeld.cpp",
+      "include": "WscAdvanceSegment.inc",
+      "resolved": "src/core/WscAdvanceSegment.inc"
+    },
+    {
+      "includer": "src/core/EngineWscHeld.cpp",
+      "include": "WscActiveSegments.inc",
+      "resolved": "src/core/WscActiveSegments.inc"
+    },
+    {
+      "includer": "src/core/EngineWscHeld.h",
+      "include": "ReconstructedOscillator.h",
+      "resolved": "src/core/ReconstructedOscillator.h"
+    },
+    {
+      "includer": "src/core/ExpressionOptics.h",
+      "include": "PraWahCircuit.h",
+      "resolved": "src/core/PraWahCircuit.h"
+    },
+    {
+      "includer": "src/core/ExternalModulationInterpolator.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "FactoryPresets.h",
+      "resolved": "src/core/FactoryPresets.h"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "InstrumentBody.h",
+      "resolved": "src/core/InstrumentBody.h"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "InstrumentBodyVariants.h",
+      "resolved": "src/core/InstrumentBodyVariants.h"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "OriginalCircuitLibrary.inc",
+      "resolved": "src/core/OriginalCircuitLibrary.inc"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "OriginalCircuitLevels.inc",
+      "resolved": "src/core/OriginalCircuitLevels.inc"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "CuratedLibrary.inc",
+      "resolved": "src/core/CuratedLibrary.inc"
+    },
+    {
+      "includer": "src/core/FactoryPresets.cpp",
+      "include": "CuratedLibraryLevels.inc",
+      "resolved": "src/core/CuratedLibraryLevels.inc"
+    },
+    {
+      "includer": "src/core/FactoryPresets.h",
+      "include": "Params.h",
+      "resolved": "src/core/Params.h"
+    },
+    {
+      "includer": "src/core/FactoryToneHypotheses.h",
+      "include": "HardwareControl.h",
+      "resolved": "src/core/HardwareControl.h"
+    },
+    {
+      "includer": "src/core/FxModels.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/FxModels.h",
+      "include": "FxLoudness.h",
+      "resolved": "src/core/FxLoudness.h"
+    },
+    {
+      "includer": "src/core/FxModels.h",
+      "include": "FxOversampler.h",
+      "resolved": "src/core/FxOversampler.h"
+    },
+    {
+      "includer": "src/core/FxSlot.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/FxSlot.h",
+      "include": "FxLoudness.h",
+      "resolved": "src/core/FxLoudness.h"
+    },
+    {
+      "includer": "src/core/FxSlot.h",
+      "include": "FxModels.h",
+      "resolved": "src/core/FxModels.h"
+    },
+    {
+      "includer": "src/core/HeterogeneousSourceCutoff.h",
+      "include": "SourceFactoryTones.h",
+      "resolved": "src/core/SourceFactoryTones.h"
+    },
+    {
+      "includer": "src/core/Ig00156Batch.cpp",
+      "include": "Ig00156Batch.h",
+      "resolved": "src/core/Ig00156Batch.h"
+    },
+    {
+      "includer": "src/core/Ig00156Batch.h",
+      "include": "Ig00156Filter.h",
+      "resolved": "src/core/Ig00156Filter.h"
+    },
+    {
+      "includer": "src/core/Ig00156Filter.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/Ig00156Filter.h",
+      "include": "FastMath.h",
+      "resolved": "src/core/FastMath.h"
+    },
+    {
+      "includer": "src/core/Ig00156Filter.h",
+      "include": "Ig00156RootFallback.h",
+      "resolved": "src/core/Ig00156RootFallback.h"
+    },
+    {
+      "includer": "src/core/Ig00156RootFallback.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/InstrumentBody.h",
+      "include": "InstrumentBodyVariants.h",
+      "resolved": "src/core/InstrumentBodyVariants.h"
+    },
+    {
+      "includer": "src/core/KbcContour.h",
+      "include": "reference/KeyboardContour.h",
+      "resolved": "src/reference/KeyboardContour.h"
+    },
+    {
+      "includer": "src/core/KbcContour.h",
+      "include": "SourceFactoryTones.h",
+      "resolved": "src/core/SourceFactoryTones.h"
+    },
+    {
+      "includer": "src/core/MemoryPanels.h",
+      "include": "SourceFactoryTones.h",
+      "resolved": "src/core/SourceFactoryTones.h"
+    },
+    {
+      "includer": "src/core/ModMatrix.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/ModernLayer.h",
+      "include": "ModMatrix.h",
+      "resolved": "src/core/ModMatrix.h"
+    },
+    {
+      "includer": "src/core/ModernLayer.h",
+      "include": "Mseg.h",
+      "resolved": "src/core/Mseg.h"
+    },
+    {
+      "includer": "src/core/ModernLayer.h",
+      "include": "PerformanceControls.h",
+      "resolved": "src/core/PerformanceControls.h"
+    },
+    {
+      "includer": "src/core/ModulationLfo.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/NoiseSource.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/OriginalSubOscillator.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/PraWahCircuit.h",
+      "include": "PraWahSolve.inc",
+      "resolved": "src/core/PraWahSolve.inc"
+    },
+    {
+      "includer": "src/core/Randomise.h",
+      "include": "Params.h",
+      "resolved": "src/core/Params.h"
+    },
+    {
+      "includer": "src/core/ReconstructedOscillator.h",
+      "include": "WscActiveSegments.inc",
+      "resolved": "src/core/WscActiveSegments.inc"
+    },
+    {
+      "includer": "src/core/ReconstructedOscillator.h",
+      "include": "WscAdvanceSegment.inc",
+      "resolved": "src/core/WscAdvanceSegment.inc"
+    },
+    {
+      "includer": "src/core/ReconstructedOscillator.h",
+      "include": "WscNextBranchEvent.inc",
+      "resolved": "src/core/WscNextBranchEvent.inc"
+    },
+    {
+      "includer": "src/core/RingModulatorCircuit.h",
+      "include": "Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/core/SourceFactoryTones.h",
+      "include": "HardwareControl.h",
+      "resolved": "src/core/HardwareControl.h"
+    },
+    {
+      "includer": "src/core/SourceFactoryTones.h",
+      "include": "FactoryToneHypotheses.h",
+      "resolved": "src/core/FactoryToneHypotheses.h"
+    },
+    {
+      "includer": "src/core/TouchCircuit.h",
+      "include": "TouchBusNewton.cpp.inc",
+      "resolved": "src/core/TouchBusNewton.cpp.inc"
+    },
+    {
+      "includer": "src/core/UniformSourceCutoff.h",
+      "include": "SourceFactoryTones.h",
+      "resolved": "src/core/SourceFactoryTones.h"
+    },
+    {
+      "includer": "src/core/UniformSourceCutoff.h",
+      "include": "HeterogeneousSourceCutoff.h",
+      "resolved": "src/core/HeterogeneousSourceCutoff.h"
+    },
+    {
+      "includer": "src/core/VoiceModes.h",
+      "include": "Engine.h",
+      "resolved": "src/core/Engine.h"
+    },
+    {
+      "includer": "src/experimental/ContinuousVoiceCircuit.h",
+      "include": "core/Dsp.h",
+      "resolved": "src/core/Dsp.h"
+    },
+    {
+      "includer": "src/experimental/ContinuousVoiceCircuit.h",
+      "include": "core/Ig00156Filter.h",
+      "resolved": "src/core/Ig00156Filter.h"
+    },
+    {
+      "includer": "src/experimental/ContinuousVoiceCircuit.h",
+      "include": "core/ReconstructedOscillator.h",
+      "resolved": "src/core/ReconstructedOscillator.h"
+    },
+    {
+      "includer": "tests/FilterBatchEngineTests.cpp",
+      "include": "core/Engine.h",
+      "resolved": "src/core/Engine.h"
+    },
+    {
+      "includer": "tests/FilterBatchSchedulingTests.cpp",
+      "include": "core/Engine.h",
+      "resolved": "src/core/Engine.h"
+    },
+    {
+      "includer": "tests/Ig00156BatchAdmissionProbe.cpp",
+      "include": "core/Ig00156Batch.h",
+      "resolved": "src/core/Ig00156Batch.h"
+    },
+    {
+      "includer": "tests/Ig00156BatchTests.cpp",
+      "include": "core/Ig00156Batch.h",
+      "resolved": "src/core/Ig00156Batch.h"
+    }
+  ],
+  "unresolved_quoted_includes": [],
+  "complete_commit_diff_paths": [
+    "docs/INSTALL_AND_QUICKSTART.md",
+    "docs/PRESET_GUIDE.md"
+  ],
+  "guides_used_by_these_four_tests": false,
+  "dependency_review": "The Python admission harness compiles Ig00156Batch.cpp and Ig00156BatchAdmissionProbe.cpp; all other four core translation units are covered by src/core. The exact test sources do not read packaged INSTALL/PRESET guides. Standard libraries, compiler binaries and GitHub runner/action implementations remain attributes of the original execution, not a new execution at the release source."
+}

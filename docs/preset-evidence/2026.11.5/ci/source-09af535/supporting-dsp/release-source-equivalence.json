@@ -1,0 +1,5556 @@
+{
+  "schema": 1,
+  "supporting_execution_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "supporting_tree": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+  "supporting_run_id": 45344888536,
+  "supporting_attempt": 1,
+  "native_release_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "native_release_tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "proof": "Complete recursive tracked Git-entry comparison, including modes/types/object IDs; exact changed blobs additionally SHA-256 hashed.",
+  "tracked_entries_per_tree": 9964,
+  "identical_tracked_entries": 9962,
+  "changed_files": [
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "supporting": {
+        "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "9ada3a94c23579e3586c9c29299882cb23082f6d",
+        "bytes": 16978,
+        "sha256": "fd361870e3b8d28e0ec1986495516cb56f4c72790c1341421525ce0624e1bcff"
+      },
+      "native_release": {
+        "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "efb916f36db1692dad20ba044ca02575278b0c6b",
+        "bytes": 17256,
+        "sha256": "e1e80b30ae88096e200a80c27072f8db8c415757220a44b795fad815ae22f330"
+      }
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "supporting": {
+        "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "bb6acb37b1bc01572ed3981f2224951658f0dc49",
+        "bytes": 29599,
+        "sha256": "03a80493147fd7d403a417bbbba26fe51c0523d5e98641ea2c119d9491d8c483"
+      },
+      "native_release": {
+        "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "e08392e8f3a907edd67b79185d578de4a513c9b3",
+        "bytes": 29669,
+        "sha256": "3f26239ef7bc4ec9b11abb3c02471146bba7d0e97ce3c2cf1f469b8b3ab45993"
+      }
+    }
+  ],
+  "audio_circuit_fixture_workflow_code_and_data_entries_identical": 912,
+  "unchanged_code_and_data_inventory": [
+    {
+      "path": ".github/workflows/dsp-measurements.yml",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f4a3e0b395fa37b60d3c6ed1b2ed68d2a58393b5"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f0875e30885046497c24acecf037ac53eb152f69"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/BarlowCondensed-Medium.ttf",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "eee49eb632153608c0bef5809ceab2418dd617a8"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/BarlowCondensed-SemiBold.ttf",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9df66576492bee4bd0559066825472808fa98adc"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/OFL.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2f22ba6ca4dbc12145ae40b14c3368f387cba0e2"
+    },
+    {
+      "path": "assets/fonts/barlow-condensed/SOURCE.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "16a148f38d4df202001f408be100102ef9060241"
+    },
+    {
+      "path": "cmake/HostAutomation.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "11d1af31e688aa2ad8eb2dfbf8fd6b004462dc71"
+    },
+    {
+      "path": "cmake/HostAutomationTests.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "35820f4e48431c733f11bd47731f0b1044444b7c"
+    },
+    {
+      "path": "cmake/ParameterStateMirror.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4a8d766f679b12084a71c8d20395e41abdcdbdc2"
+    },
+    {
+      "path": "cmake/PresetXml.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0f92a73161a83b39d5b75dcafa72db8ca84cab14"
+    },
+    {
+      "path": "installer/linux/make-deb.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "3c838851e72b97c32137d8bbcce0583913957456"
+    },
+    {
+      "path": "installer/macos/Standalone.entitlements",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4aba086264f5e031cd09a764188a5b89a5200406"
+    },
+    {
+      "path": "installer/macos/make-pkg.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "18fb093ddeda447070a9c2a96e9ee0f7b5bfecc8"
+    },
+    {
+      "path": "installer/windows/cs80-reference.iss",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "67724b8e692eb6ca5871ad8a781f5cebed0544ed"
+    },
+    {
+      "path": "scripts/analyze_dsp.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc2d8ee9952b03983dc3e050899973b462a2290e"
+    },
+    {
+      "path": "scripts/benchmark-filter-cache.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5a79f518d12a6318792e84e2f712fff572cada8b"
+    },
+    {
+      "path": "scripts/capture-factory-auditions.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ff73e82015ce88193cf267efbada420e6e20f573"
+    },
+    {
+      "path": "scripts/check-compat-gates.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "45b866fb3aa3516cec630266363acc323c694288"
+    },
+    {
+      "path": "scripts/check-windows-installer.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0f6e503bd9e8d5719f3c8b85c3b58e8c9c5848fd"
+    },
+    {
+      "path": "scripts/check_library_phrase_audit.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cdabdd6c9517f75b638e9afe656270e6f8e204f2"
+    },
+    {
+      "path": "scripts/compare-factory-revisions.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2660cb9f4bd69eae4bd5a1873dacf43e12f9d5b1"
+    },
+    {
+      "path": "scripts/compare-preset-audio.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1125f4cc4e94b50125278b6abf768b00ec8aeb8f"
+    },
+    {
+      "path": "scripts/compare-preset-refinement.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4969ad81fcdab12a09e723546f6fda45fae216d7"
+    },
+    {
+      "path": "scripts/compare-preset-response.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9793cd272bea50adb8806de0873f139325f4c116"
+    },
+    {
+      "path": "scripts/compare_amplitude_envelope_production.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "67f293756563ce38e09bdc6852b0f72f3fbadc63"
+    },
+    {
+      "path": "scripts/compare_envelope_endpoint_clock.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cfd665d6d84da3d2961b4d31ff58831c33d9c289"
+    },
+    {
+      "path": "scripts/compare_filter_envelope_production.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a1a3e718b1f97fc1c5041aca2ffefebd13509c52"
+    },
+    {
+      "path": "scripts/download-pluginval-macos.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d65dbb6de2f47abd682eae2fdab51a27363f5797"
+    },
+    {
+      "path": "scripts/download-pluginval-windows.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54068ad98ce33c10a34739347d7e01735a6710de"
+    },
+    {
+      "path": "scripts/inspect_circuit_sources.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ba21193282caf11c69d5aefa962cde94df838f72"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    {
+      "path": "scripts/parity_harness.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "da3b0dfce34486ec1045e76cb82c6f2db8278f31"
+    },
+    {
+      "path": "scripts/patch-juce-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cc4324c835e9e17b4706edf4cc0679c07032259c"
+    },
+    {
+      "path": "scripts/patch-juce-state-mirror.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cabbea550deb9ad82c1e0a6aa1df6c26c0a60b7f"
+    },
+    {
+      "path": "scripts/pluginval-diagnostic-log.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dec7d3af063a65979f663169073b539e31e64a0a"
+    },
+    {
+      "path": "scripts/pluginval-diagnostic-seed.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8cc702fc2b002b71cf5856e4cb3f9d3a9cab44ac"
+    },
+    {
+      "path": "scripts/pluginval-fault-fixture.c",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7d5c7c43722937c93cc9bd1091c9b44b5687df24"
+    },
+    {
+      "path": "scripts/pluginval-fault-trace.c",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a0564009073510289dd7e39868d1e08e37a7e87a"
+    },
+    {
+      "path": "scripts/publish-preset-refinement.py",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "b1412425b09d2e52d161b02d0d9ea4639ed71b39"
+    },
+    {
+      "path": "scripts/qualify-arp-rate-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6929d9ff61cb7871e10935d6d83b7cc94199000d"
+    },
+    {
+      "path": "scripts/qualify-dispersion-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7b5d5bd197cbc628dad57f11e6855772fb2130a9"
+    },
+    {
+      "path": "scripts/qualify-drift-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fcbf642ce7217d84ead3104bcb9b4250b1617fb7"
+    },
+    {
+      "path": "scripts/qualify-fx-matched-mix.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9b4cc5eff73e510141bc58ff64fd61230bbfa054"
+    },
+    {
+      "path": "scripts/qualify-fx-mix-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "87029c9d6e6ff61a49a9dd0b281eec7e24aba621"
+    },
+    {
+      "path": "scripts/qualify-fx-modern-mix.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "da1037f93bad3a74ecda7f42161d3c9e1725b1d8"
+    },
+    {
+      "path": "scripts/qualify-fx-modern-tail.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3524f10b689e45f996a99571c90b89bf147f503b"
+    },
+    {
+      "path": "scripts/qualify-fx-source-mix.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0304165eab5fc83cbd2aa0110007f6fdeb41b329"
+    },
+    {
+      "path": "scripts/qualify-fx-tail-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e552779b43c60be1bf701ce73565a61452426f96"
+    },
+    {
+      "path": "scripts/qualify-lfo-depth-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3db442de30ba644c7663ec3fe420d4f72841ebd5"
+    },
+    {
+      "path": "scripts/qualify-lfo-native-random.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1651d1d5d37bf65348a7a932bff2b4664895866f"
+    },
+    {
+      "path": "scripts/qualify-lfo-random-switching.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "579310f2c2cca4260b1b6992d5e91f770d9c900b"
+    },
+    {
+      "path": "scripts/qualify-lfo-random-variable-rate.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d30b444ad89637473fbcc67c224f2e05483308eb"
+    },
+    {
+      "path": "scripts/qualify-lfo-rate-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a6c722e92e4dff52116375115e9011e8f0ebcb56"
+    },
+    {
+      "path": "scripts/qualify-lfo-rate-depth-combined.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "965ed67f4c71bd0e9c25101d7227ba0ef8dc03bd"
+    },
+    {
+      "path": "scripts/qualify-lfo-static-shapes.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6f0410603a52e56b1c8d60c220ecc3196018873f"
+    },
+    {
+      "path": "scripts/qualify-linux-deb.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1ef23ecf8a00157d9d316345363793c98b4cf398"
+    },
+    {
+      "path": "scripts/qualify-macro-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "541808a29648118b8a9d50b62c82a32310bdf621"
+    },
+    {
+      "path": "scripts/qualify-matrix-amount-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a6befaac2c7a3c8fe92483b38d9b2d9c1b42cd4a"
+    },
+    {
+      "path": "scripts/qualify-matrix-combined-amounts.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c85e72f403ec3a208c4cc1f37c9d2cf75ba5b865"
+    },
+    {
+      "path": "scripts/qualify-mod-wheel-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fd6e02a017de5d2b22afe6da052e3a7c523a710b"
+    },
+    {
+      "path": "scripts/qualify-mseg-combined-rates.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6c4053aa177a2127f90626e8f23e391b4f268610"
+    },
+    {
+      "path": "scripts/qualify-mseg-rate-amount-combined.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e26193ef0c4d7063172d3deb0970b4e1979e3547"
+    },
+    {
+      "path": "scripts/qualify-mseg-rate-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "44681da21feaf203335e9bb37faa871047127a8c"
+    },
+    {
+      "path": "scripts/qualify-mseg-routing-proof.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "63f2fa7dcf74d1890b4ef6a36dd33df786cd9980"
+    },
+    {
+      "path": "scripts/qualify-noise-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "00c84504cee79e18aa00e626d9c46a95ee09fb48"
+    },
+    {
+      "path": "scripts/qualify-unison-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9bb7cfb19a055a24288b66371b1212c7749402cf"
+    },
+    {
+      "path": "scripts/render_amplitude_envelope_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d089c0b3f5b7ca3d51ed57e1f10abb9d64fa5b05"
+    },
+    {
+      "path": "scripts/render_event_aware_envelope_sine_vca.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a7b203966615413eaaaf66791572baccb4d49e8a"
+    },
+    {
+      "path": "scripts/render_event_aware_envelope_vca.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cb95cb834f5a7ec7a9227dd6f95c314163f98c44"
+    },
+    {
+      "path": "scripts/render_event_aware_ring_vca.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "549a540fac776cb9dc5b2e403548a562601efdb1"
+    },
+    {
+      "path": "scripts/render_filter_envelope_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fe6a16a8f00dcd16cab1008fb26420918d6c805b"
+    },
+    {
+      "path": "scripts/render_reference_chain.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "509e7f2d82f83f096f436f3c6b842acc4f8bc1db"
+    },
+    {
+      "path": "scripts/render_ring_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cec2c0e4a85892d0d0973df150115464f4809adf"
+    },
+    {
+      "path": "scripts/resume-mseg-rate-automation.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "08115d367cf48952d6e318839824f48721e4487b"
+    },
+    {
+      "path": "scripts/run-pluginval-linux.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "bce2d486160692e994697bbcee0346952289a87e"
+    },
+    {
+      "path": "scripts/run-pluginval-with-core.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "35bde09efa1d2ecee6af976152a1c4735cb5a705"
+    },
+    {
+      "path": "scripts/run-ui-smoke-linux.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "6ae63a8e06dc198ca67fff10ce4baa142fa0ef4f"
+    },
+    {
+      "path": "scripts/study_reference_chain_clock.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "72998084b7e60c7e8d0f84651a4690b6190b9a4b"
+    },
+    {
+      "path": "scripts/test-capture-factory-auditions.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "13d679d72144a8af0b008c0a2e80c05eda0f5046"
+    },
+    {
+      "path": "scripts/test-ci-juce-provenance.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "af724dd0446da1f44b72099f0142f089e3bf7362"
+    },
+    {
+      "path": "scripts/test-deb-runtime-dependencies.py",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "3b25ae2cf2d45dd4ce9d8e075c9fd7c32877ca9e"
+    },
+    {
+      "path": "scripts/test-ensemble-cache-mutations.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "748284ed966f505ee534ccb75c38ceb8e42dce79"
+    },
+    {
+      "path": "scripts/test-ig00156-top-octave-mutations.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fb5ed0d58981c10cdaa932a7efbb0a12d3f375f6"
+    },
+    {
+      "path": "scripts/test-macos-installer-architectures.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "059642c87e24086508b633e2379b9cacc203a51d"
+    },
+    {
+      "path": "scripts/test-package-binary-identity.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7b501256e45d78cb1b86cd8b60215b189c45b6c9"
+    },
+    {
+      "path": "scripts/test-packaging-notices.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0eb32af703a381762792eab4ae10e5ce39c65922"
+    },
+    {
+      "path": "scripts/test-pluginval-diagnostic-log.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5b68ec9d71f03e24db8f65464967855c9e55614a"
+    },
+    {
+      "path": "scripts/test-pluginval-exit-classification.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b59879945894a4a26cbc7efd79f5596050aa8318"
+    },
+    {
+      "path": "scripts/test-pluginval-fault-trace.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9d0ba9f5a4fd901099182ebc4a2788326bb9d0ea"
+    },
+    {
+      "path": "scripts/test-pluginval-macos-download-negative.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6b04e691c150f49eea184c86ec2b1a5bebf14c07"
+    },
+    {
+      "path": "scripts/test-pluginval-macos-download.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8fc3ab27aebd841e1659f881e5cea98f2084e71e"
+    },
+    {
+      "path": "scripts/test-pluginval-retry.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "85d2a3c6b06ad1a294aba2b9d51cd7bd4e5e1486"
+    },
+    {
+      "path": "scripts/test-pluginval-windows-download.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5bc2ac464b5efb7eecd3bdecfad7e7a41509c1e1"
+    },
+    {
+      "path": "scripts/test-preset-signature-math.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "afd3c37ee764be32be82cd696d660476dec8a754"
+    },
+    {
+      "path": "scripts/test-preset-trash-safety.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "74f90951da82f9cda21eb55ed4039bbb38943406"
+    },
+    {
+      "path": "scripts/test-publish-preset-refinement.py",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "08e964e276cb5be56e33c0be8b14f4263ef83bd6"
+    },
+    {
+      "path": "scripts/test-qualify-linux-deb.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "87b1ca28332f6acbdecbc908d3a92f649b90f814"
+    },
+    {
+      "path": "scripts/test-verify-ci-bundle.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f37a0510868873401f8b21bcd7cd23fc74513aa4"
+    },
+    {
+      "path": "scripts/test-windows-installer-preflight.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6d2b52d8927403de0f7a041a24fc4cd0618d2f23"
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc6a8d091e2e647c723976cf21710b37d50f3897"
+    },
+    {
+      "path": "scripts/verify-ci-juce-source.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6ab74336ad65d1edc17a957b49208ac3c1d81ca9"
+    },
+    {
+      "path": "scripts/verify-fx-evidence.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cb20ca1cb010dc3699e867574aa91dd900d6289e"
+    },
+    {
+      "path": "src/core/AdsrRcReconstruction.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c6dba84f9e3eb3ea66d3be5b62087917e526168c"
+    },
+    {
+      "path": "src/core/BbdChorus.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "42d326b3a68ea9148f02ab5d89db58fd1b884cdd"
+    },
+    {
+      "path": "src/core/BodyArticulation.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d2ab182f14fa74e16bad31a2afa73bdff1d0d12a"
+    },
+    {
+      "path": "src/core/ControllerCurves.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c9578e38fe333971cad083bac94c351257fb3e06"
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2363fbcf4318f16d7c70375206cf4224fc79401d"
+    },
+    {
+      "path": "src/core/CuratedLibraryLevels.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33b30fbe4e9a48605434b2448577fcf02bed87eb"
+    },
+    {
+      "path": "src/core/Dsp.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "186899c309369e6279de4b117cd3d88211fffec6"
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d105b8bdb7fb36709622313f0f06f6263fdfd7fe"
+    },
+    {
+      "path": "src/core/Engine.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "82c0f990b2f434ef437dfe9cba993d67072cef0a"
+    },
+    {
+      "path": "src/core/EngineOutputFir.cpp.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d399c4a94c1938068a9bebf21f431fc360ee2e71"
+    },
+    {
+      "path": "src/core/EngineOutputFir.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "eb744bab67c3e78ef2e70f4d03905ae353b9414e"
+    },
+    {
+      "path": "src/core/EngineStereoPra.cpp.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a196491554d41aa00ebb075d202df9866542c1eb"
+    },
+    {
+      "path": "src/core/EngineWscHeld.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "421c07364ebedf30cdafc8c34b936d4e72a8461b"
+    },
+    {
+      "path": "src/core/EngineWscHeld.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "196bbdb872e209deebceb5525950e60e5b980d27"
+    },
+    {
+      "path": "src/core/ExpressionOptics.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33ff96468a11177f5ce450ad0e67ab1726c68ce0"
+    },
+    {
+      "path": "src/core/ExternalModulationInterpolator.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "45951229cfbc044e0afc14c6e1ddd963d8fa5205"
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7f5e1ed72d2b58b474014383b375b083cd2aa4ab"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d6a37c684e02b897eb93eaa24dcb89289702704d"
+    },
+    {
+      "path": "src/core/FactoryToneHypotheses.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "99e38e95a685e88419a977ca563664153e47397b"
+    },
+    {
+      "path": "src/core/FastMath.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7c81bfa3632044b6c10d781e500e83de0c690c92"
+    },
+    {
+      "path": "src/core/FilterEnvRcReconstruction.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e915df0630584a0bde870affd338be60a450e365"
+    },
+    {
+      "path": "src/core/FxLoudness.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9464c31c3e0210bc0f45cfe32640bdbdff42cbf6"
+    },
+    {
+      "path": "src/core/FxModels.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6063328c321120f900f148a25c58f74f6f44d027"
+    },
+    {
+      "path": "src/core/FxOversampler.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "35760d31fffd74a060ef74f59f202c146b94bb7e"
+    },
+    {
+      "path": "src/core/FxSlot.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c67bff49aec32873517b1e3cbb8f18bdae196188"
+    },
+    {
+      "path": "src/core/HardwareControl.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "99603e66979fc7bf6d79c14607f331dd587a61ee"
+    },
+    {
+      "path": "src/core/HeadphoneAmpCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b4086cdfae26e529968f221e74c5d513e61ab722"
+    },
+    {
+      "path": "src/core/HeterogeneousSourceCutoff.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33a1bd974255d7a21ab47302c5480e468f35ff97"
+    },
+    {
+      "path": "src/core/Ig00156Batch.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "30715be2a1bc5d65828e451609fb4efa935e8f24"
+    },
+    {
+      "path": "src/core/Ig00156Batch.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0b23b30b1fed1e909a14a2361794d5f819f758e6"
+    },
+    {
+      "path": "src/core/Ig00156Filter.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc885797b2b46566b77488babfdcac38bce23a6e"
+    },
+    {
+      "path": "src/core/Ig00156RootFallback.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "55ceac556ce6ce69f4f91161cbe8908578774363"
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "61b3da5c0c2b6a139ce67fcba4631e2449a0395b"
+    },
+    {
+      "path": "src/core/InstrumentBodyFilter.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "78f8c68ada4e9e8e925fed614c1e72e0a08bbaa6"
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc5d7744967c6836e44bf8705ac95b57a197f69f"
+    },
+    {
+      "path": "src/core/KasScanner.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0d0c164d4a3cb9fcae7efb4d122026d9724fcec9"
+    },
+    {
+      "path": "src/core/KbcContour.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "74aec94f879a68c6a5c51c38dc4c3362177bcd65"
+    },
+    {
+      "path": "src/core/MasterControllerSmoothing.cpp.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4906b1a63fee258d143fd19100d26a5a06e0fe67"
+    },
+    {
+      "path": "src/core/MemoryPanels.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "eead80d454c38bf25b4f3f2a6e8220141429c492"
+    },
+    {
+      "path": "src/core/ModMatrix.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b6555c91e01cf12801e123e6488c8867a147e8bc"
+    },
+    {
+      "path": "src/core/ModernLayer.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f91c21392e47f012bb22b6e917c65982d3ca1be0"
+    },
+    {
+      "path": "src/core/ModulationLfo.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0848ea0764646db8e01c8616cff820f472404b90"
+    },
+    {
+      "path": "src/core/MpeZones.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c4351819eced42d050e853a874306e553ab08a09"
+    },
+    {
+      "path": "src/core/Mseg.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f81d33a9d002082ccfc149169650dbedb382c011"
+    },
+    {
+      "path": "src/core/NoiseSource.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "627dd728d0dabe67100313657c5170d837be45d7"
+    },
+    {
+      "path": "src/core/OriginalCircuitLevels.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a36fe38af527f48ffe298fe467897cc5948482fd"
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "30ca7cfb23cf8da0faa1359983eeda71fb7bde00"
+    },
+    {
+      "path": "src/core/OriginalSubOscillator.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8b09dc638af1a655889d6e2ef92075be91d65606"
+    },
+    {
+      "path": "src/core/OutputTapCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ef5b20a3d63a6069bf0b4f31f50ba31612446b1a"
+    },
+    {
+      "path": "src/core/Oversampling.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5b5af9a1ebb7b36ffed9ca93a2d93a737e5d0a00"
+    },
+    {
+      "path": "src/core/Params.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9f9b38ff55d8e8045bee704b2a8398e631451c9c"
+    },
+    {
+      "path": "src/core/PerformanceControls.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c2e8258b089eb41b58f9ff7aa4e76637c90a25ef"
+    },
+    {
+      "path": "src/core/PraWahCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3b71b5d1bb36939ebfd57dfdd9ab50892a1c784e"
+    },
+    {
+      "path": "src/core/PraWahSolve.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9956e15e3dbb9f14a05d28df8f1cfc14fe26c001"
+    },
+    {
+      "path": "src/core/Randomise.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d9616a8520d9ebd2f1d0cbc03ff4ff0e7127c99e"
+    },
+    {
+      "path": "src/core/ReconstructedOscillator.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e8bf147d995fb3c8f8db9ea4b26d1f388f07ffa4"
+    },
+    {
+      "path": "src/core/ReleaseOrder.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e211337c57ea3672c3c7e4c60d7a7c73173bacaa"
+    },
+    {
+      "path": "src/core/RingModulatorCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4d8899e1ddbe46ae0f9029ebc450dbab026dc7a1"
+    },
+    {
+      "path": "src/core/SharedUniformReceivers.cpp.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e97943f243935de741cb25364c8281f0b26b303d"
+    },
+    {
+      "path": "src/core/Smoothing.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "659481dacd3868cd8fb9ed632f6ab2d0c0059d88"
+    },
+    {
+      "path": "src/core/SourceFactoryTones.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b56c84af915cbfe1a16e55de24afa537945f1b66"
+    },
+    {
+      "path": "src/core/ToleranceModel.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e341bf545b8e83d6d00858036ffccea9e672db25"
+    },
+    {
+      "path": "src/core/TouchBusNewton.cpp.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68e98b83edcea815e64edac07a911b0fa1301045"
+    },
+    {
+      "path": "src/core/TouchCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "080b435f90f04cfddd9a161e91421e0bf37ca639"
+    },
+    {
+      "path": "src/core/Tuning.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "76e6b8aa49d01ebb095f3768057ace011e100579"
+    },
+    {
+      "path": "src/core/UniformSourceCutoff.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2c1e959cffb5d987dbda12e4832513168e625301"
+    },
+    {
+      "path": "src/core/Vca.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d0dda3b206826c79bccb58ca48b5760d2ea9a13b"
+    },
+    {
+      "path": "src/core/VoiceModes.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "803a68e20740124a952d1074c942539b750b85b1"
+    },
+    {
+      "path": "src/core/WscActiveSegments.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3dc608b83f3c496a64cc0adada163326ffc25593"
+    },
+    {
+      "path": "src/core/WscAdvanceSegment.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b467c5afbf855d29c49d120fa8ffb028469f2bc7"
+    },
+    {
+      "path": "src/core/WscNextBranchEvent.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2e1704a3e83ce43e5045ebc81839af2b2e314feb"
+    },
+    {
+      "path": "src/core/curated/Bass.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "695059e04cdbc515032172ea4e5cd8e89b596846"
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d0ef4bcbfcb35fa640e3ec1686d740e253b7ff85"
+    },
+    {
+      "path": "src/core/curated/Brass.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e64ad31756f0be6cc32ef10e1c35df188e302ad0"
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "177b8a13974f61ec40081a74b114d86d5e24b9a5"
+    },
+    {
+      "path": "src/core/curated/Keys.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dc44f26b4e5590d40b84d218119f33d445faa711"
+    },
+    {
+      "path": "src/core/curated/Leads.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9250c792d6cb913c7c49e47059c90b775b27d06e"
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d4ae1b5cc362c5ad3c025dc316700ddf61bcb6ac"
+    },
+    {
+      "path": "src/core/curated/Organ.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "00d876c056f1ca28dcd788070c9a5fed2c93d22a"
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a18fc81f4f8011f14cc49e721ebf67c92626e39d"
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8ddc747fa1e044a36490e72f42bd6d09fbb4c3d0"
+    },
+    {
+      "path": "src/core/curated/Polysynth.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d63f42cf65022192d17bf23878fc60d9eacc9f8e"
+    },
+    {
+      "path": "src/core/curated/Strings.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "96a302c6f46c73bdbd476b4ea5d71cef37281298"
+    },
+    {
+      "path": "src/core/curated/Winds.inc",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3e3e71709c5c0aec20950f5c038680a0ad801526"
+    },
+    {
+      "path": "src/experimental/ContinuousVoiceCircuit.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc808c8f9a2a4dd79c43ee866490d416193cbcf3"
+    },
+    {
+      "path": "src/experimental/LoadedMemoryReceivers.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "67a6818c965c20cc6932cf909ddc057763da3cbc"
+    },
+    {
+      "path": "src/experimental/MemoryControlAdapter.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68272f3f605ac11c581fe9da75d23a36af2c79ea"
+    },
+    {
+      "path": "src/experimental/MemoryControlFrame.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0ecbcf3e9dc38feff7b41111dcb7dbf0c8ccf385"
+    },
+    {
+      "path": "src/experimental/MemoryPanelPortMap.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "83abcc14575ae9fdffbe4c9dcf2c3c6ce198d2bd"
+    },
+    {
+      "path": "src/experimental/MemorySparseCertificate.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a5d8be79f9457a082cd81df3e821853d1ea01e06"
+    },
+    {
+      "path": "src/experimental/MemorySparseNetwork.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5b1b0528eb2f1f5c42aaec72c68f435630682f7a"
+    },
+    {
+      "path": "src/experimental/MemorySparseNewton.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54beaf180ab7fc05b047f791e136e3d5db9f0a9a"
+    },
+    {
+      "path": "src/experimental/MemorySparseTypes.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7df6fe37455836f2462aa1782d1a612c87e0fd9d"
+    },
+    {
+      "path": "src/experimental/MemoryVerifiedDiode.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c6530576204f13bcea52d946adf31e9bc0aa7308"
+    },
+    {
+      "path": "src/plugin/AdvancedPanel.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "340b7fc8a27f27de3f5fdf2acb67fe97f1eb0f6f"
+    },
+    {
+      "path": "src/plugin/AdvancedPanel.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "94292e3f6b35b69eb10d6e9bc751548884b9f775"
+    },
+    {
+      "path": "src/plugin/ArtCommon.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "71976632612276061496dc7b65c53a5feba88d00"
+    },
+    {
+      "path": "src/plugin/ArtCommon.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d95e226d3a0aef2251fafab2592ecb2a4daf378b"
+    },
+    {
+      "path": "src/plugin/CapturedKeyboardEvents.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "687d92e0e524e2dee321a17e6a571ca3f0becaf0"
+    },
+    {
+      "path": "src/plugin/CentreRow.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1484373b19ab8826742ad703c6fd74b26578490d"
+    },
+    {
+      "path": "src/plugin/CentreRow.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "abe40f15b574b0798702972acfa1aa02bf219a29"
+    },
+    {
+      "path": "src/plugin/ChannelRow.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5f22c78205019d6989fb30271391077d6f014bf1"
+    },
+    {
+      "path": "src/plugin/ChannelRow.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2b9340a26cdf7dcab6993cbf3aa7a37e929aeb81"
+    },
+    {
+      "path": "src/plugin/CircuitPolicyParameter.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d9ae1353474db61a5091168675bfb48f68de9f49"
+    },
+    {
+      "path": "src/plugin/EditorPreferences.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f13574b8745349b5872f1b51e2013f3071cc63e4"
+    },
+    {
+      "path": "src/plugin/EditorPreferences.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d2ea82abdf405842c7a075a85856687e29a8c609"
+    },
+    {
+      "path": "src/plugin/EvidenceRegister.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f5a9af2aec0baa889927628d8e9c62a0552e501b"
+    },
+    {
+      "path": "src/plugin/HardwareKeyboard.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "426c2f7226901ae19b640039c1559949065d6dd0"
+    },
+    {
+      "path": "src/plugin/HostAutomationBridge.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f2800131a73d60783908988714cc88567a5e4c5c"
+    },
+    {
+      "path": "src/plugin/KeyboardEventQueue.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7f14cfacbf0fc9fe98cc8eaeb8cbd50deb8a9587"
+    },
+    {
+      "path": "src/plugin/KeyboardGestureCapture.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "40d94e37105efe4b256b9fb7e9bbe2c8d5443af5"
+    },
+    {
+      "path": "src/plugin/KeyboardPressureOwnership.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "545544e5434ba43e0df6bcdae65b09b9ea30ab5c"
+    },
+    {
+      "path": "src/plugin/KeyboardTuningPage.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c7443e14612d848505a08728575b6b441cd40281"
+    },
+    {
+      "path": "src/plugin/KeyboardTuningPage.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a4d81a710fab36cec1b14cc5eafa510a9443fa20"
+    },
+    {
+      "path": "src/plugin/LfoScopePreview.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7d479f2bdbaf20b0b2ff7398eced2f06c5c87cc5"
+    },
+    {
+      "path": "src/plugin/MemoryEditing.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "21717d79f6e3754f4d03e83153410cc24531df0b"
+    },
+    {
+      "path": "src/plugin/MemoryLid.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ccb7367b597006a7f4f72d81a47dcbb87dbde014"
+    },
+    {
+      "path": "src/plugin/MemoryLid.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5d643edb428da0e0592f9f0e1f8426668d14e22c"
+    },
+    {
+      "path": "src/plugin/MidiLearn.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d589941d3a8ca1c03b68405561268a8327505f8c"
+    },
+    {
+      "path": "src/plugin/ModernLayerState.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e85ebb6a0e55c63f38129350a645b79ceddc52e9"
+    },
+    {
+      "path": "src/plugin/ModernLayerState.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bd306d21ec31491097e42783703805cc3a374309"
+    },
+    {
+      "path": "src/plugin/ModernModulationUi.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "de3d7220cc8a6f93146b3eb33c44e585c443d9e0"
+    },
+    {
+      "path": "src/plugin/ModernModulationUi.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ae49bce8fc8cf4ea5237b12fc176a25a2a5adf43"
+    },
+    {
+      "path": "src/plugin/ModernStateInteger.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b400354f424d36bcea1eac8276584adc03547034"
+    },
+    {
+      "path": "src/plugin/MpeStatus.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6cc21665918589073528a2f3dc70b1d669d84db1"
+    },
+    {
+      "path": "src/plugin/MsegPointValues.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7f1c83290ee56ce17223932ea85c07914dfb3b69"
+    },
+    {
+      "path": "src/plugin/MsegStateText.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "46156a2d5bc97dafb6653a5accdec7acff27d0df"
+    },
+    {
+      "path": "src/plugin/MtsEspClient.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3bfe25207e4471753c1ca57b1470aac40b79d5e7"
+    },
+    {
+      "path": "src/plugin/MtsEspClient.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "65d4ecf1daffdf63c92d5d5be213b7003283dc32"
+    },
+    {
+      "path": "src/plugin/OutputMeter.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2ce8ce2a51b6820aba0e9be02d4ac338e07a1658"
+    },
+    {
+      "path": "src/plugin/OutputMeterDisplay.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "340c1992558a82e774097c159c77866ffee4ec61"
+    },
+    {
+      "path": "src/plugin/PanelLayout.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7ae39af168740447670d0afd8a59c8f523ba0988"
+    },
+    {
+      "path": "src/plugin/PanelWidgets.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1ac2ff62431fab1ec36d8dcaa6c73a8d7076c09e"
+    },
+    {
+      "path": "src/plugin/PanelWidgets.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6dc212b1ca5061c2be275e8151bf367f6a887500"
+    },
+    {
+      "path": "src/plugin/ParameterComboBox.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0054b4e07722ce3bc432cd8f26e021ea58cb48dc"
+    },
+    {
+      "path": "src/plugin/ParameterComboBox.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9adf23b6af3736e547a1d41047ccd3f2ffd6f9a6"
+    },
+    {
+      "path": "src/plugin/ParameterContextButton.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "867599edd2002600962b55458cd192e7844a61af"
+    },
+    {
+      "path": "src/plugin/ParameterContextButton.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a6a8ef950bdd9786164db067874551eb7fca839f"
+    },
+    {
+      "path": "src/plugin/ParameterSlider.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5f648481896d0bf64b1e2747b62f5a7d28e82538"
+    },
+    {
+      "path": "src/plugin/ParameterStateChildIndex.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6d56d0cc5854b8fde8dc328e30c0ca9e5d72e9ab"
+    },
+    {
+      "path": "src/plugin/ParameterStateMirror.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "85fcb1b3168c549bf7392f3c6b7134ea3a7719c6"
+    },
+    {
+      "path": "src/plugin/ParameterWatch.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f17e7dbf899b251fa35621781cf151434a0f3716"
+    },
+    {
+      "path": "src/plugin/PerformanceDeck.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fa0fa2499d2426b1e0b5e3ce396d0a8b8456cae1"
+    },
+    {
+      "path": "src/plugin/PerformanceDeck.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7ef333cd96c6b939f15ed0f03a6c5ad10017a344"
+    },
+    {
+      "path": "src/plugin/PluginEditor.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d8bf344ea9d6b3017c794d83b8ff0cf61b53e5a7"
+    },
+    {
+      "path": "src/plugin/PluginEditor.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b044a5679b5e90b9b556adb3376568ab90c2b391"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ef87677987bf374de5c48569ea6b774aa4a47040"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2c279e13eca4ef39dc29126d9e5a574b778c4feb"
+    },
+    {
+      "path": "src/plugin/PluginProcessorAutomation.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7fe51d12e6dfc93ee8ba061da6532fecf6370998"
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fcd52dfed5ec3badc5a7c09bd87197b7cffe7e97"
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cfa0e8d38da027d3a514d2cd63989eafa1dbe039"
+    },
+    {
+      "path": "src/plugin/PresetBrowser.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "37e4cef5f785320bfcd40c3c9100d3dae8fb1005"
+    },
+    {
+      "path": "src/plugin/PresetBrowser.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ed3ed45eb54037cc3647e703f7fe34cc1e87bb4b"
+    },
+    {
+      "path": "src/plugin/PresetBrowserSound.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "98e5bfe6e02dbf56d1214d2da3c3b91782a36b4e"
+    },
+    {
+      "path": "src/plugin/PresetDisplayName.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "771091cbf1a3d8fd482e64bbb155c011dc723d87"
+    },
+    {
+      "path": "src/plugin/PresetFileValues.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b9a1366859495a3deea99735d5b532a798b450e0"
+    },
+    {
+      "path": "src/plugin/PresetOrigin.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "17cf53e0ea520a282f63768446651aa29ff83084"
+    },
+    {
+      "path": "src/plugin/PresetPreviewMath.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2b68e7c4a919546673a87d641f4dece8baf830d7"
+    },
+    {
+      "path": "src/plugin/PresetXml.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54a146712f295066598482d21284c4bfcd7ff20b"
+    },
+    {
+      "path": "src/plugin/StudioDrawers.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "116b836c05f35b678677638d4065a4fe105f0103"
+    },
+    {
+      "path": "src/plugin/StudioDrawers.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2dd28fd5fd2683a2f4c4f6890c31be613e5d5875"
+    },
+    {
+      "path": "src/plugin/StudioMount.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b570d05c4bbfd9b823a12b4c53d86077a67fb3f5"
+    },
+    {
+      "path": "src/plugin/StudioToolbar.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "705983b117e2b88f2fdf765f40bc89ba675ccf96"
+    },
+    {
+      "path": "src/plugin/StudioToolbar.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "aa2331bc86d6525b73904daaf4911ec27d909953"
+    },
+    {
+      "path": "src/plugin/StudioTour.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d0320f8ece3050d515ba6ce32ba81d0a7275fb6f"
+    },
+    {
+      "path": "src/plugin/StudioTour.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c913b7b6a841d4e0ea4f5f5cd01eb2afe6460b15"
+    },
+    {
+      "path": "src/plugin/StudioView.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "06bb93d4b39a0c6e41f2f0306c188f0fef0540c6"
+    },
+    {
+      "path": "src/plugin/TuningInspection.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9b61e55759cf5283af8d2c52c730afb484d59c3a"
+    },
+    {
+      "path": "src/plugin/UiComponents.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fcf07823fc6e824600f83f89e02d3780de816865"
+    },
+    {
+      "path": "src/plugin/UiComponents.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "444b83c39dd04edd0a35c8e0ddff67aca21d819e"
+    },
+    {
+      "path": "src/plugin/UndoHistory.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ece5a4d563152e5b9b5a247e64e2f4afbb2b2944"
+    },
+    {
+      "path": "src/plugin/UndoHistory.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a4b430bb1ef98d7c37325fd783f43569b1ec80f4"
+    },
+    {
+      "path": "src/plugin/VoiceActivity.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1e0f4171586ce5d667b8780da86f25e1383c235a"
+    },
+    {
+      "path": "src/plugin/VoiceInspection.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "043378e530779cb9f4c12286faa7bf189fca7631"
+    },
+    {
+      "path": "src/reference/FreeRunningVoiceTruth.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "31de7dbdd8779e64ed7bf183a916f313a58b1f40"
+    },
+    {
+      "path": "src/reference/HeadphoneAmp.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8686f6c5092e427b7902b4b239895192e040ecfc"
+    },
+    {
+      "path": "src/reference/IG00151Reference.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "59ba6e03fc45e178121d579aa3b61cd74da2777b"
+    },
+    {
+      "path": "src/reference/IG00156Linear.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2d2b0f1e0f11669d719252a3f4ecddc9f2c04f2c"
+    },
+    {
+      "path": "src/reference/IG00156Network.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0a449f3a207074035cf19b5496b691cfcac182a4"
+    },
+    {
+      "path": "src/reference/Ig00150Sub.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7af5f5feb718cbb25be2909b2fe71e98fe5ccf69"
+    },
+    {
+      "path": "src/reference/KeyboardContour.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b0edd53ad986b8c4792cf78d706f84c0637642d7"
+    },
+    {
+      "path": "src/reference/LevelControl.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c168439ed78672b8bc7ebd7d1b738e15ab677bfa"
+    },
+    {
+      "path": "src/reference/LoadedControl.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5eca031e3eee87693dafda6e1fdf8c199cc680b6"
+    },
+    {
+      "path": "src/reference/LoadedControlRank.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0f060aed70e192c458f557c7701b54c1490d1670"
+    },
+    {
+      "path": "src/reference/LoadedControlTransient.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3da46d69cc70945e5fc9b3a90e38a851fdc24f64"
+    },
+    {
+      "path": "src/reference/MemoryControlFrameCompiler.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "91209c4993a3f296c9d98f151a946d4ceac094b9"
+    },
+    {
+      "path": "src/reference/MemoryPanelNetwork.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e001337cd3390bd5ae7cf0f38ed421e54fa20383"
+    },
+    {
+      "path": "src/reference/MemoryPanelPortCompiler.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bdece964e84b44a9700482dda1a862a6ae08c713"
+    },
+    {
+      "path": "src/reference/MemoryPanelPorts.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7d2991157f675ce243c9bb82b9e2392047fa75eb"
+    },
+    {
+      "path": "src/reference/MemoryReceiverNetwork.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7fcafa01c30c142fce1baa68b17735182f67b591"
+    },
+    {
+      "path": "src/reference/MemorySparseCompiler.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4b101fd4a112cb7f224d6cb6e4b5bf61bab65a6b"
+    },
+    {
+      "path": "src/reference/Mn3001Packet.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0f711373e9ed974e550e70dc7cb03ae7cc77a5dc"
+    },
+    {
+      "path": "src/reference/MsegReference.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7c52ab5c5067452549e3db9ec815d2eefa0bd1a5"
+    },
+    {
+      "path": "src/reference/NoiseSpectrum.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d20e88c0a87d81031a7a67bffb747fb384b83dbd"
+    },
+    {
+      "path": "src/reference/Oe1Modulation.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c3c2d4b2a3bc89e7b1f7d2592b05a5bcbe79d65c"
+    },
+    {
+      "path": "src/reference/Oe2Filters.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "03441bf5608970886078b9bda115507c56290857"
+    },
+    {
+      "path": "src/reference/OutputTaps.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d73baf3249caa21457da61f8b3f4f0dfd65cfe50"
+    },
+    {
+      "path": "src/reference/PraWah.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "55e0891b84b279ce75013d70aa506060c8fce68c"
+    },
+    {
+      "path": "src/reference/ProgrammerControlIdentity.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d15e689602ae4c4062d1b8043a66d6495f6e8baa"
+    },
+    {
+      "path": "src/reference/ResonanceControl.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8477964719814e7b49ff94917f23083b64bd7cba"
+    },
+    {
+      "path": "src/reference/RingModulator.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e6a089036fe2efc4321f6a9b66219661ab2a7421"
+    },
+    {
+      "path": "src/reference/SampleHoldTruth.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "88395ef54122eaa1ec2543dd650097e034a181d1"
+    },
+    {
+      "path": "src/reference/TouchCircuitTruth.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "eede17e6cd177dea9d06088ab3575cb83ca9780e"
+    },
+    {
+      "path": "src/tools/CallbackCpuMeasurement.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c0793527a2c05306942fe04647f32ccdb9e479fa"
+    },
+    {
+      "path": "src/tools/DecimalConversion.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "05beef4c26857fc64a1be6f69c9a90118c6086ff"
+    },
+    {
+      "path": "src/tools/EventTimeline.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5e2a1d5f287370b8fa2e42341475bf63b769458b"
+    },
+    {
+      "path": "src/tools/FloatWav.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c08072a5282963773c5b79c4b4a893cd5810dd80"
+    },
+    {
+      "path": "src/tools/TruthInputSha256.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0f009fb634dad232bdc853c15facc08a991dab24"
+    },
+    {
+      "path": "src/tools/amplitude_production_trace.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b985f98d8e4bfddb174708b422191e75fba46848"
+    },
+    {
+      "path": "src/tools/compatibility_probe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a5935f12ca64b297c5879b8ae12c0de3bbeafb7e"
+    },
+    {
+      "path": "src/tools/dsp_probe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1f15321a85feef76ef11e66265082bbc53259412"
+    },
+    {
+      "path": "src/tools/engine_audit.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "109c03eb286be8d6d31be2bb485a9bf81d08f06d"
+    },
+    {
+      "path": "src/tools/filter_production_trace.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3402a8864ebbc29a1b1e82a8eec993894454ee9b"
+    },
+    {
+      "path": "src/tools/library_phrase_audit.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dddaf80b926384f5dea22294a3fc78d4a86e3d97"
+    },
+    {
+      "path": "src/tools/parity_capture.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9789bb9683d6b7e95a7fcd179e7dd8d72692e939"
+    },
+    {
+      "path": "src/tools/preset_capture.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f23ee3860f8ec7fac36369132086b2511d411ff6"
+    },
+    {
+      "path": "src/tools/render_cli.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9c45233846dca1fcb06fc3d7c1357c321f77832c"
+    },
+    {
+      "path": "src/tools/source_factory_audition.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3e296a1a0ba6caa06496d25b59e508790cc84514"
+    },
+    {
+      "path": "src/tools/source_factory_benchmark.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6ca2b8268515f05ee01e1418c3a35012e366de1d"
+    },
+    {
+      "path": "src/tools/source_factory_circuit_compatibility_probe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "13eaf52300e2acbfb2a0a7a22449e971ef14a1d8"
+    },
+    {
+      "path": "src/tools/source_factory_compatibility_probe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1220e79a976ca591350cb656b0c76c9bd02fe999"
+    },
+    {
+      "path": "src/tools/truth_render.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f0575bdde1d32ec9f95f862c292a75db7ed3acaa"
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d68239a6b20ce9eb5e46876468b4f72483470e56"
+    },
+    {
+      "path": "src/tools/vca_reference.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "657e78096dfc34c1793768c1b644c3dd6844e19a"
+    },
+    {
+      "path": "src/tools/voice_continuity_probe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2c05fcf4cf51c376220dc63c4effb79ab76387b8"
+    },
+    {
+      "path": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3d63c1ca256566669503db35721e8f054a0deb06"
+    },
+    {
+      "path": "src/vendor/libxml2/Copyright",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8c0b7c15dd9b66501511f5971ec9cae971997a0d"
+    },
+    {
+      "path": "src/vendor/libxml2/SOURCE.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "81bf74005a474e2f9f2b2973ee65941d712bc39e"
+    },
+    {
+      "path": "src/vendor/mts-esp/Client/libMTSClient.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9bbfb1ee0525fe529a27d4d5d1da346f6cd73a30"
+    },
+    {
+      "path": "src/vendor/mts-esp/Client/libMTSClient.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dee12c3b05345cfeef698d110aeab0b89a638a66"
+    },
+    {
+      "path": "src/vendor/mts-esp/LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5d77a0bfdbb69fb2bae0c984afadda0c8f7b3a41"
+    },
+    {
+      "path": "src/vendor/mts-esp/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "aaa3d03d16d13ba8e04a71c374c34662281d1d9f"
+    },
+    {
+      "path": "tests/AbCompareHistoryHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "41a1715b924a4cedba063bfa0bdb353c95f7ca84"
+    },
+    {
+      "path": "tests/AbCopyNotificationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2a2dd5434ea1de289c8f03e437d90344983f43d6"
+    },
+    {
+      "path": "tests/ActiveTailContinuityTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2635232f7b1f8f68bb02d912367407d4a372d04f"
+    },
+    {
+      "path": "tests/AmplitudeProductionOracle.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7a9f9147c96f4449e2ca296a6e8d56dc0c77617a"
+    },
+    {
+      "path": "tests/ArpPedalLifecycleTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "36edb7d535fd233e62fc13fbb4737d12b8514595"
+    },
+    {
+      "path": "tests/ArpRateLifecycleTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7fa16a351ac52096fc42f335f565cf7d4e8a606d"
+    },
+    {
+      "path": "tests/ArpRepeatLifecycleTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "60b049d9074057597584f5f1399e359df4280c6a"
+    },
+    {
+      "path": "tests/AudioCallbackAllocationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "30bdf4461a10bb529dfb609c4b57206b3fe8b2bb"
+    },
+    {
+      "path": "tests/BassPluckedRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8968c442f892b5da5e0117492447ac14d8617587"
+    },
+    {
+      "path": "tests/BbdChorusTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "371fa530771288ab0f6b71759e2b52ca2c1213bc"
+    },
+    {
+      "path": "tests/BodyArticulationEngineTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2531199474f27cc0dbaf98723d51a5f8bcee2e72"
+    },
+    {
+      "path": "tests/BowedBodyFormantTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9823b9fb9144256b8150ca86a6da3cc6efc7c320"
+    },
+    {
+      "path": "tests/BrassOrganRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a954d729a8baeb0242ac63787f9d040fe0d3e5ac"
+    },
+    {
+      "path": "tests/CallbackCpuMeasurementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5312e9534af9bf41e30c86f92c367a4b34149754"
+    },
+    {
+      "path": "tests/CapturedKeyboardEventsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0ae8e3b34f7ec0fa2a5e7c2d3d588f5085e840c3"
+    },
+    {
+      "path": "tests/CircuitPolicyHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5d7591be1cfaf25afd5c4b12c9363f32a32bbf71"
+    },
+    {
+      "path": "tests/CircuitSineSource.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "273be90d1c71c7f53178dc4c3bd7da6da143fc6e"
+    },
+    {
+      "path": "tests/CompareVst3MainCompatibility.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b2eaa2fd9b4db338953db48315d6b18a7fd21de4"
+    },
+    {
+      "path": "tests/ContextMenuKeyboardTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68c944fe0684dccd26b50dc36c47c6727e5be203"
+    },
+    {
+      "path": "tests/ContinuousVoiceCircuitAuditTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c1d5ae36be36d4ad980367849da0f3480a7780b2"
+    },
+    {
+      "path": "tests/ContinuousVoiceCircuitTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9f91f0d8d5f16d625423dc8d0f56ad8420b33bc8"
+    },
+    {
+      "path": "tests/ControllerHandoffHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ffa0600a61922d9bcb8316d0a87c4927c5ffc477"
+    },
+    {
+      "path": "tests/ControllerResetHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68b6a462243d233a3a780b2fdfda70e70102f796"
+    },
+    {
+      "path": "tests/ControllerResetTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6e4056854cfd5fb944a7ca8c0abdd602f366d2c4"
+    },
+    {
+      "path": "tests/CoreTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d26b781f8729114cba0750d53aba5f599a446a8e"
+    },
+    {
+      "path": "tests/DecimalConversionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a79260d3022bec22b3e7701fbba08f8a8a97d519"
+    },
+    {
+      "path": "tests/DelayLineTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6428bddce52de489f44906295275f2e2421ee95d"
+    },
+    {
+      "path": "tests/DriveControlCacheTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0ba5c929b53db6aa08f4db61dd833c651e41e18b"
+    },
+    {
+      "path": "tests/EditorInitialSizeTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b6fb15b1f1f371c12edc92eb4682bc0e68f7326f"
+    },
+    {
+      "path": "tests/EngineHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2a03f2bee479fd2f34d8be36e06ad708ef3cb34e"
+    },
+    {
+      "path": "tests/EngineOutputFirPackedTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "06fba6180841d6874e8031a74863221a59be6840"
+    },
+    {
+      "path": "tests/EnsembleFxBaseline.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6a222acb5f90af930b6a13b090b2b4f28c8dd9c4"
+    },
+    {
+      "path": "tests/EnsembleRateCacheTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b39d9a9927d2db9c44519b0faeaacdb2fe09fee7"
+    },
+    {
+      "path": "tests/EnvelopePrecisionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9737ff795455cbac5427b35c96471c4239c3f3c9"
+    },
+    {
+      "path": "tests/EnvelopeRcModelTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "26c61372fcbc7e40e5881795c1ecdb6b44e94597"
+    },
+    {
+      "path": "tests/EventTimelineTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c59ec536c814b0570391e48100b3cd2522475aa9"
+    },
+    {
+      "path": "tests/EvidenceRegisterTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d053ac0ecb51bcd72ce92d9c17bb8d1a63f567c7"
+    },
+    {
+      "path": "tests/ExpectFixtureInputRejection.cmake",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f1919f9f1207d23608d3ba75004a4909ce5daa44"
+    },
+    {
+      "path": "tests/ExpressionOpticsOracle.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d535b8fdfdd289f9a40e8e705ca119c8328633fb"
+    },
+    {
+      "path": "tests/ExternalModulationInterpolatorTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "96f741c0bc1b7d7a8f94101043023c10e85c94ff"
+    },
+    {
+      "path": "tests/FastMathTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e527b7cfe06d449e02b7dcc7cec99f686dc94fa6"
+    },
+    {
+      "path": "tests/FilterBatchCapTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "363148fbbbb5c11353401c95740372a057e440ca"
+    },
+    {
+      "path": "tests/FilterBatchEngineTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2fdddd8a4a22b8aabbc13656174f5de5f872e1bc"
+    },
+    {
+      "path": "tests/FilterBatchSchedulingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a5653dc49639096b56d39e79fef150fbad1a5803"
+    },
+    {
+      "path": "tests/FilterCachePerformanceProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "14a02d80dd7adc9905968c4f6351a865fc145ede"
+    },
+    {
+      "path": "tests/FilterDefaultHistoryTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9ac92dbde5839fef3a2525463f843bb7104b8de9"
+    },
+    {
+      "path": "tests/FilterIdleFallbackBaseline.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "67313bbfa3f62bccd734f4688c4648fd0694abb7"
+    },
+    {
+      "path": "tests/FilterIdleFallbackTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5030c79e334a57f9f4b46371e55d4fe8ccc6c585"
+    },
+    {
+      "path": "tests/FilterProductionOracle.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "73d51841ef0e0ae3f72b7e6091726082b00c23ed"
+    },
+    {
+      "path": "tests/FreeRunningVoiceTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7f77db2c2b367036c67cd710ce03b1ebec23d74b"
+    },
+    {
+      "path": "tests/FxLoudnessCoreTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "135a7c6e64cf861c783652904e83105d88245544"
+    },
+    {
+      "path": "tests/FxLoudnessGateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2b1e92507792ddb693500e7083211f705637ce60"
+    },
+    {
+      "path": "tests/FxRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "045d82f156660170a8f6e1e9f83d02f9896cb552"
+    },
+    {
+      "path": "tests/FxTapeLifecycleTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0c2b2682cd3f01c7d8997728a6c181aa38d5b6fe"
+    },
+    {
+      "path": "tests/HardwareControlTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3308262442a54d6c3265e564c7c5450b1a66d62c"
+    },
+    {
+      "path": "tests/HardwareSourceHistoryTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f1a17bafa02664eec507ab9603d40e2992a481d6"
+    },
+    {
+      "path": "tests/HighResolutionVelocityTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33192716fe7687be14eeac0d95b21d411efa61f6"
+    },
+    {
+      "path": "tests/HostAutomationCurveTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "90927f76056313e7291d084db4305d5154abfd09"
+    },
+    {
+      "path": "tests/HostAutomationLookupTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc084ac5d6870e9303a862a8c627dc2f83b92c27"
+    },
+    {
+      "path": "tests/HostWrapperPlatformTests.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "06abab665ec0fbc3f638874d071c71ea5dbe7e24"
+    },
+    {
+      "path": "tests/IG00156ReferenceTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2a660b5c965ad91b8269fd0d299103fa87552991"
+    },
+    {
+      "path": "tests/Ig00150SubTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5f08490a05675df3dca9f6613cfb9d8d3a37e408"
+    },
+    {
+      "path": "tests/Ig00151VcaBaseline.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2f852be61c793dcd89db9e054bd7163e498c8969"
+    },
+    {
+      "path": "tests/Ig00151VcaTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e242d09d146cf8aa945f94a82d340a0a3aeaa85d"
+    },
+    {
+      "path": "tests/Ig00151ZeroEiTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c040d5e157ed03071cc74a8582d295ecb6ac39f8"
+    },
+    {
+      "path": "tests/Ig00156BatchAdmissionProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "780013b01e7fd9aa2cf982e3ca4591bf621d2e5c"
+    },
+    {
+      "path": "tests/Ig00156BatchTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4cc75fd6a25bcdc9751f7762c0c5f9d4916de855"
+    },
+    {
+      "path": "tests/Ig00156CacheTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0faa86c976c98f2eea1265515694db7d39ae8fd3"
+    },
+    {
+      "path": "tests/Ig00156FilterTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c183426c6ed55ff313540b5f368a0452a5ec507f"
+    },
+    {
+      "path": "tests/Ig00156NodalTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fb3556eccc2601961d13fae44ff26689c5dbf504"
+    },
+    {
+      "path": "tests/Ig00156QCacheEngineProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "86612042bb803a39fd4bfc6b5721047dc1111c6e"
+    },
+    {
+      "path": "tests/Ig00156StageBaseline.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b5adfdd9d7e549208b6ac367cb122ea87f2514a6"
+    },
+    {
+      "path": "tests/Ig00156StepDiagnosticsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "03f200b3d0b2884d390a6ab564dbc844a0466bb2"
+    },
+    {
+      "path": "tests/Ig00156TopOctaveTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "77d8213f41c7dfd634d45d1d7dc9426bd15dc332"
+    },
+    {
+      "path": "tests/InstrumentBodyEngineTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e1afbed948e6de25de9fd378ed4e19ecee6aac0a"
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f58a8b37ffa292818841335c08595976a59ecd41"
+    },
+    {
+      "path": "tests/InstrumentBodyTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ca09cbd730f639c8df8ce08a2b6e1c1626041dbf"
+    },
+    {
+      "path": "tests/InstrumentBodyVariantTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7a499b78df812e056c9b6ae2b70fb8a8dfa20f05"
+    },
+    {
+      "path": "tests/IntegrationUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f5f3c3a154ccad30a3400b6b628a7978a939d132"
+    },
+    {
+      "path": "tests/KasScannerTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc8ab4d39c6f0ae167a0adc9f84b1d3122666ea7"
+    },
+    {
+      "path": "tests/KeyboardContourKeyMapTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ac60788d9d429aa87d100267ba06d02278796a6f"
+    },
+    {
+      "path": "tests/KeyboardContourReferenceTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "710ef23ed2e5a98cd27560aa70efcf96830c9841"
+    },
+    {
+      "path": "tests/KeyboardEventQueueTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "519546ede3ac27a6c41b336723a65f637ef8fd69"
+    },
+    {
+      "path": "tests/KeyboardPressureAuditTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b3733d7bb8e0adb292e57b65e04ef2636a71b510"
+    },
+    {
+      "path": "tests/KeyboardPressureHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7b583725892020a68f2ced11db37196152954039"
+    },
+    {
+      "path": "tests/KeyboardResponseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7886cfdbeb9eb11174003fa8b12a777b7f86b04e"
+    },
+    {
+      "path": "tests/KeyboardTuningUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2d62cc2f28ac40b4a8185cd7db1493adbdcf445c"
+    },
+    {
+      "path": "tests/LeadRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c54326fd3f2f3479edb44bc2350dec8b0d7f7506"
+    },
+    {
+      "path": "tests/LegacySubLfoOracle.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b87763987d6a073e653d9c470ec737267e1b5a36"
+    },
+    {
+      "path": "tests/LegacySubLfoOracleTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d775ad21481227c08e2f798cfe69dd2a9f7a6c8f"
+    },
+    {
+      "path": "tests/LevelControlTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "01dd3050162e8fc0d583643a4f0ef2519bb561de"
+    },
+    {
+      "path": "tests/LfoRandomSwitchingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9cd7d5c39997b1492db9f60f6db22ddcb6aff0ae"
+    },
+    {
+      "path": "tests/LfoRandomVariableRateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "72108d7008d3822b574143ec04f9d0330b9a7728"
+    },
+    {
+      "path": "tests/LfoScopePreviewTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ed11e2fc83ee0095e21eb0ba9f63a37d476660f4"
+    },
+    {
+      "path": "tests/LibraryAuditTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4546e32ac4c66f46f2a3068f5e57c10494d26a83"
+    },
+    {
+      "path": "tests/LiveEnvelopeLevelTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "922b6652f8fb1c48dc5e4414de4be15e7fbc7d0f"
+    },
+    {
+      "path": "tests/LiveEnvelopeTimingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "899f9214b60fb0553ed019fccb0234625629009c"
+    },
+    {
+      "path": "tests/LoadedControlRankTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33e8ded28b9b1b330ea92d19ad26f2c2a94c6e9d"
+    },
+    {
+      "path": "tests/LoadedControlReferenceTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33fb5d9ee75382126858687c473caca07f7ffda0"
+    },
+    {
+      "path": "tests/LoadedControlTransientTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "21429736fd2ec95f72eaef4d8327baf9e08b2116"
+    },
+    {
+      "path": "tests/MainVst3MultiRecallStateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fdb846a2af722b5348d784618e5da8e007fdd41e"
+    },
+    {
+      "path": "tests/MainVst3OnlyAutomationTests.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "78f77e16cafd40cd136d1a87c45fad5347f45b69"
+    },
+    {
+      "path": "tests/MalletPresetRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5c20542526a67a4c5b1ce601d06c7ef7d2c1466b"
+    },
+    {
+      "path": "tests/MatrixAmountCanonicalGenerator.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "83c311010b1857af262c3cd3346240a0d8fc6bc9"
+    },
+    {
+      "path": "tests/MatrixCombinedCanonicalGenerator.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "92d00fd58785332aa6f13e8b1e5c96c52a941b2e"
+    },
+    {
+      "path": "tests/MemoryControlRoutingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a808a2cf6dbf5c1e7d6bf7156df7ae9c508f8a35"
+    },
+    {
+      "path": "tests/MemoryPanelPortMapTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6a2593f30945531e4c906a53e258c83f00160546"
+    },
+    {
+      "path": "tests/MemoryPanelPortsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e8cacefc2434573b3df3931300f244cac8f2c5ea"
+    },
+    {
+      "path": "tests/MemoryPanelTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9e13c20cda7bbfa8b8f4610d5f3f09bb74a137c4"
+    },
+    {
+      "path": "tests/MemoryQualificationProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0dcb4c58f431079036715a0d216b8ce9d2a3bc8d"
+    },
+    {
+      "path": "tests/MemoryReceiverTruthTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3e1a396cec6ecc04f86162f283b84289bad4062a"
+    },
+    {
+      "path": "tests/MemorySparseProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0fa04adc44393ae2ed24f1ec4d58807d67577bb7"
+    },
+    {
+      "path": "tests/MemorySparseUpdateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9ae2df88c3fd682724bb71105d9d179b8efb7ee0"
+    },
+    {
+      "path": "tests/MemoryVerifiedDiodeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dad1056e3396c999fe5456e24aadf1a778fc1921"
+    },
+    {
+      "path": "tests/MidiLearnTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c3dd0a7a6647129abfa04f4669c1a238c216d89d"
+    },
+    {
+      "path": "tests/MidiMapChangeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "13a4425292a81183752da27941fe75d5bbde9b44"
+    },
+    {
+      "path": "tests/MidiMapNotificationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "aa3d0ebab6922e995eddea699c826ea283eb7a37"
+    },
+    {
+      "path": "tests/Mn3001PacketTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "71743150125f7704ea364b515b18aed63b056c22"
+    },
+    {
+      "path": "tests/ModMatrixRouteActionsTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "77048462f0d327052bc360bdab102f58a0881c4e"
+    },
+    {
+      "path": "tests/ModMatrixRoutingUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68d70922cd932469fac38b089c1e3aad5f522aba"
+    },
+    {
+      "path": "tests/ModMatrixTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6c918043bb4164a3b74a4157df2b79ccbfa6c15b"
+    },
+    {
+      "path": "tests/ModernFxTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4a4d82a90c2fc383115029c2ed320ad22625707b"
+    },
+    {
+      "path": "tests/ModernLayerHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0d00ff872a846d3a0ca3df7a90520e333759fb66"
+    },
+    {
+      "path": "tests/ModernLayerStateRangeHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2441adb1b4ef837d35092f9666e127288d7f03de"
+    },
+    {
+      "path": "tests/ModernLayerTolerances.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ed968866e6a76826b328f9cdc3c96c94051dd008"
+    },
+    {
+      "path": "tests/ModernLayerUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c7899bd8cfc32fb1cd33fa1e08d318cbc0cde091"
+    },
+    {
+      "path": "tests/ModernLfoTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e76b396a4968a6e5ca088d2a4c22af3ca09a9d36"
+    },
+    {
+      "path": "tests/ModernPresetRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1d82fcd9ba8f241311bb9c27098f735610b0e05f"
+    },
+    {
+      "path": "tests/ModernSliderGestureTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c77c9b42cc48ed47eadc35ebd3469b21c8cb215a"
+    },
+    {
+      "path": "tests/ModernStateIntegerTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bb27bb73150748fc8772fb41b1a46b30ed39562a"
+    },
+    {
+      "path": "tests/ModernStateNotificationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e137c7d02c5937e58ca9ededa746cd93d381cedc"
+    },
+    {
+      "path": "tests/MonoMsegRoutingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d8dbac62f88ed21c766730996648251feccbfbb2"
+    },
+    {
+      "path": "tests/MpeConfigurationRangeHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5bf99956f105c911a0d0a481e4291ec2308896a7"
+    },
+    {
+      "path": "tests/MpeManagerRangeRetargetHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "58363a56bc90d07cf0c145230f44671c892200a6"
+    },
+    {
+      "path": "tests/MpeMasterBendRoutingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4d7ed538c56217cc63319bace4c4aa154a754709"
+    },
+    {
+      "path": "tests/MpeMasterSmoothingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d3283bde25e177b02c0783a65e90eebc2efe5253"
+    },
+    {
+      "path": "tests/MpeMemberOnsetHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ff9cb28344c2cb79f1ea72c4f55137536448dcf7"
+    },
+    {
+      "path": "tests/MpeMemberOnsetTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a98709e2992d965357c56f9d8fa4c24b272488a7"
+    },
+    {
+      "path": "tests/MpeMemberRangeRetargetHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d5ea395d45be22351593dcb786bec2a58cc2512e"
+    },
+    {
+      "path": "tests/MpeMembershipResetHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b43989cf4a911b3cc92248254e218157e24c529b"
+    },
+    {
+      "path": "tests/MpePolyPressureHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "86e279491fe46ea5d1961e5a4155e5ed42de0271"
+    },
+    {
+      "path": "tests/MpePressureCombinationHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "162a45a67d53f574ea28988bee0b204fb68ecbce"
+    },
+    {
+      "path": "tests/MpePressureCombinationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "02bfa123548448a823b1a9f3a3f0c0022674bbe5"
+    },
+    {
+      "path": "tests/MpeProgramRoutingHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0595e14a89a414b7dbfa0e2f47467befe1aa0564"
+    },
+    {
+      "path": "tests/MpeReleasedTargetHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fa2998f109d9862191c919ae88880776f6953b54"
+    },
+    {
+      "path": "tests/MpeReleasedTargetTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "57a726c3a7d4a6adb2be7d4a39dd647b32538a5b"
+    },
+    {
+      "path": "tests/MpeRoleTransitionHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "467fa189fd2a9711cdcd81bf6fedd974c9067d0e"
+    },
+    {
+      "path": "tests/MpeStatusHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a19874a47259a1a0a391afc83fe95cb26382954a"
+    },
+    {
+      "path": "tests/MpeTimbreCombinationHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "108d38a96bd6b90075507ba9a2ee38a308034e44"
+    },
+    {
+      "path": "tests/MpeTimbreCombinationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c7a6922d47fa692d761b3da92045a0c36e72b1a5"
+    },
+    {
+      "path": "tests/MsegCanonicalStateGenerator.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "858c030964137d51d3f1bffc31fe9c8d31ccc99e"
+    },
+    {
+      "path": "tests/MsegCombinedCanonicalGenerator.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a6f1285d177ca8bba9e184177c6b6a458171fe00"
+    },
+    {
+      "path": "tests/MsegCombinedInteractionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5c75198422ced00e4ce690d4fbf400ea557558e5"
+    },
+    {
+      "path": "tests/MsegEditorLifecycleTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "39294342e36b002f677fb1e5f2241e16dd06211c"
+    },
+    {
+      "path": "tests/MsegPointValuesTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cee46f7148be3b893b437bbf75ce4e1a9437268a"
+    },
+    {
+      "path": "tests/MsegRateAmountCanonicalGenerator.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9862280ee0b940f1398df04ba1b915aec049ae00"
+    },
+    {
+      "path": "tests/MsegRetriggerRateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d27b8999970ce0f0f9cdb48daab721efafac42db"
+    },
+    {
+      "path": "tests/MsegShapeCopyTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1c38de642cc00473bd400c7d65723f25a453d51f"
+    },
+    {
+      "path": "tests/MsegStateTextTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54fafcdae3ee787a4e5fa480f12d56048e38ce72"
+    },
+    {
+      "path": "tests/MsegTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e10ef073be227ff872603e00f216323bfd12d5ab"
+    },
+    {
+      "path": "tests/MsegTransportRateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3fc8b32bc8f21df224f4c30be806bce8366a74f1"
+    },
+    {
+      "path": "tests/MtsDormantEngineHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5e3c32e16d3c73ec587e41451fe926495d4ed3b4"
+    },
+    {
+      "path": "tests/MtsEspChannelTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5733b6613cf00a2929d13d8dc36c8e992955b411"
+    },
+    {
+      "path": "tests/MtsEspFallbackTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c95214ce864aeeed906e05cf6d3bdb660c95b83f"
+    },
+    {
+      "path": "tests/MtsEspIntegrationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dbb3710e02f89ecc0b1570d8b4b616210a185f11"
+    },
+    {
+      "path": "tests/MtsEspNativeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "60d45cb1585af351afbb2d8c2ee91ec188fdfb34"
+    },
+    {
+      "path": "tests/MtsEspProcessorTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a8699ab353387108ac5792856dc87cf0d6661cd2"
+    },
+    {
+      "path": "tests/MtsEspWindowsMacroTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6d7b222c2457fda8eaf8abf53864d68c4ce9bca9"
+    },
+    {
+      "path": "tests/NoiseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f7c3424b503a22f84f14709e64939ae682029ecb"
+    },
+    {
+      "path": "tests/Oe2FiltersTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f9fecce81496c6eb40eddac25849ad9de349eb1f"
+    },
+    {
+      "path": "tests/Oe2StereoChorusTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d1e3c035d4cc3c29a5f8706a7f6e9b09990db4e7"
+    },
+    {
+      "path": "tests/OriginalArticulationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c9e4b78f05c2b94e4fd52f9192317899d308f96a"
+    },
+    {
+      "path": "tests/OscillatorPromotionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cf66b93637f65754a2b4d79e5a4c611e3b3ff4b8"
+    },
+    {
+      "path": "tests/OutputListeningTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "96c2eea66c4eeee3dc1ee8425f44bcc8a5a1c3fc"
+    },
+    {
+      "path": "tests/OutputMeterAuditTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "12fed2849783a98b1e5a8fd754886931ee3174e8"
+    },
+    {
+      "path": "tests/OutputMeterDisplayTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2fe022bb94879a58fed01ee833829a8261010488"
+    },
+    {
+      "path": "tests/OutputMeterHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "be9b96a135a4b0602bde2a9707c473989f983cfd"
+    },
+    {
+      "path": "tests/OutputMeterTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7c562eee69a64384bedb1245f072ccffa6fd4e8d"
+    },
+    {
+      "path": "tests/OutputMeterUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "63def86dc290656e24a4d96929eda8ac49f6556c"
+    },
+    {
+      "path": "tests/OutputTapCircuitTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2c53e029d0eaafe74c12132e8067370d8b7ec7ed"
+    },
+    {
+      "path": "tests/OutputTapIntegrationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c6bc51362a60976787db4facb1c1fd841a852205"
+    },
+    {
+      "path": "tests/OutputTapsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c417dc964d5d361beabd078a685491cccc34b0d3"
+    },
+    {
+      "path": "tests/OversamplingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2636a8ba5c81112d3744071740a8ccd643cf1c90"
+    },
+    {
+      "path": "tests/PadPolyRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b503ebd2aea09bd1a7fc5ead7af6d0d1df3846de"
+    },
+    {
+      "path": "tests/PanelEditorTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2eed1b20182e3638fa5c4b0ff5079ac6a9fee35c"
+    },
+    {
+      "path": "tests/ParameterComboContextTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2ae2ddf57fcecc1e7b8b944c98230d430369296d"
+    },
+    {
+      "path": "tests/ParameterStateChildIndexTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "91bc288799090425a14a257f0d18c81008cc9139"
+    },
+    {
+      "path": "tests/ParameterValueAdmissionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "08ece6692097168eb062db69c81ea51543616a16"
+    },
+    {
+      "path": "tests/ParityModeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5ec9d8f7d15e117a90934bf097a5f3db418e5a8a"
+    },
+    {
+      "path": "tests/PedalReleaseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4f55bbb6643d37b0cec2ccb6e8702e164b62a975"
+    },
+    {
+      "path": "tests/PerformanceControlTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b253eaed297a1a6aec9c689244c4104839473c9d"
+    },
+    {
+      "path": "tests/PerformanceWheelKeyboardTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d1bee73914e2f95c46a886cc3e7fd886627ec885"
+    },
+    {
+      "path": "tests/PitchBendRangeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e9f05a724b22acbedd46aec2840482adc9c61d7e"
+    },
+    {
+      "path": "tests/PlateReverbRateTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5d61928f779ca65a44c1bf6304d63781ea23bab7"
+    },
+    {
+      "path": "tests/PluginHostMetadata.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "50bc9d249484f53fc1e8d449a120484f632d89c1"
+    },
+    {
+      "path": "tests/PluginLocalePreservation.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "727e474026b6553ee43b3bbcf21a7be1e28be1d1"
+    },
+    {
+      "path": "tests/PluginPanicTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6eb85a1903e1654fa0be27fa1973bf7a37ab7eb1"
+    },
+    {
+      "path": "tests/PolyPressureRoutingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ce9c3f035d01adb0c348bc7e129027df36f2c01e"
+    },
+    {
+      "path": "tests/PraOpticalCellTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6472470520e440b2323bce9bafb9134791cde656"
+    },
+    {
+      "path": "tests/PraWahCircuitTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "033ede2f9a272c692a20c3af8d2b5d199414ea5b"
+    },
+    {
+      "path": "tests/PraWahIntegrationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b8e673b2d294473b35c2095207abab534216c3c5"
+    },
+    {
+      "path": "tests/PraWahTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d9ef23e3840049e63ec7f4ce3b36afd724e73e78"
+    },
+    {
+      "path": "tests/PresetBrowserXmlTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "013fe884bc42e4e3923ff7ea3568f4631c206ca1"
+    },
+    {
+      "path": "tests/PresetCharacterTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d7319687b82b213cbf7ecf8141a3c69250a2c2a1"
+    },
+    {
+      "path": "tests/PresetClickTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f6dc8b0eb300841fda0781b1d6b498d0fb2cdec9"
+    },
+    {
+      "path": "tests/PresetDisplayNameTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ec7d72527272cd6844fd3dfa62395d8fcb636e26"
+    },
+    {
+      "path": "tests/PresetFileHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "330e2cd6251896b02c41af586baf96cbc6a6d149"
+    },
+    {
+      "path": "tests/PresetFileValuesTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a1b98901dfc2c9710521b65542b58bc32347d6ee"
+    },
+    {
+      "path": "tests/PresetIdentityTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "eec14b6b195d118a052f183026b9650c53ede118"
+    },
+    {
+      "path": "tests/PresetLoadTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3bfa0d21f254aa8fc8952b4723ff1fc7f663392a"
+    },
+    {
+      "path": "tests/PresetPrecisionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f9e8430cbe42cab70657809770530c0b7f509fdc"
+    },
+    {
+      "path": "tests/PresetPreferencesTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8be29f10e2f63f309fbf5cdc192b9cdf347f552d"
+    },
+    {
+      "path": "tests/PresetPreviewMathTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dba3d7e1581ea76b34aaad2fcdeca489f8bf448d"
+    },
+    {
+      "path": "tests/PresetRecallHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "767ee749aac9e94e3b2bfb2976d42f59f35dbe6d"
+    },
+    {
+      "path": "tests/PresetRefreshTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8c1314065bb661b6ce39c1873285147d186e824c"
+    },
+    {
+      "path": "tests/PresetRevertTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bc60c3d6d9a20b3cebeef4299f3f25063ef6299f"
+    },
+    {
+      "path": "tests/PresetSaveTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d142fc09c159c4cd41adf93153de6566a8446352"
+    },
+    {
+      "path": "tests/PresetSearchTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "53d9cce6d161023d1f6afd039ddb82892f3caf50"
+    },
+    {
+      "path": "tests/PresetVoicingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5e76b2909fd69905ce7c43209b1eddc3f755da61"
+    },
+    {
+      "path": "tests/PresetXmlTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e6d74afddbe4593f553785c4c02729f3a0e42bb5"
+    },
+    {
+      "path": "tests/ProgramArpHandoffHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5acf792c449428de2ae9647b2761cb962d18817f"
+    },
+    {
+      "path": "tests/ProgramExtensionRecallHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4fd31968c357d4c29d52d275c054662c11de15f5"
+    },
+    {
+      "path": "tests/ProgramLibraryHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "539cc806e76ae2704c4c878f267f12ee7dac9adc"
+    },
+    {
+      "path": "tests/ProgrammerControlIdentityTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9dd9778a18b96bf2d2d4c2719f2ce4a1b57252e6"
+    },
+    {
+      "path": "tests/PumpUntil.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2cbeb6030e114ec8233db52cda144055bc06feae"
+    },
+    {
+      "path": "tests/PumpUntilTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3be6c705d70559087120c1315b170119440f0899"
+    },
+    {
+      "path": "tests/QuietFxRackTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "23a315211de018c2f555a5141f8849c538a1bbdc"
+    },
+    {
+      "path": "tests/QwertyNoteOwnershipTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fa34129b2ef4c3162194e36c5107d958901ef223"
+    },
+    {
+      "path": "tests/RandomiseHistoryHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "895b8b51405cd031bb515791c85042a5858c5e97"
+    },
+    {
+      "path": "tests/RandomiseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "df9c7e5bac74c15152ef87d1d36e8b59795a330d"
+    },
+    {
+      "path": "tests/ReconstructedOscillatorTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6e280f59bc9f9259a2b2532911ceebeb863006b9"
+    },
+    {
+      "path": "tests/RenderPolicyContextTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fa3bce2b56c5cc0716d100df2f272cec2a9eaccb"
+    },
+    {
+      "path": "tests/ResonanceControlTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4851a081bc3da9ef050189ff34ad1764cde46941"
+    },
+    {
+      "path": "tests/RingCurveGestureTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a0a3db98eb687779bb54130229703e9aba17a9f8"
+    },
+    {
+      "path": "tests/RingModulatorCircuitTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "36fad211852efe755c0efbeaa38228d8278ad7b4"
+    },
+    {
+      "path": "tests/ScalaSessionAdmissionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "efd6301beebde6f97e6826b475c77d3c66a552bb"
+    },
+    {
+      "path": "tests/ScannerOrderingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3805b13ef4b4765c737d7ebc2f7430ad494006be"
+    },
+    {
+      "path": "tests/ScannerOverflowTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d44311558797620554faebba50d0a9f76a676e1c"
+    },
+    {
+      "path": "tests/SessionSchemaHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6fb70f30e27bf590e1715980699b6d8582a5f211"
+    },
+    {
+      "path": "tests/SessionUndoHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7a3c3b9e91f8b39750079f8fbe0d89ceb18a3f72"
+    },
+    {
+      "path": "tests/SixteenVoiceKeyboardHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "86dec9f94ca93238f1b9c67228b0dc8f860a7f7f"
+    },
+    {
+      "path": "tests/SixteenVoiceReleaseHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "365ffda291da09a6e56ea64926ff153f51504611"
+    },
+    {
+      "path": "tests/SixteenVoiceReleaseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bfd8749c181064fa6c9a936edfc728d50613645d"
+    },
+    {
+      "path": "tests/SmoothingTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6005ab072c10b37ca3be454b6f52d779b069cda4"
+    },
+    {
+      "path": "tests/SnapshotCliTests.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8764aadbe8006627238c506f3d4b0206466cd226"
+    },
+    {
+      "path": "tests/SourceFactoryBoundaryTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4e2452ee87058d1fd6d270763ce042b689efde8e"
+    },
+    {
+      "path": "tests/SourceFactoryIntegrationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5043b352af978acd0a3ae4299c08d846af3213ef"
+    },
+    {
+      "path": "tests/SourceFactoryToneTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "18761158481c9b64e96cfafec8ba40a780d49141"
+    },
+    {
+      "path": "tests/SourcePerformanceAuditTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "632b77ecd964189690cba8c646bc8b885b33bd69"
+    },
+    {
+      "path": "tests/SourcePerformanceHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "843f0b8dd77fdf5b5868bfffe49d2c18d097c9e5"
+    },
+    {
+      "path": "tests/SourcePerformanceTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "53c0fc8d18f0a57f972202668c8e8c82dc2aad47"
+    },
+    {
+      "path": "tests/StateMirrorBridgeTests.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7fd92bc8b4d1b72849b11f14f065a3e9b00dd9e2"
+    },
+    {
+      "path": "tests/StateMirrorHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "884c7306c2f37706c03fd558f26405862364dcc6"
+    },
+    {
+      "path": "tests/StereoPraExactTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8b8db21411161944e7f227475f59221f7b7b4d86"
+    },
+    {
+      "path": "tests/StruckBodyDynamicsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "03ee8cffc1a046010501556ba8163a9a3c69ddba"
+    },
+    {
+      "path": "tests/StudioLfoContextTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "24f38837ee0eacdda707005608235adf785e4615"
+    },
+    {
+      "path": "tests/StudioPreferenceNotificationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cac47fea91302b4d9ea80cac7ba247ef7add529a"
+    },
+    {
+      "path": "tests/StudioStateSyncTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "14bd0e0a759b7b93856ddf74bfdb141bdaed860b"
+    },
+    {
+      "path": "tests/StudioSwitchContextTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "94aa62b38bb0dcfb201de52f15bbc8383535ee33"
+    },
+    {
+      "path": "tests/StudioUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c94dacb78e820aae6bf44ec7051ddd1e05d8e670"
+    },
+    {
+      "path": "tests/SubRoutingDisplayTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2db8e7de0be662c4a3fb4fcf6b1e3175a4199511"
+    },
+    {
+      "path": "tests/SwitchContextTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "93f4cd75187db6340cb45ceba8deb7a70a6705bc"
+    },
+    {
+      "path": "tests/TapeEchoControlCacheTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0db1a25ff9b24d6c071e84653110e8d708f1c836"
+    },
+    {
+      "path": "tests/TapeEchoTimeTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3da1279b8ca289bb7904218b0bd9e30fc06f4d7b"
+    },
+    {
+      "path": "tests/TapeEchoUncachedReference.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b9e9ac82c8b042526daa845431b212f269896f4d"
+    },
+    {
+      "path": "tests/TimerTestWait.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "45cff1c1b99680f36828d4e0142906011736e9d3"
+    },
+    {
+      "path": "tests/TineStrikeDynamicsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "155a397b7fae657b0c422e8b2bf12f980957da9d"
+    },
+    {
+      "path": "tests/ToleranceDriftTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d2d77ef451a8a45a044a920a08ba281b6d3edc6d"
+    },
+    {
+      "path": "tests/ToolbarMenuLifetimeTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "83c479a996e74fe62ef7434595f1816608c70fe3"
+    },
+    {
+      "path": "tests/TouchCircuitTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1f7409ae1fdd314232722ee68ce5ba858a306449"
+    },
+    {
+      "path": "tests/TransientControlLifecycleTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "49bfe69f232f1772022245083fa919a6042baab0"
+    },
+    {
+      "path": "tests/TruthInputSha256Tests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d59c530619b80dc97ffa7d4997fc7f785ec79897"
+    },
+    {
+      "path": "tests/TuningFrequencyDomainTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "08ee442f055ae5a23a84d2bdf0b362c9646ccdcf"
+    },
+    {
+      "path": "tests/TuningInspectionHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "87e92d8bbdd309f786c0e17e2142ba702fe06a0f"
+    },
+    {
+      "path": "tests/TuningMidiTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f4c3adc3f56e64116c25c2094d9797cd32b493b2"
+    },
+    {
+      "path": "tests/TuningRobustnessTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "41a06ccc3a048839fb41384a87f6c455cdb58058"
+    },
+    {
+      "path": "tests/TuningStateNotificationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "601fcd79af4abf89c2912cc72e5f497dfd43d4f9"
+    },
+    {
+      "path": "tests/TypedValueUnitTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a0d013a1e0c8370c8f060b8477da07d393e8363b"
+    },
+    {
+      "path": "tests/UiControlMailboxTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f001b0ce5e4c96a20b8372ec5849e2cb8386b8fb"
+    },
+    {
+      "path": "tests/UiReadinessTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cf3098b3aa5d7701be7302a00558b28ce74dcbd8"
+    },
+    {
+      "path": "tests/UiSmokeTiming.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ccf4c923b3c7d24108d78a55061dd7d0bbe50ca3"
+    },
+    {
+      "path": "tests/UndoReplayGestureTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7e9718b49c15c57bf72191b664054ced36fa2870"
+    },
+    {
+      "path": "tests/UnisonDetuneLatchTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "490940c9b99207af98c2c3f126cbd83335001b7f"
+    },
+    {
+      "path": "tests/UnisonGlideTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "53cf30caf6b84de59a521d868cd0f98f9c3da965"
+    },
+    {
+      "path": "tests/VocalBodyTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0e9ad6126b1f7d8a395f720fd628296065a844fb"
+    },
+    {
+      "path": "tests/VoiceActivityHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "924a698f7b28dd24f633e1722e14ec720b52562e"
+    },
+    {
+      "path": "tests/VoiceActivityTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3a24f53587d1deea818da512fe0160f21475c066"
+    },
+    {
+      "path": "tests/VoiceActivityUiTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c38c4d247d402acac4473839055dbe4aa617b413"
+    },
+    {
+      "path": "tests/VoiceInspectionAllocationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3eb263c5cdb68c2afdb027c0ba6365e5fc1e130a"
+    },
+    {
+      "path": "tests/VoiceInspectionHostTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b3d1e3fa4092033781836db6bea2bc23a82520e9"
+    },
+    {
+      "path": "tests/VoiceMonitorAccessibilityTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a22c5340618997338e0edda3393161179ae1c8c6"
+    },
+    {
+      "path": "tests/VoiceMonitorFocusChecks.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b64662a4f1f7be620ac9fe13039455dcfd74ec9c"
+    },
+    {
+      "path": "tests/VoiceMonitorFocusTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8a5b41eec90c3c70419764c29f7d65e31e3d6973"
+    },
+    {
+      "path": "tests/VoiceReleaseTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "13d551446b20e4c5a4eba9642af55388d7e87d85"
+    },
+    {
+      "path": "tests/Vst3AfterTouchAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "731cda7595f27458557664f93e329e1ecd5aa70c"
+    },
+    {
+      "path": "tests/Vst3ArpRateAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ab1f86a04a8cb0a30d589a4096410ad9da8b5678"
+    },
+    {
+      "path": "tests/Vst3AutomationPolicyBoundaryTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6c29fd1809df39424f891705fcff442d567d0553"
+    },
+    {
+      "path": "tests/Vst3AutomationProgramBoundaryTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ea8d327568753178257b5f692de8503774dce636"
+    },
+    {
+      "path": "tests/Vst3AutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "659b3ac1c2dac53c03caf960b4ae31c84d6a2c1a"
+    },
+    {
+      "path": "tests/Vst3Cc1FixtureTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "25a7667ee0e282d5b465112013c50e45075b0e87"
+    },
+    {
+      "path": "tests/Vst3ChorusAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a100fded5fb8f06215a8ab799dc269d2d4bb46aa"
+    },
+    {
+      "path": "tests/Vst3DispersionAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e415989dc121384e7d636e2572421afd95bee779"
+    },
+    {
+      "path": "tests/Vst3DriftAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e5f356da3b7f62d8921a13bd6a5d80eeb0e893de"
+    },
+    {
+      "path": "tests/Vst3EnvelopeAttackAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "64cb79e3a21534798184f73df632ea9e9401e180"
+    },
+    {
+      "path": "tests/Vst3EnvelopeDecayAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "08b92a73b5b3afb09973904635b7f44fdb28e588"
+    },
+    {
+      "path": "tests/Vst3EnvelopeDecayReleaseCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3e215ee93a2b27b024721c7576e2fa4f06f62691"
+    },
+    {
+      "path": "tests/Vst3EnvelopeReleaseAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b5b2c5701c939ae5217b20e4ea35debd543a4ba4"
+    },
+    {
+      "path": "tests/Vst3FilterAlAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1afe603381dd6e48a1b8944f745a3ec5e3eb26bc"
+    },
+    {
+      "path": "tests/Vst3FilterIlAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "43403ba92be7ffb4c7ff41cf7abd9144565fc84c"
+    },
+    {
+      "path": "tests/Vst3Frozen108Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6ba64d12525c86a14304dae54828b6a4a4d45cd4"
+    },
+    {
+      "path": "tests/Vst3Frozen112Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5718fae3a47f7833f7a680a1168f1dce8472d019"
+    },
+    {
+      "path": "tests/Vst3Frozen115Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "23e3768535fac3c428e7e1db9af02ef4e40a3f53"
+    },
+    {
+      "path": "tests/Vst3Frozen116Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "676711e64d82e2af05414b025bc80c73dca445b3"
+    },
+    {
+      "path": "tests/Vst3Frozen117Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b34ad8a0b84be14c28bd591e90be02dc8ede31f7"
+    },
+    {
+      "path": "tests/Vst3Frozen118Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "aa3a6d7b406787e27b249d4e75195c4d85e3c17e"
+    },
+    {
+      "path": "tests/Vst3Frozen119Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "75ed92a23573ae21eb9c3d00f8475c2ce9ade87c"
+    },
+    {
+      "path": "tests/Vst3Frozen81Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7088dad4865424bdfdc3edb536f5215585e9622d"
+    },
+    {
+      "path": "tests/Vst3Frozen83Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8c4c1caed5b4a33f312794c279ba6ccb03f0b882"
+    },
+    {
+      "path": "tests/Vst3Frozen86Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "59598bc95a3e16cd224f7ee48608b67cf85b17d2"
+    },
+    {
+      "path": "tests/Vst3Frozen89Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "61c26863304d8c7775f4a090b86e699ff2c63903"
+    },
+    {
+      "path": "tests/Vst3Frozen92Roster.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a7d985d1f575db9746a0863babc466875d2c5faf"
+    },
+    {
+      "path": "tests/Vst3FxMatchedMixTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "da14a095c8d5380e3e216d05b5aff81a867a9a49"
+    },
+    {
+      "path": "tests/Vst3FxMixAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b9cd28557c2aa7d780a669bcd7375e00ff7088d3"
+    },
+    {
+      "path": "tests/Vst3FxModernMixTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "343cf9bffce2e9488f12d52cb17ce3493201e69f"
+    },
+    {
+      "path": "tests/Vst3FxModernTailTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "931eda240fa9309b10dec07ae63c7b95db1ea0c6"
+    },
+    {
+      "path": "tests/Vst3FxSourceMixTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1650c500988ac4b9e6114e9722ff9d5c4aea9796"
+    },
+    {
+      "path": "tests/Vst3FxTailAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0042710a7f60572d2e07920dbe9372829bf2b6e0"
+    },
+    {
+      "path": "tests/Vst3GlissandoAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c3e25af5baace9e903ac115e6f095754f995b356"
+    },
+    {
+      "path": "tests/Vst3InitialBendAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "16cebe4ac2d7322e1d507b0a73fcee00ba758fea"
+    },
+    {
+      "path": "tests/Vst3InitialTouchAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4fcc6acd0eb447de2577734dd3b0f07f8813f3af"
+    },
+    {
+      "path": "tests/Vst3KbdBrillianceAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2f2718188380d2ddb163ad4e6874fc701db6c0fe"
+    },
+    {
+      "path": "tests/Vst3KbdContourCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3d27c930f3ecbc446b16e1f40029cdd7bcb8bdb4"
+    },
+    {
+      "path": "tests/Vst3KbdLevelHighAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9871cef431cc0c0cbcdb1fa1f43855d0325af653"
+    },
+    {
+      "path": "tests/Vst3KbdLevelLowAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c4bbd63465ce3ff2f35596e9970b8ba7035c45df"
+    },
+    {
+      "path": "tests/Vst3KeyReleaseAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7ea2c13296622d1585d6918da13157cb7262526e"
+    },
+    {
+      "path": "tests/Vst3LfoDepthAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8b7456fbfd88ec29084eb27b8b7f7966afb45df2"
+    },
+    {
+      "path": "tests/Vst3LfoNativeRandomTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "454a319ab7deb8c9c9356ac0f8130eef88a43e52"
+    },
+    {
+      "path": "tests/Vst3LfoRateAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c37d9db094599c4d901d6af8a55f452990e7bca9"
+    },
+    {
+      "path": "tests/Vst3LfoRateDepthCombinedTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5628963d33cf99b9e185a74db49d8478ee46ff90"
+    },
+    {
+      "path": "tests/Vst3LfoStaticShapesTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1c34c246e66418be7ac6ab92df849a7379a479c7"
+    },
+    {
+      "path": "tests/Vst3MacroAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e1ccbc92183b3ed5c0479079d4c2d99798dda186"
+    },
+    {
+      "path": "tests/Vst3MainCompatibilityCapture.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ee6d3c9e36a54471d74d8ce236f4424215b28aa9"
+    },
+    {
+      "path": "tests/Vst3MasterSustainAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "91509bc99d132792e2f89d395048cc989e7fce5d"
+    },
+    {
+      "path": "tests/Vst3MatrixAmountAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "87bd811acd417ede146f98fba9d586383664261d"
+    },
+    {
+      "path": "tests/Vst3MatrixCombinedAmountsTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "79398749b4bcd56df94efacd79aafe5d9ac1095a"
+    },
+    {
+      "path": "tests/Vst3ModWheelAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b1e8a610fcfd2a12cc915697a9a22421b0061e5c"
+    },
+    {
+      "path": "tests/Vst3MpeTransportTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "74ffb4e433112107887d4a3cd0994ca730186fed"
+    },
+    {
+      "path": "tests/Vst3MsegCombinedRatesTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "67315735f21f44ce88637e098e6009af3f186f99"
+    },
+    {
+      "path": "tests/Vst3MsegRateAmountCombinedTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2b27f3297969f26239c99318edd5ab006ba8434c"
+    },
+    {
+      "path": "tests/Vst3MsegRateAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "55edcf3365e0ddc55a445377f94b91e832af2756"
+    },
+    {
+      "path": "tests/Vst3MsegRoutingProofTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "757a2e60e7d0682f8f18100ce523dbd61d0e2584"
+    },
+    {
+      "path": "tests/Vst3MtsSysExTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c0dbdbc9d7ea048772571c23b081a19f754bc5f5"
+    },
+    {
+      "path": "tests/Vst3NoiseAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dff83d1127d36cf54b1a1a603b6db5ab1ffb5621"
+    },
+    {
+      "path": "tests/Vst3PanAutomationTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "47a13fa1e22415fc675e4102cabf9f5638b23c9e"
+    },
+    {
+      "path": "tests/Vst3PortamentoAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9ab35bc6cc0ad093bf939b037cadd3bbe890bc0e"
+    },
+    {
+      "path": "tests/Vst3PwmAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "134dbb3fa3a4b9da90bbff3bcd8d018bdf676ec8"
+    },
+    {
+      "path": "tests/Vst3ReleaseFloorInteractionTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d460e7ebdf0423ad7c7309b1b98623e605e65e1f"
+    },
+    {
+      "path": "tests/Vst3RibbonAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "16b74b179a40fb4c5922d67c3c400c87071fe64a"
+    },
+    {
+      "path": "tests/Vst3RibbonReleaseModesAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3710d6b06f2a02c04efed2410c5c0eee9ca74fc0"
+    },
+    {
+      "path": "tests/Vst3RingAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1599a3bd1eee2964956401c4e5f007a4017b87dd"
+    },
+    {
+      "path": "tests/Vst3RingChorusCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ee2f0b465b797a8767a20f2afda979627dd97bdf"
+    },
+    {
+      "path": "tests/Vst3RingCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "24db7f03d0dedc854fc0c85f9dce37a8cd9e8b68"
+    },
+    {
+      "path": "tests/Vst3RingDepthAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "29467348dbe133e74ddd99b1d923d279fabc4caa"
+    },
+    {
+      "path": "tests/Vst3RingRetriggerAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f0b551177f5acfb876505ebdcbb6e107b9b6f8c8"
+    },
+    {
+      "path": "tests/Vst3RingTimesAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2ee8105f64c8dad808c8f7238854fa692d4b44fd"
+    },
+    {
+      "path": "tests/Vst3ScalaSessionTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0ac42418f74b50c5e980748dc41f68ac756ea55b"
+    },
+    {
+      "path": "tests/Vst3SineNoiseAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "12d17f0dfefab28938b0312e040f66d978131c7a"
+    },
+    {
+      "path": "tests/Vst3SubAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1345f6689bbd644f2df28c4b8908359789b885f4"
+    },
+    {
+      "path": "tests/Vst3SubLegacyCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "26fd336f7c4d3455c2a9d856b2310d206a90aee9"
+    },
+    {
+      "path": "tests/Vst3SubLegacySpeedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a6cc5a497af8e8bbb87c01335064873383633830"
+    },
+    {
+      "path": "tests/Vst3SubTouchAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "16dbc7cd7624627e703fc3a886187ab9fab0f038"
+    },
+    {
+      "path": "tests/Vst3SubTouchCombinedAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "10eefa717663e0d2e071539ddd949194290f9f00"
+    },
+    {
+      "path": "tests/Vst3SubWaveformAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f6c71c74323cfe3d5c1184f9eeff3b2b80b29514"
+    },
+    {
+      "path": "tests/Vst3TremoloAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4365c5fa7004a97a2866b6874a5fe9cdc86fa3d4"
+    },
+    {
+      "path": "tests/Vst3TuningRefAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "19957a6ca13885695667d4528bda59fc4b1bb4e9"
+    },
+    {
+      "path": "tests/Vst3UnisonAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cafb270b1506fe9045e2aa88e9e1756b972c6d6c"
+    },
+    {
+      "path": "tests/Vst3VcaSustainAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "31821a04fd3cdd57236c9ade7c5b0fbc1ea8bc9b"
+    },
+    {
+      "path": "tests/Vst3VcfLevelAutomationTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0fe4ad933cba2c13446cf3877713a8376a5fc69a"
+    },
+    {
+      "path": "tests/WindStringRefinementTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "12fb1883eadc3edafcbbe6404a61df7b8ce9af1b"
+    },
+    {
+      "path": "tests/Ws1Tolerances.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "22b3ce08570fd5038549cbe684e1b36c603b2bbe"
+    },
+    {
+      "path": "tests/Ws2EngineTolerances.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "11252e4fd946aa37bfd4efc7d8929a2f98b605f7"
+    },
+    {
+      "path": "tests/Ws3KeyboardHostTests.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0d2c5c351c11f12b43e94bad8d1cad8a2efa8edd"
+    },
+    {
+      "path": "tests/Ws3Tolerances.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6db0f8cb886a350fdebf56b262d11670f9a26541"
+    },
+    {
+      "path": "tests/Ws4Tolerances.h",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c37987db19076e2544c7a5626c864679efddad33"
+    },
+    {
+      "path": "tests/WscHeldEndpointTests.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a2118960f050410bae193d524eb63c0d7b19ec36"
+    },
+    {
+      "path": "tests/arp-rate-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d1a96ad35eb1692bf495802bbf476783b332b25e"
+    },
+    {
+      "path": "tests/check_pan_roster_prefix.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7a2ae4e26b39ad80e47ebd1e91c025bc287adb44"
+    },
+    {
+      "path": "tests/data/ig00156-cap-states-truncated.csv",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "53d68b0c2126acbb2d5a654e6a09bc6a9b15b9c9"
+    },
+    {
+      "path": "tests/data/ig00156-cap-states.csv",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5acdba3d90f1f23490f4ac46ef09b89c5ae9e33f"
+    },
+    {
+      "path": "tests/data/ig00156-cap-states.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "52c295d6b7d3b685c14f17bd9a5facf13f066745"
+    },
+    {
+      "path": "tests/data/tuning/12tet.scl",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "10bfb0faa2aac7946228801d1d45c7ee0b6ebac2"
+    },
+    {
+      "path": "tests/data/tuning/19edo.scl",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5254517901b5803a4b880164aeba7b5f775a9c35"
+    },
+    {
+      "path": "tests/data/tuning/a432.kbm",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2b316a379ca7ae1f3370488d17f21d33fb034474"
+    },
+    {
+      "path": "tests/data/tuning/diatonic7.scl",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2370e2c1d5fdc3476133b3f5254e1fb37e05f288"
+    },
+    {
+      "path": "tests/data/tuning/just5.scl",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a06541c124d6e17627e4bd4c4fd17a8c5026126f"
+    },
+    {
+      "path": "tests/data/tuning/meantone.scl",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8549b651afc936503a199f15513ac4b2224da83f"
+    },
+    {
+      "path": "tests/data/tuning/white-keys.kbm",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e88c229f7d8cfa1eaeb2818d59fee48dfa922cf0"
+    },
+    {
+      "path": "tests/diagnostics/DcBlockCoefficientProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cf09e40be742108a98283497a117b49862c75fc1"
+    },
+    {
+      "path": "tests/diagnostics/DriveTapeCacheProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4d0ea67bb458578ef046733368f46c7730afa13d"
+    },
+    {
+      "path": "tests/diagnostics/EnsembleCacheProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fc2a2b70111f28be692ddf1df6bcc8f85bbfcac7"
+    },
+    {
+      "path": "tests/diagnostics/ExternalInterpolationEngineProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fdab48af7a2ae23ea7272323cba170b689c52cbc"
+    },
+    {
+      "path": "tests/diagnostics/Oe1SpeedEndpointProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "592e0c49a87dd757b7caca53e5188320b6541f64"
+    },
+    {
+      "path": "tests/diagnostics/VcaZeroEiBenchmark.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b400df168a6858047dc645e79536680832f8f20b"
+    },
+    {
+      "path": "tests/diagnostics/VcaZeroEiEngineProbe.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ffac50aedae4cb531345fdb2b0b19201750d439c"
+    },
+    {
+      "path": "tests/dispersion-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "39fd6d49dad49bc97215176bc09484e6b9e4c46c"
+    },
+    {
+      "path": "tests/drift-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7afc3ddef2e9ad7ed0e4dd7f1c459940b87ec4e3"
+    },
+    {
+      "path": "tests/float_wav_fixture.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7d2ce709d152451fb47ccadca02341f2c4c26b5d"
+    },
+    {
+      "path": "tests/fx-matched-mix-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6cd0b354a09ff38d748e34d9343542c454587986"
+    },
+    {
+      "path": "tests/fx-mix-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "45d11c0523c929f2e2d371b8fb9618b520085f09"
+    },
+    {
+      "path": "tests/fx-modern-mix-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "823d4191b55c9fa460399b63dc3d257db7882a8d"
+    },
+    {
+      "path": "tests/fx-modern-tail-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cfd23b3c49e39433e1444afdd697d1a763e5cb47"
+    },
+    {
+      "path": "tests/fx-source-mix-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "89338380ab859a22eec7f1bef436f8f6486850a0"
+    },
+    {
+      "path": "tests/fx-tail-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7e8cfd39c9dff1ce41f9ccc9e151ac7155a02802"
+    },
+    {
+      "path": "tests/golden/main-1120x700.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54dcacb4f5f7a157e17e0564e3dd09c107d09cac"
+    },
+    {
+      "path": "tests/golden/main-1600x1000.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0fa213e551c80c1f7fc5cb3febd53958a1a44bd4"
+    },
+    {
+      "path": "tests/lfo-combined-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d70930713652c40f5700773c88bad76dce2f2acd"
+    },
+    {
+      "path": "tests/lfo-combined-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6c0a96583fa0105148021fee8be7d3520093b3db"
+    },
+    {
+      "path": "tests/lfo-depth-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d6a42fbf19bf376d2b67fd59da7d318d51df727f"
+    },
+    {
+      "path": "tests/lfo-native-random-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "95efa4aed41ce69566f21ae932990e78d6a2964d"
+    },
+    {
+      "path": "tests/lfo-native-random-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "32a945d0310d609e79f58f09ab2da5112eea425f"
+    },
+    {
+      "path": "tests/lfo-random-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "aa7ea0cd9f06018e37a41d5f8764264a205e8d8d"
+    },
+    {
+      "path": "tests/lfo-random-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cdf6fc42b1f78c23509fc1caa0a466ddb394be31"
+    },
+    {
+      "path": "tests/lfo-random-switch-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e6b1d466bd5d016a97138fcf9963180c773f9a3e"
+    },
+    {
+      "path": "tests/lfo-random-switch-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7886fba9ed327ae1e6eec87e42c6cb2fbc3f02b5"
+    },
+    {
+      "path": "tests/lfo-rate-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "57cfbe5d7bde1154252da31bda59b4c29312ef46"
+    },
+    {
+      "path": "tests/lfo-static-shapes-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fdb5e24e85bdbc6b745837d9fbab1a1d5378b829"
+    },
+    {
+      "path": "tests/lfo-static-shapes-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "301a736d52d4e7577a0d32437c499974ccc0e154"
+    },
+    {
+      "path": "tests/macro-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cdb1df5f8545e09aea4a34004685ba51381fdb71"
+    },
+    {
+      "path": "tests/matrix-amount-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a19cc0f88dd3989a2a876de99dc4aaedee2fc039"
+    },
+    {
+      "path": "tests/matrix-combined-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4cb07bfc1846fe27be7e1d01bf64651a43d02fc9"
+    },
+    {
+      "path": "tests/matrix-combined-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c8810543a6639f7431828ed8d84c3c0f42b53b82"
+    },
+    {
+      "path": "tests/mod-wheel-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "39035a31821c32801b61b2491bcff2dc046a7b7e"
+    },
+    {
+      "path": "tests/mseg-combined-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8c441e2d98eec4a34747fd0b98e74542f2f1607a"
+    },
+    {
+      "path": "tests/mseg-combined-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2247638a49e759eb828377c9364f5b80e9612453"
+    },
+    {
+      "path": "tests/mseg-rate-amount-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9f17c265ac41c25e4fdac58e88570420b94c987b"
+    },
+    {
+      "path": "tests/mseg-rate-amount-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "981486b82429995c2c38095022ad2001f592775e"
+    },
+    {
+      "path": "tests/mseg-rate-resume-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1c07aafd2f5ca4c5c4796d3137e7386ce2ba3932"
+    },
+    {
+      "path": "tests/mseg-rate-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cab62ec72bfcf37c974913342e73642098f9f897"
+    },
+    {
+      "path": "tests/mseg-routing-retained-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bababa57e1b99fad3ea41bb0f1c0ade6b5c2ffe1"
+    },
+    {
+      "path": "tests/mseg-routing-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d99c1c5055b89e51ca2578b3084e348db9447223"
+    },
+    {
+      "path": "tests/mts_real_library/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b74ecfd67cc28efd69d5c1b0a72c769d2bff4c99"
+    },
+    {
+      "path": "tests/mts_real_library/build.sh",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "03863dbda8b9467e9d9503d0ec15faf945e0ae12"
+    },
+    {
+      "path": "tests/mts_real_library/build_processor.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "96b795ac48eabcac32807f865feb3ffcfd0e9b39"
+    },
+    {
+      "path": "tests/mts_real_library/client.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f6ee52fb742f6a025a9e213a591bad1689ac0bcc"
+    },
+    {
+      "path": "tests/mts_real_library/master.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a3577c8e8cde42a4630b92324c72d5d19f9e4a35"
+    },
+    {
+      "path": "tests/mts_real_library/prepare.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5262fe0a151bf1151b74b7d70c2b8dae841c4c5d"
+    },
+    {
+      "path": "tests/mts_real_library/prepare_processor.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b0878fef4ff086a75dc18fd1a3875354be216eac"
+    },
+    {
+      "path": "tests/mts_real_library/processor.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7ace77ce279e301feb854c1d8962e75c748c7d46"
+    },
+    {
+      "path": "tests/mts_real_library/run.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c5a5f0a89d360bbca8a56c01789bb4ff02cfe42f"
+    },
+    {
+      "path": "tests/mts_real_library/run_processor.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9fe840d104230b7c1560a343f029fbf396daa157"
+    },
+    {
+      "path": "tests/noise-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e2f23bd84b28017623581f8d2565519b57f61164"
+    },
+    {
+      "path": "tests/parity/known-deviations/ig00156-top-octave.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "50f189b3cea077fbdf4b95c26c20ed777d10f2a5"
+    },
+    {
+      "path": "tests/parity/reference-intake.example.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "10ba4e28b416c6ef3554490a617796dcf99c4f02"
+    },
+    {
+      "path": "tests/parity/tolerances-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "46a1447cea7219be0b615ac1b2b96e2f325eafc2"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-after-touch-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9c30868172a749aab2f8b46c6d9e79e9fbe3deeb"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-arp-rate-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8ecda3368129d96b7ec72ca6fcd5915eefabd976"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-chorus-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "55bb7d95f738172fa96e2b959182d5a48a9cc67a"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-dispersion-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7b47bdbf42cf3600c2cf5688a7f4fcfb84641b24"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-drift-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "899c168dc5d4268b80ae5b1a3b811e7015f8995d"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-envelope-attack-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6e7766f16a3ec1ee9970572a93ac68fbaa38a779"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-envelope-decay-release-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c204a170ed47bbe286526a3883d2e3db0c34025a"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-envelope-decay-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e60843006d69626096ddeb5f20312fde2ec27e6d"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-envelope-release-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8c5231110708300fcae503ddb31eb8acf8f6deba"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-filter-al-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b7c9b84323e620e3ec2dbc03d0a76c4c3cf2a9f1"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-filter-il-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e546673309f843ae5f29076485656f9104b33aff"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-matched-mix-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c5af0784f76edfbc1f5909ca743b8fe5b6fcebf1"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-mix-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "574f700cf8fbee687412249f7b48f3fbf507ac38"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-modern-mix-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7f86c59bfc5bec17b1a43991dd96b716e7f24e2b"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-modern-tail-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ef632c8753ba1e237429fbfdb93a5ad2721f0768"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-source-mix-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "92ad2df35a4b705b2fb96aa5459c2786e04ca4f2"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-fx-tail-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a28d7d5e5a74baa29c40460d921afae851e5dbea"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-glissando-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "497a89bbab3bce38e515b67e725b53b2c5526b70"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-initial-bend-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6fe7b0ed536186eabe4d42b302088ea8137a9aba"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-initial-touch-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "07af2023b6b3834102b57035a2098e3c36ba7a10"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-kbd-brilliance-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c8f45e41f089fb09985f6b8c383d7c16a663f0fc"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-kbd-contour-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0799f2e8221e7cf5a8c5ad1a32799b630641f9ef"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-kbd-level-high-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e94f75c2ab2ef33b82fa5dfb8c362fa6094dc794"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-kbd-level-low-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "69dd7cf440cb2ca1e7b16a1640630f64ee201c62"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-key-release-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a4bae478ce4111f7738175ef10b9441a9fac270d"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-lfo-depth-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e10bf5d7fff3e03b6ac0bd4f0ad6cb586010cc56"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-lfo-native-random-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "636d30f2bb2ac3e9ebd7c0a19e66482b2896b3ef"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-lfo-rate-depth-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c9bf3aeb7a79008b8b4210ea0cbbd38e39752420"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-lfo-rate-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "335288d348a64243ca67b0f0ac2cca50de376133"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-lfo-static-shapes-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "43bb42b5648964e30bac371cd5a4d690854d48b5"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-macro-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "632667b3b6dd6a3102f48bf5113e0b187e09a3c3"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-master-sustain-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "97ee7f72587696ef49cb4944336b79d7072cd70a"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-matrix-amount-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "2326827e5c17461b285bb1fad57caffa0117d012"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-mod-wheel-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "68e5801e4cd4b3553862e156d61299f1346d1aef"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-mseg-rate-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b81a5ddabd0e78f8e00a62463821514fce6824ce"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-noise-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c1f22e30b70cc3801dc697af8d5923013d2d5582"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-pan-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ab47e646476df223aee167534472a969a6057e71"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-portamento-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "1620f5be57fd0b7161c802e2e65631eeb8c3fd84"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-pwm-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "be37bab824277a67ab450aaade17052978b0dd06"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-release-floor-interaction-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e3cbabe0d256af01f115a3202ef0ae60a463dc27"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ribbon-release-modes-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "477902408871dd092807c2cf6e22ee5dc1f4be14"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f7efe7e942739be42490ec8e6de94c55891289c8"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-chorus-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "17ad7d63d400d5d0398152002603a844408c8ce5"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "33363f82bff1ac9d28705cf0f8f662ec8692aaa9"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-depth-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fb49b426e6acfc3afb7d8e8176a42b6beed3d374"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-retrigger-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dafb3647c3776aaaee2ae9e79c4d5835815210ed"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-times-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "776c15e28cb932417ba1e90a88741be1dc752ca7"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-ring-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6cec6d386779e6c229f31b19af93ce73d829a6d8"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-sine-noise-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f62b8ee9cbb7e5226f73817ef94a18d00b5d41d6"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-state-boundary.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9dafd40a8f72b1020dc87cff8d97d4ecfa510b30"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-sub-depth-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a850b1091aa3386c23865a49f21398103bf254bb"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-sub-legacy-speed-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c38f77089bda72325cfcdd2547ff2f9ae71999bf"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "70f57a3a53509ba1580d66fa4177621a4322ed95"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-sub-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3ed3310d8e875768e2c5698a07363db292f51926"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-tremolo-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "020ff191c6ec75ad6eee0483a5704ff5d8ccd6a5"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-tuning-ref-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6f679cc66f482d9aaf67402cbc639ca5e515949b"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-unison-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d3c66d658e3b9de9c52038bc4b41b6a9d63bbe4e"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-vca-sustain-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "359aca485bdbf74d7de4e612565983bfc7ca4470"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation-vcf-level-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "22d30d74903d0bc61ef334635fcc463ceec51e1c"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-automation.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a0786520591ac9d6ebb053850b4d7f9d706aaa5e"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/host-wrapper-platforms.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fca66dd59c0252fc5d90c2c9d1ee1d42f5a6e79c"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/lfo-random-switching-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ca9679cdb353e621669babf475a7d5db6eb23e3b"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/lfo-random-variable-rate-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3ce851830e9f093abbec2832e2736137e1a0c3ab"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/library-phrase-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "52bf8d818df3269d4fcf3ee08903fe54788f5c73"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/main-vst3-compatibility.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3efd5a01f6845335d6c7af598556d80e8aa7cbac"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/main-vst3-multirecall-state.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4ad7b4d835f9eaf0901c5fd577f003b2e27b5d69"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/main-vst3-only-automation.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "dcc832f73ef5099cc9c66e585b7e5b2fe1c2d680"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/matrix-combined-amounts-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e281003aadd576a8c283bb2d4c8bac5ea2925b7f"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/memory-control-routing.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "805e8b6c39e6e2f324ce9f038c038390c5c22cb9"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/memory-nonlinear-study.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "86f43c03594b638afaabbe6bb1f171273c1287fc"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/memory-port-map.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e7b42b26942352739ff31b40be475cdd6c1e22bd"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/memory-sparse-update.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b23e9394ce9c0bb454b8941930772af061f1a22a"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/mseg-combined-rates-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4477aecfede32fef9a75c73062669d4ef180573e"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/mseg-native-routing-proof-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "77d59fb4a803203412eff2949f60a72214acadc5"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/mseg-rate-amount-combined-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "6efc49636f18bf365e2a241514ae7194edc96d06"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/windows-wrapper-path-alias.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "8daab0da7dc587ca76a501a7ebe41dab18caa0b8"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/ws1-voice.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "54e995c974dee6d869022a95042bb02a749b6e1c"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/ws3-keyboard.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "fa4c67b79ff4753f7e3d4bfbff31139c1996ab33"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/ws6-library.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "35cedf4a1fef090209052740988d922efe616d4d"
+    },
+    {
+      "path": "tests/run_memory_cost_pairs.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "faaa4c9e5de4c82c31dd6dc85745c4a5ff0b0544"
+    },
+    {
+      "path": "tests/run_memory_verified_diode_checks.sh",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "ee9d41ff8cccb6952ea1314a9240d96f4f8511e0"
+    },
+    {
+      "path": "tests/test_amplitude_envelope_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "3fc01cdb0fc525ae3f691df0082b0614f94cb691"
+    },
+    {
+      "path": "tests/test_amplitude_production_comparison.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "021ae3104f8a76a81a9bef96108d12b99f8af1c1"
+    },
+    {
+      "path": "tests/test_benchmark_preflight.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cf1bf952bbbc4ac6c6134ee6cfaf2eb89621d760"
+    },
+    {
+      "path": "tests/test_callback_cpu_benchmark.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ef1cc7f61523debcc83acc431ad761aa398392c4"
+    },
+    {
+      "path": "tests/test_controller_reset_host_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cba9fabab169b51ed3d7a7085c388381b5c4e03c"
+    },
+    {
+      "path": "tests/test_controller_reset_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "028ae04979cde307c6a6a37f18d7c44e25218a59"
+    },
+    {
+      "path": "tests/test_envelope_endpoint_clock.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "0936bf29c4411d02e96ff2c2e09db74d59e37347"
+    },
+    {
+      "path": "tests/test_event_aware_envelope_sine.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "a87f34a7f88245a23d5808defd73954860426bed"
+    },
+    {
+      "path": "tests/test_event_aware_envelope_vca.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e4310be9146809a4abd67cea7afee7321f45f00b"
+    },
+    {
+      "path": "tests/test_event_aware_ring_vca.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "bf1abd6653cb9ed6fdb467c25dbc4f0ce462a6da"
+    },
+    {
+      "path": "tests/test_event_aware_ring_vca_coincident.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "48e79947a5555c8b797e67de66f9569d85ea2aa6"
+    },
+    {
+      "path": "tests/test_filter_batch_admission.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "b98ce3fbcdf055975f64e673881b1344980ea43e"
+    },
+    {
+      "path": "tests/test_filter_envelope_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "93d596e12d28f4753c9cc38e3a391668ef59e237"
+    },
+    {
+      "path": "tests/test_filter_production_comparison.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "687f83931b6bd148dd6a804ed60c2203fa262022"
+    },
+    {
+      "path": "tests/test_float_wav.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "58708224671dba84660ac357baea044a5f76ab11"
+    },
+    {
+      "path": "tests/test_keyboard_epoch_interleaving.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4113d401aafaa8e6601c128799840a678d96793b"
+    },
+    {
+      "path": "tests/test_library_phrase_audit.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "794f1b54b9e2e90d3ad8dabd3de286637299e0b4"
+    },
+    {
+      "path": "tests/test_memory_centered_log_rational.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "60bfb0eae23ab6b18fd56edc5fbfb12d3c3ab1fb"
+    },
+    {
+      "path": "tests/test_memory_interval_extrema.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "d8faac53c182488be7cad53f19b68ef3b3ecba34"
+    },
+    {
+      "path": "tests/test_memory_log_span_rational.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "7eaecf0fb09f8aeb8cbbb98726a55eaae52d49e2"
+    },
+    {
+      "path": "tests/test_memory_port_map_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f3a68fe73bf9189adb0ab3a51591503a6de45c8c"
+    },
+    {
+      "path": "tests/test_memory_routing_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "59d4831a88f742e28dda1c15b84d113b05cd9fb2"
+    },
+    {
+      "path": "tests/test_memory_sparse_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "60d24dec0d4eedab70619b35835b9f221952ab52"
+    },
+    {
+      "path": "tests/test_memory_verified_diode.py",
+      "mode": "100755",
+      "type": "blob",
+      "git_object": "d6f9b44cb05cadcf9dc3003af12c6d536f805fef"
+    },
+    {
+      "path": "tests/test_mpe_member_onset_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "22a5780107b5e3f36f43681ba0661461fbe2c0d4"
+    },
+    {
+      "path": "tests/test_parameter_combo_context_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "cd4bb8d62043dad01fbd5b566880e502d342ca13"
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "930a2132b9c4aac0f7dd27fabecbb35d16af35ad"
+    },
+    {
+      "path": "tests/test_parity_harness.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "387cf21848cdfa2184732ed9a5d17bacaacee305"
+    },
+    {
+      "path": "tests/test_preset_capture.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "f6aeafde1451b4a8d78ebd0fd1036d5b0cd42484"
+    },
+    {
+      "path": "tests/test_preset_preferences.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "9c80bd2ce9815eb8754a2320351efa5355039fa8"
+    },
+    {
+      "path": "tests/test_reference_chain.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "c959ca0d7a03f6e3ad06a3040adf9719283f3b97"
+    },
+    {
+      "path": "tests/test_reference_chain_clock.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4f08748c71ace5505b5828d1a40de964fa982624"
+    },
+    {
+      "path": "tests/test_render_cli.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "23e89b7ec1be9f886f8b64a2dcc9e85b1cdf0c6d"
+    },
+    {
+      "path": "tests/test_ring_time_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "39b683b9e69c83124895f8796df2d808dd389dd7"
+    },
+    {
+      "path": "tests/test_studio_lfo_context_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "166d125b4d4938ac51075d7f5503e7fd4e0e9c79"
+    },
+    {
+      "path": "tests/test_studio_switch_context_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "775b8ee16658a8f2094aea9f76154732c09f7bf2"
+    },
+    {
+      "path": "tests/test_switch_context_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ddd5daa2901eb23d3e42c01c678e8dff15c7dafa"
+    },
+    {
+      "path": "tests/test_truth_render.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4d271a5a8b4c267ed97d49d4a13206c5de8c5620"
+    },
+    {
+      "path": "tests/test_ui_smoke_environment.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "e4c12c8fc98a85a063cd7713cfbe77bdaba22929"
+    },
+    {
+      "path": "tests/test_undo_replay_gesture_negative_controls.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "ea3b5e9ea21d3db1d33f0dd1b25ed69883f647df"
+    },
+    {
+      "path": "tests/test_undo_replay_gesture_sanitized.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "61efcfb37d6df75b0ccff8c3ba9ed3b77b3619fd"
+    },
+    {
+      "path": "tests/test_vca_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "4b6827ae558d5cdb3f3ea894bc80b4a1929e1fe1"
+    },
+    {
+      "path": "tests/unison-source-freeze.json",
+      "mode": "100644",
+      "type": "blob",
+      "git_object": "5717eb0b1e5b6832cf90182dad6d764f10cb1d35"
+    }
+  ],
+  "whole_supporting_test_input_tree_identical": false,
+  "documentation_dependent_packaging_tests": [
+    {
+      "ctest": "cs80_packaging_notice_tests",
+      "script": "scripts/test-packaging-notices.py",
+      "changed_inputs": [
+        "docs/INSTALL_AND_QUICKSTART.md",
+        "docs/PRESET_GUIDE.md"
+      ],
+      "reason": "The fixture copies actual guide bytes, checks transformed links and verifies the packaged copies.",
+      "unchanged_script_sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f"
+    },
+    {
+      "ctest": "cs80_macos_installer_architecture_tests",
+      "script": "scripts/test-macos-installer-architectures.py",
+      "changed_inputs": [
+        "docs/INSTALL_AND_QUICKSTART.md"
+      ],
+      "reason": "The inert installer fixture copies the actual installation guide into its test source tree.",
+      "unchanged_script_sha256": "162872874a2aa510f5d4f4ab90b3de95aa07cd598e4ce4947a1cb2f199b0125d"
+    }
+  ],
+  "scope": "All observed CI results remain attributed to 09af535. The two changed guides leave the audio/circuit/fixture/workflow implementations and data unchanged, but they are changed inputs to documentation-dependent packaging fixtures. The final-source native suite must qualify those fixtures and package the corrected guides.",
+  "limitations": [
+    "No supporting job or artifact is relabeled as a db6b5a7 execution.",
+    "This is source equivalence, not a claim that independently built executables or provenance files are byte-identical.",
+    "The actual 09af535 supporting workflow must still finish successfully; this comparison itself qualifies no run.",
+    "The corrected documentation inputs require the separate native db6b5a7 execution and package-content checks."
+  ]
+}

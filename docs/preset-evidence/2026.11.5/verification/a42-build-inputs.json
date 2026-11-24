@@ -1,0 +1,89 @@
+{
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "core_original_path": "build-preset/libcs80_core.a",
+  "private_core_path": "/tmp/cs80-a42/libcs80_core_6094.a",
+  "core_sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8",
+  "core_bytes": 1691342,
+  "inputs": [
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "ce0ac9fd1b23210608cc9ae69ad8c623f3777ab8df8c58193b24eaa548370a33",
+      "bytes": 40894,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588",
+      "bytes": 168522,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "bytes": 2815,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "57594811c620a374470d649b82bc48c6eddaffe09c0ae7f3d028ab1cfdde8352",
+      "bytes": 10882,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/curated/Leads.inc",
+      "sha256": "022dc22a0e45660680accd8856a44e77cd7ac09e3d4c1267cd5f0aa11cf7c9f4",
+      "bytes": 27537,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "sha256": "a4606e3090ed2a2cd42031ed5f98c5224cb64cc4235f537634979828961e2205",
+      "bytes": 30936,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/CuratedLibraryLevels.inc",
+      "sha256": "85515d0554dd13b4c7a1c26439e645bfe9008aebd79d4f31547800706d7c3392",
+      "bytes": 9880,
+      "matches_6094": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLevels.inc",
+      "sha256": "3d84a610c06d2093176b0bb5de1a0f27744e5b4d10b1b9eac087e779c62297a6",
+      "bytes": 8222,
+      "matches_6094": true
+    },
+    {
+      "path": "tests/LeadRefinementTests.cpp",
+      "sha256": "c27ede973f6d104178f84ef9ed3c7d6e710e7187714b4125fae34c7213cfb40a",
+      "bytes": 11466,
+      "matches_6094": true
+    }
+  ],
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "private_core_matches_preceding_root_build_record": true,
+  "commands": [
+    "c++ -std=c++20 -O2 -Isrc docs/preset-evidence/2026.11.5/verification/a42-lead-phrase-probe.cpp /tmp/cs80-a42/libcs80_core_6094.a -pthread -o /tmp/cs80-a42/lead-phrase-probe",
+    "/tmp/cs80-a42/lead-phrase-probe > docs/preset-evidence/2026.11.5/verification/a42-lead-phrase-probe.log",
+    "c++ -std=c++20 -O2 -Isrc docs/preset-evidence/2026.11.5/verification/a42-lead-pressure-followup.cpp /tmp/cs80-a42/libcs80_core_6094.a -pthread -o /tmp/cs80-a42/lead-pressure-followup",
+    "/tmp/cs80-a42/lead-pressure-followup > docs/preset-evidence/2026.11.5/verification/a42-lead-pressure-followup.log"
+  ],
+  "process_results": {
+    "initial_compile": 0,
+    "initial_probe": 1,
+    "followup_compile": 0,
+    "followup_probe": 0
+  },
+  "executables": [
+    {
+      "path": "/tmp/cs80-a42/lead-phrase-probe",
+      "bytes": 1110616,
+      "sha256": "7c30cb529dd3bdef8fa53c9a6790058cd1071c1b3c8c3cbc51640ee15bb31435"
+    },
+    {
+      "path": "/tmp/cs80-a42/lead-pressure-followup",
+      "bytes": 1122856,
+      "sha256": "d010c368a7d84751eeae2f3dcf9caf6ce959dcfad9cdd6d08014ed01c96042d0"
+    }
+  ]
+}

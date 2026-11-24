@@ -1,0 +1,160 @@
+{
+  "captures": 36,
+  "note": 84,
+  "sample_rate": 48000,
+  "finite_and_unclipped": true,
+  "minimum_early_soft_firm_db": 6.713150769999999,
+  "maximum_early_soft_firm_db": 8.178917380000001,
+  "maximum_peak_dbfs": -19.79687834,
+  "rows": [
+    {
+      "name": "Ring Bell I",
+      "early_soft_firm_db": 7.614964440000001,
+      "soft_peak_dbfs": -34.70368116,
+      "firm_peak_dbfs": -26.06091222
+    },
+    {
+      "name": "Ring Bell II",
+      "early_soft_firm_db": 8.178917380000001,
+      "soft_peak_dbfs": -34.96489364,
+      "firm_peak_dbfs": -26.00070334
+    },
+    {
+      "name": "Glockenspiel",
+      "early_soft_firm_db": 7.354172040000002,
+      "soft_peak_dbfs": -30.90455844,
+      "firm_peak_dbfs": -22.58099737
+    },
+    {
+      "name": "Celeste Bells",
+      "early_soft_firm_db": 7.493517100000002,
+      "soft_peak_dbfs": -29.31184941,
+      "firm_peak_dbfs": -21.58248161
+    },
+    {
+      "name": "Marimba",
+      "early_soft_firm_db": 7.284094860000003,
+      "soft_peak_dbfs": -30.87388608,
+      "firm_peak_dbfs": -23.1854759
+    },
+    {
+      "name": "Vibraphone",
+      "early_soft_firm_db": 7.530738140000004,
+      "soft_peak_dbfs": -27.31398697,
+      "firm_peak_dbfs": -19.79687834
+    },
+    {
+      "name": "Xylophone",
+      "early_soft_firm_db": 7.177090360000001,
+      "soft_peak_dbfs": -33.55269715,
+      "firm_peak_dbfs": -25.37635934
+    },
+    {
+      "name": "Crystal Bell",
+      "early_soft_firm_db": 7.403730750000001,
+      "soft_peak_dbfs": -31.89171988,
+      "firm_peak_dbfs": -23.55687149
+    },
+    {
+      "name": "Bell Pad",
+      "early_soft_firm_db": 7.50854923,
+      "soft_peak_dbfs": -37.98500958,
+      "firm_peak_dbfs": -29.86599832
+    },
+    {
+      "name": "Ring Sweep Bell",
+      "early_soft_firm_db": 7.989978559999997,
+      "soft_peak_dbfs": -33.82038392,
+      "firm_peak_dbfs": -24.98382947
+    },
+    {
+      "name": "Steel Drum",
+      "early_soft_firm_db": 8.017017119999998,
+      "soft_peak_dbfs": -35.25206877,
+      "firm_peak_dbfs": -25.97294911
+    },
+    {
+      "name": "Chimes",
+      "early_soft_firm_db": 7.203875570000001,
+      "soft_peak_dbfs": -30.36754114,
+      "firm_peak_dbfs": -22.54095688
+    },
+    {
+      "name": "Dark Bell",
+      "early_soft_firm_db": 7.587945350000005,
+      "soft_peak_dbfs": -33.55772388,
+      "firm_peak_dbfs": -25.21940909
+    },
+    {
+      "name": "Bell Choir",
+      "early_soft_firm_db": 7.206779569999998,
+      "soft_peak_dbfs": -29.1522309,
+      "firm_peak_dbfs": -21.42403726
+    },
+    {
+      "name": "Metallic Keys",
+      "early_soft_firm_db": 6.713150769999999,
+      "soft_peak_dbfs": -29.72853115,
+      "firm_peak_dbfs": -22.98405267
+    },
+    {
+      "name": "Clock Bells",
+      "early_soft_firm_db": 7.167069060000003,
+      "soft_peak_dbfs": -30.17817269,
+      "firm_peak_dbfs": -22.64228134
+    },
+    {
+      "name": "Ring Mallet",
+      "early_soft_firm_db": 7.929119539999995,
+      "soft_peak_dbfs": -33.44751241,
+      "firm_peak_dbfs": -24.9620189
+    },
+    {
+      "name": "Ambient Bells",
+      "early_soft_firm_db": 7.7116465000000005,
+      "soft_peak_dbfs": -31.75927503,
+      "firm_peak_dbfs": -23.40573467
+    }
+  ],
+  "gong": {
+    "cases": 216,
+    "failures": 0,
+    "peak": 0.612346113,
+    "generator_seconds": 345.6,
+    "conservative_generator_bound": 0.834,
+    "notes": [
+      12,
+      36,
+      60,
+      84,
+      108,
+      127
+    ],
+    "host_rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "internal_factor": 2,
+    "sizes": [
+      0.5,
+      2.5
+    ],
+    "decays": [
+      0.25,
+      4
+    ],
+    "velocity": 1,
+    "seeds": [
+      1,
+      152947,
+      2147483647
+    ]
+  },
+  "hashes": {
+    "gong_bound.cpp": "0b3f4b18b1935f8402b96b6eba8000e7acbfd0e23ecf0060f9979e26b034578b",
+    "gong-bound.log": "bc83cbf880a09c6a37260f3ee5840acd1c935a94d7bfdd5d97fd5d5c29c132b2",
+    "soft/metrics.csv": "cd87d07dffd400274f4d66c993f6e23b175f733ef47a92790f00621365ff034f",
+    "firm/metrics.csv": "b99ced336c5106d7ea4d06823fb0e496915fc82422d08f1630634ebbc261fa05"
+  }
+}

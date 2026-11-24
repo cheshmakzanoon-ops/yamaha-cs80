@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "native_run": 45351731801,
+  "dsp_run": 45351731746,
+  "attempt": 1,
+  "preparation_only": true,
+  "release_qualified": false,
+  "platform_qualified": false,
+  "expected_native_registration_counts_not_observed": {
+    "windows-x86_64": 244,
+    "macos-arm64": 266,
+    "macos-x86_64": 266,
+    "linux-x86_64": 602
+  },
+  "required_new_test_names": [
+    "cs80_struck_body_dynamics_tests",
+    "cs80_instrument_body_variant_tests",
+    "cs80_vocal_body_tests",
+    "cs80_body_articulation_engine_tests",
+    "cs80_original_articulation_tests",
+    "cs80_keyboard_response_tests",
+    "cs80_mallet_preset_refinement_tests",
+    "cs80_bass_plucked_refinement_tests",
+    "cs80_brass_organ_refinement_tests",
+    "cs80_wind_string_refinement_tests",
+    "cs80_pad_poly_refinement_tests",
+    "cs80_fx_refinement_tests",
+    "cs80_modern_preset_refinement_tests",
+    "cs80_lead_refinement_tests",
+    "cs80_preset_response_coverage_tests"
+  ],
+  "required_validator_lanes": 13,
+  "required_fixed_seeds": {
+    "linux_gui": "0x2da72db",
+    "windows_headless": "0x5037a0c",
+    "macos_au_gui": "0x2b4eef5"
+  },
+  "requirements": [
+    {
+      "id": "exact_source",
+      "required": "Every final native and DSP execution uses c76ad288, the correct workflow, run and attempt 1; source/tree are exact Git objects.",
+      "prepared_support": "Original-job binders require source/run/attempt and repository; full run/tree remains the consolidated gate.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "native_jobs",
+      "required": "Four producer jobs and both separate Windows/Linux pluginval jobs succeed, including required build/test/validation/package/upload steps.",
+      "prepared_support": "A49/A50/A51 require producer success and required steps; A52 binds Linux producer/consumer success. An always() evidence upload is not proof of success.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "artifact_attempt",
+      "required": "Authentic API plus original successful upload ID/name/size/hash/timestamps bind each actual ZIP to its producing job and attempt.",
+      "prepared_support": "Prepared original-job binders enforce the record relationships; authenticity comes from connector acquisition. Current artifact metadata alone has no producing-attempt proof.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "parser_inputs",
+      "required": "Raw native and validator archive SHA-256/bytes equal actual ZIP/API receipts; every parsed member record matches those same immutable ZIP bytes.",
+      "prepared_support": "New A58 checker and assertion guidance close an omission in A49/A50/A51. Linux composition must use the same gate.",
+      "actual_status": "correction_prepared_not_yet_applied_to_actual_artifacts"
+    },
+    {
+      "id": "native_rosters",
+      "required": "Reconcile every JUnit/LastTest case, actual registered/pass/failure/formal-skip/disabled/unknown totals and all 15 new cases. Count nested Python skips separately.",
+      "prepared_support": "Windows/Mac compare the complete old roster plus 15 and require zero failed/disabled/unknown. Linux original binder deliberately leaves this external. Expected counts are not observed passes.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "juce",
+      "required": "Actual provenance states JUCE 8.0.11 at c352e2489000ffeb9e397051377d75eef2efe641, clean configured source, expected run/source and a successful original verification step.",
+      "prepared_support": "A41 and Windows/Mac require it. The raw historical parser permits absence, so Linux must explicitly require it too.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "validator_lanes",
+      "required": "All 13 lanes use pluginval 1.0.4, strictness 10, 523 programs, exact GUI coverage, one final start per console/report, terminal SUCCESS, required seeds and original exits.",
+      "prepared_support": "The unchanged parser plus original binders check semantics and successful-step exit propagation. Archive binding ties summaries to actual authenticated ZIPs.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "linux_retries",
+      "required": "Retain every invocation; final child normal exit 0; every earlier retry meets source wrapper status 139, started/completed phase and neither SUCCESS nor FAILED. Preserve signal versus normal-exit distinctions.",
+      "prepared_support": "Parser checks numbering/count/final child exit, not eligibility. A52 leaves eligibility external. A diagnostic replay cannot replace an original lane.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "windows_consumer",
+      "required": "Unconditionally bind original Download Windows VST3 receipt, downloaded digest and completion within that step. Bind any A36 consumer-log digest to that same original log.",
+      "prepared_support": "A36 checks the receipt only if optional MSVC sidecars occur; A49 needs an unconditional original-step check.",
+      "actual_status": "correction_required_in_fresh_windows_binder"
+    },
+    {
+      "id": "linux_consumer",
+      "required": "Bind original Download Linux VST3 receipt, digest and successful completion to the exact produced VST3 artifact.",
+      "prepared_support": "Explicitly implemented by A52.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "install_payload",
+      "required": "A41 validates all four actual install ZIPs, full inventories/checksums/modes/native headers/source/revision. A36 binds complete Windows/Linux VST3 resources and payloads.",
+      "prepared_support": "Source-pinned helpers retain limited false release/native qualification fields; original/external gates remain separate.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "mac_payload",
+      "required": "Bind all four validator paths, both successful full AU directory comparisons, executable hashes, unchanged VST3 outputs and absence of intervening rebuild/mutation to packaged data.",
+      "prepared_support": "A37 checks archive/path/executable consistency; A50/A51 add original successful steps and workflow order. AU executable hashes alone do not bind resources.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "audition",
+      "required": "Actual 171-WAV archive passes complete content/sample/metric/inventory checks and original Linux capture/upload binding. Expected roster is not produced audio.",
+      "prepared_support": "Unchanged verifier plus A53 binds actual ZIP hash, source/tree/run, full inventory and measured totals.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "supporting_dsp",
+      "required": "All five original c76 DSP jobs and six actual supporting archives pass independent qualification; report sanitizer and nested skips exactly.",
+      "prepared_support": "A46 earlier 09af checkpoint is historical. Its measure export failed 3 of 13 metadata tests; the overall run was cancelled when superseded.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "filter_screenshots",
+      "required": "Retain original 09af execution identity and add relevant-input equivalence to c76. Account explicitly for the changed nonconsumed Python fixture in the broad screenshot input inventory.",
+      "prepared_support": "A47/A48 have earlier scoped records. Final extension is separate; no automatic blanket equivalence claim.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "public_downloads",
+      "required": "Use actual new IDs, GET byte/hash checks, four correct architectures plus audition, and actual earliest expiry converted to America/Halifax.",
+      "prepared_support": "A57 old-artifact route control cannot qualify new URLs. HEAD 404 alone does not establish GET failure.",
+      "actual_status": "pending"
+    },
+    {
+      "id": "publication",
+      "required": "Publish accepted links/facts, preserve historical failures, count 60 actual current workers. Final docs/evidence commit uses [skip ci], a fresh parent and leased nonforce update without changing compiled production inputs.",
+      "prepared_support": "Coordinator and final publication review remain required. Green infrastructure does not establish listening approval or acoustic equivalence.",
+      "actual_status": "pending"
+    }
+  ],
+  "findings": [
+    {
+      "id": "A58-F1",
+      "kind": "Parser summary input binding omission",
+      "status": "Checker and assertion guidance prepared; actual integration pending"
+    },
+    {
+      "id": "A58-F2",
+      "kind": "Conditional Windows consumer receipt binding",
+      "status": "Unconditional fresh-binder check required"
+    }
+  ]
+}

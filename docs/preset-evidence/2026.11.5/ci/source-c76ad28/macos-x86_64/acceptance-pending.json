@@ -1,0 +1,21 @@
+{
+  "worker": "a51",
+  "status": "corrected_source_native_test_pending",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "run_id": 45351731801,
+  "attempt": 1,
+  "producer_job_id": 138299557267,
+  "observed_at_utc": "2026-11-24T08:54:00Z",
+  "test_started_at": "2026-11-24T08:22:16Z",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "actual_native_results": null,
+  "actual_pluginval_results": null,
+  "actual_intel_archives_acquired": [],
+  "a58_f1_closure_prepared": true,
+  "a58_f1_actual_artifact_execution": false,
+  "original_attempt_context": "The Intel producer remains attempt1 even if a separate ARM job rerun increments the overall workflow latest attempt. Only explicit attempts/1 APIs and this producer/upload are accepted.",
+  "historical_db6b_outcome": "ARM native parity-capture schema failed; Intel and other pending native jobs were cancelled by the corrective source push. No db6b execution is relabelled as c76.",
+  "checkpoint_window": "Prepared actual evidence inspection; original Intel Test remains pending after the requested fifteen-minute observation window."
+}

@@ -92,66 +92,103 @@ on-screen key to try pressure.
   not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Instrument voicing revision — 2026.11.4
+## Instrument voicing revision — 2026.11.6
 
-All **521 existing musical factory programs** have revised sound controls. The
-two initialization patches and all **523 names, categories and program addresses**
-are preserved. No presets were added. The work covers the original-address
-collection as well as every musical program in the later collection.
+The cumulative revision changes sound controls in **all 521 existing musical
+factory programs** relative to the published 2026.11.4 bank. The
+**523 names, categories and program addresses** remain intact, and both Init
+programs preserve their preceding sound. No presets were added. The changes
+cover the original 222-address collection and the later 301-program collection.
 
-An optional body for each synthesizer rank supplies independently evolving
-partials for struck strings, electric pianos, winds, bowed strings, brass,
-organs and bars. **259 existing programs use these bodies**, with 19 model
-choices; the remaining 264 entries, including the two initialization patches,
-retain circuit excitation. Each body now follows its rank’s panel high-pass and low-pass controls. Piano
-partials evolve across the register; tine and reed pickup spectra evolve through
-the decay. Bowed resonances remain stationary during vibrato and slides.
-Synthetic pads, polysynths, leads, basses and effects also have individually
-revised articulation, expression and motion.
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_4.md) explains the sound changes,
-controls, measured behavior and limits. The
-[complete coverage record](docs/preset-evidence/2026.11.4/parameter-coverage.json)
-checks every existing address.
+The programming now gives each family a more appropriate strike, sustained
+body, release and playing response. Soft hammer strikes retain their lower
+energy and softer upper spectrum. Held piano and electric-piano notes leave
+room for their independently decaying partials; releasing a key damps them.
+Bow and breath entrances respond to playing effort and register. Xylophone,
+Steel Drum, Choir Pad and Dark Choir use distinct material or vowel profiles.
+Environmental effects have separate evolving contours, and sequence voices
+shape their dry articulation around their actual note spacing.
+
+The 2026.11.6 continuation stabilizes piano string-course tuning while keeping
+varied strikes, and preserves fixed-frequency wind/brass body color during
+pitch changes. Nine existing voices gain dedicated material profiles: Tubular
+Bells, Gong, Temple Bell, Agogo, Music Box, Kalimba, Banjo, Koto and Harp. Their
+contact and ringing body now use the intended material in both ranks.
+
+**272 existing programs use instrument bodies**; the other 251 entries,
+including both Init programs, retain circuit excitation. The 19 active model
+choices keep their published addresses. Four optional variants add xylophone
+bar, steelpan shell, choir Ah and choir Oo behavior within those existing
+models. Nine Material profiles specialize compatible models without changing
+either the Model or Variant range. Standard profiles remain available.
+Deliberately synthetic sounds keep their ring modulation, PWM, interval, motion or pressure-led identities.
+
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_6.md) explains the implementation,
+measurements and limits. The
+[complete coverage record](docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json)
+checks every existing address, and the
+[final audio accounting](docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json)
+records the retained matched-condition comparisons and the two pad-level corrections.
+The [current complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
+passes the existing level and headroom limits. Native qualification and the
+actual expanded audition archive remain pending; the Downloads table above
+continues to identify the published 2026.11.4 packages.
 
 | Try | Revised character and playing suggestion |
 | --- | --- |
-| Analog Piano / Stage Keys / Soft Keys | Hammer-shaped attacks, slightly stretched upper partials and separate string-course decay. Compare soft and firm notes, then hold a key as the upper content softens. |
-| Electric Piano I / Electric Piano II / Tine Piano / Reed Piano | Distinct tine and reed spectra, a defined strike and more responsive touch. Compare soft and firm strikes in low, middle and high registers. |
-| Guitar I / Guitar II / Nylon Pluck / Steel Pluck | Different pluck notches, body weighting and upper-partial losses. Listen to the onset and decay of single notes before playing chords. |
-| Solo Violin / Solo Cello / Flute / Clarinet / Oboe / Bassoon | Sustained instrument bodies with controlled bow or air texture and pressure expression. Hold a note, then add aftertouch. |
-| Vibraphone / Marimba / Celesta / Toy Piano | Distinct modal ratios and decay profiles. Marimba's upper mode fades substantially faster than Vibraphone's; compare sustained keys and early release. |
-| Covered Horn / Trombone Glide | A sustained brass body and stronger fundamental, with the authored touch, slide and initial scoop. |
-| Percussive Organ / Theatre Organ | Fading octave percussion or a gentle whole-registration tremulant, while the organ body keeps steady strike dynamics. |
-| Pads / Polysynth / Leads / FX | Individually programmed attack, bloom, sustain, release and controller roles; environmental effects retain distinct noise bands and envelopes. |
+| Analog Piano / Stage Keys / Soft Keys / Honky Keys | A softer quiet strike, stronger touch contrast, stable string-course tuning and more audible lower-partial aftersound. Compare soft and firm notes across the keyboard; hold a note, then release it or use the pedal. |
+| Electric Piano I / Electric Piano II / Tine Piano / Reed Piano | Distinct tine and reed spectra, revised strike balance and independent partial decay. Compare low, middle and high registers at several velocities. |
+| Guitar I / Guitar II / Nylon Pluck / Steel Pluck | Separate pluck, body and upper-partial loss profiles, with clearer touch contrast and key damping. Try single notes before chords. |
+| Harp / Banjo / Koto / Kalimba | Dedicated finger, membrane, plectrum or supported-tine profiles. Harp and Kalimba now keep both ranks at the played pitch; vary touch, release and register. |
+| Solo Violin / Solo Cello / Flute / Clarinet / Oboe / Bassoon | Shaped bow or breath entrances, register-aware response and pressure expression. Hold a note, increase aftertouch, then ease it back. |
+| Xylophone / Marimba / Steel Drum / Vibraphone | Distinct wooden-bar, metal-bar and shell resonances. Xylophone emphasizes a near-three-times upper mode; Steel Drum has octave and twelfth modes. Compare held notes, early release and pedal-held ringing. |
+| Tubular Bells / Gong / Temple Bell / Agogo / Music Box | Separate tube, developing plate, beating shell, compact bell and comb-tooth spectra. Compare soft and firm strikes, then leave room for their different aftersounds. |
+| Covered Horn / Trombone Glide | Revised breath and fundamental balance with controlled pressure, slide and initial scoop. |
+| Percussive Organ / Theatre Organ | Steady strike dynamics with the intended footage, fading percussion or registration tremulant. Compare equal notes at different velocities. |
+| Choir Pad / Dark Choir | Separate Ah and Oo resonance profiles, shaped entrances and breath/pressure response. Play several registers and use gentle pitch movement. |
+| Pads / Polysynth / Leads / Sequences | Individually programmed bloom, touch, pressure and release. Long dense chords have additional headroom checks; sequence attacks and releases follow their actual gates. |
+| Wind / Rain / Surf / Thunder / Clockwork | Irregular gusts, smooth rain motion, a surge with draining foam, a crack with a decaying low roll, or separated ticking. Hold long enough to hear each contour. |
 
-The ten body controls are available in the DAW's parameter list and automation
-editor. Model, partial decay and resonant size are captured on the next note;
-mix and brightness are live. Partial decay applies to struck models; it has no
-effect on sustained bowed, wind, brass or organ bodies. The custom Studio editor and standalone interface do not
-yet have dedicated body-control widgets. Factory selection and saved-state
-recall load these settings normally.
+The **14 body controls** are available in the DAW's parameter list and automation
+editor. Model, partial decay, resonant size, variant and material are captured
+on the next accepted note; mix and brightness are live. Partial decay applies to struck
+models; it has no effect on sustained bowed, wind, brass or organ bodies. The
+custom Studio editor and standalone interface do not yet have dedicated
+body-control widgets. Factory selection and saved-state recall load these
+settings normally.
 
-**Pressure Lead requires aftertouch** and is intentionally silent until pressure
-is applied. Use channel/polyphonic aftertouch or drag downward on a held
+**Pressure Lead and Electric Leads 136 require aftertouch** and are intentionally
+silent until pressure is applied. Use channel/polyphonic aftertouch or drag downward on a held
 on-screen key. For on-screen pressure, leave **KAS Scan Timing** off (the default);
 MIDI aftertouch also works with scan timing enabled. The **modern** tag identifies
-programs using optional effects, modulation or arpeggiation; those features remain
-available in the same circuit instrument. The [preset guide](docs/PRESET_GUIDE.md)
-explains registrations and playing techniques.
+programs using optional effects, modulation or arpeggiation. The
+[preset guide](docs/PRESET_GUIDE.md) explains registrations and playing techniques.
 
-**Older sessions using Legacy or Pure intentionally change sound.** Their saved
-controls and parameter identities are retained, but obsolete engine settings
-resolve to the circuit engine with normal MIDI and optional Studio features.
-There is no promise of identical old rendering. Use **Library → FACTORY LIBRARY → LOAD / RELOAD**, then play fresh notes,
-to hear the revised voicing; merely opening a saved session does not
-replace its stored patch with the current factory recipe. Keep the older binary
-and a rendered reference when an existing project's exact sound must be retained.
+**To hear the revised factory recipes after updating:** open **Library → FACTORY
+LIBRARY**, select a program and press **LOAD** (or **RELOAD**, if shown), even if
+the same name is already displayed. Release held notes and the pedal, then play
+fresh notes. Save the project to retain the new settings. Existing projects,
+user patches and A/B slots keep their stored controls; merely selecting a row
+or reopening an old project does not replace them. REVERT can restore the
+settings present when Library opened.
 
-Instrument names describe synthesized interpretations. The instrument bodies are
-authored signal models with physically motivated spectra and losses; they are
-not sampled instruments or complete measured simulations of instrument
-mechanics. The software checks do not establish an indistinguishable acoustic
-instrument or calibrated physical CS-80 match. Build and validator
+The two Material parameters append after all **202 preceding core definitions**
+and **308 host positions**, bringing the totals to **204 core parameters** and
+**310 host positions**. Earlier IDs, ranges and choice meanings stay intact;
+missing Material or Variant values in older state default to Standard. The
+[compatibility review](docs/preset-evidence/2026.11.6/reviews/a34.md) checks the
+previous metadata and host layout. Older sessions using Legacy or Pure still
+resolve to the circuit engine under the
+preceding migration contract. Their saved controls remain, but their old
+rendering is not promised. Keep the older binary and a rendered reference when
+an existing project's exact sound must be retained.
+
+Instrument names describe synthesized interpretations. These are authored
+signal models with physically motivated spectra and losses, rather than
+sampled instruments or complete measured simulations of instrument mechanics.
+The software checks establish the measured behavior in the linked evidence;
+they do not establish indistinguishability from acoustic instruments, human
+listening approval, or a calibrated physical CS-80 match. Build and validator
 results belong to the specific download and source commit listed above. The
 earlier [2026.11.1 report](docs/PRESET_REFINEMENT_2026_11_1.md) also records a native
 VST3 Program-queue controller dependency; **Library** selection is the direct

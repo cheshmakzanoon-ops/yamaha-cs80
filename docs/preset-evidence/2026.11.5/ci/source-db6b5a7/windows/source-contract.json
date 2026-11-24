@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "source_tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "status": "source_contract_prepared_no_native_outcome_asserted",
+  "run": 45346719693,
+  "attempt": 1,
+  "target": "windows-x86_64",
+  "paths": [
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79",
+      "working_bytes_match": true
+    },
+    {
+      "path": "scripts/download-pluginval-windows.py",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a",
+      "git_blob": "54068ad98ce33c10a34739347d7e01735a6710de",
+      "working_bytes_match": true
+    },
+    {
+      "path": "scripts/verify-ci-juce-source.cmake",
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+      "git_blob": "6ab74336ad65d1edc17a957b49208ac3c1d81ca9",
+      "working_bytes_match": true
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da",
+      "working_bytes_match": true
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "git_blob": "fc6a8d091e2e647c723976cf21710b37d50f3897",
+      "working_bytes_match": true
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f",
+      "git_blob": "f0875e30885046497c24acecf037ac53eb152f69",
+      "working_bytes_match": true
+    },
+    {
+      "path": "tests/FilterBatchCapTests.cpp",
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729",
+      "git_blob": "363148fbbbb5c11353401c95740372a057e440ca",
+      "working_bytes_match": true
+    },
+    {
+      "path": "tests/StereoPraExactTests.cpp",
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0",
+      "git_blob": "8b8db21411161944e7f227475f59221f7b7b4d86",
+      "working_bytes_match": true
+    }
+  ],
+  "required_new_tests": [
+    "cs80_struck_body_dynamics_tests",
+    "cs80_instrument_body_variant_tests",
+    "cs80_vocal_body_tests",
+    "cs80_body_articulation_engine_tests",
+    "cs80_original_articulation_tests",
+    "cs80_keyboard_response_tests",
+    "cs80_mallet_preset_refinement_tests",
+    "cs80_bass_plucked_refinement_tests",
+    "cs80_brass_organ_refinement_tests",
+    "cs80_wind_string_refinement_tests",
+    "cs80_pad_poly_refinement_tests",
+    "cs80_fx_refinement_tests",
+    "cs80_modern_preset_refinement_tests",
+    "cs80_lead_refinement_tests",
+    "cs80_preset_response_coverage_tests"
+  ],
+  "expected_registration_count_provisional": 244,
+  "workflow_contract": {
+    "runner": "windows-2022",
+    "compiler_generator": "Visual Studio 17 2022",
+    "architecture": "x64",
+    "configuration": "Release",
+    "configure_continue_on_error_followed_by_failure_step": true,
+    "ctest_direct_and_no_continue_on_error": true,
+    "validator_lanes": 2,
+    "validator_gui": false,
+    "validator_version": "1.0.4",
+    "strictness": 10,
+    "programs_expected": 523,
+    "fixed_seed": "0x5037a0c",
+    "validator_immediate_LASTEXITCODE_propagation": true,
+    "validator_explicit_SUCCESS_required": true,
+    "no_validator_continue_on_error": true
+  },
+  "not_proven": [
+    "native execution and complete outcomes",
+    "actual artifact bytes and upload attempt binding",
+    "actual pluginval execution and download evidence",
+    "installed-to-validated VST3 byte equality"
+  ]
+}

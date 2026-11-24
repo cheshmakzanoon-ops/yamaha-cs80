@@ -1,0 +1,115 @@
+{
+  "status": "Prepared contract only; actual c76 artifacts and public route checks pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "factory_revision": "2026.11.5",
+  "expected_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "expected_tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "expected_native_run_id": 45351731801,
+  "expected_run_attempt": 1,
+  "release_qualified": false,
+  "expected_targets": [
+    {
+      "target": "windows-x86_64",
+      "label": "Windows x64",
+      "expected_artifact_name": "cs80-windows-install-bundle",
+      "expected_formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "expected_architecture": "x86_64",
+      "actual_artifact_id": null,
+      "actual_api_size_bytes": null,
+      "actual_api_sha256": null,
+      "actual_expires_at": null,
+      "verified_public_url": null,
+      "original_upload_attempt_bound": null,
+      "content_and_native_gates_passed": null,
+      "public_get_size_hash_verified": null
+    },
+    {
+      "target": "macos-arm64",
+      "label": "macOS Apple Silicon",
+      "expected_artifact_name": "cs80-macos-15-install-bundle",
+      "expected_formats": [
+        "VST3",
+        "AU",
+        "Standalone"
+      ],
+      "expected_architecture": "arm64",
+      "actual_artifact_id": null,
+      "actual_api_size_bytes": null,
+      "actual_api_sha256": null,
+      "actual_expires_at": null,
+      "verified_public_url": null,
+      "original_upload_attempt_bound": null,
+      "content_and_native_gates_passed": null,
+      "public_get_size_hash_verified": null
+    },
+    {
+      "target": "macos-x86_64",
+      "label": "macOS Intel",
+      "expected_artifact_name": "cs80-macos-15-intel-install-bundle",
+      "expected_formats": [
+        "VST3",
+        "AU",
+        "Standalone"
+      ],
+      "expected_architecture": "x86_64",
+      "actual_artifact_id": null,
+      "actual_api_size_bytes": null,
+      "actual_api_sha256": null,
+      "actual_expires_at": null,
+      "verified_public_url": null,
+      "original_upload_attempt_bound": null,
+      "content_and_native_gates_passed": null,
+      "public_get_size_hash_verified": null
+    },
+    {
+      "target": "linux-x86_64",
+      "label": "Linux x86-64",
+      "expected_artifact_name": "cs80-linux-install-bundle",
+      "expected_formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "expected_architecture": "x86_64",
+      "actual_artifact_id": null,
+      "actual_api_size_bytes": null,
+      "actual_api_sha256": null,
+      "actual_expires_at": null,
+      "verified_public_url": null,
+      "original_upload_attempt_bound": null,
+      "content_and_native_gates_passed": null,
+      "public_get_size_hash_verified": null
+    },
+    {
+      "target": "factory-audition",
+      "label": "Factory audition recordings",
+      "expected_artifact_name": "cs80-curated-preset-audition-c76ad288e02fbeca48f39652bf4fcdd99837f793",
+      "expected_formats": [
+        "48kHz stereo float32 WAV"
+      ],
+      "expected_architecture": "not_applicable",
+      "actual_artifact_id": null,
+      "actual_api_size_bytes": null,
+      "actual_api_sha256": null,
+      "actual_expires_at": null,
+      "verified_public_url": null,
+      "original_upload_attempt_bound": null,
+      "content_and_native_gates_passed": null,
+      "public_get_size_hash_verified": null
+    }
+  ],
+  "fallback_artifacts_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801#artifacts",
+  "earliest_advertised_expiry_utc": null,
+  "earliest_advertised_expiry_America_Halifax": null,
+  "earliest_expiry_zone_abbreviation": null,
+  "retention_rule": "Derive the minimum actual expires_at over all four advertised install ZIPs plus the audition ZIP. Do not copy the old release expiry or infer it from upload/run start dates. Convert the minimum with ZoneInfo(America/Halifax), keeping UTC alongside it.",
+  "platform_choice": "Mac download follows the host process architecture; Apple Silicon hardware may run an Intel host process. Windows and Linux bundles are x86_64. Linux system-library compatibility and Mac publisher signing/notarization remain separate from architecture headers.",
+  "publication_rule": "Use current artifact IDs only after original exact-source native, validator, complete-content and producer/upload attempt gates pass. Public GET byte retrieval is a distinct gate and never substitutes for those results.",
+  "public_route_rule": "For every advertised new ID, perform an unauthenticated full GET to the exact derived nightly.link URL, require HTTP200/no partial Content-Range and hash/byte identity with authenticated API metadata. HEAD is unsuitable: the historical control returned404 to HEAD but200 to full GET.",
+  "attempt_binding_rule": "Artifact workflow_run metadata has no run_attempt. Authentic run API context plus original successful upload ID/hash/time records must bind the intended attempt.",
+  "links_are_permanent_release_assets": false,
+  "historical_control_artifact_id": 14856804857,
+  "historical_control_does_not_qualify_current_artifacts": true
+}

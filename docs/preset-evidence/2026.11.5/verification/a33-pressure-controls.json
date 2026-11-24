@@ -1,0 +1,104 @@
+[
+  {
+    "version": "before",
+    "executable_sha256": "adaa07ffc8f59c3dbe67e802bf49bd7690669fa3e5560aa106a6484befdd1742",
+    "command": [
+      "/workspace/scratch/c98fb40a9529/baseline-build/cs80_preset_capture",
+      "--library",
+      "all",
+      "--out",
+      "/tmp/cs80-a33/pressure-before",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.8",
+      "--pressure",
+      "1",
+      "--hold",
+      "3",
+      "--tail",
+      "1",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead"
+    ],
+    "returncode": 0,
+    "files": [
+      {
+        "name": "179-Electric-Leads-136.wav",
+        "bytes": 1536058,
+        "sha256": "42108b9dfbbed8c7c8cab8f7eee49b7474e7c72464862284d9e904928ddd6df2"
+      },
+      {
+        "name": "444-Pressure-Lead.wav",
+        "bytes": 1536058,
+        "sha256": "d72d05a158a6a73abe811c63a755aad960b95dbc9261f4891360ea59e88660bc"
+      },
+      {
+        "name": "capture.log",
+        "bytes": 81,
+        "sha256": "77fdd9b6e6e5a926eb7cc7afab376219729a923b3eaec8ebe40dc23436e08347"
+      },
+      {
+        "name": "metrics.csv",
+        "bytes": 746,
+        "sha256": "95a3781142f3d67e4b1a7d70ba89027a9919a374d28492041dd3ced1d58115f8"
+      }
+    ]
+  },
+  {
+    "version": "after",
+    "executable_sha256": "f859d99a29d02258271f66b9e4c7d65dcd04dad67af8ed261821ed1389064f5e",
+    "command": [
+      "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_capture",
+      "--library",
+      "all",
+      "--out",
+      "/tmp/cs80-a33/pressure-after",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      "0.8",
+      "--pressure",
+      "1",
+      "--hold",
+      "3",
+      "--tail",
+      "1",
+      "--preset",
+      "Electric Leads 136",
+      "--preset",
+      "Pressure Lead"
+    ],
+    "returncode": 0,
+    "files": [
+      {
+        "name": "179-Electric-Leads-136.wav",
+        "bytes": 1536058,
+        "sha256": "f128edc9cd9f22a889a272a419110e8fdf74fec297d1cdec2284debc0e2697ad"
+      },
+      {
+        "name": "444-Pressure-Lead.wav",
+        "bytes": 1536058,
+        "sha256": "bcc15ab36c7fa863d5a9a2ed263c5556ddf05cebea1402e3339a3dbdbb2a345f"
+      },
+      {
+        "name": "capture.log",
+        "bytes": 81,
+        "sha256": "a5be066de8d2b47713808591a89124c2aff08bdf893711f53b2f2c74f7b8150f"
+      },
+      {
+        "name": "metrics.csv",
+        "bytes": 742,
+        "sha256": "9bb9b048686c7802a6eaf2b2463a6d2eeccf69d68a0ed62dd653abf9c50a4ed6"
+      }
+    ]
+  }
+]

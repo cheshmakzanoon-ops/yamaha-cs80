@@ -1,0 +1,815 @@
+name: build
+
+on:
+  push:
+    paths-ignore:
+      - 'scripts/inspect_circuit_sources.py'
+      - '.github/workflows/circuit-inspection.yml'
+  pull_request:
+    paths-ignore:
+      - 'scripts/inspect_circuit_sources.py'
+      - '.github/workflows/circuit-inspection.yml'
+  workflow_dispatch:
+
+# Schedule each validation job independently so a macOS allocation wait cannot
+# block Linux/Windows. Updated main/PR runs supersede obsolete jobs; manual runs
+# have their own groups so a publication check can finish against its chosen SHA.
+# A cancelled run is incomplete evidence: every gate still applies to its successor.
+jobs:
+  linux:
+    concurrency:
+      group: ${{ github.workflow }}-linux-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    name: Linux / VST3 + Standalone
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCS80_BUILD_PLUGIN=ON
+          -DCS80_BUILD_TESTS=ON
+
+      - name: Verify configured JUCE source
+        run: >
+          cmake -DBUILD_DIR=build
+          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
+          -DEXPECTED_JUCE_VERSION=8.0.11
+          -P scripts/verify-ci-juce-source.cmake
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        # UI timers, persistence and timing-sensitive cases are not qualified
+        # for whole-suite concurrency. Keep the complete test suite serial.
+        run: >
+          ctest --test-dir build --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
+
+      - name: Capture curated preset auditions
+        id: preset_audition
+        run: >
+          python3 scripts/capture-factory-auditions.py
+          --capture build/cs80_preset_capture --out preset-audition
+
+      - name: Upload curated preset auditions
+        if: always() && (steps.preset_audition.outcome == 'success' || steps.preset_audition.outcome == 'failure')
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-curated-preset-audition-${{ github.sha }}
+          path: preset-audition/
+          if-no-files-found: error
+
+      - name: Upload Linux VST3
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-vst3
+          path: build/CS80Reference_artefacts/Release/VST3
+          if-no-files-found: error
+
+      - name: Render demo and screenshots
+        run: |
+          mkdir -p artifacts/ui
+          ./build/cs80_render --out artifacts/cs80-demo.wav --seconds 12
+          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu \
+            bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots \
+            --out artifacts/ui --self-test
+
+      - name: Upload render artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-artifacts
+          path: artifacts
+          if-no-files-found: error
+
+      - name: Package Linux VST3 and Standalone
+        run: |
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages
+
+      - name: Upload Linux install bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload test and JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-test-evidence
+          path: |
+            build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
+            build/ci-juce-provenance.txt
+          if-no-files-found: warn
+
+  pluginval:
+    concurrency:
+      group: ${{ github.workflow }}-pluginval-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    name: pluginval / Linux VST3 (strictness 10)
+    needs: linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PLUGINVAL_VERSION: "1.0.4"
+    steps:
+      # The validation wrapper lives in the repository, so this job needs a
+      # checkout even though the plugin itself arrives as an artifact.
+      - uses: actions/checkout@v5
+
+      - name: Download Linux VST3
+        uses: actions/download-artifact@v5
+        with:
+          name: cs80-linux-vst3
+          path: vst3
+
+      - name: Install pluginval runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libfontconfig1 libfreetype6 \
+            libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \
+            libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
+            fonts-dejavu-core xauth xvfb unzip gdb
+
+      - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 --retry-delay 2 \
+            -o pluginval.zip \
+            "https://github.com/Tracktion/pluginval/releases/download/v${PLUGINVAL_VERSION}/pluginval_Linux.zip"
+          unzip -q pluginval.zip -d pluginval
+          test -x pluginval/pluginval
+          ./pluginval/pluginval --version | tee pluginval-version.txt
+
+      - name: Verify diagnostic exit propagation
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/run-pluginval-with-core.py
+          for expected in 0 7 139; do
+            set +e
+            python3 scripts/run-pluginval-with-core.py \
+              --core-log "$PWD/pluginval-core-fixture.log" \
+              --executable /bin/sh -- /bin/sh -c "exit $expected"
+            actual=$?
+            set -e
+            if [ "$actual" -ne "$expected" ]; then
+              echo "::error::Diagnostic helper changed exit $expected to $actual"
+              exit 1
+            fi
+          done
+          # A diagnostic log open failure must not override the child result.
+          set +e
+          python3 scripts/run-pluginval-with-core.py \
+            --core-log /dev/null/unwritable.log \
+            --executable /bin/sh -- /bin/sh -c 'exit 7'
+          actual=$?
+          set -e
+          if [ "$actual" -ne 7 ]; then
+            echo "::error::Diagnostic log failure changed child exit to $actual"
+            exit 1
+          fi
+          # Do not synthesize a crash when the kernel routes cores externally:
+          # Linux pipe collectors ignore RLIMIT_CORE, including a zero limit.
+          pattern="$(cat /proc/sys/kernel/core_pattern)"
+          if [[ "$pattern" != \|* ]]; then
+            set +e
+            python3 scripts/run-pluginval-with-core.py \
+              --core-log "$PWD/pluginval-core-fixture.log" \
+              --executable /bin/sh -- /bin/sh -c 'ulimit -c 0; kill -SEGV "$$"'
+            actual=$?
+            set -e
+            if [ "$actual" -ne 139 ]; then
+              echo "::error::Diagnostic helper changed SIGSEGV status to $actual"
+              exit 1
+            fi
+          else
+            echo "Synthetic signal fixture unavailable with kernel pipe collector; exit139 fixture remains required."
+          fi
+          # A normally exited inferior has no live thread/register context.
+          # Exercise the same guard as the failure-only diagnostic below.
+          gdb -nx -nh --batch --return-child-result \
+            -iex "set auto-load off" \
+            -iex "set debuginfod enabled off" \
+            -iex "set print frame-arguments none" \
+            -ex "run" \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
+            --args /bin/true > pluginval-gdb-normal-exit.log 2>&1
+          echo "Diagnostic exit propagation and normal-inferior guard checked."
+
+      # The wrapper accepts only an explicit SUCCESS. At most three full
+      # attempts are allowed for exit139 after a completed test phase with
+      # neither FAILED nor SUCCESS. Eligibility does not prove the whole suite
+      # finished or identify which component caused the crash.
+      - name: Validate VST3 headless
+        id: validate_headless
+        run: |
+          set -euo pipefail
+          mkdir -p pluginval-reports
+          ./scripts/run-pluginval-linux.sh pluginval-headless.log \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-headless-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-reports" \
+            --output-filename cs80-headless \
+            "$PWD/vst3/CS-80 Reference.vst3"
+
+      - name: Validate VST3 GUI under Xvfb
+        id: validate_gui
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s "-screen 0 1920x1200x24" \
+            ./scripts/run-pluginval-linux.sh pluginval-gui.log \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-gui-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-reports" \
+            --output-filename cs80-gui \
+            "$PWD/vst3/CS-80 Reference.vst3"
+
+      # Required replay of the state-restoration regression, never a rescue
+      # for the independent randomized validation immediately above.
+      - name: Validate GUI state regression seed 0x2da72db
+        id: validate_gui_seed
+        if: always() && !cancelled() && (steps.validate_gui.outcome == 'success' || steps.validate_gui.outcome == 'failure')
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s "-screen 0 1920x1200x24" \
+            ./scripts/run-pluginval-linux.sh pluginval-gui-seed-regression.log \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-gui-seed-regression-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
+            --random-seed 0x2da72db \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-reports" \
+            --output-filename cs80-gui-seed-regression \
+            "$PWD/vst3/CS-80 Reference.vst3"
+
+      - name: Show first-attempt core diagnostics
+        if: always()
+        run: |
+          for log in pluginval-headless-core.log pluginval-gui-core.log pluginval-gui-seed-regression-core.log; do
+            if [ -f "$log" ]; then cat "$log"; fi
+          done
+
+      # Select once so both bounded diagnostic paths replay the same failed gate.
+      - name: Select failed validator log for diagnostics
+        id: select_validator_diagnostic
+        if: always() && !cancelled()
+        env:
+          GUI_OUTCOME: ${{ steps.validate_gui.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.validate_gui_seed.outcome }}
+          HEADLESS_OUTCOME: ${{ steps.validate_headless.outcome }}
+        run: |
+          set -euo pipefail
+          log="$(python3 scripts/pluginval-diagnostic-log.py "$GUI_OUTCOME" "$REGRESSION_OUTCOME" "$HEADLESS_OUTCOME")"
+          echo "log=$log" >> "$GITHUB_OUTPUT"
+
+      # This is a separate diagnostic execution, never a replacement pass.
+      # The original validation step stays failed even if this run cannot
+      # reproduce the crash. --return-child-result and pipe statuses preserve
+      # diagnostic failure rather than turning a signal into success.
+      - name: Diagnose validator failure with gdb
+        if: failure() && !cancelled() && steps.select_validator_diagnostic.outputs.log != ''
+        env:
+          DIAGNOSTIC_LOG: ${{ steps.select_validator_diagnostic.outputs.log }}
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p pluginval-diagnostic-reports
+          seed_args=()
+          display_args=(xvfb-run -a -s "-screen 0 1920x1200x24")
+          gui_args=()
+          if [ "$DIAGNOSTIC_LOG" = "pluginval-headless.log" ]; then
+            display_args=()
+            gui_args=(--skip-gui-tests)
+          fi
+          echo "Diagnostic original log: $DIAGNOSTIC_LOG"
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py "$DIAGNOSTIC_LOG")"
+          if [ -n "$seed" ]; then
+            seed_args=(--random-seed "$seed")
+            echo "Diagnostic replay seed: $seed"
+          else
+            echo "Diagnostic seed differs or is unmatched; nonreproduction cannot isolate debugger timing."
+          fi
+          timeout --signal=TERM --kill-after=10s 240s \
+            "${display_args[@]}" \
+            gdb -nx -nh --batch --return-child-result \
+            -iex "set auto-load off" \
+            -iex "set debuginfod enabled off" \
+            -iex "set print frame-arguments none" \
+            -ex "set pagination off" \
+            -ex "set print thread-events off" \
+            -ex "run" \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
+            --args ./pluginval/pluginval \
+            "${seed_args[@]}" "${gui_args[@]}" \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir pluginval-diagnostic-reports \
+            --output-filename cs80-gui-gdb \
+            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-gui-gdb.log
+          statuses=("${PIPESTATUS[@]}")
+          echo "Diagnostic process exit: ${statuses[0]}; log capture exit: ${statuses[1]}"
+          echo "Original validation remains failed. This rerun is diagnostic evidence only."
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      # Additional diagnostic only: never changes the preceding strict gate.
+      - name: Build and test fault-thread diagnostic shim
+        id: build_trace
+        if: always() && !cancelled()
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc libunwind-dev
+          mkdir -p pluginval-trace-tools
+          cc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared -Wl,-z,now \
+            scripts/pluginval-fault-trace.c -lunwind \
+            -o pluginval-trace-tools/fault-trace.so
+          cc -std=c11 -O0 -g -Wall -Wextra -Werror -rdynamic -pthread \
+            scripts/pluginval-fault-fixture.c \
+            -o pluginval-trace-tools/fault-fixture
+          python3 scripts/test-pluginval-fault-trace.py \
+            pluginval-trace-tools/fault-trace.so pluginval-trace-tools/fault-fixture
+
+      - name: Diagnose validator with fault-thread trace
+        if: failure() && !cancelled() && steps.select_validator_diagnostic.outputs.log != '' && steps.build_trace.outcome == 'success'
+        env:
+          DIAGNOSTIC_LOG: ${{ steps.select_validator_diagnostic.outputs.log }}
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p pluginval-trace-reports
+          seed_args=()
+          display_args=(xvfb-run -a -s "-screen 0 1920x1200x24")
+          gui_args=()
+          if [ "$DIAGNOSTIC_LOG" = "pluginval-headless.log" ]; then
+            display_args=()
+            gui_args=(--skip-gui-tests)
+          fi
+          echo "Diagnostic original log: $DIAGNOSTIC_LOG"
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py "$DIAGNOSTIC_LOG")"
+          if [ -n "$seed" ]; then
+            seed_args=(--random-seed "$seed")
+            echo "Diagnostic replay seed: $seed"
+          else
+            echo "Diagnostic seed differs or is unmatched; nonreproduction cannot isolate debugger timing."
+          fi
+          # Preload the validator (and possible descendants), not timeout/Xvfb/env.
+          # One rerun, same binary and plugin. It cannot replace the failed gate.
+          timeout --signal=TERM --kill-after=10s 240s \
+            "${display_args[@]}" \
+            env LD_PRELOAD="$PWD/pluginval-trace-tools/fault-trace.so" \
+            ./pluginval/pluginval "${seed_args[@]}" "${gui_args[@]}" \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-trace-reports" \
+            --output-filename cs80-gui-trace \
+            "$PWD/vst3/CS-80 Reference.vst3" \
+            198>pluginval-fault-trace.log 2>&1 | tee pluginval-gui-trace.log
+          statuses=("${PIPESTATUS[@]}")
+          cat pluginval-fault-trace.log
+          echo "Trace diagnostic process exit: ${statuses[0]}; log capture exit: ${statuses[1]}"
+          echo "Original validation remains failed; diagnostic nonreproduction is inconclusive."
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      - name: Report pluginval failure
+        if: failure()
+        run: |
+          for log in pluginval-headless.log pluginval-gui.log pluginval-gui-seed-regression.log; do
+            if [ -f "$log" ]; then
+              echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
+            fi
+          done
+
+      - name: Upload pluginval reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-reports
+          path: |
+            pluginval-reports
+            pluginval-headless.log
+            pluginval-headless-attempt*.log
+            pluginval-gui.log
+            pluginval-gui-attempt*.log
+            pluginval-gui-seed-regression.log
+            pluginval-gui-seed-regression-attempt*.log
+            pluginval-gui-seed-regression-core.log
+            pluginval-gui-gdb.log
+            pluginval-gui-trace.log
+            pluginval-fault-trace.log
+            pluginval-trace-reports
+            pluginval-headless-core.log
+            pluginval-gui-core.log
+            pluginval-core-fixture.log
+            pluginval-gdb-normal-exit.log
+            pluginval-diagnostic-reports
+            pluginval-version.txt
+          if-no-files-found: warn
+
+  macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
+    concurrency:
+      group: ${{ github.workflow }}-macos-${{ matrix.runner }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    name: macOS / ${{ matrix.runner }} / VST3 + AU + Standalone
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Record native platform
+        run: |
+          uname -m
+          sw_vers
+          xcodebuild -version
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCS80_BUILD_PLUGIN=ON
+          -DCS80_BUILD_TESTS=ON
+
+      - name: Verify configured JUCE source
+        run: >
+          cmake -DBUILD_DIR=build
+          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
+          -DEXPECTED_JUCE_VERSION=8.0.11
+          -P scripts/verify-ci-juce-source.cmake
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: >
+          ctest --test-dir build --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
+
+      - name: Fetch pluginval 1.0.4
+        timeout-minutes: 5
+        env:
+          PLUGINVAL_VERSION: "1.0.4"
+        run: |
+          set -euo pipefail
+          python3 scripts/download-pluginval-macos.py --output pluginval.zip --evidence pluginval-download.json
+          unzip -q pluginval.zip -d pluginval
+          xattr -dr com.apple.quarantine pluginval/pluginval.app || true
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval --version
+
+      # Audio Unit hosts discover AUs through AudioComponentRegistrar, not
+      # through the build tree. Ad-hoc sign the packaging source first, then
+      # register an identical copy and force the registrar to rescan.
+      - name: Register built AU
+        run: |
+          set -euo pipefail
+          AU_SOURCE="$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component"
+          AU_DEST="$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          test -d "$AU_SOURCE"
+          codesign --force --sign - "$AU_SOURCE"
+          mkdir -p "$HOME/Library/Audio/Plug-Ins/Components"
+          rm -rf "$AU_DEST"
+          cp -R "$AU_SOURCE" "$AU_DEST"
+          diff -qr "$AU_SOURCE" "$AU_DEST"
+          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \
+            "$AU_DEST/Contents/MacOS/CS-80 Reference" | tee au-payload-before-validation.sha256
+          killall -9 AudioComponentRegistrar || true
+          sleep 2
+          ls -ld "$AU_DEST"
+
+      - name: Validate VST3 with pluginval
+        run: |
+          set -euo pipefail
+          mkdir -p pluginval-reports
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-vst3 \
+            "$PWD/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
+            2>&1 | tee pluginval-vst3.log
+          grep -qx 'SUCCESS' pluginval-vst3.log
+
+      - name: Validate AU with pluginval
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au.log
+          grep -qx 'SUCCESS' pluginval-au.log
+
+      - name: Validate AU with pluginval GUI
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au-gui \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au-gui.log
+          grep -qx 'SUCCESS' pluginval-au-gui.log
+
+      - name: Validate AU GUI fixed-seed regression
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --random-seed 0x2b4eef5 \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au-seed-regression \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au-seed-regression.log
+          grep -qx 'SUCCESS' pluginval-au-seed-regression.log
+
+      - name: Package native macOS VST3, AU and Standalone
+        run: |
+          set -euo pipefail
+          AU_SOURCE="$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component"
+          AU_DEST="$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          # Fail if validation or registration changed the copied AU's bytes
+          # or resources relative to the bundle that will be packaged.
+          diff -qr "$AU_SOURCE" "$AU_DEST"
+          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \
+            "$AU_DEST/Contents/MacOS/CS-80 Reference" | tee au-payload-after-validation.sha256
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages
+
+      - name: Upload native macOS install bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-${{ matrix.runner }}-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: AU registration diagnostics
+        if: failure()
+        run: |
+          echo '--- installed component ---'
+          ls -la "$HOME/Library/Audio/Plug-Ins/Components" || true
+          codesign -dv "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" || true
+          echo '--- registered audio units ---'
+          auval -a 2>&1 | grep -i 'cs-80' || true
+
+      - name: Report pluginval failure
+        if: failure()
+        run: |
+          for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log pluginval-au-seed-regression.log; do
+            if [ -f "$log" ]; then
+              echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
+            fi
+          done
+
+      - name: Upload pluginval reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-${{ matrix.runner }}
+          path: |
+            au-payload-before-validation.sha256
+            au-payload-after-validation.sha256
+            pluginval-download.json
+            pluginval-reports
+            pluginval-vst3.log
+            pluginval-au.log
+            pluginval-au-gui.log
+            pluginval-au-seed-regression.log
+          if-no-files-found: warn
+
+      - name: Upload test and JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-${{ matrix.runner }}-test-evidence
+          path: |
+            build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
+            build/ci-juce-provenance.txt
+          if-no-files-found: warn
+
+  windows:
+    concurrency:
+      group: ${{ github.workflow }}-windows-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    name: Windows / VST3 + Standalone
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure
+        id: configure
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
+            -DCS80_BUILD_PLUGIN=ON `
+            -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Report CMake failure
+        if: steps.configure.outcome == 'failure'
+        shell: pwsh
+        run: |
+          $message = (Get-Content configure.log -Tail 25) -join ' || '
+          Write-Output "::error title=Windows CMake::$message"
+          exit 1
+
+      - name: Verify configured JUCE source
+        if: steps.configure.outcome == 'success'
+        # Quote complete -D arguments so PowerShell preserves dotted versions.
+        run: >
+          cmake "-DBUILD_DIR=build"
+          "-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641"
+          "-DEXPECTED_JUCE_VERSION=8.0.11"
+          -P scripts/verify-ci-juce-source.cmake
+
+      - name: Build
+        if: steps.configure.outcome == 'success'
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        if: steps.configure.outcome == 'success'
+        run: >
+          ctest --test-dir build -C Release --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
+
+      - name: Upload Windows VST3
+        if: steps.configure.outcome == 'success'
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-vst3
+          path: build/CS80Reference_artefacts/Release/VST3
+          if-no-files-found: error
+
+      - name: Package Windows VST3 and Standalone
+        if: steps.configure.outcome == 'success'
+        run: |
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages
+
+      - name: Upload Windows install bundle
+        if: steps.configure.outcome == 'success'
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload test and JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-test-evidence
+          path: |
+            build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
+            build/ci-juce-provenance.txt
+          if-no-files-found: warn
+
+  pluginval-windows:
+    concurrency:
+      group: ${{ github.workflow }}-pluginval-windows-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    name: pluginval / Windows VST3 (strictness 10)
+    needs: windows
+    runs-on: windows-2022
+    timeout-minutes: 20
+    env:
+      PLUGINVAL_VERSION: "1.0.4"
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Download Windows VST3
+        uses: actions/download-artifact@v5
+        with:
+          name: cs80-windows-vst3
+          path: vst3
+
+      - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
+        timeout-minutes: 5
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          python scripts/download-pluginval-windows.py --output pluginval.zip --evidence pluginval-download.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Expand-Archive -Path pluginval.zip -DestinationPath pluginval -Force
+          Unblock-File -Path pluginval\pluginval.exe
+          & .\pluginval\pluginval.exe --version | Tee-Object -FilePath pluginval-version.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate VST3 headless
+        id: validate_windows
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null
+          & .\pluginval\pluginval.exe `
+            --strictness-level 10 `
+            --validate-in-process `
+            --skip-gui-tests `
+            --timeout-ms 120000 `
+            --output-dir pluginval-reports `
+            --output-filename cs80-windows `
+            "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Select-String -Path pluginval-windows.log -Pattern '^SUCCESS$' -Quiet)) {
+            Write-Output "::error title=pluginval Windows::validator exited without printing SUCCESS"
+            exit 1
+          }
+
+      # Required known-failure replay in addition to the randomized gate.
+      - name: Validate state regression seed 0x5037a0c
+        if: always() && !cancelled() && (steps.validate_windows.outcome == 'success' || steps.validate_windows.outcome == 'failure')
+        timeout-minutes: 5
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null
+          & .\pluginval\pluginval.exe `
+            --random-seed 0x5037a0c `
+            --strictness-level 10 `
+            --validate-in-process `
+            --skip-gui-tests `
+            --timeout-ms 120000 `
+            --output-dir pluginval-reports `
+            --output-filename cs80-windows-seed-regression `
+            "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows-seed-regression.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Select-String -Path pluginval-windows-seed-regression.log -Pattern '^SUCCESS$' -Quiet)) {
+            Write-Output "::error title=pluginval Windows seeded regression::validator exited without printing SUCCESS"
+            exit 1
+          }
+
+      - name: Report pluginval failure
+        if: failure()
+        shell: pwsh
+        run: |
+          if (Test-Path pluginval-windows.log) {
+            $message = (Get-Content pluginval-windows.log -Tail 20) -join ' || '
+            Write-Output "::error title=pluginval Windows::$message"
+          }
+
+      - name: Upload pluginval reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-windows
+          path: |
+            pluginval-download.json
+            pluginval-reports
+            pluginval-windows.log
+            pluginval-windows-seed-regression.log
+            pluginval-version.txt
+          if-no-files-found: warn

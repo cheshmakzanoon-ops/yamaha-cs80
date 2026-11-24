@@ -1,0 +1,21 @@
+docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp: In function ‘bool probe(juce::RangedAudioParameter*)’:
+docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp:7:31: error: ‘virtual int juce::AudioParameterChoice::getNumSteps() const’ is private within this context
+    7 |         && choice->getNumSteps() == 5 && range.start == 0.0f && range.end == 4.0f
+      |            ~~~~~~~~~~~~~~~~~~~^~
+In file included from ../juce-validation/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:155,
+                 from docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp:1:
+../juce-validation/modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.h:148:9: note: declared private here
+  148 |     int getNumSteps() const override;
+      |         ^~~~~~~~~~~
+docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp:8:59: error: ‘virtual float juce::AudioParameterChoice::getDefaultValue() const’ is private within this context
+    8 |         && choice->convertFrom0to1(choice->getDefaultValue()) == 0.0f
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~^~
+../juce-validation/modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.h:147:11: note: declared private here
+  147 |     float getDefaultValue() const override;
+      |           ^~~~~~~~~~~~~~~
+docs/preset-evidence/2026.11.5/development/host-choice-access/before.cpp:9:28: error: ‘virtual float juce::AudioParameterChoice::getValue() const’ is private within this context
+    9 |         && choice->getValue() == 0.25f;
+      |            ~~~~~~~~~~~~~~~~^~
+../juce-validation/modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.h:145:11: note: declared private here
+  145 |     float getValue() const override;
+      |           ^~~~~~~~

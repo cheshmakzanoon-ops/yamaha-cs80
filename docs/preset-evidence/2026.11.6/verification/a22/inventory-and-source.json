@@ -1,0 +1,789 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "baseline_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+  "candidate_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+  "program_count": 23,
+  "identities_preserved": true,
+  "all_prior_non_volume_changed": true,
+  "programs": [
+    {
+      "name": "Ring Bell I",
+      "host_index": 458,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Ring Bell II",
+      "host_index": 459,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_level"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Tubular Bells",
+      "host_index": 460,
+      "prior_non_volume_changes": [
+        "mix",
+        "ring_amount",
+        "voice_dispersion",
+        "drift",
+        "ch1_feet",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Glockenspiel",
+      "host_index": 461,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "body2_model",
+        "body2_mix"
+      ],
+      "models": [
+        19,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Celeste Bells",
+      "host_index": 462,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_r"
+      ],
+      "models": [
+        19,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Music Box",
+      "host_index": 463,
+      "prior_non_volume_changes": [
+        "mix",
+        "voice_dispersion",
+        "drift",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_pw",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_brightness",
+        "body1_decay",
+        "body2_model",
+        "body2_mix",
+        "body2_brightness"
+      ],
+      "models": [
+        19,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        5,
+        5
+      ]
+    },
+    {
+      "name": "Gong",
+      "host_index": 464,
+      "prior_non_volume_changes": [
+        "mix",
+        "resonance",
+        "ring_depth",
+        "ring_attack",
+        "ring_decay",
+        "ring_amount",
+        "voice_dispersion",
+        "drift",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_saw",
+        "ch2_sine",
+        "ch2_noise",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_il",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        2,
+        2
+      ]
+    },
+    {
+      "name": "Temple Bell",
+      "host_index": 465,
+      "prior_non_volume_changes": [
+        "mix",
+        "ring_depth",
+        "ring_attack",
+        "ring_decay",
+        "ring_amount",
+        "voice_dispersion",
+        "drift",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_low",
+        "kbd_level_high",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        3,
+        3
+      ]
+    },
+    {
+      "name": "Marimba",
+      "host_index": 466,
+      "prior_non_volume_changes": [
+        "mix",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "body1_decay"
+      ],
+      "models": [
+        18,
+        18
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Vibraphone",
+      "host_index": 467,
+      "prior_non_volume_changes": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_r",
+        "body1_mix",
+        "body1_decay"
+      ],
+      "models": [
+        17,
+        0
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Xylophone",
+      "host_index": 468,
+      "prior_non_volume_changes": [
+        "mix",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_feet",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        18,
+        18
+      ],
+      "variants": [
+        1,
+        1
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Crystal Bell",
+      "host_index": 469,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_level",
+        "body2_mix"
+      ],
+      "models": [
+        16,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Bell Pad",
+      "host_index": 470,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "ch1_after_brill",
+        "ch1_after_level",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_r"
+      ],
+      "models": [
+        16,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Ring Sweep Bell",
+      "host_index": 471,
+      "prior_non_volume_changes": [
+        "ring_attack",
+        "ring_decay",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_level"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Steel Drum",
+      "host_index": 472,
+      "prior_non_volume_changes": [
+        "mix",
+        "ring_amount",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        17,
+        17
+      ],
+      "variants": [
+        2,
+        2
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Chimes",
+      "host_index": 473,
+      "prior_non_volume_changes": [
+        "ring_amount",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "body1_mix"
+      ],
+      "models": [
+        16,
+        19
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Dark Bell",
+      "host_index": 474,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_level",
+        "body2_mix",
+        "body2_brightness",
+        "body2_decay"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Bell Choir",
+      "host_index": 475,
+      "prior_non_volume_changes": [
+        "ring_amount",
+        "ch1_v_d",
+        "ch1_v_level",
+        "ch2_v_d"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Metallic Keys",
+      "host_index": 476,
+      "prior_non_volume_changes": [
+        "mix",
+        "ring_amount",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "models": [
+        3,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Agogo",
+      "host_index": 477,
+      "prior_non_volume_changes": [
+        "mix",
+        "resonance",
+        "ring_amount",
+        "voice_dispersion",
+        "drift",
+        "ch1_pulse",
+        "ch1_sine",
+        "ch1_pw",
+        "ch1_hpf_cutoff",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_f_al",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_pw",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_f_al",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_d",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "kbd_brilliance_low",
+        "kbd_brilliance_high",
+        "kbd_level_high",
+        "body1_mix",
+        "body1_brightness",
+        "body1_decay",
+        "body2_mix"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        4,
+        4
+      ]
+    },
+    {
+      "name": "Clock Bells",
+      "host_index": 478,
+      "prior_non_volume_changes": [
+        "ring_amount",
+        "ch1_v_d",
+        "ch1_v_level",
+        "ch2_v_d"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Ring Mallet",
+      "host_index": 479,
+      "prior_non_volume_changes": [
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_level",
+        "body1_mix",
+        "body1_decay"
+      ],
+      "models": [
+        18,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Ambient Bells",
+      "host_index": 515,
+      "prior_non_volume_changes": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_level"
+      ],
+      "models": [
+        16,
+        16
+      ],
+      "variants": [
+        0,
+        0
+      ],
+      "materials": [
+        0,
+        0
+      ]
+    }
+  ],
+  "extended_register_capture": {
+    "count": 36,
+    "note": 84,
+    "velocities": [
+      0.25,
+      0.85
+    ],
+    "hold": 0.55,
+    "tail": 0.15,
+    "programs": [
+      "Ring Bell I",
+      "Ring Bell II",
+      "Glockenspiel",
+      "Celeste Bells",
+      "Marimba",
+      "Vibraphone",
+      "Xylophone",
+      "Crystal Bell",
+      "Bell Pad",
+      "Ring Sweep Bell",
+      "Steel Drum",
+      "Chimes",
+      "Dark Bell",
+      "Bell Choir",
+      "Metallic Keys",
+      "Clock Bells",
+      "Ring Mallet",
+      "Ambient Bells"
+    ],
+    "capture_sha256": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057"
+  },
+  "source_sha256": {
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/curated/Bells.inc": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "tests/MalletPresetRefinementTests.cpp": "f94b35a672ae3f4ae4cc15b733d0ef701e1178f4850240b54c33fe1c7eadc153"
+  }
+}

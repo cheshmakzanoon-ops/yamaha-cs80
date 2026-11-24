@@ -1,0 +1,326 @@
+{
+  "schema": 1,
+  "review": "A45 bundled guide current-revision consistency",
+  "reviewed_code_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "canonical_revision": "2026.11.5",
+  "native_execution_performed": false,
+  "release_qualified": false,
+  "scope": "Actual packaged_markdown transformations only; no archive built, installed or executed. Transformation uses the reviewed source SHA as a test input, not a claim that the uncommitted guide changes exist in that commit. Final package must use its own committed source.",
+  "packager": {
+    "path": "scripts/package-ci-artifacts.py",
+    "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "guides": [
+    {
+      "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+      "archive_name": "INSTALL_AND_QUICKSTART.md",
+      "bytes": 17256,
+      "sha256": "e1e80b30ae88096e200a80c27072f8db8c415757220a44b795fad815ae22f330",
+      "packaged_markdown_bytes": 17862,
+      "packaged_markdown_sha256": "b679d72f4f0a462eec0c07b35e06732dc13b82c8e9c9a4085d1dd73a6c689dee",
+      "revision_occurrences": [
+        {
+          "line": 7,
+          "text": "This guide covers factory library revision **2026.11.5**: revoiced existing"
+        },
+        {
+          "line": 12,
+          "text": "program addresses preserved. See the [2026.11.5 sound revision](CIRCUIT_LIBRARY_2026_11_5.md)."
+        },
+        {
+          "line": 61,
+          "text": "confirm that both identify **2026.11.5** and that their full source commit matches"
+        }
+      ],
+      "checks": {
+        "opening_revision_matches_header": true,
+        "required_manifest_source_revision_matches_header": true,
+        "no_stale_2026_11_4_current_label": true,
+        "preserved_523_total_521_musical_count": true,
+        "load_or_reload_wording": true,
+        "current_revision_report_link_pinned": true,
+        "bundled_preset_guide_link_stays_local": true
+      }
+    },
+    {
+      "source_path": "docs/PRESET_GUIDE.md",
+      "archive_name": "PRESET_GUIDE.md",
+      "bytes": 29599,
+      "sha256": "03a80493147fd7d403a417bbbba26fe51c0523d5e98641ea2c119d9491d8c483",
+      "packaged_markdown_bytes": 35833,
+      "packaged_markdown_sha256": "c560c7c840e88f79ad957925c4801dd444c2cb4c98b29223ce49d8efe43d66c1",
+      "revision_occurrences": [
+        {
+          "line": 3,
+          "text": "The **2026.11.5 factory library** contains **523 existing programs**. Its **521"
+        },
+        {
+          "line": 16,
+          "text": "The [2026.11.5 revision report](CIRCUIT_LIBRARY_2026_11_5.md) explains the sound"
+        },
+        {
+          "line": 18,
+          "text": "[2026.11.4 report](CIRCUIT_LIBRARY_2026_11_4.md) records the preceding filtering"
+        },
+        {
+          "line": 20,
+          "text": "[2026.11.3 instrument-voicing report](CIRCUIT_LIBRARY_2026_11_3.md) documents the"
+        },
+        {
+          "line": 22,
+          "text": "[2026.11.2 circuit library report](CIRCUIT_LIBRARY_2026_11_2.md) documents the earlier original-bank"
+        },
+        {
+          "line": 24,
+          "text": "[2026.11.1 refinement report](PRESET_REFINEMENT_2026_11_1.md) and"
+        },
+        {
+          "line": 333,
+          "text": "**2026.11.5 identifies a sound-data revision**, separate from the"
+        },
+        {
+          "line": 376,
+          "text": "The earlier **2026.11.2 migration of Legacy or Pure sessions intentionally"
+        },
+        {
+          "line": 422,
+          "text": "name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.5 roster"
+        }
+      ]
+    },
+    {
+      "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "archive_name": "DISTRIBUTION_STATUS.md",
+      "bytes": 34833,
+      "sha256": "6901d86d292d74b6a26ae3738e3cdceefdb39b8187ed9ce0ecb50c7c8682d411",
+      "packaged_markdown_bytes": 39277,
+      "packaged_markdown_sha256": "e3b97fd580f004515d0565d21fc626f4a663de71cc7e2d22d8b57095d96f87d2",
+      "revision_occurrences": [
+        {
+          "line": 8,
+          "text": "## Source candidate \u2014 2026.11.5 playing-response and material refinement"
+        },
+        {
+          "line": 10,
+          "text": "This source snapshot contains the **2026.11.5** factory library: all 521"
+        },
+        {
+          "line": 19,
+          "text": "2026.11.4 build. They do not qualify a package built from this candidate."
+        },
+        {
+          "line": 25,
+          "text": "## Previous qualified revision \u2014 2026.11.4 instrument voicing"
+        },
+        {
+          "line": 30,
+          "text": "**2026.11.4**. All 521 existing musical programs have revised sound controls;"
+        },
+        {
+          "line": 51,
+          "text": "[Consolidated qualification and original evidence](preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json)"
+        },
+        {
+          "line": 77,
+          "text": "[Actual audition acceptance](preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json) \u00b7"
+        },
+        {
+          "line": 78,
+          "text": "[Delivered inventory identity](preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json)"
+        },
+        {
+          "line": 107,
+          "text": "[Supporting DSP evidence](preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json)"
+        },
+        {
+          "line": 117,
+          "text": "[Screenshot acceptance and historical failure](preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json)"
+        },
+        {
+          "line": 124,
+          "text": "[Filter source equivalence and results](preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json)"
+        },
+        {
+          "line": 135,
+          "text": "[Actual continuation ledger](preset-evidence/2026.11.4/continuation/worker-ledger.json)"
+        },
+        {
+          "line": 137,
+          "text": "## Historical verified revision \u2014 2026.11.3 instrument voicing"
+        },
+        {
+          "line": 143,
+          "text": "`ddcbc5a150810b2e3d30c94e1c208e2e1ce81ec2`, and factory-library revision **2026.11.3**."
+        },
+        {
+          "line": 162,
+          "text": "[Consolidated qualification and original evidence](preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json)"
+        },
+        {
+          "line": 180,
+          "text": "[Actual audition acceptance](preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json) \u00b7"
+        },
+        {
+          "line": 181,
+          "text": "[Delivered inventory identity](preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json)"
+        },
+        {
+          "line": 214,
+          "text": "[Source history](preset-evidence/2026.11.3/source-fixture-correction.json)"
+        },
+        {
+          "line": 238,
+          "text": "[Current supporting CI review](preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json) \u00b7"
+        },
+        {
+          "line": 239,
+          "text": "[Historical a81851b supporting review](preset-evidence/2026.11.3/ci/source-a81851b/supporting-ci-final.json) \u00b7"
+        },
+        {
+          "line": 242,
+          "text": "## Historical verified revision \u2014 2026.11.2 circuit library"
+        },
+        {
+          "line": 248,
+          "text": "**2026.11.2**. This revision provides one circuit instrument, removes the"
+        },
+        {
+          "line": 270,
+          "text": "[Consolidated qualification and original evidence](preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json)"
+        },
+        {
+          "line": 289,
+          "text": "[Actual audition acceptance](preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json)"
+        },
+        {
+          "line": 315,
+          "text": "## Historical 2026.11.1 development candidates \u2014 release blocked"
+        },
+        {
+          "line": 320,
+          "text": "strict publisher was skipped and no qualified 2026.11.1 prerelease was published."
+        },
+        {
+          "line": 343,
+          "text": "[Windows native evidence](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) \u00b7"
+        },
+        {
+          "line": 344,
+          "text": "[Apple Silicon native evidence](preset-evidence/2026.11.1/ci/native-macos-arm64.json) \u00b7"
+        },
+        {
+          "line": 345,
+          "text": "[Intel Mac native evidence](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) \u00b7"
+        },
+        {
+          "line": 346,
+          "text": "[Linux gates and original exits](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)"
+        },
+        {
+          "line": 348,
+          "text": "The [consolidated qualification](preset-evidence/2026.11.1/ci/release-qualification.json)"
+        },
+        {
+          "line": 358,
+          "text": "[Four-archive installation evidence](preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) \u00b7"
+        },
+        {
+          "line": 359,
+          "text": "[Five public GETs, hashes and withheld publisher](preset-evidence/2026.11.1/final-ci/public-candidates/summary.json)"
+        },
+        {
+          "line": 361,
+          "text": "The complementary [V3 archive aggregate](preset-evidence/2026.11.1/ci/final-install-artifacts.json)"
+        },
+        {
+          "line": 363,
+          "text": "[complete validator payload comparison](preset-evidence/2026.11.1/ci/final-validator-payload-identity.json)"
+        },
+        {
+          "line": 371,
+          "text": "local `99f5ebd` replay and the older twelve-excerpt 2026.11 package below."
+        },
+        {
+          "line": 372,
+          "text": "[Actual CI audition proof](preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json)"
+        },
+        {
+          "line": 387,
+          "text": "The original **2026.11** downloads and their separate Linux failure/retry history"
+        },
+        {
+          "line": 389,
+          "text": "2026.11.1 refinements."
+        },
+        {
+          "line": 390,
+          "text": "The [2026.11.1 60-agent assignment review](TEAM_REVIEW_2026_11_1.md) records this"
+        },
+        {
+          "line": 391,
+          "text": "task separately from the earlier 2026.11 review. Completing an investigation"
+        },
+        {
+          "line": 394,
+          "text": "[Recorded download acceptance](preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md) \u00b7"
+        },
+        {
+          "line": 395,
+          "text": "[Teardown source audit](preset-evidence/2026.11.1/ci/teardown-source-audit.md)"
+        },
+        {
+          "line": 397,
+          "text": "## Pinned verified development downloads \u2014 2026.11"
+        },
+        {
+          "line": 400,
+          "text": "2026.11.1 source and packaging changes on `main` are preserved; their separate"
+        },
+        {
+          "line": 402,
+          "text": "The pinned 2026.11 packages do not include those later changes."
+        },
+        {
+          "line": 410,
+          "text": "[Combined verification record](preset-evidence/2026.11/ci/release-qualification.json) \u00b7"
+        },
+        {
+          "line": 411,
+          "text": "[Latest run status](preset-evidence/2026.11/ci/run-latest-attempt.json)"
+        },
+        {
+          "line": 435,
+          "text": "[Archive verification](preset-evidence/2026.11/ci/final-install-artifacts.json) \u00b7"
+        },
+        {
+          "line": 436,
+          "text": "[Validator payload identity](preset-evidence/2026.11/ci/final-validator-payload-identity.json) \u00b7"
+        },
+        {
+          "line": 437,
+          "text": "[Public download verification](preset-evidence/2026.11/ci/final-download-links.json)"
+        },
+        {
+          "line": 444,
+          "text": "[Audition verification](preset-evidence/2026.11/ci/final-audition.json)"
+        }
+      ]
+    }
+  ],
+  "edits_by_a45": [
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "changes": [
+        "Opening current revision .4 to .5",
+        "Required manifest and SOURCE revision .4 to .5",
+        "Explicit 521 musical plus two Init programs within unchanged 523 entries",
+        "Current .5 revision report link",
+        "LOAD or RELOAD conditional label"
+      ]
+    }
+  ],
+  "other_guide_conclusions": {
+    "docs/PRESET_GUIDE.md": "Current .5/523/521/202-core/308-host scope and planned audition roster are identified. Bare RELOAD wording and one Current link to .4 were suggested to parent as precision improvements, not edited by A45.",
+    "docs/CI_DISTRIBUTION_STATUS.md": "Current .5 pending status is explicit. .4 and earlier qualification, test counts and download links are labeled previous or historical; do not replace those version labels globally."
+  }
+}

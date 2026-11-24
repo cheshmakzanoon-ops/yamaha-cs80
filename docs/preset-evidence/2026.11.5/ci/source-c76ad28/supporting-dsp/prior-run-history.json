@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "purpose": "Preserved superseded history, never replacement-run acceptance evidence.",
+  "prior_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "prior_run_id": 45344888536,
+  "prior_attempt": 1,
+  "failed_job_id": 138277054911,
+  "job_conclusion": "failure",
+  "old_metadata_test_total": 13,
+  "old_metadata_test_failures": 3,
+  "numerical_bounds_step": "success",
+  "required_exports_and_uploads": "not produced; uploads skipped",
+  "preserved_checkpoint_file_hashes_verified": 25,
+  "referenced_history": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/measure-failed-original.log",
+      "bytes": 29877,
+      "sha256": "5b7c9f5f827dfd66afd6b184264b197dbedd13b50f9e635f1761e0e2ddb43884"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/dsp-jobs-measure-failed-api.json",
+      "bytes": 12161,
+      "sha256": "310b4adb0942085182068941be3f35f8179fbcc70f6ecd8cad2c3473125fc6f6"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-09af535/supporting-dsp/checkpoint-retained-files.json",
+      "bytes": 4127,
+      "sha256": "3d83250b0e5cfdc62635bca05c3423d7f870e9653b57a723f8bb0c5c74d3e4be"
+    }
+  ],
+  "replacement_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "replacement_run_id": 45351731746,
+  "used_for_replacement_acceptance": false
+}

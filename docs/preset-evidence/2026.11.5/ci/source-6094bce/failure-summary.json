@@ -1,0 +1,76 @@
+{
+  "source": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "run_id": 45341783399,
+  "attempt": 1,
+  "original_run_conclusion": "failure",
+  "qualified": false,
+  "original_jobs": [
+    {
+      "id": 138266899984,
+      "name": "Windows / VST3 + Standalone",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138266900245,
+      "name": "Linux / VST3 + Standalone",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138266900270,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138266900439,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138274302281,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138274890456,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "conclusion": "skipped"
+    }
+  ],
+  "cause": "Three new host-test assertions called private AudioParameterChoice overrides. The correction uses the existing public RangedAudioParameter interface without removing assertions or changing expected values.",
+  "corrected_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "original_logs": {
+    "windows-build-failed.log": {
+      "bytes": 95493,
+      "sha256": "246117b7295627000c7fc87ecfec4beba58e882f44d52d7f4c7ebf368b7f8649",
+      "original_error_lines": [
+        "2026-11-24T06:52:43.6505297Z D:\\a\\yamaha-cs80\\yamaha-cs80\\tests\\InstrumentBodyHostTests.h(220,34): error C2248: 'juce::AudioParameterChoice::getNumSteps': cannot access private member declared in class 'juce::AudioParameterChoice' [D:\\a\\yamaha-cs80\\yamaha-cs80\\build\\CS80Snapshots.vcxproj]",
+        "2026-11-24T06:52:43.6520782Z D:\\a\\yamaha-cs80\\yamaha-cs80\\tests\\InstrumentBodyHostTests.h(221,58): error C2248: 'juce::AudioParameterChoice::getDefaultValue': cannot access private member declared in class 'juce::AudioParameterChoice' [D:\\a\\yamaha-cs80\\yamaha-cs80\\build\\CS80Snapshots.vcxproj]",
+        "2026-11-24T06:52:43.6530018Z D:\\a\\yamaha-cs80\\yamaha-cs80\\tests\\InstrumentBodyHostTests.h(228,38): error C2248: 'juce::AudioParameterChoice::getValue': cannot access private member declared in class 'juce::AudioParameterChoice' [D:\\a\\yamaha-cs80\\yamaha-cs80\\build\\CS80Snapshots.vcxproj]"
+      ]
+    },
+    "linux-build-failed.log": {
+      "bytes": 246767,
+      "sha256": "e9d8381ae72fb3c12e362722854801fd5ff61e3499595e2e0374dd5d52e43f24",
+      "original_error_lines": []
+    },
+    "macos-arm64-build-failed.log": {
+      "bytes": 110981,
+      "sha256": "a064572c81f4ab130498c30551c0f97a53cfb202de57f906acd23690ae89091c",
+      "original_error_lines": [
+        "2026-11-24T06:54:01.1506930Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:220:34: error: 'getNumSteps' is a private member of 'juce::AudioParameterChoice'",
+        "2026-11-24T06:54:01.1535210Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:221:58: error: 'getDefaultValue' is a private member of 'juce::AudioParameterChoice'",
+        "2026-11-24T06:54:01.1544620Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:228:38: error: 'getValue' is a private member of 'juce::AudioParameterChoice'"
+      ]
+    },
+    "macos-intel-build-failed.log": {
+      "bytes": 114792,
+      "sha256": "83b38b6692cf9934c2815890fd82f308556efa28eb4365a11dacac83c908b17a",
+      "original_error_lines": [
+        "2026-11-24T06:47:18.0017970Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:220:34: error: 'getNumSteps' is a private member of 'juce::AudioParameterChoice'",
+        "2026-11-24T06:47:18.1656970Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:221:58: error: 'getDefaultValue' is a private member of 'juce::AudioParameterChoice'",
+        "2026-11-24T06:47:18.3425160Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/InstrumentBodyHostTests.h:228:38: error: 'getValue' is a private member of 'juce::AudioParameterChoice'"
+      ]
+    }
+  },
+  "other_post_build_change": "A separate long-hold review led to lower output trims for Cathedral Pad and Golden Pads66; local original failing regression and corrected results are retained separately."
+}

@@ -1,0 +1,3759 @@
+{
+  "status": "expected_source_contract_only",
+  "accepted_archive_content": false,
+  "release_qualified": false,
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "source_tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "inventory_sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+  "inventory_programs": 523,
+  "inventory_parameters": 202,
+  "inventory_binary32_values": 105646,
+  "expected_regular_files": 216,
+  "expected_checksummed_members": 215,
+  "expected_requests": [
+    {
+      "folder": "keyboards",
+      "program": "Electric Piano I",
+      "host_index": 336,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "a71ce3fcab2af27c"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Electric Piano II",
+      "host_index": 337,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "1cd789e0c0ebe7dc"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Tine Piano",
+      "host_index": 338,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "334f3ed9c5e1d310"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Clavichord I",
+      "host_index": 339,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "d89381db49eebb37"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Clavichord II",
+      "host_index": 340,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "495a6d2931a5873"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Funky Clavichord",
+      "host_index": 341,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "f04b709988698ca"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Harpsichord I",
+      "host_index": 342,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "9e3fdf852fa426f0"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Harpsichord II",
+      "host_index": 343,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "cdfabb073c7d2022"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Lute Harpsichord",
+      "host_index": 344,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "8479dc4e4db084cb"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Toy Piano",
+      "host_index": 345,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "ab208f4691da0781"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Honky Keys",
+      "host_index": 346,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "70e232d255c44384"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Vibes Keys",
+      "host_index": 347,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "a7f69710400e22e4"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Celesta",
+      "host_index": 348,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "e950896d56418369"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Saw Pulse Piano",
+      "host_index": 349,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "78e49696b7593bd1"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Soft Keys",
+      "host_index": 350,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "45647f09669b43e9"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Chorus Keys",
+      "host_index": 351,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "b71b2830a793b22c"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Velocity Keys",
+      "host_index": 353,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "3c63930b06101bfb"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Dulcimer",
+      "host_index": 354,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "8b5b79ee6629f759"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Reed Piano",
+      "host_index": 355,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "78539b5f3aea6f9e"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Glass Keys",
+      "host_index": 356,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "16941a743e77d277"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Tremolo Keys",
+      "host_index": 357,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "15b6b99423c0e51c"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Contour Keys",
+      "host_index": 358,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "f43d6ab9c897e5af"
+    },
+    {
+      "folder": "keyboards",
+      "program": "Pressure Keys",
+      "host_index": 359,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "471de0a33c4f45a1"
+    },
+    {
+      "folder": "soft-keyboards",
+      "program": "Electric Piano I",
+      "host_index": 336,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "a71ce3fcab2af27c"
+    },
+    {
+      "folder": "soft-keyboards",
+      "program": "Electric Piano II",
+      "host_index": 337,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "1cd789e0c0ebe7dc"
+    },
+    {
+      "folder": "soft-keyboards",
+      "program": "Tine Piano",
+      "host_index": 338,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "334f3ed9c5e1d310"
+    },
+    {
+      "folder": "soft-keyboards",
+      "program": "Reed Piano",
+      "host_index": 355,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "78539b5f3aea6f9e"
+    },
+    {
+      "folder": "soft-keyboards",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "families",
+      "program": "Brass Swell I",
+      "host_index": 222,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "6a95c05d7e228d29"
+    },
+    {
+      "folder": "families",
+      "program": "Sforzando Brass",
+      "host_index": 227,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "b6bceab6f69afcda"
+    },
+    {
+      "folder": "families",
+      "program": "Covered Horn",
+      "host_index": 230,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "2f3f1446d9e24ec9"
+    },
+    {
+      "folder": "families",
+      "program": "Solo Violin",
+      "host_index": 263,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "81cfde87e9ea8549"
+    },
+    {
+      "folder": "families",
+      "program": "Solo Cello",
+      "host_index": 264,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "4777ba2606d1e74"
+    },
+    {
+      "folder": "families",
+      "program": "Marcato Strings",
+      "host_index": 280,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "5d096b9fddd195f4"
+    },
+    {
+      "folder": "families",
+      "program": "Recorder",
+      "host_index": 377,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "3e5532e9f74839e9"
+    },
+    {
+      "folder": "families",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "families",
+      "program": "Flute Organ 8+4",
+      "host_index": 360,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "d4c0c2bc08304cca"
+    },
+    {
+      "folder": "families",
+      "program": "Tremolo Organ",
+      "host_index": 367,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "4d71b95dbd132992"
+    },
+    {
+      "folder": "families",
+      "program": "Rubber Bass",
+      "host_index": 416,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "d76e86a2d937e2c7"
+    },
+    {
+      "folder": "families",
+      "program": "Picked Bass",
+      "host_index": 419,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "13aae67db42de572"
+    },
+    {
+      "folder": "families",
+      "program": "Nylon Pluck",
+      "host_index": 397,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "fa1f9862f7f16b61"
+    },
+    {
+      "folder": "families",
+      "program": "Mandolin",
+      "host_index": 395,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "843b92d23b531fb3"
+    },
+    {
+      "folder": "families",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "families",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "families",
+      "program": "Tremolo Brass",
+      "host_index": 251,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "a764c3f266596a7a"
+    },
+    {
+      "folder": "families",
+      "program": "Tremolo Pad",
+      "host_index": 300,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "410df726260f5521"
+    },
+    {
+      "folder": "families",
+      "program": "Tremolo Poly",
+      "host_index": 334,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "498c8438c11542c1"
+    },
+    {
+      "folder": "families",
+      "program": "Touch Lead",
+      "host_index": 428,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "81f9aeedd7a899b9"
+    },
+    {
+      "folder": "families",
+      "program": "Aftertouch Vibrato Lead",
+      "host_index": 429,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "a1cd0b913e3dedfd"
+    },
+    {
+      "folder": "families",
+      "program": "Glide Lead",
+      "host_index": 433,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "df033c8a976f0f4c"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Tone I: E. Piano",
+      "host_index": 8,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "93b7afda3b0b47a6"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Tone II: Bass",
+      "host_index": 9,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "631adb093696e814"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Bright Keys",
+      "host_index": 39,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "e726930ac5185e2c"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Amber Keys 97",
+      "host_index": 140,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "5ac42636e98919c6"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Slow Keys 106",
+      "host_index": 149,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "27815a01ae239779"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Replicant Brass",
+      "host_index": 22,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "a3477450cb8be2ca"
+    },
+    {
+      "folder": "original-addresses",
+      "program": "Bass Stack",
+      "host_index": 35,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "45c0f6ab899990c6"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Aftertouch Vibrato Lead",
+      "host_index": 429,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "a1cd0b913e3dedfd"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Pressure Lead",
+      "host_index": 444,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "172f0ce96ce01456"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Wah Lead",
+      "host_index": 452,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "d17644a2df01b579"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Pressure Pad",
+      "host_index": 295,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "829a15d5238f5c71"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Flute",
+      "host_index": 374,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "da6b1129b9a2711e"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Solo Violin",
+      "host_index": 263,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "81cfde87e9ea8549"
+    },
+    {
+      "folder": "pressure-zero",
+      "program": "Pressure Keys",
+      "host_index": 359,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "471de0a33c4f45a1"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Aftertouch Vibrato Lead",
+      "host_index": 429,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "a1cd0b913e3dedfd"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Pressure Lead",
+      "host_index": 444,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "172f0ce96ce01456"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Wah Lead",
+      "host_index": 452,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "d17644a2df01b579"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Pressure Pad",
+      "host_index": 295,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "829a15d5238f5c71"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Flute",
+      "host_index": 374,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "da6b1129b9a2711e"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Solo Violin",
+      "host_index": 263,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "81cfde87e9ea8549"
+    },
+    {
+      "folder": "pressure-full",
+      "program": "Pressure Keys",
+      "host_index": 359,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "471de0a33c4f45a1"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Trombone Glide",
+      "host_index": 232,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "f4d43e7c4c2500ef"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Theatre Organ",
+      "host_index": 366,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "6b734df9a06320f8"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Oboe",
+      "host_index": 380,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "3bcc95963529f192"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Bassoon",
+      "host_index": 382,
+      "note": 67,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "64e816652d07779b"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Guitar I",
+      "host_index": 388,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "5d10bd4cd0fcc8d8"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Guitar II",
+      "host_index": 389,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "bc58c483470ed4e0"
+    },
+    {
+      "folder": "instrument-bodies",
+      "program": "Kalimba",
+      "host_index": 400,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 2,
+      "expected_frames": 384000,
+      "parameter_digest": "99a10d341b5dab2"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Evolving Pad",
+      "host_index": 293,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "7958ac89c7464ba"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Breathing Pad",
+      "host_index": 287,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "6eb74797b34cb132"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Thunder",
+      "host_index": 491,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "213a668fb2d3e956"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Rain",
+      "host_index": 492,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "9f75baebc6619cad"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Surf",
+      "host_index": 485,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "283a8d9fdcddc34d"
+    },
+    {
+      "folder": "textures-and-effects",
+      "program": "Wind",
+      "host_index": 484,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 7,
+      "tail_seconds": 2,
+      "expected_frames": 432000,
+      "parameter_digest": "f85e89c1318e6b3b"
+    },
+    {
+      "folder": "soft-kalimba",
+      "program": "Kalimba",
+      "host_index": 400,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 4,
+      "tail_seconds": 1,
+      "expected_frames": 240000,
+      "parameter_digest": "99a10d341b5dab2"
+    },
+    {
+      "folder": "tine-register-48",
+      "program": "Tine Piano",
+      "host_index": 338,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "334f3ed9c5e1d310"
+    },
+    {
+      "folder": "tine-register-60",
+      "program": "Tine Piano",
+      "host_index": 338,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "334f3ed9c5e1d310"
+    },
+    {
+      "folder": "tine-register-84",
+      "program": "Tine Piano",
+      "host_index": 338,
+      "note": 84,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "334f3ed9c5e1d310"
+    },
+    {
+      "folder": "piano-register-36-soft",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 36,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-36-soft",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 36,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "piano-register-36-firm",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 36,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-36-firm",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 36,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "piano-register-60-soft",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-60-soft",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "piano-register-60-firm",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-60-firm",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "piano-register-84-soft",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 84,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-84-soft",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 84,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "piano-register-84-firm",
+      "program": "Analog Piano",
+      "host_index": 38,
+      "note": 84,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "41b620027e3d1e95"
+    },
+    {
+      "folder": "piano-register-84-firm",
+      "program": "Stage Keys",
+      "host_index": 352,
+      "note": 84,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "bff197d2227c67b0"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Solo Violin",
+      "host_index": 263,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "81cfde87e9ea8549"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Flute",
+      "host_index": 374,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "da6b1129b9a2711e"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Oboe",
+      "host_index": 380,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "3bcc95963529f192"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "English Horn",
+      "host_index": 381,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "decade23a1d4f819"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Covered Horn",
+      "host_index": 230,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "2f3f1446d9e24ec9"
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "program": "Muted Trumpet",
+      "host_index": 231,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "a02ac74594b7c36e"
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "program": "Solo Cello",
+      "host_index": 264,
+      "note": 72,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "4777ba2606d1e74"
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 72,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "program": "Bassoon",
+      "host_index": 382,
+      "note": 72,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "64e816652d07779b"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Solo Violin",
+      "host_index": 263,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "81cfde87e9ea8549"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Flute",
+      "host_index": 374,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "da6b1129b9a2711e"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Oboe",
+      "host_index": 380,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "3bcc95963529f192"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "English Horn",
+      "host_index": 381,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "decade23a1d4f819"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Covered Horn",
+      "host_index": 230,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "2f3f1446d9e24ec9"
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "program": "Muted Trumpet",
+      "host_index": 231,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "a02ac74594b7c36e"
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "program": "Solo Cello",
+      "host_index": 264,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "4777ba2606d1e74"
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "program": "Bassoon",
+      "host_index": 382,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "64e816652d07779b"
+    },
+    {
+      "folder": "clarinet-register-60-soft",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-60-soft",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 60,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-60-firm",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-60-firm",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-64-soft",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 64,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-64-soft",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 64,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-64-firm",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 64,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-64-firm",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 64,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-68-soft",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 68,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-68-soft",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 68,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-68-firm",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 68,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-68-firm",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 68,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-72-soft",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 72,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-72-soft",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 72,
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "clarinet-register-72-firm",
+      "program": "Clarinet",
+      "host_index": 378,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "7d74dc6169781115"
+    },
+    {
+      "folder": "clarinet-register-72-firm",
+      "program": "Bass Clarinet",
+      "host_index": 379,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3,
+      "tail_seconds": 1,
+      "expected_frames": 192000,
+      "parameter_digest": "389c1d914540c9c9"
+    },
+    {
+      "folder": "mallet-material-48-soft",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 48,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-48-soft",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 48,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-48-soft",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 48,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-48-soft",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 48,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "mallet-material-48-firm",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-48-firm",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-48-firm",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-48-firm",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "choir-vowels-48",
+      "program": "Choir Pad",
+      "host_index": 284,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "62c1c02b035be957"
+    },
+    {
+      "folder": "choir-vowels-48",
+      "program": "Dark Choir",
+      "host_index": 285,
+      "note": 48,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "cf132798d062483f"
+    },
+    {
+      "folder": "mallet-material-60-soft",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 60,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-60-soft",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 60,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-60-soft",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 60,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-60-soft",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 60,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "mallet-material-60-firm",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-60-firm",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-60-firm",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-60-firm",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "choir-vowels-60",
+      "program": "Choir Pad",
+      "host_index": 284,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "62c1c02b035be957"
+    },
+    {
+      "folder": "choir-vowels-60",
+      "program": "Dark Choir",
+      "host_index": 285,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "cf132798d062483f"
+    },
+    {
+      "folder": "mallet-material-72-soft",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 72,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-72-soft",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 72,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-72-soft",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 72,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-72-soft",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 72,
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "mallet-material-72-firm",
+      "program": "Xylophone",
+      "host_index": 468,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "da7c2b8152d05425"
+    },
+    {
+      "folder": "mallet-material-72-firm",
+      "program": "Steel Drum",
+      "host_index": 472,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "ddf848507614eb46"
+    },
+    {
+      "folder": "mallet-material-72-firm",
+      "program": "Marimba",
+      "host_index": 466,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "f6f67171f39da1a3"
+    },
+    {
+      "folder": "mallet-material-72-firm",
+      "program": "Vibraphone",
+      "host_index": 467,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 3.5,
+      "tail_seconds": 0.8,
+      "expected_frames": 206400,
+      "parameter_digest": "9d7f28930d6f951f"
+    },
+    {
+      "folder": "choir-vowels-72",
+      "program": "Choir Pad",
+      "host_index": 284,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "62c1c02b035be957"
+    },
+    {
+      "folder": "choir-vowels-72",
+      "program": "Dark Choir",
+      "host_index": 285,
+      "note": 72,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 6,
+      "tail_seconds": 1,
+      "expected_frames": 336000,
+      "parameter_digest": "cf132798d062483f"
+    },
+    {
+      "folder": "original-articulation",
+      "program": "Frozen Leads 121",
+      "host_index": 164,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "48efd5ff76d880c3"
+    },
+    {
+      "folder": "original-articulation",
+      "program": "Soft Leads 128",
+      "host_index": 171,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "18b0fa763f5c8481"
+    },
+    {
+      "folder": "original-articulation",
+      "program": "Neon Sequences 174",
+      "host_index": 217,
+      "note": 60,
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold_seconds": 5,
+      "tail_seconds": 1,
+      "expected_frames": 288000,
+      "parameter_digest": "8a37f2c3833e028b"
+    }
+  ],
+  "groups": [
+    {
+      "folder": "keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Clavichord I",
+        "Clavichord II",
+        "Funky Clavichord",
+        "Harpsichord I",
+        "Harpsichord II",
+        "Lute Harpsichord",
+        "Toy Piano",
+        "Honky Keys",
+        "Vibes Keys",
+        "Celesta",
+        "Saw Pulse Piano",
+        "Soft Keys",
+        "Chorus Keys",
+        "Stage Keys",
+        "Velocity Keys",
+        "Dulcimer",
+        "Reed Piano",
+        "Glass Keys",
+        "Tremolo Keys",
+        "Contour Keys",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "soft-keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Reed Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "families",
+      "names": [
+        "Brass Swell I",
+        "Sforzando Brass",
+        "Covered Horn",
+        "Solo Violin",
+        "Solo Cello",
+        "Marcato Strings",
+        "Recorder",
+        "Clarinet",
+        "Flute Organ 8+4",
+        "Tremolo Organ",
+        "Rubber Bass",
+        "Picked Bass",
+        "Nylon Pluck",
+        "Mandolin",
+        "Vibraphone",
+        "Marimba",
+        "Tremolo Brass",
+        "Tremolo Pad",
+        "Tremolo Poly",
+        "Touch Lead",
+        "Aftertouch Vibrato Lead",
+        "Glide Lead"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2
+    },
+    {
+      "folder": "original-addresses",
+      "names": [
+        "Tone I: E. Piano",
+        "Tone II: Bass",
+        "Analog Piano",
+        "Bright Keys",
+        "Amber Keys 97",
+        "Slow Keys 106",
+        "Replicant Brass",
+        "Bass Stack"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "pressure-zero",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1
+    },
+    {
+      "folder": "pressure-full",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold": 5,
+      "tail": 1
+    },
+    {
+      "folder": "instrument-bodies",
+      "names": [
+        "Trombone Glide",
+        "Theatre Organ",
+        "Oboe",
+        "Bassoon",
+        "Guitar I",
+        "Guitar II",
+        "Kalimba"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 2
+    },
+    {
+      "folder": "textures-and-effects",
+      "names": [
+        "Evolving Pad",
+        "Breathing Pad",
+        "Thunder",
+        "Rain",
+        "Surf",
+        "Wind"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2
+    },
+    {
+      "folder": "soft-kalimba",
+      "names": [
+        "Kalimba"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "tine-register-48",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 48
+    },
+    {
+      "folder": "tine-register-60",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "tine-register-84",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "piano-register-36-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36
+    },
+    {
+      "folder": "piano-register-36-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36
+    },
+    {
+      "folder": "piano-register-60-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "piano-register-60-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "piano-register-84-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "piano-register-84-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "clarinet-register-60-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "clarinet-register-60-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "clarinet-register-64-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64
+    },
+    {
+      "folder": "clarinet-register-64-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64
+    },
+    {
+      "folder": "clarinet-register-68-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68
+    },
+    {
+      "folder": "clarinet-register-68-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68
+    },
+    {
+      "folder": "clarinet-register-72-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "clarinet-register-72-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "mallet-material-48-soft",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 48
+    },
+    {
+      "folder": "mallet-material-48-firm",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 48
+    },
+    {
+      "folder": "choir-vowels-48",
+      "names": [
+        "Choir Pad",
+        "Dark Choir"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 48
+    },
+    {
+      "folder": "mallet-material-60-soft",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 60
+    },
+    {
+      "folder": "mallet-material-60-firm",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 60
+    },
+    {
+      "folder": "choir-vowels-60",
+      "names": [
+        "Choir Pad",
+        "Dark Choir"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "mallet-material-72-soft",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.25,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 72
+    },
+    {
+      "folder": "mallet-material-72-firm",
+      "names": [
+        "Xylophone",
+        "Steel Drum",
+        "Marimba",
+        "Vibraphone"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3.5,
+      "tail": 0.8,
+      "note": 72
+    },
+    {
+      "folder": "choir-vowels-72",
+      "names": [
+        "Choir Pad",
+        "Dark Choir"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "original-articulation",
+      "names": [
+        "Frozen Leads 121",
+        "Soft Leads 128",
+        "Neon Sequences 174"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60
+    }
+  ],
+  "selected_programs": [
+    {
+      "name": "Tone I: E. Piano",
+      "host_index": 8,
+      "category": "Hardware Studies",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Tone II: Bass",
+      "host_index": 9,
+      "category": "Hardware Studies",
+      "active_body_selections": []
+    },
+    {
+      "name": "Replicant Brass",
+      "host_index": 22,
+      "category": "Brass",
+      "active_body_selections": []
+    },
+    {
+      "name": "Bass Stack",
+      "host_index": 35,
+      "category": "Bass",
+      "active_body_selections": []
+    },
+    {
+      "name": "Analog Piano",
+      "host_index": 38,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Bright Keys",
+      "host_index": 39,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Amber Keys 97",
+      "host_index": 140,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Slow Keys 106",
+      "host_index": 149,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Frozen Leads 121",
+      "host_index": 164,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Soft Leads 128",
+      "host_index": 171,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Neon Sequences 174",
+      "host_index": 217,
+      "category": "Sequences",
+      "active_body_selections": []
+    },
+    {
+      "name": "Brass Swell I",
+      "host_index": 222,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Sforzando Brass",
+      "host_index": 227,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Covered Horn",
+      "host_index": 230,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Muted Trumpet",
+      "host_index": 231,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Trombone Glide",
+      "host_index": 232,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Tremolo Brass",
+      "host_index": 251,
+      "category": "Brass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 14,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Solo Violin",
+      "host_index": 263,
+      "category": "Strings",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 9,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Solo Cello",
+      "host_index": 264,
+      "category": "Strings",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 9,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Marcato Strings",
+      "host_index": 280,
+      "category": "Strings",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 9,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 9,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Choir Pad",
+      "host_index": 284,
+      "category": "Pads",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 15,
+          "variant": 3
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "variant": 3
+        }
+      ]
+    },
+    {
+      "name": "Dark Choir",
+      "host_index": 285,
+      "category": "Pads",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 15,
+          "variant": 4
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "variant": 4
+        }
+      ]
+    },
+    {
+      "name": "Breathing Pad",
+      "host_index": 287,
+      "category": "Pads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Evolving Pad",
+      "host_index": 293,
+      "category": "Pads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Pressure Pad",
+      "host_index": 295,
+      "category": "Pads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Tremolo Pad",
+      "host_index": 300,
+      "category": "Pads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Tremolo Poly",
+      "host_index": 334,
+      "category": "Polysynth",
+      "active_body_selections": []
+    },
+    {
+      "name": "Electric Piano I",
+      "host_index": 336,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Electric Piano II",
+      "host_index": 337,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Tine Piano",
+      "host_index": 338,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Clavichord I",
+      "host_index": 339,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 4,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Clavichord II",
+      "host_index": 340,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 4,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Funky Clavichord",
+      "host_index": 341,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 4,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Harpsichord I",
+      "host_index": 342,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 5,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 5,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Harpsichord II",
+      "host_index": 343,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 5,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 5,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Lute Harpsichord",
+      "host_index": 344,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 5,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 5,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Toy Piano",
+      "host_index": 345,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 19,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 16,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Honky Keys",
+      "host_index": 346,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Vibes Keys",
+      "host_index": 347,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 17,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Celesta",
+      "host_index": 348,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 19,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 19,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Saw Pulse Piano",
+      "host_index": 349,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Soft Keys",
+      "host_index": 350,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Chorus Keys",
+      "host_index": 351,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Stage Keys",
+      "host_index": 352,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Velocity Keys",
+      "host_index": 353,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Dulcimer",
+      "host_index": 354,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 7,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Reed Piano",
+      "host_index": 355,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 3,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 3,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Glass Keys",
+      "host_index": 356,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 19,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 16,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Tremolo Keys",
+      "host_index": 357,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Contour Keys",
+      "host_index": 358,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 3,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Pressure Keys",
+      "host_index": 359,
+      "category": "Keys",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 1,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 1,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Flute Organ 8+4",
+      "host_index": 360,
+      "category": "Organ",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 15,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Theatre Organ",
+      "host_index": 366,
+      "category": "Organ",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 15,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Tremolo Organ",
+      "host_index": 367,
+      "category": "Organ",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 15,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "host_index": 374,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 10,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Recorder",
+      "host_index": 377,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 10,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Clarinet",
+      "host_index": 378,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 11,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Bass Clarinet",
+      "host_index": 379,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 11,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 11,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Oboe",
+      "host_index": 380,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 12,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 12,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "English Horn",
+      "host_index": 381,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 12,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 12,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Bassoon",
+      "host_index": 382,
+      "category": "Winds",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 13,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 13,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Guitar I",
+      "host_index": 388,
+      "category": "Plucked",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 6,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 6,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Guitar II",
+      "host_index": 389,
+      "category": "Plucked",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 7,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Mandolin",
+      "host_index": 395,
+      "category": "Plucked",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 7,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Nylon Pluck",
+      "host_index": 397,
+      "category": "Plucked",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 6,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 6,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Kalimba",
+      "host_index": 400,
+      "category": "Plucked",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 2,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 19,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Rubber Bass",
+      "host_index": 416,
+      "category": "Bass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 8,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Picked Bass",
+      "host_index": 419,
+      "category": "Bass",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 8,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Touch Lead",
+      "host_index": 428,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Aftertouch Vibrato Lead",
+      "host_index": 429,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Glide Lead",
+      "host_index": 433,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Pressure Lead",
+      "host_index": 444,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Wah Lead",
+      "host_index": 452,
+      "category": "Leads",
+      "active_body_selections": []
+    },
+    {
+      "name": "Marimba",
+      "host_index": 466,
+      "category": "Bells",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 18,
+          "variant": 0
+        },
+        {
+          "rank": 2,
+          "model": 18,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Vibraphone",
+      "host_index": 467,
+      "category": "Bells",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 17,
+          "variant": 0
+        }
+      ]
+    },
+    {
+      "name": "Xylophone",
+      "host_index": 468,
+      "category": "Bells",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 18,
+          "variant": 1
+        },
+        {
+          "rank": 2,
+          "model": 18,
+          "variant": 1
+        }
+      ]
+    },
+    {
+      "name": "Steel Drum",
+      "host_index": 472,
+      "category": "Bells",
+      "active_body_selections": [
+        {
+          "rank": 1,
+          "model": 17,
+          "variant": 2
+        },
+        {
+          "rank": 2,
+          "model": 17,
+          "variant": 2
+        }
+      ]
+    },
+    {
+      "name": "Wind",
+      "host_index": 484,
+      "category": "FX",
+      "active_body_selections": []
+    },
+    {
+      "name": "Surf",
+      "host_index": 485,
+      "category": "FX",
+      "active_body_selections": []
+    },
+    {
+      "name": "Thunder",
+      "host_index": 491,
+      "category": "FX",
+      "active_body_selections": []
+    },
+    {
+      "name": "Rain",
+      "host_index": 492,
+      "category": "FX",
+      "active_body_selections": []
+    }
+  ],
+  "expected_active_models": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "expected_variant_selections": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "scope": "Resolved exact-source declarations and reviewed inventory only; no produced ZIP, WAV samples or original successful capture are available."
+}

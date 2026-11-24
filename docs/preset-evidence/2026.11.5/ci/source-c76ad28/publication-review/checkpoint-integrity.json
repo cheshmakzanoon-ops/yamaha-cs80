@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "worker": 60,
+  "recorded_at_utc": "2026-11-24T08:13:41.245957+00:00",
+  "scope": "Frozen publication preparation files only. Final gate completion and final staged/publication review remain pending.",
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/main-ref-checkpoint-api.json",
+      "bytes": 358,
+      "sha256": "4802ba39f55e55c38f539f2a24573dee3c40c224bdbd9d327e564d18dc513c2c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/publication-acceptance-plan.json",
+      "bytes": 4817,
+      "sha256": "a7d267527c64c0d555eed12e7b2af7d9f7616a48488acca64d54b43ac715e99d"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/publication-procedure.md",
+      "bytes": 6270,
+      "sha256": "8939edf5f22436dffa3cc9402f306629d7b7e00fdc2303fe3c0880784bc79c69"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/review-checkpoint.txt",
+      "bytes": 5105,
+      "sha256": "44930dd1ba8f7740b56a4820362ecd42b3225fd0bb356851ecde04d9c26a7fa9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/source-and-claims-checkpoint.json",
+      "bytes": 5578,
+      "sha256": "e5c811b432b51eb454ba31a390f84847740c5374e331dfed0cebeb5c4b0adf22"
+    }
+  ],
+  "mutable_review_at_checkpoint": {
+    "path": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+    "sha256": "44930dd1ba8f7740b56a4820362ecd42b3225fd0bb356851ecde04d9c26a7fa9",
+    "frozen_identical_copy": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/review-checkpoint.txt",
+    "future_update_rule": "The current review may later be extended; this identical checkpoint text remains immutable and preserves the original hash."
+  },
+  "relative_link_checks": [
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../ci/source-c76ad28/publication-review/source-and-claims-checkpoint.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../ci/source-c76ad28/publication-review/main-ref-checkpoint-api.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../parameter-coverage.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "a56.md",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "a57.md",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../verification/a57-final-download-mapping-contract.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../ci/source-c76ad28/publication-review/publication-acceptance-plan.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/reviews/a60.md",
+      "target": "../ci/source-c76ad28/publication-review/publication-procedure.md",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/publication-review/publication-procedure.md",
+      "target": "publication-acceptance-plan.json",
+      "exists": true
+    }
+  ],
+  "final_signoff": false,
+  "release_qualified": false
+}

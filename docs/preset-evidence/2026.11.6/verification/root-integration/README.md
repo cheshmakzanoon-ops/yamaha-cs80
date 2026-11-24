@@ -7,3 +7,5 @@ The Gong recipe and authored 0.80 excitation ceiling correct its level without c
 The six focused integrated suites passed after rebuilding: material body, bell/material presets, plucked/material presets, preset character, amplitude production comparison and filter production comparison. This local character run precedes A16's final coverage addition; A16 retains its final separate result. The direct final gong ceiling test passes 794 checks.
 
 This checkpoint is development evidence, not native-host or package qualification. The full final bank and all native platforms must still pass against the committed source.
+
+The final complete 523-program LibraryAudit passes unchanged (406.58 seconds), and the cumulative .4→.6 comparator test also passes (6.27 seconds). This closes the initial Gong bank-level failure. Native committed-source tests and installation archives remain separate gates.

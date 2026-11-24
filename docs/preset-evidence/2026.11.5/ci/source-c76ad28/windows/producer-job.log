@@ -1,0 +1,1584 @@
+﻿2026-11-24T07:55:42.6370191Z Current runner version: '2.338.2'
+2026-11-24T07:55:42.6599324Z ##[group]Runner Image Provisioner
+2026-11-24T07:55:42.6600217Z Hosted Compute Agent
+2026-11-24T07:55:42.6600780Z Version: 20261111.635
+2026-11-24T07:55:42.6601342Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-24T07:55:42.6602026Z Build Date: 2026-11-11T01:49:01Z
+2026-11-24T07:55:42.6602669Z Worker ID: {ca894a6d-dad3-4ff4-bbab-cdff67c0bedd}
+2026-11-24T07:55:42.6603326Z Region: westcentralus
+2026-11-24T07:55:42.6603837Z Cloud: Azure
+2026-11-24T07:55:42.6604315Z ##[endgroup]
+2026-11-24T07:55:42.6605637Z ##[group]Operating System
+2026-11-24T07:55:42.6606267Z Microsoft Windows Server 2022
+2026-11-24T07:55:42.6606813Z 10.0.20348
+2026-11-24T07:55:42.6607270Z Datacenter
+2026-11-24T07:55:42.6607727Z ##[endgroup]
+2026-11-24T07:55:42.6608190Z ##[group]Runner Image
+2026-11-24T07:55:42.6608719Z Image: windows-2022
+2026-11-24T07:55:42.6609207Z Version: 20261116.370.1
+2026-11-24T07:55:42.6610600Z Included Software: https://github.com/actions/runner-images/blob/win22/20261116.370/images/windows/Windows2022-Readme.md
+2026-11-24T07:55:42.6611994Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261116.370
+2026-11-24T07:55:42.6612883Z ##[endgroup]
+2026-11-24T07:55:42.6614008Z ##[group]GITHUB_TOKEN Permissions
+2026-11-24T07:55:42.6615871Z Contents: read
+2026-11-24T07:55:42.6616392Z Metadata: read
+2026-11-24T07:55:42.6616901Z Packages: read
+2026-11-24T07:55:42.6617404Z ##[endgroup]
+2026-11-24T07:55:42.6619628Z Secret source: Actions
+2026-11-24T07:55:42.6620457Z Cache mode: write
+2026-11-24T07:55:42.6621102Z Prepare workflow directory
+2026-11-24T07:55:42.7579731Z Prepare all required actions
+2026-11-24T07:55:42.7628777Z Getting action download info
+2026-11-24T07:55:43.0746404Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-24T07:55:43.2439556Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-24T07:55:44.0566293Z Complete job name: Windows / VST3 + Standalone
+2026-11-24T07:55:44.7979191Z ##[group]Run actions/checkout@v5
+2026-11-24T07:55:44.7980486Z with:
+2026-11-24T07:55:44.7981024Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T07:55:44.7988049Z   token: ***
+2026-11-24T07:55:44.7988516Z   ssh-strict: true
+2026-11-24T07:55:44.7989013Z   ssh-user: git
+2026-11-24T07:55:44.7989514Z   persist-credentials: true
+2026-11-24T07:55:44.7990094Z   clean: true
+2026-11-24T07:55:44.7990594Z   sparse-checkout-cone-mode: true
+2026-11-24T07:55:44.7991230Z   fetch-depth: 1
+2026-11-24T07:55:44.7991714Z   fetch-tags: false
+2026-11-24T07:55:44.7992220Z   show-progress: true
+2026-11-24T07:55:44.7992721Z   lfs: false
+2026-11-24T07:55:44.7993200Z   submodules: false
+2026-11-24T07:55:44.7993727Z   set-safe-directory: true
+2026-11-24T07:55:44.7994351Z   allow-unsafe-pr-checkout: false
+2026-11-24T07:55:44.7995201Z ##[endgroup]
+2026-11-24T07:55:45.1101535Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T07:55:45.1103963Z ##[group]Getting Git version info
+2026-11-24T07:55:45.1104798Z Working directory is 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-11-24T07:55:45.1844511Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-24T07:55:45.5610627Z git version 2.56.1.windows.1
+2026-11-24T07:55:45.5650875Z ##[endgroup]
+2026-11-24T07:55:45.5686616Z Temporarily overriding HOME='D:\a\_temp\04e61324-e22c-4e46-99aa-8b60e080138b' before making global git config changes
+2026-11-24T07:55:45.5688781Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T07:55:45.5691059Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-11-24T07:55:45.6260689Z Deleting the contents of 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-11-24T07:55:45.6266049Z ##[group]Initializing the repository
+2026-11-24T07:55:45.6275309Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\yamaha-cs80\yamaha-cs80
+2026-11-24T07:55:45.6892075Z Initialized empty Git repository in D:/a/yamaha-cs80/yamaha-cs80/.git/
+2026-11-24T07:55:45.6933115Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T07:55:45.7507101Z ##[endgroup]
+2026-11-24T07:55:45.7508416Z ##[group]Disabling automatic garbage collection
+2026-11-24T07:55:45.7515161Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-24T07:55:45.7819808Z ##[endgroup]
+2026-11-24T07:55:45.7821873Z ##[group]Setting up auth
+2026-11-24T07:55:45.7832097Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T07:55:45.8145262Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-24T07:55:47.1045642Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T07:55:47.1354660Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-24T07:55:47.6040024Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T07:55:47.6348540Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-24T07:55:48.1226276Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-24T07:55:48.1547312Z ##[endgroup]
+2026-11-24T07:55:48.1548017Z ##[group]Fetching the repository
+2026-11-24T07:55:48.1627110Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c76ad288e02fbeca48f39652bf4fcdd99837f793:refs/remotes/origin/main
+2026-11-24T07:55:54.9158238Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-24T07:55:54.9159052Z  * [new ref]         c76ad288e02fbeca48f39652bf4fcdd99837f793 -> origin/main
+2026-11-24T07:55:54.9196539Z ##[endgroup]
+2026-11-24T07:55:54.9197171Z ##[group]Determining the checkout info
+2026-11-24T07:55:54.9200562Z ##[endgroup]
+2026-11-24T07:55:54.9210796Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-24T07:55:55.0398486Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-24T07:55:55.0724715Z ##[group]Checking out the ref
+2026-11-24T07:55:55.0725368Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+2026-11-24T07:55:56.1495128Z Updating files:  49% (4944/9964)
+2026-11-24T07:55:56.1632011Z Updating files:  50% (4982/9964)
+2026-11-24T07:55:56.1822965Z Updating files:  51% (5082/9964)
+2026-11-24T07:55:56.1969414Z Updating files:  52% (5182/9964)
+2026-11-24T07:55:56.2171992Z Updating files:  53% (5281/9964)
+2026-11-24T07:55:56.2361158Z Updating files:  54% (5381/9964)
+2026-11-24T07:55:56.2579929Z Updating files:  55% (5481/9964)
+2026-11-24T07:55:56.2776049Z Updating files:  56% (5580/9964)
+2026-11-24T07:55:56.2929966Z Updating files:  57% (5680/9964)
+2026-11-24T07:55:56.3036642Z Updating files:  58% (5780/9964)
+2026-11-24T07:55:56.3193825Z Updating files:  59% (5879/9964)
+2026-11-24T07:55:56.3376256Z Updating files:  60% (5979/9964)
+2026-11-24T07:55:56.3517799Z Updating files:  61% (6079/9964)
+2026-11-24T07:55:56.3668526Z Updating files:  62% (6178/9964)
+2026-11-24T07:55:56.3854150Z Updating files:  63% (6278/9964)
+2026-11-24T07:55:56.4010256Z Updating files:  64% (6377/9964)
+2026-11-24T07:55:56.4241226Z Updating files:  65% (6477/9964)
+2026-11-24T07:55:56.4469846Z Updating files:  66% (6577/9964)
+2026-11-24T07:55:56.4639262Z Updating files:  67% (6676/9964)
+2026-11-24T07:55:56.4907538Z Updating files:  68% (6776/9964)
+2026-11-24T07:55:56.5276061Z Updating files:  69% (6876/9964)
+2026-11-24T07:55:56.5484366Z Updating files:  70% (6975/9964)
+2026-11-24T07:55:56.5762396Z Updating files:  71% (7075/9964)
+2026-11-24T07:55:56.6058174Z Updating files:  72% (7175/9964)
+2026-11-24T07:55:56.6289435Z Updating files:  73% (7274/9964)
+2026-11-24T07:55:56.6565264Z Updating files:  74% (7374/9964)
+2026-11-24T07:55:56.6963130Z Updating files:  75% (7473/9964)
+2026-11-24T07:55:56.7246758Z Updating files:  76% (7573/9964)
+2026-11-24T07:55:56.7471586Z Updating files:  77% (7673/9964)
+2026-11-24T07:55:56.7648612Z Updating files:  78% (7772/9964)
+2026-11-24T07:55:56.7853391Z Updating files:  79% (7872/9964)
+2026-11-24T07:55:56.8133115Z Updating files:  80% (7972/9964)
+2026-11-24T07:55:56.8413671Z Updating files:  81% (8071/9964)
+2026-11-24T07:55:56.8643623Z Updating files:  82% (8171/9964)
+2026-11-24T07:55:56.8870270Z Updating files:  83% (8271/9964)
+2026-11-24T07:55:57.1485880Z Updating files:  84% (8370/9964)
+2026-11-24T07:55:57.2854913Z Updating files:  84% (8445/9964)
+2026-11-24T07:55:57.3606276Z Updating files:  85% (8470/9964)
+2026-11-24T07:55:57.3805796Z Updating files:  86% (8570/9964)
+2026-11-24T07:55:57.4025492Z Updating files:  87% (8669/9964)
+2026-11-24T07:55:57.4236020Z Updating files:  88% (8769/9964)
+2026-11-24T07:55:57.4446156Z Updating files:  89% (8868/9964)
+2026-11-24T07:55:57.4652055Z Updating files:  90% (8968/9964)
+2026-11-24T07:55:57.4854934Z Updating files:  91% (9068/9964)
+2026-11-24T07:55:57.5019655Z Updating files:  92% (9167/9964)
+2026-11-24T07:55:57.5459872Z Updating files:  93% (9267/9964)
+2026-11-24T07:55:57.5618320Z Updating files:  94% (9367/9964)
+2026-11-24T07:55:57.5783956Z Updating files:  95% (9466/9964)
+2026-11-24T07:55:57.6164788Z Updating files:  96% (9566/9964)
+2026-11-24T07:55:57.6341503Z Updating files:  97% (9666/9964)
+2026-11-24T07:55:57.6510320Z Updating files:  98% (9765/9964)
+2026-11-24T07:55:57.6727344Z Updating files:  99% (9865/9964)
+2026-11-24T07:55:57.6728924Z Updating files: 100% (9964/9964)
+2026-11-24T07:55:57.6729276Z Updating files: 100% (9964/9964), done.
+2026-11-24T07:55:57.6961627Z Switched to a new branch 'main'
+2026-11-24T07:55:57.7029283Z branch 'main' set up to track 'origin/main'.
+2026-11-24T07:55:57.7169051Z ##[endgroup]
+2026-11-24T07:55:57.7667880Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-24T07:55:57.7886169Z c76ad288e02fbeca48f39652bf4fcdd99837f793
+2026-11-24T07:55:57.8277289Z ##[group]Run cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
+2026-11-24T07:55:57.8277966Z [36;1mcmake -S . -B build -G "Visual Studio 17 2022" -A x64 `[0m
+2026-11-24T07:55:57.8278350Z [36;1m  -DCS80_BUILD_PLUGIN=ON `[0m
+2026-11-24T07:55:57.8278738Z [36;1m  -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log[0m
+2026-11-24T07:55:57.8279183Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-24T07:55:57.8360361Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-24T07:55:57.8360750Z ##[endgroup]
+2026-11-24T07:55:59.1529057Z -- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348.
+2026-11-24T07:56:08.8316058Z -- The C compiler identification is MSVC 19.44.35230.0
+2026-11-24T07:56:10.1956971Z -- The CXX compiler identification is MSVC 19.44.35230.0
+2026-11-24T07:56:10.3200855Z -- Detecting C compiler ABI info
+2026-11-24T07:56:11.3800024Z -- Detecting C compiler ABI info - done
+2026-11-24T07:56:11.3950886Z -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+2026-11-24T07:56:11.3960855Z -- Detecting C compile features
+2026-11-24T07:56:11.4012935Z -- Detecting C compile features - done
+2026-11-24T07:56:11.4149270Z -- Detecting CXX compiler ABI info
+2026-11-24T07:56:12.1103039Z -- Detecting CXX compiler ABI info - done
+2026-11-24T07:56:12.1257173Z -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+2026-11-24T07:56:12.1260876Z -- Detecting CXX compile features
+2026-11-24T07:56:12.1269364Z -- Detecting CXX compile features - done
+2026-11-24T07:56:12.1295577Z -- AVX2 filter batch request remains scalar: only GCC has a qualified detectable math contract
+2026-11-24T07:56:13.2934270Z -- Found Python3: C:/hostedtoolcache/windows/Python/3.14.10/x64/python3.exe (found suitable version "3.14.10", minimum required is "3.10") found components: Interpreter
+2026-11-24T07:56:13.3178608Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-24T07:56:14.8909155Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+2026-11-24T07:56:14.8909759Z -- Looking for pthread_create in pthreads
+2026-11-24T07:56:15.4854887Z -- Looking for pthread_create in pthreads - not found
+2026-11-24T07:56:15.4855485Z -- Looking for pthread_create in pthread
+2026-11-24T07:56:16.0549229Z -- Looking for pthread_create in pthread - not found
+2026-11-24T07:56:16.0560547Z -- Found Threads: TRUE
+2026-11-24T07:56:29.0644799Z -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+2026-11-24T07:56:29.0836584Z -- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR
+2026-11-24T07:56:29.6365909Z -- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR - Failed
+2026-11-24T07:56:29.6366487Z -- Looking for getentropy
+2026-11-24T07:56:30.1468834Z -- Looking for getentropy - not found
+2026-11-24T07:56:30.1469370Z -- Looking for glob
+2026-11-24T07:56:30.6430461Z -- Looking for glob - not found
+2026-11-24T07:56:30.6431134Z -- Looking for mmap
+2026-11-24T07:56:31.1424268Z -- Looking for mmap - not found
+2026-11-24T07:56:31.1424742Z -- Looking for include file stdint.h
+2026-11-24T07:56:31.8748735Z -- Looking for include file stdint.h - found
+2026-11-24T07:57:04.0078490Z -- Configuring juceaide
+2026-11-24T07:57:07.9210785Z -- Building juceaide
+2026-11-24T07:58:28.0698877Z -- Exporting juceaide
+2026-11-24T07:58:28.0704291Z -- Testing juceaide
+2026-11-24T07:58:28.1918923Z -- Finished setting up juceaide
+2026-11-24T07:58:28.4491277Z -- Found Python3: C:/hostedtoolcache/windows/Python/3.14.10/x64/python3.exe (found version "3.14.10") found components: Interpreter
+2026-11-24T07:58:29.2125846Z -- Configuring done (150.4s)
+2026-11-24T07:58:30.4927592Z -- Generating done (1.3s)
+2026-11-24T07:58:30.4934342Z -- Build files have been written to: D:/a/yamaha-cs80/yamaha-cs80/build
+2026-11-24T07:58:30.5901150Z ##[group]Run cmake "-DBUILD_DIR=build" "-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641" "-DEXPECTED_JUCE_VERSION=8.0.11" -P scripts/verify-ci-juce-source.cmake
+2026-11-24T07:58:30.5902577Z [36;1mcmake "-DBUILD_DIR=build" "-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641" "-DEXPECTED_JUCE_VERSION=8.0.11" -P scripts/verify-ci-juce-source.cmake[0m
+2026-11-24T07:58:30.5940529Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-24T07:58:30.5940900Z ##[endgroup]
+2026-11-24T07:58:31.1278316Z -- Verified clean JUCE 8.0.11 at c352e2489000ffeb9e397051377d75eef2efe641; evidence: D:/a/yamaha-cs80/yamaha-cs80/build/ci-juce-provenance.txt
+2026-11-24T07:58:31.2446306Z ##[group]Run cmake --build build --config Release --parallel
+2026-11-24T07:58:31.2446903Z [36;1mcmake --build build --config Release --parallel[0m
+2026-11-24T07:58:31.2483891Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-24T07:58:31.2484323Z ##[endgroup]
+2026-11-24T07:58:31.6028729Z MSBuild version 17.14.60+43b635718 for .NET Framework
+2026-11-24T07:58:31.6358723Z 
+2026-11-24T07:58:31.9567856Z   Checking File Globs
+2026-11-24T07:58:32.3868062Z   1>Checking Build System
+2026-11-24T07:58:32.5785483Z   Generating cs80_mseg_state_text_tests_artefacts/JuceLibraryCode/cs80_mseg_state_text_tests_resources.rc
+2026-11-24T07:58:32.5787195Z   Generating cs80_modern_state_integer_tests_artefacts/JuceLibraryCode/cs80_modern_state_integer_tests_resources.rc
+2026-11-24T07:58:32.5857625Z   Generating CS80Snapshots_artefacts/JuceLibraryCode/CS80Snapshots_resources.rc
+2026-11-24T07:58:32.6077636Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:32.6078509Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:32.6100390Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:32.7194362Z   Generating cs80_preset_display_name_tests_artefacts/JuceLibraryCode/cs80_preset_display_name_tests_resources.rc
+2026-11-24T07:58:32.7195931Z   Generating cs80_parameter_state_index_tests_artefacts/JuceLibraryCode/cs80_parameter_state_index_tests_resources.rc
+2026-11-24T07:58:32.7471196Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:32.7471838Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:32.9864338Z   cs80_parameter_state_index_tests_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_parameter_state_index_tests_rc_lib.dir\Release\cs80_parameter_state_index_tests_rc_lib.lib
+2026-11-24T07:58:32.9866674Z   cs80_preset_display_name_tests_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_preset_display_name_tests_rc_lib.dir\Release\cs80_preset_display_name_tests_rc_lib.lib
+2026-11-24T07:58:33.1415401Z   cs80_modern_state_integer_tests_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_modern_state_integer_tests_rc_lib.dir\Release\cs80_modern_state_integer_tests_rc_lib.lib
+2026-11-24T07:58:33.1417412Z   cs80_mseg_state_text_tests_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_mseg_state_text_tests_rc_lib.dir\Release\cs80_mseg_state_text_tests_rc_lib.lib
+2026-11-24T07:58:33.2146189Z   Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_resources.rc
+2026-11-24T07:58:33.2367843Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:33.3177453Z   CS80Snapshots_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Snapshots_rc_lib.dir\Release\CS80Snapshots_rc_lib.lib
+2026-11-24T07:58:33.3923287Z   CS80Reference_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Reference_rc_lib.dir\Release\CS80Reference_rc_lib.lib
+2026-11-24T07:58:33.4429788Z   Generating cs80_preset_file_values_tests_artefacts/JuceLibraryCode/cs80_preset_file_values_tests_resources.rc
+2026-11-24T07:58:33.4730573Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:33.5008697Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:33.5154756Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/build/_deps/cs80_libxml2-src/CMakeLists.txt
+2026-11-24T07:58:33.5481830Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:33.6732420Z   juce_VST3ManifestHelper.cpp
+2026-11-24T07:58:33.7019444Z   cs80_preset_file_values_tests_rc_lib.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_preset_file_values_tests_rc_lib.dir\Release\cs80_preset_file_values_tests_rc_lib.lib
+2026-11-24T07:58:33.7137397Z   buf.c
+2026-11-24T07:58:33.7419841Z   Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+2026-11-24T07:58:33.7430091Z   Engine.cpp
+2026-11-24T07:58:33.7700698Z   chvalid.c
+2026-11-24T07:58:33.7801568Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:33.7943637Z   dict.c
+2026-11-24T07:58:33.9320783Z   BinaryData1.cpp
+2026-11-24T07:58:34.0038108Z   BinaryData2.cpp
+2026-11-24T07:58:34.0586895Z   encoding.c
+2026-11-24T07:58:34.1205398Z   Generating Code...
+2026-11-24T07:58:34.1394353Z   entities.c
+2026-11-24T07:58:34.2068956Z   error.c
+2026-11-24T07:58:34.2745864Z   cs80_panel_fonts.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_panel_fonts.lib
+2026-11-24T07:58:34.2763131Z   globals.c
+2026-11-24T07:58:34.5111737Z   hash.c
+2026-11-24T07:58:34.5687623Z   list.c
+2026-11-24T07:58:34.6157078Z   parser.c
+2026-11-24T07:58:34.7032434Z   parserInternals.c
+2026-11-24T07:58:34.7664865Z   SAX2.c
+2026-11-24T07:58:34.8093021Z   threads.c
+2026-11-24T07:58:34.9797812Z   tree.c
+2026-11-24T07:58:35.0474366Z   uri.c
+2026-11-24T07:58:35.1052447Z   valid.c
+2026-11-24T07:58:35.1549619Z   xmlIO.c
+2026-11-24T07:58:35.3411289Z   xmlmemory.c
+2026-11-24T07:58:35.5370155Z   xmlstring.c
+2026-11-24T07:58:35.5994471Z   Generating Code...
+2026-11-24T07:58:37.8876512Z D:\a\yamaha-cs80\yamaha-cs80\src\core\Engine.cpp(3098,48): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data [D:\a\yamaha-cs80\yamaha-cs80\build\cs80_core.vcxproj]
+2026-11-24T07:58:38.0792147Z D:\a\yamaha-cs80\yamaha-cs80\src\core\Engine.cpp(3098,33): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data [D:\a\yamaha-cs80\yamaha-cs80\build\cs80_core.vcxproj]
+2026-11-24T07:58:38.2167194Z D:\a\yamaha-cs80\yamaha-cs80\src\core\Engine.cpp(3202,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\yamaha-cs80\yamaha-cs80\build\cs80_core.vcxproj]
+2026-11-24T07:58:38.8885520Z   EngineWscHeld.cpp
+2026-11-24T07:58:38.9670309Z   Generating Code...
+2026-11-24T07:58:41.4700926Z   LibXml2.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\_deps\cs80_libxml2-build\Release\libxml2s.lib
+2026-11-24T07:58:41.8918166Z   CS80Reference_vst3_helper.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\CS80Reference_vst3_helper.exe
+2026-11-24T07:58:42.5487486Z   FactoryPresets.cpp
+2026-11-24T07:58:43.3067527Z   Ig00156Batch.cpp
+2026-11-24T07:58:43.7694294Z   Generating Code...
+2026-11-24T07:58:50.5836151Z   cs80_core.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_core.lib
+2026-11-24T07:58:50.6385825Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T07:58:50.7325705Z   PluginProcessor.cpp
+2026-11-24T07:58:58.4298485Z   PluginProcessorAutomation.cpp
+2026-11-24T07:59:04.8786995Z   PluginEditor.cpp
+2026-11-24T07:59:12.1671907Z   UiComponents.cpp
+2026-11-24T07:59:19.2051010Z   AdvancedPanel.cpp
+2026-11-24T07:59:26.8679815Z   ParameterComboBox.cpp
+2026-11-24T07:59:33.6318091Z   ParameterContextButton.cpp
+2026-11-24T07:59:40.0666245Z   PresetBrowser.cpp
+2026-11-24T07:59:47.0649433Z   MtsEspClient.cpp
+2026-11-24T07:59:47.8585404Z   KeyboardTuningPage.cpp
+2026-11-24T07:59:54.3414937Z   ModernLayerState.cpp
+2026-11-24T08:00:00.3124382Z   ModernModulationUi.cpp
+2026-11-24T08:00:07.0316562Z   PluginProcessorLibrary.cpp
+2026-11-24T08:00:13.4957396Z   ArtCommon.cpp
+2026-11-24T08:00:18.0524071Z   PanelWidgets.cpp
+2026-11-24T08:00:24.6197760Z   ChannelRow.cpp
+2026-11-24T08:00:31.0811814Z   CentreRow.cpp
+2026-11-24T08:00:37.5924924Z   PerformanceDeck.cpp
+2026-11-24T08:00:44.1532226Z   MemoryLid.cpp
+2026-11-24T08:00:50.7547029Z   EditorPreferences.cpp
+2026-11-24T08:00:52.6751233Z   Generating Code...
+2026-11-24T08:01:10.5676929Z   Compiling...
+2026-11-24T08:01:17.1902978Z   StudioToolbar.cpp
+2026-11-24T08:01:17.1903332Z   StudioDrawers.cpp
+2026-11-24T08:01:23.6673270Z   UndoHistory.cpp
+2026-11-24T08:01:28.2107091Z   StudioTour.cpp
+2026-11-24T08:01:32.7099662Z   juce_audio_processors.cpp
+2026-11-24T08:01:38.2966039Z   juce_gui_extra.cpp
+2026-11-24T08:01:43.1510893Z   juce_gui_basics.cpp
+2026-11-24T08:01:46.0582259Z D:\a\yamaha-cs80\yamaha-cs80\build\_deps\juce-src\modules\juce_gui_basics\juce_gui_basics.cpp(61): warning : This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [D:\a\yamaha-cs80\yamaha-cs80\build\CS80Reference.vcxproj]
+2026-11-24T08:01:54.8866519Z   juce_graphics.cpp
+2026-11-24T08:02:03.2353483Z   juce_graphics_Harfbuzz.cpp
+2026-11-24T08:02:12.6923111Z   juce_events.cpp
+2026-11-24T08:02:15.5075301Z   juce_core.cpp
+2026-11-24T08:02:19.1963375Z   juce_core_CompilationTime.cpp
+2026-11-24T08:02:19.2007989Z   juce_data_structures.cpp
+2026-11-24T08:02:21.2689905Z   juce_audio_processors_headless.cpp
+2026-11-24T08:02:25.5241865Z   juce_audio_processors_headless_ara.cpp
+2026-11-24T08:02:25.5296136Z   juce_audio_processors_headless_lv2_libs.cpp
+2026-11-24T08:02:25.5346576Z   juce_audio_basics.cpp
+2026-11-24T08:02:28.6556964Z   juce_audio_utils.cpp
+2026-11-24T08:02:34.5242336Z   juce_audio_formats.cpp
+2026-11-24T08:02:38.6256676Z   juce_audio_devices.cpp
+2026-11-24T08:02:44.4581358Z   Generating Code...
+2026-11-24T08:04:06.9721908Z   Compiling...
+2026-11-24T08:04:06.9722290Z   juce_dsp.cpp
+2026-11-24T08:04:10.3798843Z   Generating Code...
+2026-11-24T08:04:13.7404362Z   juce_graphics_Sheenbidi.c
+2026-11-24T08:04:14.4344117Z   CS80Reference.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Reference_artefacts\Release\CS-80 Reference_SharedCode.lib
+2026-11-24T08:04:14.5036208Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:14.5819918Z   juce_audio_plugin_client_AAX.cpp
+2026-11-24T08:04:14.5916056Z   juce_audio_plugin_client_AAX_utils.cpp
+2026-11-24T08:04:14.5964269Z   juce_audio_plugin_client_ARA.cpp
+2026-11-24T08:04:14.6012502Z   juce_audio_plugin_client_LV2.cpp
+2026-11-24T08:04:14.6061183Z   juce_audio_plugin_client_Standalone.cpp
+2026-11-24T08:04:14.6107865Z   juce_audio_plugin_client_Unity.cpp
+2026-11-24T08:04:14.6156291Z   juce_audio_plugin_client_VST2.cpp
+2026-11-24T08:04:14.6209762Z   juce_audio_plugin_client_VST3.cpp
+2026-11-24T08:04:21.5824572Z   Generating Code...
+2026-11-24T08:04:27.4320340Z      Creating library D:/a/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.lib and object D:/a/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.exp
+2026-11-24T08:04:27.7400037Z   CS80Reference_VST3.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Reference_artefacts\Release\VST3\CS-80 Reference.vst3\Contents\x86_64-win\CS-80 Reference.vst3
+2026-11-24T08:04:27.7919698Z   removing moduleinfo.json
+2026-11-24T08:04:27.8247627Z   creating D:/a/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3
+2026-11-24T08:04:27.9796790Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:27.9871038Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:27.9886391Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:28.0048976Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:28.0813396Z   AmplitudeProductionOracle.cpp
+2026-11-24T08:04:28.1104147Z   ActiveTailContinuityTests.cpp
+2026-11-24T08:04:28.2242463Z   amplitude_production_trace.cpp
+2026-11-24T08:04:28.2320886Z   juce_audio_plugin_client_AAX.cpp
+2026-11-24T08:04:28.2393240Z   juce_audio_plugin_client_AAX_utils.cpp
+2026-11-24T08:04:28.2571761Z   juce_audio_plugin_client_ARA.cpp
+2026-11-24T08:04:28.2773693Z   juce_audio_plugin_client_LV2.cpp
+2026-11-24T08:04:28.2931303Z   juce_audio_plugin_client_Standalone.cpp
+2026-11-24T08:04:29.2477986Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:29.6274797Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:29.7604795Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:30.0454396Z   ArpPedalLifecycleTests.cpp
+2026-11-24T08:04:30.7020588Z   PluginProcessor.cpp
+2026-11-24T08:04:30.9680240Z   ArpRateLifecycleTests.cpp
+2026-11-24T08:04:34.6266256Z   cs80_amplitude_production_trace.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_amplitude_production_trace.exe
+2026-11-24T08:04:34.9536686Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:34.9939731Z   cs80_amplitude_production_oracle.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_amplitude_production_oracle.exe
+2026-11-24T08:04:35.0672235Z   cs80_active_tail_continuity_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_active_tail_continuity_tests.exe
+2026-11-24T08:04:35.2915114Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:35.4056227Z   cs80_arp_pedal_lifecycle_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_arp_pedal_lifecycle_tests.exe
+2026-11-24T08:04:35.5718959Z   ArpRepeatLifecycleTests.cpp
+2026-11-24T08:04:35.6001526Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:35.7732678Z   BassPluckedRefinementTests.cpp
+2026-11-24T08:04:36.5580042Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:37.3153112Z   juce_audio_plugin_client_Unity.cpp
+2026-11-24T08:04:37.3262389Z   juce_audio_plugin_client_VST2.cpp
+2026-11-24T08:04:37.3504202Z   juce_audio_plugin_client_VST3.cpp
+2026-11-24T08:04:37.4175110Z   Generating Code...
+2026-11-24T08:04:38.6393209Z   BbdChorusTests.cpp
+2026-11-24T08:04:40.5619329Z   BodyArticulationEngineTests.cpp
+2026-11-24T08:04:40.7842974Z   cs80_arp_rate_lifecycle_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_arp_rate_lifecycle_tests.exe
+2026-11-24T08:04:41.1348104Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:41.2550503Z   cs80_bbd_chorus_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_bbd_chorus_tests.exe
+2026-11-24T08:04:41.3011029Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:41.4003066Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:41.5159757Z   BowedBodyFormantTests.cpp
+2026-11-24T08:04:41.7260699Z   CS80Reference_Standalone.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Reference_artefacts\Release\Standalone\CS-80 Reference.exe
+2026-11-24T08:04:41.7977485Z   BrassOrganRefinementTests.cpp
+2026-11-24T08:04:43.0186031Z   CallbackCpuMeasurementTests.cpp
+2026-11-24T08:04:43.5515010Z   cs80_bass_plucked_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_bass_plucked_refinement_tests.exe
+2026-11-24T08:04:43.7558404Z   cs80_arp_repeat_lifecycle_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_arp_repeat_lifecycle_tests.exe
+2026-11-24T08:04:43.8260379Z   PluginProcessorAutomation.cpp
+2026-11-24T08:04:43.9146718Z   cs80_bowed_body_formant_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_bowed_body_formant_tests.exe
+2026-11-24T08:04:43.9863936Z   cs80_callback_cpu_measurement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_callback_cpu_measurement_tests.exe
+2026-11-24T08:04:44.0822275Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:44.0920773Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:44.1349023Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:44.3029785Z   ContinuousVoiceCircuitAuditTests.cpp
+2026-11-24T08:04:45.1482866Z   ContinuousVoiceCircuitTests.cpp
+2026-11-24T08:04:45.9763903Z   CapturedKeyboardEventsTests.cpp
+2026-11-24T08:04:47.2262387Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:47.2493066Z   cs80_body_articulation_engine_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_body_articulation_engine_tests.exe
+2026-11-24T08:04:47.4222392Z   cs80_continuous_voice_circuit_audit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_continuous_voice_circuit_audit_tests.exe
+2026-11-24T08:04:47.6287323Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:47.9217427Z   DecimalConversionTests.cpp
+2026-11-24T08:04:47.9427983Z   ControllerResetTests.cpp
+2026-11-24T08:04:48.1310771Z   cs80_continuous_voice_circuit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_continuous_voice_circuit_tests.exe
+2026-11-24T08:04:48.1545468Z   cs80_brass_organ_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_brass_organ_refinement_tests.exe
+2026-11-24T08:04:48.3656939Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:48.4008747Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:48.5630377Z   cs80_captured_keyboard_events_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_captured_keyboard_events_tests.exe
+2026-11-24T08:04:48.6116519Z   DriveControlCacheTests.cpp
+2026-11-24T08:04:50.6369210Z   DelayLineTests.cpp
+2026-11-24T08:04:51.7490339Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:52.1134539Z   cs80_decimal_conversion_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_decimal_conversion_tests.exe
+2026-11-24T08:04:52.1682851Z   cs80_drive_control_cache_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_drive_control_cache_tests.exe
+2026-11-24T08:04:52.9714864Z   cs80_delay_line_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_delay_line_tests.exe
+2026-11-24T08:04:53.1828257Z   dsp_probe.cpp
+2026-11-24T08:04:53.3251776Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:53.3519175Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:53.4241771Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:53.5634810Z   EnvelopePrecisionTests.cpp
+2026-11-24T08:04:53.8982751Z   engine_audit.cpp
+2026-11-24T08:04:53.9849023Z   EnsembleRateCacheTests.cpp
+2026-11-24T08:04:54.3423131Z   cs80_controller_reset_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_controller_reset_tests.exe
+2026-11-24T08:04:55.9390254Z   PluginEditor.cpp
+2026-11-24T08:04:58.6307407Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:59.8124756Z   cs80_ensemble_rate_cache_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ensemble_rate_cache_tests.exe
+2026-11-24T08:04:59.9252603Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:04:59.9715810Z   cs80_envelope_precision_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_envelope_precision_tests.exe
+2026-11-24T08:05:00.0008779Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:00.0872131Z   EnvelopeRcModelTests.cpp
+2026-11-24T08:05:00.1342804Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:00.1856594Z   EventTimelineTests.cpp
+2026-11-24T08:05:02.2033032Z   EvidenceRegisterTests.cpp
+2026-11-24T08:05:02.9332147Z   ReconstructedOscillatorTests.cpp
+2026-11-24T08:05:03.2352250Z   cs80_event_timeline_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_event_timeline_tests.exe
+2026-11-24T08:05:03.6823573Z   cs80_dsp_probe.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_dsp_probe.exe
+2026-11-24T08:05:04.9865986Z   cs80_engine_audit.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_engine_audit.exe
+2026-11-24T08:05:05.0383869Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:05.1168339Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:05.1270243Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:05.1687012Z   cs80_evidence_register_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_evidence_register_tests.exe
+2026-11-24T08:05:05.2454809Z   ExternalModulationInterpolatorTests.cpp
+2026-11-24T08:05:05.4333109Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:05.4649427Z   FilterBatchCapTests.cpp
+2026-11-24T08:05:07.3293047Z   Ig00156Batch.cpp
+2026-11-24T08:05:07.6333190Z   FastMathTests.cpp
+2026-11-24T08:05:08.1857933Z   Generating Code...
+2026-11-24T08:05:08.9903684Z   cs80_experimental_oscillator_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_experimental_oscillator_tests.exe
+2026-11-24T08:05:09.0316504Z   FilterBatchEngineTests.cpp
+2026-11-24T08:05:09.1334089Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:09.2232943Z   cs80_envelope_rc_model_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_envelope_rc_model_tests.exe
+2026-11-24T08:05:09.2733064Z   cs80_fast_math_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_fast_math_tests.exe
+2026-11-24T08:05:09.5188299Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:09.5702543Z   FilterBatchSchedulingTests.cpp
+2026-11-24T08:05:09.6885968Z   cs80_external_interpolator_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_external_interpolator_tests.exe
+2026-11-24T08:05:09.8785139Z   UiComponents.cpp
+2026-11-24T08:05:10.0888521Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:10.2087541Z   cs80_filter_batch_cap_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_batch_cap_tests.exe
+2026-11-24T08:05:10.3131858Z   FilterDefaultHistoryTests.cpp
+2026-11-24T08:05:11.9933451Z   FilterIdleFallbackTests.cpp
+2026-11-24T08:05:12.5744865Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:14.7552581Z   cs80_filter_default_history_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_default_history_tests.exe
+2026-11-24T08:05:14.7969442Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:14.8877762Z   cs80_filter_batch_scheduling_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_batch_scheduling_tests.exe
+2026-11-24T08:05:14.9316577Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:14.9342116Z   FilterProductionOracle.cpp
+2026-11-24T08:05:15.0768222Z   filter_production_trace.cpp
+2026-11-24T08:05:15.1993772Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:15.2782249Z   cs80_filter_batch_engine_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_batch_engine_tests.exe
+2026-11-24T08:05:15.5279037Z   float_wav_fixture.cpp
+2026-11-24T08:05:15.7400081Z   cs80_filter_idle_fallback_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_idle_fallback_tests.exe
+2026-11-24T08:05:16.6825166Z   FreeRunningVoiceTests.cpp
+2026-11-24T08:05:17.1969191Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:17.8392805Z   cs80_filter_production_oracle.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_production_oracle.exe
+2026-11-24T08:05:17.8843367Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:17.9569566Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:18.1821977Z   FxLoudnessCoreTests.cpp
+2026-11-24T08:05:18.4969405Z   FxRefinementTests.cpp
+2026-11-24T08:05:19.4206230Z   FxLoudnessGateTests.cpp
+2026-11-24T08:05:20.4398998Z   cs80_float_wav_fixture.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_float_wav_fixture.exe
+2026-11-24T08:05:20.5014317Z   cs80_filter_production_trace.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_filter_production_trace.exe
+2026-11-24T08:05:20.6880633Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:20.7569260Z   cs80_fx_loudness_gate_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_fx_loudness_gate_tests.exe
+2026-11-24T08:05:20.8555100Z   cs80_fx_loudness_core_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_fx_loudness_core_tests.exe
+2026-11-24T08:05:20.9559765Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:21.0774427Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:22.3344225Z   AdvancedPanel.cpp
+2026-11-24T08:05:22.3760130Z   FxTapeLifecycleTests.cpp
+2026-11-24T08:05:23.0645135Z   HighResolutionVelocityTests.cpp
+2026-11-24T08:05:23.1453619Z   HardwareControlTests.cpp
+2026-11-24T08:05:23.3305974Z   cs80_free_running_voice_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_free_running_voice_tests.exe
+2026-11-24T08:05:24.3077986Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:24.3391823Z   cs80_fx_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_fx_refinement_tests.exe
+2026-11-24T08:05:24.3580893Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:24.4439236Z   cs80_fx_tape_lifecycle_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_fx_tape_lifecycle_tests.exe
+2026-11-24T08:05:24.4924539Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:24.5297225Z   Ig00150SubTests.cpp
+2026-11-24T08:05:24.5847785Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:24.6624954Z   HostAutomationCurveTests.cpp
+2026-11-24T08:05:25.7395663Z   Ig00151VcaTests.cpp
+2026-11-24T08:05:26.1159637Z   Ig00151ZeroEiTests.cpp
+2026-11-24T08:05:30.1774488Z   cs80_ig00151_zero_ei_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00151_zero_ei_tests.exe
+2026-11-24T08:05:30.2968119Z   cs80_high_resolution_velocity_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_high_resolution_velocity_tests.exe
+2026-11-24T08:05:30.3171030Z   cs80_ig00150_sub_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00150_sub_tests.exe
+2026-11-24T08:05:30.3695780Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:30.4371521Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:30.4412525Z   cs80_hardware_control_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_hardware_control_tests.exe
+2026-11-24T08:05:30.5608346Z   cs80_host_automation_curve_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_host_automation_curve_tests.exe
+2026-11-24T08:05:30.5752794Z   Ig00156BatchTests.cpp
+2026-11-24T08:05:30.6545859Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:31.0704770Z   Ig00156CacheTests.cpp
+2026-11-24T08:05:31.0923281Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:32.3239951Z   Ig00156FilterTests.cpp
+2026-11-24T08:05:32.3723973Z   Ig00156NodalTests.cpp
+2026-11-24T08:05:34.0797081Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:34.1215905Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:34.2021248Z   cs80_ig00151_vca_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00151_vca_tests.exe
+2026-11-24T08:05:34.4238242Z   Ig00156StepDiagnosticsTests.cpp
+2026-11-24T08:05:35.5817123Z   IG00156ReferenceTests.cpp
+2026-11-24T08:05:35.9464405Z   ParameterComboBox.cpp
+2026-11-24T08:05:36.4724446Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:37.7489268Z   cs80_ig00156_cache_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_cache_tests.exe
+2026-11-24T08:05:37.7784275Z   cs80_ig00156_batch_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_batch_tests.exe
+2026-11-24T08:05:37.9267970Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:37.9441191Z   Ig00156TopOctaveTests.cpp
+2026-11-24T08:05:37.9730522Z   cs80_ig00156_filter_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_filter_tests.exe
+2026-11-24T08:05:37.9921698Z   cs80_ig00156_step_diagnostics_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_step_diagnostics_tests.exe
+2026-11-24T08:05:38.1780858Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:38.2691387Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:38.2982623Z   cs80_ig00156_nodal_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_nodal_tests.exe
+2026-11-24T08:05:38.3475891Z   InstrumentBodyEngineTests.cpp
+2026-11-24T08:05:38.3773440Z   InstrumentBodyTests.cpp
+2026-11-24T08:05:41.9845817Z   InstrumentBodyVariantTests.cpp
+2026-11-24T08:05:42.1203421Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:44.1118785Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:44.1202409Z   KasScannerTests.cpp
+2026-11-24T08:05:44.2082818Z   cs80_instrument_body_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_instrument_body_tests.exe
+2026-11-24T08:05:44.2403412Z   cs80_ig00156_reference_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_reference_tests.exe
+2026-11-24T08:05:44.3248964Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:44.3377196Z   cs80_ig00156_top_octave_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ig00156_top_octave_tests.exe
+2026-11-24T08:05:44.3992523Z   KeyboardContourKeyMapTests.cpp
+2026-11-24T08:05:44.4627043Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:44.6212182Z   cs80_instrument_body_engine_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_instrument_body_engine_tests.exe
+2026-11-24T08:05:44.7482891Z   KeyboardEventQueueTests.cpp
+2026-11-24T08:05:44.7678218Z   KeyboardContourReferenceTests.cpp
+2026-11-24T08:05:46.8165248Z   cs80_instrument_body_variant_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_instrument_body_variant_tests.exe
+2026-11-24T08:05:48.0066197Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:48.2805069Z   cs80_keyboard_contour_reference_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_keyboard_contour_reference_tests.exe
+2026-11-24T08:05:48.3754870Z   ParameterContextButton.cpp
+2026-11-24T08:05:50.2165446Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:50.4972916Z   KeyboardPressureAuditTests.cpp
+2026-11-24T08:05:50.5127435Z   cs80_keyboard_contour_key_map_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_keyboard_contour_key_map_tests.exe
+2026-11-24T08:05:50.9498266Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:51.0597902Z   KeyboardResponseTests.cpp
+2026-11-24T08:05:51.1725681Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:51.2381394Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:51.4200363Z   LeadRefinementTests.cpp
+2026-11-24T08:05:51.7637076Z   LevelControlTests.cpp
+2026-11-24T08:05:53.7110408Z   LegacySubLfoOracleTests.cpp
+2026-11-24T08:05:55.5009709Z   cs80_kas_scanner_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_kas_scanner_tests.exe
+2026-11-24T08:05:56.4873360Z   cs80_level_control_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_level_control_tests.exe
+2026-11-24T08:05:56.5579408Z   cs80_keyboard_event_queue_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_keyboard_event_queue_tests.exe
+2026-11-24T08:05:56.5835274Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:56.6255959Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:56.6586291Z   cs80_keyboard_response_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_keyboard_response_tests.exe
+2026-11-24T08:05:56.7487945Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:05:56.7848941Z   cs80_lead_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_lead_refinement_tests.exe
+2026-11-24T08:05:56.8281796Z   LfoRandomSwitchingTests.cpp
+2026-11-24T08:05:56.9140789Z   LfoRandomVariableRateTests.cpp
+2026-11-24T08:05:58.3242514Z   cs80_keyboard_pressure_audit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_keyboard_pressure_audit_tests.exe
+2026-11-24T08:05:58.8819952Z   LfoScopePreviewTests.cpp
+2026-11-24T08:06:00.0502170Z   PresetBrowser.cpp
+2026-11-24T08:06:00.8949410Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:00.9461290Z   cs80_legacy_sub_lfo_oracle_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_legacy_sub_lfo_oracle_tests.exe
+2026-11-24T08:06:01.3202150Z   LibraryAuditTests.cpp
+2026-11-24T08:06:01.4684928Z   cs80_lfo_random_variable_rate_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_lfo_random_variable_rate_tests.exe
+2026-11-24T08:06:01.5212034Z   cs80_lfo_scope_preview_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_lfo_scope_preview_tests.exe
+2026-11-24T08:06:01.6991638Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:01.7354369Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:01.7388861Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:01.9152544Z   LoadedControlRankTests.cpp
+2026-11-24T08:06:02.0816956Z   LiveEnvelopeLevelTests.cpp
+2026-11-24T08:06:02.9724187Z   LiveEnvelopeTimingTests.cpp
+2026-11-24T08:06:04.8273878Z   cs80_lfo_random_switching_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_lfo_random_switching_tests.exe
+2026-11-24T08:06:07.3763891Z   cs80_loaded_control_rank_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_loaded_control_rank_tests.exe
+2026-11-24T08:06:07.8972799Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:07.9776223Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:08.0267492Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:08.0612163Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:08.1563686Z   LoadedControlReferenceTests.cpp
+2026-11-24T08:06:08.2003632Z   MalletPresetRefinementTests.cpp
+2026-11-24T08:06:08.2718641Z   LoadedControlTransientTests.cpp
+2026-11-24T08:06:09.6292112Z   cs80_library_audit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_library_audit_tests.exe
+2026-11-24T08:06:09.8967272Z   MemoryControlRoutingTests.cpp
+2026-11-24T08:06:10.0401509Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:10.1081782Z   cs80_loaded_control_transient_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_loaded_control_transient_tests.exe
+2026-11-24T08:06:10.1552794Z   cs80_loaded_control_reference_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_loaded_control_reference_tests.exe
+2026-11-24T08:06:10.4074327Z   cs80_live_envelope_level_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_live_envelope_level_tests.exe
+2026-11-24T08:06:10.5415011Z   cs80_live_envelope_timing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_live_envelope_timing_tests.exe
+2026-11-24T08:06:10.6085072Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:10.7409010Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:10.8511153Z   MemoryPanelPortMapTests.cpp
+2026-11-24T08:06:12.2738271Z   MtsEspClient.cpp
+2026-11-24T08:06:12.8379638Z   MemoryPanelPortsTests.cpp
+2026-11-24T08:06:13.6520596Z   MemoryPanelTests.cpp
+2026-11-24T08:06:13.7140935Z   KeyboardTuningPage.cpp
+2026-11-24T08:06:17.5973912Z   cs80_mallet_preset_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mallet_preset_refinement_tests.exe
+2026-11-24T08:06:18.8288397Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:18.8939701Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:18.9221738Z   cs80_memory_panel_port_map_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_panel_port_map_tests.exe
+2026-11-24T08:06:19.0309036Z   cs80_memory_panel_ports_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_panel_ports_tests.exe
+2026-11-24T08:06:19.0656857Z   MemoryReceiverTruthTests.cpp
+2026-11-24T08:06:19.1144362Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:19.1337895Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:19.3108982Z   MemoryQualificationProbe.cpp
+2026-11-24T08:06:19.8907999Z   MemoryVerifiedDiodeTests.cpp
+2026-11-24T08:06:21.4692613Z   MemorySparseUpdateTests.cpp
+2026-11-24T08:06:26.6862477Z   ModernLayerState.cpp
+2026-11-24T08:06:26.7728875Z   cs80_memory_control_routing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_control_routing_tests.exe
+2026-11-24T08:06:27.2218025Z   cs80_memory_verified_diode_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_verified_diode_tests.exe
+2026-11-24T08:06:27.3613461Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:27.3836971Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:27.4382270Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:27.4748323Z   cs80_memory_panel_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_panel_tests.exe
+2026-11-24T08:06:27.6184679Z   MidiLearnTests.cpp
+2026-11-24T08:06:27.7276789Z   Mn3001PacketTests.cpp
+2026-11-24T08:06:28.5258280Z   ModMatrixTests.cpp
+2026-11-24T08:06:28.6795593Z   cs80_memory_receiver_truth_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_receiver_truth_tests.exe
+2026-11-24T08:06:28.9030470Z   cs80_memory_qualification_probe.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_qualification_probe.exe
+2026-11-24T08:06:28.9142856Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:28.9604299Z   cs80_mn3001_packet_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mn3001_packet_tests.exe
+2026-11-24T08:06:28.9888674Z   cs80_memory_sparse_update_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_memory_sparse_update_tests.exe
+2026-11-24T08:06:29.0717282Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:29.1004558Z   cs80_midi_learn_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_midi_learn_tests.exe
+2026-11-24T08:06:29.2014126Z   ModernFxTests.cpp
+2026-11-24T08:06:29.3879912Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:29.4036242Z   ModernLfoTests.cpp
+2026-11-24T08:06:31.6236191Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:35.6134852Z   ModernPresetRefinementTests.cpp
+2026-11-24T08:06:35.8759823Z   cs80_mod_matrix_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mod_matrix_tests.exe
+2026-11-24T08:06:35.9281482Z   cs80_modern_lfo_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_modern_lfo_tests.exe
+2026-11-24T08:06:36.0142439Z   ModernStateIntegerTests.cpp
+2026-11-24T08:06:36.0797051Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:36.1140400Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:36.2045278Z   cs80_modern_fx_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_modern_fx_tests.exe
+2026-11-24T08:06:36.3484528Z   MpeMasterBendRoutingTests.cpp
+2026-11-24T08:06:37.0001112Z   ModernModulationUi.cpp
+2026-11-24T08:06:38.5873369Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:38.7333869Z   juce_core.cpp
+2026-11-24T08:06:39.1348123Z   MonoMsegRoutingTests.cpp
+2026-11-24T08:06:41.6051787Z   cs80_mpe_master_bend_routing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_master_bend_routing_tests.exe
+2026-11-24T08:06:41.6457132Z   cs80_modern_preset_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_modern_preset_refinement_tests.exe
+2026-11-24T08:06:41.8430846Z   MpeMasterSmoothingTests.cpp
+2026-11-24T08:06:43.3114203Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:43.3922950Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:44.1752292Z   MpeMemberOnsetTests.cpp
+2026-11-24T08:06:44.2517539Z   MpePressureCombinationTests.cpp
+2026-11-24T08:06:44.9020004Z   juce_core_CompilationTime.cpp
+2026-11-24T08:06:45.0022658Z   Generating Code...
+2026-11-24T08:06:47.2850779Z   cs80_mono_mseg_routing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mono_mseg_routing_tests.exe
+2026-11-24T08:06:49.7721332Z   PluginProcessorLibrary.cpp
+2026-11-24T08:06:54.2947769Z   cs80_mpe_master_smoothing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_master_smoothing_tests.exe
+2026-11-24T08:06:55.4352900Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:55.5075607Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:55.5096320Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:55.5437484Z   cs80_mpe_pressure_combination_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_pressure_combination_tests.exe
+2026-11-24T08:06:55.6409149Z   MsegCombinedInteractionTests.cpp
+2026-11-24T08:06:55.6413468Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:06:55.8450637Z   MpeTimbreCombinationTests.cpp
+2026-11-24T08:06:55.9847337Z   MpeReleasedTargetTests.cpp
+2026-11-24T08:06:57.8309924Z   MsegRetriggerRateTests.cpp
+2026-11-24T08:06:58.2873170Z   cs80_mpe_member_onset_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_member_onset_tests.exe
+2026-11-24T08:07:00.2889437Z   cs80_mseg_combined_interaction_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mseg_combined_interaction_tests.exe
+2026-11-24T08:07:00.7721866Z   cs80_modern_state_integer_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_modern_state_integer_tests_artefacts\Release\cs80_modern_state_integer_tests.exe
+2026-11-24T08:07:01.9489543Z   ArtCommon.cpp
+2026-11-24T08:07:02.7582915Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:02.8041824Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:02.8599160Z   cs80_mpe_timbre_combination_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_timbre_combination_tests.exe
+2026-11-24T08:07:02.9141117Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:02.9902276Z   MsegTransportRateTests.cpp
+2026-11-24T08:07:03.0252498Z   MsegTests.cpp
+2026-11-24T08:07:03.1238865Z   MtsEspChannelTests.cpp
+2026-11-24T08:07:03.6160672Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:04.7543418Z   cs80_mseg_retrigger_rate_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mseg_retrigger_rate_tests.exe
+2026-11-24T08:07:04.8513438Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:05.0635347Z   cs80_mpe_released_target_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mpe_released_target_tests.exe
+2026-11-24T08:07:05.1065051Z   MtsEspFallbackTests.cpp
+2026-11-24T08:07:05.2264083Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:05.3067264Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:05.3828034Z   cs80_mseg_transport_rate_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mseg_transport_rate_tests.exe
+2026-11-24T08:07:05.6091221Z   MtsEspNativeTests.cpp
+2026-11-24T08:07:05.9277036Z   MtsEspClient.cpp
+2026-11-24T08:07:05.9350693Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:05.9583778Z   MtsEspIntegrationTests.cpp
+2026-11-24T08:07:06.9075155Z   MtsEspClient.cpp
+2026-11-24T08:07:07.0716582Z   Generating Code...
+2026-11-24T08:07:07.1454662Z   MtsEspClient.cpp
+2026-11-24T08:07:07.7832058Z   Generating Code...
+2026-11-24T08:07:08.2640373Z   cs80_mts_esp_channel_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mts_esp_channel_tests.exe
+2026-11-24T08:07:08.3464585Z   cs80_mts_esp_fallback_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mts_esp_fallback_tests.exe
+2026-11-24T08:07:08.6298559Z   MtsEspWindowsMacroTests.cpp
+2026-11-24T08:07:08.6727004Z   Generating Code...
+2026-11-24T08:07:09.1428895Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:09.1664416Z   cs80_mseg_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mseg_tests.exe
+2026-11-24T08:07:09.3367605Z   MsegStateTextTests.cpp
+2026-11-24T08:07:09.7354317Z   PanelWidgets.cpp
+2026-11-24T08:07:09.8177370Z   cs80_mts_esp_native_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mts_esp_native_tests.exe
+2026-11-24T08:07:10.0034505Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:10.0285124Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:10.1631044Z   NoiseTests.cpp
+2026-11-24T08:07:10.3318687Z   MtsEspClient.cpp
+2026-11-24T08:07:11.3002368Z   Generating Code...
+2026-11-24T08:07:11.3513133Z   Oe2FiltersTests.cpp
+2026-11-24T08:07:12.2787440Z   juce_core.cpp
+2026-11-24T08:07:12.6813778Z   Oe2StereoChorusTests.cpp
+2026-11-24T08:07:15.9064746Z   cs80_mts_esp_windows_macro_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mts_esp_windows_macro_tests.exe
+2026-11-24T08:07:15.9860062Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:15.9904196Z   cs80_noise_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_noise_tests.exe
+2026-11-24T08:07:16.0053527Z   cs80_mts_esp_integration_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_mts_esp_integration_tests.exe
+2026-11-24T08:07:16.1494360Z   OriginalArticulationTests.cpp
+2026-11-24T08:07:16.2055454Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:16.2912349Z   cs80_oe2_stereo_chorus_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_oe2_stereo_chorus_tests.exe
+2026-11-24T08:07:16.3074410Z   cs80_oe2_filters_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_oe2_filters_tests.exe
+2026-11-24T08:07:16.4905557Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:16.5029560Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:16.7185475Z   OscillatorPromotionTests.cpp
+2026-11-24T08:07:18.0322730Z   OutputListeningTests.cpp
+2026-11-24T08:07:18.8574550Z   juce_core_CompilationTime.cpp
+2026-11-24T08:07:19.0488041Z   Generating Code...
+2026-11-24T08:07:20.6605220Z   OutputMeterAuditTests.cpp
+2026-11-24T08:07:22.4487046Z   ChannelRow.cpp
+2026-11-24T08:07:29.7050543Z   cs80_oscillator_promotion_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_oscillator_promotion_tests.exe
+2026-11-24T08:07:29.7256075Z   cs80_output_meter_audit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_meter_audit_tests.exe
+2026-11-24T08:07:29.7380126Z   cs80_original_articulation_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_original_articulation_tests.exe
+2026-11-24T08:07:29.8830926Z   cs80_output_listening_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_listening_tests.exe
+2026-11-24T08:07:29.9230253Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:29.9232939Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:30.5214063Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:30.5453993Z   OutputMeterTests.cpp
+2026-11-24T08:07:30.5716643Z   OutputMeterDisplayTests.cpp
+2026-11-24T08:07:30.7498749Z   cs80_mseg_state_text_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_mseg_state_text_tests_artefacts\Release\cs80_mseg_state_text_tests.exe
+2026-11-24T08:07:31.3158087Z   OutputTapCircuitTests.cpp
+2026-11-24T08:07:31.3422103Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:31.3908505Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:31.4288297Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:31.4645629Z   cs80_output_meter_display_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_meter_display_tests.exe
+2026-11-24T08:07:31.5193750Z   OutputTapIntegrationTests.cpp
+2026-11-24T08:07:31.5712875Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:31.8634993Z   OversamplingTests.cpp
+2026-11-24T08:07:32.1582066Z   PadPolyRefinementTests.cpp
+2026-11-24T08:07:32.3614974Z   OutputTapsTests.cpp
+2026-11-24T08:07:37.0786634Z   CentreRow.cpp
+2026-11-24T08:07:38.6968129Z   cs80_output_meter_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_meter_tests.exe
+2026-11-24T08:07:38.7448198Z   cs80_output_tap_circuit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_tap_circuit_tests.exe
+2026-11-24T08:07:38.7794017Z   cs80_output_taps_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_taps_tests.exe
+2026-11-24T08:07:38.8710102Z   cs80_pad_poly_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pad_poly_refinement_tests.exe
+2026-11-24T08:07:38.9206565Z   cs80_output_tap_integration_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_output_tap_integration_tests.exe
+2026-11-24T08:07:38.9226775Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:38.9587202Z   cs80_oversampling_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_oversampling_tests.exe
+2026-11-24T08:07:38.9811910Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:39.0756495Z   parity_capture.cpp
+2026-11-24T08:07:39.1056077Z   ParityModeTests.cpp
+2026-11-24T08:07:39.1375056Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:39.1880720Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:39.2089733Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:41.6346729Z   PedalReleaseTests.cpp
+2026-11-24T08:07:41.9471195Z   PerformanceControlTests.cpp
+2026-11-24T08:07:44.6322678Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:46.3259317Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:46.3743489Z   cs80_parity_mode_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_parity_mode_tests.exe
+2026-11-24T08:07:46.4837156Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:46.5932481Z   PitchBendRangeTests.cpp
+2026-11-24T08:07:48.2725248Z   PlateReverbRateTests.cpp
+2026-11-24T08:07:48.5630660Z   PolyPressureRoutingTests.cpp
+2026-11-24T08:07:48.6056341Z   PerformanceDeck.cpp
+2026-11-24T08:07:48.6942927Z   cs80_parity_capture.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_parity_capture.exe
+2026-11-24T08:07:49.6263033Z   cs80_pedal_release_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pedal_release_tests.exe
+2026-11-24T08:07:49.6836413Z   ParameterStateChildIndexTests.cpp
+2026-11-24T08:07:50.2229120Z   cs80_performance_control_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_performance_control_tests.exe
+2026-11-24T08:07:51.4321453Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:51.4878927Z   cs80_plate_reverb_rate_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_plate_reverb_rate_tests.exe
+2026-11-24T08:07:51.6587318Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:51.6909735Z   cs80_pitch_bend_range_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pitch_bend_range_tests.exe
+2026-11-24T08:07:51.9418552Z   PraOpticalCellTests.cpp
+2026-11-24T08:07:52.8192797Z   PraWahCircuitTests.cpp
+2026-11-24T08:07:53.0091651Z   juce_data_structures.cpp
+2026-11-24T08:07:53.3495223Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:56.2045724Z   PraWahIntegrationTests.cpp
+2026-11-24T08:07:56.3253998Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:56.4166505Z   cs80_pra_optical_cell_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pra_optical_cell_tests.exe
+2026-11-24T08:07:56.4794666Z   cs80_pra_wah_circuit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pra_wah_circuit_tests.exe
+2026-11-24T08:07:56.4908573Z   juce_events.cpp
+2026-11-24T08:07:56.6637828Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:56.7101116Z   cs80_poly_pressure_routing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_poly_pressure_routing_tests.exe
+2026-11-24T08:07:56.8559376Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:07:56.9491723Z   PraWahTests.cpp
+2026-11-24T08:07:59.1827329Z   MemoryLid.cpp
+2026-11-24T08:07:59.4980827Z   preset_capture.cpp
+2026-11-24T08:08:01.3537078Z   juce_core.cpp
+2026-11-24T08:08:01.4891259Z   PresetCharacterTests.cpp
+2026-11-24T08:08:02.2973366Z   cs80_pra_wah_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pra_wah_tests.exe
+2026-11-24T08:08:04.1290849Z   cs80_pra_wah_integration_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pra_wah_integration_tests.exe
+2026-11-24T08:08:05.2720762Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:06.9024048Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:07.1052204Z   cs80_preset_capture.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_preset_capture.exe
+2026-11-24T08:08:07.1708789Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:07.1888874Z   PresetPrecisionTests.cpp
+2026-11-24T08:08:07.2117519Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:07.4620449Z   PresetPreviewMathTests.cpp
+2026-11-24T08:08:07.6982652Z   juce_core_CompilationTime.cpp
+2026-11-24T08:08:07.7275398Z   Generating Code...
+2026-11-24T08:08:07.8079379Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:10.8445497Z   cs80_preset_character_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_preset_character_tests.exe
+2026-11-24T08:08:11.8568657Z   EditorPreferences.cpp
+2026-11-24T08:08:16.3794523Z   Generating Code...
+2026-11-24T08:08:16.8019361Z   cs80_preset_preview_math_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_preset_preview_math_tests.exe
+2026-11-24T08:08:16.8805579Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:17.6640349Z   PresetVoicingTests.cpp
+2026-11-24T08:08:19.2342153Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:19.2995727Z   cs80_preset_precision_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_preset_precision_tests.exe
+2026-11-24T08:08:20.8879518Z   PresetDisplayNameTests.cpp
+2026-11-24T08:08:23.1861291Z   ProgrammerControlIdentityTests.cpp
+2026-11-24T08:08:24.6588271Z   PumpUntilTests.cpp
+2026-11-24T08:08:25.7161920Z   juce_core.cpp
+2026-11-24T08:08:28.2582051Z   cs80_parameter_state_index_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_parameter_state_index_tests_artefacts\Release\cs80_parameter_state_index_tests.exe
+2026-11-24T08:08:28.4833893Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:28.6200542Z   cs80_preset_voicing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_preset_voicing_tests.exe
+2026-11-24T08:08:28.8697763Z   cs80_programmer_control_identity_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_programmer_control_identity_tests.exe
+2026-11-24T08:08:29.0014386Z   PresetFileValuesTests.cpp
+2026-11-24T08:08:29.0457462Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:33.5441150Z   juce_core.cpp
+2026-11-24T08:08:33.6852901Z   QuietFxRackTests.cpp
+2026-11-24T08:08:34.1059024Z   RandomiseTests.cpp
+2026-11-24T08:08:34.4655506Z   juce_core_CompilationTime.cpp
+2026-11-24T08:08:34.8740882Z   Generating Code...
+2026-11-24T08:08:45.5681347Z   juce_core_CompilationTime.cpp
+2026-11-24T08:08:46.1794611Z   Generating Code...
+2026-11-24T08:08:49.8080973Z   Compiling...
+2026-11-24T08:08:50.0430805Z   StudioToolbar.cpp
+2026-11-24T08:08:50.4029827Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:54.1568375Z   cs80_quiet_fx_rack_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_quiet_fx_rack_tests.exe
+2026-11-24T08:08:55.6575909Z   cs80_pump_until_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_pump_until_tests.exe
+2026-11-24T08:08:57.6557981Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:57.7757934Z   render_cli.cpp
+2026-11-24T08:08:57.8136968Z   ResonanceControlTests.cpp
+2026-11-24T08:08:58.7539006Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:08:58.8025309Z   cs80_randomise_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_randomise_tests.exe
+2026-11-24T08:08:59.1660749Z   cs80_preset_file_values_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_preset_file_values_tests_artefacts\Release\cs80_preset_file_values_tests.exe
+2026-11-24T08:08:59.2007045Z   cs80_preset_display_name_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\cs80_preset_display_name_tests_artefacts\Release\cs80_preset_display_name_tests.exe
+2026-11-24T08:08:59.4926664Z   RingModulatorCircuitTests.cpp
+2026-11-24T08:09:00.2930976Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:00.3155239Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:00.4408762Z   cs80_resonance_control_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_resonance_control_tests.exe
+2026-11-24T08:09:00.5081191Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:00.6968325Z   SixteenVoiceReleaseTests.cpp
+2026-11-24T08:09:00.7750281Z   ScannerOverflowTests.cpp
+2026-11-24T08:09:01.1202700Z   ScannerOrderingTests.cpp
+2026-11-24T08:09:02.9170697Z   StudioDrawers.cpp
+2026-11-24T08:09:08.6651705Z   cs80_render.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_render.exe
+2026-11-24T08:09:08.8008829Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:08.8378466Z   cs80_ring_modulator_circuit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_ring_modulator_circuit_tests.exe
+2026-11-24T08:09:08.8950988Z   cs80_scanner_overflow_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_scanner_overflow_tests.exe
+2026-11-24T08:09:08.9294909Z   SmoothingTests.cpp
+2026-11-24T08:09:09.0401599Z   cs80_sixteen_voice_release_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_sixteen_voice_release_tests.exe
+2026-11-24T08:09:09.0440381Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:09.1001065Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:09.1536462Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:09.1998714Z   cs80_scanner_ordering_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_scanner_ordering_tests.exe
+2026-11-24T08:09:09.2565459Z   source_factory_benchmark.cpp
+2026-11-24T08:09:09.4256011Z   source_factory_audition.cpp
+2026-11-24T08:09:12.0092177Z   SourceFactoryBoundaryTests.cpp
+2026-11-24T08:09:14.4987074Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:15.4963392Z   UndoHistory.cpp
+2026-11-24T08:09:17.3256310Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:17.3861133Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:17.5225524Z   SourceFactoryIntegrationTests.cpp
+2026-11-24T08:09:17.5958637Z   SourcePerformanceAuditTests.cpp
+2026-11-24T08:09:18.4598617Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:18.5287509Z   SourceFactoryToneTests.cpp
+2026-11-24T08:09:21.3820275Z   cs80_smoothing_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_smoothing_tests.exe
+2026-11-24T08:09:23.8622509Z   StudioTour.cpp
+2026-11-24T08:09:24.0543991Z   SourcePerformanceTests.cpp
+2026-11-24T08:09:24.6239889Z   cs80_source_factory_audition.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_factory_audition.exe
+2026-11-24T08:09:24.7325381Z   cs80_source_factory_boundary_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_factory_boundary_tests.exe
+2026-11-24T08:09:24.7393779Z   cs80_source_factory_benchmark.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_factory_benchmark.exe
+2026-11-24T08:09:24.8917694Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:24.8967215Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:24.9532040Z   cs80_source_factory_integration_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_factory_integration_tests.exe
+2026-11-24T08:09:24.9932613Z   cs80_source_performance_audit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_performance_audit_tests.exe
+2026-11-24T08:09:25.1133554Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:25.1413500Z   StereoPraExactTests.cpp
+2026-11-24T08:09:25.1718951Z   StruckBodyDynamicsTests.cpp
+2026-11-24T08:09:25.3080306Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:25.3888205Z   TapeEchoControlCacheTests.cpp
+2026-11-24T08:09:25.6943426Z   cs80_source_factory_tone_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_factory_tone_tests.exe
+2026-11-24T08:09:27.0433778Z   cs80_stereo_pra_exact_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_stereo_pra_exact_tests.exe
+2026-11-24T08:09:27.2794501Z   cs80_struck_body_dynamics_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_struck_body_dynamics_tests.exe
+2026-11-24T08:09:27.3571175Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:27.4337759Z   TapeEchoTimeTests.cpp
+2026-11-24T08:09:27.9495228Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:29.1732319Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:29.1915763Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:29.2245328Z   CoreTests.cpp
+2026-11-24T08:09:29.3370816Z   ToleranceDriftTests.cpp
+2026-11-24T08:09:29.3676767Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:29.3715551Z   TineStrikeDynamicsTests.cpp
+2026-11-24T08:09:29.7803005Z   TouchCircuitTests.cpp
+2026-11-24T08:09:31.9992699Z   ui_snapshot.cpp
+2026-11-24T08:09:33.0846341Z   cs80_source_performance_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_source_performance_tests.exe
+2026-11-24T08:09:33.1271854Z   TruthInputSha256Tests.cpp
+2026-11-24T08:09:38.8092271Z   cs80_tape_echo_control_cache_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tape_echo_control_cache_tests.exe
+2026-11-24T08:09:38.8986357Z   cs80_tape_echo_time_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tape_echo_time_tests.exe
+2026-11-24T08:09:38.9385231Z   cs80_truth_input_sha256_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_truth_input_sha256_tests.exe
+2026-11-24T08:09:38.9460141Z   cs80_touch_circuit_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_touch_circuit_tests.exe
+2026-11-24T08:09:39.0321293Z   cs80_tine_strike_dynamics_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tine_strike_dynamics_tests.exe
+2026-11-24T08:09:39.0441999Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:39.1270255Z   cs80_tolerance_drift_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tolerance_drift_tests.exe
+2026-11-24T08:09:39.1362334Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:39.1771850Z   truth_render.cpp
+2026-11-24T08:09:39.2076366Z   cs80_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tests.exe
+2026-11-24T08:09:39.2508107Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:39.3014905Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:39.4910699Z   TuningFrequencyDomainTests.cpp
+2026-11-24T08:09:39.5798149Z   TuningRobustnessTests.cpp
+2026-11-24T08:09:40.4682274Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:44.5432131Z   TuningMidiTests.cpp
+2026-11-24T08:09:45.0839172Z   cs80_tuning_robustness_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tuning_robustness_tests.exe
+2026-11-24T08:09:45.1057584Z   UnisonDetuneLatchTests.cpp
+2026-11-24T08:09:45.3107557Z   cs80_tuning_frequency_domain_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tuning_frequency_domain_tests.exe
+2026-11-24T08:09:45.5770491Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:45.6154679Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:45.6897120Z   cs80_truth_render.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_truth_render.exe
+2026-11-24T08:09:45.8262828Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:45.9341545Z   vca_reference.cpp
+2026-11-24T08:09:47.8906274Z   UnisonGlideTests.cpp
+2026-11-24T08:09:53.4173096Z   juce_audio_utils.cpp
+2026-11-24T08:09:53.8810639Z   VocalBodyTests.cpp
+2026-11-24T08:09:56.2588067Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:56.4289612Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:56.9660276Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:56.9994616Z   cs80_unison_detune_latch_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_unison_detune_latch_tests.exe
+2026-11-24T08:09:57.0865017Z   VoiceActivityTests.cpp
+2026-11-24T08:09:57.1490290Z   voice_continuity_probe.cpp
+2026-11-24T08:09:57.6050907Z   cs80_vocal_body_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_vocal_body_tests.exe
+2026-11-24T08:09:57.6985667Z   VoiceReleaseTests.cpp
+2026-11-24T08:09:57.7571568Z   cs80_vca_reference.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_vca_reference.exe
+2026-11-24T08:09:58.1300699Z   cs80_unison_glide_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_unison_glide_tests.exe
+2026-11-24T08:09:58.1454071Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:58.3656040Z   cs80_voice_activity_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_voice_activity_tests.exe
+2026-11-24T08:09:58.4550013Z   cs80_tuning_midi_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_tuning_midi_tests.exe
+2026-11-24T08:09:58.5024013Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:09:58.6992115Z   WindStringRefinementTests.cpp
+2026-11-24T08:10:00.0391466Z   WscHeldEndpointTests.cpp
+2026-11-24T08:10:02.8306685Z   cs80_voice_continuity_probe.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_voice_continuity_probe.exe
+2026-11-24T08:10:02.8593362Z   cs80_wsc_held_endpoint_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_wsc_held_endpoint_tests.exe
+2026-11-24T08:10:03.2095011Z   cs80_voice_release_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_voice_release_tests.exe
+2026-11-24T08:10:03.4644501Z   cs80_wind_string_refinement_tests.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\Release\cs80_wind_string_refinement_tests.exe
+2026-11-24T08:10:03.9721779Z   juce_audio_processors.cpp
+2026-11-24T08:10:09.4961090Z   juce_gui_extra.cpp
+2026-11-24T08:10:14.3188201Z   juce_gui_basics.cpp
+2026-11-24T08:10:17.2147436Z D:\a\yamaha-cs80\yamaha-cs80\build\_deps\juce-src\modules\juce_gui_basics\juce_gui_basics.cpp(61): warning : This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [D:\a\yamaha-cs80\yamaha-cs80\build\CS80Snapshots.vcxproj]
+2026-11-24T08:10:25.7581840Z   juce_graphics.cpp
+2026-11-24T08:10:33.7529099Z   juce_graphics_Harfbuzz.cpp
+2026-11-24T08:10:42.5519914Z   juce_events.cpp
+2026-11-24T08:10:45.2642463Z   juce_core.cpp
+2026-11-24T08:10:48.8392228Z   juce_core_CompilationTime.cpp
+2026-11-24T08:10:48.8437308Z   juce_data_structures.cpp
+2026-11-24T08:10:50.9274086Z   juce_audio_processors_headless.cpp
+2026-11-24T08:10:55.1719773Z   juce_audio_processors_headless_ara.cpp
+2026-11-24T08:10:55.1772072Z   juce_audio_processors_headless_lv2_libs.cpp
+2026-11-24T08:10:55.1816503Z   juce_audio_basics.cpp
+2026-11-24T08:10:58.2769702Z   juce_audio_formats.cpp
+2026-11-24T08:11:02.1994540Z   Generating Code...
+2026-11-24T08:12:46.9256348Z   Compiling...
+2026-11-24T08:12:46.9256704Z   juce_audio_devices.cpp
+2026-11-24T08:12:52.7013147Z   juce_dsp.cpp
+2026-11-24T08:12:56.0053187Z   Generating Code...
+2026-11-24T08:13:03.2669811Z   juce_graphics_Sheenbidi.c
+2026-11-24T08:13:04.3348414Z   CS80Snapshots.vcxproj -> D:\a\yamaha-cs80\yamaha-cs80\build\CS80Snapshots_artefacts\Release\CS80Snapshots.exe
+2026-11-24T08:13:04.5052414Z   Building Custom Rule D:/a/yamaha-cs80/yamaha-cs80/CMakeLists.txt
+2026-11-24T08:13:04.8544541Z ##[group]Run ctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit "D:\a\yamaha-cs80\yamaha-cs80/build/ctest-results.xml"
+2026-11-24T08:13:04.8545882Z [36;1mctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit "D:\a\yamaha-cs80\yamaha-cs80/build/ctest-results.xml"[0m
+2026-11-24T08:13:04.8586736Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-24T08:13:04.8587158Z ##[endgroup]
+2026-11-24T08:13:05.5387321Z Internal ctest changing into directory: D:/a/yamaha-cs80/yamaha-cs80/build
+2026-11-24T08:13:05.6416150Z Test project D:/a/yamaha-cs80/yamaha-cs80/build
+2026-11-24T08:13:05.7078712Z         Start   1: cs80_wsc_held_endpoint_tests
+2026-11-24T08:13:05.7271505Z   1/244 Test   #1: cs80_wsc_held_endpoint_tests ..................   Passed    0.02 sec
+2026-11-24T08:13:05.7275387Z         Start   2: cs80_legacy_sub_lfo_oracle_tests
+2026-11-24T08:13:07.5862240Z   2/244 Test   #2: cs80_legacy_sub_lfo_oracle_tests ..............   Passed    1.86 sec
+2026-11-24T08:13:07.5864415Z         Start   3: cs80_ig00156_batch_tests
+2026-11-24T08:13:07.6101420Z   3/244 Test   #3: cs80_ig00156_batch_tests ......................   Passed    0.02 sec
+2026-11-24T08:13:07.6103121Z         Start   4: cs80_filter_batch_engine_tests
+2026-11-24T08:13:16.5512819Z   4/244 Test   #4: cs80_filter_batch_engine_tests ................   Passed    8.94 sec
+2026-11-24T08:13:16.5515023Z         Start   5: cs80_filter_batch_scheduling_tests
+2026-11-24T08:13:19.5027785Z   5/244 Test   #5: cs80_filter_batch_scheduling_tests ............   Passed    2.95 sec
+2026-11-24T08:13:19.5029882Z         Start   6: cs80_ig00151_zero_ei_tests
+2026-11-24T08:13:19.5705699Z   6/244 Test   #6: cs80_ig00151_zero_ei_tests ....................   Passed    0.07 sec
+2026-11-24T08:13:19.5707866Z         Start   7: cs80_event_timeline_tests
+2026-11-24T08:13:19.5803537Z   7/244 Test   #7: cs80_event_timeline_tests .....................   Passed    0.01 sec
+2026-11-24T08:13:19.5805271Z         Start   8: cs80_pump_until_tests
+2026-11-24T08:13:19.5874977Z   8/244 Test   #8: cs80_pump_until_tests .........................   Passed    0.01 sec
+2026-11-24T08:13:19.5876767Z         Start   9: cs80_package_binary_identity_tests
+2026-11-24T08:13:20.7129530Z   9/244 Test   #9: cs80_package_binary_identity_tests ............   Passed    1.12 sec
+2026-11-24T08:13:20.7131815Z         Start  10: cs80_packaging_notice_tests
+2026-11-24T08:13:30.7695200Z  10/244 Test  #10: cs80_packaging_notice_tests ...................   Passed   10.06 sec
+2026-11-24T08:13:30.7697687Z         Start  11: cs80_factory_audition_artifact_tests
+2026-11-24T08:13:33.5836048Z  11/244 Test  #11: cs80_factory_audition_artifact_tests ..........   Passed    2.81 sec
+2026-11-24T08:13:33.5838112Z         Start  12: cs80_ci_juce_provenance_tests
+2026-11-24T08:13:37.5964493Z  12/244 Test  #12: cs80_ci_juce_provenance_tests .................   Passed    4.01 sec
+2026-11-24T08:13:37.5966594Z         Start  13: cs80_pluginval_windows_download_tests
+2026-11-24T08:13:37.8943492Z  13/244 Test  #13: cs80_pluginval_windows_download_tests .........   Passed    0.30 sec
+2026-11-24T08:13:37.8945503Z         Start  14: cs80_pluginval_macos_download_tests
+2026-11-24T08:13:38.1195894Z  14/244 Test  #14: cs80_pluginval_macos_download_tests ...........   Passed    0.22 sec
+2026-11-24T08:13:38.1197854Z         Start  15: cs80_ci_bundle_verification_tests
+2026-11-24T08:13:38.7991768Z  15/244 Test  #15: cs80_ci_bundle_verification_tests .............   Passed    0.68 sec
+2026-11-24T08:13:38.7994095Z         Start  16: cs80_windows_installer_preflight_tests
+2026-11-24T08:13:43.8812638Z  16/244 Test  #16: cs80_windows_installer_preflight_tests ........   Passed    5.08 sec
+2026-11-24T08:13:43.8814724Z         Start  17: cs80_parity_harness_tests
+2026-11-24T08:13:48.2744119Z  17/244 Test  #17: cs80_parity_harness_tests .....................   Passed    4.39 sec
+2026-11-24T08:13:48.2748695Z         Start  18: cs80_continuous_voice_circuit_tests
+2026-11-24T08:13:48.3265681Z  18/244 Test  #18: cs80_continuous_voice_circuit_tests ...........   Passed    0.05 sec
+2026-11-24T08:13:48.3267908Z         Start  19: cs80_continuous_voice_circuit_audit_tests
+2026-11-24T08:13:50.2235244Z  19/244 Test  #19: cs80_continuous_voice_circuit_audit_tests .....   Passed    1.90 sec
+2026-11-24T08:13:50.2237446Z         Start  20: cs80_lfo_scope_preview_tests
+2026-11-24T08:13:50.2348796Z  20/244 Test  #20: cs80_lfo_scope_preview_tests ..................   Passed    0.01 sec
+2026-11-24T08:13:50.2350689Z         Start  21: cs80_preset_preview_math_tests
+2026-11-24T08:13:50.2429946Z  21/244 Test  #21: cs80_preset_preview_math_tests ................   Passed    0.01 sec
+2026-11-24T08:13:50.2431715Z         Start  22: cs80_output_meter_display_tests
+2026-11-24T08:13:50.2499139Z  22/244 Test  #22: cs80_output_meter_display_tests ...............   Passed    0.01 sec
+2026-11-24T08:13:50.2500896Z         Start  23: cs80_voice_activity_tests
+2026-11-24T08:13:50.2620446Z  23/244 Test  #23: cs80_voice_activity_tests .....................   Passed    0.01 sec
+2026-11-24T08:13:50.2622306Z         Start  24: cs80_output_meter_tests
+2026-11-24T08:13:50.2688013Z  24/244 Test  #24: cs80_output_meter_tests .......................   Passed    0.01 sec
+2026-11-24T08:13:50.2689730Z         Start  25: cs80_output_meter_audit_tests
+2026-11-24T08:13:50.2869505Z  25/244 Test  #25: cs80_output_meter_audit_tests .................   Passed    0.02 sec
+2026-11-24T08:13:50.2871559Z         Start  26: cs80_keyboard_pressure_audit_tests
+2026-11-24T08:13:50.2990223Z  26/244 Test  #26: cs80_keyboard_pressure_audit_tests ............   Passed    0.01 sec
+2026-11-24T08:13:50.2992262Z         Start  27: cs80_captured_keyboard_events_tests
+2026-11-24T08:13:50.3063968Z  27/244 Test  #27: cs80_captured_keyboard_events_tests ...........   Passed    0.01 sec
+2026-11-24T08:13:50.3065676Z         Start  28: cs80_keyboard_event_queue_tests
+2026-11-24T08:13:50.3168590Z  28/244 Test  #28: cs80_keyboard_event_queue_tests ...............   Passed    0.01 sec
+2026-11-24T08:13:50.3170408Z         Start  29: cs80_parity_mode_tests
+2026-11-24T08:13:55.6198516Z  29/244 Test  #29: cs80_parity_mode_tests ........................   Passed    5.30 sec
+2026-11-24T08:13:55.6200633Z         Start  30: cs80_source_performance_tests
+2026-11-24T08:14:12.0240110Z  30/244 Test  #30: cs80_source_performance_tests .................   Passed   16.40 sec
+2026-11-24T08:14:12.0242890Z         Start  31: cs80_source_performance_audit_tests
+2026-11-24T08:14:15.5239887Z  31/244 Test  #31: cs80_source_performance_audit_tests ...........   Passed    3.50 sec
+2026-11-24T08:14:15.5242690Z         Start  32: cs80_envelope_precision_tests
+2026-11-24T08:15:29.6272801Z  32/244 Test  #32: cs80_envelope_precision_tests .................   Passed   74.10 sec
+2026-11-24T08:15:29.6275270Z         Start  33: cs80_filter_default_history_tests
+2026-11-24T08:15:29.6979142Z  33/244 Test  #33: cs80_filter_default_history_tests .............   Passed    0.07 sec
+2026-11-24T08:15:29.6981715Z         Start  34: cs80_filter_default_history_missing_tests
+2026-11-24T08:15:29.7191762Z  34/244 Test  #34: cs80_filter_default_history_missing_tests .....   Passed    0.02 sec
+2026-11-24T08:15:29.7193673Z         Start  35: cs80_filter_default_history_truncated_tests
+2026-11-24T08:15:29.7386715Z  35/244 Test  #35: cs80_filter_default_history_truncated_tests ...   Passed    0.02 sec
+2026-11-24T08:15:29.7388909Z         Start  36: cs80_filter_idle_fallback_tests
+2026-11-24T08:15:29.7927358Z  36/244 Test  #36: cs80_filter_idle_fallback_tests ...............   Passed    0.05 sec
+2026-11-24T08:15:29.7929288Z         Start  37: cs80_filter_idle_fallback_missing_tests
+2026-11-24T08:15:29.8130044Z  37/244 Test  #37: cs80_filter_idle_fallback_missing_tests .......   Passed    0.02 sec
+2026-11-24T08:15:29.8131941Z         Start  38: cs80_filter_idle_fallback_truncated_tests
+2026-11-24T08:15:29.8325593Z  38/244 Test  #38: cs80_filter_idle_fallback_truncated_tests .....   Passed    0.02 sec
+2026-11-24T08:15:29.8326538Z         Start  39: cs80_filter_batch_cap_tests
+2026-11-24T08:15:29.8603217Z  39/244 Test  #39: cs80_filter_batch_cap_tests ...................***Skipped   0.03 sec
+2026-11-24T08:15:29.8605044Z         Start  40: cs80_filter_batch_cap_missing_tests
+2026-11-24T08:15:29.8803566Z  40/244 Test  #40: cs80_filter_batch_cap_missing_tests ...........   Passed    0.02 sec
+2026-11-24T08:15:29.8805729Z         Start  41: cs80_filter_batch_cap_truncated_tests
+2026-11-24T08:15:29.9001950Z  41/244 Test  #41: cs80_filter_batch_cap_truncated_tests .........   Passed    0.02 sec
+2026-11-24T08:15:29.9004093Z         Start  42: cs80_ig00156_cache_tests
+2026-11-24T08:15:30.0705375Z  42/244 Test  #42: cs80_ig00156_cache_tests ......................   Passed    0.17 sec
+2026-11-24T08:15:30.0707919Z         Start  43: cs80_ig00156_filter_tests
+2026-11-24T08:15:30.6547676Z  43/244 Test  #43: cs80_ig00156_filter_tests .....................   Passed    0.58 sec
+2026-11-24T08:15:30.6549944Z         Start  44: cs80_envelope_rc_model_tests
+2026-11-24T08:15:31.0089815Z  44/244 Test  #44: cs80_envelope_rc_model_tests ..................   Passed    0.35 sec
+2026-11-24T08:15:31.0091934Z         Start  45: cs80_live_envelope_level_tests
+2026-11-24T08:15:37.4777695Z  45/244 Test  #45: cs80_live_envelope_level_tests ................   Passed    6.47 sec
+2026-11-24T08:15:37.4779864Z         Start  46: cs80_live_envelope_timing_tests
+2026-11-24T08:15:40.2157940Z  46/244 Test  #46: cs80_live_envelope_timing_tests ...............   Passed    2.74 sec
+2026-11-24T08:15:40.2159933Z         Start  47: cs80_active_tail_continuity_tests
+2026-11-24T08:15:56.8143535Z  47/244 Test  #47: cs80_active_tail_continuity_tests .............   Passed   16.60 sec
+2026-11-24T08:15:56.8145524Z         Start  48: cs80_core_tests
+2026-11-24T08:16:11.2318028Z  48/244 Test  #48: cs80_core_tests ...............................   Passed   14.42 sec
+2026-11-24T08:16:11.2320338Z         Start  49: cs80_voice_release_tests
+2026-11-24T08:16:12.8287987Z  49/244 Test  #49: cs80_voice_release_tests ......................   Passed    1.60 sec
+2026-11-24T08:16:12.8290210Z         Start  50: cs80_sixteen_voice_release_tests
+2026-11-24T08:16:16.6216717Z  50/244 Test  #50: cs80_sixteen_voice_release_tests ..............   Passed    3.79 sec
+2026-11-24T08:16:16.6218746Z         Start  51: cs80_unison_glide_tests
+2026-11-24T08:16:27.9393444Z  51/244 Test  #51: cs80_unison_glide_tests .......................   Passed   11.32 sec
+2026-11-24T08:16:27.9396720Z         Start  52: cs80_unison_detune_latch_tests
+2026-11-24T08:16:28.2253238Z  52/244 Test  #52: cs80_unison_detune_latch_tests ................   Passed    0.29 sec
+2026-11-24T08:16:28.2255374Z         Start  53: cs80_pedal_release_tests
+2026-11-24T08:16:29.7772888Z  53/244 Test  #53: cs80_pedal_release_tests ......................   Passed    1.55 sec
+2026-11-24T08:16:29.7775528Z         Start  54: cs80_high_resolution_velocity_tests
+2026-11-24T08:16:29.7862696Z  54/244 Test  #54: cs80_high_resolution_velocity_tests ...........   Passed    0.01 sec
+2026-11-24T08:16:29.7864450Z         Start  55: cs80_controller_reset_tests
+2026-11-24T08:16:40.3954168Z  55/244 Test  #55: cs80_controller_reset_tests ...................   Passed   10.61 sec
+2026-11-24T08:16:40.3956241Z         Start  56: cs80_experimental_oscillator_tests
+2026-11-24T08:16:52.2285601Z  56/244 Test  #56: cs80_experimental_oscillator_tests ............   Passed   11.83 sec
+2026-11-24T08:16:52.2288012Z         Start  57: cs80_source_factory_integration_tests
+2026-11-24T08:21:49.8345515Z  57/244 Test  #57: cs80_source_factory_integration_tests .........   Passed  297.60 sec
+2026-11-24T08:21:49.8347576Z         Start  58: cs80_source_factory_tone_tests
+2026-11-24T08:21:49.9331347Z  58/244 Test  #58: cs80_source_factory_tone_tests ................   Passed    0.10 sec
+2026-11-24T08:21:49.9333292Z         Start  59: cs80_hardware_control_tests
+2026-11-24T08:21:49.9424428Z  59/244 Test  #59: cs80_hardware_control_tests ...................   Passed    0.01 sec
+2026-11-24T08:21:49.9425824Z         Start  60: cs80_ig00156_reference_tests
+2026-11-24T08:21:49.9993184Z  60/244 Test  #60: cs80_ig00156_reference_tests ..................   Passed    0.06 sec
+2026-11-24T08:21:49.9995046Z         Start  61: cs80_keyboard_contour_reference_tests
+2026-11-24T08:21:50.0109653Z  61/244 Test  #61: cs80_keyboard_contour_reference_tests .........   Passed    0.01 sec
+2026-11-24T08:21:50.0111342Z         Start  62: cs80_loaded_control_reference_tests
+2026-11-24T08:21:50.0190789Z  62/244 Test  #62: cs80_loaded_control_reference_tests ...........   Passed    0.01 sec
+2026-11-24T08:21:50.0192381Z         Start  63: cs80_loaded_control_rank_tests
+2026-11-24T08:21:50.0321548Z  63/244 Test  #63: cs80_loaded_control_rank_tests ................   Passed    0.01 sec
+2026-11-24T08:21:50.0323569Z         Start  64: cs80_loaded_control_transient_tests
+2026-11-24T08:21:50.0578396Z  64/244 Test  #64: cs80_loaded_control_transient_tests ...........   Passed    0.03 sec
+2026-11-24T08:21:50.0580538Z         Start  65: cs80_output_tap_integration_tests
+2026-11-24T08:21:52.2395684Z  65/244 Test  #65: cs80_output_tap_integration_tests .............   Passed    2.18 sec
+2026-11-24T08:21:52.2397988Z         Start  66: cs80_output_tap_circuit_tests
+2026-11-24T08:21:54.5817260Z  66/244 Test  #66: cs80_output_tap_circuit_tests .................   Passed    2.34 sec
+2026-11-24T08:21:54.5819379Z         Start  67: cs80_output_taps_tests
+2026-11-24T08:21:54.5917210Z  67/244 Test  #67: cs80_output_taps_tests ........................   Passed    0.01 sec
+2026-11-24T08:21:54.5918955Z         Start  68: cs80_level_control_tests
+2026-11-24T08:21:54.6191574Z  68/244 Test  #68: cs80_level_control_tests ......................   Passed    0.03 sec
+2026-11-24T08:21:54.6193542Z         Start  69: cs80_resonance_control_tests
+2026-11-24T08:21:54.6347853Z  69/244 Test  #69: cs80_resonance_control_tests ..................   Passed    0.02 sec
+2026-11-24T08:21:54.6349587Z         Start  70: cs80_oe2_filters_tests
+2026-11-24T08:21:54.6471783Z  70/244 Test  #70: cs80_oe2_filters_tests ........................   Passed    0.01 sec
+2026-11-24T08:21:54.6473450Z         Start  71: cs80_stereo_pra_exact_tests
+2026-11-24T08:21:54.6543505Z  71/244 Test  #71: cs80_stereo_pra_exact_tests ...................***Skipped   0.01 sec
+2026-11-24T08:21:54.6545177Z         Start  72: cs80_pra_wah_integration_tests
+2026-11-24T08:21:56.6271504Z  72/244 Test  #72: cs80_pra_wah_integration_tests ................   Passed    1.97 sec
+2026-11-24T08:21:56.6273666Z         Start  73: cs80_pra_wah_circuit_tests
+2026-11-24T08:21:58.0847897Z  73/244 Test  #73: cs80_pra_wah_circuit_tests ....................   Passed    1.46 sec
+2026-11-24T08:21:58.0849756Z         Start  74: cs80_pra_wah_tests
+2026-11-24T08:21:58.1197848Z  74/244 Test  #74: cs80_pra_wah_tests ............................   Passed    0.03 sec
+2026-11-24T08:21:58.1199794Z         Start  75: cs80_bbd_chorus_tests
+2026-11-24T08:21:59.1993896Z  75/244 Test  #75: cs80_bbd_chorus_tests .........................   Passed    1.08 sec
+2026-11-24T08:21:59.1995617Z         Start  76: cs80_mn3001_packet_tests
+2026-11-24T08:21:59.2707360Z  76/244 Test  #76: cs80_mn3001_packet_tests ......................   Passed    0.07 sec
+2026-11-24T08:21:59.2709102Z         Start  77: cs80_performance_control_tests
+2026-11-24T08:22:13.6189857Z  77/244 Test  #77: cs80_performance_control_tests ................   Passed   14.35 sec
+2026-11-24T08:22:13.6191999Z         Start  78: cs80_validator_diagnostic_selection_tests
+2026-11-24T08:22:18.8629758Z  78/244 Test  #78: cs80_validator_diagnostic_selection_tests .....   Passed    5.24 sec
+2026-11-24T08:22:18.8631989Z         Start  79: cs80_ig00156_nodal_tests
+2026-11-24T08:22:52.9600235Z  79/244 Test  #79: cs80_ig00156_nodal_tests ......................   Passed   34.10 sec
+2026-11-24T08:22:52.9603102Z         Start  80: cs80_ig00156_top_octave_tests
+2026-11-24T08:22:54.6518351Z  80/244 Test  #80: cs80_ig00156_top_octave_tests .................   Passed    1.69 sec
+2026-11-24T08:22:54.6521079Z         Start  81: cs80_oscillator_promotion_tests
+2026-11-24T08:23:01.4496083Z  81/244 Test  #81: cs80_oscillator_promotion_tests ...............   Passed    6.80 sec
+2026-11-24T08:23:01.4498060Z         Start  82: cs80_ig00151_vca_tests
+2026-11-24T08:23:03.4909917Z  82/244 Test  #82: cs80_ig00151_vca_tests ........................   Passed    2.04 sec
+2026-11-24T08:23:03.4912014Z         Start  83: cs80_tolerance_drift_tests
+2026-11-24T08:23:14.1807161Z  83/244 Test  #83: cs80_tolerance_drift_tests ....................   Passed   10.69 sec
+2026-11-24T08:23:14.1809290Z         Start  84: cs80_fx_loudness_core_tests
+2026-11-24T08:23:14.3413615Z  84/244 Test  #84: cs80_fx_loudness_core_tests ...................   Passed    0.16 sec
+2026-11-24T08:23:14.3415931Z         Start  85: cs80_fx_loudness_gate_tests
+2026-11-24T08:23:14.3796375Z  85/244 Test  #85: cs80_fx_loudness_gate_tests ...................   Passed    0.04 sec
+2026-11-24T08:23:14.3798163Z         Start  86: cs80_arp_rate_lifecycle_tests
+2026-11-24T08:23:14.7603647Z  86/244 Test  #86: cs80_arp_rate_lifecycle_tests .................   Passed    0.38 sec
+2026-11-24T08:23:14.7605376Z         Start  87: cs80_arp_pedal_lifecycle_tests
+2026-11-24T08:23:15.0983402Z  87/244 Test  #87: cs80_arp_pedal_lifecycle_tests ................   Passed    0.34 sec
+2026-11-24T08:23:15.0985321Z         Start  88: cs80_arp_repeat_lifecycle_tests
+2026-11-24T08:23:15.2345220Z  88/244 Test  #88: cs80_arp_repeat_lifecycle_tests ...............   Passed    0.14 sec
+2026-11-24T08:23:15.2348609Z         Start  89: cs80_quiet_fx_rack_tests
+2026-11-24T08:23:17.2154080Z  89/244 Test  #89: cs80_quiet_fx_rack_tests ......................   Passed    1.98 sec
+2026-11-24T08:23:17.2156104Z         Start  90: cs80_fx_tape_lifecycle_tests
+2026-11-24T08:23:17.3099264Z  90/244 Test  #90: cs80_fx_tape_lifecycle_tests ..................   Passed    0.09 sec
+2026-11-24T08:23:17.3101263Z         Start  91: cs80_external_interpolator_tests
+2026-11-24T08:23:20.5491584Z  91/244 Test  #91: cs80_external_interpolator_tests ..............   Passed    3.24 sec
+2026-11-24T08:23:20.5493616Z         Start  92: cs80_oversampling_tests
+2026-11-24T08:23:22.9694073Z  92/244 Test  #92: cs80_oversampling_tests .......................   Passed    2.42 sec
+2026-11-24T08:23:22.9696145Z         Start  93: cs80_smoothing_tests
+2026-11-24T08:23:27.3473479Z  93/244 Test  #93: cs80_smoothing_tests ..........................   Passed    4.38 sec
+2026-11-24T08:23:27.3475620Z         Start  94: cs80_pitch_bend_range_tests
+2026-11-24T08:23:29.7592634Z  94/244 Test  #94: cs80_pitch_bend_range_tests ...................   Passed    2.41 sec
+2026-11-24T08:23:29.7594512Z         Start  95: cs80_mpe_member_onset_tests
+2026-11-24T08:23:33.6998633Z  95/244 Test  #95: cs80_mpe_member_onset_tests ...................   Passed    3.94 sec
+2026-11-24T08:23:33.7001009Z         Start  96: cs80_mpe_timbre_combination_tests
+2026-11-24T08:23:34.8030213Z  96/244 Test  #96: cs80_mpe_timbre_combination_tests .............   Passed    1.10 sec
+2026-11-24T08:23:34.8032861Z         Start  97: cs80_mpe_pressure_combination_tests
+2026-11-24T08:23:35.4010164Z  97/244 Test  #97: cs80_mpe_pressure_combination_tests ...........   Passed    0.60 sec
+2026-11-24T08:23:35.4012403Z         Start  98: cs80_mpe_released_target_tests
+2026-11-24T08:23:39.6026283Z  98/244 Test  #98: cs80_mpe_released_target_tests ................   Passed    4.20 sec
+2026-11-24T08:23:39.6028255Z         Start  99: cs80_mpe_master_smoothing_tests
+2026-11-24T08:23:40.1140348Z  99/244 Test  #99: cs80_mpe_master_smoothing_tests ...............   Passed    0.51 sec
+2026-11-24T08:23:40.1142151Z         Start 100: cs80_output_listening_tests
+2026-11-24T08:23:42.2118613Z 100/244 Test #100: cs80_output_listening_tests ...................   Passed    2.10 sec
+2026-11-24T08:23:42.2121595Z         Start 101: cs80_noise_tests
+2026-11-24T08:23:47.4146690Z 101/244 Test #101: cs80_noise_tests ..............................   Passed    5.20 sec
+2026-11-24T08:23:47.4148890Z         Start 102: cs80_poly_pressure_routing_tests
+2026-11-24T08:23:48.7449280Z 102/244 Test #102: cs80_poly_pressure_routing_tests ..............   Passed    1.33 sec
+2026-11-24T08:23:48.7451743Z         Start 103: cs80_host_automation_curve_tests
+2026-11-24T08:23:49.4490597Z 103/244 Test #103: cs80_host_automation_curve_tests ..............   Passed    0.70 sec
+2026-11-24T08:23:49.4492607Z         Start 104: cs80_free_running_voice_tests
+2026-11-24T08:23:56.3721945Z 104/244 Test #104: cs80_free_running_voice_tests .................   Passed    6.92 sec
+2026-11-24T08:23:56.3723903Z         Start 105: cs80_kas_scanner_tests
+2026-11-24T08:24:00.2579594Z 105/244 Test #105: cs80_kas_scanner_tests ........................   Passed    3.89 sec
+2026-11-24T08:24:00.2581727Z         Start 106: cs80_scanner_ordering_tests
+2026-11-24T08:24:01.5594913Z 106/244 Test #106: cs80_scanner_ordering_tests ...................   Passed    1.30 sec
+2026-11-24T08:24:01.5596891Z         Start 107: cs80_scanner_overflow_tests
+2026-11-24T08:24:03.2424244Z 107/244 Test #107: cs80_scanner_overflow_tests ...................   Passed    1.68 sec
+2026-11-24T08:24:03.2426615Z         Start 108: cs80_keyboard_contour_key_map_tests
+2026-11-24T08:24:20.1153072Z 108/244 Test #108: cs80_keyboard_contour_key_map_tests ...........   Passed   16.87 sec
+2026-11-24T08:24:20.1155097Z         Start 109: cs80_touch_circuit_tests
+2026-11-24T08:24:25.3876089Z 109/244 Test #109: cs80_touch_circuit_tests ......................   Passed    5.27 sec
+2026-11-24T08:24:25.3878137Z         Start 110: cs80_mpe_master_bend_routing_tests
+2026-11-24T08:24:30.8691993Z 110/244 Test #110: cs80_mpe_master_bend_routing_tests ............   Passed    5.48 sec
+2026-11-24T08:24:30.8694280Z         Start 111: cs80_tuning_midi_tests
+2026-11-24T08:24:53.1631647Z 111/244 Test #111: cs80_tuning_midi_tests ........................   Passed   22.29 sec
+2026-11-24T08:24:53.1633841Z         Start 112: cs80_tuning_frequency_domain_tests
+2026-11-24T08:24:53.1733550Z 112/244 Test #112: cs80_tuning_frequency_domain_tests ............   Passed    0.01 sec
+2026-11-24T08:24:53.1735362Z         Start 113: cs80_tuning_robustness_tests
+2026-11-24T08:24:53.1835290Z 113/244 Test #113: cs80_tuning_robustness_tests ..................   Passed    0.01 sec
+2026-11-24T08:24:53.1837236Z         Start 114: cs80_mts_esp_native_tests
+2026-11-24T08:24:53.1914490Z 114/244 Test #114: cs80_mts_esp_native_tests .....................   Passed    0.01 sec
+2026-11-24T08:24:53.1916059Z         Start 115: cs80_mts_esp_integration_tests
+2026-11-24T08:24:53.6014119Z 115/244 Test #115: cs80_mts_esp_integration_tests ................   Passed    0.41 sec
+2026-11-24T08:24:53.6015944Z         Start 116: cs80_mts_esp_channel_tests
+2026-11-24T08:24:53.6189303Z 116/244 Test #116: cs80_mts_esp_channel_tests ....................   Passed    0.02 sec
+2026-11-24T08:24:53.6190814Z         Start 117: cs80_mts_esp_fallback_tests
+2026-11-24T08:24:53.6267966Z 117/244 Test #117: cs80_mts_esp_fallback_tests ...................   Passed    0.01 sec
+2026-11-24T08:24:53.6269571Z         Start 118: cs80_mts_esp_windows_macro_tests
+2026-11-24T08:24:53.6339921Z 118/244 Test #118: cs80_mts_esp_windows_macro_tests ..............   Passed    0.01 sec
+2026-11-24T08:24:53.6341561Z         Start 119: cs80_ig00150_sub_tests
+2026-11-24T08:25:07.1760643Z 119/244 Test #119: cs80_ig00150_sub_tests ........................   Passed   13.54 sec
+2026-11-24T08:25:07.1763408Z         Start 120: cs80_ring_modulator_circuit_tests
+2026-11-24T08:25:11.4865984Z 120/244 Test #120: cs80_ring_modulator_circuit_tests .............   Passed    4.31 sec
+2026-11-24T08:25:11.4868086Z         Start 121: cs80_oe2_stereo_chorus_tests
+2026-11-24T08:25:12.3304712Z 121/244 Test #121: cs80_oe2_stereo_chorus_tests ..................   Passed    0.84 sec
+2026-11-24T08:25:12.3306860Z         Start 122: cs80_pra_optical_cell_tests
+2026-11-24T08:25:18.8791923Z 122/244 Test #122: cs80_pra_optical_cell_tests ...................   Passed    6.55 sec
+2026-11-24T08:25:18.8794040Z         Start 123: cs80_lfo_random_switching_tests
+2026-11-24T08:25:18.9686168Z 123/244 Test #123: cs80_lfo_random_switching_tests ...............   Passed    0.09 sec
+2026-11-24T08:25:18.9688071Z         Start 124: cs80_lfo_random_variable_rate_tests
+2026-11-24T08:25:19.0468321Z 124/244 Test #124: cs80_lfo_random_variable_rate_tests ...........   Passed    0.08 sec
+2026-11-24T08:25:19.0470706Z         Start 125: cs80_modern_lfo_tests
+2026-11-24T08:25:21.1272318Z 125/244 Test #125: cs80_modern_lfo_tests .........................   Passed    2.08 sec
+2026-11-24T08:25:21.1274658Z         Start 126: cs80_mseg_tests
+2026-11-24T08:25:23.7561383Z 126/244 Test #126: cs80_mseg_tests ...............................   Passed    2.63 sec
+2026-11-24T08:25:23.7563462Z         Start 127: cs80_mseg_transport_rate_tests
+2026-11-24T08:25:23.9562852Z 127/244 Test #127: cs80_mseg_transport_rate_tests ................   Passed    0.20 sec
+2026-11-24T08:25:23.9564750Z         Start 128: cs80_mono_mseg_routing_tests
+2026-11-24T08:25:24.6160418Z 128/244 Test #128: cs80_mono_mseg_routing_tests ..................   Passed    0.66 sec
+2026-11-24T08:25:24.6162184Z         Start 129: cs80_mseg_retrigger_rate_tests
+2026-11-24T08:25:25.4833118Z 129/244 Test #129: cs80_mseg_retrigger_rate_tests ................   Passed    0.87 sec
+2026-11-24T08:25:25.4835080Z         Start 130: cs80_mseg_combined_interaction_tests
+2026-11-24T08:25:25.5475022Z 130/244 Test #130: cs80_mseg_combined_interaction_tests ..........   Passed    0.06 sec
+2026-11-24T08:25:25.5477229Z         Start 131: cs80_mod_matrix_tests
+2026-11-24T08:26:04.9329082Z 131/244 Test #131: cs80_mod_matrix_tests .........................   Passed   39.38 sec
+2026-11-24T08:26:04.9331230Z         Start 132: cs80_modern_fx_tests
+2026-11-24T08:27:12.7315320Z 132/244 Test #132: cs80_modern_fx_tests ..........................   Passed   67.80 sec
+2026-11-24T08:27:12.7317475Z         Start 133: cs80_delay_line_tests
+2026-11-24T08:27:12.7818678Z 133/244 Test #133: cs80_delay_line_tests .........................   Passed    0.05 sec
+2026-11-24T08:27:12.7821512Z         Start 134: cs80_plate_reverb_rate_tests
+2026-11-24T08:27:16.6121773Z 134/244 Test #134: cs80_plate_reverb_rate_tests ..................   Passed    3.83 sec
+2026-11-24T08:27:16.6123926Z         Start 135: cs80_tape_echo_time_tests
+2026-11-24T08:27:19.8632234Z 135/244 Test #135: cs80_tape_echo_time_tests .....................   Passed    3.25 sec
+2026-11-24T08:27:19.8634233Z         Start 136: cs80_drive_control_cache_tests
+2026-11-24T08:27:20.4138588Z 136/244 Test #136: cs80_drive_control_cache_tests ................   Passed    0.55 sec
+2026-11-24T08:27:20.4140613Z         Start 137: cs80_ensemble_rate_cache_tests
+2026-11-24T08:27:26.5747087Z 137/244 Test #137: cs80_ensemble_rate_cache_tests ................   Passed    6.16 sec
+2026-11-24T08:27:26.5749589Z         Start 138: cs80_tape_echo_control_cache_tests
+2026-11-24T08:27:35.7805850Z 138/244 Test #138: cs80_tape_echo_control_cache_tests ............   Passed    9.21 sec
+2026-11-24T08:27:35.7808151Z         Start 139: cs80_instrument_body_tests
+2026-11-24T08:27:41.8403574Z 139/244 Test #139: cs80_instrument_body_tests ....................   Passed    6.06 sec
+2026-11-24T08:27:41.8405509Z         Start 140: cs80_tine_strike_dynamics_tests
+2026-11-24T08:27:42.1340828Z 140/244 Test #140: cs80_tine_strike_dynamics_tests ...............   Passed    0.29 sec
+2026-11-24T08:27:42.1343104Z         Start 141: cs80_struck_body_dynamics_tests
+2026-11-24T08:27:45.4842775Z 141/244 Test #141: cs80_struck_body_dynamics_tests ...............   Passed    3.35 sec
+2026-11-24T08:27:45.4845312Z         Start 142: cs80_instrument_body_variant_tests
+2026-11-24T08:27:46.9583890Z 142/244 Test #142: cs80_instrument_body_variant_tests ............   Passed    1.47 sec
+2026-11-24T08:27:46.9587299Z         Start 143: cs80_vocal_body_tests
+2026-11-24T08:27:53.8804874Z 143/244 Test #143: cs80_vocal_body_tests .........................   Passed    6.92 sec
+2026-11-24T08:27:53.8807243Z         Start 144: cs80_bowed_body_formant_tests
+2026-11-24T08:27:57.7432899Z 144/244 Test #144: cs80_bowed_body_formant_tests .................   Passed    3.86 sec
+2026-11-24T08:27:57.7434862Z         Start 145: cs80_instrument_body_engine_tests
+2026-11-24T08:28:09.9565728Z 145/244 Test #145: cs80_instrument_body_engine_tests .............   Passed   12.21 sec
+2026-11-24T08:28:09.9568076Z         Start 146: cs80_body_articulation_engine_tests
+2026-11-24T08:28:15.0937232Z 146/244 Test #146: cs80_body_articulation_engine_tests ...........   Passed    5.14 sec
+2026-11-24T08:28:15.0939238Z         Start 147: cs80_original_articulation_tests
+2026-11-24T08:28:18.0403269Z 147/244 Test #147: cs80_original_articulation_tests ..............   Passed    2.95 sec
+2026-11-24T08:28:18.0406091Z         Start 148: cs80_keyboard_response_tests
+2026-11-24T08:29:07.6867560Z 148/244 Test #148: cs80_keyboard_response_tests ..................   Passed   49.64 sec
+2026-11-24T08:29:07.6869559Z         Start 149: cs80_mallet_preset_refinement_tests
+2026-11-24T08:29:20.8506557Z 149/244 Test #149: cs80_mallet_preset_refinement_tests ...........   Passed   13.16 sec
+2026-11-24T08:29:20.8509281Z         Start 150: cs80_bass_plucked_refinement_tests
+2026-11-24T08:29:39.9457998Z 150/244 Test #150: cs80_bass_plucked_refinement_tests ............   Passed   19.09 sec
+2026-11-24T08:29:39.9460209Z         Start 151: cs80_brass_organ_refinement_tests
+2026-11-24T08:30:39.6709785Z 151/244 Test #151: cs80_brass_organ_refinement_tests .............   Passed   59.72 sec
+2026-11-24T08:30:39.6711794Z         Start 152: cs80_wind_string_refinement_tests
+2026-11-24T08:31:56.2111754Z 152/244 Test #152: cs80_wind_string_refinement_tests .............   Passed   76.54 sec
+2026-11-24T08:31:56.2113972Z         Start 153: cs80_pad_poly_refinement_tests
+2026-11-24T08:33:50.7880741Z 153/244 Test #153: cs80_pad_poly_refinement_tests ................   Passed  114.57 sec
+2026-11-24T08:33:50.7883804Z         Start 154: cs80_fx_refinement_tests
+2026-11-24T08:34:06.5504399Z 154/244 Test #154: cs80_fx_refinement_tests ......................   Passed   15.76 sec
+2026-11-24T08:34:06.5507194Z         Start 155: cs80_modern_preset_refinement_tests
+2026-11-24T08:34:56.4802472Z 155/244 Test #155: cs80_modern_preset_refinement_tests ...........   Passed   49.93 sec
+2026-11-24T08:34:56.4804740Z         Start 156: cs80_lead_refinement_tests
+2026-11-24T08:35:42.3275576Z 156/244 Test #156: cs80_lead_refinement_tests ....................   Passed   45.85 sec
+2026-11-24T08:35:42.3277809Z         Start 157: cs80_preset_response_coverage_tests
+2026-11-24T08:35:43.3936399Z 157/244 Test #157: cs80_preset_response_coverage_tests ...........   Passed    1.07 sec
+2026-11-24T08:35:43.3940173Z         Start 158: cs80_library_audit_tests
+2026-11-24T08:44:12.4464652Z 158/244 Test #158: cs80_library_audit_tests ......................   Passed  509.04 sec
+2026-11-24T08:44:12.4467133Z         Start 159: cs80_preset_voicing_tests
+2026-11-24T08:44:30.1995592Z 159/244 Test #159: cs80_preset_voicing_tests .....................   Passed   17.75 sec
+2026-11-24T08:44:30.1997690Z         Start 160: cs80_preset_character_tests
+2026-11-24T08:44:37.1292706Z 160/244 Test #160: cs80_preset_character_tests ...................   Passed    6.93 sec
+2026-11-24T08:44:37.1294729Z         Start 161: cs80_preset_precision_tests
+2026-11-24T08:45:24.5917195Z 161/244 Test #161: cs80_preset_precision_tests ...................   Passed   47.46 sec
+2026-11-24T08:45:24.5919555Z         Start 162: cs80_preset_capture_tests
+2026-11-24T08:45:28.6188039Z 162/244 Test #162: cs80_preset_capture_tests .....................   Passed    4.03 sec
+2026-11-24T08:45:28.6190324Z         Start 163: cs80_randomise_tests
+2026-11-24T08:46:33.8270464Z 163/244 Test #163: cs80_randomise_tests ..........................   Passed   65.21 sec
+2026-11-24T08:46:33.8272157Z         Start 164: cs80_source_factory_boundary_tests
+2026-11-24T08:46:34.3853079Z 164/244 Test #164: cs80_source_factory_boundary_tests ............   Passed    0.56 sec
+2026-11-24T08:46:34.3855301Z         Start 165: cs80_memory_panel_tests
+2026-11-24T08:46:35.1796980Z 165/244 Test #165: cs80_memory_panel_tests .......................   Passed    0.79 sec
+2026-11-24T08:46:35.1801207Z         Start 166: cs80_memory_panel_ports_tests
+2026-11-24T08:46:50.7198099Z 166/244 Test #166: cs80_memory_panel_ports_tests .................   Passed   15.54 sec
+2026-11-24T08:46:50.7200163Z         Start 167: cs80_memory_panel_port_map_tests
+2026-11-24T08:46:52.3246108Z 167/244 Test #167: cs80_memory_panel_port_map_tests ..............   Passed    1.60 sec
+2026-11-24T08:46:52.3248088Z         Start 168: cs80_memory_control_routing_tests
+2026-11-24T08:46:53.0894202Z 168/244 Test #168: cs80_memory_control_routing_tests .............   Passed    0.76 sec
+2026-11-24T08:46:53.0896194Z         Start 169: cs80_memory_receiver_truth_tests
+2026-11-24T08:46:55.1004387Z 169/244 Test #169: cs80_memory_receiver_truth_tests ..............   Passed    2.01 sec
+2026-11-24T08:46:55.1006460Z         Start 170: cs80_memory_qualification_probe_self_tests
+2026-11-24T08:46:55.1090637Z 170/244 Test #170: cs80_memory_qualification_probe_self_tests ....   Passed    0.01 sec
+2026-11-24T08:46:55.1092422Z         Start 171: cs80_memory_verified_diode_tests
+2026-11-24T08:47:08.6932925Z 171/244 Test #171: cs80_memory_verified_diode_tests ..............   Passed   13.58 sec
+2026-11-24T08:47:08.6935090Z         Start 172: cs80_memory_centered_log_rational
+2026-11-24T08:47:09.1664593Z 172/244 Test #172: cs80_memory_centered_log_rational .............   Passed    0.47 sec
+2026-11-24T08:47:09.1666572Z         Start 173: cs80_memory_interval_extrema
+2026-11-24T08:47:09.5690380Z 173/244 Test #173: cs80_memory_interval_extrema ..................   Passed    0.40 sec
+2026-11-24T08:47:09.5692469Z         Start 174: cs80_memory_sparse_update_tests
+2026-11-24T08:47:31.2816569Z 174/244 Test #174: cs80_memory_sparse_update_tests ...............   Passed   21.71 sec
+2026-11-24T08:47:31.2818724Z         Start 175: cs80_programmer_control_identity_tests
+2026-11-24T08:47:31.2899962Z 175/244 Test #175: cs80_programmer_control_identity_tests ........   Passed    0.01 sec
+2026-11-24T08:47:31.2901587Z         Start 176: cs80_fast_math_tests
+2026-11-24T08:47:31.3333303Z 176/244 Test #176: cs80_fast_math_tests ..........................   Passed    0.04 sec
+2026-11-24T08:47:31.3335128Z         Start 177: cs80_evidence_register_tests
+2026-11-24T08:47:31.3422889Z 177/244 Test #177: cs80_evidence_register_tests ..................   Passed    0.01 sec
+2026-11-24T08:47:31.3424519Z         Start 178: cs80_midi_learn_tests
+2026-11-24T08:47:31.4624375Z 178/244 Test #178: cs80_midi_learn_tests .........................   Passed    0.12 sec
+2026-11-24T08:47:31.4626476Z         Start 179: cs80_render_cli_tests
+2026-11-24T08:47:31.8010459Z 179/244 Test #179: cs80_render_cli_tests .........................   Passed    0.34 sec
+2026-11-24T08:47:31.8012258Z         Start 180: cs80_callback_cpu_measurement_tests
+2026-11-24T08:47:31.8092723Z 180/244 Test #180: cs80_callback_cpu_measurement_tests ...........   Passed    0.01 sec
+2026-11-24T08:47:31.8094709Z         Start 181: cs80_callback_cpu_benchmark_tests
+2026-11-24T08:47:51.6643670Z 181/244 Test #181: cs80_callback_cpu_benchmark_tests .............   Passed   19.85 sec
+2026-11-24T08:47:51.6645409Z         Start 182: cs80_benchmark_preflight_tests
+2026-11-24T08:47:51.8573134Z 182/244 Test #182: cs80_benchmark_preflight_tests ................   Passed    0.19 sec
+2026-11-24T08:47:51.8575772Z         Start 183: cs80_parity_capture_tests
+2026-11-24T08:47:56.8837747Z 183/244 Test #183: cs80_parity_capture_tests .....................   Passed    5.03 sec
+2026-11-24T08:47:56.8840042Z         Start 184: cs80_dsp_probe_tests
+2026-11-24T08:47:58.9256593Z 184/244 Test #184: cs80_dsp_probe_tests ..........................   Passed    2.04 sec
+2026-11-24T08:47:58.9257839Z         Start 185: cs80_modern_state_integer_tests
+2026-11-24T08:47:58.9341968Z 185/244 Test #185: cs80_modern_state_integer_tests ...............   Passed    0.01 sec
+2026-11-24T08:47:58.9343822Z         Start 186: cs80_preset_display_name_tests
+2026-11-24T08:47:58.9420333Z 186/244 Test #186: cs80_preset_display_name_tests ................   Passed    0.01 sec
+2026-11-24T08:47:58.9421973Z         Start 187: cs80_preset_file_values_tests
+2026-11-24T08:47:58.9564109Z 187/244 Test #187: cs80_preset_file_values_tests .................   Passed    0.01 sec
+2026-11-24T08:47:58.9565906Z         Start 188: cs80_mseg_state_text_tests
+2026-11-24T08:47:59.0269979Z 188/244 Test #188: cs80_mseg_state_text_tests ....................   Passed    0.07 sec
+2026-11-24T08:47:59.0271931Z         Start 189: cs80_parameter_state_index_tests
+2026-11-24T08:48:01.3769554Z 189/244 Test #189: cs80_parameter_state_index_tests ..............   Passed    2.35 sec
+2026-11-24T08:48:01.3771591Z         Start 190: cs80_state_mirror_bridge_tests
+2026-11-24T08:48:01.5225662Z 190/244 Test #190: cs80_state_mirror_bridge_tests ................   Passed    0.14 sec
+2026-11-24T08:48:01.5227192Z         Start 191: cs80_panel_golden_tests
+2026-11-24T08:48:04.4946974Z 191/244 Test #191: cs80_panel_golden_tests .......................   Passed    2.97 sec
+2026-11-24T08:48:04.4949044Z         Start 192: cs80_circuit_policy_host_tests
+2026-11-24T08:48:04.6526439Z 192/244 Test #192: cs80_circuit_policy_host_tests ................   Passed    0.16 sec
+2026-11-24T08:48:04.6528444Z         Start 193: cs80_circuit_source_host_tests
+2026-11-24T08:48:15.3795111Z 193/244 Test #193: cs80_circuit_source_host_tests ................   Passed   10.73 sec
+2026-11-24T08:48:15.3797706Z         Start 194: cs80_preset_revert_tests
+2026-11-24T08:48:17.6584284Z 194/244 Test #194: cs80_preset_revert_tests ......................   Passed    2.28 sec
+2026-11-24T08:48:17.6586203Z         Start 195: cs80_modern_recall_host_tests
+2026-11-24T08:48:27.1411155Z 195/244 Test #195: cs80_modern_recall_host_tests .................   Passed    9.48 sec
+2026-11-24T08:48:27.1413019Z         Start 196: cs80_preset_file_recall_tests
+2026-11-24T08:48:28.3964464Z 196/244 Test #196: cs80_preset_file_recall_tests .................   Passed    1.25 sec
+2026-11-24T08:48:28.3966142Z         Start 197: cs80_preset_xml_tests
+2026-11-24T08:48:28.5781754Z 197/244 Test #197: cs80_preset_xml_tests .........................   Passed    0.18 sec
+2026-11-24T08:48:28.5783994Z         Start 198: cs80_preset_load_tests
+2026-11-24T08:48:29.7963675Z 198/244 Test #198: cs80_preset_load_tests ........................   Passed    1.22 sec
+2026-11-24T08:48:29.7965667Z         Start 199: cs80_preset_save_storage_tests
+2026-11-24T08:48:29.8961353Z 199/244 Test #199: cs80_preset_save_storage_tests ................   Passed    0.10 sec
+2026-11-24T08:48:29.8963208Z         Start 200: cs80_preset_identity_tests
+2026-11-24T08:48:30.2027317Z 200/244 Test #200: cs80_preset_identity_tests ....................   Passed    0.31 sec
+2026-11-24T08:48:30.2029482Z         Start 201: cs80_preset_refresh_tests
+2026-11-24T08:48:30.6324184Z 201/244 Test #201: cs80_preset_refresh_tests .....................   Passed    0.43 sec
+2026-11-24T08:48:30.6326812Z         Start 202: cs80_preset_search_tests
+2026-11-24T08:48:30.9206516Z 202/244 Test #202: cs80_preset_search_tests ......................   Passed    0.29 sec
+2026-11-24T08:48:30.9208868Z         Start 203: cs80_preset_preferences_tests
+2026-11-24T08:48:31.6108792Z 203/244 Test #203: cs80_preset_preferences_tests .................   Passed    0.69 sec
+2026-11-24T08:48:31.6110706Z         Start 204: cs80_preset_click_tests
+2026-11-24T08:48:31.7406079Z 204/244 Test #204: cs80_preset_click_tests .......................   Passed    0.13 sec
+2026-11-24T08:48:31.7407859Z         Start 205: cs80_undo_replay_gesture_tests
+2026-11-24T08:48:32.6186333Z 205/244 Test #205: cs80_undo_replay_gesture_tests ................   Passed    0.88 sec
+2026-11-24T08:48:32.6188191Z         Start 206: cs80_hardware_source_history_tests
+2026-11-24T08:48:33.6254270Z 206/244 Test #206: cs80_hardware_source_history_tests ............   Passed    1.01 sec
+2026-11-24T08:48:33.6255968Z         Start 207: cs80_patch_history_tests
+2026-11-24T08:48:33.9275311Z 207/244 Test #207: cs80_patch_history_tests ......................   Passed    0.30 sec
+2026-11-24T08:48:33.9277691Z         Start 208: cs80_mpe_released_target_host_tests
+2026-11-24T08:48:47.9367115Z 208/244 Test #208: cs80_mpe_released_target_host_tests ...........   Passed   14.01 sec
+2026-11-24T08:48:47.9370102Z         Start 209: cs80_mpe_member_onset_host_tests
+2026-11-24T08:48:53.5635439Z 209/244 Test #209: cs80_mpe_member_onset_host_tests ..............   Passed    5.63 sec
+2026-11-24T08:48:53.5637396Z         Start 210: cs80_sixteen_voice_release_host_tests
+2026-11-24T08:48:54.3363850Z 210/244 Test #210: cs80_sixteen_voice_release_host_tests .........   Passed    0.77 sec
+2026-11-24T08:48:54.3366266Z         Start 211: cs80_ring_curve_gesture_tests
+2026-11-24T08:48:55.7555012Z 211/244 Test #211: cs80_ring_curve_gesture_tests .................   Passed    1.42 sec
+2026-11-24T08:48:55.7556932Z         Start 212: cs80_mod_matrix_route_actions_tests
+2026-11-24T08:48:55.9380337Z 212/244 Test #212: cs80_mod_matrix_route_actions_tests ...........   Passed    0.18 sec
+2026-11-24T08:48:55.9382650Z         Start 213: cs80_mod_matrix_routing_ui_tests
+2026-11-24T08:48:56.0255711Z 213/244 Test #213: cs80_mod_matrix_routing_ui_tests ..............   Passed    0.09 sec
+2026-11-24T08:48:56.0257770Z         Start 214: cs80_mseg_point_values_tests
+2026-11-24T08:48:56.4339197Z 214/244 Test #214: cs80_mseg_point_values_tests ..................   Passed    0.41 sec
+2026-11-24T08:48:56.4341654Z         Start 215: cs80_mseg_shape_copy_tests
+2026-11-24T08:48:56.5384538Z 215/244 Test #215: cs80_mseg_shape_copy_tests ....................   Passed    0.10 sec
+2026-11-24T08:48:56.5386344Z         Start 216: cs80_mseg_editor_lifecycle_tests
+2026-11-24T08:48:56.8029624Z 216/244 Test #216: cs80_mseg_editor_lifecycle_tests ..............   Passed    0.26 sec
+2026-11-24T08:48:56.8031651Z         Start 217: cs80_modern_slider_gesture_tests
+2026-11-24T08:48:56.8592477Z 217/244 Test #217: cs80_modern_slider_gesture_tests ..............   Passed    0.06 sec
+2026-11-24T08:48:56.8594764Z         Start 218: cs80_qwerty_note_ownership_tests
+2026-11-24T08:48:58.6263679Z 218/244 Test #218: cs80_qwerty_note_ownership_tests ..............   Passed    1.77 sec
+2026-11-24T08:48:58.6265769Z         Start 219: cs80_toolbar_menu_lifetime_tests
+2026-11-24T08:48:58.6760674Z 219/244 Test #219: cs80_toolbar_menu_lifetime_tests ..............   Passed    0.05 sec
+2026-11-24T08:48:58.6762648Z         Start 220: cs80_snapshot_cli_tests
+2026-11-24T08:48:58.8344159Z 220/244 Test #220: cs80_snapshot_cli_tests .......................   Passed    0.16 sec
+2026-11-24T08:48:58.8345861Z         Start 221: cs80_mts_dormant_engine_host_tests
+2026-11-24T08:49:00.2302667Z 221/244 Test #221: cs80_mts_dormant_engine_host_tests ............   Passed    1.40 sec
+2026-11-24T08:49:00.2304992Z         Start 222: cs80_controller_reset_host_tests
+2026-11-24T08:49:03.5240445Z 222/244 Test #222: cs80_controller_reset_host_tests ..............   Passed    3.29 sec
+2026-11-24T08:49:03.5242527Z         Start 223: cs80_voice_activity_host_tests
+2026-11-24T08:49:03.7540106Z 223/244 Test #223: cs80_voice_activity_host_tests ................   Passed    0.23 sec
+2026-11-24T08:49:03.7542261Z         Start 224: cs80_voice_activity_ui_tests
+2026-11-24T08:49:04.9570073Z 224/244 Test #224: cs80_voice_activity_ui_tests ..................   Passed    1.20 sec
+2026-11-24T08:49:04.9572110Z         Start 225: cs80_keyboard_handoff_host_tests
+2026-11-24T08:49:05.7742913Z 225/244 Test #225: cs80_keyboard_handoff_host_tests ..............   Passed    0.82 sec
+2026-11-24T08:49:05.7745144Z         Start 226: cs80_switch_context_tests
+2026-11-24T08:49:06.9270151Z 226/244 Test #226: cs80_switch_context_tests .....................   Passed    1.15 sec
+2026-11-24T08:49:06.9272606Z         Start 227: cs80_studio_lfo_context_tests
+2026-11-24T08:49:10.2692407Z 227/244 Test #227: cs80_studio_lfo_context_tests .................   Passed    3.34 sec
+2026-11-24T08:49:10.2694543Z         Start 228: cs80_studio_switch_context_tests
+2026-11-24T08:49:10.7347942Z 228/244 Test #228: cs80_studio_switch_context_tests ..............   Passed    0.46 sec
+2026-11-24T08:49:10.7350156Z         Start 229: cs80_parameter_combo_context_tests
+2026-11-24T08:49:10.8693791Z 229/244 Test #229: cs80_parameter_combo_context_tests ............   Passed    0.13 sec
+2026-11-24T08:49:10.8695906Z         Start 230: cs80_context_menu_keyboard_tests
+2026-11-24T08:49:10.9707417Z 230/244 Test #230: cs80_context_menu_keyboard_tests ..............   Passed    0.10 sec
+2026-11-24T08:49:10.9709503Z         Start 231: cs80_typed_value_unit_tests
+2026-11-24T08:49:11.0361694Z 231/244 Test #231: cs80_typed_value_unit_tests ...................   Passed    0.06 sec
+2026-11-24T08:49:11.0363632Z         Start 232: cs80_keyboard_tuning_ui_tests
+2026-11-24T08:49:11.1537660Z 232/244 Test #232: cs80_keyboard_tuning_ui_tests .................   Passed    0.12 sec
+2026-11-24T08:49:11.1540388Z         Start 233: cs80_transient_control_tests
+2026-11-24T08:49:11.6993097Z 233/244 Test #233: cs80_transient_control_tests ..................   Passed    0.54 sec
+2026-11-24T08:49:11.6994905Z         Start 234: cs80_performance_wheel_keyboard_tests
+2026-11-24T08:49:12.0654746Z 234/244 Test #234: cs80_performance_wheel_keyboard_tests .........   Passed    0.37 sec
+2026-11-24T08:49:12.0657327Z         Start 235: cs80_ui_smoke
+2026-11-24T08:51:16.4267126Z 235/244 Test #235: cs80_ui_smoke .................................   Passed  124.36 sec
+2026-11-24T08:51:16.4269293Z         Start 236: cs80_teardown_probe
+2026-11-24T08:51:17.0578068Z 236/244 Test #236: cs80_teardown_probe ...........................   Passed    0.63 sec
+2026-11-24T08:51:17.0580985Z         Start 237: cs80_host_wrapper_platform_tests
+2026-11-24T08:51:24.7533546Z 237/244 Test #237: cs80_host_wrapper_platform_tests ..............   Passed    7.69 sec
+2026-11-24T08:51:24.7535738Z         Start 238: cs80_main_vst3_only_automation_tests
+2026-11-24T08:51:35.5638718Z 238/244 Test #238: cs80_main_vst3_only_automation_tests ..........   Passed   10.81 sec
+2026-11-24T08:51:35.5640640Z         Start 239: cs80_truth_render_tests
+2026-11-24T08:51:38.1463085Z 239/244 Test #239: cs80_truth_render_tests .......................   Passed    2.58 sec
+2026-11-24T08:51:38.1464633Z         Start 240: cs80_ig00156_step_diagnostics_tests
+2026-11-24T08:51:38.1584264Z 240/244 Test #240: cs80_ig00156_step_diagnostics_tests ...........   Passed    0.01 sec
+2026-11-24T08:51:38.1585830Z         Start 241: cs80_truth_input_sha256_tests
+2026-11-24T08:51:38.1711194Z 241/244 Test #241: cs80_truth_input_sha256_tests .................   Passed    0.01 sec
+2026-11-24T08:51:38.1712733Z         Start 242: cs80_vca_reference_tests
+2026-11-24T08:51:38.9155724Z 242/244 Test #242: cs80_vca_reference_tests ......................   Passed    0.74 sec
+2026-11-24T08:51:38.9157339Z         Start 243: cs80_decimal_conversion_tests
+2026-11-24T08:51:38.9516592Z 243/244 Test #243: cs80_decimal_conversion_tests .................   Passed    0.04 sec
+2026-11-24T08:51:38.9518278Z         Start 244: cs80_float_wav_tests
+2026-11-24T08:51:39.4161215Z 244/244 Test #244: cs80_float_wav_tests ..........................   Passed    0.46 sec
+2026-11-24T08:51:39.4177274Z 
+2026-11-24T08:51:39.4177620Z 100% tests passed, 0 tests failed out of 244
+2026-11-24T08:51:39.4177963Z 
+2026-11-24T08:51:39.4178145Z Label Time Summary:
+2026-11-24T08:51:39.4178828Z packaging    =  18.01 sec*proc (4 tests)
+2026-11-24T08:51:39.4179156Z 
+2026-11-24T08:51:39.4179304Z Total Test time (real) = 2313.73 sec
+2026-11-24T08:51:39.4179584Z 
+2026-11-24T08:51:39.4180206Z The following tests did not run:
+2026-11-24T08:51:39.4180891Z 	 39 - cs80_filter_batch_cap_tests (Skipped)
+2026-11-24T08:51:39.4182465Z 	 71 - cs80_stereo_pra_exact_tests (Skipped)
+2026-11-24T08:51:39.5749678Z ##[group]Run actions/upload-artifact@v5
+2026-11-24T08:51:39.5750140Z with:
+2026-11-24T08:51:39.5750432Z   name: cs80-windows-vst3
+2026-11-24T08:51:39.5750828Z   path: build/CS80Reference_artefacts/Release/VST3
+2026-11-24T08:51:39.5751226Z   if-no-files-found: error
+2026-11-24T08:51:39.5751555Z   compression-level: 6
+2026-11-24T08:51:39.5751843Z   overwrite: false
+2026-11-24T08:51:39.5752133Z   include-hidden-files: false
+2026-11-24T08:51:39.5752446Z ##[endgroup]
+2026-11-24T08:51:39.7517922Z (node:7084) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T08:51:39.7518748Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T08:51:39.7612686Z With the provided path, there will be 4 files uploaded
+2026-11-24T08:51:39.7617663Z Artifact name is valid!
+2026-11-24T08:51:39.7619298Z Root directory input is valid!
+2026-11-24T08:51:40.0919540Z Beginning upload of artifact content to blob storage
+2026-11-24T08:51:40.3759275Z (node:7084) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-24T08:51:41.0203457Z Uploaded bytes 3198055
+2026-11-24T08:51:41.0703412Z Finished uploading artifact content to blob storage!
+2026-11-24T08:51:41.0705078Z SHA256 digest of uploaded artifact zip is bd3c04ba2c168eade18c5103ce8eb2a13eb80a6da06fe9b2e4bae52067f70fff
+2026-11-24T08:51:41.0707150Z Finalizing artifact upload
+2026-11-24T08:51:41.4422224Z Artifact cs80-windows-vst3.zip successfully finalized. Artifact ID 14902949639
+2026-11-24T08:51:41.4423223Z Artifact cs80-windows-vst3 has been successfully uploaded! Final size is 3198055 bytes. Artifact ID is 14902949639
+2026-11-24T08:51:41.4432338Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801/artifacts/14902949639
+2026-11-24T08:51:41.4738032Z ##[group]Run python scripts/package-ci-artifacts.py --self-test
+2026-11-24T08:51:41.4738741Z [36;1mpython scripts/package-ci-artifacts.py --self-test[0m
+2026-11-24T08:51:41.4739442Z [36;1mpython scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages[0m
+2026-11-24T08:51:41.4779825Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-24T08:51:41.4780262Z ##[endgroup]
+2026-11-24T08:51:43.1862977Z Packaging self-test passed: 34 fixture/rejection checks; synthetic artifacts only.
+2026-11-24T08:51:43.1863966Z Native symlink/chmod fixtures run on Unix CI; Windows packages reject all symlinks.
+2026-11-24T08:51:44.6118840Z {
+2026-11-24T08:51:44.6119330Z   "archive": "packages\\cs80-reference-windows-x86_64-c76ad288e02f.zip",
+2026-11-24T08:51:44.6119940Z   "sha256": "c6566e21954aaaa33f9252a7c9b332f8c2edd3a0915bfee547f9927cc72acb06",
+2026-11-24T08:51:44.6120439Z   "formats": [
+2026-11-24T08:51:44.6120685Z     "VST3",
+2026-11-24T08:51:44.6121060Z     "Standalone"
+2026-11-24T08:51:44.6121305Z   ],
+2026-11-24T08:51:44.6121545Z   "architecture": "x86_64"
+2026-11-24T08:51:44.6121821Z }
+2026-11-24T08:51:44.7525308Z ##[group]Run actions/upload-artifact@v5
+2026-11-24T08:51:44.7525679Z with:
+2026-11-24T08:51:44.7525899Z   name: cs80-windows-install-bundle
+2026-11-24T08:51:44.7526186Z   path: packages/
+2026-11-24T08:51:44.7526408Z   if-no-files-found: error
+2026-11-24T08:51:44.7526645Z   compression-level: 0
+2026-11-24T08:51:44.7526860Z   overwrite: false
+2026-11-24T08:51:44.7527092Z   include-hidden-files: false
+2026-11-24T08:51:44.7527338Z ##[endgroup]
+2026-11-24T08:51:44.9268012Z (node:7060) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T08:51:44.9269203Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T08:51:44.9332435Z With the provided path, there will be 3 files uploaded
+2026-11-24T08:51:44.9337118Z Artifact name is valid!
+2026-11-24T08:51:44.9339756Z Root directory input is valid!
+2026-11-24T08:51:45.2638372Z Beginning upload of artifact content to blob storage
+2026-11-24T08:51:45.3156846Z (node:7060) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-24T08:51:46.0638410Z Uploaded bytes 6387912
+2026-11-24T08:51:46.1201261Z Finished uploading artifact content to blob storage!
+2026-11-24T08:51:46.1202807Z SHA256 digest of uploaded artifact zip is 0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f
+2026-11-24T08:51:46.1205138Z Finalizing artifact upload
+2026-11-24T08:51:46.4752819Z Artifact cs80-windows-install-bundle.zip successfully finalized. Artifact ID 14903717361
+2026-11-24T08:51:46.4753845Z Artifact cs80-windows-install-bundle has been successfully uploaded! Final size is 6387912 bytes. Artifact ID is 14903717361
+2026-11-24T08:51:46.4762515Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801/artifacts/14903717361
+2026-11-24T08:51:46.5041869Z ##[group]Run actions/upload-artifact@v5
+2026-11-24T08:51:46.5042214Z with:
+2026-11-24T08:51:46.5042421Z   name: cs80-windows-test-evidence
+2026-11-24T08:51:46.5043057Z   path: build/Testing/Temporary/LastTest.log
+build/ctest-results.xml
+build/ci-juce-provenance.txt
+
+2026-11-24T08:51:46.5043573Z   if-no-files-found: warn
+2026-11-24T08:51:46.5043807Z   compression-level: 6
+2026-11-24T08:51:46.5044050Z   overwrite: false
+2026-11-24T08:51:46.5044256Z   include-hidden-files: false
+2026-11-24T08:51:46.5044497Z ##[endgroup]
+2026-11-24T08:51:46.6770750Z (node:7432) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-24T08:51:46.6771509Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-24T08:51:46.6836103Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-24T08:51:46.6840025Z The least common ancestor is D:\a\yamaha-cs80\yamaha-cs80\build. This will be the root directory of the artifact
+2026-11-24T08:51:46.6840790Z With the provided path, there will be 3 files uploaded
+2026-11-24T08:51:46.6845379Z Artifact name is valid!
+2026-11-24T08:51:46.6847346Z Root directory input is valid!
+2026-11-24T08:51:46.9858199Z Beginning upload of artifact content to blob storage
+2026-11-24T08:51:47.0175214Z (node:7432) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-24T08:51:47.2695381Z Uploaded bytes 77576
+2026-11-24T08:51:47.3197470Z Finished uploading artifact content to blob storage!
+2026-11-24T08:51:47.3198846Z SHA256 digest of uploaded artifact zip is 711a6b245060a73637dcc94461df2033282d3bf57fb154592f13bdf63135da4f
+2026-11-24T08:51:47.3201540Z Finalizing artifact upload
+2026-11-24T08:51:47.7378925Z Artifact cs80-windows-test-evidence.zip successfully finalized. Artifact ID 14904251198
+2026-11-24T08:51:47.7379943Z Artifact cs80-windows-test-evidence has been successfully uploaded! Final size is 77576 bytes. Artifact ID is 14904251198
+2026-11-24T08:51:47.7388909Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801/artifacts/14904251198
+2026-11-24T08:51:47.7707893Z Post job cleanup.
+2026-11-24T08:51:47.9284647Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-24T08:51:47.9558284Z git version 2.56.1.windows.1
+2026-11-24T08:51:47.9615740Z Temporarily overriding HOME='D:\a\_temp\5deaae02-a783-4c30-aeea-19cbdc9c98e9' before making global git config changes
+2026-11-24T08:51:47.9616961Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-24T08:51:47.9626992Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-11-24T08:51:47.9934634Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-24T08:51:48.0246243Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-24T08:51:48.4888490Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-24T08:51:48.5162879Z http.https://github.com/.extraheader
+2026-11-24T08:51:48.5197992Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-24T08:51:48.5500218Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-24T08:51:49.0195178Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-24T08:51:49.0486781Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-24T08:51:49.5372378Z Cleaning up orphan processes
+2026-11-24T08:51:49.5920367Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

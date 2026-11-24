@@ -1,0 +1,78 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "sources": [
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168644,
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "bytes": 40920,
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 69309,
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/InstrumentBodyMaterials.h",
+      "bytes": 1620,
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "bytes": 26057,
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "bytes": 23340,
+      "sha256": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+      "matches_source": true
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "bytes": 19059,
+      "sha256": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+      "matches_source": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a38/lifecycle.cpp",
+      "bytes": 6669,
+      "sha256": "f0fd365f9b40651bb4b984297a925344d16a79f4ab367b5632f3b5fec282db70"
+    },
+    {
+      "path": "build-preset/libcs80_core.a",
+      "bytes": 1735386,
+      "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583"
+    },
+    {
+      "path": "/workspace/scratch/b9c11dd92abc/a38-lifecycle",
+      "bytes": 1122272,
+      "sha256": "686569f6d03485fdc2b6066ddb7581361dbd7caeaa361fef940d66c6432cfed5"
+    }
+  ],
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "build_command": "c++ -std=c++20 -O2 -Isrc docs/preset-evidence/2026.11.6/verification/a38/lifecycle.cpp build-preset/libcs80_core.a -o /workspace/scratch/b9c11dd92abc/a38-lifecycle"
+}

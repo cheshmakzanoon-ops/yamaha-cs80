@@ -1,0 +1,16 @@
+FAIL: Tubular Bells: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Tubular Bells overlap_release 6.750 excess_release 6.750 expression_release 6.750 panic_drain_seconds 0.005458333 pipeline_rms 0.013617062019 settled_rms 0.000113200745779
+RESULT Gong overlap_release 8.750 excess_release 9.000 expression_release 9.000 panic_drain_seconds 0.005458333 pipeline_rms 0.0201760251857 settled_rms 4.60827193247e-05
+FAIL: Temple Bell: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Temple Bell overlap_release 8.250 excess_release 8.500 expression_release 8.250 panic_drain_seconds 0.005458333 pipeline_rms 0.0223898721991 settled_rms 0.000106289329567
+RESULT Agogo overlap_release 0.500 excess_release 0.750 expression_release 0.750 panic_drain_seconds 0.005458333 pipeline_rms 0.00690811716927 settled_rms 7.19375597439e-05
+FAIL: Music Box: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Music Box overlap_release 2.750 excess_release 3.000 expression_release 2.750 panic_drain_seconds 0.005458333 pipeline_rms 0.0129888448164 settled_rms 0.000143421847508
+RESULT Banjo overlap_release 0.250 excess_release 0.250 expression_release 0.250 panic_drain_seconds 0.005458333 pipeline_rms 0.00622476862564 settled_rms 9.59212744012e-05
+FAIL: Koto: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Koto overlap_release 1.250 excess_release 1.250 expression_release 1.250 panic_drain_seconds 0.005458333 pipeline_rms 0.00942760822547 settled_rms 0.000102881126389
+FAIL: Harp: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Harp overlap_release 3.750 excess_release 3.750 expression_release 3.750 panic_drain_seconds 0.005458333 pipeline_rms 0.021078475226 settled_rms 0.000180726805362
+FAIL: Kalimba: panic residual after pipeline drain is below -80 dBFS RMS
+RESULT Kalimba overlap_release 1.750 excess_release 1.750 expression_release 1.750 panic_drain_seconds 0.005458333 pipeline_rms 0.0209942656027 settled_rms 0.000187418554343
+Lifecycle: 1629 checks, 6 failures; 120.019 seconds; peak 0.233249992132

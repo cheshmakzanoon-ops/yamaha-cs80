@@ -1,0 +1,13 @@
+The first inspection invocation exited 1 at the original CTest summary check:
+ValueError: Original CTest summary binding
+
+The prepared inspector expected the older exact console wording:
+100% tests passed, 0 tests failed out of 266
+
+The original c76 log instead contains:
+2026-11-24T08:36:05.7604040Z 100% tests passed out of 266
+
+The successful original Test API step and separately parsed complete JUnit/LastTest
+records still show 264 passed, 2 formal skips, zero failed, disabled or unknown.
+This is a verifier-format rejection, not a native-test failure. Only the exact
+console-format check is corrected; those independent result requirements remain.

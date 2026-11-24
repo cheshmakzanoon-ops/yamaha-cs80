@@ -1,0 +1,222 @@
+src/core/Dsp.h:418:    // time constant. Without this, a 200 ms release would still be audible a
+scripts/test-pluginval-macos-download.py:31:    def __init__(self, data=DATA, *, status=200, content_type="application/octet-stream",
+scripts/test-pluginval-macos-download.py:191:                                "http_status": 200 if outcome == 0 else 403 if outcome == 12 else 504}), "")
+src/core/Engine.cpp:904:        global.ringSpeed = std::min(global.ringSpeed, 200.0f);
+scripts/analyze_dsp.py:225:    for name,color in [(7,"#59d4b5"),(40,"#7fafff"),(200,"#f0be62")]:
+src/core/Params.h:513:static_assert(P_body1Variant == 200 && P_body2Variant == 201, "body variants preserve all 200 published core indexes");
+src/core/OriginalSubOscillator.h:62:    // DECLARED INFERENCE: the service p52 200 Hz IG00150 calibration point is the rate
+src/core/OriginalSubOscillator.h:63:    // at full SPEED plus full touch, so full touch adds log2(200/60) octaves at every
+src/core/OriginalSubOscillator.h:65:    static constexpr double kConverterAnchorHz = 200.0;
+scripts/download-pluginval-windows.py:74:            if response.status != 200:
+tests/PraWahCircuitTests.cpp:296:  const double u=std::sin(2*std::numbers::pi*900*t)*(-std::expm1(-200*t));
+src/reference/Ig00150Sub.h:16:// maxCombinedHz: service p52 lists a 200 Hz IG00150 calibration point. Taking it as the
+src/reference/Ig00150Sub.h:25:    double maxCombinedHz = 200.0;
+scripts/resume-mseg-rate-automation.py:145:    'candidate_renders': 306, 'baseline_renders': 126, 'actual_pcm_pairs': 72,
+src/core/TouchCircuit.h:38:inline constexpr double kCPathSeconds = 1.0e-6 * (100.0e3 * 100.0e3 / 200.0e3); // SOURCE: 50 ms
+src/reference/NoiseSpectrum.h:57:// typical bipolar (4558-class) 1/f corner; alternatives 50 or 200 Hz.
+src/core/SourceFactoryTones.h:266:    for (int k = 0; k < 200; ++k) {
+src/core/SourceFactoryTones.h:358:        for (int k = 0; k < 200; ++k) {
+tests/test_float_wav.py:53:        self.controls.write_text('sample,hp_hz,lp_hz,q\n'+''.join(f'{i},200,{2000+i},1\n' for i in range(65)))
+src/reference/TouchCircuitTruth.h:59:    return cs80::touch::busVolts(a, 0.5 * cs80::touch::kFullScaleVolts, 200);
+tests/Ws4Tolerances.h:24:// the fundamental, saw and square, 60-200 Hz, internal rates 88.2 and 96 kHz.
+scripts/test-pluginval-windows-download.py:31:    def __init__(self, data=DATA, *, status=200, content_type="application/octet-stream",
+scripts/test-pluginval-windows-download.py:158:                                "http_status": 200 if outcome == 0 else (403 if outcome == 12 else 504)}), "")
+scripts/compare-preset-audio.py:136:    validate_inventory(after, "2026.11.4", 200)
+scripts/download-pluginval-macos.py:74:            if response.status != 200:
+scripts/test-package-binary-identity.py:30:        data = bytearray(200)
+scripts/qualify-mseg-rate-automation.py:140:    'candidate_renders': 306, 'baseline_renders': 126, 'actual_pcm_pairs': 72,
+scripts/compare-preset-response.py:28:OLD_PARAMETER_COUNT = 200
+scripts/compare-preset-response.py:98:    require(ids[198:200] == SIZE_IDS, f"{label}: published size IDs moved")
+scripts/compare-preset-response.py:130:        if count >= 200:
+scripts/compare-preset-response.py:131:            require(all(.5 <= size <= 2.5 for size in values[198:200]),
+scripts/compare-preset-response.py:134:            for rank, variant in enumerate(values[200:202]):
+scripts/compare-preset-response.py:150:            "The original 200 parameter IDs moved or the two variant IDs differ")
+scripts/compare-preset-response.py:181:                                   variant_index=int(values[200 + rank]),
+scripts/compare-preset-response.py:182:                                   variant=VARIANT_NAMES[int(values[200 + rank])]))
+scripts/compare-preset-response.py:183:                variant_counts[VARIANT_NAMES[int(values[200 + rank])]] += 1
+scripts/compare-preset-response.py:251:        ("invalid variant", lambda data: data["programs"][0]["values"].__setitem__(200, 5)),
+scripts/compare-preset-response.py:252:        ("fractional variant", lambda data: data["programs"][0]["values"].__setitem__(200, 1.5)),
+scripts/compare-preset-response.py:253:        ("incompatible factory variant", lambda data: data["programs"][0]["values"].__setitem__(200, 3)),
+scripts/compare-preset-response.py:271:    unchanged_active["programs"][0]["values"][:200] = active_before["programs"][0]["values"]
+scripts/compare-preset-response.py:275:    volume_only["programs"][0]["values"][:200] = before["programs"][0]["values"]
+scripts/compare-preset-response.py:282:    variant_only_after["programs"][0]["values"][:200] = variant_only_before["programs"][0]["values"]
+scripts/compare-preset-response.py:283:    variant_only_after["programs"][0]["values"][200] = 1
+scripts/compare-preset-response.py:287:    below_float_precision["programs"][0]["values"][:200] = before["programs"][0]["values"]
+scripts/compare-preset-response.py:371:    print(f"PASS: {PROGRAM_COUNT} identities, 200 stable IDs, 521 changed musical programs, "
+scripts/package-ci-artifacts.py:430:        header = bytearray(200)
+tests/test_reference_chain_clock.py:101:                   'samples': self.count, 'hp-hz': 200, 'lp-hz': 2000,
+tests/test_reference_chain_clock.py:213:        fc = [(200+43*i, 2800-61*i, .6+.11*i) for i in range(21)]
+tests/test_reference_chain_clock.py:227:        fc = [(200+.1*i, 2800-137*i, .7+.3*i) for i in range(5)]
+tests/test_reference_chain_clock.py:356:        options = self.dynamic([(200, 2000, 1)]*self.count)
+tests/test_reference_chain_clock.py:357:        for key, value in [('hp-hz', 200), ('lp-hz', 2000), ('q', 1)]:
+tests/test_reference_chain_clock.py:385:        options = self.dynamic([(200, 2000, 1)]*self.count)
+tests/test_reference_chain_clock.py:488:        options = self.dynamic([(200+5*i, 2000-17*i, 1+.02*i) for i in range(self.count)])
+tests/test_reference_chain.py:33:def linear_lp(values, rate, substeps, hp=200, lp=2000, q=1):
+tests/test_reference_chain.py:162:                   'out': self.out, 'rate': 48000, 'samples': self.count, 'hp-hz': 200, 'lp-hz': 2000,
+tests/test_reference_chain.py:168:        values = values if values is not None else [(200+i*3, 2000-i*7, 1+i*.01) for i in range(self.count)]
+tests/test_reference_chain.py:205:        controls = [(200+45*i, 2800-65*i, .6+.12*i) for i in range(len(signal))]
+tests/test_reference_chain.py:227:                                     **self.dynamic_options([(200,2000,1)]*self.count))
+tests/test_reference_chain.py:245:        options = self.dynamic_options([(200,500+4500*i/(count-1),1+3*i/(count-1)) for i in range(count)], crlf=True)
+tests/test_reference_chain.py:323:        for key,value in [('hp-hz',200), ('lp-hz',2000), ('q',1)]:
+tests/test_reference_chain.py:332:        bad_rows = [b'00,200,2000,1', b'0,25,20001,1', b'0,24.999,2000,1', b'0,200,2000,.349',
+tests/test_reference_chain.py:333:                    b'0,200,2000,9.001', b'0,nan,2000,1', b'0,1e-999,2000,1', b'0,0x100,2000,1',
+tests/test_reference_chain.py:334:                    b'0,2_00,2000,1', b'0,200,2000, 1', b'0,200,2000,"1"', b'0,200,2000,1,1',
+tests/test_reference_chain.py:335:                    b'0,200,2000,1'+b'0'*128, b'0,200,2000,\xff']
+tests/test_reference_chain.py:336:        malformed = [original[:-1], original+b'81,200,2000,1\n', header+b'\n'+rest,
+tests/test_reference_chain.py:348:        for last in [(4000,2000,1),(200,4000,1)]:
+tests/test_reference_chain.py:349:            options = self.dynamic_options([(200,2000,1)]*2+[last])
+tests/test_reference_chain.py:363:            ('trace', "p=out/'control_endpoints.csv';p.write_text(p.read_text().replace('0,0,200,','0,0,201,',1))"),
+tests/OutputMeterDisplayTests.cpp:64:        meter.reset(200.0);
+tests/OutputMeterDisplayTests.cpp:65:        meter.update({value, false, false}, 200.0);
+tests/test_filter_envelope_reference.py:241:            values.update({'hp-base-hz': '200', 'lp-base-hz': '2000', 'hp-depth': '.25', 'lp-depth': '-.5', 'q': '1'})
+tests/test_filter_envelope_reference.py:271:            self.assertEqual(float(c['hp_hz']), 200 * 2 ** (.25 * v))
+tests/test_filter_envelope_reference.py:338:        self.run_cli(False, **{'hp-base-hz': '200'})
+scripts/compare-preset-refinement.py:125:        if count == 200:
+src/plugin/MemoryLid.h:50:    static int recallCommand(int bank, int channel) noexcept { return 200 + 10 * bank + channel; }
+tests/StudioUiTests.h:526:    check(tipBounds.getWidth() > 200 && tipBounds.getHeight() > 60, "the structured tooltip lays out");
+tests/StudioUiTests.h:655:        flush(200);
+tests/StudioUiTests.h:997:        // on a 200 ms timer whenever the process is not in the foreground (JUCE's
+src/plugin/StudioDrawers.cpp:474:        const char* ticks[] = { "20", "200", "2k", "20k" };
+tests/FreeRunningVoiceTests.cpp:147:    pulse.hpCutoff = 200.0; pulse.hpQ = 1.0; pulse.lpCutoff = 5000.0; pulse.lpQ = 0.5;
+tests/Ig00150SubTests.cpp:47:    // Anchors: owner p49 endpoints with no touch, the 200 Hz point with full touch.
+tests/Ig00150SubTests.cpp:48:    check(relative(OriginalSubOscillator::circuitTargetRate(60, 1, 1), 200.0) <= tol::kLawRelative,
+tests/Ig00150SubTests.cpp:49:          "full SPEED plus full touch reaches the 200 Hz IG00150 anchor");
+tests/Ig00150SubTests.cpp:50:    check(relative(ref::speedHz(60, 1, 1), 200.0) <= tol::kLawRelative, "reference reaches 200 Hz anchor");
+tests/test_event_aware_ring_vca_coincident.py:21:                  input_frequency=Q(200),input_phase=Q('.125'),carrier_frequency=Q(200),carrier_phase=Q('.125'),amount=Q('.6'),
+tests/test_event_aware_ring_vca_coincident.py:32:                expected=direct_ring(float(t),frequency=200.,carrier_frequency=200.,phase=.125,carrier_phase=float(carrier_phase))
+tests/test_event_aware_ring_vca_coincident.py:42:                coarse=rk4_direct(float(duration),steps,env,frequency=200.,carrier_frequency=200.,phase=.125,carrier_phase=float(phase))
+tests/test_event_aware_ring_vca_coincident.py:43:                fine=rk4_direct(float(duration),2*steps,env,frequency=200.,carrier_frequency=200.,phase=.125,carrier_phase=float(phase))
+tests/test_event_aware_ring_vca_coincident.py:64:            first=rk4_direct(.004,steps,lambda t:1.5*(1-3**(-t/.01)),frequency=200.,carrier_frequency=200.,carrier_phase=.125)
+tests/test_event_aware_ring_vca_coincident.py:65:            answers.append(rk4_direct(.002,steps,lambda t:0.,start=.004,li=first[0],coupling=first[1],frequency=200.,carrier_frequency=200.,carrier_phase=.125))
+tests/test_event_aware_ring_vca_coincident.py:90:                 '--input-amplitude','.4','--input-frequency','200','--input-phase','.125','--carrier-frequency','200','--carrier-phase','.625',
+src/plugin/PresetBrowser.cpp:1661:        caption(g, "SELECTED PATCH", { x, D.getY() + 20.0f, 200.0f, 16.0f });
+tests/AmplitudeProductionOracle.cpp:21:        if (i == 200) { env.noteOff(); env.noteOn(.0137f, .02f, .37f, .03f); }
+src/plugin/HardwareKeyboard.h:561:        stroke(rng.nextFloat() * (along + 60.0f) - 60.0f, 30.0f + rng.nextFloat() * 200.0f, rng.nextFloat() * across,
+tests/InstrumentBodyHostTests.h:34:    // The 200/306 prefixes are from published 8685e9ed (2026.11.4).
+tests/InstrumentBodyHostTests.h:94:                      && P_body1Variant == 200 && P_numParams == 202,
+tests/InstrumentBodyHostTests.h:100:              "resonator variants append after all 306 published host slots");
+tests/InstrumentBodyHostTests.h:108:        for (int index = 198; index < 200; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
+tests/InstrumentBodyHostTests.h:110:              "the complete 2026.11.4 200-core-ID prefix is unchanged");
+tests/InstrumentBodyHostTests.h:114:        for (int index = 0; index < 200; ++index)
+tests/InstrumentBodyHostTests.h:129:              "all 200 published core ranges, defaults and normalization skews remain unchanged");
+tests/InstrumentBodyHostTests.h:145:        oldHostIds = oldHostIds && parameters.size() >= 306;
+tests/InstrumentBodyHostTests.h:146:        for (int index = 304; oldHostIds && index < 306; ++index)
+tests/InstrumentBodyHostTests.h:151:              "the complete 2026.11.4 306-host-ID prefix is unchanged");
+tests/InstrumentBodyHostTests.h:216:            check(parameters.indexOf(choice) == 306 + rank && host->hostParameterIndex(index) == 306 + rank
+tests/Ig00156CacheTests.cpp:129:    const std::array<float,10> cutoffs{-1.f,-0.f,0.f,18.f,200.f,20000.f,43200.f,86400.f,1e10f,1e30f};
+tests/test_ring_time_reference.py:42:        self.assertAlmostEqual(self.ref.hz_for_volts(10),200,delta=2e-13)
+tests/test_ring_time_reference.py:48:            self.assertAlmostEqual(s['carrier_cycles'],.25+200*float(t),delta=2e-13)
+tests/test_ring_time_reference.py:49:            self.assertAlmostEqual(s['carrier'],math.sin(2*math.pi*(.25+200*float(t))),delta=2e-12)
+tests/test_ring_time_reference.py:110:        expected={200:(amount*.0005*math.sin(pc),amount*.0005*math.cos(pc)),
+src/plugin/StudioView.h:37:// primary surface stays a CS-80 rather than a generic plugin with 200 knobs. It replaces the
+tests/EditorInitialSizeTests.h:49:              // the 200 % display-size preset fits. Minimum and aspect ratio are unchanged.
+tests/test_parity_capture.py:168:        modified['parameter_count'] = 200
+tests/test_parity_capture.py:439:        modified['parameter_count'] = 200
+tests/LoadedControlTransientTests.cpp:115:    const double duration = 1e-4, seconds = duration / 200;
+tests/LoadedControlTransientTests.cpp:123:    for (int step = 0; step < 200; ++step)
+tests/LoadedControlTransientTests.cpp:133:    for (int step = 1; step <= 200; ++step) {
+tests/Ig00156NodalTests.cpp:304:            const auto p = stagePoles(*n, 200.0, law);
+tests/Ig00156NodalTests.cpp:338:        for (double hz : { 200.0, 1000.0, 4000.0, 12000.0 })
+tests/Ig00156NodalTests.cpp:343:            if (hz == 200.0) low = p.q;
+tests/Ig00156NodalTests.cpp:346:        check(high < low, "resonance at 12 kHz is below resonance at 200 Hz (180 pF branch)");
+tests/Ig00156NodalTests.cpp:409:    // +/-8 noise has resonant gain at most Q (9), so 200 rejects only
+tests/Ig00156NodalTests.cpp:416:        for (float fc : { 0.0f, 18.0f, 200.0f, 2000.0f, 20000.0f, 0.45f * fs })
+tests/ParityModeTests.cpp:154:    ring[P_ringAmount] = 1.0f; ring[P_ringSpeed] = 200.0f;
+tests/ParityModeTests.cpp:157:    check(phrase(ring) == ringReference, "ring base speed capped at 200 Hz");
+tests/MsegTransportRateTests.cpp:163:        f.p.enabled = true; f.layer.setControls(f.p); f.transport(200 * step); f.samples(1);
+tests/test_truth_render.py:253:        cp = self.write_controls('controls.csv', [(200+i,2000+i,1+i*.01) for i in range(65)])
+tests/test_truth_render.py:273:            cp = self.write_controls(name+'.csv', [(200,2000,1)]*count)
+tests/test_truth_render.py:391:        controls = [(200+75*i, 2800-90*i, .6+.2*i) for i in range(17)]
+tests/test_truth_render.py:456:        controls = [(200+i*7.1234567, 2500-i*11.234567, .6+i*.0256789) for i in range(97)]
+tests/test_truth_render.py:492:        cp = self.write_controls('bad-controls.csv', [(200,2000,1)]*3)
+tests/test_truth_render.py:495:        invalid=[b'', b'sample,hp_hz,lp_hz,q\n', valid[:-1], valid+b'3,200,2000,1\n',
+tests/test_truth_render.py:496:                 valid.replace(b'1,200',b'01,200'),valid.replace(b'1,200',b'2,200'),
+tests/test_truth_render.py:497:                 valid.replace(b'lp_hz',b'lp'), valid.replace(b'1,200,2000,1',b'1,200,2000'),
+tests/test_truth_render.py:498:                 valid.replace(b'1,200,2000,1',b'1,200,2000,1,2'),
+tests/test_truth_render.py:499:                 valid.replace(b'1,200',b'1,'+b'0'*129)]
+tests/test_truth_render.py:500:        for field, bad_values in [(1,['24.9','20000.1','nan','inf','0x1p8','1e999','1e-999',' 200','200 ','']),
+tests/test_truth_render.py:503:                row=['1','200','2000','1']; row[field]=value
+tests/test_truth_render.py:504:                invalid.append(valid.replace(b'1,200,2000,1',','.join(row).encode()))
+tests/test_truth_render.py:510:        for i,args in enumerate([['--hp-hz',200],['--lp-hz',2000],['--q',1],['--controls',cp]]):
+tests/test_truth_render.py:514:                cs=[[200,2000,1] for _ in range(3)]
+tests/test_truth_render.py:533:                                 '--hp-hz', '200', '--lp-hz', '20000', '--q', '9',
+tests/PanelEditorTests.h:228:    flush(200);
+tests/PanelEditorTests.h:294:        editor.setZoomPercent(200);
+tests/PanelEditorTests.h:295:        check(editor.getWidth() == 3200 && editor.getHeight() == 2000 && editor.getZoomPercent() == 200,
+tests/PanelEditorTests.h:296:              "the 200 % preset fits the resize limits");
+tests/PanelEditorTests.h:308:    EditorPreferences::saveZoomPercent(200);
+src/plugin/PluginEditor.h:25:    // Display size presets (75, 100, 125, 150 and 200 percent of 1600 x 1000). Choosing one resizes the editor
+src/plugin/EditorPreferences.h:17:    static constexpr std::array<int, 5> zoomPresets { 75, 100, 125, 150, 200 };
+tests/RingModulatorCircuitTests.cpp:50:    for (float base : { 0.1f, 1.0f / 0.15f, 40.0f, 200.0f, 500.0f })
+tests/RingModulatorCircuitTests.cpp:114:        const double fast = renderedPeriod(hostRate, 200.0f);
+tests/RingModulatorCircuitTests.cpp:132:    check(pure.getRingFrequency() == 200.0f, "PURE CS-80 masks the 500 Hz SPEED extension at 200 Hz");
+src/plugin/AdvancedPanel.cpp:1299:        const float cellW[3] = { 200.0f, 170.0f, 300.0f };
+src/plugin/AdvancedPanel.cpp:1781:    static Rect tileRect(int i) { return { 14.0f + (float) i * 158.0f, 78.0f, 148.0f, 200.0f }; }
+src/plugin/AdvancedPanel.cpp:1994:                        for (int i = 0; i <= 200; ++i)
+src/plugin/AdvancedPanel.cpp:1996:                            const float t = (float) i / 200.0f;
+src/plugin/AdvancedPanel.cpp:2072:                    axisText(g, "RT60 ABOUT " + juce::String(tail.mean, 1) + " s (EST.)", { xr + 6.0f, plot.getY() + 2.0f, 200.0f, 16.0f }, Just::centredLeft);
+src/plugin/AdvancedPanel.cpp:2248:    explicit OutputPanel(Cs80AudioProcessor& p) : LiveWidget(p, 256.0f, 200.0f) {}
+src/plugin/AdvancedPanel.cpp:2653:            for (int i = 0; i <= 200; ++i)
+src/plugin/AdvancedPanel.cpp:2655:                const float t = span * (float) i / 200.0f;
+src/plugin/AdvancedPanel.cpp:4508:    page.widget<OutputPanel>({ 1264.0f, 678.0f, 256.0f, 200.0f });
+tests/CoreTests.cpp:437:    p[chParam(0, CP_hpfCutoff)] = 200.0f;
+tests/CoreTests.cpp:445:    check(first.hpfHz < 200.0f && first.lpfHz < 2000.0f, "IL lowers both filter cutoffs");
+tests/CoreTests.cpp:446:    checkNear(first.hpfHz / 200.0f,
+tests/CoreTests.cpp:451:    check(peak.hpfHz > 200.0f && peak.lpfHz > 2000.0f, "AL raises both filter cutoffs");
+tests/CoreTests.cpp:580:        p[chParam(ch,CP_hpfCutoff)]=200;
+tests/CoreTests.cpp:589:    for(float hz : {20.f,200.f,2000.f})
+tests/CoreTests.cpp:1664:    check(bank.size() >= 200, "factory bank has at least 200 presets");
+tests/CoreTests.cpp:1741:            p[chParam(rank,CP_hpfCutoff)]=200; p[chParam(rank,CP_lpfCutoff)]=1000;
+src/plugin/PanelLayout.h:45:const Rf subStatus    { 412, 47, 200, 14 };
+src/plugin/PanelLayout.h:63:const Rf voiceKey     { 200, 412, 130, 26 };
+tests/ReconstructedOscillatorTests.cpp:164: volatile double sink=0.;std::array<double,200> times{};for(auto& ms:times){auto begin=std::chrono::steady_clock::now();for(int n=0;n<512;++n)for(auto& o:bank){auto x=o.tick(8372.);sink+=x.sawPin5+x.pulsePin7+x.sinePin2;}ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();}
+src/plugin/PluginEditor.cpp:55:                                          (usableHeight - 64) / 5), 140, 200);
+src/plugin/PluginEditor.cpp:722:        setTooltip("Display size: 75, 100, 125, 150 or 200 percent of 1600 x 1000. New editor windows open at the chosen size when it fits the screen.");
+src/plugin/PluginEditor.cpp:2302:    setResizeLimits(1120, 700, 3200, 2000);   // the 1120 x 700 minimum up to the 200 % display-size preset
+tests/OriginalArticulationTests.cpp:101:        deadFilter[chParam(0, CP_lpfCutoff)] = 200.0f;
+src/plugin/PluginProcessor.cpp:446:    // choices append after all 306 published host slots, including geometry.
+tests/FilterProductionOracle.cpp:22:        if (i == 200) { env.noteOff(); env.noteOn(-.7f, 1.3f, .0137f, .02f, .03f, 0.0f, true); }
+tests/ParameterStateChildIndexTests.cpp:299:    require(idHash(restores, 200) == UINT64_C(0xd3a2c0a6ae64bd51), "2026.11.4 core IDs remain stable");
+tests/ParameterStateChildIndexTests.cpp:300:    require(idHash(saves, 306) == UINT64_C(0xe384b0acb2ff134e), "2026.11.4 host positions remain stable");
+tests/test_amplitude_production_comparison.py:114:                  (61, 'note_on'), (200, 'note_off'), (200, 'note_on'),
+tests/test_amplitude_production_comparison.py:173:        _, data = self.native([(0, 'note_on'), (200, 'note_off')], a='.001', d='.01', s='1', r='.01', n=401)
+tests/test_amplitude_production_comparison.py:175:        self.assertEqual(data[200+ticks-1]['stage'], 'release')
+tests/test_amplitude_production_comparison.py:176:        self.assertEqual(data[200+ticks]['stage'], 'idle')
+tests/test_amplitude_production_comparison.py:177:        self.assertEqual(float(data[200+ticks]['envelope']), 0)
+tests/test_amplitude_production_comparison.py:179:            self.assertEqual(float(data[200+k]['envelope']), f32(1000**(-k/(8000*f32(.01)))))
+tests/BbdChorusTests.cpp:334:            const float in = 0.8f * std::sin(0.4f * (float) n) + 0.1f * (float) (((long long) n * 7919) % 200 - 100) / 100.0f;
+tests/IG00156ReferenceTests.cpp:153:        const double e2=distance(trapezoid(model,200,duration),finer);
+tests/test_memory_interval_extrema.py:45:                x,y=sorted([math.ldexp(rng.uniform(.5,1.),rng.randrange(-200,201)),
+tests/test_memory_interval_extrema.py:46:                            math.ldexp(rng.uniform(.5,1.),rng.randrange(-200,201))])
+tests/ModernFxTests.cpp:334:                const float x = 0.1f * std::sin(kTwoPi * 200.0f * (float) n / fs);
+tests/ModernFxTests.cpp:617:        check(centroid(400.0) > centroid(3000.0) + 200.0, "spring returns a descending chirp (low frequencies travel slower)");
+tests/MemoryControlRoutingTests.cpp:324:        banks[bank][cs80::CP_hpfCutoff] = 100.0 + 200.0 * bank;
+src/tools/dsp_probe.cpp:126:    for (float base : {6.6666667f, 40.0f, 200.0f}) {
+tests/test_amplitude_envelope_reference.py:394:                   '--rate', '16000', '--samples', '1601', '--hp-hz', '200', '--lp-hz', '2000', '--q', '1',
+src/tools/truth_render.cpp:36:    double hp = 200, lp = 2000, q = 1, ota = 2.5, tolerance = .001;
+src/tools/truth_render.cpp:500:                     "[--frequency 440] [--amplitude 1] [--hp-hz 200] [--lp-hz 2000] [--q 1]\n"
+tests/Ig00156FilterTests.cpp:79:        for (float fc : { 18.0f, 200.0f, 2000.0f, 20000.0f, 0.45f * sr })
+tests/Ig00156FilterTests.cpp:91:                    bounded = bounded && std::abs(y.lp) < 200.0f && std::abs(y.bp) < 200.0f;
+tests/ToolbarMenuLifetimeTests.h:17:                                          175, 200, 225, 250, 300 };
+tests/ToolbarMenuLifetimeTests.h:35:    result.zoomPresets = { 75, 100, 125, 150, 200 };
+tests/ToolbarMenuLifetimeTests.h:85:            check(entry.isTicked == (id == 200), "only the active zoom preset is ticked");
+tests/ToolbarMenuLifetimeTests.h:159:        const auto callback = item(toolbar->buildMenu(), zoom ? 200 : 1).action;
+tests/test_event_aware_ring_vca.py:22:def direct_ring(t,amplitude=.4,frequency=230.,phase=.125,carrier_frequency=200.,carrier_phase=.25,amount=.6):
+tests/test_event_aware_ring_vca.py:52:                  input_frequency=Q(230),input_phase=Q('.125'),carrier_frequency=Q(200),carrier_phase=Q('.25'),amount=Q('.6'),
+tests/test_event_aware_ring_vca.py:102:            expected=.6*(.0005*(math.sin(2*math.pi*(200*float(t)+.25))+.005)+.001)
+tests/test_event_aware_ring_vca.py:153:                 '--input-amplitude','.4','--input-frequency','130','--input-phase','.125','--carrier-frequency','200','--carrier-phase','.25',
+tests/test_filter_production_comparison.py:103:        mapping = {'hp-base-hz': '200', 'lp-base-hz': '1000', 'hp-depth': '.2', 'lp-depth': '-.3', 'q': '.7'}
+tests/test_filter_production_comparison.py:149:                  (61, 'fresh_on'), (200, 'note_off'), (200, 'retained_retrigger'),
+tests/test_filter_production_comparison.py:198:        _, data = self.native([(0, 'fresh_on'), (7, 'note_off'), (200, 'note_off'), (210, 'reset')],
+tests/test_filter_production_comparison.py:209:        self.assertEqual(float(data[200]['envelope']), -2)
+tests/test_filter_production_comparison.py:210:        self.assertGreater(float(data[200]['elapsed']), 0)  # off on Idle is no-op
+src/tools/ui_snapshot.cpp:705:    check(gesture.drag(60, 50.0f, 200.0f) == 0.0f, "a fresh strike starts with no pressure");
+src/tools/ui_snapshot.cpp:706:    check(std::abs(gesture.drag(60, 90.0f, 200.0f) - 0.5f) < 1e-6f, "half the travel is half pressure");
+src/tools/ui_snapshot.cpp:707:    check(gesture.drag(60, 400.0f, 200.0f) == 1.0f, "pressure saturates at full travel");
+src/tools/ui_snapshot.cpp:708:    check(gesture.drag(60, 10.0f, 200.0f) == 0.0f, "drawing back up eases off and never goes negative");
+src/tools/ui_snapshot.cpp:709:    check(gesture.drag(62, 120.0f, 200.0f) < 0.0f && gesture.getNote() == 62,
+src/tools/ui_snapshot.cpp:711:    check(gesture.drag(62, 120.0f, 200.0f) == 0.0f, "the new key's anchor is where it was entered");
+src/tools/ui_snapshot.cpp:2614:    check(processor.getFactoryPresets().size() >= 200, "factory bank present");
+src/tools/ui_snapshot.cpp:3260:        for (int block = 0; block < 200; ++block) panic.processBlock(audio, messages);
+src/tools/ui_snapshot.cpp:3273:        for (int block = 0; block < 200; ++block) panic.processBlock(audio, messages);
+tests/OutputListeningTests.cpp:78:        const double u = i / 200.0;

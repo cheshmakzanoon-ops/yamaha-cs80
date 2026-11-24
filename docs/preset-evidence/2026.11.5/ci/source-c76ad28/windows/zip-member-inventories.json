@@ -1,0 +1,338 @@
+[
+  {
+    "archive": "install.zip",
+    "bytes": 6387912,
+    "sha256": "0123b292a7f5fd818efdfc5db87f87e112c48beabf90b3201c79a579a8b64b3f",
+    "members": [
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f.manifest.json",
+        "type": "file",
+        "bytes": 4558,
+        "sha256": "713574cb1787370207e7d06e9b2ac75385540a50ca96fe6128fb7b70031f5b5c",
+        "crc32": "fc659b76",
+        "mode": "0o100666"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f.zip",
+        "type": "file",
+        "bytes": 6382596,
+        "sha256": "c6566e21954aaaa33f9252a7c9b332f8c2edd3a0915bfee547f9927cc72acb06",
+        "crc32": "0f3efeed",
+        "mode": "0o100666"
+      },
+      {
+        "path": "SHA256SUMS",
+        "type": "file",
+        "bytes": 236,
+        "sha256": "d624e43c6270c32479f8a44880449d14abf575f241bb8d34432c42f12dd70db9",
+        "crc32": "8360306c",
+        "mode": "0o100666"
+      }
+    ],
+    "all_member_bytes_crc_and_hashes_checked": true
+  },
+  {
+    "archive": "vst3.zip",
+    "bytes": 3198055,
+    "sha256": "bd3c04ba2c168eade18c5103ce8eb2a13eb80a6da06fe9b2e4bae52067f70fff",
+    "members": [
+      {
+        "path": "CS-80 Reference.exp",
+        "type": "file",
+        "bytes": 968,
+        "sha256": "23db29f59d7ccc5a1cc23a4445dc4c7cffca0359d355982c12814ffcfcbc16c8",
+        "crc32": "c9e3b9ec",
+        "mode": "0o100666"
+      },
+      {
+        "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "type": "file",
+        "bytes": 1143,
+        "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+        "crc32": "ed221a7e",
+        "mode": "0o100666"
+      },
+      {
+        "path": "CS-80 Reference.lib",
+        "type": "file",
+        "bytes": 2266,
+        "sha256": "91a2e333c2bcb92c3e35b894e6d04d7c4c35697e547557e31f46c85d43812b05",
+        "crc32": "a7486f21",
+        "mode": "0o100666"
+      },
+      {
+        "path": "CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "type": "file",
+        "bytes": 7375872,
+        "sha256": "6503825833f5ef1cc9150bddb69ecef111dd0ba7717c0e7c2ec604bd6c37ee87",
+        "crc32": "4231a277",
+        "mode": "0o100666"
+      }
+    ],
+    "all_member_bytes_crc_and_hashes_checked": true
+  },
+  {
+    "archive": "test-evidence.zip",
+    "bytes": 77576,
+    "sha256": "711a6b245060a73637dcc94461df2033282d3bf57fb154592f13bdf63135da4f",
+    "members": [
+      {
+        "path": "Testing/Temporary/LastTest.log",
+        "type": "file",
+        "bytes": 356283,
+        "sha256": "ed6af6eab9168854092b5297c560f6a5b48022eef026774278419fa359fe61bb",
+        "crc32": "7af71970",
+        "mode": "0o100666"
+      },
+      {
+        "path": "ctest-results.xml",
+        "type": "file",
+        "bytes": 120766,
+        "sha256": "c83c76518de1f6a0760e7a13b0da361b1f6176536b10b4b2040781e1443c9495",
+        "crc32": "73fda683",
+        "mode": "0o100666"
+      },
+      {
+        "path": "ci-juce-provenance.txt",
+        "type": "file",
+        "bytes": 585,
+        "sha256": "a2a2d2ddaed333eb07120d645c81eaed04d08d864ebecfcaf46b0914ab921083",
+        "crc32": "c14b477a",
+        "mode": "0o100666"
+      }
+    ],
+    "all_member_bytes_crc_and_hashes_checked": true
+  },
+  {
+    "archive": "pluginval.zip",
+    "bytes": 5083,
+    "sha256": "c152c11ab6d8bea1f5777ce3c1877124acb05678e08e658647bb9523252ab705",
+    "members": [
+      {
+        "path": "pluginval-download.json",
+        "type": "file",
+        "bytes": 718,
+        "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c",
+        "crc32": "97fd54a9",
+        "mode": "0o100666"
+      },
+      {
+        "path": "pluginval-reports/cs80-windows-seed-regression",
+        "type": "file",
+        "bytes": 7168,
+        "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616",
+        "crc32": "44ce6dd1",
+        "mode": "0o100666"
+      },
+      {
+        "path": "pluginval-reports/cs80-windows",
+        "type": "file",
+        "bytes": 7168,
+        "sha256": "7a4580b98ebd427c317493fb47695587291147435335190e756d4a15efb5fe6b",
+        "crc32": "0d743e9c",
+        "mode": "0o100666"
+      },
+      {
+        "path": "pluginval-windows.log",
+        "type": "file",
+        "bytes": 7382,
+        "sha256": "ee286f1d7ba9ffad2ade59634650974a7c70c71173e15c3c48eab94e4b147e93",
+        "crc32": "9e66b0d9",
+        "mode": "0o100666"
+      },
+      {
+        "path": "pluginval-windows-seed-regression.log",
+        "type": "file",
+        "bytes": 7382,
+        "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+        "crc32": "d24e8877",
+        "mode": "0o100666"
+      },
+      {
+        "path": "pluginval-version.txt",
+        "type": "file",
+        "bytes": 19,
+        "sha256": "83c1d35a35bad95a0c3b2e63de3f8526c134a35093d604a6a22e684981199d6c",
+        "crc32": "ec86f5ac",
+        "mode": "0o100666"
+      }
+    ],
+    "all_member_bytes_crc_and_hashes_checked": true
+  },
+  {
+    "archive": "cs80-reference-windows-x86_64-c76ad288e02f.zip",
+    "bytes": 6382596,
+    "sha256": "c6566e21954aaaa33f9252a7c9b332f8c2edd3a0915bfee547f9927cc72acb06",
+    "members": [
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/Standalone/CS-80 Reference.exe",
+        "type": "file",
+        "bytes": 7577088,
+        "sha256": "d6820861d777a646ba4503fb2fbcadd85de30708bb5c9478b5d3565a73e88535",
+        "crc32": "6f635bf0",
+        "mode": "0o100777"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/",
+        "type": "directory",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "crc32": "00000000",
+        "mode": "0o40777"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/Contents/",
+        "type": "directory",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "crc32": "00000000",
+        "mode": "0o40777"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/Contents/Resources/",
+        "type": "directory",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "crc32": "00000000",
+        "mode": "0o40777"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "type": "file",
+        "bytes": 1143,
+        "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+        "crc32": "ed221a7e",
+        "mode": "0o100666"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/Contents/x86_64-win/",
+        "type": "directory",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "crc32": "00000000",
+        "mode": "0o40777"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "type": "file",
+        "bytes": 7375872,
+        "sha256": "6503825833f5ef1cc9150bddb69ecef111dd0ba7717c0e7c2ec604bd6c37ee87",
+        "crc32": "4231a277",
+        "mode": "0o100666"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/DISTRIBUTION_STATUS.md",
+        "type": "file",
+        "bytes": 39277,
+        "sha256": "405c700243f90037af61cbef90b77bc7a9c8c1675095921dcbd4c7c18214baf8",
+        "crc32": "1b2b74b6",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/INSTALL_AND_QUICKSTART.md",
+        "type": "file",
+        "bytes": 17862,
+        "sha256": "28a062538c4ce03e1f091ce8adef46633bcd653950b6e320f4babb1f695b834e",
+        "crc32": "918b763f",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/LICENSE",
+        "type": "file",
+        "bytes": 35184,
+        "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+        "crc32": "1209bcd4",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/PRESET_GUIDE.md",
+        "type": "file",
+        "bytes": 35903,
+        "sha256": "33fd2e700d0089f36e279f62b775e0e9c076222aacd244e9e0d6b79edd6e6e2a",
+        "crc32": "359d134b",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/SOURCE.txt",
+        "type": "file",
+        "bytes": 404,
+        "sha256": "3ae9d2760857a81ad2f0f4c64ef9243a9809b655d7d7002ba40d40f2ccd58ec8",
+        "crc32": "d7f18b9d",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/evidence/juce-provenance.txt",
+        "type": "file",
+        "bytes": 585,
+        "sha256": "a2a2d2ddaed333eb07120d645c81eaed04d08d864ebecfcaf46b0914ab921083",
+        "crc32": "c14b477a",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/BarlowCondensed-OFL.txt",
+        "type": "file",
+        "bytes": 4470,
+        "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+        "crc32": "63bc5039",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/BarlowCondensed-SOURCE.txt",
+        "type": "file",
+        "bytes": 1010,
+        "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+        "crc32": "073f9476",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/JUCE-LICENSE.md",
+        "type": "file",
+        "bytes": 5038,
+        "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+        "crc32": "c5f3f261",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/MTS-ESP-LICENSE.txt",
+        "type": "file",
+        "bytes": 666,
+        "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+        "crc32": "c6486637",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/libxml2-ADDITIONAL-NOTICES.txt",
+        "type": "file",
+        "bytes": 1444,
+        "sha256": "773ec3c805a88806812048182c3b0fa90b4bc18012ea4dc131e01ba3729bd337",
+        "crc32": "20a41f8d",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/libxml2-Copyright.txt",
+        "type": "file",
+        "bytes": 1338,
+        "sha256": "f06bad318a967a790be27cc90235573a2548a2125f6c54b6129d1c802ed201a8",
+        "crc32": "43ab1c31",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/licenses/libxml2-SOURCE.txt",
+        "type": "file",
+        "bytes": 682,
+        "sha256": "0afbd154bd05bb26fd9d6fc2db195da5b7347b5cdde10dd39d320a6c3cfbbe2c",
+        "crc32": "7236d520",
+        "mode": "0o600"
+      },
+      {
+        "path": "cs80-reference-windows-x86_64-c76ad288e02f/manifest.json",
+        "type": "file",
+        "bytes": 4558,
+        "sha256": "713574cb1787370207e7d06e9b2ac75385540a50ca96fe6128fb7b70031f5b5c",
+        "crc32": "fc659b76",
+        "mode": "0o600"
+      }
+    ],
+    "all_member_bytes_crc_and_hashes_checked": true
+  }
+]

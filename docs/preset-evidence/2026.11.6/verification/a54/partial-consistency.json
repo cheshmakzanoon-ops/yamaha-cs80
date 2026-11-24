@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "status": "partial_one_of_four_platforms_observed",
+  "release_qualified": false,
+  "cross_platform_qualified": false,
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "factory_revision": "2026.11.6",
+  "run_id": 45366603800,
+  "run_attempt": 1,
+  "documentation_head_observed": "2a8d6ed580c6527226c81437393206ac8b0cd5a4",
+  "compiled_source_and_documentation_head_distinct": true,
+  "protected_source_changes_to_observed_head": [],
+  "observed_arm": {
+    "actual_artifacts": [
+      {
+        "role": "install",
+        "id": 14910025415,
+        "name": "cs80-macos-15-install-bundle",
+        "bytes": 14986588,
+        "sha256": "c08e83380b0403b03f11684d2cc8e9f88dd2ebd78f217be7d7940952a2143e61",
+        "expires_at": "2027-02-22T09:35:13Z",
+        "original_upload_step": "Upload native macOS install bundle"
+      },
+      {
+        "role": "native",
+        "id": 14909506446,
+        "name": "cs80-macos-15-test-evidence",
+        "bytes": 84310,
+        "sha256": "f049c902309a520f953850dc8fbafdb659f616f04bac1fa08060e414ad2b8492",
+        "expires_at": "2027-02-22T09:35:13Z",
+        "original_upload_step": "Upload test and JUCE source evidence"
+      },
+      {
+        "role": "validator",
+        "id": 14910405103,
+        "name": "cs80-pluginval-macos-15",
+        "bytes": 12772,
+        "sha256": "b7bb8f97b4d484cd71e719f87b24c31eb9e7e20686f837c259460f8ce3b93de7",
+        "expires_at": "2027-02-22T09:35:13Z",
+        "original_upload_step": "Upload pluginval reports"
+      }
+    ],
+    "native_counts": {
+      "registered": 273,
+      "passed": 271,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "formal_skip_names": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "nested_python_skips": 5,
+    "formats": [
+      "VST3",
+      "Standalone",
+      "AU"
+    ],
+    "architecture": "arm64",
+    "five_original_validator_steps_successful": true,
+    "shared_member_receipts": {
+      "INSTALL_AND_QUICKSTART.md": {
+        "bytes": 18518,
+        "sha256": "4dff675cec1928b95dd0be5d99c0accf1f0ee6c65d2aebd887c0d8dbe9aa6245"
+      },
+      "PRESET_GUIDE.md": {
+        "bytes": 40396,
+        "sha256": "84da55c497fbbaf22da2d4b8e50ee3e789d2f1978b1e36f0f46cf48ef63a5749"
+      },
+      "DISTRIBUTION_STATUS.md": {
+        "bytes": 39277,
+        "sha256": "bf02a8f0e396cdcf9dd85f33e48afed0821ce2b6c5fc8cb659db29c06d3e63c4"
+      },
+      "LICENSE": {
+        "bytes": 34523,
+        "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+      },
+      "licenses/BarlowCondensed-OFL.txt": {
+        "bytes": 4377,
+        "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+      },
+      "licenses/BarlowCondensed-SOURCE.txt": {
+        "bytes": 994,
+        "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+      },
+      "licenses/MTS-ESP-LICENSE.txt": {
+        "bytes": 661,
+        "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+      },
+      "licenses/libxml2-Copyright.txt": {
+        "bytes": 1314,
+        "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+      },
+      "licenses/libxml2-SOURCE.txt": {
+        "bytes": 667,
+        "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+      },
+      "licenses/libxml2-ADDITIONAL-NOTICES.txt": {
+        "bytes": 1406,
+        "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+      },
+      "licenses/JUCE-LICENSE.md": {
+        "bytes": 4971,
+        "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146"
+      }
+    }
+  },
+  "pending": {
+    "windows-x86_64": {
+      "status": "pending_actual_platform_qualification",
+      "expected_registrations_provisional": 251,
+      "observed_registrations": null,
+      "contract": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/source-contract.json",
+      "contract_receipt": {
+        "bytes": 11539,
+        "sha256": "d4561d7c9c510c672d0cf78892b2356198eec6f368f61b35161934cf0a69de63"
+      }
+    },
+    "macos-x86_64": {
+      "status": "pending_actual_platform_qualification",
+      "expected_registrations_provisional": 273,
+      "observed_registrations": null,
+      "contract": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/macos-x86_64/preparation-contract.json",
+      "contract_receipt": {
+        "bytes": 16086,
+        "sha256": "765de569f783f4b4ddcc895380c04344b93c81eb3a187dfa9818afc4fb4cf7b1"
+      }
+    },
+    "linux-x86_64": {
+      "status": "pending_actual_platform_qualification",
+      "expected_registrations_provisional": 609,
+      "observed_registrations": null,
+      "contract": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/linux/preparation-contract.json",
+      "contract_receipt": {
+        "bytes": 40342,
+        "sha256": "d8f4329e982585a392aa0a4b171b121ff6f822e82ff16c09dab5b9511de65e2c"
+      }
+    }
+  },
+  "required_validator_lanes": {
+    "macos-arm64": [
+      "vst3",
+      "au",
+      "au-gui",
+      "au-gui-seed",
+      "au-gui-seed-c76"
+    ],
+    "macos-x86_64": [
+      "vst3",
+      "au",
+      "au-gui",
+      "au-gui-seed",
+      "au-gui-seed-c76"
+    ],
+    "windows-x86_64": [
+      "headless-randomized-in-process",
+      "headless-seed-0x5037a0c-in-process"
+    ],
+    "linux-x86_64": [
+      "headless",
+      "gui",
+      "gui-seed-0x2da72db"
+    ]
+  },
+  "required_validator_count": 15,
+  "observed_validator_count": 5,
+  "completion_requirements": [
+    "Obtain and independently bind all three missing platforms to source/revision/run/attempt, actual ZIP API and original successful uploads.",
+    "Reconcile each actual native roster and formal/nested skips; do not turn provisional counts into observations.",
+    "Bind all fifteen original validator lanes and platform-specific validator input payloads; preserve retry/core evidence.",
+    "Compare exact source-time guides/notices and factory metadata across all four; verify PE32+ x64, Mach-O x86_64/ARM64 and ELF64 x86_64 format sets.",
+    "Require final native run, supporting jobs, actual audition/inventory, public downloads and publication gates outside this checker."
+  ],
+  "limits": [
+    "This bounded checker always leaves cross_platform_qualified and release_qualified false; root must complete missing platform observations.",
+    "Shared guide/notice consistency is byte equality; compiled binaries must differ by platform and architecture.",
+    "A53 establishes source-time guide/license content; this checker independently rehashes those members from the actual install ZIP.",
+    "Frozen bundled distribution history is the .5 candidate/.4 publication snapshot; later online documentation HEAD is not the compiled source.",
+    "No product binary executed locally, acoustic equivalence, new crash root cause, or cross-architecture binary equality is claimed."
+  ]
+}

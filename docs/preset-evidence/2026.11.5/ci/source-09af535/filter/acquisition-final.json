@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "reviewer": "a47_filter_ci_qualification",
+  "final_api_check_at_utc": "2026-11-24 08:15:10 UTC",
+  "completion_retention_observed_at_utc": "2026-11-24 08:16:00 UTC",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45344888479,
+  "run_attempt": 1,
+  "run_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "release_source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "acquisition": "Connected authenticated GitHub tools. API files retain the structuredContent.content response body; logs retain the complete structuredContent.content UTF-8 string, including the original BOM and timestamped lines. No command was rerun to substitute for original CI evidence.",
+  "api_records": [
+    {
+      "file": "run-final-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/attempts/1"
+    },
+    {
+      "file": "jobs-final-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/attempts/1/jobs?per_page=100&page=1"
+    },
+    {
+      "file": "artifacts-final-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/artifacts?per_page=100"
+    }
+  ],
+  "log_records": [
+    {
+      "file": "job-138276946182.log",
+      "job_id": 138276946182,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "earlier checkpoint",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946182/logs",
+      "bytes": 15892,
+      "sha256": "20eeb282853e817618f4944e1f6cbe486d0d2e319708bd583bbca8c7f8d0f3ce"
+    },
+    {
+      "file": "job-138276946520.log",
+      "job_id": 138276946520,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "final completion pass",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946520/logs",
+      "bytes": 15899,
+      "sha256": "32e1a0b05e17e6631fb5724f17ac438e60eaaeac09171311bc69ee7ed51e9f80"
+    },
+    {
+      "file": "job-138276946524.log",
+      "job_id": 138276946524,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "earlier checkpoint",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946524/logs",
+      "bytes": 16029,
+      "sha256": "814da3ac564d5886bdd499e6f02552bf85f353edfee5efeda7da9048f6bca4e7"
+    },
+    {
+      "file": "job-138276946543.log",
+      "job_id": 138276946543,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "final completion pass",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946543/logs",
+      "bytes": 16020,
+      "sha256": "8466c06a15178d6c18491680c4bd5ecd417d008825becda47084b69c64d5d8bc"
+    },
+    {
+      "file": "job-138276946568.log",
+      "job_id": 138276946568,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "final completion pass",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946568/logs",
+      "bytes": 15889,
+      "sha256": "cf9e01715d970be49b4636200cf317c59ed1af118cfef873c6142cb425b3ddee"
+    },
+    {
+      "file": "job-138276946630.log",
+      "job_id": 138276946630,
+      "tool": "github_fetch_workflow_job_logs",
+      "acquired_in": "final completion pass",
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946630/logs",
+      "bytes": 15902,
+      "sha256": "f1ffe78ccffd8dc032e8cfcf90ecbc6dd2c7c074a107c1857930fc6e8e8820b2"
+    }
+  ],
+  "checkpoint_preservation": "All 17 original checkpoint-manifest entries were verified before final acquisition writes and are reverified after final record creation. No prior checkpoint record or hash was replaced.",
+  "integrity_scope": "SHA256 detects changes to retained bodies. These are not GitHub signatures and do not independently authenticate locally supplied copies.",
+  "artifacts": {
+    "total_count": 0,
+    "workflow_has_upload_step": false
+  },
+  "original_execution_label": "09af5358d34a7ea431de7e8a42e35dae66e52159 remains the original execution source. Relevant-input byte equivalence to c76ad288e02fbeca48f39652bf4fcdd99837f793 is a separate supporting finding.",
+  "acceptance_scope": {
+    "supporting_filter_gates_passed": true,
+    "release_qualified": false,
+    "observed_original_jobs_passed": 6,
+    "observed_ctest_executions_passed": 24,
+    "unique_ctest_definitions": 4,
+    "formal_ctest_skipped": 0,
+    "internal_admission_profile_skips": null,
+    "actual_accelerated_group_count": null
+  }
+}

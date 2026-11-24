@@ -1,0 +1,476 @@
+{
+  "schema": 2,
+  "reviewer": "A46, distinct worker 46 of 60",
+  "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "source_tree": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+  "reviewed_at_utc": "2026-11-24T07:27:09.663578+00:00",
+  "status": "partial",
+  "conclusion": null,
+  "supporting_scope_qualified": false,
+  "native_release_qualified": false,
+  "run": {
+    "id": 45344888536,
+    "name": "DSP numerical measurements",
+    "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+    "run_attempt": 1,
+    "status": "queued",
+    "conclusion": null,
+    "created_at": "2026-11-24T07:02:14Z",
+    "run_started_at": "2026-11-24T07:02:14Z",
+    "updated_at": "2026-11-24T07:02:30Z",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536"
+  },
+  "api_inputs": [
+    {
+      "path": "run-initial-api.json",
+      "bytes": 14219,
+      "sha256": "53635d945d78819b55ee7cbfab6a1d992352aa8bfd7982ab7cb0611c11220063"
+    },
+    {
+      "path": "jobs-source-api.json",
+      "bytes": 8242,
+      "sha256": "2563d8eb966975eba18d52158ed291c5a4202b7d0d14bb30c7dbadf8471c1d2d"
+    },
+    {
+      "path": "artifacts-source-api.json",
+      "bytes": 1545,
+      "sha256": "c821fa754147925804471848736eb16afc977764795e7256be6484fb8846435d"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 138277054372,
+      "name": "Default-off raw audio versus shipped baseline",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T07:12:12Z",
+      "completed_at": "2026-11-24T07:15:17Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536/job/138277054372",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T07:12:13Z",
+          "completed_at": "2026-11-24T07:12:15Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T07:12:15Z",
+          "completed_at": "2026-11-24T07:12:24Z"
+        },
+        {
+          "name": "Build both revisions with the same compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T07:12:24Z",
+          "completed_at": "2026-11-24T07:13:01Z"
+        },
+        {
+          "name": "Require byte-identical default and noisy-reassignment traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T07:13:01Z",
+          "completed_at": "2026-11-24T07:15:15Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T07:15:15Z",
+          "completed_at": "2026-11-24T07:15:15Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T07:15:15Z",
+          "completed_at": "2026-11-24T07:15:16Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T07:15:16Z",
+          "completed_at": "2026-11-24T07:15:16Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "legacy-job.log",
+        "bytes": 19254,
+        "sha256": "71e78aaa995e39e2adffe42ded81407aa171aca82759648bb8b249e10e83920b"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": []
+    },
+    {
+      "id": 138277054685,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-24T07:25:19Z",
+      "completed_at": "2026-11-24T07:26:23Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536/job/138277054685",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T07:25:20Z",
+          "completed_at": "2026-11-24T07:25:23Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T07:25:23Z",
+          "completed_at": "2026-11-24T07:25:33Z"
+        },
+        {
+          "name": "Build immutable circuit and audio checkpoints with one compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T07:25:33Z",
+          "completed_at": "2026-11-24T07:26:10Z"
+        },
+        {
+          "name": "Require unchanged seven-tone V1 circuit numerics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T07:26:10Z",
+          "completed_at": "2026-11-24T07:26:10Z"
+        },
+        {
+          "name": "Require unchanged source-audio V2 and numerical history",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T07:26:10Z",
+          "completed_at": "2026-11-24T07:26:19Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T07:26:19Z",
+          "completed_at": "2026-11-24T07:26:20Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-24T07:26:20Z",
+          "completed_at": "2026-11-24T07:26:21Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-24T07:26:21Z",
+          "completed_at": "2026-11-24T07:26:21Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "source-job.log",
+        "bytes": 20944,
+        "sha256": "5986a31cd8926beea339ff4e97c68014403ee856b19241a8d208d3a9e3aa6140"
+      },
+      "observed_exact_checkout": true,
+      "python_test_terminal_summaries": []
+    },
+    {
+      "id": 138277054786,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "status": "queued",
+      "conclusion": null,
+      "started_at": "2026-11-24T07:02:30Z",
+      "completed_at": null,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536/job/138277054786",
+      "steps": []
+    },
+    {
+      "id": 138277054911,
+      "name": "measure",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "status": "queued",
+      "conclusion": null,
+      "started_at": "2026-11-24T07:02:30Z",
+      "completed_at": null,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536/job/138277054911",
+      "steps": []
+    },
+    {
+      "id": 138277054625,
+      "name": "sanitizers",
+      "head_sha": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-24T07:15:19Z",
+      "completed_at": null,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888536/job/138277054625",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T07:15:20Z",
+          "completed_at": "2026-11-24T07:15:21Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T07:15:21Z",
+          "completed_at": "2026-11-24T07:15:29Z"
+        },
+        {
+          "name": "Configure ASan and UBSan core build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T07:15:29Z",
+          "completed_at": "2026-11-24T07:15:31Z"
+        },
+        {
+          "name": "Build instrument and circuit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T07:15:31Z",
+          "completed_at": "2026-11-24T07:24:12Z"
+        },
+        {
+          "name": "Run sanitizer and validator-fixture tests",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 5,
+          "started_at": "2026-11-24T07:24:12Z",
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "pending",
+          "conclusion": null,
+          "number": 10,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    }
+  ],
+  "actual_artifact_inspections": [
+    {
+      "kind": "legacy",
+      "artifact_id": 14899105668,
+      "name": "cs80-legacy-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "bytes": 29435,
+      "sha256": "de30012857354461a326adfabe53e3296e0483c28c12094e366d337ea1be743c",
+      "created_at": "2026-11-24T07:15:15Z",
+      "expires_at": "2027-02-22T07:02:14Z",
+      "producer_job_id": 138277054372,
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T07:15:15.9881612Z Artifact cs80-legacy-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159.zip successfully finalized. Artifact ID 14899105668",
+        "size": "2026-11-24T07:15:15.9882875Z Artifact cs80-legacy-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159 has been successfully uploaded! Final size is 29435 bytes. Artifact ID is 14899105668",
+        "digest": "2026-11-24T07:15:15.6637567Z SHA256 digest of uploaded artifact zip is de30012857354461a326adfabe53e3296e0483c28c12094e366d337ea1be743c"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T07:15:15Z",
+        "completed_at": "2026-11-24T07:15:15Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 4,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 548,
+          "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+        },
+        {
+          "path": "baseline-corpus.txt",
+          "bytes": 277637,
+          "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 392,
+          "sha256": "6e536b2ceae3b8bfad4ab7e632e6a98607c8f054e64dc8fe4f50c72ac14928fd"
+        }
+      ],
+      "checks": {
+        "report": {
+          "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "candidate": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+          "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "corpus_parameters": 137,
+          "default_off_byte_identical": true,
+          "legacy_programs": 222,
+          "sample_rates": [
+            44100,
+            48000,
+            96000
+          ],
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_comparison_binaries_distributed": false,
+        "byte_comparison_basis": "Successful original unsuppressed cmp steps and retained digest report. No local raw comparison claimed.",
+        "csv_scan": {
+          "files": 0,
+          "finite_numeric_cells": 0,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    },
+    {
+      "kind": "source",
+      "artifact_id": 14898618245,
+      "name": "cs80-source-factory-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "bytes": 983,
+      "sha256": "16e261131426f43e9300472d661d8a36e0a96dc2bc8c030542950cf73231ba3a",
+      "created_at": "2026-11-24T07:26:20Z",
+      "expires_at": "2027-02-22T07:02:14Z",
+      "producer_job_id": 138277054685,
+      "source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+      "run_id": 45344888536,
+      "run_attempt": 1,
+      "attempt_bound_by_original_successful_upload": true,
+      "producer_upload_lines": {
+        "finalized": "2026-11-24T07:26:20.8465937Z Artifact cs80-source-factory-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159.zip successfully finalized. Artifact ID 14898618245",
+        "size": "2026-11-24T07:26:20.8467274Z Artifact cs80-source-factory-compatibility-09af5358d34a7ea431de7e8a42e35dae66e52159 has been successfully uploaded! Final size is 983 bytes. Artifact ID is 14898618245",
+        "digest": "2026-11-24T07:26:20.4523801Z SHA256 digest of uploaded artifact zip is 16e261131426f43e9300472d661d8a36e0a96dc2bc8c030542950cf73231ba3a"
+      },
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T07:26:19Z",
+        "completed_at": "2026-11-24T07:26:20Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_count": 3,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 486,
+          "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 400,
+          "sha256": "cdbe9acc4426d94869b13688383833ef71eca799cffd017c6cf280fb7b3099d2"
+        }
+      ],
+      "checks": {
+        "report": {
+          "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+          "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+          "candidate": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+          "source_tones": 7,
+          "circuit_values": 16632,
+          "sample_rates": [
+            44100,
+            48000,
+            96000,
+            192000
+          ],
+          "v1_circuit_bytes_unchanged": true,
+          "v2_audio_and_numeric_state_bytes_unchanged": true,
+          "model_metadata_excluded": true,
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_comparison_binaries_distributed": false,
+        "byte_comparison_basis": "Successful original unsuppressed cmp steps and retained digest report. No local raw comparison claimed.",
+        "csv_scan": {
+          "files": 0,
+          "finite_numeric_cells": 0,
+          "scope": "Every parseable numeric cell is finite; this does not independently recompute the numerical/Fourier comparison."
+        }
+      }
+    }
+  ],
+  "source_contract": {
+    "path": "source-contract.json",
+    "bytes": 2372,
+    "sha256": "64ac5651f58a3f35b6ef53767f85b341ecc9c68c7aab43329d945d2bb0cdc6c6"
+  },
+  "inspection_script": {
+    "path": "inspect_supporting.py",
+    "bytes": 23262,
+    "sha256": "6f885cefe0fd1a1b88fc82d02e217f981d2cd84d4ae0183b50cf5725a59dbb7b"
+  },
+  "scope_limits": [
+    "Supporting DSP workflow only; does not qualify native plugin packages or pluginval.",
+    "Core-only/Python jobs do not provide JUCE plugin provenance; native qualification owns that gate.",
+    "Synthetic and numerical references are software fixtures, not physical CS-80 or acoustic-instrument measurements.",
+    "Compatibility artifacts retain reports/digests and a legacy corpus, not raw comparison binaries; original successful cmp steps provide comparison evidence.",
+    "Trace and compatibility artifacts contain tool-defined corpora, not per-program listening evaluations of all 523 factory entries.",
+    "Sanitizer CTest executions remain separate from native counts; suppressed nested Python skips are unknown.",
+    "Original API step times have second precision; fractional log times are compared within that same final second.",
+    "Acquisition uses authenticated GitHub tools; no public unauthenticated download-route claim is made."
+  ]
+}

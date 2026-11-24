@@ -1,0 +1,135 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_inputs": [
+    {
+      "path": "tests/BellMaterialPresetTests.cpp",
+      "bytes": 8292,
+      "sha256": "fb051105e19a66c57c486702a1370956f6fdc200d829dcabd884c4bc2df58d2a",
+      "matches_commit": true
+    },
+    {
+      "path": "tests/PluckedMaterialPresetTests.cpp",
+      "bytes": 6609,
+      "sha256": "2869a1728950837ead97128cd69c67f2a25b080c063ef53d7fd1f372a6c46c43",
+      "matches_commit": true
+    },
+    {
+      "path": "tests/MaterialBodyTests.cpp",
+      "bytes": 11811,
+      "sha256": "66eb731a3a3352c83f3cb5518d31aa0008f67b6d63c0ec3345298ccf799cfe8d",
+      "matches_commit": true
+    },
+    {
+      "path": "tests/PluckedMaterialTests.cpp",
+      "bytes": 9914,
+      "sha256": "8a029c8fffcb7f9463d5ce3137a550f81a0d2ea29ca19b33a77415a554cbf497",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 69309,
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/InstrumentBodyMaterials.h",
+      "bytes": 1620,
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168644,
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "bytes": 40920,
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "bytes": 26057,
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "bytes": 23340,
+      "sha256": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+      "matches_commit": true
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "bytes": 19059,
+      "sha256": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+      "matches_commit": true
+    },
+    {
+      "path": "scripts/compare-preset-response-2026-11-6.py",
+      "bytes": 18692,
+      "sha256": "f6f84bf7f262cd4b79ea37df79373e072df684ae765668e21e2817fc67213c70",
+      "matches_commit": true
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "bell-gain-probe.cpp",
+      "bytes": 2153,
+      "sha256": "d4f1c72ea93ff8214711c8f351758e888392a97f30ecbd2f3b8be0071a34eda9"
+    },
+    {
+      "path": "bell-gain-probe.log",
+      "bytes": 678,
+      "sha256": "a0f9830d385dd2bdc898693a0e7e55ec5634f5fd528186aabf9c246530dcdc95"
+    },
+    {
+      "path": "initial-bell-gain-probe.cpp",
+      "bytes": 1647,
+      "sha256": "a02cb18f9c61af23e2cde514bde2136b66f7a6e958a278bdeeacc7627c65df4e"
+    },
+    {
+      "path": "initial-bell-gain-probe.log",
+      "bytes": 629,
+      "sha256": "e2eb27dbbebbe14d1a132a651ec1abcf15efecffcbfc3d0eaccc42d4c98980cc"
+    },
+    {
+      "path": "plucked-gain-probe.cpp",
+      "bytes": 1434,
+      "sha256": "1b3c2a79509c503fa865a43c080257a70d174e9f5f86ef285421d9078e59fcb4"
+    },
+    {
+      "path": "plucked-gain-probe.log",
+      "bytes": 410,
+      "sha256": "6a420a68266b882410bc25766e1e54868a621b495ac41ef2d48140c803d8e081"
+    }
+  ],
+  "library": {
+    "path": "/workspace/scratch/b9c11dd92abc/yamaha-cs80/build-preset/libcs80_core.a",
+    "bytes": 1735386,
+    "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+    "scope": "Current integrated local static library; hash alone is not a compiled-source attestation"
+  },
+  "new_checks": 50,
+  "new_failures": 0,
+  "rendered_seconds": 19.2,
+  "sample_rate": 48000,
+  "plucked_pure_gain_max_distance": 6.69287837559e-09,
+  "bell_pure_gain_max_abs_db": 1.30303244665e-08,
+  "bell_exact_binary_scale_max_error_db": 0,
+  "bell_arbitrary_gain_max_reference_error_db": 0.0799557510376,
+  "initial_diagnostic": {
+    "checks": 25,
+    "failures": 1,
+    "reason": "An arbitrary 3.7x float scaling adds quantization noise to a near-zero generic reference; initial 0.01 dB numerical-closeness assumption was unsupported."
+  },
+  "scope": "Signal metric causal audit, not acoustic fit, human listening, native qualification or a complete alias/pitch assessment"
+}

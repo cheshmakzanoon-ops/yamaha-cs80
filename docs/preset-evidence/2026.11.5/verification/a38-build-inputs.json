@@ -1,0 +1,78 @@
+{
+  "source_commit": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "commands": [
+    "c++ -std=c++20 -O2 -Isrc docs/preset-evidence/2026.11.5/verification/a38-organ-probe.cpp build-preset/libcs80_core.a -pthread -o /tmp/cs80-a38/final-probe",
+    "/tmp/cs80-a38/final-probe > docs/preset-evidence/2026.11.5/verification/a38-organ-final.json",
+    "c++ -std=c++20 -O2 -I../baseline-2026.11.4/src docs/preset-evidence/2026.11.5/verification/a38-organ-probe.cpp ../baseline-build/libcs80_core.a -pthread -o /tmp/cs80-a38/baseline-probe",
+    "/tmp/cs80-a38/baseline-probe > docs/preset-evidence/2026.11.5/verification/a38-organ-baseline.json",
+    "python3 docs/preset-evidence/2026.11.5/verification/a38-review-organ.py > docs/preset-evidence/2026.11.5/verification/a38-organ-checks.log"
+  ],
+  "process_results": {
+    "current_compile_and_render_exit": 0,
+    "baseline_compile_and_render_exit": 0,
+    "review_exit": 0
+  },
+  "files": {
+    "current_executable": {
+      "path": "/tmp/cs80-a38/final-probe",
+      "bytes": 1092944,
+      "sha256": "af679c41b46e34d1063a691771cff13aa0bc47f9a0e4118299b9fc541fbf0c49"
+    },
+    "baseline_executable": {
+      "path": "/tmp/cs80-a38/baseline-probe",
+      "bytes": 1084456,
+      "sha256": "562e28e2b0f1a1609dc67238e9a56266fee10062ec89bd3e8db45d97ba6aa5d7"
+    },
+    "current_core": {
+      "path": "build-preset/libcs80_core.a",
+      "bytes": 1691342,
+      "sha256": "0daeb24d43130bd852d31655289322a1cb39e46f4f8e4d99163457d8fe3a58d8"
+    },
+    "baseline_core": {
+      "path": "/workspace/scratch/c98fb40a9529/baseline-build/libcs80_core.a",
+      "bytes": 1659742,
+      "sha256": "306f0d8b48f0c6f9375203d1dd76899859aecd27b3d621ae016213561c923c89"
+    },
+    "source_src/core/curated/Organ.inc": {
+      "path": "src/core/curated/Organ.inc",
+      "bytes": 11428,
+      "sha256": "b49954a3f04ba7aecead9cd3be97bd5d0cba7fec5ad88c9305567e982a3b089b"
+    },
+    "source_src/core/curated/Modern.inc": {
+      "path": "src/core/curated/Modern.inc",
+      "bytes": 20705,
+      "sha256": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc"
+    },
+    "source_src/core/InstrumentBody.h": {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 52123,
+      "sha256": "12e715e46370d6aa695a3837dcc3983c047e8f7fbbdcf93d74082be7c5e1b0aa"
+    },
+    "source_src/core/BodyArticulation.h": {
+      "path": "src/core/BodyArticulation.h",
+      "bytes": 3326,
+      "sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7"
+    },
+    "source_src/core/Engine.cpp": {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168522,
+      "sha256": "2bc097ba64ccbcc3c2c79cb8245ccbfaa4b089d9c0184cb4d7755a47f7566588"
+    },
+    "source_src/core/Params.h": {
+      "path": "src/core/Params.h",
+      "bytes": 25409,
+      "sha256": "10a8dbe0265d28a140ade3bfb4c4f2a81ceb713063ab36e510b4a32cdb355b20"
+    },
+    "source_src/core/OriginalCircuitLibrary.inc": {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "bytes": 30936,
+      "sha256": "a4606e3090ed2a2cd42031ed5f98c5224cb64cc4235f537634979828961e2205"
+    },
+    "source_src/core/FactoryPresets.h": {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10"
+    }
+  }
+}

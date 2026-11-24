@@ -1,0 +1,72 @@
+{
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "overall_conclusion": "cancelled",
+  "qualified": false,
+  "jobs": [
+    {
+      "id": 138282948362,
+      "name": "Linux / VST3 + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138282948529,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138282948648,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138282948726,
+      "name": "Windows / VST3 + Standalone",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 138299606710,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138299675393,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "conclusion": "skipped"
+    }
+  ],
+  "completed_native_failure": {
+    "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+    "run_id": 45346719693,
+    "attempt": 1,
+    "producer_job": 138282948529,
+    "qualified": false,
+    "artifact": {
+      "id": 14900566066,
+      "bytes": 81210,
+      "sha256": "67fecf28b8dcd553b482a81f12beb1342fb89dd499959e2f7e4c42c4f5c29efa"
+    },
+    "members": [
+      "Testing/Temporary/LastTest.log",
+      "ctest-results.xml",
+      "ci-juce-provenance.txt"
+    ],
+    "registered_cases": 266,
+    "failed": [
+      "cs80_parity_capture_tests"
+    ],
+    "formal_skips": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "passed": 263,
+    "original_scope": "Failed db6b Apple Silicon native suite; original log records only capture-schema current-count failure. Not accepted as replacement native evidence."
+  },
+  "superseded_by": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "correction_scope": "Only the parity-capture Python test contract changes: explicit202 controls and both Standard variant defaults, plus strict negative cases. Production DSP/factory data are unchanged.",
+  "failure_log": {
+    "path": "macos-arm64-test-failed-original.log",
+    "sha256": "936840e86a9fcbad62f0acae1456e19d1f248df1ef7a4e2c46af268ac2e97a3a"
+  }
+}

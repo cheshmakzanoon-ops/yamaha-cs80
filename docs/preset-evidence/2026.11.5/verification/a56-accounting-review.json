@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "worker": 56,
+  "reviewed_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "observed_head": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "release_qualified": false,
+  "scope": "Independent data, existing artifact integrity and composition review; no audio regeneration, native execution or listening assessment.",
+  "source_trees": {
+    "8685e9ed39d6347b67401da7590b7e1e8e95472d": "70592d6711dbc39e3bbc4f0adc47f1d21d87b0da",
+    "6094bce18c8b19da804c2fbc9a00e31969a7f579": "ffec7e5d062ccc6761fff9080405769d5002513a",
+    "09af5358d34a7ea431de7e8a42e35dae66e52159": "d18ddfb7766b622af346f55fe78a59d041adffc5",
+    "db6b5a76b3c5e38dd9444d0cf6065a14f6302814": "fee5d145866135a4c9afb1c22afd375042e4e86f"
+  },
+  "inventory": {
+    "baseline_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "matched6094_sha256": "faed6ff610bc778dc5135a94039344d73df5d76a6d85d48b2b35cc6290862193",
+    "final_sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1",
+    "ordered_identities": 523,
+    "changed_existing_non_volume_non_policy_programs": 521,
+    "unchanged_initialization_programs": [
+      "Init Circuit",
+      "Init Patch"
+    ],
+    "updated_tag_lists": [
+      "Velvet FX 138",
+      "Golden FX 142",
+      "Dark FX 148",
+      "Wide FX 149",
+      "Mandolin",
+      "Tubular Bells",
+      "Xylophone",
+      "Steel Drum",
+      "Chimes",
+      "Clock Bells",
+      "Wind",
+      "Surf",
+      "Thunder",
+      "Clockwork"
+    ],
+    "duplicate_non_volume_vectors": 0,
+    "body_enabled_programs": 272,
+    "circuit_only_programs": 251,
+    "active_models": {
+      "1": 20,
+      "2": 28,
+      "3": 7,
+      "4": 29,
+      "5": 14,
+      "6": 12,
+      "7": 31,
+      "8": 20,
+      "9": 91,
+      "10": 9,
+      "11": 5,
+      "12": 9,
+      "13": 2,
+      "14": 84,
+      "15": 42,
+      "16": 46,
+      "17": 5,
+      "18": 7,
+      "19": 16
+    },
+    "active_variants": {
+      "0": 461,
+      "1": 2,
+      "2": 2,
+      "3": 6,
+      "4": 6
+    },
+    "changed_old_controls_min": 1,
+    "changed_old_controls_median": 6,
+    "changed_old_controls_max": 54
+  },
+  "only_6094_to_final_control_changes": [
+    {
+      "host_index": 109,
+      "name": "Golden Pads 66",
+      "parameter": "volume",
+      "before": 0.853999972,
+      "after": 0.649999976
+    },
+    {
+      "host_index": 303,
+      "name": "Cathedral Pad",
+      "parameter": "volume",
+      "before": 0.862999976,
+      "after": 0.649999976
+    }
+  ],
+  "composed_main_summary_rederived": {
+    "programs": 523,
+    "stereo_frames_per_version": 103153374,
+    "seconds_per_version": 2149.028625,
+    "exact_pcm_equal": [
+      "Init Patch",
+      "Electric Leads 136",
+      "Pressure Lead",
+      "Init Circuit"
+    ],
+    "both_silent": [
+      "Electric Leads 136",
+      "Pressure Lead"
+    ],
+    "changed_raw_pcm": 519,
+    "audible_comparisons": 521,
+    "equal_rms_residual_above_0_001": 516,
+    "averaged_spectral_hellinger_above_0_01": 188,
+    "highest_before_peak_dbfs": -13.537388218538613,
+    "highest_after_peak_dbfs": -13.40001374848623,
+    "rms_change_db": {
+      "min": -9.623121436457147,
+      "median": -1.003743485926541,
+      "max": 3.177715759605417
+    },
+    "equal_rms_residual": {
+      "min": 0.0,
+      "median": 0.04090451793606999,
+      "max": 1.5656811107921647
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.0,
+      "median": 0.005597779826674445,
+      "max": 0.7549173622779995
+    }
+  },
+  "pressure_supplement_programs": 2,
+  "musical_programs_with_changed_output_in_main_or_pressure_gesture": 521,
+  "replacement_input_wavs": [
+    {
+      "path": "baseline-headroom-subset/109-Golden-Pads-66.wav",
+      "phase": "before",
+      "bytes": 1766458,
+      "wav_sha256": "9779d01e83292d217d8c67b651ad0a5a3bdcf503c008caf34ca53d23f3e3f7a3",
+      "pcm_sha256": "dc89236d8884580371dfb934e0d830dacc5202480f3a306d520c7c37f0a10007",
+      "frames": 220800
+    },
+    {
+      "path": "candidate-headroom-audio/109-Golden-Pads-66.wav",
+      "phase": "after",
+      "bytes": 1766458,
+      "wav_sha256": "5e58667d4dd1fe2d5c7e6992e27250b81d23adc965ab4a1038a6e8cc604f15cd",
+      "pcm_sha256": "cdd16337e3b5448ab546f988b5da537d7501408f516fcfbd77ccc4603b30b0ee",
+      "frames": 220800
+    },
+    {
+      "path": "baseline-headroom-subset/303-Cathedral-Pad.wav",
+      "phase": "before",
+      "bytes": 1766458,
+      "wav_sha256": "544c5166733f9e086916b88c310635a6b68b934e63d248fe66ba76ce8561c12a",
+      "pcm_sha256": "642b07ee0a2017510e99c375b3078ea0f9040297327579e054d27a1b6173fd92",
+      "frames": 220800
+    },
+    {
+      "path": "candidate-headroom-audio/303-Cathedral-Pad.wav",
+      "phase": "after",
+      "bytes": 1766458,
+      "wav_sha256": "bc574173432f01d4522342988cf82455895a7485d23564b335278b602d990fe8",
+      "pcm_sha256": "40b484320bf326c818dd35b8794d377a962ec587806c631a4248473c49ac5e71",
+      "frames": 220800
+    }
+  ],
+  "core_archive_members_verified": [
+    {
+      "member": "Engine.cpp.o",
+      "before_sha256": "d2da23ad245482081ac4d1ff323d8767c2dc275347b7b59069dfe58b8fe81016",
+      "after_sha256": "d2da23ad245482081ac4d1ff323d8767c2dc275347b7b59069dfe58b8fe81016",
+      "identical": true
+    },
+    {
+      "member": "EngineWscHeld.cpp.o",
+      "before_sha256": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+      "after_sha256": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+      "identical": true
+    },
+    {
+      "member": "FactoryPresets.cpp.o",
+      "before_sha256": "262709bab312a30e5b5a6885f6a36be8411572d3f46f877a4d85c5e852825204",
+      "after_sha256": "e8ed64bb79faa4470a2c515436075fbdd3a495f37f1fc067220607d6323d0224",
+      "identical": false
+    },
+    {
+      "member": "Ig00156Batch.cpp.o",
+      "before_sha256": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266",
+      "after_sha256": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266",
+      "identical": true
+    }
+  ],
+  "core_metadata_prefix": {
+    "old_controls": 200,
+    "new_controls": 202,
+    "identical_rows": 200,
+    "normalization_points_per_control": 257,
+    "retained_stream_sha256": "2632fd6788f95e94627ba5d9b176a85e93c008e198b50b23a3151e96c4fed70d",
+    "header_git_objects_match": true,
+    "new_compilation_performed": false
+  },
+  "source_differences_6094_to_db6b": [
+    "docs/INSTALL_AND_QUICKSTART.md",
+    "docs/PRESET_GUIDE.md",
+    "docs/preset-evidence/2026.11.5/inventory.json",
+    "docs/preset-evidence/2026.11.5/parameter-coverage.json",
+    "src/core/CuratedLibraryLevels.inc",
+    "src/core/OriginalCircuitLevels.inc",
+    "tests/InstrumentBodyHostTests.h",
+    "tests/LibraryAuditTests.cpp",
+    "tests/PadPolyRefinementTests.cpp"
+  ],
+  "source_differences_db6b_to_observed_head": [
+    "tests/test_parity_capture.py"
+  ],
+  "retained_input_identities": {
+    "parameter-coverage.json": {
+      "bytes": 331202,
+      "sha256": "502697b2d6b12b168f1ea274a0534f0503266cb9b5b2149e709aa57160d7635b"
+    },
+    "development/long-pad-headroom/final-bank-audio-accounting.json": {
+      "bytes": 4183,
+      "sha256": "91b2f92f2a5656bfc0e1aa74e110279246640b88a53fc48e5a52f176bce1e4e5"
+    },
+    "verification/a33-matched-bank-audio.json": {
+      "bytes": 1036051,
+      "sha256": "ffd703c9df2ef5ef6439004625a79c17e77a5f99467ecf5d5d82620cc25a8da0"
+    },
+    "development/long-pad-headroom/final-audio-supplement.json": {
+      "bytes": 5569,
+      "sha256": "d615de6ec6ca7cdb21ca84fc725c8641cbb75612f744a71cddea05ede18bd4a6"
+    },
+    "development/long-pad-headroom/inventory-delta.json": {
+      "bytes": 579,
+      "sha256": "46e9d5e84130696d49eea677e3f53ee054bb6697a4c375cb793abff2398f5af8"
+    },
+    "development/long-pad-headroom/core-object-equivalence.json": {
+      "bytes": 1407,
+      "sha256": "661ccab044f2544e0296c4418d1daf828fd3bbed3167cf32101f7a413918045d"
+    },
+    "inventory.json": {
+      "bytes": 708553,
+      "sha256": "fd91cc5dde92bf9f823114a5c07e609961d92cd69080b6b6791191e86ba2bfa1"
+    },
+    "verification/a33-retained-files.json": {
+      "bytes": 2018,
+      "sha256": "070a70f4d5b6c06cc0e8e723d243f2787a5c3554cad6dcb3383bdda2a4b8a59e"
+    },
+    "development/core-after-long-pad-headroom.json": {
+      "bytes": 425,
+      "sha256": "b943e7fce2e44c2fe22795cf1e3008b0a6688edb43706e00088614b2ec19d2a0"
+    }
+  },
+  "remaining_native_gates": [
+    "Authentic final source/run/attempt and complete native CTest/LastTest/JUCE qualification on all four targets.",
+    "cs80_parameter_state_index_tests: detached ValueTree mapping, not processor execution.",
+    "cs80_modern_recall_host_tests: actual processor prefix, variant host mapping, session/user-preset/A-B migration, all523 factory/MIDI recalls and next-note audio ownership.",
+    "cs80_typed_value_unit_tests: variant choice text and parser rejection.",
+    "cs80_ui_smoke: complete host/state/editor integration, with original successful process exit.",
+    "All13 original pluginval lanes and actual distributed-payload/source bindings."
+  ],
+  "limits": [
+    "Updated tags and descriptions are not frozen program identity fields.",
+    "Changed PCM/residual/spectrum and greater touch contrast are descriptive, not quality scores.",
+    "Two Init renders are exact only for the tested matched gestures; shared DSP changes can affect saved settings generally.",
+    "The historical A33 replay command needs its6094 inventory/executable, not current post-pad-trim paths.",
+    "Final native source must independently qualify current Python capture metadata assertions; this review does not erase their prior failure."
+  ]
+}

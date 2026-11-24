@@ -1,0 +1,38 @@
+{
+  "scope": "Historical .4 Windows artifact14856804857 route-control only; no current-release result",
+  "requested_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+  "method": "GET",
+  "utc": "2026-11-24T07:57:57.201866+00:00",
+  "credentials_supplied": false,
+  "requested_range": "bytes=0-65535",
+  "public_route_qualified": false,
+  "status": 206,
+  "final_endpoint": {
+    "scheme": "https",
+    "host": "productionresultssa9.blob.core.windows.net",
+    "path": "/actions-results/f01aefd8-37eb-8a51-beab-c334bb21eff5/workflow-job-run-f00e7343-84ee-56d8-9841-7eb255749bb5/artifacts/5e1937f844a178147f21017b52aa112644e9c9b28266c7029c264c1494850ff3.zip",
+    "query_redacted": true
+  },
+  "headers": {
+    "content-length": "65536",
+    "content-type": "application/zip",
+    "content-range": "bytes 0-65535/6361027",
+    "last-modified": "Mon, 23 Nov 2026 19:54:17 GMT",
+    "etag": "\"0x8DF499B8F127BB1\"",
+    "server": "envoy",
+    "content-disposition": "attachment; filename=\"cs80-windows-install-bundle.zip\""
+  },
+  "body_bytes_read": 65536,
+  "body_sha256": "0b7fea222846e6aa81432482baed6bcfc3338545919988556444e4ff267dea71",
+  "zip_prefix": true,
+  "truncated": false,
+  "preceding_head_observation": {
+    "method": "HEAD",
+    "utc": "2026-11-24T07:57:16.046624+00:00",
+    "status": 404,
+    "reason": "Not Found",
+    "body_excerpt": "",
+    "credentials_supplied": false,
+    "scope": "HEAD handling alone does not establish GET behavior."
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "worker": "a51",
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "tree": "fee5d145866135a4c9afb1c22afd375042e4e86f",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "producer_job": 138282948648,
+  "target": "macos-x86_64",
+  "runner": "macos-15-intel",
+  "architecture": "x86_64",
+  "review_status": "Source contract only; original native/package outcomes are pending.",
+  "inputs": [
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79"
+    },
+    {
+      "path": "scripts/verify-ci-juce-source.cmake",
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+      "git_blob": "6ab74336ad65d1edc17a957b49208ac3c1d81ca9"
+    },
+    {
+      "path": "scripts/download-pluginval-macos.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+      "git_blob": "d65dbb6de2f47abd682eae2fdab51a27363f5797"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "git_blob": "fc6a8d091e2e647c723976cf21710b37d50f3897"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "2c1008aee7c8927e5d79b845314e2e056852f4dd2f16383497a605958bd60a10",
+      "git_blob": "d6a37c684e02b897eb93eaa24dcb89289702704d"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 217322,
+      "sha256": "290c72a71bba9dcc927ab1dacd77a25f6b235bd2f84fc7c6cdf1f33a057e567f",
+      "git_blob": "f0875e30885046497c24acecf037ac53eb152f69"
+    }
+  ],
+  "required_new_tests": [
+    "cs80_struck_body_dynamics_tests",
+    "cs80_instrument_body_variant_tests",
+    "cs80_vocal_body_tests",
+    "cs80_body_articulation_engine_tests",
+    "cs80_original_articulation_tests",
+    "cs80_keyboard_response_tests",
+    "cs80_mallet_preset_refinement_tests",
+    "cs80_bass_plucked_refinement_tests",
+    "cs80_brass_organ_refinement_tests",
+    "cs80_wind_string_refinement_tests",
+    "cs80_pad_poly_refinement_tests",
+    "cs80_fx_refinement_tests",
+    "cs80_modern_preset_refinement_tests",
+    "cs80_lead_refinement_tests",
+    "cs80_preset_response_coverage_tests"
+  ],
+  "provisional_registrations": 266,
+  "expected_juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "expected_juce_version": "8.0.11",
+  "validator_contract": {
+    "version": "1.0.4",
+    "lanes": [
+      "VST3 headless",
+      "AU headless",
+      "AU GUI",
+      "AU GUI fixed-seed regression"
+    ],
+    "strictness": 10,
+    "programs": 523,
+    "fixed_seed": "0x2b4eef5",
+    "original_exits_required": true,
+    "source_failures_unsuppressed": true,
+    "download_retries_not_validation_retries": true
+  },
+  "binding_contract": {
+    "complete_au_before_and_after_diff_required": true,
+    "au_signing_precedes_copy_and_validation": true,
+    "vst3_validation_and_packaging_same_build_path_required": true,
+    "no_rebuild_between_validation_and_packaging": true,
+    "all_three_original_upload_id_digest_size_time_bindings_required": true
+  },
+  "release_qualified": false,
+  "platform_qualified": false
+}

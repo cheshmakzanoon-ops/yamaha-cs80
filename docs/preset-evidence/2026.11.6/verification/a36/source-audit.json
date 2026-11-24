@@ -1,0 +1,231 @@
+{
+  "scope": "Source and documentation review; no native processor/GUI runtime executed",
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "material_labels": [
+    "Standard",
+    "Tubular bell",
+    "Gong plate",
+    "Temple bell",
+    "Agogo bell",
+    "Music box comb",
+    "Kalimba tine",
+    "Banjo membrane",
+    "Koto bridge",
+    "Harp soundboard"
+  ],
+  "all_material_labels_present_in_guide": true,
+  "compatible_models": {
+    "Bell": [
+      "Tubular bell",
+      "Gong plate",
+      "Temple bell",
+      "Agogo bell"
+    ],
+    "Celesta": [
+      "Music box comb"
+    ],
+    "Tine electric piano": [
+      "Kalimba tine"
+    ],
+    "Steel strings": [
+      "Banjo membrane",
+      "Koto bridge"
+    ],
+    "Nylon strings": [
+      "Harp soundboard"
+    ]
+  },
+  "body_controls_per_rank": 7,
+  "body_controls_total": 14,
+  "inspected_existing_programs": [
+    {
+      "name": "Harp",
+      "host_index": 392,
+      "category": "Plucked",
+      "tags": [
+        "sine",
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A finger-plucked harp string excites a rounded soundboard response with a broad, softly notched upper spectrum. The short contact rank shares the string's pitch, then yields to a long lower aftersound. Soft arpeggios retain their gentler attack and can ring across key releases."
+    },
+    {
+      "name": "Koto",
+      "host_index": 393,
+      "category": "Plucked",
+      "tags": [
+        "init-bend",
+        "velocity",
+        "percussive"
+      ],
+      "description": "A near-bridge plectrum opens a bright notched string spectrum over the koto's long-board response. A quiet short contact rank shares the played pitch; upper string modes soften before the ringing body. Restrained initial settling leaves the ribbon available for deliberate bends."
+    },
+    {
+      "name": "Banjo",
+      "host_index": 394,
+      "category": "Plucked",
+      "tags": [
+        "percussive",
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A sharp string pluck excites the banjo's membrane-and-bridge response, with a strong low-mid body and a dry bright edge. Fast losses around the head resonance let the sound clear between picked notes; the brief contact rank adds no unrelated clavichord or held oscillator buzz."
+    },
+    {
+      "name": "Kalimba",
+      "host_index": 400,
+      "category": "Plucked",
+      "tags": [
+        "sine",
+        "percussive",
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A thumb-plucked supported tine gives a rounded fundamental and a brief nonharmonic ping, distinct from an electric-piano pickup. Both ranks share the played pitch; the brighter contact fades first while the lower tine continues ringing after key release."
+    },
+    {
+      "name": "Tubular Bells",
+      "host_index": 460,
+      "category": "Bells",
+      "tags": [
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A struck tube carries a weak low spectrum and a bright octave nominal, with the near 2:3:4 upper group suggesting the played pitch. The separate hard contact shares the same tube tuning, then clears to leave its independently decaying metal modes."
+    },
+    {
+      "name": "Music Box",
+      "host_index": 463,
+      "category": "Bells",
+      "tags": [
+        "percussive",
+        "velocity"
+      ],
+      "description": "A small plucked comb tooth rings with a clear high pitch and sparse upper resonances near 6.27 times its fundamental. A short same-pitch contact glint lights the attack; the bright overtones fade into the simple mechanical ringing tail."
+    },
+    {
+      "name": "Gong",
+      "host_index": 464,
+      "category": "Bells",
+      "tags": [
+        "percussive",
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A low mallet thud opens into a dense, irregular set of plate modes. Delayed upper resonances bloom after the impact, then lose energy at different rates; the same tuned plate supplies the strike and the lingering, shifting aftersound."
+    },
+    {
+      "name": "Temple Bell",
+      "host_index": 465,
+      "category": "Bells",
+      "tags": [
+        "velocity",
+        "dual-rank"
+      ],
+      "description": "A deep struck shell rings with stable close mode pairs and slow metallic beating. Widely separated upper resonances recede from the initial clang, leaving a calm low aftersound; the brief hard contact and the long body share one shell pitch."
+    },
+    {
+      "name": "Agogo",
+      "host_index": 477,
+      "category": "Bells",
+      "tags": [
+        "percussive",
+        "velocity"
+      ],
+      "description": "A small hollow bell opens with a hard contact and several widely spaced metal resonances. Its compact shell damps quickly for repeated strokes; a short same-pitch upper knock adds definition to each crisp metal hit."
+    }
+  ],
+  "source_receipts": [
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "bytes": 95647,
+      "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.cpp",
+      "bytes": 22323,
+      "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.cpp",
+      "bytes": 183655,
+      "sha256": "793bbec4b4b19323deb3f6f1174b7bfc471a1dab16b896cefd718100d3589860",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.h",
+      "bytes": 14210,
+      "sha256": "22d677aab5242a30073308904fc9c555086114b4060d3961c28a788d95052d8d",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/CentreRow.cpp",
+      "bytes": 8779,
+      "sha256": "bc580ee0fd5a2fd22745d6d55d0d4b04559cd2cdb0ad4f8301c7880efdaccd9d",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/UiComponents.cpp",
+      "bytes": 244993,
+      "sha256": "461dff048a7f26c04fb3f067f17dde4e5345ac5356a8455c03c867651af499dc",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/plugin/EvidenceRegister.h",
+      "bytes": 39585,
+      "sha256": "67edd376b42cd8da480396cb82c241e00a0718b67ac9e95cacda7976664217ab",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/core/InstrumentBodyMaterials.h",
+      "bytes": 1620,
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "bytes": 69309,
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "matches_source_commit": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168644,
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "matches_source_commit": true
+    },
+    {
+      "path": "tests/TypedValueUnitTests.h",
+      "bytes": 14668,
+      "sha256": "f5971fcc55bdaa9e78b08ae4829bd7053ad8e3275c02063536152f01c265092c",
+      "matches_source_commit": true
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "bytes": 43689,
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+      "matches_source_commit": true
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 33875,
+      "sha256": "ac3e0bbec6f201c43bd0213b91e693ec7c9b5a9979c60e47221b61e123649c94",
+      "matches_source_commit": true
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 17912,
+      "sha256": "e317199d472a0eb70fb8a0818b6003ec997021952ca53f7e0d1a4bfe0ad1007d",
+      "matches_source_commit": true
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_6.md",
+      "bytes": 13419,
+      "sha256": "562c6689cbcda417d456cbeca8b77dd79e2c210899600fe09f09241a1922d48d",
+      "matches_source_commit": true
+    }
+  ],
+  "production_changed": false
+}

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "worker": "a49",
+  "status": "paused_for_replacement_source",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "run_id": 45346719693,
+  "attempt": 1,
+  "last_observed_at_utc": "2026-11-24T07:49:46Z",
+  "producer_job_id": 138282948726,
+  "last_job_status": "in_progress",
+  "last_job_conclusion": null,
+  "current_step": {
+    "name": "Test",
+    "status": "in_progress",
+    "conclusion": null,
+    "number": 7,
+    "started_at": "2026-11-24T07:34:09Z",
+    "completed_at": null
+  },
+  "observed_current_artifacts": 0,
+  "archives_downloaded": 0,
+  "actual_native_outcomes_asserted": false,
+  "actual_validator_outcomes_asserted": false,
+  "parent_reported_reason": "Root reported supporting DSP parity-export tests still expect200 parameters although the revised core exposes202; an exact-source replacement run is required after test-contract correction. A49 did not independently inspect that supporting failure.",
+  "prepared_scope": "Source-pinned Windows contracts and an unexecuted final evidence binder covering native roster, authentic upload bindings, actual validators and full VST3 payload equality.",
+  "not_done": [
+    "Final Windows producer outcomes",
+    "Windows actual install/test/VST3 artifact acquisition",
+    "Original Windows consumer/pluginval artifact qualification",
+    "A41/A36 acceptance on actual Windows artifacts"
+  ],
+  "no_production_changes": true,
+  "no_ci_reruns": true,
+  "no_external_mutations": true,
+  "retained": [
+    {
+      "file": "cmake-registration-delta.diff",
+      "bytes": 6189,
+      "sha256": "721c7d787e336ca112401bceba0e7049f7a158c8a3ec5081488aff5bfebd9d90"
+    },
+    {
+      "file": "jobs-initial-api.json",
+      "bytes": 12943,
+      "sha256": "f0e6039cc6e43ce01ee501a6e4d274038e1d709831e7465e700027003b2bb948"
+    },
+    {
+      "file": "jobs-paused-api.json",
+      "bytes": 12943,
+      "sha256": "f0e6039cc6e43ce01ee501a6e4d274038e1d709831e7465e700027003b2bb948"
+    },
+    {
+      "file": "qualify-windows.py",
+      "bytes": 20714,
+      "sha256": "bdfcd1f29270c263e199eeaf15a719a9985d87f9e8e16b72b7f4771d79a4d2d9"
+    },
+    {
+      "file": "run-attempt-initial-api.json",
+      "bytes": 13940,
+      "sha256": "08fe4e7a36a49d1ebf2e5cd7c3f2a3530aed0db166272765af8c3a24899ecd5c"
+    },
+    {
+      "file": "source-build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    },
+    {
+      "file": "source-contract.json",
+      "bytes": 3880,
+      "sha256": "eca93c9e14cc945f9a01e77801ccc59fbf8d5732b37446b38f3f1040ea9d57ab"
+    },
+    {
+      "file": "source-download-pluginval-windows.py",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a"
+    },
+    {
+      "file": "source-verify-ci-juce-source.cmake",
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "scope": "Inert synthetic header/archive and supplied-receipt fixtures; no product execution, real CI result, download authenticity or release qualification.",
+  "committed_source_used_for_checker_loading": "6094bce18c8b19da804c2fbc9a00e31969a7f579",
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "positive_target_fixtures": 4,
+  "rejected_mutations": 22,
+  "observations": [
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "linux-x86_64",
+      "header_count": 2,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "windows-x86_64",
+      "header_count": 2,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "macos-arm64",
+      "header_count": 3,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "macos-x86_64",
+      "header_count": 3,
+      "release_qualified": false
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: linux-x86_64",
+      "error": "ELF architecture differs from advertised x86_64: /tmp/a41-install-accept-bq_pd1cs/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: windows-x86_64",
+      "error": "Expected x86_64 PE32+ binary: /tmp/a41-install-accept-npmdhoh4/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: macos-arm64",
+      "error": "Expected arm64 Mach-O 64-bit binary: /tmp/a41-install-accept-aqp8lbw4/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: macos-x86_64",
+      "error": "Expected x86_64 Mach-O 64-bit binary: /tmp/a41-install-accept-6x7_kcj3/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "inner payload checksum corruption while outer digest agrees",
+      "error": "Checksum mismatch: cs80-reference-windows-x86_64-6094bce18c8b.zip"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "duplicate artifact JSON key",
+      "error": "Duplicate JSON key: id"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "extra outer member despite updated authentic-byte-style metadata",
+      "error": "Invalid or oversized outer ZIP directory"
+    },
+    {
+      "kind": "scope_control",
+      "run_conclusion": "failure",
+      "release_qualified": false
+    },
+    {
+      "kind": "snapshot_control",
+      "inputs_changed_after_read": 3,
+      "same_bytes_hashed_and_inspected": true
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:digest",
+      "error": "Archive SHA256 differs from API"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:size_in_bytes",
+      "error": "Archive size differs from API"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:name",
+      "error": "Artifact name differs from expected target"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:expired",
+      "error": "Artifact expired or expiry state missing"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.head_sha",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.id",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.repository_id",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.run_attempt",
+      "error": "Artifact declared attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:archive_download_url",
+      "error": "Artifact API repository/ID URL mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:head_sha",
+      "error": "Run API source/run/attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:run_attempt",
+      "error": "Run API source/run/attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:repository.full_name",
+      "error": "Run API repository identity mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:head_repository.id",
+      "error": "Run API repository identity mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "symlink external archive",
+      "error": "[Errno 40] Too many levels of symbolic links: '/tmp/a41-fixture-e5q94bsb/1/linked.zip'"
+    },
+    {
+      "kind": "publication_control",
+      "existing_file_and_dangling_symlink_preserved": true
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "explicit revision does not match source declaration",
+      "error": "Expected revision differs from exact source commit"
+    }
+  ],
+  "helper_sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+  "probe_sha256": "7a93df2477f0c6c9958d2decd667ccda264af2cf5204a9d8a35fb04135e5a739"
+}

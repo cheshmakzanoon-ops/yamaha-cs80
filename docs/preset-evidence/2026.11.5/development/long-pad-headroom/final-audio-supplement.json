@@ -1,0 +1,132 @@
+{
+  "source_before": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "source_after": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "summary": {
+    "programs": 2,
+    "stereo_frames_per_version": 441600,
+    "seconds_per_version": 9.2,
+    "all_samples_finite_and_within_full_scale": true,
+    "exact_pcm_equal": [],
+    "both_silent": [],
+    "changed_raw_pcm": 2,
+    "audible_comparisons": 2,
+    "equal_rms_residual_above_0_001": 2,
+    "averaged_spectral_hellinger_above_0_01": 0,
+    "rms_change_db": {
+      "min": -2.868767917431039,
+      "median": -2.846085875295896,
+      "max": -2.823403833160753
+    },
+    "equal_rms_residual": {
+      "min": 0.002398505308008423,
+      "median": 0.008583839517236597,
+      "max": 0.014769173726464769
+    },
+    "averaged_spectral_hellinger": {
+      "min": 0.0011071022067374614,
+      "median": 0.001343686396044709,
+      "max": 0.0015802705853519567
+    },
+    "highest_before_peak_dbfs": -16.79476068427656,
+    "highest_after_peak_dbfs": -19.52763178436648
+  },
+  "programs": [
+    {
+      "index": 109,
+      "name": "Golden Pads 66",
+      "category": "Pads",
+      "settings": {
+        "note": "60",
+        "sample_rate": "48000",
+        "velocity": "0.8000000119",
+        "pressure": "0",
+        "hold_seconds": "3.599999905",
+        "tail_seconds": "1",
+        "rank": "0"
+      },
+      "frames": 220800,
+      "before_wav_sha256": "9779d01e83292d217d8c67b651ad0a5a3bdcf503c008caf34ca53d23f3e3f7a3",
+      "after_wav_sha256": "5e58667d4dd1fe2d5c7e6992e27250b81d23adc965ab4a1038a6e8cc604f15cd",
+      "before_pcm_sha256": "dc89236d8884580371dfb934e0d830dacc5202480f3a306d520c7c37f0a10007",
+      "after_pcm_sha256": "cdd16337e3b5448ab546f988b5da537d7501408f516fcfbd77ccc4603b30b0ee",
+      "exact_pcm_equal": false,
+      "changed_float32_bit_patterns": 441600,
+      "before": {
+        "peak_dbfs": -16.79476068427656,
+        "rms_dbfs": -27.741113520866225,
+        "early_rms_dbfs": -40.2003665588276,
+        "body_rms_dbfs": -26.47171207828862,
+        "tail_rms_dbfs": -34.41418729461222,
+        "late_held_relative_to_early_db": 13.728654480538982,
+        "release_tail_relative_to_late_held_db": -7.942475216323599
+      },
+      "after": {
+        "peak_dbfs": -19.52763178436648,
+        "rms_dbfs": -30.56451735402698,
+        "early_rms_dbfs": -43.00255633752313,
+        "body_rms_dbfs": -29.31064314720679,
+        "tail_rms_dbfs": -37.2313558315879,
+        "late_held_relative_to_early_db": 13.691913190316342,
+        "release_tail_relative_to_late_held_db": -7.920712684381113
+      },
+      "raw_difference_rms_dbfs": -38.866556974755426,
+      "both_silent": false,
+      "rms_change_db": -2.823403833160753,
+      "equal_rms_residual": 0.014769173726464769,
+      "waveform_correlation": 0.9998909357537188,
+      "averaged_spectral_hellinger": 0.0015802705853519567,
+      "before_averaged_centroid_hz": 308.4304891014035,
+      "after_averaged_centroid_hz": 309.8951049675539
+    },
+    {
+      "index": 303,
+      "name": "Cathedral Pad",
+      "category": "Pads",
+      "settings": {
+        "note": "60",
+        "sample_rate": "48000",
+        "velocity": "0.8000000119",
+        "pressure": "0",
+        "hold_seconds": "3.599999905",
+        "tail_seconds": "1",
+        "rank": "0"
+      },
+      "frames": 220800,
+      "before_wav_sha256": "544c5166733f9e086916b88c310635a6b68b934e63d248fe66ba76ce8561c12a",
+      "after_wav_sha256": "bc574173432f01d4522342988cf82455895a7485d23564b335278b602d990fe8",
+      "before_pcm_sha256": "642b07ee0a2017510e99c375b3078ea0f9040297327579e054d27a1b6173fd92",
+      "after_pcm_sha256": "40b484320bf326c818dd35b8794d377a962ec587806c631a4248473c49ac5e71",
+      "exact_pcm_equal": false,
+      "changed_float32_bit_patterns": 441600,
+      "before": {
+        "peak_dbfs": -16.8941550298285,
+        "rms_dbfs": -27.728186820979595,
+        "early_rms_dbfs": -40.21547971129437,
+        "body_rms_dbfs": -26.486736504786617,
+        "tail_rms_dbfs": -34.010721704609,
+        "late_held_relative_to_early_db": 13.728743206507756,
+        "release_tail_relative_to_late_held_db": -7.523985199822382
+      },
+      "after": {
+        "peak_dbfs": -19.766561487888676,
+        "rms_dbfs": -30.596954738410638,
+        "early_rms_dbfs": -43.08357938633342,
+        "body_rms_dbfs": -29.358238278987763,
+        "tail_rms_dbfs": -36.875435610767,
+        "late_held_relative_to_early_db": 13.725341107345649,
+        "release_tail_relative_to_late_held_db": -7.517197331779236
+      },
+      "raw_difference_rms_dbfs": -38.745278556669106,
+      "both_silent": false,
+      "rms_change_db": -2.868767917431039,
+      "equal_rms_residual": 0.002398505308008423,
+      "waveform_correlation": 0.9999971235861438,
+      "averaged_spectral_hellinger": 0.0011071022067374614,
+      "before_averaged_centroid_hz": 300.27601479448947,
+      "after_averaged_centroid_hz": 300.1069288217044
+    }
+  ],
+  "comparator_sha256": "d635f6a0e2ff0fffbd7e41dce1b9e304745ed27286875c4f24b7c92da397f2d5",
+  "after_executable_sha256": "f98a04dfe401acf10957e9a13b68bf962361642032e739ac180d627ba5229cf3",
+  "scope": "Exact final-source matched-gesture supplements for the only two factory vectors changed after the complete source6094 A33 comparison. The inventory-delta and core-object-equivalence reports establish unchanged inputs/core objects for the other521 programs. Combined evidence accounts for all521 musical programs and both preserved initialization programs. Signal differences do not establish perceptual improvement or acoustic equivalence."
+}

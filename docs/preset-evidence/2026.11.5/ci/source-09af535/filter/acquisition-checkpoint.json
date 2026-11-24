@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "reviewer": "a47_filter_ci_qualification",
+  "checkpoint_time_utc": "2026-11-24 07:39:34 UTC",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45344888479,
+  "run_attempt": 1,
+  "run_source": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "release_source": "db6b5a76b3c5e38dd9444d0cf6065a14f6302814",
+  "acquisition": "Connected authenticated GitHub tools. API files retain the structuredContent.content response body; logs retain the complete structuredContent.content UTF-8 string, including its original BOM and timestamped lines. No command was rerun to substitute for original CI evidence.",
+  "api_records": [
+    {
+      "file": "run-checkpoint-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/attempts/1"
+    },
+    {
+      "file": "jobs-checkpoint-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/attempts/1/jobs?per_page=100&page=1"
+    },
+    {
+      "file": "artifacts-checkpoint-api.json",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45344888479/artifacts?per_page=100"
+    }
+  ],
+  "log_records": [
+    {
+      "file": "job-138276946182.log",
+      "tool": "github_fetch_workflow_job_logs",
+      "job_id": 138276946182,
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946182/logs"
+    },
+    {
+      "file": "job-138276946524.log",
+      "tool": "github_fetch_workflow_job_logs",
+      "job_id": 138276946524,
+      "api_endpoint": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138276946524/logs"
+    }
+  ],
+  "integrity_scope": "SHA256 records detect changes to retained bodies. They are not GitHub signatures and do not independently authenticate locally supplied copies.",
+  "retention_scope": "No artifact-upload step exists in this workflow. The checkpoint artifacts API has total_count=0. Full original job logs and API bodies are the retained execution evidence.",
+  "timestamp_scope": "The checkpoint acquisition time is recorded here. Earlier raw snapshots and log retrievals were preserved before this checkpoint; no exact earlier retrieval timestamps are invented.",
+  "resumption": "Do not accept the full matrix until all six original jobs, their three direct command steps, and their four actual CTest result lines have completed successfully. Use the same attempt and preserve any failures."
+}

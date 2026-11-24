@@ -1,0 +1,21 @@
+{
+  "source_executed": "09af5358d34a7ea431de7e8a42e35dae66e52159",
+  "run_id": 45344888473,
+  "run_attempt": 1,
+  "job_id": 138276946587,
+  "actual_artifact_id": 14899141895,
+  "reviewed_images_sha256": {
+    "main-1600x1000.png": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+    "main-1120x700.png": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+    "studio-settings-1600x1000.png": "7f54e36ff3bc82f28fc3f63ff48c7b0d6bdde226f04371f2a41ee3924f3aaafe",
+    "studio-settings-1120x700.png": "52b87636065ce0edca1a85249308d9f20919f7bb6ccc4413201bbc562cffd59f",
+    "main-source-performance-headroom-1600x1000.png": "2bb4d82824c186618f4f40ada5ceb57425c54f448a26dec6583bed18429877c1"
+  },
+  "observations": [
+    "Both actual golden candidates show the complete hardware panel, controls and keyboard at their intended image sizes; their full PNG bytes also match the unchanged source goldens.",
+    "Both actual Studio Settings images show the instrument panel and evidence register within the frame. The visible instrument text states two ranks, one circuit engine and 523 existing programs. No retired mode chooser is visible.",
+    "The settings register retains the existing evidence qualifications and the footer says no hardware match is established. These images are rendered gallery observations, not golden image comparisons.",
+    "The source-performance headroom capture shows active voices, illuminated keys and an operating output meter. It is an intentional source-performance fixture, not a measurement of all preset headroom."
+  ],
+  "scope": "Five actual images were visually inspected. All 70 PNGs were independently decoded and their dimensions recorded; all 73 files were read, CRC-checked and hashed. This does not claim a human visual inspection of every gallery image, instrument acoustic realism, native-platform rendering equality or actual hardware measurement."
+}

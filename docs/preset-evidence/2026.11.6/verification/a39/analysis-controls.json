@@ -1,0 +1,64 @@
+{
+  "checks": 3,
+  "failures": 0,
+  "known_unequal_channel_loss_db": 1.3353890837021754,
+  "controls": {
+    "same_phase": {
+      "qualified_energy": true,
+      "stereo_rms_dbfs": -23.01029995663977,
+      "mono_loss_db": 4.339473599489771e-14,
+      "left_right_balance_db": 0.0,
+      "uncentered_channel_correlation": 0.9999999999999899,
+      "side_mid_ratio_db": -276.9897000433602,
+      "dominant_hz": 440.0,
+      "dominant_band": {
+        "relative_stereo_power_db": -5.162642811795862e-10,
+        "qualified_energy": true,
+        "mono_loss_db": 0.0
+      },
+      "upper_band": {
+        "relative_stereo_power_db": -149.7604661009766,
+        "qualified_energy": false,
+        "mono_loss_db": null
+      }
+    },
+    "opposite_phase": {
+      "qualified_energy": true,
+      "stereo_rms_dbfs": -23.01029995663977,
+      "mono_loss_db": 276.98970004336024,
+      "left_right_balance_db": 0.0,
+      "uncentered_channel_correlation": -0.9999999999999899,
+      "side_mid_ratio_db": 276.9897000433602,
+      "dominant_hz": 440.0,
+      "dominant_band": {
+        "relative_stereo_power_db": -5.162642811795862e-10,
+        "qualified_energy": true,
+        "mono_loss_db": 349.36468501062564
+      },
+      "upper_band": {
+        "relative_stereo_power_db": -149.7604661009766,
+        "qualified_energy": false,
+        "mono_loss_db": null
+      }
+    },
+    "unequal_same_phase": {
+      "qualified_energy": true,
+      "stereo_rms_dbfs": -25.757310526056088,
+      "mono_loss_db": 1.3353890837022186,
+      "left_right_balance_db": 12.041199826559248,
+      "uncentered_channel_correlation": 0.9999999999999899,
+      "side_mid_ratio_db": -4.436974992327126,
+      "dominant_hz": 440.0,
+      "dominant_band": {
+        "relative_stereo_power_db": -5.162657276707862e-10,
+        "qualified_energy": true,
+        "mono_loss_db": 1.3353890837021747
+      },
+      "upper_band": {
+        "relative_stereo_power_db": -149.7604661009766,
+        "qualified_energy": false,
+        "mono_loss_db": null
+      }
+    }
+  }
+}

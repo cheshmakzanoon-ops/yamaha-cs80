@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "worker": "a58",
+  "scope": "Additional mixed-attempt preparation; preserves original A58 checkpoint and failed ARM evidence.",
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/mixed-attempt-supplement.json",
+      "bytes": 19305,
+      "sha256": "90399ef3692146abb9a55716c3f2ef690caf0f76cc21d2adb8b04ee32369e84e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/mixed-attempt-supplement.md",
+      "bytes": 5087,
+      "sha256": "41d3730a0d69a13896c97fe71e15eadafe69d32f75f2ba945e14ddd1aee2cea0"
+    }
+  ],
+  "original_checkpoint": {
+    "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/checkpoint-retained-files.json",
+    "bytes": 2006,
+    "sha256": "6facc8121df5b67f218c83c403bc0315f08e1b87a089185330c409e5ec912327"
+  },
+  "release_qualified": false
+}

@@ -1,0 +1,73 @@
+{
+  "worker": "a46",
+  "status": "preparation_only_actual_windows_execution_pending",
+  "recorded_at_utc": "2026-11-24T10:27:51.251610+00:00",
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "run_id": 45366603800,
+  "attempt": 1,
+  "native_qualified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "observed_windows_jobs": [
+    {
+      "id": 138349817051,
+      "name": "Windows / VST3 + Standalone",
+      "status": "in_progress",
+      "conclusion": null,
+      "current_steps": [
+        "Test"
+      ]
+    }
+  ],
+  "observed_windows_artifacts": [],
+  "expected_registered_source_derived_not_observed": 251,
+  "protocol_syntax_checked": true,
+  "protocol_executed_on_actual_inputs": false,
+  "records": [
+    {
+      "path": "source-contract.json",
+      "bytes": 11539,
+      "sha256": "d4561d7c9c510c672d0cf78892b2356198eec6f368f61b35161934cf0a69de63"
+    },
+    {
+      "path": "cmake-registration-delta.diff",
+      "bytes": 2503,
+      "sha256": "8a9a44c59475997c06d9dddcb819097c570080a98445d06fe2c397f2dcf3c70e"
+    },
+    {
+      "path": "inspect_archives.py",
+      "bytes": 4379,
+      "sha256": "278316e96f8a10d2c6a2b415a7d1e814d79c8c15d8ac7d40590a45353b0ecaab"
+    },
+    {
+      "path": "qualify_windows.py",
+      "bytes": 28098,
+      "sha256": "7060d8c3d0d478737c99abeb7fcbd0ba37b8ee04256a791136226677fd59c95c"
+    },
+    {
+      "path": "run-initial-api.json",
+      "bytes": 14072,
+      "sha256": "e9cc574a3b387d6413246a1fb34ca9fd0855aac35cee96bc6b98a246c1ab811a"
+    },
+    {
+      "path": "jobs-initial-api.json",
+      "bytes": 14194,
+      "sha256": "8979a6953c5de0f5b3831dd199c3631f73811f5d35b15786d928a9050b931577"
+    },
+    {
+      "path": "artifacts-initial-api.json",
+      "bytes": 2177,
+      "sha256": "d6501246f3184c17de304dfae40969a0c0c50d7c1da66e6fa5903ec6c0a64e9b"
+    },
+    {
+      "path": "jobs-preparation-api.json",
+      "bytes": 14194,
+      "sha256": "8979a6953c5de0f5b3831dd199c3631f73811f5d35b15786d928a9050b931577"
+    },
+    {
+      "path": "artifacts-preparation-api.json",
+      "bytes": 2177,
+      "sha256": "d6501246f3184c17de304dfae40969a0c0c50d7c1da66e6fa5903ec6c0a64e9b"
+    }
+  ]
+}

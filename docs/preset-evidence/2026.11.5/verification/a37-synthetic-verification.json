@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic helper verification only; no actual 2026.11.5 native artifacts supplied",
+  "status": "PASS",
+  "tests": 18,
+  "duration_seconds": 0.299,
+  "release_qualified": false,
+  "native_validation_run": false,
+  "historical_results_reused": false,
+  "production_or_workflow_edits": false,
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a37-verify-macos-binding.py",
+      "bytes": 23492,
+      "sha256": "214a15276244a6ebfd57f66c66ccbef9678f2435ae2b9c9ca43aadbc92a8eda2"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a37-test-macos-binding.py",
+      "bytes": 15689,
+      "sha256": "19044605402b282e97ed684255c3ce40f396c866445d5ebab5d1113ba67065fa"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a37-macos-binding-usage.md",
+      "bytes": 7247,
+      "sha256": "3354c1cd0d74f929767df746f55c28e2af6ef6edfc2de26a436199e38993e787"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a37-synthetic-tests.log",
+      "bytes": 2037,
+      "sha256": "d97e04a07258dfe44ee2bfbce54f4ea9d61fc9b0f2d32cb124cf07e3415ef64f"
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    {
+      "path": "scripts/download-pluginval-macos.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290"
+    }
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 python docs/preset-evidence/2026.11.5/verification/a37-test-macos-binding.py"
+}

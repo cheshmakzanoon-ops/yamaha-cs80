@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "status": "parser_archive_and_member_input_binding_verified",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "run_id": 45351731801,
+  "attempt_context": 1,
+  "target": "windows-x86_64",
+  "parser_archive_binding_verified": true,
+  "native_results_accepted": false,
+  "original_attempt_binding_verified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "parser_source_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+  "parser_sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+  "checker_sha256": "cada3812da3285e91116b0273b8bda0f4782bcc05f968e450dfb4ed2f540b682",
+  "bindings": [
+    {
+      "kind": "native",
+      "parser_archive_record": {
+        "path": "/workspace/scratch/c98fb40a9529/ci-c76-windows-downloads/test-evidence.zip",
+        "bytes": 77576,
+        "sha256": "711a6b245060a73637dcc94461df2033282d3bf57fb154592f13bdf63135da4f"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14904251198,
+        "name": "cs80-windows-test-evidence",
+        "bytes": 77576,
+        "sha256": "711a6b245060a73637dcc94461df2033282d3bf57fb154592f13bdf63135da4f"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "junit",
+          "path": "ctest-results.xml",
+          "bytes": 120766,
+          "sha256": "c83c76518de1f6a0760e7a13b0da361b1f6176536b10b4b2040781e1443c9495"
+        },
+        {
+          "role": "lasttest",
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 356283,
+          "sha256": "ed6af6eab9168854092b5297c560f6a5b48022eef026774278419fa359fe61bb"
+        },
+        {
+          "role": "juce_provenance",
+          "path": "ci-juce-provenance.txt",
+          "bytes": 585,
+          "sha256": "a2a2d2ddaed333eb07120d645c81eaed04d08d864ebecfcaf46b0914ab921083"
+        }
+      ]
+    },
+    {
+      "kind": "validator",
+      "parser_archive_record": {
+        "path": "/workspace/scratch/c98fb40a9529/ci-c76-windows-downloads/pluginval.zip",
+        "bytes": 5083,
+        "sha256": "c152c11ab6d8bea1f5777ce3c1877124acb05678e08e658647bb9523252ab705"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14903484339,
+        "name": "cs80-pluginval-windows",
+        "bytes": 5083,
+        "sha256": "c152c11ab6d8bea1f5777ce3c1877124acb05678e08e658647bb9523252ab705"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "validator_version",
+          "path": "pluginval-download.json",
+          "bytes": 718,
+          "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c"
+        },
+        {
+          "role": "headless/console",
+          "path": "pluginval-windows.log",
+          "bytes": 7382,
+          "sha256": "ee286f1d7ba9ffad2ade59634650974a7c70c71173e15c3c48eab94e4b147e93"
+        },
+        {
+          "role": "headless/report",
+          "path": "pluginval-reports/cs80-windows",
+          "bytes": 7168,
+          "sha256": "7a4580b98ebd427c317493fb47695587291147435335190e756d4a15efb5fe6b"
+        },
+        {
+          "role": "headless-seed/console",
+          "path": "pluginval-windows-seed-regression.log",
+          "bytes": 7382,
+          "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45"
+        },
+        {
+          "role": "headless-seed/report",
+          "path": "pluginval-reports/cs80-windows-seed-regression",
+          "bytes": 7168,
+          "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616"
+        }
+      ]
+    }
+  ],
+  "inputs": {
+    "observations": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/native-validator-observations.json",
+      "bytes": 92171,
+      "sha256": "bc9de21429fe6a147c972a034a837a774d5e712b205ef868100fbddce0510792"
+    },
+    "native_zip": {
+      "path": "../ci-c76-windows-downloads/test-evidence.zip",
+      "bytes": 77576,
+      "sha256": "711a6b245060a73637dcc94461df2033282d3bf57fb154592f13bdf63135da4f"
+    },
+    "native_api": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/test-evidence-api.json",
+      "bytes": 796,
+      "sha256": "b187ae230bf43b6fb05cf13b6addbf45365ded3278e200cfc35c2b81432f42b4"
+    },
+    "validator_zip": {
+      "path": "../ci-c76-windows-downloads/pluginval.zip",
+      "bytes": 5083,
+      "sha256": "c152c11ab6d8bea1f5777ce3c1877124acb05678e08e658647bb9523252ab705"
+    },
+    "validator_api": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/pluginval-api.json",
+      "bytes": 791,
+      "sha256": "485b7e35f55fd48746a41105761a8749452f8f86e4e9af509bceaf6a8bb893e1"
+    }
+  },
+  "limits": [
+    "Supplied API authenticity and exact producing attempt require the original external acquisition/job/upload gates.",
+    "This checks actual input identities, including parsed member bytes; it does not accept test counts, skips, lane results, exits, retries or payload equivalence.",
+    "Retain the raw parser release_qualified:false field unchanged."
+  ]
+}

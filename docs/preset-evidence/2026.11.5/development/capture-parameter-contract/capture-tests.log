@@ -1,0 +1,18 @@
+test_bad_arguments_fail (__main__.CaptureTests.test_bad_arguments_fail) ... ok
+test_finite_nonzero_complete_channels (__main__.CaptureTests.test_finite_nonzero_complete_channels) ... ok
+test_independent_process_byte_determinism (__main__.CaptureTests.test_independent_process_byte_determinism) ... ok
+test_metadata_and_fixed_stimulus (__main__.CaptureTests.test_metadata_and_fixed_stimulus) ... ok
+test_metadata_mutations_are_detected (__main__.CaptureTests.test_metadata_mutations_are_detected) ... ok
+test_sample_mutations_are_detected (__main__.CaptureTests.test_sample_mutations_are_detected) ... ok
+test_unwritable_destination_fails (__main__.CaptureTests.test_unwritable_destination_fails) ... ok
+test_fixture_switch_removes_only_known_stale_trace (__main__.LiveCaptureTests.test_fixture_switch_removes_only_known_stale_trace) ... ok
+test_live_independent_process_determinism_and_audio (__main__.LiveCaptureTests.test_live_independent_process_determinism_and_audio) ... ok
+test_live_metadata_mutations (__main__.LiveCaptureTests.test_live_metadata_mutations) ... ok
+test_live_metadata_replay_and_probe_law (__main__.LiveCaptureTests.test_live_metadata_replay_and_probe_law) ... ok
+test_live_probe_mutations (__main__.LiveCaptureTests.test_live_probe_mutations) ... ok
+test_strict_json_and_failed_rerun_manifest (__main__.LiveCaptureTests.test_strict_json_and_failed_rerun_manifest) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 4.126s
+
+OK

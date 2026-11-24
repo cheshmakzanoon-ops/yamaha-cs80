@@ -1,0 +1,32 @@
+{
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "source_hashes": {
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/FactoryPresets.h": "31082897ae41627f9e757b59990b8394c679c6ed74a68ed554ed439e30e35ff4",
+    "src/core/InstrumentBody.h": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+    "src/core/curated/Bass.inc": "ae22d2c220127be965640beda4ad8b9a566761f45aa7d24286ca080f10b48248",
+    "src/core/curated/Bells.inc": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+    "src/core/curated/Brass.inc": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+    "src/core/curated/Fx.inc": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3",
+    "src/core/curated/Keys.inc": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+    "src/core/curated/Leads.inc": "022dc22a0e45660680accd8856a44e77cd7ac09e3d4c1267cd5f0aa11cf7c9f4",
+    "src/core/curated/Modern.inc": "8850f344df9c2e144488fe4b94f7d226499daed9ae652ad329573b90b9609cfc",
+    "src/core/curated/Organ.inc": "b49954a3f04ba7aecead9cd3be97bd5d0cba7fec5ad88c9305567e982a3b089b",
+    "src/core/curated/Pads.inc": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+    "src/core/curated/Plucked.inc": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+    "src/core/curated/Polysynth.inc": "2ea34eefa62aeaaca600bd65038446eb2d812aaab8b5d43dd8d3903815044649",
+    "src/core/curated/Strings.inc": "0c36b00a0e3e430fbe32a1e399eabc1003d55eb02c6d94208afc5f6effeb5b17",
+    "src/core/curated/Winds.inc": "97aec97d480995a3db46b00dc9ca16e678397bd38996a86a93c05ac4aa678420",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13"
+  },
+  "core_archive_sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "core_archive_unchanged_after_render": true,
+  "probe_sha256": "f4d52906ceccdf899370934188067412e8c2161b0f22b4230264a7d27c47cd83",
+  "probe_build_command": "c++ -std=c++20 -O2 -Isrc docs/preset-evidence/2026.11.6/verification/a28/sequence-phrase-probe.cpp build-preset/libcs80_core.a -o /tmp/cs80-a28-phrase",
+  "articulation_test_sha256": "80c40682d3b114288a873de7efe8f2634cbc730959bb20860c39b8840f1515fc"
+}

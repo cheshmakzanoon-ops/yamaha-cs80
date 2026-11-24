@@ -1,0 +1,1 @@
+Initial probe setup used nonexistent CP_tone identifier; compiler rejected it before execution. Removed that redundant assignment: ParamValues defaults already select PANEL, as in the existing InstrumentBodyEngineTests fixture. No production change.

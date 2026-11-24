@@ -1,0 +1,70 @@
+{
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "scope": "Direct generator boundary and memory/undefined-behavior checks; not full Engine, leak, callback CPU or acoustic-equivalence evidence",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=c++20",
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer"
+  ],
+  "asan_options": "detect_leaks=0",
+  "production_edits": false,
+  "sanitized_exit": 0,
+  "negative_exit": 1,
+  "negative_mutation": {
+    "file": "src/core/InstrumentBody.h",
+    "before": "const double antialias = t * t * (3.0 - 2.0 * t);",
+    "after": "const double antialias = 1.0; // A32 deliberate negative control",
+    "scope": "Temporary copied header only"
+  },
+  "measurements": {
+    "checks": 3236,
+    "failures": 0,
+    "boundary_cases": 1440,
+    "fallback_comparisons": 211,
+    "cutoff_cases": 32,
+    "malformed_control_cases": 27,
+    "rendered_samples": 11223296,
+    "maximum_absolute_sample": 0.715956986,
+    "negative_failures": 32
+  },
+  "files": {
+    "src/core/InstrumentBody.h": {
+      "bytes": 69309,
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "matches_commit": true
+    },
+    "src/core/InstrumentBodyMaterials.h": {
+      "bytes": 1620,
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_commit": true
+    },
+    "src/core/InstrumentBodyVariants.h": {
+      "bytes": 1259,
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "matches_commit": true
+    },
+    "docs/preset-evidence/2026.11.6/verification/a32/extremes.cpp": {
+      "bytes": 4119,
+      "sha256": "87ed1c6ab2c0df6d803e3322fff2ce2ba9061ded2726dd24f7c7d6b927efe308"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a32/extremes-sanitized.log": {
+      "bytes": 126,
+      "sha256": "0e57c0977c43febab905719a6c4c33fd218bc172e50ae5782c79cf0ce7b66e40"
+    },
+    "docs/preset-evidence/2026.11.6/verification/a32/cutoff-disabled-negative.log": {
+      "bytes": 2303,
+      "sha256": "538426c7b85445c3154d144956205a2012c15913410d33c34b11b79b793224e0"
+    },
+    "/workspace/scratch/b9c11dd92abc/a32-build/extremes-san": {
+      "bytes": 967624,
+      "sha256": "084384ac1a3e902566f7590f746d586fb46622ea1bb62c07446e4952c89269f2"
+    },
+    "/workspace/scratch/b9c11dd92abc/a32-build/extremes-negative": {
+      "bytes": 71240,
+      "sha256": "048bf2312f5b9c67de25a38f27b6d8f6a8fa863290235a6dbb5dc976e4b1ef77"
+    }
+  }
+}

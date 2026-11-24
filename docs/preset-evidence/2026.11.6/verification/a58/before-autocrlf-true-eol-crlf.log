@@ -1,0 +1,24 @@
+Rejected 43 structural mutations
+test_allowed_tags_description_and_musical_volume_edits (__main__.ContractTests.test_allowed_tags_description_and_musical_volume_edits) ... ok
+test_cli_failure_preserves_existing_report_and_input_bytes (__main__.ContractTests.test_cli_failure_preserves_existing_report_and_input_bytes) ... ok
+test_cli_valid_report_and_failed_comparison_are_atomic (__main__.ContractTests.test_cli_valid_report_and_failed_comparison_are_atomic) ... FAIL
+test_identity_and_inventory_mutations_are_rejected (__main__.ContractTests.test_identity_and_inventory_mutations_are_rejected) ... ok
+test_json_ambiguity_and_nonfinite_numbers_are_rejected (__main__.ContractTests.test_json_ambiguity_and_nonfinite_numbers_are_rejected) ... ok
+test_valid_cumulative_coverage (__main__.ContractTests.test_valid_cumulative_coverage) ... ok
+test_volume_or_new_material_does_not_qualify_as_prior_sound_edit (__main__.ContractTests.test_volume_or_new_material_does_not_qualify_as_prior_sound_edit) ... ok
+
+======================================================================
+FAIL: test_cli_valid_report_and_failed_comparison_are_atomic (__main__.ContractTests.test_cli_valid_report_and_failed_comparison_are_atomic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-baseline-checkout-1o4sdz59/scripts/test-compare-preset-response-2026-11-6.py", line 144, in test_cli_valid_report_and_failed_comparison_are_atomic
+    self.assertEqual(digest, contract.BASELINE_INVENTORY_SHA256)
+AssertionError: '072f6692ec360248b8edf104452f2c59272be028495d3949b1e6523895311e59' != '0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611'
+- 072f6692ec360248b8edf104452f2c59272be028495d3949b1e6523895311e59
++ 0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.258s
+
+FAILED (failures=1)

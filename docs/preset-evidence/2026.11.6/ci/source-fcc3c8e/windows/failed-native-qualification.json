@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "status": "original_windows_native_failure_bound",
+  "platform_qualified": false,
+  "release_qualified": false,
+  "source_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "factory_revision": "2026.11.6",
+  "run_id": 45366603800,
+  "run_attempt": 1,
+  "producer_job_id": 138349817051,
+  "validator_job_id": 138381888391,
+  "producer_conclusion": "failure",
+  "validator_conclusion": "skipped",
+  "native_counts": {
+    "registered": 251,
+    "passed": 248,
+    "failed": 1,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "failed_test": "cs80_preset_response_2026_11_6_comparison_tests",
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "message": "SKIP_RETURN_CODE=77",
+      "output": "SKIP: AVX2 unavailable or disabled; no SIMD qualification\n"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "message": "SKIP_RETURN_CODE=77",
+      "output": ""
+    }
+  ],
+  "nested_python_skips": {
+    "total": 11,
+    "suites": [
+      {
+        "test": "cs80_packaging_notice_tests",
+        "count": 1,
+        "count_basis": "verbose individual skipped record"
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "count": 1,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_validator_diagnostic_selection_tests",
+        "count": 1,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_preset_capture_tests",
+        "count": 1,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_render_cli_tests",
+        "count": 3,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_truth_render_tests",
+        "count": 2,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_vca_reference_tests",
+        "count": 1,
+        "count_basis": "unittest summary"
+      },
+      {
+        "test": "cs80_float_wav_tests",
+        "count": 1,
+        "count_basis": "unittest summary"
+      }
+    ]
+  },
+  "roster": {
+    "prior_registered": 244,
+    "added": [
+      "cs80_bell_material_preset_tests",
+      "cs80_material_body_tests",
+      "cs80_piano_course_geometry_tests",
+      "cs80_plucked_material_preset_tests",
+      "cs80_plucked_material_tests",
+      "cs80_preset_response_2026_11_6_comparison_tests",
+      "cs80_wind_body_formant_tests"
+    ],
+    "removed": [],
+    "prior_roster": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/native-original/ctest-results.xml",
+      "bytes": 120766,
+      "sha256": "c83c76518de1f6a0760e7a13b0da361b1f6176536b10b4b2040781e1443c9495"
+    }
+  },
+  "other_required_family_tests_passed": [
+    "cs80_struck_body_dynamics_tests",
+    "cs80_instrument_body_variant_tests",
+    "cs80_vocal_body_tests",
+    "cs80_body_articulation_engine_tests",
+    "cs80_original_articulation_tests",
+    "cs80_keyboard_response_tests",
+    "cs80_mallet_preset_refinement_tests",
+    "cs80_bass_plucked_refinement_tests",
+    "cs80_brass_organ_refinement_tests",
+    "cs80_wind_string_refinement_tests",
+    "cs80_pad_poly_refinement_tests",
+    "cs80_fx_refinement_tests",
+    "cs80_modern_preset_refinement_tests",
+    "cs80_lead_refinement_tests",
+    "cs80_preset_response_coverage_tests",
+    "cs80_piano_course_geometry_tests",
+    "cs80_wind_body_formant_tests",
+    "cs80_material_body_tests",
+    "cs80_plucked_material_tests",
+    "cs80_bell_material_preset_tests",
+    "cs80_plucked_material_preset_tests"
+  ],
+  "expanded_body_host_phase_executed": true,
+  "ctest_step_exit": 1,
+  "ctest_exit_scope": "GitHub step exit; PowerShell step reports 1. No exact direct ctest process status is inferred.",
+  "failed_assertion": {
+    "expected_lf_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "observed_windows_sha256": "072f6692ec360248b8edf104452f2c59272be028495d3949b1e6523895311e59",
+    "git_blob_bytes": 704822,
+    "crlf_variant_bytes": 704823,
+    "cause": "Single LF-to-CRLF checkout translation exactly reproduces the failed byte authentication digest."
+  },
+  "installation_artifact_available": false,
+  "validator_invocations": 0,
+  "validation_retries": 0,
+  "artifact": {
+    "id": 14910589335,
+    "name": "cs80-windows-test-evidence",
+    "bytes": 82356,
+    "sha256": "8a74d70710f3c4fbb27fa6ae9478225b155be1a97cabfc90d2837f1ba217ea00",
+    "original_upload_timestamp": "2026-11-24T10:33:08.1352809Z",
+    "members": [
+      {
+        "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/native-members/ctest-results.xml",
+        "bytes": 129025,
+        "sha256": "4d7c93958999ff6db9c555d2060336465e9e7454397846d669ad142ace5d6d2b"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/native-members/Testing/Temporary/LastTest.log",
+        "bytes": 372478,
+        "sha256": "df6e9cb99042450b86391d9503b940c6e47f64c9bb45bd7101ea9ce986f3b377"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/native-members/ci-juce-provenance.txt",
+        "bytes": 585,
+        "sha256": "cabdd2492091c85435ce260a2b7ee0c9c06dfbddb4b4a864a9b385d18120c80c"
+      }
+    ]
+  },
+  "juce": {
+    "checked_at": "2026-11-24T09:38:59Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+    "workflow_run": "45366603800",
+    "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "inputs": {
+    "run-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/run-api.json",
+      "bytes": 15400,
+      "sha256": "0297c79a2609b818d3d7d3222181e0ab6f4ff85b62e118bce2b0934312a64e66"
+    },
+    "jobs-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/jobs-api.json",
+      "bytes": 23307,
+      "sha256": "5b28442f25ac510b1ad8edf606ca26ecd86ca524bcf2c830f55e21d8840eb9d1"
+    },
+    "artifacts-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/artifacts-api.json",
+      "bytes": 3555,
+      "sha256": "9aa7cf395c9500c0f499c60d21ec52330739ac3f9be393c25877a738755f8c49"
+    },
+    "job-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/job-api.json",
+      "bytes": 3895,
+      "sha256": "2cc5b0a7b82e035ba43ab9305a2872932eb37d5ea0d3bc17e13d6ee75aec1681"
+    },
+    "validator-job-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/validator-job-api.json",
+      "bytes": 1018,
+      "sha256": "8a1ba7ceda50e150f33c87d7e849975b0b1309abc202ea44af34387ab60c231d"
+    },
+    "native-api.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/native-api.json",
+      "bytes": 796,
+      "sha256": "5ea295d001b7aa6ab38735682b87dddf93c32aed1a114eb703301825a411ca72"
+    },
+    "source-contract.json": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/source-contract.json",
+      "bytes": 11539,
+      "sha256": "d4561d7c9c510c672d0cf78892b2356198eec6f368f61b35161934cf0a69de63"
+    },
+    "original-producer-job.log": {
+      "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/original-producer-job.log",
+      "bytes": 148683,
+      "sha256": "630d9c85d5a730987fb3f238ff69867fafd3ff6f53a1c842184929f63df03fa1"
+    }
+  },
+  "verifier": {
+    "path": "docs/preset-evidence/2026.11.6/ci/source-fcc3c8e/windows/verify_failure.py",
+    "bytes": 13419,
+    "sha256": "6f5ccf7a19ef45d2aa9e63a34bbe520a67fdfe0bc549ca82743ffca3c482badf"
+  },
+  "limits": [
+    "This source failed qualification; the remaining passing tests do not override the failed gate.",
+    "No Windows installation archive or validator result exists for this producer; none is accepted.",
+    "The failure is a fixture-byte contract error. No plugin runtime crash was observed in this run.",
+    "The run API snapshot was taken while other platforms remained in progress; no later all-run result is inferred.",
+    "Correction requires a new source commit and fresh native jobs; this record remains historical."
+  ]
+}

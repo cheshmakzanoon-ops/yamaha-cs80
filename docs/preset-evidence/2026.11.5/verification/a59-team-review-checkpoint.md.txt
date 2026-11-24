@@ -1,0 +1,172 @@
+# Team review — factory revision 2026.11.5
+
+**All 60 requested distinct agents have actually been assigned work in this
+continuation.** They run in batches, with at most three workers active alongside
+the coordinator. No worker from the preceding .4 project is counted here.
+The [machine-readable work log](preset-evidence/2026.11.5/work-log.json) gives every
+exact task name and distinguishes completed contributions, retained checkpoints
+and outstanding final follow-ups.
+
+**Final native, package, audition and publication acceptance is still pending.**
+Sixty assignments do not mean sixty completed release gates. Preparatory
+checkers and expected rosters do not establish passing binaries. The first six
+assignments supplied conversational research or audits and have no separately
+authored retained reports; none is reconstructed below.
+
+The current source candidate is
+[`c76ad288e02fbeca48f39652bf4fcdd99837f793`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/c76ad288e02fbeca48f39652bf4fcdd99837f793).
+Actual final native results must belong to
+[build 45351731801, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731801),
+and the replacement supporting DSP results to
+[run 45351731746, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45351731746).
+Original execution sources remain explicit in every older observation.
+
+## Actual assignments
+
+| Worker | Scope | Outcome or current work | Evidence |
+| ---: | --- | --- | --- |
+| 1 | Release and repository audit | Initial conversational audit of the preceding source, builds and publication state. | Conversational findings; no separately authored report |
+| 2 | Instrument acoustics research | Initial conversational research identifying useful primary references and limits of synthesized instrument claims. | Conversational findings; no separately authored report |
+| 3 | Complete bank inventory | Initial conversational inventory of the existing program collections, identities and sound-control coverage. | Conversational findings; no separately authored report |
+| 4 | Instrument-body DSP audit | Initial conversational diagnosis of body excitation, spectra and decay behavior. | Conversational findings; no separately authored report |
+| 5 | Articulation audit | Initial conversational diagnosis of note entrance, release, touch and register response. | Conversational findings; no separately authored report |
+| 6 | Recipe audit | Initial conversational diagnosis of family programming and original-bank finishes. | Conversational findings; no separately authored report |
+| 7 | Struck-body excitation | Corrected soft-strike normalization; full-strike reference and direct-model checks retained. | [A07 review](preset-evidence/2026.11.5/reviews/a07.md) |
+| 8 | Captured articulation | Added bounded register and entrance profiles with next-note ownership, sustain and routing checks. | [A08 review](preset-evidence/2026.11.5/reviews/a08.md) |
+| 9 | Saved variant contract | Appended material/vowel choices without moving the published parameter prefix; migration and host tests. | [A09 review](preset-evidence/2026.11.5/reviews/a09.md) |
+| 10 | Wood and steel resonators | Implemented separate Xylophone and Steelpan modal/contact/loss profiles, preserving Standard. | [A10 review](preset-evidence/2026.11.5/reviews/a10.md) |
+| 11 | Original finishes and sequences | Made pure-sine finishes audible through the amplifier and aligned sequence articulation with its gate. | [A11 review](preset-evidence/2026.11.5/reviews/a11.md) |
+| 12 | Mallet and bell recipes | Reprogrammed existing material, touch, damping and carrier choices. | [A12 review](preset-evidence/2026.11.5/reviews/a12.md) |
+| 13 | Wind and string recipes | Reprogrammed 42 existing breath, bow and register responses. | [A13 review](preset-evidence/2026.11.5/reviews/a13.md) |
+| 14 | Brass and organ recipes | Reprogrammed 46 existing effort, registration and keying responses. | [A14 review](preset-evidence/2026.11.5/reviews/a14.md) |
+| 15 | Bass and plucked recipes | Reprogrammed 40 existing touch, aftersound and damping responses. | [A15 review](preset-evidence/2026.11.5/reviews/a15.md) |
+| 16 | Choir resonances | Added fixed Ah/Oo resonance profiles to the existing Organ source with moving-pitch checks. | [A16 review](preset-evidence/2026.11.5/reviews/a16.md) |
+| 17 | Pad and polysynth recipes | Reprogrammed 54 existing entrances, expression and release behaviors. | [A17 review](preset-evidence/2026.11.5/reviews/a17.md) |
+| 18 | Environmental and other FX | Reprogrammed 24 existing FX with distinct motion, contours and pressure roles. | [A18 review](preset-evidence/2026.11.5/reviews/a18.md) |
+| 19 | Modern recipes | Reprogrammed 18 existing effect and articulation responses, preserving explicit arp/LFO identities. | [A19 review](preset-evidence/2026.11.5/reviews/a19.md) |
+| 20 | Lead recipes | Reprogrammed 30 existing strike, pressure, interval and glide responses. | [A20 review](preset-evidence/2026.11.5/reviews/a20.md) |
+| 21 | Independent host ABI review | Reviewed the unchanged published prefix, state indices, defaults and migration. | [A21 review](preset-evidence/2026.11.5/reviews/a21.md) |
+| 22 | Independent whole-bank coverage | Reviewed all identities, program addresses, changed musical controls and preserved Init programs. | [A22 review](preset-evidence/2026.11.5/reviews/a22.md) |
+| 23 | DSP edge and isolation review | Exercised sample rates, variants, incompatible-pair fallback, release and allocation boundaries. | [A23 review](preset-evidence/2026.11.5/reviews/a23.md) |
+| 24 | Release gate design review | Reviewed exact-source native, validator, payload, audition and publication requirements. | [A24 review](preset-evidence/2026.11.5/reviews/a24.md) |
+| 25 | Guide and description review | Reconciled preset descriptions, controls, audition coverage and saved-state wording with source. | [A25 review](preset-evidence/2026.11.5/reviews/a25.md) |
+| 26 | Audition acceptance checker | Built an exact-source, bounded verifier for the actual new audition archive and full inventory. | [A26 review](preset-evidence/2026.11.5/reviews/a26.md) |
+| 27 | Editor fixture review | Reviewed the actual editor contract and pinned six historical fixture controls without changing goldens. | [A27 review](preset-evidence/2026.11.5/reviews/a27.md) |
+| 28 | Keyboard playing edges | Checked registers, touch, early release, held notes and pedal/direct-hold behavior. | [A28 review](preset-evidence/2026.11.5/reviews/a28.md) |
+| 29 | Mallet spectral review | Independently checked wooden/metal mode ratios, upper losses and damping. | [A29 review](preset-evidence/2026.11.5/reviews/a29.md) |
+| 30 | Wind balance correction | Corrected six below-floor wind levels and rechecked touch/pressure behavior. | [A30 review](preset-evidence/2026.11.5/reviews/a30.md) |
+| 31 | Brass/string balance correction | Corrected six below-floor brass/string levels and rechecked family behavior. | [A31 review](preset-evidence/2026.11.5/reviews/a31.md) |
+| 32 | Bass/metallic-key balance correction | Corrected three below-floor levels and rechecked family behavior. | [A32 review](preset-evidence/2026.11.5/reviews/a32.md) |
+| 33 | Matched full-bank audio review | Compared every program at matched gestures; separately checked pressure-only and touch-dependent cases. | [A33 review](preset-evidence/2026.11.5/reviews/a33.md) |
+| 34 | Audition verifier adversarial review | Reviewed malformed/racing inputs and fixed immutable input snapshot handling. | [A34 review](preset-evidence/2026.11.5/reviews/a34.md) |
+| 35 | Native evidence parser review | Verified parser compatibility and documented external provenance, count, skip and exit gates. | [A35 review](preset-evidence/2026.11.5/reviews/a35.md) |
+| 36 | Windows/Linux payload checker | Built complete-bundle equality checks binding installation and validator input archives. | [A36 review](preset-evidence/2026.11.5/reviews/a36.md) |
+| 37 | Mac payload checker | Built source-pinned architecture, AU identity and VST3/AU path-binding inspection. | [A37 review](preset-evidence/2026.11.5/reviews/a37.md) |
+| 38 | Organ performance review | Checked steady strike behavior, registrations, pressure, repeated chords and release. | [A38 review](preset-evidence/2026.11.5/reviews/a38.md) |
+| 39 | Bowed voice lifetime review | Checked sustained/repeated/overlapped notes and separated existing chorus noise from voice lifetime. | [A39 review](preset-evidence/2026.11.5/reviews/a39.md) |
+| 40 | Pad and choir long-duration review | Checked long chords, choir profiles and pressure; found two pad trim ceilings that root implemented. | [A40 review](preset-evidence/2026.11.5/reviews/a40.md) |
+| 41 | Installation archive checker | Built source-pinned full-inventory/native-header acceptance for all four install targets. | [A41 review](preset-evidence/2026.11.5/reviews/a41.md) |
+| 42 | Lead phrase and pressure review | Checked ownership, overlapping notes, ribbon return and pressure-reset behavior; retained corrected-oracle diagnostics. | [A42 review](preset-evidence/2026.11.5/reviews/a42.md) |
+| 43 | Sequence phrase review | Checked all 27 sequence-category programs, gates, timing, stop behavior and unchanged arp ownership. | [A43 review](preset-evidence/2026.11.5/reviews/a43.md) |
+| 44 | Long environmental FX review | Measured extended wind, rain, surf, thunder, clock, helicopter and siren contours. | [A44 review](preset-evidence/2026.11.5/reviews/a44.md) |
+| 45 | Factory reload review | Confirmed explicit LOAD/RELOAD behavior, old-session storage and fresh-note capture; corrected installation wording. | [A45 review](preset-evidence/2026.11.5/reviews/a45.md) |
+| 46 | Supporting DSP qualification | Retained three original 09af successful job/artifact checkpoints; that overall run was later cancelled with an actual failed measure job. Final c76 DSP acceptance is pending. | [Original checkpoint](preset-evidence/2026.11.5/ci/source-09af535/supporting-dsp/checkpoint.md) |
+| 47 | Filter matrix qualification | Retained original compiler/SIMD results and 106-input db6b equivalence. Complete matrix acceptance and the c76 extension are pending. | [A47 review](preset-evidence/2026.11.5/reviews/a47.md) |
+| 48 | Screenshot qualification | Verified original 09af UI execution, 73-file artifact, 70 decoded PNGs and two byte-identical unchanged goldens. Final c76 input extension is pending. | [A48 review](preset-evidence/2026.11.5/reviews/a48.md) |
+| 49 | Windows native qualification | Prepared native, upload, validator and full-payload checks at db6b; actual replacement-source acceptance is pending. | [A49 checkpoint](preset-evidence/2026.11.5/reviews/a49.md) |
+| 50 | Apple Silicon native qualification | Prepared original execution, four validator lanes, AU/VST3 identity and install checks. Replacement-source acceptance is pending. | [A50 checkpoint](preset-evidence/2026.11.5/reviews/a50.md) |
+| 51 | Intel Mac native qualification | Reviewed exact source and adapted the Mac binder with attribution. Actual replacement-source acceptance is pending. | [A51 checkpoint](preset-evidence/2026.11.5/reviews/a51.md) |
+| 52 | Linux native qualification | Prepared original-job/upload, native and full VST3 binding requirements, including explicit original-exit and retry rules. Actual acceptance is pending. | [A52 checkpoint](preset-evidence/2026.11.5/reviews/a52.md) |
+| 53 | Audition archive qualification | Derived the 171-request/81-program roster and full 523×202 inventory contract; prepared explicit upload binding. Actual recordings remain unaccepted. | [A53 checkpoint](preset-evidence/2026.11.5/reviews/a53.md) |
+| 54 | Capture metadata contract repair | Corrected the stale current-count expectation to 202 and enforced both variant IDs/defaults. All 13 existing methods pass, with 12 added negative cases; no sound code changed. | [A54 review](preset-evidence/2026.11.5/reviews/a54.md) |
+| 55 | Release claim and guide review | Confirmed counts/reload instructions and narrowed headroom/Rain statements to their actual measurement windows. No further bundled-guide change required. | [A55 review](preset-evidence/2026.11.5/reviews/a55.md) |
+| 56 | Final continuity and audio accounting | Independently reconciled identities, historical parameter prefix, complete composed audio totals, two replacement pad captures and exact source continuity through c76. | [A56 review](preset-evidence/2026.11.5/reviews/a56.md) |
+| 57 | Public download and retention review | Verified one historical Windows archive by unauthenticated full GET/hash and prepared exact new-artifact mapping. Current download routes and expiry remain pending. | [A57 checkpoint](preset-evidence/2026.11.5/reviews/a57.md) |
+| 58 | Adversarial release-gate review | Reviewing actual-evidence binders and external gates. A raw-parser archive identity gap is being addressed in new c76 evidence; original db6b checkpoint bytes remain intact. | Active review; final acceptance pending |
+| 59 | Team and retained-evidence ledger | Reconciled 60 actual assignments, source/failure history, retained-output identities and local links. Final completion-status reconciliation remains pending. | [A59 checkpoint](preset-evidence/2026.11.5/reviews/a59.md) |
+| 60 | Final publication review | Actually started independent transaction, download/claim and staged-manifest review. Final sign-off requires the completed gates and concrete publication tree. | Active review; final sign-off pending |
+
+## What the combined reviews establish
+
+The final inventory keeps all **523 ordered names, categories and program
+addresses**. All **521 musical programs** have changed existing sound controls,
+and both Init programs preserve their preceding control values and metadata.
+The bank contains **272 body-enabled** and **251 circuit-only** entries. Four
+optional material/vowel variants plus Standard occupy appended choices while
+the **200-core/306-host published prefixes** retain their identities. The new
+totals are 202 core and 308 host controls. **Fourteen tag lists changed**; unchanged
+tags are not part of the blanket identity claim.
+[Final coverage](preset-evidence/2026.11.5/parameter-coverage.json) ·
+[Independent reconciliation](preset-evidence/2026.11.5/reviews/a56.md)
+
+The full matched-bank PCM comparison belongs to source 6094bce. It covers
+**103,153,374 stereo frames per version**, with finite samples within full-scale
+bounds. The 519 musical programs audible without pressure have changed PCM;
+two separate pressure-one captures account for the remaining pressure-led
+musical programs. Both Init programs have unchanged PCM. These measurements
+show signal change, not listening approval or improved quality by themselves.
+
+The later 09af source changes exactly two control values after that complete
+comparison: the output trims of Cathedral Pad and Golden Pads 66. Their new
+matched captures and the unchanged parameters/core objects for the other
+entries form an explicit composed accounting. Source db6b changes only two
+bundled guides; c76 changes only the strict capture-metadata test. No earlier
+recording is relabelled as a fresh c76 executable render.
+[Final audio accounting](preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json) ·
+[Source continuity](preset-evidence/2026.11.5/verification/a56-final-source-extension.json)
+
+## Original failures and corrections remain visible
+
+| Source / run | Actual original outcome | Correction or remaining scope |
+| --- | --- | --- |
+| 6094bce / native 45341783399 | All four producer builds failed; both separate validators skipped. | Three host-test calls used private JUCE choice overrides. 09af uses the existing public ranged-parameter interface with the same assertions and expected values. |
+| 09af535 / native 45344888485 | Overall cancelled; all four producers cancelled; separate validators skipped. | Superseded by the two bundled-guide corrections in db6b. No successful native release is inferred. |
+| 09af535 / DSP 45344888536 | Overall cancelled. Three jobs succeeded, the measure job failed and sanitizer job was cancelled. | Numerical bounds passed; the capture export then failed 3 of 13 metadata tests because the fixture expected 200 controls. Its exports/uploads were skipped. |
+| db6b5a7 / native 45346719693 | Overall cancelled. Apple Silicon completed with Test failure; three producers cancelled; separate validators skipped. | The capture-metadata test was the sole failed CTest among 266 Apple Silicon registrations. Its same three internal failures are retained. |
+| c76ad28 / native 45351731801 and DSP 45351731746 | Pending final acceptance. | The test-only correction explicitly expects 202 controls and Standard defaults. All 13 local methods pass; native/platform evidence must still come from these actual replacement runs. |
+
+[6094 original failure records](preset-evidence/2026.11.5/ci/source-6094bce/failure-summary.json) ·
+[09af native record](preset-evidence/2026.11.5/ci/source-09af535/native-superseded-summary.json) ·
+[09af DSP original job outcomes](preset-evidence/2026.11.5/ci/source-09af535/dsp-superseded-jobs-final-api.json) ·
+[db6b original job outcomes](preset-evidence/2026.11.5/ci/source-db6b5a7/superseded-jobs-final-api.json) ·
+[Strict capture correction](preset-evidence/2026.11.5/reviews/a54.md)
+
+The first integrated bank audit's 17 below-floor voices were corrected without
+weakening the existing acceptance floor. A separate long-held chord review found
+narrow headroom in two pads, leading to their lower output ceilings and a
+regression that rejects the preceding trims. The bank's −1.5 dBFS stress maximum
+is a nominal one-second audit result; the 12-second upper-chord checks describe
+those two pads specifically.
+
+Diagnostic expectations that proved wrong also remain visible. A39 separated
+the existing chorus noise floor from sounding-voice lifetime. A42 corrected
+assumptions about pressure inheritance and instantaneous quieting. Their
+original failed diagnostics are retained alongside the causal follow-ups; they
+are not silently converted into passing release tests.
+[A39 review](preset-evidence/2026.11.5/reviews/a39.md) ·
+[A40 review](preset-evidence/2026.11.5/reviews/a40.md) ·
+[A42 review](preset-evidence/2026.11.5/reviews/a42.md)
+
+## Supporting execution and integrity boundaries
+
+The accepted screenshot execution remains source 09af. Its original artifact,
+UI smoke result and two golden comparisons do not become a c76 execution by
+renaming a file. The original filter matrix also remains source 09af. Each needs
+an explicit relevant-input extension to the final candidate. The changed
+capture Python fixture is not automatically treated as a UI or filter input;
+its exclusion must follow the executed target/configuration dependency review.
+The replacement DSP workflow, including document-dependent fixtures, must be
+qualified from actual c76 results.
+
+The output-manifest review checks the declared retained files and local links.
+Source/input snapshots in earlier reviews intentionally describe earlier Git
+objects or working-tree observations. They are not blindly compared with
+subsequently edited documentation. File-hash agreement establishes identity,
+not the truth of a measurement or the success of a native run.
+[A59 integrity checkpoint](preset-evidence/2026.11.5/reviews/a59.md)
+
+Objective software checks establish defined signal, compatibility and packaging
+behavior. They do not establish a human listening panel, acoustic
+indistinguishability, a calibrated physical CS-80 match, or universal host
+compatibility. Actual installation bytes, validators, original process exits,
+public download responses and retention dates remain separate release gates.

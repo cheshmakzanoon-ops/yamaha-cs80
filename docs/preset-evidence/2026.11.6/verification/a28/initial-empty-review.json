@@ -1,0 +1,84 @@
+{
+  "source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+  "preset_revision": "2026.11.6",
+  "scope": "Local complete-preset phrase/lifecycle and declared scheduling review; no native build, listening approval or acoustic-equivalence evidence.",
+  "input": {
+    "file": "sequence-phrase-raw.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "committed_inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50"
+  },
+  "render_method": {
+    "rate": 48000,
+    "hold_seconds": 12,
+    "tail_seconds": 4,
+    "block_frames": 64,
+    "observation_resolution_ms": 1.3333333333333333,
+    "timing_tolerance_ms": 2.6666666666666665,
+    "source_notes_velocities": [
+      [
+        55,
+        0.65
+      ],
+      [
+        48,
+        0.25
+      ],
+      [
+        52,
+        0.95
+      ]
+    ],
+    "parameter_overrides": [],
+    "main_transport_bpm": 60,
+    "tempo_control": {
+      "initial_bpm": 60,
+      "new_bpm": 180,
+      "at_seconds": 6
+    },
+    "sample_digest": "FNV-1a64 over little-endian float32 sample representations; descriptive, not a cryptographic artifact identity"
+  },
+  "counts": {
+    "programs": 0,
+    "numbered_original_sequences": 0,
+    "other_original_sequence": 0,
+    "modern_arps": 4,
+    "renders": 0,
+    "stereo_frames": 0,
+    "checks": 3,
+    "failures": 2
+  },
+  "programs": [],
+  "tempo_controls": [],
+  "checks": [
+    {
+      "passed": true,
+      "label": "only recognized raw record types"
+    },
+    {
+      "passed": false,
+      "label": "all 27 existing sequence-category programs exactly once"
+    },
+    {
+      "passed": false,
+      "label": "four actual modern arp tempo controls"
+    }
+  ],
+  "failures": [
+    {
+      "passed": false,
+      "label": "all 27 existing sequence-category programs exactly once"
+    },
+    {
+      "passed": false,
+      "label": "four actual modern arp tempo controls"
+    }
+  ],
+  "limits": [
+    "Trace times are callback-boundary observations of held state, not sample-exact acoustic onset measurements.",
+    "Rates are free-running Hz and are not host-tempo synchronized.",
+    "Mode/order/octave and finite/headroom observations protect preserved behavior; they are not new improvements or a quality score.",
+    "Final output tails can include intentional delay and existing noise after all generated voices have retired.",
+    "Only this three-key gesture and the indicated twelve-second hold are tested."
+  ]
+}

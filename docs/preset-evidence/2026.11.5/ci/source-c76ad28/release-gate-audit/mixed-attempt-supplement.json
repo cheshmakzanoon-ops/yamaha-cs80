@@ -1,0 +1,333 @@
+{
+  "schema": 1,
+  "worker": "a58",
+  "status": "mixed_attempt_supplement_prepared_actual_selection_pending",
+  "prepared_at_utc": "2026-11-24T08:52:08.599884+00:00",
+  "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793",
+  "tree": "416c1f6bfb4cd9f7dd5dbd9f5cbc211edda2bf00",
+  "native_run_id": 45351731801,
+  "release_qualified": false,
+  "platforms_qualified_by_this_review": [],
+  "relationship_to_frozen_checkpoint": {
+    "frozen_requirements": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/gate-requirements.json",
+      "bytes": 8751,
+      "sha256": "199b100ec8527b34d3bc37277bc004e7fca2ee3ce8de6cbf986b3cff33e5397b"
+    },
+    "frozen_checkpoint": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/checkpoint-retained-files.json",
+      "bytes": 2006,
+      "sha256": "6facc8121df5b67f218c83c403bc0315f08e1b87a089185330c409e5ec912327"
+    },
+    "original_files_modified": false,
+    "narrow_override": "For native evidence only, replace the original scalar attempt=1 and the native part of source_run_tree with each selected producer and consumer actual attempt. Keep all other source, count, lane, payload, supporting-evidence and publication requirements.",
+    "dsp_context_unchanged": {
+      "run_id": 45351731746,
+      "run_attempt": 1,
+      "source": "c76ad288e02fbeca48f39652bf4fcdd99837f793"
+    },
+    "filter_and_screenshot_context_unchanged": "Retain 09af execution identities and separately prove relevant-input equivalence to c76. Native rerun attempts do not relabel them."
+  },
+  "planned_selection_not_acceptance": [
+    {
+      "target": "linux-x86_64",
+      "native_producer_job_id": 138299557138,
+      "native_producer_run_attempt": 1,
+      "validator_job_id": null,
+      "validator_run_attempt": null,
+      "selection_status": "pending_actual_complete_qualification",
+      "validator_rule": "Acquire the actual separate consumer job and its own attempt API; do not infer its attempt from the producer or latest run."
+    },
+    {
+      "target": "windows-x86_64",
+      "native_producer_job_id": 138299557166,
+      "native_producer_run_attempt": 1,
+      "validator_job_id": null,
+      "validator_run_attempt": null,
+      "selection_status": "pending_actual_complete_qualification",
+      "validator_rule": "Acquire the actual separate consumer job and its own attempt API; retain A49 separate producer and validator attempt fields."
+    },
+    {
+      "target": "macos-x86_64",
+      "native_producer_job_id": 138299557267,
+      "native_producer_run_attempt": 1,
+      "selection_status": "pending_actual_complete_qualification",
+      "validator_rule": "All four validators and packaging must belong to this same selected producer execution."
+    },
+    {
+      "target": "macos-arm64",
+      "native_producer_job_id": null,
+      "native_producer_run_attempt": null,
+      "selection_status": "replacement_job_not_started_in_retained_request",
+      "anticipated_attempt_not_evidence": 2,
+      "replacement_rule": "Discover actual replacement job ID and positive attempt greater than 1 from authentic APIs after successful job-only rerun request. Require a complete independently passing job at unchanged c76 source; never assume the actual attempt is 2. All four validators and packaging must belong to that execution.",
+      "excluded_original_failed_job_id": 138299557178
+    }
+  ],
+  "required_attempt_and_archive_joins": [
+    "Retain authentic exact-attempt workflow and jobs API responses for each selected native producer and each separate validator consumer, including the actual job ID, run_attempt, head_sha, workflow path, repository and required successful step outcomes.",
+    "Match each original log to its exact job ID and source checkout. Retain terminal API state, required successful steps and source-pinned unsuppressed exit propagation. A later latest-run response or overall workflow success cannot substitute for these joins.",
+    "For every native, validator, VST3, install and audition artifact, bind authentic API ID/name/source/run/size/digest to the actual ZIP and its original successful upload receipt and time in the producing job attempt. Artifact API workflow_run alone has no producing-attempt field.",
+    "Select exact artifact IDs and bytes, never merely the latest artifact having the same name. Preserve both original failed ARM artifact identities and lossless bytes before any overwrite.",
+    "For Windows and Linux, bind the validator consumer original download ID/size/digest/completion to the exact selected producer VST3 bytes, even if producer and consumer attempts differ. Preserve complete bundle equality, not only executable equality.",
+    "Run all source-pinned A35/A36/A37/A41/A53 and platform-specific gates appropriate to the selected actual artifacts. Require A58 F1 actual archive/member binding on all four targets and Windows F2 unconditional consumer/log binding.",
+    "Create a fresh ARM replacement evidence directory and binder with actual source/job/attempt context. Preserve the failed-attempt evidence and earlier binder bytes. Retain its reviewed derivative identity; do not weaken native, validator, GUI, seed, resource or exit requirements.",
+    "Keep every raw helper release_qualified:false and other limited-scope flags unchanged. Only the external consolidated record may qualify the complete release after all independent gates are satisfied."
+  ],
+  "parser_composition": {
+    "preferred_mode": "Aggregate four separately retained platform-local raw parser outputs and complete external platform acceptances.",
+    "parser": {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+      "bytes": 17824,
+      "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58"
+    },
+    "observed_behavior": "The parser copies arbitrary input provenance into caller_provenance_claims_unverified. It neither proves attempts nor supplies a verified global run_attempt. --require-complete only checks the four requested target names in both lists.",
+    "requirements": [
+      "Retain each input manifest and raw output by SHA256 and byte count; bind output.input_manifest and output.parser to those actual bytes and pinned parser source.",
+      "Record native producer attempt and validator producing attempt independently in the external platform mapping. A scalar provenance.attempt must have an explicit native-producer-only scope when a separate consumer differs; it cannot describe all evidence.",
+      "Join each parser native/validator archive and member record to its actual ZIP/API and then to the original producing job/attempt. A58 attempt_context is a supplied context and intentionally does not prove an attempt.",
+      "Require exactly one selected native and one selected validator observation for each of four target names. Complete external coverage is mandatory even when each parser invocation intentionally omits --require-complete.",
+      "Retain each raw output unchanged; aggregate selected counts externally. Do not stamp attempt 2 onto retained attempt-1 outputs, rewrite attempt fields, or mutate raw false qualification fields.",
+      "Do not include the initial failed ARM native-only output among selected acceptance outputs: its all_requested_observations_green:true covers no validator observations and cannot qualify the platform."
+    ]
+  },
+  "counting_contract": {
+    "selected_release_counts": {
+      "status": "pending_actual_four_platform_selection",
+      "native_registration_expectations_only": {
+        "windows-x86_64": 244,
+        "linux-x86_64": 602,
+        "macos-arm64": 266,
+        "macos-x86_64": 266
+      },
+      "expected_registered_total_not_observed": 1378,
+      "required_final_validator_lanes": 13,
+      "expected_lane_roster": {
+        "windows-x86_64": 2,
+        "linux-x86_64": 3,
+        "macos-arm64": 4,
+        "macos-x86_64": 4
+      },
+      "rule": "Sum exactly one fully qualified selected execution per platform. Recompute passed/failed/formal-skipped/disabled/unknown and nested skips from those raw outputs. Count console/report copies once. Count selected runtime invocations as 13 final lanes plus actual eligible preserved within-lane retries."
+    },
+    "historical_initial_arm_failure": {
+      "job_id": 138299557178,
+      "run_attempt": 1,
+      "selected_for_release": false,
+      "native_counts": {
+        "registered": 266,
+        "passed": 264,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "nested_python_skips": 5,
+      "validator_invocations_started": 3,
+      "successful_validator_invocations": 2,
+      "failed_validator_invocations": 1,
+      "unexecuted_required_lanes": [
+        "au-gui-seed"
+      ],
+      "runtime_validation_retries": 0,
+      "installation_produced": false,
+      "rule": "Keep these historical executions visible but separate from selected release totals. Do not add 266 to selected registrations, count the unexecuted lane as an invocation, or borrow either headless success for the new ARM job."
+    },
+    "workflow_job_reruns": {
+      "rejected_request_count_in_retained_record": 1,
+      "accepted_requests_started_in_retained_record": 0,
+      "planned_additional_job_executions": 1,
+      "rule": "A GitHub job rerun is a separate workflow execution/attempt category, not a Linux per-lane runtime retry. Preserve its actual request response, job ID and attempt once it exists. No successful rerun is asserted now."
+    },
+    "runtime_retry_policy_unchanged": "Linux-only source wrapper eligibility, original final normal exit 0 and every prior attempt remain mandatory. No Mac retry allowance or SUCCESS-after-crash allowance is introduced."
+  },
+  "preserved_failure": {
+    "summary": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/failure-summary.json",
+      "bytes": 15768,
+      "sha256": "14c3da1d409debc2bc1764b3444a4cf3bb0a7cafdfece4deffdf040ce1caca02"
+    },
+    "phase": "AU GUI Editor Automation",
+    "seed": "0x3c99748",
+    "assertion_file": "AppleParavirtCommandBuffer.mm",
+    "assertion_line": 266,
+    "pluginval_message": "pluginval received Abort trap: 6, exiting immediately",
+    "reported_step_exit": 9,
+    "cause_ownership_established": false,
+    "new_random_seed_is_not_deterministic_reproduction": true,
+    "required_existing_fixed_seed_unchanged": "0x2b4eef5",
+    "rerun_request_record": {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/rerun-request-while-running.json",
+      "bytes": 1337,
+      "sha256": "6b452a111989ad363fd2c9bf2f8736832289c3b739f1dcd952f30a9ea794b5ea"
+    },
+    "original_response": {
+      "content": [
+        {
+          "type": "text",
+          "text": "GitHub API error 403: {\"message\":\"The workflow run containing this job is already running\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run\",\"status\":\"403\"}"
+        }
+      ],
+      "structuredContent": {
+        "error": "GitHub API error 403: {\"message\":\"The workflow run containing this job is already running\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run\",\"status\":\"403\"}",
+        "error_code": "FORBIDDEN",
+        "error_data": {
+          "message": "The workflow run containing this job is already running",
+          "documentation_url": "https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run",
+          "status": "403"
+        }
+      },
+      "isError": true
+    },
+    "request_time_utc": null,
+    "retained_at_utc": "2026-11-24 08:48:48 UTC",
+    "request_result": "GitHub rejected the request because the containing workflow was still running; this was not an approval denial, and no new attempt started."
+  },
+  "ctest_format_review": {
+    "actual_observation": "Original ARM Test step printed 100% tests passed out of 266. Native JUnit and LastTest still establish 264 passed, 2 formal skips and zero failed/disabled/unknown.",
+    "accepted_exact_forms": [
+      "100% tests passed, 0 tests failed out of 266",
+      "100% tests passed out of 266"
+    ],
+    "independently_reviewed_changes": "A50 failed-attempt inspector and A51 fresh qualifier differ from their retained before copies only in this one exact terminal-line predicate.",
+    "replacement_arm_preparation_required": "The retained original ARM qualifier still has the old exact phrase. A fresh replacement-attempt qualifier needs the same two-form accommodation, tied to its successful original Test step, without changing any roster/count/outcome gate.",
+    "native_ci_source_or_threshold_changed": false
+  },
+  "bounded_integrity_verification": {
+    "frozen_a58_checkpoint_files_verified": 8,
+    "failed_arm_retained_manifest_files_verified": 28,
+    "lossless_failed_zip_bytes_verified_against_api": true,
+    "failed_archives": [
+      {
+        "artifact_id": 14903471382,
+        "bytes": 80433,
+        "sha256": "6900bb29e3d926d53802f9ebced7ebe0c0925cd67e26d29fe379ddc1ffb3f9ba",
+        "members_verified": 3
+      },
+      {
+        "artifact_id": 14903346660,
+        "bytes": 6433,
+        "sha256": "2c88144dbabd2d437795f2c75365704e7e82d58ffc7896716f7898d6bc21bd85",
+        "members_verified": 8
+      }
+    ],
+    "member_lengths_sha256_crc_and_rosters_verified": true,
+    "native_or_product_test_runs_performed": 0
+  },
+  "publication_boundary": {
+    "coordinator_reported_state": "Current evidence blobs preuploaded only as unreferenced Git objects; no final tree or documentation commit exists.",
+    "reported_state_is_not_independent_remote_ref_verification": true,
+    "requirements": [
+      "Build and verify the final consolidated record with actual per-platform selections and explicit failed history before final documentation publication.",
+      "Retain genuine current download IDs/GET bytes/expiry and all non-native release gates. No preuploaded blob, local pending JSON or synthetic checker result is a publication or release.",
+      "Verify the eventual final commit and main reference separately, including unchanged compiled production inputs relative to c76."
+    ]
+  },
+  "reviewed_input_snapshots": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/gate-requirements.json",
+      "bytes": 8751,
+      "sha256": "199b100ec8527b34d3bc37277bc004e7fca2ee3ce8de6cbf986b3cff33e5397b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/checkpoint-retained-files.json",
+      "bytes": 2006,
+      "sha256": "6facc8121df5b67f218c83c403bc0315f08e1b87a089185330c409e5ec912327"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/release-gate-audit/bind-parser-archives.py",
+      "bytes": 10048,
+      "sha256": "cada3812da3285e91116b0273b8bda0f4782bcc05f968e450dfb4ed2f540b682"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+      "bytes": 17824,
+      "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/failure-summary.json",
+      "bytes": 15768,
+      "sha256": "14c3da1d409debc2bc1764b3444a4cf3bb0a7cafdfece4deffdf040ce1caca02"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/retained-file-integrity.json",
+      "bytes": 4821,
+      "sha256": "9fcd9239602a2fc43aaa42f39c303fb662e10fdcd9a7f30db26015083873655e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/preservation-summary.json",
+      "bytes": 7701,
+      "sha256": "aaa190b6039dedc880e76e0b17af907bd8b38c03b3f7bbe38e7c555f4d6945d0"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/run-attempt-api.json",
+      "bytes": 13843,
+      "sha256": "b7a07c619574b0a330c18124a9a8f453beae1a57a1dde90e25ecfe621eb0484c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/jobs-api.json",
+      "bytes": 20961,
+      "sha256": "e1a8d6210cf299c4171ae8e7f4f823c0121c6d300a2571efb2873716e1e3b7ba"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/original-producer-job.log",
+      "bytes": 222996,
+      "sha256": "fd381feec6c18ace447722f1e9da1d0917d45a0f80070e0d95edb8b31af05c9a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/native-parser-inputs.json",
+      "bytes": 439,
+      "sha256": "d97a35279c619232ef4b29c8848880ed014956cc32b612e351e053e2df31d781"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/native-only-observations.json",
+      "bytes": 91247,
+      "sha256": "5247ce3ef884a1a4eea84844856a85b9d3979dd7446cea22cb02eb675a468606"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/inspect-failed-attempt-initial.py",
+      "bytes": 9962,
+      "sha256": "478a0d029afcb2c290a9960fb990275c95aeaf7877a12721cc6c92146cbe7abe"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/attempt-1-failed/inspect-failed-attempt.py",
+      "bytes": 9997,
+      "sha256": "a8df4da59beec4ee476c921220504d74910d03161936b809d0d93ee6a68de39a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-arm64/qualify-macos-arm64.py",
+      "bytes": 25715,
+      "sha256": "60cb1db74dac2ca799d66f6ad257d3b78cc4901d4470c02017ef0de92b5fcac4"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-x86_64/qualify-macos-x86_64-before-ctest-format.py",
+      "bytes": 25807,
+      "sha256": "a72c523a798b9b5ecc4af9c244796a63dc71680557caafa65407e4ff18d6957f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-x86_64/qualify-macos-x86_64.py",
+      "bytes": 25843,
+      "sha256": "38db755237e3a6d29673a8db03849e26350162a62e64996bf65835a2795f418b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/macos-x86_64/ctest-format-compatibility.json",
+      "bytes": 878,
+      "sha256": "b4705bdacb49eca5c7a9aa8b48ecac070363c55b64450fc16127bc6e7272a179"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/windows/qualify-windows.py",
+      "bytes": 25926,
+      "sha256": "5a6771ae845b32ac6e788bc4ecb0d0f97f6a6601d9f5e04393b6de7aa67920f6"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/ci/source-c76ad28/rerun-request-while-running.json",
+      "bytes": 1337,
+      "sha256": "6b452a111989ad363fd2c9bf2f8736832289c3b739f1dcd952f30a9ea794b5ea"
+    }
+  ],
+  "limits": [
+    "This is a supplemental preparation contract and review of retained local evidence, not live GitHub polling or final acceptance.",
+    "No source code, workflow, historical evidence, download link, remote ref or existing checkpoint was changed.",
+    "No audio realism, listening approval or failure-cause ownership is inferred."
+  ]
+}
