@@ -1,0 +1,29 @@
+{
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "expected_tests": 232,
+  "shard_sizes": [
+    78,
+    77,
+    77
+  ],
+  "unchanged_existing_other_jobs": [
+    "measure",
+    "legacy-compatibility",
+    "source-factory-compatibility",
+    "parity-harness"
+  ],
+  "configure_step_byte_structure_equal": true,
+  "build_step_equal": true,
+  "runtime_environment_equal": true,
+  "timeout_minutes": 75,
+  "no_cmake_or_native_workflow_patch": true,
+  "indexed_patch_check": true,
+  "patch_sha256": "2aae609a8c3441ebe263dbf779048554ecb8ba0ce40ad195ba96480353f10994",
+  "files": {
+    ".github/workflows/dsp-measurements.yml": "cfcc4ed3f2ed566d7d157bd3816c648c417182540663be6fe06a2b9ae6043cc9",
+    "scripts/ci-sanitizer-shards.py": "b9dfbaefe08c80470c0d49845bfb0103223bf545385dd04c8fe562e2a7e2bbfb",
+    "scripts/test-ci-sanitizer-shards.py": "b98f0abe699adc42217bffc1870bf014ed1c710392e2f626f6e9ea87ddd3d9b6"
+  },
+  "self_tests": 20,
+  "self_test_exit": 0
+}

@@ -1,0 +1,620 @@
+diff --git a/.github/workflows/dsp-measurements.yml b/.github/workflows/dsp-measurements.yml
+--- a/.github/workflows/dsp-measurements.yml
++++ b/.github/workflows/dsp-measurements.yml
+@@ -16,6 +16,8 @@
+       - 'src/tools/source_factory_circuit_compatibility_probe.cpp'
+       - 'scripts/analyze_dsp.py'
+       - 'scripts/parity_harness.py'
++      - 'scripts/ci-sanitizer-shards.py'
++      - 'scripts/test-ci-sanitizer-shards.py'
+       - 'CMakeLists.txt'
+       - '.github/workflows/dsp-measurements.yml'
+ permissions:
+@@ -191,12 +193,18 @@
+           if-no-files-found: error
+ 
+   sanitizers:
+-    runs-on: ubuntu-24.04
+-    # The merged suite (eight workstreams, ~70 executables, the 523-program
+-    # library audit) no longer fits 20 serial minutes under ASan + UBSan.
++    name: ASan and UBSan core (shard ${{ matrix.shard }}/3)
++    runs-on: ubuntu-24.04
++    # Separate runners keep tests serial while dividing the complete roster.
+     timeout-minutes: 75
+-    steps:
+-      - uses: actions/checkout@v5
++    strategy:
++      fail-fast: false
++      matrix:
++        shard: [1, 2, 3]
++    steps:
++      - uses: actions/checkout@v5
++      - name: Check sanitizer partition and evidence gates
++        run: python3 scripts/test-ci-sanitizer-shards.py
+       - name: Configure ASan and UBSan core build
+         run: >
+           cmake -S . -B build-sanitizers -DCMAKE_BUILD_TYPE=RelWithDebInfo
+@@ -204,10 +212,53 @@
+           -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+           -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+           -DCS80_TEST_TIMEOUT_SCALE=4
++      - name: Record full roster and all three exact partitions
++        run: >
++          python3 scripts/ci-sanitizer-shards.py plan
++          --build build-sanitizers --shard ${{ matrix.shard }}
++          --output artifacts/sanitizer-shard-${{ matrix.shard }}
+       - name: Build instrument and circuit tests
+         run: cmake --build build-sanitizers --parallel 4
+       - name: Run sanitizer and validator-fixture tests
+         env:
+           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+-        run: ctest --test-dir build-sanitizers --output-on-failure --parallel 2
++        run: >
++          python3 scripts/ci-sanitizer-shards.py run --build build-sanitizers
++          --output artifacts/sanitizer-shard-${{ matrix.shard }}
++      - name: Upload original sanitizer shard evidence
++        if: always()
++        uses: actions/upload-artifact@v5
++        with:
++          name: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-${{ matrix.shard }}
++          path: |
++            artifacts/sanitizer-shard-${{ matrix.shard }}
++            build-sanitizers/Testing/Temporary/LastTest.log
++          if-no-files-found: error
++
++  sanitizers-complete:
++    name: ASan and UBSan complete core suite
++    needs: sanitizers
++    if: always()
++    runs-on: ubuntu-24.04
++    timeout-minutes: 5
++    steps:
++      - uses: actions/checkout@v5
++      - name: Download all original sanitizer shard evidence
++        uses: actions/download-artifact@v5
++        with:
++          pattern: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-*
++          path: artifacts/sanitizer-shards
++      - name: Require three successful jobs and the exact complete test union
++        if: always()
++        run: >
++          python3 scripts/ci-sanitizer-shards.py verify
++          --input artifacts/sanitizer-shards --output artifacts/sanitizer-summary.json
++          --jobs-result "${{ needs.sanitizers.result }}"
++      - name: Upload sanitizer completeness decision
++        if: always()
++        uses: actions/upload-artifact@v5
++        with:
++          name: cs80-sanitizers-complete-${{ github.sha }}-${{ github.run_attempt }}
++          path: artifacts/sanitizer-summary.json
++          if-no-files-found: error
+diff --git a/scripts/ci-sanitizer-shards.py b/scripts/ci-sanitizer-shards.py
+new file mode 100644
+--- /dev/null
++++ b/scripts/ci-sanitizer-shards.py
+@@ -0,0 +1,279 @@
++#!/usr/bin/env python3
++"""Run three isolated, serial sanitizer shards and require their complete union."""
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import re
++import shutil
++import subprocess
++import sys
++import xml.etree.ElementTree as ET
++
++TEST_COUNT = 232
++SHARD_COUNT = 3
++SANITIZER_ENV = {
++    "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1",
++    "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
++}
++BUILD_FLAGS = {
++    "CMAKE_BUILD_TYPE": "RelWithDebInfo",
++    "CS80_BUILD_PLUGIN": "OFF",
++    "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
++    "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
++    "CS80_TEST_TIMEOUT_SCALE": "4",
++}
++EVIDENCE = ("ctest-results.xml", "LastTest.log", "ctest.log")
++
++
++def require(condition, message):
++    if not condition:
++        raise ValueError(message)
++
++
++def read(path):
++    return json.loads(Path(path).read_text())
++
++
++def write(path, value):
++    Path(path).write_text(json.dumps(value, indent=2) + "\n")
++
++
++def digest(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def identity():
++    result = {key: os.environ[key] for key in
++              ("GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")}
++    require(re.fullmatch(r"[0-9a-f]{40}", result["GITHUB_SHA"]), "Invalid source SHA")
++    require(all(re.fullmatch(r"[1-9][0-9]*", result[key]) for key in
++                ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT")), "Invalid run identity")
++    return result
++
++
++def check_cache(path):
++    entries = dict(re.findall(r"^([A-Za-z0-9_]+):[^=\r\n]+=([^\r\n]*)$", path.read_text(), re.M))
++    require(all(entries.get(key) == value for key, value in BUILD_FLAGS.items()),
++            "Sanitizer build flags or timeout scale changed")
++
++
++def contract(roster):
++    tests = roster["tests"]
++    names = [test["name"] for test in tests]
++    require(len(names) == TEST_COUNT and len(set(names)) == TEST_COUNT,
++            f"Expected {TEST_COUNT} distinct configured tests")
++    result, skips = [], []
++    for test in tests:
++        name = test["name"]
++        require(isinstance(name, str) and name and "\n" not in name, "Invalid test name")
++        properties = {item["name"]: item["value"] for item in test["properties"]}
++        require(properties.get("RUN_SERIAL") is True, f"Test is not exclusive: {name}")
++        require(not properties.get("DISABLED"), f"Disabled test: {name}")
++        for key in ("DEPENDS", "FIXTURES_SETUP", "FIXTURES_REQUIRED", "FIXTURES_CLEANUP"):
++            require(not properties.get(key), f"Shard dependency needs review: {name}: {key}")
++        if "SKIP_RETURN_CODE" in properties or properties.get("SKIP_REGULAR_EXPRESSION"):
++            skips.append(name)
++        properties.pop("WORKING_DIRECTORY", None)
++        result.append({"name": name, "properties": properties})
++    return result, skips
++
++
++def snapshot(ctest, build, output, selection=None):
++    command = [ctest, "--test-dir", str(build), "--show-only=json-v1"]
++    if selection is not None:
++        command += ["-I", selection]
++    result = subprocess.run(command, check=True, capture_output=True, text=True)
++    output.write_text(result.stdout)
++    return json.loads(result.stdout)
++
++
++def check_plan(plan, roster):
++    full, skips = contract(roster)
++    names = [test["name"] for test in full]
++    require(plan["identity"] == identity(), "Plan belongs to another source/run/attempt")
++    require(type(plan["shard"]) is int and 1 <= plan["shard"] <= SHARD_COUNT,
++            "Invalid shard index")
++    require(plan["contract"] == full and plan["allowed_skips"] == skips,
++            "Configured test names/properties changed")
++    require(plan["partitions"] == [names[index::SHARD_COUNT] for index in range(SHARD_COUNT)],
++            "Partition plan is not the exact deterministic roster thirds")
++    require(plan["selection"] == f"{plan['shard']},{TEST_COUNT},{SHARD_COUNT}",
++            "Incorrect CTest index selection")
++    return plan["partitions"][plan["shard"] - 1]
++
++
++def plan_shard(args):
++    output, build = args.output.resolve(), args.build.resolve()
++    output.mkdir(parents=True, exist_ok=False)
++    shutil.copy2(build / "CMakeCache.txt", output / "CMakeCache.txt")
++    check_cache(output / "CMakeCache.txt")
++    roster = snapshot(args.ctest, build, output / "roster.json")
++    full, skips = contract(roster)
++    names = [test["name"] for test in full]
++    plan = {"identity": identity(), "shard": args.shard, "contract": full,
++            "allowed_skips": skips,
++            "partitions": [names[index::SHARD_COUNT] for index in range(SHARD_COUNT)],
++            "selection": f"{args.shard},{TEST_COUNT},{SHARD_COUNT}"}
++    selected = check_plan(plan, roster)
++    write(output / "plan.json", plan)
++    (output / "selected-tests.txt").write_text("\n".join(selected) + "\n")
++    print(f"Planned shard {args.shard}/{SHARD_COUNT}: {len(selected)}/{TEST_COUNT} tests")
++
++
++def execution_command(ctest, build, output, selection):
++    return [ctest, "--test-dir", str(build), "--output-on-failure", "--parallel", "1",
++            "--no-tests=error", "-I", selection,
++            "--output-junit", str(Path(output) / "ctest-results.xml"),
++            "--output-log", str(Path(output) / "ctest.log")]
++
++
++def check_results(output):
++    plan, receipt = read(output / "plan.json"), read(output / "result.json")
++    selected = check_plan(plan, read(output / "roster.json"))
++    check_cache(output / "CMakeCache.txt")
++    require(receipt["identity"] == identity() and receipt["shard"] == plan["shard"],
++            "Execution belongs to another source/run/attempt/shard")
++    require(receipt["completed"] is True and type(receipt["ctest_returncode"]) is int
++            and receipt["ctest_returncode"] == 0, "CTest did not return normally with zero")
++    require(receipt["environment"] == SANITIZER_ENV, "Sanitizer runtime options changed")
++    require(receipt["command"] == execution_command(receipt["ctest"], receipt["build"],
++            receipt["output"], plan["selection"]), "CTest command changed")
++    require(all(receipt["sha256"][name] == digest(output / name) for name in EVIDENCE),
++            "Original CTest evidence changed")
++    check_plan(plan, read(output / "roster-before-run.json"))
++    require([test["name"] for test in read(output / "selected-before-run.json")["tests"]]
++            == selected, "CTest selection differs from plan (including fixtures)")
++    suite = ET.parse(output / "ctest-results.xml").getroot()
++    require(suite.tag == "testsuite" and suite.get("tests") == str(len(selected))
++            and all(suite.get(key, "0") == "0" for key in ("failures", "errors", "disabled")),
++            "JUnit suite counts or status changed")
++    cases = list(suite)
++    require(all(case.tag == "testcase" for case in cases), "Unexpected JUnit wrapper or element")
++    names = [case.get("name") for case in cases]
++    require(len(names) == len(set(names)) and set(names) == set(selected),
++            "JUnit contains duplicate, missing or unexpected tests")
++    skipped = []
++    for case in cases:
++        require(case.find(".//failure") is None and case.find(".//error") is None,
++                f"JUnit failure: {case.get('name')}")
++        require(list(case.iter("skipped")) == case.findall("skipped")
++                and len(case.findall("skipped")) <= 1, "Malformed JUnit skip marker")
++        if case.find("skipped") is not None:
++            require(case.get("status") == "notrun" and case.get("name") in plan["allowed_skips"],
++                    f"Undeclared skip: {case.get('name')}")
++            skipped.append(case.get("name"))
++        else:
++            require(case.get("status") == "run", "JUnit test did not run")
++    require(suite.get("skipped", "0") == str(len(skipped)), "JUnit skip count differs")
++    log = (output / "LastTest.log").read_text()
++    headers = list(re.finditer(r"^(\d+)/(\d+) Testing: ([^\n]+)\n\1/\2 Test: \3\n", log, re.M))
++    logged = [header[3] for header in headers]
++    require(len(logged) == len(set(logged)) and set(logged) == set(selected),
++            "Incomplete LastTest.log")
++    require(re.fullmatch(r"Start testing: [^\n]+\n-+\n", log[:headers[0].start()]),
++            "Malformed LastTest.log session start")
++    footer = re.search(r"^End testing: [^\n]+\n\s*\Z", log, re.M)
++    require(footer is not None, "LastTest.log did not finish normally")
++    full_names = [test["name"] for test in plan["contract"]]
++    for index, header in enumerate(headers):
++        name = header[3]
++        require(int(header[1]) == full_names.index(name) + 1 and int(header[2]) == TEST_COUNT,
++                "LastTest.log test index differs")
++        end = headers[index + 1].start() if index + 1 < len(headers) else footer.start()
++        body = log[header.end():end]
++        escaped = re.escape(name)
++        require(re.search(rf'^"{escaped}" start time: [^\n]+\nOutput:\n-+\n', body, re.M) and
++                re.search(rf'<end of output>\nTest time =[ \t]+[0-9.]+ sec\n-+\nTest Passed\.\n'
++                          rf'"{escaped}" end time: [^\n]+\n'
++                          rf'"{escaped}" time elapsed: [0-9:]+\n-+\n\s*\Z', body),
++                f"Incomplete original test log: {name}")
++    return plan, skipped
++
++
++def run_shard(args):
++    output, build = args.output.resolve(), args.build.resolve()
++    require(not (output / "result.json").exists(), "Refusing to replace an original attempt")
++    plan = read(output / "plan.json")
++    selected = check_plan(plan, read(output / "roster.json"))
++    check_cache(build / "CMakeCache.txt")
++    check_plan(plan, snapshot(args.ctest, build, output / "roster-before-run.json"))
++    actual = snapshot(args.ctest, build, output / "selected-before-run.json", plan["selection"])
++    require([test["name"] for test in actual["tests"]] == selected,
++            "CTest selection differs from plan (including fixtures)")
++    environment = {key: os.environ.get(key) for key in SANITIZER_ENV}
++    require(environment == SANITIZER_ENV, "Sanitizer runtime options changed")
++    command = execution_command(args.ctest, build, output, plan["selection"])
++    receipt = {"identity": identity(), "shard": plan["shard"], "completed": False,
++               "ctest_returncode": None, "ctest": args.ctest, "build": str(build),
++               "output": str(output), "command": command, "environment": environment}
++    write(output / "result.json", receipt)
++    result = subprocess.run(command)
++    last_log = build / "Testing/Temporary/LastTest.log"
++    if last_log.is_file():
++        shutil.copy2(last_log, output / "LastTest.log")
++    receipt.update(completed=True, ctest_returncode=result.returncode,
++                   sha256={name: digest(output / name) for name in EVIDENCE
++                           if (output / name).is_file()})
++    write(output / "result.json", receipt)
++    check_results(output)
++
++
++def verify_shards(args):
++    summary = {"identity": identity(), "accepted": False, "jobs_result": args.jobs_result}
++    try:
++        require(args.jobs_result == "success", "All three original shard jobs must succeed")
++        plans = sorted(args.input.rglob("plan.json"))
++        require(len(plans) == SHARD_COUNT, "Missing or extra shard artifact")
++        rosters, indices, union, skipped = [], [], [], []
++        for path in plans:
++            plan, shard_skips = check_results(path.parent)
++            indices.append(plan["shard"])
++            rosters.append(plan["contract"])
++            union.extend(plan["partitions"][plan["shard"] - 1])
++            skipped.extend(shard_skips)
++        require(sorted(indices) == [1, 2, 3], "Missing or duplicate shard index")
++        require(all(roster == rosters[0] for roster in rosters), "Shard full rosters differ")
++        require(len(union) == len(set(union)) == TEST_COUNT and
++                set(union) == {test["name"] for test in rosters[0]},
++                "Shard union has omissions or overlaps")
++        summary.update(accepted=True, tests=TEST_COUNT, passed=TEST_COUNT-len(skipped),
++                       skipped=sorted(skipped), shards=sorted(indices))
++    except (KeyError, OSError, ValueError, ET.ParseError) as error:
++        summary["error"] = str(error)
++        raise
++    finally:
++        args.output.parent.mkdir(parents=True, exist_ok=True)
++        write(args.output, summary)
++    print(f"All {SHARD_COUNT} original serial shards complete: {TEST_COUNT} unique tests; "
++          f"{len(skipped)} declared skips")
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    commands = parser.add_subparsers(dest="operation", required=True)
++    for operation, function in (("plan", plan_shard), ("run", run_shard)):
++        sub = commands.add_parser(operation)
++        sub.add_argument("--build", type=Path, required=True)
++        sub.add_argument("--output", type=Path, required=True)
++        sub.add_argument("--ctest", default="ctest")
++        if operation == "plan":
++            sub.add_argument("--shard", type=int, choices=range(1, SHARD_COUNT+1), required=True)
++        sub.set_defaults(function=function)
++    sub = commands.add_parser("verify")
++    sub.add_argument("--input", type=Path, required=True)
++    sub.add_argument("--output", type=Path, required=True)
++    sub.add_argument("--jobs-result", required=True)
++    sub.set_defaults(function=verify_shards)
++    args = parser.parse_args()
++    try:
++        args.function(args)
++    except (KeyError, OSError, ValueError, ET.ParseError, subprocess.SubprocessError) as error:
++        print(f"Sanitizer shard gate failed: {error}", file=sys.stderr)
++        return 1
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/scripts/test-ci-sanitizer-shards.py b/scripts/test-ci-sanitizer-shards.py
+new file mode 100644
+--- /dev/null
++++ b/scripts/test-ci-sanitizer-shards.py
+@@ -0,0 +1,240 @@
++#!/usr/bin/env python3
++"""Bounded partition/evidence controls; not registered in the product CTest roster."""
++import copy
++import importlib.util
++import json
++import os
++from pathlib import Path
++import shutil
++import subprocess
++import sys
++import tempfile
++import unittest
++from unittest import mock
++import xml.etree.ElementTree as ET
++
++sys.dont_write_bytecode = True
++SCRIPT = Path(__file__).with_name("ci-sanitizer-shards.py")
++spec = importlib.util.spec_from_file_location("shards", SCRIPT)
++shards = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(shards)
++
++
++class ShardTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.temporary = tempfile.TemporaryDirectory(prefix="cs80-sanitizer-shard-tests-")
++        cls.addClassCleanup(cls.temporary.cleanup)
++        cls.root = Path(cls.temporary.name)
++        cls.environment = mock.patch.dict(os.environ, {
++            "GITHUB_SHA": "a" * 40, "GITHUB_RUN_ID": "1", "GITHUB_RUN_ATTEMPT": "1",
++            **shards.SANITIZER_ENV})
++        cls.environment.start()
++        cls.addClassCleanup(cls.environment.stop)
++        cmake = os.environ.get("CMAKE_COMMAND", "cmake")
++        cls.ctest = os.environ.get("CTEST_COMMAND", "ctest")
++        source = cls.root / "fixture"
++        source.mkdir()
++        (source / "skip.py").write_text("raise SystemExit(77)\n")
++        lines = ["cmake_minimum_required(VERSION 3.22)", "project(ShardFixture NONE)",
++                 "enable_testing()"]
++        for index in range(1, shards.TEST_COUNT + 1):
++            name = f"fixture_{index:03}"
++            command = f'"{sys.executable}" "{source / "skip.py"}"' if index == 80 else '"${CMAKE_COMMAND}" -E true'
++            lines += [f'add_test(NAME {name} COMMAND {command})',
++                      f'set_tests_properties({name} PROPERTIES RUN_SERIAL TRUE TIMEOUT 10)']
++        lines.append('set_tests_properties(fixture_080 PROPERTIES SKIP_RETURN_CODE 77)')
++        (source / "CMakeLists.txt").write_text("\n".join(lines) + "\n")
++        cls.build = cls.root / "build"
++        flags = [f"-D{key}={value}" for key, value in shards.BUILD_FLAGS.items()]
++        subprocess.run([cmake, "-S", str(source), "-B", str(cls.build), *flags],
++                       check=True, capture_output=True, text=True)
++        cls.artifacts = cls.root / "originals"
++        for index in range(1, 4):
++            output = cls.artifacts / f"shard-{index}"
++            for operation, extra in (("plan", ["--shard", str(index)]), ("run", [])):
++                result = subprocess.run([sys.executable, str(SCRIPT), operation,
++                    "--ctest", cls.ctest, "--build", str(cls.build), "--output", str(output), *extra],
++                    capture_output=True, text=True, timeout=30)
++                if result.returncode:
++                    raise RuntimeError(result.stdout + result.stderr)
++
++    def setUp(self):
++        self.case = self.root / self._testMethodName
++        shutil.copytree(self.artifacts, self.case)
++
++    def verify(self, success=True, jobs="success"):
++        result = subprocess.run([sys.executable, str(SCRIPT), "verify", "--input", str(self.case),
++            "--output", str(self.case / "summary.json"), "--jobs-result", jobs],
++            capture_output=True, text=True, timeout=10)
++        self.assertEqual(result.returncode, 0 if success else 1, result.stdout + result.stderr)
++        self.assertEqual(shards.read(self.case / "summary.json")["accepted"], success)
++
++    def change(self, relative, function):
++        path = self.case / relative
++        value = shards.read(path)
++        function(value)
++        shards.write(path, value)
++
++    def test_three_original_serial_shards_cover_full_roster(self):
++        self.verify()
++        summary = shards.read(self.case / "summary.json")
++        self.assertEqual((summary["tests"], summary["passed"], summary["skipped"]),
++                         (232, 231, ["fixture_080"]))
++        plans = [shards.read(self.case / f"shard-{index}/plan.json") for index in (1, 2, 3)]
++        self.assertEqual([len(plans[0]["partitions"][i]) for i in range(3)], [78, 77, 77])
++
++    def test_missing_shard_fails(self):
++        shutil.rmtree(self.case / "shard-2")
++        self.verify(False)
++
++    def test_duplicate_shard_fails(self):
++        shutil.rmtree(self.case / "shard-2")
++        shutil.copytree(self.case / "shard-1", self.case / "shard-2")
++        self.verify(False)
++
++    def test_changed_partition_fails(self):
++        self.change("shard-1/plan.json", lambda p: p["partitions"][0].pop())
++        self.verify(False)
++
++    def test_failed_or_cancelled_jobs_fail(self):
++        for status in ("failure", "cancelled", "skipped"):
++            self.verify(False, status)
++
++    def test_failed_signaled_or_incomplete_original_ctest_fails(self):
++        receipt = shards.read(self.case / "shard-1/result.json")
++        for status, completed in ((8, True), (-15, True), (None, False)):
++            value = dict(receipt, ctest_returncode=status, completed=completed)
++            shards.write(self.case / "shard-1/result.json", value)
++            self.verify(False)
++
++    def test_changed_run_identity_fails(self):
++        self.change("shard-1/result.json", lambda r: r["identity"].update(GITHUB_RUN_ATTEMPT="2"))
++        self.verify(False)
++
++    def test_missing_junit_or_last_test_fails(self):
++        for filename in ("ctest-results.xml", "LastTest.log"):
++            path = self.case / "shard-1" / filename
++            original = path.read_bytes()
++            path.unlink()
++            self.verify(False)
++            path.write_bytes(original)
++
++    def test_changed_runtime_flags_fail(self):
++        self.change("shard-1/result.json", lambda r: r["environment"].update(ASAN_OPTIONS="detect_leaks=0"))
++        self.verify(False)
++
++    def test_changed_build_scale_fails(self):
++        path = self.case / "shard-1/CMakeCache.txt"
++        path.write_text(path.read_text().replace("CS80_TEST_TIMEOUT_SCALE:UNINITIALIZED=4",
++                                                "CS80_TEST_TIMEOUT_SCALE:UNINITIALIZED=5"))
++        self.verify(False)
++
++    def test_undeclared_skip_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/ctest-results.xml"
++        tree = ET.parse(path)
++        case = next(tree.getroot().iter("testcase"))
++        ET.SubElement(case, "skipped")
++        tree.write(path)
++        self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++        self.verify(False)
++
++    def test_invalid_junit_status_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/ctest-results.xml"
++        original = path.read_bytes()
++        for status in ("notrun", "disabled", "unknown"):
++            path.write_bytes(original)
++            tree = ET.parse(path)
++            next(tree.getroot().iter("testcase")).set("status", status)
++            tree.write(path)
++            self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++            self.verify(False)
++
++    def test_nested_junit_cases_fail_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/ctest-results.xml"
++        tree = ET.parse(path)
++        root = tree.getroot()
++        children = list(root)
++        wrapper = ET.SubElement(root, "unknown-wrapper")
++        for case in children:
++            root.remove(case)
++            wrapper.append(case)
++        tree.write(path)
++        self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++        self.verify(False)
++
++    def test_nested_failure_or_skip_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/ctest-results.xml"
++        original = path.read_bytes()
++        for marker in ("failure", "error", "skipped"):
++            path.write_bytes(original)
++            tree = ET.parse(path)
++            wrapper = ET.SubElement(next(tree.getroot().iter("testcase")), "unknown-child")
++            ET.SubElement(wrapper, marker)
++            tree.write(path)
++            self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++            self.verify(False)
++
++    def test_partial_last_test_with_footer_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/LastTest.log"
++        path.write_text(path.read_text().replace('"fixture_001" end time:', '"wrong_test" end time:', 1))
++        self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++        self.verify(False)
++
++    def test_duplicate_session_or_missing_output_frame_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/LastTest.log"
++        original = path.read_text()
++        prefix = "\n".join(original.splitlines()[:2]) + "\n"
++        for log in (prefix + original, original.replace("Output:\n", "", 1)):
++            path.write_text(log)
++            self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++            self.verify(False)
++
++    def test_duplicate_or_omitted_junit_fails_even_with_rehashed_receipt(self):
++        path = self.case / "shard-1/ctest-results.xml"
++        original = path.read_bytes()
++        for duplicate in (False, True):
++            path.write_bytes(original)
++            tree = ET.parse(path)
++            root = tree.getroot()
++            case = next(root.iter("testcase"))
++            if duplicate:
++                root.append(copy.deepcopy(case))
++            else:
++                root.remove(case)
++            tree.write(path)
++            self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
++            self.verify(False)
++
++    def test_duplicate_roster_disabled_fixture_and_dependency_fail(self):
++        roster = shards.read(self.case / "shard-1/roster.json")
++        for key, value in (("DISABLED", True), ("FIXTURES_SETUP", ["state"]),
++                           ("FIXTURES_REQUIRED", ["state"]), ("FIXTURES_CLEANUP", ["state"]),
++                           ("DEPENDS", ["fixture_002"]), ("RUN_SERIAL", False)):
++            mutated = copy.deepcopy(roster)
++            mutated["tests"][0]["properties"] = [p for p in mutated["tests"][0]["properties"] if p["name"] != key]
++            mutated["tests"][0]["properties"].append({"name": key, "value": value})
++            with self.assertRaises(ValueError):
++                shards.contract(mutated)
++        roster["tests"][0]["name"] = roster["tests"][1]["name"]
++        with self.assertRaises(ValueError):
++            shards.contract(roster)
++
++    def test_out_of_range_shard_fails(self):
++        for index in (0, 4, -1):
++            result = subprocess.run([sys.executable, str(SCRIPT), "plan", "--shard", str(index),
++                "--build", str(self.build), "--output", str(self.case / "bad-plan")],
++                capture_output=True, text=True, timeout=10)
++            self.assertEqual(result.returncode, 2)
++            self.assertFalse((self.case / "bad-plan").exists())
++
++    def test_original_attempt_cannot_be_replaced(self):
++        result = subprocess.run([sys.executable, str(SCRIPT), "run", "--ctest", self.ctest,
++            "--build", str(self.build), "--output", str(self.case / "shard-1")],
++            capture_output=True, text=True, timeout=10)
++        self.assertEqual(result.returncode, 1)
++        self.assertIn("Refusing to replace an original attempt", result.stderr)
++
++
++if __name__ == "__main__":
++    unittest.main()

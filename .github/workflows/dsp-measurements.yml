@@ -16,6 +16,8 @@ on:
       - 'src/tools/source_factory_circuit_compatibility_probe.cpp'
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
+      - 'scripts/ci-sanitizer-shards.py'
+      - 'scripts/test-ci-sanitizer-shards.py'
       - 'CMakeLists.txt'
       - '.github/workflows/dsp-measurements.yml'
 permissions:
@@ -191,12 +193,18 @@ jobs:
           if-no-files-found: error
 
   sanitizers:
+    name: ASan and UBSan core (shard ${{ matrix.shard }}/3)
     runs-on: ubuntu-24.04
-    # The merged suite (eight workstreams, ~70 executables, the 523-program
-    # library audit) no longer fits 20 serial minutes under ASan + UBSan.
+    # Separate runners keep tests serial while dividing the complete roster.
     timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v5
+      - name: Check sanitizer partition and evidence gates
+        run: python3 scripts/test-ci-sanitizer-shards.py
       - name: Configure ASan and UBSan core build
         run: >
           cmake -S . -B build-sanitizers -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -204,10 +212,53 @@ jobs:
           -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
           -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
           -DCS80_TEST_TIMEOUT_SCALE=4
+      - name: Record full roster and all three exact partitions
+        run: >
+          python3 scripts/ci-sanitizer-shards.py plan
+          --build build-sanitizers --shard ${{ matrix.shard }}
+          --output artifacts/sanitizer-shard-${{ matrix.shard }}
       - name: Build instrument and circuit tests
         run: cmake --build build-sanitizers --parallel 4
       - name: Run sanitizer and validator-fixture tests
         env:
           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
-        run: ctest --test-dir build-sanitizers --output-on-failure --parallel 2
+        run: >
+          python3 scripts/ci-sanitizer-shards.py run --build build-sanitizers
+          --output artifacts/sanitizer-shard-${{ matrix.shard }}
+      - name: Upload original sanitizer shard evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-${{ matrix.shard }}
+          path: |
+            artifacts/sanitizer-shard-${{ matrix.shard }}
+            build-sanitizers/Testing/Temporary/LastTest.log
+          if-no-files-found: error
+
+  sanitizers-complete:
+    name: ASan and UBSan complete core suite
+    needs: sanitizers
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download all original sanitizer shard evidence
+        uses: actions/download-artifact@v5
+        with:
+          pattern: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-*
+          path: artifacts/sanitizer-shards
+      - name: Require three successful jobs and the exact complete test union
+        if: always()
+        run: >
+          python3 scripts/ci-sanitizer-shards.py verify
+          --input artifacts/sanitizer-shards --output artifacts/sanitizer-summary.json
+          --jobs-result "${{ needs.sanitizers.result }}"
+      - name: Upload sanitizer completeness decision
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-sanitizers-complete-${{ github.sha }}-${{ github.run_attempt }}
+          path: artifacts/sanitizer-summary.json
+          if-no-files-found: error

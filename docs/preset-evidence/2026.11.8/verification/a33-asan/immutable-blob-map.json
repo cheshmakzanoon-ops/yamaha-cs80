@@ -1,0 +1,63 @@
+{
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_base": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "status": "Final A33 candidate, supersedes earlier draft blobs",
+  "files": [
+    {
+      "name": "sanitizer-shards.patch",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/sanitizer-shards.patch",
+      "git_blob": "82907b175fae341817dd76e7f013f92faec5ecd4",
+      "sha256": "2aae609a8c3441ebe263dbf779048554ecb8ba0ce40ad195ba96480353f10994",
+      "bytes": 29737
+    },
+    {
+      "name": "ci-sanitizer-shards.py",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/candidate/scripts/ci-sanitizer-shards.py",
+      "git_blob": "3e9098ffe65a4aec63ed3649028888f0e36e8d5c",
+      "sha256": "b9dfbaefe08c80470c0d49845bfb0103223bf545385dd04c8fe562e2a7e2bbfb",
+      "bytes": 13555
+    },
+    {
+      "name": "test-ci-sanitizer-shards.py",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/candidate/scripts/test-ci-sanitizer-shards.py",
+      "git_blob": "dcb861c684e052c2c60dbb2464dc06818f6a40d9",
+      "sha256": "b98f0abe699adc42217bffc1870bf014ed1c710392e2f626f6e9ea87ddd3d9b6",
+      "bytes": 11409
+    },
+    {
+      "name": "dsp-measurements.yml",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/candidate/.github/workflows/dsp-measurements.yml",
+      "git_blob": "dff5d94bbd212e7484c6232a064141abd4f5c2cf",
+      "sha256": "cfcc4ed3f2ed566d7d157bd3816c648c417182540663be6fe06a2b9ae6043cc9",
+      "bytes": 13815
+    },
+    {
+      "name": "proof-packet.json",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/proof-packet.json",
+      "git_blob": "50324b4d59e5cf32efea9725281a399f01ff9e09",
+      "sha256": "8fba28d001980f921d21420b5929fc128839633f7fe28b4688f0aff639582947",
+      "bytes": 10915
+    },
+    {
+      "name": "workflow-preservation.json",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/workflow-preservation.json",
+      "git_blob": "42b0f48876f17608af1b27e4123b944fdf80c809",
+      "sha256": "2d31123f9d294bf6b13b85cd3c908fe25998205e56454a2a509dfa23b69be6a6",
+      "bytes": 963
+    },
+    {
+      "name": "self-tests.log",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan/self-tests.log",
+      "git_blob": "38ea0c3ef58272a00abda56136880af1962c86c5",
+      "sha256": "5dd887d9f63a14daa5a7402161192b7d240913f67256542ad08b491540a2a411",
+      "bytes": 2539
+    },
+    {
+      "name": "a33-asan.md",
+      "path": "/tmp/cs80-614c8ce056b7-notes/a33-asan.md",
+      "git_blob": "9980ddf11c41282a331274be26767dafc31e50d9",
+      "sha256": "bfe229e7e82638c7347f0365b2c32198496bfb5fd432d6c8337425cc812a797e",
+      "bytes": 5744
+    }
+  ]
+}

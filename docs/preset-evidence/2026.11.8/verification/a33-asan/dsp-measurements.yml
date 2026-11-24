@@ -1,0 +1,264 @@
+name: DSP numerical measurements
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/core/**'
+      - 'src/reference/**'
+      - 'src/plugin/KeyboardEventQueue.h'
+      - 'tests/**'
+      - 'scripts/*pluginval*.sh'
+      - 'src/tools/dsp_probe.cpp'
+      - 'src/tools/parity_capture.cpp'
+      - 'src/tools/compatibility_probe.cpp'
+      - 'src/tools/source_factory_compatibility_probe.cpp'
+      - 'src/tools/source_factory_circuit_compatibility_probe.cpp'
+      - 'scripts/analyze_dsp.py'
+      - 'scripts/parity_harness.py'
+      - 'scripts/ci-sanitizer-shards.py'
+      - 'scripts/test-ci-sanitizer-shards.py'
+      - 'CMakeLists.txt'
+      - '.github/workflows/dsp-measurements.yml'
+permissions:
+  contents: read
+concurrency:
+  group: dsp-measurements-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical plotting tools
+        run: python -m pip install numpy==2.2.6 matplotlib==3.10.3
+      - name: Build standalone numerical probe
+        run: |
+          cmake -S . -B build-probe -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF
+          cmake --build build-probe --target cs80_dsp_probe cs80_parity_capture --parallel 2
+      - name: Measure and enforce regression bounds
+        run: |
+          ./build-probe/cs80_dsp_probe artifacts/dsp-probe
+          python scripts/analyze_dsp.py artifacts/dsp-probe
+      - name: Export actual-engine candidate with exact-source provenance
+        run: |
+          python tests/test_parity_capture.py --capture ./build-probe/cs80_parity_capture
+          ./build-probe/cs80_parity_capture --out artifacts/engine-candidate
+          ./build-probe/cs80_parity_capture --out artifacts/engine-live-adr --fixture live-adr-v1
+          for capture in artifacts/engine-candidate artifacts/engine-live-adr; do
+            printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > "$capture/provenance.json"
+            sha256sum src/core/Engine.cpp src/core/Engine.h src/core/InstrumentBody.h src/core/InstrumentBodyFilter.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/PraWahCircuit.h src/core/OutputTapCircuit.h src/core/SourceFactoryTones.h src/core/FactoryToneHypotheses.h src/core/HardwareControl.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > "$capture/SOURCE_SHA256SUMS"
+            sha256sum build-probe/cs80_parity_capture > "$capture/BINARY_SHA256SUMS"
+            { c++ --version; cmake --version; uname -sm; grep -E '^CMAKE_(BUILD_TYPE|CXX_COMPILER|CXX_FLAGS)' build-probe/CMakeCache.txt; } > "$capture/build-environment.txt"
+            (cd "$capture" && sha256sum *.csv *.json SOURCE_SHA256SUMS BINARY_SHA256SUMS build-environment.txt > SHA256SUMS)
+          done
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-engine-candidate-${{ github.sha }}
+          path: artifacts/engine-candidate
+          if-no-files-found: error
+      - name: Upload live envelope candidate trace
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-engine-live-adr-${{ github.sha }}
+          path: artifacts/engine-live-adr
+          if-no-files-found: error
+      - name: Upload source-traceable graphs and raw traces
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-dsp-${{ github.sha }}
+          path: artifacts/dsp-probe
+          if-no-files-found: error
+
+  legacy-compatibility:
+    name: Default-off raw audio versus shipped baseline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build both revisions with the same compiler
+        run: |
+          git fetch --depth=1 origin "$BASELINE"
+          git worktree add --detach baseline "$BASELINE"
+          for source in baseline .; do
+            cmake -S "$source" -B "$source/build-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF
+            cmake --build "$source/build-compat" --target cs80_core --parallel 2
+          done
+          c++ -O2 -std=c++20 -Ibaseline/src src/tools/compatibility_probe.cpp baseline/build-compat/libcs80_core.a -o baseline-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/compatibility_probe.cpp build-compat/libcs80_core.a -o current-probe
+      - name: Require byte-identical default and noisy-reassignment traces
+        run: |
+          mkdir -p artifacts/compatibility
+          corpus=artifacts/compatibility/baseline-corpus.txt
+          ./baseline-probe --export-corpus "$corpus"
+          corpus_sha256="$(sha256sum "$corpus" | cut -d ' ' -f 1)"
+          for scenario in default tails; do
+            args=()
+            if [ "$scenario" = tails ]; then args=(--tails); fi
+            ./baseline-probe "artifacts/compatibility/baseline-$scenario.f32" --corpus "$corpus" "${args[@]}"
+            ./current-probe "artifacts/compatibility/current-$scenario.f32" --corpus "$corpus" "${args[@]}"
+            cmp "artifacts/compatibility/baseline-$scenario.f32" "artifacts/compatibility/current-$scenario.f32"
+          done
+          sha256sum "$corpus" artifacts/compatibility/*.f32 > artifacts/compatibility/SHA256SUMS
+          printf '{"baseline":"%s","candidate":"%s","corpus_source":"%s","corpus_sha256":"%s","corpus_parameters":137,"default_off_byte_identical":true,"legacy_programs":222,"sample_rates":[44100,48000,96000],"analog_evidence":false}\n' "$BASELINE" "$GITHUB_SHA" "$BASELINE" "$corpus_sha256" > artifacts/compatibility/report.json
+          c++ --version > artifacts/compatibility/compiler.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-legacy-compatibility-${{ github.sha }}
+          path: |
+            artifacts/compatibility/report.json
+            artifacts/compatibility/SHA256SUMS
+            artifacts/compatibility/compiler.txt
+            artifacts/compatibility/baseline-corpus.txt
+          if-no-files-found: error
+
+
+  source-factory-compatibility:
+    name: Source circuit V1 and audio V2 compatibility
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+      # Immutable circuit-engine audio checkpoint. Re-pinned from 6e5892f (BBD
+      # chorus and release-tail changes) to Phase 1.5 gain staging (228459c),
+      # then Phase 1.3 RC envelopes (131f72b), then the Phase 1.1 IG00156 filter
+      # (f6b126d), then once for the eight-workstream integration (00ceccf: ws1
+      # nodal filter, oscillator, VCA and plan 2.5 tolerances/drift; ws2
+      # smoothing, noise, optical expression, Standard 2x; ws3 free-running
+      # voices, KAS hold, KBC contour, touch; ws4 SUB/ring/OE1/OE2/PRA; the CPU
+      # pass's tan); see docs/STATUS.md. V1's original circuit numerics remain a
+      # separate gate.
+      SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build immutable circuit and audio checkpoints with one compiler
+        run: |
+          git fetch --depth=1 origin "$SOURCE_V1" "$SOURCE_AUDIO_V2"
+          git worktree add --detach source-v1 "$SOURCE_V1"
+          git worktree add --detach source-audio-v2 "$SOURCE_AUDIO_V2"
+          c++ -O2 -std=c++20 -Isource-v1/src src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-v1-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-current-probe
+          for source in source-audio-v2 .; do
+            cmake -S "$source" -B "$source/build-source-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF
+            cmake --build "$source/build-source-compat" --target cs80_core --parallel 2
+          done
+          c++ -O2 -std=c++20 -Isource-audio-v2/src src/tools/source_factory_compatibility_probe.cpp source-audio-v2/build-source-compat/libcs80_core.a -o source-audio-v2-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/source_factory_compatibility_probe.cpp build-source-compat/libcs80_core.a -o source-current-probe
+      - name: Require unchanged seven-tone V1 circuit numerics
+        run: |
+          mkdir -p artifacts/source-factory-compatibility
+          ./source-circuit-v1-probe artifacts/source-factory-compatibility/circuit-v1.bin
+          ./source-circuit-current-probe artifacts/source-factory-compatibility/circuit-current.bin
+          cmp artifacts/source-factory-compatibility/circuit-v1.bin artifacts/source-factory-compatibility/circuit-current.bin
+      - name: Require unchanged source-audio V2 and numerical history
+        run: |
+          ./source-audio-v2-probe artifacts/source-factory-compatibility/audio-v2.bin
+          ./source-current-probe artifacts/source-factory-compatibility/audio-current.bin
+          cmp artifacts/source-factory-compatibility/audio-v2.bin artifacts/source-factory-compatibility/audio-current.bin
+          sha256sum artifacts/source-factory-compatibility/*.bin > artifacts/source-factory-compatibility/SHA256SUMS
+          printf '{"circuit_baseline":"%s","audio_baseline":"%s","candidate":"%s","source_tones":7,"circuit_values":16632,"sample_rates":[44100,48000,96000,192000],"v1_circuit_bytes_unchanged":true,"v2_audio_and_numeric_state_bytes_unchanged":true,"model_metadata_excluded":true,"analog_evidence":false}\n' "$SOURCE_V1" "$SOURCE_AUDIO_V2" "$GITHUB_SHA" > artifacts/source-factory-compatibility/report.json
+          c++ --version > artifacts/source-factory-compatibility/compiler.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-source-factory-compatibility-${{ github.sha }}
+          path: |
+            artifacts/source-factory-compatibility/report.json
+            artifacts/source-factory-compatibility/SHA256SUMS
+            artifacts/source-factory-compatibility/compiler.txt
+          if-no-files-found: error
+
+  parity-harness:
+    name: Synthetic reference comparison (not hardware evidence)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test comparison failures and provenance gates
+        run: python tests/test_parity_harness.py
+      - name: Compare deterministic synthetic stand-in traces
+        run: python scripts/parity_harness.py synthetic --out artifacts/parity-harness
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-synthetic-comparison-${{ github.sha }}
+          path: artifacts/parity-harness
+          if-no-files-found: error
+
+  sanitizers:
+    name: ASan and UBSan core (shard ${{ matrix.shard }}/3)
+    runs-on: ubuntu-24.04
+    # Separate runners keep tests serial while dividing the complete roster.
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check sanitizer partition and evidence gates
+        run: python3 scripts/test-ci-sanitizer-shards.py
+      - name: Configure ASan and UBSan core build
+        run: >
+          cmake -S . -B build-sanitizers -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DCS80_BUILD_PLUGIN=OFF
+          -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+          -DCS80_TEST_TIMEOUT_SCALE=4
+      - name: Record full roster and all three exact partitions
+        run: >
+          python3 scripts/ci-sanitizer-shards.py plan
+          --build build-sanitizers --shard ${{ matrix.shard }}
+          --output artifacts/sanitizer-shard-${{ matrix.shard }}
+      - name: Build instrument and circuit tests
+        run: cmake --build build-sanitizers --parallel 4
+      - name: Run sanitizer and validator-fixture tests
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: >
+          python3 scripts/ci-sanitizer-shards.py run --build build-sanitizers
+          --output artifacts/sanitizer-shard-${{ matrix.shard }}
+      - name: Upload original sanitizer shard evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-${{ matrix.shard }}
+          path: |
+            artifacts/sanitizer-shard-${{ matrix.shard }}
+            build-sanitizers/Testing/Temporary/LastTest.log
+          if-no-files-found: error
+
+  sanitizers-complete:
+    name: ASan and UBSan complete core suite
+    needs: sanitizers
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download all original sanitizer shard evidence
+        uses: actions/download-artifact@v5
+        with:
+          pattern: cs80-sanitizers-${{ github.sha }}-${{ github.run_attempt }}-*
+          path: artifacts/sanitizer-shards
+      - name: Require three successful jobs and the exact complete test union
+        if: always()
+        run: >
+          python3 scripts/ci-sanitizer-shards.py verify
+          --input artifacts/sanitizer-shards --output artifacts/sanitizer-summary.json
+          --jobs-result "${{ needs.sanitizers.result }}"
+      - name: Upload sanitizer completeness decision
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-sanitizers-complete-${{ github.sha }}-${{ github.run_attempt }}
+          path: artifacts/sanitizer-summary.json
+          if-no-files-found: error
