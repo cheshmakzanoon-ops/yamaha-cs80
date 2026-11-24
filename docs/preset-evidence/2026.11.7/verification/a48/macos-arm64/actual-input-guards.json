@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "name": "changed-native-zip",
+      "returncode": 2,
+      "stderr": "Mac qualification refused: Actual ZIP bytes: native\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "changed-doc-supplement",
+      "returncode": 2,
+      "stderr": "Mac qualification refused: Reviewed actual A48 document/notice supplement changed\n",
+      "expected_refusal": true
+    },
+    {
+      "name": "existing-qualified-output",
+      "returncode": 2,
+      "stderr": "Mac qualification refused: Refusing to overwrite evidence: docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/original-execution-binding.json\n",
+      "expected_refusal": true
+    }
+  ],
+  "original_inputs_mutated": false,
+  "downloaded_products_executed": false,
+  "scope": "Temporary copied bytes only. Qualifier refusal guards; no native build or validation rerun."
+}

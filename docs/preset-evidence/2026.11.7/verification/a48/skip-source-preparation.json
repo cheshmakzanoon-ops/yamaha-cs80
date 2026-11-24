@@ -1,0 +1,39 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_files": {
+    "tests/FilterBatchCapTests.cpp": {
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729",
+      "same_skip_source_as_c554": true
+    },
+    "tests/StereoPraExactTests.cpp": {
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0",
+      "same_skip_source_as_c554": true
+    },
+    "scripts/test-package-binary-identity.py": {
+      "bytes": 11758,
+      "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480",
+      "same_skip_source_as_c554": true
+    },
+    "scripts/test-packaging-notices.py": {
+      "bytes": 15702,
+      "sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f",
+      "same_skip_source_as_c554": true
+    },
+    "scripts/test-windows-installer-preflight.py": {
+      "bytes": 10817,
+      "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4",
+      "same_skip_source_as_c554": true
+    },
+    "tests/test_render_cli.py": {
+      "bytes": 8752,
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868",
+      "same_skip_source_as_c554": true
+    }
+  },
+  "scope": "Static source guards only; actual formal/nested outputs must be separately reviewed per Mac. No runtime skip is accepted here.",
+  "actual_runtime_skip_reviewed": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

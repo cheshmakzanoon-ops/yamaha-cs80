@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a48/qualify-macos-arm64.py",
+    "--repo",
+    ".",
+    "--archives",
+    "/tmp/cs80-ci-1cee5a/ee0dabca",
+    "--documents-receipt",
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/docs-and-notices.json",
+    "--out-dir",
+    "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64"
+  ],
+  "returncode": 0,
+  "stdout": "{\"status\": \"platform_qualified\", \"target\": \"macos-arm64\", \"native_counts\": {\"registered\": 277, \"passed\": 275, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"validator_lanes\": 5, \"validation_retries\": 0, \"cross_platform_qualified\": false, \"release_qualified\": false}\n",
+  "stderr": "",
+  "completed_at_utc": "2026-11-24T13:37:47.407033+00:00"
+}

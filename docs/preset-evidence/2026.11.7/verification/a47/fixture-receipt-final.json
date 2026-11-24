@@ -1,0 +1,36 @@
+{
+  "status": "offline_fixture_checks_only",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a47/test-runtime-checker.py"
+  ],
+  "started_at_utc": "2026-11-24T13:44:58.648251+00:00",
+  "finished_at_utc": "2026-11-24T13:44:58.903911+00:00",
+  "exit_code": 0,
+  "methods": 6,
+  "failures": 0,
+  "negative_checks": 21,
+  "log": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a47/runtime-checker-fixtures-final.log",
+    "bytes": 804,
+    "sha256": "a29e2104b1655135b49b909d7ff964b314a7805f8ecc009dc6e2e82e32767d65"
+  },
+  "checker": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a47/verify-linux-runtime-evidence.py",
+    "bytes": 29517,
+    "sha256": "fd8c6da6604179d8394eb39db1e6151661c37c95fe9380ce34e4c448dcd85540"
+  },
+  "fixture": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a47/test-runtime-checker.py",
+    "bytes": 7532,
+    "sha256": "67b2ee2bfab5b2d30aa73c3c232d69056929c387da68ade0a6ac62c184c737c6"
+  },
+  "historical_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "historical_bytes_used_as_format_fixtures_only": true,
+  "actual_artifacts_checked": false,
+  "native_binaries_executed": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

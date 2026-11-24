@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "target": "macos-arm64",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a48/qualify-macos-arm64.py"
+      ],
+      "returncode": 2,
+      "stderr": "Mac qualification refused: Prepared only; actual inputs have not been reviewed\n",
+      "expected_preparation_refusal": true
+    },
+    {
+      "target": "macos-x86_64",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a48/qualify-macos-x86_64.py"
+      ],
+      "returncode": 2,
+      "stderr": "Mac qualification refused: Prepared only; actual inputs have not been reviewed\n",
+      "expected_preparation_refusal": true
+    }
+  ],
+  "actual_native_execution": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

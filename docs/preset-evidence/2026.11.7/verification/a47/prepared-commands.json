@@ -1,0 +1,163 @@
+{
+  "status": "prepared_commands_not_executed_on_actual_artifacts",
+  "working_directory": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "commands": [
+    {
+      "purpose": "parse_original_native_and_validator_archives",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+        "--inputs",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-native-inputs.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-observations.json"
+      ]
+    },
+    {
+      "purpose": "bind_parser_to_both_archives_and_api_objects",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--target",
+        "linux-x86_64",
+        "--observations",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-observations.json",
+        "--native-zip",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-native.zip",
+        "--native-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/native-api.json",
+        "--validator-zip",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-validator.zip",
+        "--validator-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/validator-api.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-parser-archive-binding.json"
+      ]
+    },
+    {
+      "purpose": "verify_native_only_after_actual_skip_review",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--inputs",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-native-inputs.json",
+        "--target",
+        "linux-x86_64",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-native-content-contract.json"
+      ]
+    },
+    {
+      "purpose": "verify_installation_structure_and_native_headers",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/run-api-at-platform-completion.json",
+        "--platform",
+        "linux",
+        "--architecture",
+        "x86_64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-install.zip",
+        "--artifact-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/install-api.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-install-acceptance.json"
+      ]
+    },
+    {
+      "purpose": "verify_source_guides_notices_and_required_metadata",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-install.zip",
+        "--acceptance",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-install-acceptance.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-docs-and-notices.json"
+      ]
+    },
+    {
+      "purpose": "compare_complete_validated_product_to_installation",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/run-api-at-platform-completion.json",
+        "--platform",
+        "linux",
+        "--install-archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-install.zip",
+        "--install-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/install-api.json",
+        "--validator-archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/linux-vst3.zip",
+        "--validator-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/vst3-api.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-payload-binding.json"
+      ]
+    },
+    {
+      "purpose": "bind_original_jobs_commands_uploads_consumer_and_retry_history",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a47/verify-linux-runtime-evidence.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--inputs",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-original-inputs.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/linux-x86_64/a47-runtime-binding.json"
+      ]
+    }
+  ],
+  "all_output_paths_must_be_new": true,
+  "actual_artifacts_checked": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

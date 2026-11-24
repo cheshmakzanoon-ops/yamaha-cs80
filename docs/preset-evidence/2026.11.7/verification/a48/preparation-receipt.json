@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "status": "prepared_both_mac_targets_no_actual_artifacts_accepted",
+  "prepared_at_utc": "2026-11-24T13:28:20.939067+00:00",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "targets": [
+    "macos-arm64",
+    "macos-x86_64"
+  ],
+  "expected_native_names_each": 277,
+  "required_validator_lanes_each": 5,
+  "current_global_validator_lanes": 15,
+  "ast_parse_passed": true,
+  "historical_files_preserved": 100,
+  "downloaded_product_or_validator_executed": false,
+  "actual_artifacts_checked": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "helpers": {
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-qualification.py": {
+      "bytes": 43186,
+      "sha256": "0b881f00d480ef32d31f6866eb03a3aa31a5ae809de05bafa9ad0d816f3b4fb1"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py": {
+      "bytes": 9655,
+      "sha256": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d"
+    }
+  }
+}

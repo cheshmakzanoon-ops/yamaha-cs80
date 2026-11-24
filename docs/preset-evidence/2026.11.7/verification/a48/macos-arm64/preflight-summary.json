@@ -1,0 +1,176 @@
+{
+  "status": "actual_original_mac_execution_preflight_passed",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "target": "macos-arm64",
+  "ctest_seconds": "1646.06",
+  "command_groups": 13,
+  "native_counts": {
+    "registered": 277,
+    "passed": 275,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "audit": {
+    "name": "cs80_library_audit_tests",
+    "original_ctest_result": "Passed",
+    "junit_seconds": 309.396,
+    "lasttest_output": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs\n",
+    "output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f",
+    "all_523_programs_completed": true,
+    "source_sha256": "958e67fc42fa3438c5dd47425f9f4dc8012650e44d814283aa0e3d2bbc4f69cd",
+    "predecessor_failure_preserved": "c5549f7d Intel run 45385716988 job 138415960996 remains failed; this original ee0dabca execution is a separate source/run result."
+  },
+  "validators": [
+    {
+      "lane": "vst3",
+      "seed": "0x1c41232",
+      "original_normal_exit": 0,
+      "warnings": [],
+      "optional_steinberg_skipped": true
+    },
+    {
+      "lane": "au",
+      "seed": "0xf949b5",
+      "original_normal_exit": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "optional_steinberg_skipped": false
+    },
+    {
+      "lane": "au-gui",
+      "seed": "0x6632057",
+      "original_normal_exit": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "optional_steinberg_skipped": false
+    },
+    {
+      "lane": "au-gui-seed",
+      "seed": "0x2b4eef5",
+      "original_normal_exit": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "optional_steinberg_skipped": false
+    },
+    {
+      "lane": "au-gui-seed-c76",
+      "seed": "0x3c99748",
+      "original_normal_exit": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "optional_steinberg_skipped": false
+    }
+  ],
+  "uploads": [
+    {
+      "kind": "native",
+      "artifact_id": 14923599291,
+      "name": "cs80-macos-15-test-evidence",
+      "bytes": 86866,
+      "sha256": "93cf1ac090abc9c437dbef5fa279a6f5baad9d2e1b9cb6c21e900ffd70eee55a",
+      "original_api_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20,
+        "started_at": "2026-11-24T13:30:28Z",
+        "completed_at": "2026-11-24T13:30:30Z"
+      },
+      "original_upload_timestamp": "2026-11-24T13:30:30.0097030Z",
+      "original_digest_timestamp": "2026-11-24T13:30:29.6208880Z",
+      "created_at": "2026-11-24T13:30:29Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "producing_attempt_bound": true
+    },
+    {
+      "kind": "validator",
+      "artifact_id": 14923963817,
+      "name": "cs80-pluginval-macos-15",
+      "bytes": 12720,
+      "sha256": "a8fd5db8bca67d76d7ae64e4354ecfa4245301859457e40dae64838f39b977d0",
+      "original_api_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-24T13:30:27Z",
+        "completed_at": "2026-11-24T13:30:28Z"
+      },
+      "original_upload_timestamp": "2026-11-24T13:30:28.5565070Z",
+      "original_digest_timestamp": "2026-11-24T13:30:28.1600760Z",
+      "created_at": "2026-11-24T13:30:28Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "producing_attempt_bound": true
+    },
+    {
+      "kind": "install",
+      "artifact_id": 14923244833,
+      "name": "cs80-macos-15-install-bundle",
+      "bytes": 14989471,
+      "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+      "original_api_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-11-24T13:30:24Z",
+        "completed_at": "2026-11-24T13:30:27Z"
+      },
+      "original_upload_timestamp": "2026-11-24T13:30:27.1635210Z",
+      "original_digest_timestamp": "2026-11-24T13:30:26.7406690Z",
+      "created_at": "2026-11-24T13:30:27Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "producing_attempt_bound": true
+    }
+  ],
+  "actual_native_binary_headers": [
+    {
+      "format": "AU",
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 14329184,
+      "sha256": "4a9c5dc5c58b6491380462902ca4b264c0e718c84501487a87a6caa00aa35dd4",
+      "mode": "0o755",
+      "magic": "cffaedfe",
+      "cpu_type": "0x100000c",
+      "cpu_subtype": "0x0",
+      "mach_o_filetype": 8,
+      "thin_native_64_bit": true,
+      "header_role": "bundle"
+    },
+    {
+      "format": "Standalone",
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14161776,
+      "sha256": "0ef8235abc1b9ffbb4953904684d62816a1b646c32e691d759bf987d9d22662c",
+      "mode": "0o755",
+      "magic": "cffaedfe",
+      "cpu_type": "0x100000c",
+      "cpu_subtype": "0x0",
+      "mach_o_filetype": 2,
+      "thin_native_64_bit": true,
+      "header_role": "executable"
+    },
+    {
+      "format": "VST3",
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 14606928,
+      "sha256": "f481d957677d117d29541d7ae95e6188d965d04c2e64d76beffc918601058554",
+      "mode": "0o755",
+      "magic": "cffaedfe",
+      "cpu_type": "0x100000c",
+      "cpu_subtype": "0x0",
+      "mach_o_filetype": 8,
+      "thin_native_64_bit": true,
+      "header_role": "bundle"
+    }
+  ],
+  "whole_au_directory_comparisons_passed": true,
+  "platform_qualified": false,
+  "release_qualified": false
+}

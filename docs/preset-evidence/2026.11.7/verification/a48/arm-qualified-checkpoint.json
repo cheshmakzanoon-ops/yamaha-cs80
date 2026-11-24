@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "status": "arm_qualified_intel_pending",
+  "checked_at_utc": "2026-11-24T13:40:13.155759+00:00",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "target_status": {
+    "macos-arm64": "platform_qualified",
+    "macos-x86_64": "pending_actual_artifact_review"
+  },
+  "mac_validator_lanes_accepted": 5,
+  "mac_validator_lanes_required": 10,
+  "both_macs_cross_check_complete": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "historical_files_verified_unchanged": 100,
+  "root_acquisition_files_verified_unchanged": 9,
+  "files": {
+    "docs/preset-evidence/2026.11.7/verification/a48/USAGE.md": {
+      "bytes": 8512,
+      "sha256": "51293a448abe9309b51f26af3d17c845d12f728948969c4e4a5d99b7a214b1db"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/helper-differences.patch": {
+      "bytes": 35011,
+      "sha256": "66217c31f9aa44129165112a9a647d16e87dcb97231a3a6851e357267e9439c2"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py": {
+      "bytes": 9655,
+      "sha256": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/actual-content-command-receipts.json": {
+      "bytes": 5378,
+      "sha256": "f3e77fb95d78da4ea16c530700acbb49b3e72822234f0b87b637e759077ef6f4"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/actual-input-guards.json": {
+      "bytes": 874,
+      "sha256": "c0368d3e05b95b01b027a713cfed7a31fe5d87dc626674779e26d80ee2049c61"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/bind-parser-archives.log": {
+      "bytes": 152,
+      "sha256": "244a9906ee434201fbac36eabe73ba4b9f44abb3206096f52aa2c15e4a7f7ac1"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/docs-and-notices.json": {
+      "bytes": 32828,
+      "sha256": "258c2233eeb0723c2ac66513245920176ea9290d18fde315261abd756113b35a"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/inputs.json": {
+      "bytes": 607,
+      "sha256": "52cd4575e84151ba15c718a5d78064093472d39c3ad61c1d8c8f130e44d8e3c8"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/inspect-docs-notices.log": {
+      "bytes": 242,
+      "sha256": "5b30395f4099f18c8d8342a235e5a0896f4882b78667a232210e2b043a03d0f1"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/inspect-install.log": {
+      "bytes": 202,
+      "sha256": "0af2902ed0927a7e59cd01867a834373bc98bcb595e68e0b8f2a13b0f3cfe6f2"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/inspect-payload-binding.log": {
+      "bytes": 459,
+      "sha256": "214f4718410e89c77bde3d2535a31fb709cd34a715ed645ac1c27d86f6f43a93"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/native-contract.json": {
+      "bytes": 4863,
+      "sha256": "342a00c271d95f0ed53b6dde684869b1a541419d3a61f0b15fda3499a7d8d95c"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/native-reviewed-excerpts.json": {
+      "bytes": 4038,
+      "sha256": "177a470cbeac248af04536fe403e01dfb75641273f0dd0cd4d073c0dd3eaad93"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/observations.json": {
+      "bytes": 107203,
+      "sha256": "3d8163916dabc11c52efc45e92626e42df3a04d17be0b84ada0ff353c5369186"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/parse-observations.log": {
+      "bytes": 354,
+      "sha256": "7cdcdca53d06f325049c4184ae9361347b89abf0533bfd8ffb7966d94be473ad"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/parser-archive-binding.json": {
+      "bytes": 6539,
+      "sha256": "0034e472eb625d3042d780b2b28c77c3cad7a8b29b6e671eefacba68285c5358"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/preflight-original-execution-binding.json": {
+      "bytes": 47165,
+      "sha256": "22345d7d3c73c652f70a99419da025172c738950e87a33a75571f229fc8568af"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/preflight-summary.json": {
+      "bytes": 5949,
+      "sha256": "ae462ca5c8a16cbba1a93a3cc306346e04ec110769caf3a6744844036353c25d"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/preparation-context.json": {
+      "bytes": 236,
+      "sha256": "d32fb0bedda1c1d3b7d279307fc2719ccb1dc6a331417fee4fca6cf2f0a7ec2a"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/qualification-command.json": {
+      "bytes": 891,
+      "sha256": "158bcb5608f3af29034ccdbf0da71319ec1ee99311827c42327fcabf36ad0922"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/reviewed-input-pins.json": {
+      "bytes": 2154,
+      "sha256": "8e8e96e9be8a4e5e6edc246dcbb91dd328e5c95b5129154218a5f08c73d4940d"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/skip-review.json": {
+      "bytes": 8706,
+      "sha256": "de1aca2f99da1ef1513a85a5e917d4afa68ea8c02b192bd158ad3f62aea61d66"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/wrapper-preparation-to-actual.patch": {
+      "bytes": 3254,
+      "sha256": "df753d5819f4c6b1b021d9b2f1b4b5a044080460bc7e2bd16580c0697a32f39b"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-qualification.py": {
+      "bytes": 43186,
+      "sha256": "0b881f00d480ef32d31f6866eb03a3aa31a5ae809de05bafa9ad0d816f3b4fb1"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-x86_64/inputs.json": {
+      "bytes": 612,
+      "sha256": "00d847321929a254bd938c0b3fbaefc719eb4b7a483852ad67e794c6471a9752"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/macos-x86_64/preparation-context.json": {
+      "bytes": 237,
+      "sha256": "e250fcb0d06352acf3b1503968505339ccbaacf6e1adf1c2cec1eae6d42df0b8"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/predecessor-files.json": {
+      "bytes": 20035,
+      "sha256": "71d4ac386b6870090b427dda9149654d77872969a08360646f22468dd3d24fd2"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/preparation-guards.json": {
+      "bytes": 950,
+      "sha256": "1d064cf54804d271de87abe383591bce535325a346e5e5d146fb074cb510aaa3"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/preparation-receipt.json": {
+      "bytes": 1162,
+      "sha256": "c9817747f9e9c7fad3d82cbcfedd5dee89c44612a8415c12306ae7693f668a6e"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/qualify-macos-arm64.py": {
+      "bytes": 3463,
+      "sha256": "2e7a61a25ecf30cbbd0ff85ec7a63601fe038f4e7e6260bd3978d28ee3c019af"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/qualify-macos-x86_64.py": {
+      "bytes": 1282,
+      "sha256": "f675c9f0ddf8c42c2e2ef4681f827e51fabd2697ce406e7b79d0517cff6183fe"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/retained-files.json": {
+      "bytes": 3031,
+      "sha256": "0e8b02d9c2b46788eb9610a59e1f7c0db672f900e029da8b21a6f1bd83143185"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a48/skip-source-preparation.json": {
+      "bytes": 1492,
+      "sha256": "4049bda54705c97f4b63a0224828d51d5a92df540924d29e921854cfa64e1bf9"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a48.md": {
+      "bytes": 12286,
+      "sha256": "9ae16069d4545579b6749d4f3b5be6c17f9b12ef5b06fad2b8d95b1a6a2303ba"
+    },
+    "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-acceptance.json": {
+      "bytes": 14209,
+      "sha256": "24ac1d60ac214fe0ba76e2f13e64b97186ddf08b6a2cb1064b5dbaea04d24549"
+    },
+    "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/archive-payload-binding.json": {
+      "bytes": 17509,
+      "sha256": "5d4470627917cd47b9cbaf9493568f2327a3695fa6ae632a69d72dbf76eb6f57"
+    },
+    "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/original-execution-binding.json": {
+      "bytes": 47222,
+      "sha256": "7ac3e4bbea1d1c40737f02fd523b6588bd4be1a32f4c74fc688a83398bbeb57d"
+    },
+    "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json": {
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    }
+  }
+}

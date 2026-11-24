@@ -1,0 +1,62 @@
+{
+  "cs80_filter_batch_cap_tests": {
+    "output": "SKIP: AVX2 unavailable or disabled; no SIMD qualification\n",
+    "lasttest_status": "Passed"
+  },
+  "cs80_stereo_pra_exact_tests": {
+    "output": "",
+    "lasttest_status": "Passed"
+  },
+  "cs80_package_binary_identity_tests": {
+    "output": "...s.........\n----------------------------------------------------------------------\nRan 13 tests in 0.074s\n\nOK (skipped=1)\n",
+    "lasttest_status": "Passed"
+  },
+  "cs80_packaging_notice_tests": {
+    "output": "test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok\ntest_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok\ntest_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok\ntest_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok\ntest_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok\ntest_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok\ntest_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'\n\n----------------------------------------------------------------------\nRan 7 tests in 2.040s\n\nOK (skipped=1)\n",
+    "lasttest_status": "Passed"
+  },
+  "cs80_windows_installer_preflight_tests": {
+    "output": "...ss.......\n----------------------------------------------------------------------\nRan 12 tests in 0.984s\n\nOK (skipped=2)\n",
+    "lasttest_status": "Passed"
+  },
+  "cs80_render_cli_tests": {
+    "output": "..s....\n----------------------------------------------------------------------\nRan 7 tests in 0.327s\n\nOK (skipped=1)\n",
+    "lasttest_status": "Passed"
+  },
+  "cs80_library_audit_tests": {
+    "output": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs\n",
+    "lasttest_status": "Passed"
+  },
+  "new_test_summaries": {
+    "cs80_piano_partial_decay_tests": {
+      "lasttest_status": "Passed",
+      "terminal_summary": "Piano partial decay: 220 checks, 0 failures; 20053080 generated samples",
+      "output_sha256": "6127dc37a9fc0c600dae0ba0b7558a67c687ba8f57c61c570216b1b440929627"
+    },
+    "cs80_body_noise_rate_tests": {
+      "lasttest_status": "Passed",
+      "terminal_summary": "Body noise rates: 157 checks, 0 failures",
+      "output_sha256": "bd5375ef2b4fc937df9e46c2d49437d356be7b63c7ecb831b3bfbbfb1d75be1f"
+    },
+    "cs80_string_body_formant_tests": {
+      "lasttest_status": "Passed",
+      "terminal_summary": "String body formants: 5388 checks, 0 failures",
+      "output_sha256": "c01f8c940dc71e6baae69f622803b5b323caf87247a6b0f255025d68ec3f75cf"
+    },
+    "cs80_low_choir_spectrum_tests": {
+      "lasttest_status": "Passed",
+      "terminal_summary": "LowChoirSpectrumTests: 1342 checks, 0 failures",
+      "output_sha256": "411faec0861488daa502b3bb2fa141714ca17ad340b0d9cfaa59a9bf1cf9f826"
+    }
+  },
+  "ui_required_lines": [
+    "UI SMOKE START: processor=555792 bytes engine=504776 bytes",
+    "UI SMOKE PHASE: instrument body host identity and recall",
+    "UI SMOKE TIMING: phase=instrument body host identity and recall seconds=3.388362 total_seconds=17.635525",
+    "UI SMOKE TEST PASSED"
+  ],
+  "ui_report_only_golden_lines": [
+    "golden main-1600x1000: changed 0.7652 % of pixels (limit 0.30 %), worst 8x8 block mean 64.52 (limit 8.0) [report only on this platform]",
+    "golden main-1120x700: changed 1.3670 % of pixels (limit 0.30 %), worst 8x8 block mean 52.28 (limit 8.0) [report only on this platform]"
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "schema": 1,
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "status": "exact_inputs_prepared_no_actual_native_archives_inspected",
+  "platforms": {
+    "linux-x86_64": {
+      "producer_job_id": 138455975798,
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "expected_runner_label": "ubuntu-24.04",
+      "expected_binary_platform": "linux",
+      "expected_binary_architecture": "x86_64",
+      "initial_api_observed": {
+        "status": "pending",
+        "conclusion": null,
+        "started_at": "2026-11-24T12:49:06Z",
+        "completed_at": null,
+        "labels": [
+          "ubuntu-24.04"
+        ]
+      },
+      "initial_api_steps_observed": [],
+      "required_artifact_names": {
+        "native_test_evidence": "cs80-linux-test-evidence",
+        "install_bundle": "cs80-linux-install-bundle",
+        "vst3_payload_for_separate_validator": "cs80-linux-vst3",
+        "validator": "cs80-pluginval-reports"
+      },
+      "declared_configure_command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+      "declared_build_command": "cmake --build build --parallel \"$(nproc)\"",
+      "declared_packager_command": "python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages",
+      "required_raw_inputs": [
+        "completed authenticated run and exact-attempt API",
+        "completed authenticated producer-job API and full original log",
+        "artifact API ID/name/digest/run/head metadata",
+        "actual outer install ZIP and selected inner package",
+        "actual native-test ZIP",
+        "original validator job/log and validator ZIP"
+      ],
+      "checks_when_actual_inputs_arrive": [
+        "Bind exact checkout SHA and clean tracked product source to original configure, JUCE verify, build, tests, packaging and upload sequence.",
+        "Read actual runner OS/version, architecture, compiler/version, generator and macOS Xcode/SDK evidence from logs and package; distinguish missing fields.",
+        "Hash outer archives against authenticated API digests and original upload logs.",
+        "Check manifest/source metadata names ee0dabca full SHA, revision .7, run 45397189410 and expected native architecture.",
+        "Compare native ci-juce-provenance.txt and embedded evidence/juce-provenance.txt byte for byte; reject wrong workflow/source/run/path/clean/version fields.",
+        "Connect bundled JUCE license bytes to successful original clean dependency verification and source-pinned packager read path; do not substitute a local JUCE checkout.",
+        "Inspect original Mac/Windows pluginval receipt against frozen official asset constants, or record Linux version URL and lack of independent digest pin.",
+        "Reuse platform payload and signing-scope reports only after checking their raw metadata and log bindings."
+      ],
+      "actual_native_test_archive": null,
+      "actual_install_archive": null,
+      "actual_checkout_sha_observed_in_original_log": null,
+      "actual_toolchain": null,
+      "actual_os": null,
+      "actual_architecture": null,
+      "actual_juce_provenance": null,
+      "actual_native_package_provenance_bytes_equal": null,
+      "actual_juce_license_package_connection": null,
+      "actual_pluginval_receipt": null,
+      "decision": "pending_actual_receipts_not_qualified"
+    },
+    "windows-x86_64": {
+      "producer_job_id": 138455976256,
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "expected_runner_label": "windows-2022",
+      "expected_binary_platform": "windows",
+      "expected_binary_architecture": "x86_64",
+      "initial_api_observed": {
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-11-24T12:49:23Z",
+        "completed_at": null,
+        "labels": [
+          "windows-2022"
+        ]
+      },
+      "initial_api_steps_observed": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Configure",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "name": "Report CMake failure",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Build",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Test",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Upload Windows VST3",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Package Windows VST3 and Standalone",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Upload Windows install bundle",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Upload test and JUCE source evidence",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "pending",
+          "conclusion": null
+        }
+      ],
+      "required_artifact_names": {
+        "native_test_evidence": "cs80-windows-test-evidence",
+        "install_bundle": "cs80-windows-install-bundle",
+        "vst3_payload_for_separate_validator": "cs80-windows-vst3",
+        "validator": "cs80-pluginval-windows"
+      },
+      "declared_configure_command": "cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+      "declared_build_command": "cmake --build build --config Release --parallel",
+      "declared_packager_command": "python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages",
+      "required_raw_inputs": [
+        "completed authenticated run and exact-attempt API",
+        "completed authenticated producer-job API and full original log",
+        "artifact API ID/name/digest/run/head metadata",
+        "actual outer install ZIP and selected inner package",
+        "actual native-test ZIP",
+        "original validator job/log and validator ZIP"
+      ],
+      "checks_when_actual_inputs_arrive": [
+        "Bind exact checkout SHA and clean tracked product source to original configure, JUCE verify, build, tests, packaging and upload sequence.",
+        "Read actual runner OS/version, architecture, compiler/version, generator and macOS Xcode/SDK evidence from logs and package; distinguish missing fields.",
+        "Hash outer archives against authenticated API digests and original upload logs.",
+        "Check manifest/source metadata names ee0dabca full SHA, revision .7, run 45397189410 and expected native architecture.",
+        "Compare native ci-juce-provenance.txt and embedded evidence/juce-provenance.txt byte for byte; reject wrong workflow/source/run/path/clean/version fields.",
+        "Connect bundled JUCE license bytes to successful original clean dependency verification and source-pinned packager read path; do not substitute a local JUCE checkout.",
+        "Inspect original Mac/Windows pluginval receipt against frozen official asset constants, or record Linux version URL and lack of independent digest pin.",
+        "Reuse platform payload and signing-scope reports only after checking their raw metadata and log bindings."
+      ],
+      "actual_native_test_archive": null,
+      "actual_install_archive": null,
+      "actual_checkout_sha_observed_in_original_log": null,
+      "actual_toolchain": null,
+      "actual_os": null,
+      "actual_architecture": null,
+      "actual_juce_provenance": null,
+      "actual_native_package_provenance_bytes_equal": null,
+      "actual_juce_license_package_connection": null,
+      "actual_pluginval_receipt": null,
+      "decision": "pending_actual_receipts_not_qualified"
+    },
+    "macos-arm64": {
+      "producer_job_id": 138455976227,
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "expected_runner_label": "macos-15",
+      "expected_binary_platform": "macos",
+      "expected_binary_architecture": "arm64",
+      "initial_api_observed": {
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-11-24T12:49:06Z",
+        "completed_at": null,
+        "labels": [
+          "macos-15"
+        ]
+      },
+      "initial_api_steps_observed": [],
+      "required_artifact_names": {
+        "native_test_evidence": "cs80-macos-15-test-evidence",
+        "install_bundle": "cs80-macos-15-install-bundle",
+        "vst3_payload_for_separate_validator": null,
+        "validator": "cs80-pluginval-macos-15"
+      },
+      "declared_configure_command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+      "declared_build_command": "cmake --build build --parallel",
+      "declared_packager_command": "python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages",
+      "required_raw_inputs": [
+        "completed authenticated run and exact-attempt API",
+        "completed authenticated producer-job API and full original log",
+        "artifact API ID/name/digest/run/head metadata",
+        "actual outer install ZIP and selected inner package",
+        "actual native-test ZIP",
+        "original validator job/log and validator ZIP"
+      ],
+      "checks_when_actual_inputs_arrive": [
+        "Bind exact checkout SHA and clean tracked product source to original configure, JUCE verify, build, tests, packaging and upload sequence.",
+        "Read actual runner OS/version, architecture, compiler/version, generator and macOS Xcode/SDK evidence from logs and package; distinguish missing fields.",
+        "Hash outer archives against authenticated API digests and original upload logs.",
+        "Check manifest/source metadata names ee0dabca full SHA, revision .7, run 45397189410 and expected native architecture.",
+        "Compare native ci-juce-provenance.txt and embedded evidence/juce-provenance.txt byte for byte; reject wrong workflow/source/run/path/clean/version fields.",
+        "Connect bundled JUCE license bytes to successful original clean dependency verification and source-pinned packager read path; do not substitute a local JUCE checkout.",
+        "Inspect original Mac/Windows pluginval receipt against frozen official asset constants, or record Linux version URL and lack of independent digest pin.",
+        "Reuse platform payload and signing-scope reports only after checking their raw metadata and log bindings."
+      ],
+      "actual_native_test_archive": null,
+      "actual_install_archive": null,
+      "actual_checkout_sha_observed_in_original_log": null,
+      "actual_toolchain": null,
+      "actual_os": null,
+      "actual_architecture": null,
+      "actual_juce_provenance": null,
+      "actual_native_package_provenance_bytes_equal": null,
+      "actual_juce_license_package_connection": null,
+      "actual_pluginval_receipt": null,
+      "decision": "pending_actual_receipts_not_qualified"
+    },
+    "macos-x86_64": {
+      "producer_job_id": 138455976307,
+      "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "run_id": 45397189410,
+      "attempt": 1,
+      "expected_runner_label": "macos-15-intel",
+      "expected_binary_platform": "macos",
+      "expected_binary_architecture": "x86_64",
+      "initial_api_observed": {
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-11-24T12:49:06Z",
+        "completed_at": null,
+        "labels": [
+          "macos-15-intel"
+        ]
+      },
+      "initial_api_steps_observed": [],
+      "required_artifact_names": {
+        "native_test_evidence": "cs80-macos-15-intel-test-evidence",
+        "install_bundle": "cs80-macos-15-intel-install-bundle",
+        "vst3_payload_for_separate_validator": null,
+        "validator": "cs80-pluginval-macos-15-intel"
+      },
+      "declared_configure_command": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON",
+      "declared_build_command": "cmake --build build --parallel",
+      "declared_packager_command": "python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages",
+      "required_raw_inputs": [
+        "completed authenticated run and exact-attempt API",
+        "completed authenticated producer-job API and full original log",
+        "artifact API ID/name/digest/run/head metadata",
+        "actual outer install ZIP and selected inner package",
+        "actual native-test ZIP",
+        "original validator job/log and validator ZIP"
+      ],
+      "checks_when_actual_inputs_arrive": [
+        "Bind exact checkout SHA and clean tracked product source to original configure, JUCE verify, build, tests, packaging and upload sequence.",
+        "Read actual runner OS/version, architecture, compiler/version, generator and macOS Xcode/SDK evidence from logs and package; distinguish missing fields.",
+        "Hash outer archives against authenticated API digests and original upload logs.",
+        "Check manifest/source metadata names ee0dabca full SHA, revision .7, run 45397189410 and expected native architecture.",
+        "Compare native ci-juce-provenance.txt and embedded evidence/juce-provenance.txt byte for byte; reject wrong workflow/source/run/path/clean/version fields.",
+        "Connect bundled JUCE license bytes to successful original clean dependency verification and source-pinned packager read path; do not substitute a local JUCE checkout.",
+        "Inspect original Mac/Windows pluginval receipt against frozen official asset constants, or record Linux version URL and lack of independent digest pin.",
+        "Reuse platform payload and signing-scope reports only after checking their raw metadata and log bindings."
+      ],
+      "actual_native_test_archive": null,
+      "actual_install_archive": null,
+      "actual_checkout_sha_observed_in_original_log": null,
+      "actual_toolchain": null,
+      "actual_os": null,
+      "actual_architecture": null,
+      "actual_juce_provenance": null,
+      "actual_native_package_provenance_bytes_equal": null,
+      "actual_juce_license_package_connection": null,
+      "actual_pluginval_receipt": null,
+      "decision": "pending_actual_receipts_not_qualified"
+    }
+  },
+  "remaining_scope_limits": [
+    "Initial API status is historical; no inference about the current run status is made.",
+    "Expected suite counts and 15 validator lanes are context only and are not qualified by this provenance review.",
+    "Source pinning, successful build logs, and package hashes do not establish a complete reproducible build.",
+    "The workflow does not upload full CMakeCache.txt or compile_commands.json with native test evidence; unseen final compiler flags are not inferred.",
+    "The JUCE verifier checks all tracked/untracked dependency source changes at verification time; the packager checks tracked product changes at package time and consumes the earlier report.",
+    "Successful source-pinned packaging plus reviewed intervening commands supports the dependency-license path; it is not a fresh post-build JUCE clean check.",
+    "macOS AU ad-hoc signing and artifact hashes are not publisher Developer ID signing, notarization, or release authorization."
+  ],
+  "release_qualified": false
+}

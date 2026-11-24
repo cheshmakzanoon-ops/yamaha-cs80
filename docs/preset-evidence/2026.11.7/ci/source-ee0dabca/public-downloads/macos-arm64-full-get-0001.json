@@ -1,0 +1,58 @@
+{
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "attempt_context": 1,
+  "artifact_id": 14923244833,
+  "artifact_name": "cs80-macos-15-install-bundle",
+  "expected_bytes": 14989471,
+  "expected_sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+  "expires_at": "2027-02-22T12:49:05Z",
+  "artifact_api_sha256": "605a2893b66809f4a95e4c1f1b113d704db320a9eadc0969be416a00c01b87f8",
+  "run_api_sha256": "39279467ce21a9acee15d945898b60d39760bfebd5e9c90d8e7b4ce3f33ca1c9",
+  "requested_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14923244833.zip",
+  "method": "GET",
+  "credentials_supplied": false,
+  "started_at": "2026-11-24T13:39:05.702140+00:00",
+  "run_status_observed": "in_progress",
+  "run_conclusion_observed": null,
+  "artifact_attempt_binding_verified": false,
+  "public_route_verified": true,
+  "release_qualified": false,
+  "scope": "Actual public body hash only; authentic metadata and original upload/attempt, content/native qualification remain external gates.",
+  "status": 200,
+  "final_endpoint": {
+    "scheme": "https",
+    "host": "productionresultssa1.blob.core.windows.net",
+    "path": "/actions-results/f6961f19-cebd-8511-a88c-3a70a0cbe63b/workflow-job-run-1525edf9-7c1a-59d3-9c99-fa149feb2f7f/artifacts/bc22e4ef8aadf9c1cd63e46da4b9f29e432b40b92f8d0ea5757ef43099a716b6.zip",
+    "query_redacted": true
+  },
+  "headers": {
+    "content-length": "14989471",
+    "content-type": "application/zip",
+    "last-modified": "Tue, 24 Nov 2026 13:30:26 GMT",
+    "etag": "\"0x8DF4A2F19DFE329\"",
+    "server": "envoy",
+    "content-disposition": "attachment; filename=\"cs80-macos-15-install-bundle.zip\""
+  },
+  "actual_bytes": 14989471,
+  "actual_sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+  "redirects": [
+    {
+      "status": 302,
+      "from": {
+        "scheme": "https",
+        "host": "nightly.link",
+        "path": "/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14923244833.zip",
+        "query_redacted": false
+      },
+      "to": {
+        "scheme": "https",
+        "host": "productionresultssa1.blob.core.windows.net",
+        "path": "/actions-results/f6961f19-cebd-8511-a88c-3a70a0cbe63b/workflow-job-run-1525edf9-7c1a-59d3-9c99-fa149feb2f7f/artifacts/bc22e4ef8aadf9c1cd63e46da4b9f29e432b40b92f8d0ea5757ef43099a716b6.zip",
+        "query_redacted": true
+      }
+    }
+  ],
+  "completed_at": "2026-11-24T13:39:23.475901+00:00"
+}

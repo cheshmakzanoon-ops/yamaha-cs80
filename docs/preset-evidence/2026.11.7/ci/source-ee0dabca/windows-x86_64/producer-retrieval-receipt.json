@@ -1,0 +1,74 @@
+{
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "job_id": 138455976256,
+  "retrieved_at_utc": "2026-11-24T13:45:21.804218+00:00",
+  "transport": "Authenticated repository-owner GitHub connector. Full artifact and job objects extracted unchanged from the exact run collections. Unwrapped API objects serialized with indentation. Decoded original job log retained as UTF-8 without newline rewriting. Signed download URLs not retained. Producer acquisition only; validator consumer remains pending.",
+  "files": {
+    "artifact-collection-api-at-producer-completion.json": {
+      "bytes": 4967,
+      "sha256": "d3a11152a21323790f9948f9e92ae155648c112de04459a8c034c79292d11110"
+    },
+    "attempt1-api-at-producer-completion.json": {
+      "bytes": 14801,
+      "sha256": "c9449d16806ef0e64e8ef047454b20b3aff67947a19080fe425fa0747bf96691"
+    },
+    "install-api.json": {
+      "bytes": 750,
+      "sha256": "1629b1dafdc24007b1752e6bc458abec83c81a34749abdb09b6a8d8c25c61d74"
+    },
+    "jobs-api-at-producer-completion.json": {
+      "bytes": 23056,
+      "sha256": "627f86c09b02e530f2160fc4dc750e1b3311fdd286c4966c3b44ba8a0fb69f17"
+    },
+    "native-api.json": {
+      "bytes": 747,
+      "sha256": "6b734fc21012052715a4a2118c182e02b1f9cd113e3b54c7008f2cebec7785ba"
+    },
+    "producer-job-api.json": {
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    "producer-job.log": {
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    "run-api-at-producer-completion.json": {
+      "bytes": 14779,
+      "sha256": "4874deeec043af4c21dd6a1c4ceebfa2630db334cf8f8c0f24606936636fbc5e"
+    },
+    "vst3-api.json": {
+      "bytes": 740,
+      "sha256": "c6302d789bc7afabfbac0618834eb366187c7b028358781e107a94936aae5c9f"
+    }
+  },
+  "archives": [
+    {
+      "kind": "native",
+      "artifact_id": 14926075048,
+      "local_path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "bytes": 84062,
+      "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97",
+      "api_identity_matched": true
+    },
+    {
+      "kind": "install",
+      "artifact_id": 14925251949,
+      "local_path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+      "api_identity_matched": true
+    },
+    {
+      "kind": "vst3",
+      "artifact_id": 14924634293,
+      "local_path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+      "bytes": 3205643,
+      "sha256": "d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9",
+      "api_identity_matched": true
+    }
+  ],
+  "platform_qualified": false,
+  "release_qualified": false
+}

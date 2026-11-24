@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "status": "prepared_awaiting_actual_linux_inputs",
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "linux-x86_64",
+  "producer_job_id": 138455975798,
+  "consumer_job_id": null,
+  "recorded_at_utc": "2026-11-24T13:44:58.914132+00:00",
+  "native_contract_derivation": {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "--repo",
+      ".",
+      "--describe",
+      "--out",
+      "docs/preset-evidence/2026.11.7/verification/a47/derived-native-contract.json"
+    ],
+    "exit_code": 0,
+    "record": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a47/derived-native-contract.json",
+      "bytes": 67113,
+      "sha256": "917392950e0dac4e0518dd6bea3ea7b398eb4aa56c98ba3f40dbfec9446df90d"
+    },
+    "equals_a40_prepared_contract": true,
+    "linux_exact_name_count": 613
+  },
+  "fixture_receipt": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a47/fixture-receipt-final.json",
+    "bytes": 1356,
+    "sha256": "4ca3c2025faf76dbb42c29a70b712cc60f453395af0d22518a81d99472aa1771"
+  },
+  "expected_archive_roles": [
+    "native",
+    "validator",
+    "vst3",
+    "install"
+  ],
+  "actual_artifact_ids": null,
+  "actual_archive_sizes_or_digests": null,
+  "actual_native_counts": null,
+  "actual_lane_seeds_or_retries": null,
+  "all_prepared_inputs_are_pending": true,
+  "actual_artifacts_checked": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "changes_limited_to": [
+    "docs/preset-evidence/2026.11.7/reviews/a47.md",
+    "docs/preset-evidence/2026.11.7/verification/a47/"
+  ],
+  "native_binaries_executed": false,
+  "raw_inputs_modified": false,
+  "historical_helpers_or_receipts_modified": false,
+  "git_refs_modified": false
+}

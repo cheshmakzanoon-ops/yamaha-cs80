@@ -1,0 +1,108 @@
+{
+  "id": 138483772246,
+  "run_id": 45397189410,
+  "workflow_name": "build",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOVaLxy88AAAAgPkarVg",
+  "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138483772246",
+  "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/job/138483772246",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-24T13:36:25Z",
+  "started_at": "2026-11-24T13:45:40Z",
+  "completed_at": "2026-11-24T13:46:17Z",
+  "name": "pluginval / Windows VST3 (strictness 10)",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-24T13:45:41Z",
+      "completed_at": "2026-11-24T13:45:43Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T13:45:43Z",
+      "completed_at": "2026-11-24T13:45:57Z"
+    },
+    {
+      "name": "Download Windows VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T13:45:57Z",
+      "completed_at": "2026-11-24T13:45:58Z"
+    },
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T13:45:58Z",
+      "completed_at": "2026-11-24T13:46:01Z"
+    },
+    {
+      "name": "Validate VST3 headless",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T13:46:01Z",
+      "completed_at": "2026-11-24T13:46:07Z"
+    },
+    {
+      "name": "Validate state regression seed 0x5037a0c",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T13:46:07Z",
+      "completed_at": "2026-11-24T13:46:13Z"
+    },
+    {
+      "name": "Report pluginval failure",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 7,
+      "started_at": "2026-11-24T13:46:13Z",
+      "completed_at": "2026-11-24T13:46:13Z"
+    },
+    {
+      "name": "Upload pluginval reports",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-24T13:46:13Z",
+      "completed_at": "2026-11-24T13:46:14Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-11-24T13:46:14Z",
+      "completed_at": "2026-11-24T13:46:16Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-11-24T13:46:16Z",
+      "completed_at": "2026-11-24T13:46:16Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138483772246",
+  "labels": [
+    "windows-2022"
+  ],
+  "runner_id": 1000045396,
+  "runner_name": "GitHub Actions 1000045396",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

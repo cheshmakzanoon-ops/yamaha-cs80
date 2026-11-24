@@ -323,20 +323,36 @@
     {
       "id": "a46",
       "role": "Actual final-source Windows platform and consumer qualification",
-      "status": "in_progress",
-      "agent": "/root/a46_windows_qualification"
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a46_windows_qualification",
+      "report": "reviews/a46.md",
+      "phase1_complete": true
     },
     {
       "id": "a47",
       "role": "Actual final-source Linux platform and original retry-history qualification",
-      "status": "in_progress",
-      "agent": "/root/a47_linux_qualification"
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a47_linux_qualification",
+      "report": "reviews/a47.md",
+      "phase1_complete": true
     },
     {
       "id": "a48",
       "role": "Actual final-source ARM and Intel Mac platform/validator qualification",
-      "status": "in_progress",
-      "agent": "/root/a48_macos_qualification"
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a48_macos_qualification",
+      "report": "reviews/a48.md",
+      "phase1_complete": true,
+      "phase1_scope": "Fresh ee0 Apple Silicon qualified; Intel actual qualification pending."
+    },
+    {
+      "id": "a51",
+      "role": "Actual five public artifact downloads and expiry mapping",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a51_public_downloads",
+      "report": "reviews/a51.md",
+      "phase1_complete": true,
+      "phase1_scope": "Apple Silicon actual public full GET accepted; four public routes pending."
     },
     {
       "id": "a52",
@@ -345,6 +361,13 @@
       "agent": "/root/a52_build_provenance",
       "report": "reviews/a52.md",
       "phase1_complete": true
+    },
+    {
+      "id": "a53",
+      "role": "Independent exact native rosters, skip reasons and host-boundary coverage",
+      "status": "in_progress",
+      "agent": "/root/a53_native_skip_reconciliation",
+      "report": "reviews/a53.md"
     },
     {
       "id": "a54",
@@ -368,13 +391,20 @@
       "report": "reviews/a56.md",
       "phase1_complete": true,
       "phase2": "Await accepted native platforms, validators, installers, audition and public routes before final download publication."
+    },
+    {
+      "id": "a57",
+      "role": "Independent four-platform installation and payload cross-check",
+      "status": "in_progress",
+      "agent": "/root/a57_installation_crosscheck",
+      "report": "reviews/a57.md"
     }
   ],
   "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
   "candidate_build_run": 45397189410,
-  "documentation_head_observed": "39811916ef812b5c5cb5805cd532358ab684529f",
-  "assigned_count": 52,
+  "documentation_head_observed": "a7195f01051e0f02aa53ff3bc3201e0889c7eddb",
+  "assigned_count": 55,
   "completed_count": 47,
-  "candidate_build_note": "Fresh four-platform native run for ownership-only audit/capture repair. Previous c554: ARM platform-qualified, Intel and Windows original failures retained, Linux canceled on successor push. No cross-platform/release qualification yet.",
+  "candidate_build_note": "Fresh ee0 Apple Silicon platform qualified and publicly downloaded. Windows producer succeeded; separate original validator pending. Intel and Linux still running. Previous c554 failures/cancellation retained. No cross-platform/release qualification yet.",
   "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
 }

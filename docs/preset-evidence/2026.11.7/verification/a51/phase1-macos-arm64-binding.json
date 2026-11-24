@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "status": "phase1_arm_public_route_bound",
+  "verified_at_utc": "2026-11-24T13:41:28.129645+00:00",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "job_id": 138455976227,
+  "target": "macos-arm64",
+  "artifact_id": 14923244833,
+  "artifact_name": "cs80-macos-15-install-bundle",
+  "authenticated_metadata_file_digests_match_root_retrieval_receipt": true,
+  "qualification_sha256_matches_A48_handoff": true,
+  "unchanged_probe_matches_frozen_source": true,
+  "original_producer_upload_attempt_binding_verified": true,
+  "original_upload": {
+    "kind": "install",
+    "artifact_id": 14923244833,
+    "name": "cs80-macos-15-install-bundle",
+    "bytes": 14989471,
+    "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+    "original_api_step": {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-11-24T13:30:24Z",
+      "completed_at": "2026-11-24T13:30:27Z"
+    },
+    "original_upload_timestamp": "2026-11-24T13:30:27.1635210Z",
+    "original_digest_timestamp": "2026-11-24T13:30:26.7406690Z",
+    "created_at": "2026-11-24T13:30:27Z",
+    "expires_at": "2027-02-22T12:49:05Z",
+    "producing_attempt_bound": true
+  },
+  "original_upload_log_lines": [
+    {
+      "line": 2538,
+      "text": "2026-11-24T13:30:26.7406690Z SHA256 digest of uploaded artifact zip is 0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6"
+    },
+    {
+      "line": 2540,
+      "text": "2026-11-24T13:30:27.1633380Z Artifact cs80-macos-15-install-bundle.zip successfully finalized. Artifact ID 14923244833"
+    },
+    {
+      "line": 2541,
+      "text": "2026-11-24T13:30:27.1635210Z Artifact cs80-macos-15-install-bundle has been successfully uploaded! Final size is 14989471 bytes. Artifact ID is 14923244833"
+    },
+    {
+      "line": 2542,
+      "text": "2026-11-24T13:30:27.1648160Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/artifacts/14923244833"
+    }
+  ],
+  "external_platform_qualification": {
+    "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+    "bytes": 24530,
+    "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+  },
+  "input_files": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/retrieval-receipt.json",
+      "bytes": 2665,
+      "sha256": "1c8999da31d092f9bdb435eb3f76790e1f7314f040a397cd3676776d26a5ea6c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-api.json",
+      "bytes": 752,
+      "sha256": "605a2893b66809f4a95e4c1f1b113d704db320a9eadc0969be416a00c01b87f8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/run-api-at-platform-completion.json",
+      "bytes": 14784,
+      "sha256": "39279467ce21a9acee15d945898b60d39760bfebd5e9c90d8e7b4ce3f33ca1c9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/attempt1-api-at-platform-completion.json",
+      "bytes": 14806,
+      "sha256": "9545ea767022d43cbb0857759018001e9f85ddefa07307b6c962e93893273470"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job-api.json",
+      "bytes": 5977,
+      "sha256": "6b3c08d29f6e23f00405d608c5b538b905a2612e2f691458c1eac56e8903f062"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log",
+      "bytes": 256051,
+      "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/original-execution-binding.json",
+      "bytes": 47222,
+      "sha256": "7ac3e4bbea1d1c40737f02fd523b6588bd4be1a32f4c74fc688a83398bbeb57d"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a57-probe-public-artifact.py",
+      "bytes": 8221,
+      "sha256": "ca863189b395c2952253de8f4b64538dd045f497db39b2bfcd12b40fd81bc06f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/macos-arm64-full-get-0001.json",
+      "bytes": 2540,
+      "sha256": "3d03a9da6128ff22127d5ccd2ffff7a940c87518b538737e4198b68a5824b126"
+    }
+  ],
+  "full_public_get_verified": true,
+  "probe_process_exit_code_observed": 0,
+  "public_transport_attempts": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/macos-arm64-full-get-0001.json",
+      "bytes": 2540,
+      "sha256": "3d03a9da6128ff22127d5ccd2ffff7a940c87518b538737e4198b68a5824b126"
+    }
+  ],
+  "failed_public_transports_observed": 0,
+  "archive_retained_by_probe": false,
+  "expired_boolean": false,
+  "expires_at_is_future_at_probe_and_binding": true,
+  "expires_at_utc": "2027-02-22T12:49:05Z",
+  "expires_at_America_Halifax": "2027-02-22T08:49:05-04:00",
+  "expiry_timezone_abbreviation": "AST",
+  "run_status_at_metadata_snapshot": "in_progress",
+  "run_conclusion_at_metadata_snapshot": null,
+  "release_qualified": false,
+  "all_five_public_downloads_verified": false,
+  "scope": "One actual public route observed at the retained timestamps. Original attempt and native/package acceptance are external A48 evidence, checked for identity and integrity here; no product tests were rerun."
+}

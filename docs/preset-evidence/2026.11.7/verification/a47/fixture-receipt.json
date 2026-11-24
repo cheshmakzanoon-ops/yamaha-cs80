@@ -1,0 +1,26 @@
+{
+  "status": "offline_fixture_checks_only",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a47/test-runtime-checker.py"
+  ],
+  "started_at_utc": "2026-11-24T13:41:12.085348+00:00",
+  "finished_at_utc": "2026-11-24T13:41:12.222772+00:00",
+  "exit_code": 0,
+  "methods": 6,
+  "failures": 0,
+  "negative_checks": 21,
+  "log": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a47/runtime-checker-fixtures.log",
+    "bytes": 804,
+    "sha256": "7393148cbd63e9f6f35544b29b54cff6b347a76ce04b111009aeddfb74601d87"
+  },
+  "historical_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "historical_bytes_used_as_format_fixtures_only": true,
+  "ee0dabca_artifacts_accepted": false,
+  "native_binaries_executed": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

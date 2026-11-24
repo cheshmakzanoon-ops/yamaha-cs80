@@ -1,0 +1,440 @@
+--- docs/preset-evidence/2026.11.7/verification/a44/qualify-macos-arm64.py
++++ docs/preset-evidence/2026.11.7/verification/a48/macos-qualification.py
+@@ -1,9 +1,10 @@
+ #!/usr/bin/env python3
+-"""Join the retained original .7 ARM evidence; never qualify other targets.
+-
+-This is a fixed-source, fixed-run acceptance receipt generator, not a generic
+-validator. Its authenticated inputs were acquired by the repository owner in
+-this session. Offline hashes preserve that acquisition; they do not provide
++"""A48: join one retained ee0dabca macOS execution with its exact artifacts.
++
++This engine accepts only a fixed reviewed Apple Silicon or Intel wrapper for
++source ee0dabca and its original native run. Its authenticated inputs were
++acquired by the repository owner in this session. Offline hashes preserve that
++acquisition; they do not provide
+ independent authentication. No downloaded product or validator is executed.
+ """
+ from __future__ import annotations
+@@ -17,46 +18,64 @@
+ from pathlib import Path
+ import re
+ import subprocess
++import struct
++import tarfile
+ import sys
+ import zipfile
+ 
+ sys.dont_write_bytecode = True
+-SOURCE = 'c5549f7d095a5c5f49a5ad22ec0ccc819245d201'
+-TREE = '469244af34233cfa145537266efd29024b66abba'
+-RUN, ATTEMPT, JOB, REPOSITORY_ID = 45385716988, 1, 138415961176, 1436742091
++SOURCE = 'ee0dabcacb4cdff93f8803844f60348e0ceda6ed'
++TREE = '17115913cbb29157bd00539485bcc5f38b57219c'
++RUN, ATTEMPT, REPOSITORY_ID = 45397189410, 1, 1436742091
+ REPOSITORY = 'cheshmakzanoon-ops/yamaha-cs80'
+ REVISION = '2026.11.7'
+ JUCE = 'c352e2489000ffeb9e397051377d75eef2efe641'
+ WORKSPACE = '/Users/runner/work/yamaha-cs80/yamaha-cs80'
+ BASE = Path('docs/preset-evidence/2026.11.7')
+-CI = BASE / 'ci/source-c5549f7d/macos-arm64'
+-A29 = BASE / 'verification/a29'
+ COUNTS = dict(registered=277, passed=275, failed=0, formal_skipped=2, disabled=0, unknown=0)
+-PINS = {
+-    str(CI / 'retrieval-receipt.json'): 'ae8ac17ecb67beb3eb642cfcf3bcc820299f56a22679212beaf3ff43bc7bbb24',
+-    str(CI / 'install-acceptance.json'): 'aa1cd4d2498220af271cf5dbebb6abbdb5f1c775deee7b47a8015ac7225c3bc0',
+-    str(CI / 'archive-payload-binding.json'): 'f58d662cf40860f49f627f80e7cfdeaaae3a261de4f5497663b5ec5515b920f1',
+-    str(A29 / 'macos-arm64-native-contract.json'): '664ffdd9e246d13cc3ccd8d7494fb398186b7a44d81ccf82d1ed26b3a4797f01',
+-    str(A29 / 'macos-arm64-observations.json'): 'cb5969758b48728de081306ed0c3db502dc611d3090888778b7d1b33f7183672',
+-    str(A29 / 'macos-arm64-parser-archive-binding.json'): '99ec90857f69206d6e27ef974230108a2e0ebbaab99a6c3617fdea7617fa75ab',
+-    str(A29 / 'macos-arm64-skip-review.json'): 'c6b0376b59f8fcd2f9dae64ad32e587393d9c813b3f18e1d9b2ff868f4178a5f',
++STATIC_PINS = {
+     'docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py': '803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305',
+     'docs/preset-evidence/2026.11.6/verification/a51/verify-macos-binding.py': 'f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9',
+     'docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py': 'f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846',
+     'docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py': '343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11',
+-    str(A29 / 'verify-native-contract.py'): '73790c648d2c185ee4cba6de081042231df3bfa9dcd96e61732ea62cea5b1ce2',
++    str(BASE / 'verification/a40/source-ee0dabca/verify-native-contract.py'): 'cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f',
++    str(BASE / 'verification/a48/inspect-packaged-docs.py'): '8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d',
+ }
+-ARTIFACTS = {
+-    'install': (14918661184, 'cs80-macos-15-install-bundle', 14989442,
+-                'e5839607c8c49d7a9859aee896277c9773ae16359dff59e8b11d1564fa9da545',
+-                'Upload native macOS install bundle'),
+-    'native': (14918856035, 'cs80-macos-15-test-evidence', 86685,
+-               '0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633',
+-               'Upload test and JUCE source evidence'),
+-    'validator': (14918039561, 'cs80-pluginval-macos-15', 12770,
+-                  '55aed166b5dee6881f9d8e221b2b05d18ab69d0a71c07911396caf0f57104af6',
+-                  'Upload pluginval reports'),
++TARGET_CONTEXT = {
++    'macos-arm64': ('arm64', 'macos-15', 138455976227, 0x0100000c),
++    'macos-x86_64': ('x86_64', 'macos-15-intel', 138455976307, 0x01000007),
+ }
++
++
++def configure(fixed):
++    global FIXED, TARGET, ARCH, LABEL, JOB, CPU, CI, EVIDENCE, PINS, ARTIFACTS
++    require(fixed.get('reviewed_actual_inputs') is True, 'Prepared only; actual inputs have not been reviewed')
++    TARGET = fixed['target']
++    require(TARGET in TARGET_CONTEXT, 'Unrecognized macOS target')
++    ARCH, LABEL, JOB, CPU = TARGET_CONTEXT[TARGET]
++    require((fixed['source'], fixed['tree'], fixed['run'], fixed['attempt'], fixed['job'])
++            == (SOURCE, TREE, RUN, ATTEMPT, JOB), 'Fixed reviewed context differs')
++    CI = BASE / 'ci/source-ee0dabca' / TARGET
++    EVIDENCE = BASE / 'verification/a48' / TARGET
++    required = {str(CI / name) for name in ('retrieval-receipt.json', 'install-acceptance.json', 'archive-payload-binding.json')}
++    required |= {str(EVIDENCE / name) for name in ('native-contract.json', 'observations.json', 'parser-archive-binding.json', 'skip-review.json')}
++    require(set(fixed['pins']) == required, 'Fixed input pin roster differs')
++    require(all(re.fullmatch(r'[0-9a-f]{64}', digest) for digest in fixed['pins'].values()), 'Invalid fixed input digest')
++    require(re.fullmatch(r'[0-9a-f]{64}', fixed['documents_sha256']), 'Invalid reviewed document digest')
++    PINS = {**STATIC_PINS, **fixed['pins']}
++    ARTIFACTS = fixed['artifacts']
++    names = {'install': 'cs80-' + LABEL + '-install-bundle', 'native': 'cs80-' + LABEL + '-test-evidence', 'validator': 'cs80-pluginval-' + LABEL}
++    steps = {'install': 'Upload native macOS install bundle', 'native': 'Upload test and JUCE source evidence', 'validator': 'Upload pluginval reports'}
++    require(set(ARTIFACTS) == set(names), 'Fixed artifact roster differs')
++    for kind, record in ARTIFACTS.items():
++        require(len(record) == 5 and record[1] == names[kind] and record[4] == steps[kind]
++                and type(record[0]) is int and type(record[2]) is int and record[2] > 0
++                and re.fullmatch(r'[0-9a-f]{64}', record[3]), 'Invalid reviewed artifact identity')
++    require(fixed['nested_python_skips'] == 5, 'Unexpected Mac nested skip count; explicit review required')
++    require(re.fullmatch(r'[0-9]+[.][0-9]{2}', fixed['ctest_seconds']), 'Invalid reviewed CTest elapsed time')
++    FIXED = fixed
++
++
+ REQUIRED = [
+     'Run actions/checkout@v5', 'Record native platform', 'Configure',
+     'Verify configured JUCE source', 'Build', 'Test', 'Fetch pluginval 1.0.4',
+@@ -175,12 +194,14 @@
+     source = {}
+     for path in ['.github/workflows/build.yml', 'CMakeLists.txt', 'scripts/package-ci-artifacts.py',
+                  'scripts/verify-ci-bundle.py', 'scripts/verify-ci-juce-source.cmake',
+-                 'scripts/download-pluginval-macos.py', 'src/core/FactoryPresets.h']:
++                 'scripts/download-pluginval-macos.py', 'src/core/FactoryPresets.h',
++                 'tests/LibraryAuditTests.cpp']:
+         source[path] = subprocess.check_output(['git', '-C', str(repo), 'show', SOURCE + ':' + path])
+     actual_tree = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', SOURCE + '^{tree}'], text=True).strip()
+     require(actual_tree == TREE, 'Frozen source tree')
+     require(sha(source['.github/workflows/build.yml']) == '9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb', 'Reviewed workflow')
+     require(sha(source['scripts/package-ci-artifacts.py']) == 'f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf', 'Reviewed read-only packager')
++    require(sha(source['tests/LibraryAuditTests.cpp']) == '958e67fc42fa3438c5dd47425f9f4dc8012650e44d814283aa0e3d2bbc4f69cd', 'Reviewed heap-owned audit source')
+ 
+     runs = [load(CI / name) for name in ('run-api-at-platform-completion.json', 'attempt1-api-at-platform-completion.json')]
+     for run in runs:
+@@ -191,7 +212,7 @@
+     job = load(CI / 'producer-job-api.json')
+     require((job['id'], job['run_id'], job['head_sha'], job['run_attempt']) == (JOB, RUN, SOURCE, ATTEMPT), 'Original producer identity')
+     require(job['status'] == 'completed' and job['conclusion'] == 'success'
+-            and job['labels'] == ['macos-15'] and job['name'] == 'macOS / macos-15 / VST3 + AU + Standalone', 'Original ARM result')
++            and job['labels'] == [LABEL] and job['name'] == 'macOS / ' + LABEL + ' / VST3 + AU + Standalone', 'Original Mac result')
+     steps = {step['name']: step for step in job['steps']}
+     require(len(steps) == len(job['steps']), 'Duplicate API step name')
+     for name in REQUIRED:
+@@ -206,7 +227,7 @@
+     original = read(CI / 'producer-job.log')
+     lines, groups = parse_log(original)
+     text = '\n'.join(line['text'] for line in lines) + '\n'
+-    require('\n' + SOURCE + '\n' in text and '\narm64\n' in text, 'Original checkout/platform')
++    require('\n' + SOURCE + '\n' in text and '\n' + ARCH + '\n' in text, 'Original checkout/platform')
+     require('##[error]' not in text and 'Process completed with exit code' not in text, 'Original error/nonzero exit')
+     logged_scripts = [group for group in groups if group['command']]
+     all_source_scripts = source_commands(source['.github/workflows/build.yml'].decode())
+@@ -230,7 +251,7 @@
+     archive_bytes, uploads = {}, []
+     for kind, (artifact_id, name, size, digest, step_name) in ARTIFACTS.items():
+         api = load(CI / (kind + '-api.json'))
+-        path = archives / ('macos-arm64-' + kind + '.zip')
++        path = archives / (TARGET + '-' + kind + '.zip')
+         require(path.is_file() and not path.is_symlink(), 'Invalid actual archive: ' + kind)
+         raw = path.read_bytes()
+         archive_bytes[kind] = raw
+@@ -259,16 +280,16 @@
+                             original_digest_timestamp=hashes[0]['timestamp'], created_at=api['created_at'],
+                             expires_at=api['expires_at'], producing_attempt_bound=True))
+ 
+-    observation = load(A29 / 'macos-arm64-observations.json')
+-    contract = load(A29 / 'macos-arm64-native-contract.json')
+-    binding = load(A29 / 'macos-arm64-parser-archive-binding.json')
++    observation = load(EVIDENCE / 'observations.json')
++    contract = load(EVIDENCE / 'native-contract.json')
++    binding = load(EVIDENCE / 'parser-archive-binding.json')
+     require(observation['all_requested_observations_green'] is True
+             and contract['source'] == SOURCE and contract['tree'] == TREE
+             and contract['run_id'] == RUN and contract['attempt'] == ATTEMPT
+-            and binding['status'] == 'parser_archive_and_member_input_binding_verified', 'A29 content/binding status')
++            and binding['status'] == 'parser_archive_and_member_input_binding_verified', 'Actual native content/binding status')
+     require(len(contract['native']) == len(observation['native']) == 1, 'Unexpected native target')
+     native, native_contract = observation['native'][0], contract['native'][0]
+-    require(native['target'] == native_contract['target'] == 'macos-arm64'
++    require(native['target'] == native_contract['target'] == TARGET
+             and native['counts'] == native_contract['counts'] == COUNTS
+             and native_contract['native_content_contract_verified'] is True
+             and native_contract['ui_body_identity_phase_complete'] is True
+@@ -276,11 +297,11 @@
+     for item in binding['bindings']:
+         raw = archive_bytes[item['kind']]
+         claim = item['actual_zip_api_binding']
+-        require((claim['bytes'], claim['sha256']) == (len(raw), sha(raw)), 'A29 archive identity')
++        require((claim['bytes'], claim['sha256']) == (len(raw), sha(raw)), 'Actual archive identity')
+         with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+             for member in item['parsed_member_records_bound']:
+                 member_raw = archive.read(member['path'])
+-                require((len(member_raw), sha(member_raw)) == (member['bytes'], member['sha256']), 'A29 member binding')
++                require((len(member_raw), sha(member_raw)) == (member['bytes'], member['sha256']), 'Actual member binding')
+     ctest = named['Test']
+     runtime = '\n'.join(line['text'] for line in ctest['runtime'])
+     rows = re.findall(r'^\s*(\d+)/277 Test\s+#(\d+): (\w+) \.+\s*(Passed|\*\*\*Skipped)\s+[0-9.]+ sec$', runtime, re.M)
+@@ -288,9 +309,10 @@
+             and [int(row[1]) for row in rows] == list(range(1, 278)), 'Original complete serial CTest roster')
+     require([(row[2], 'passed' if row[3] == 'Passed' else 'formal_skipped') for row in rows]
+             == [(case['name'], case['result']) for case in native['testcases']], 'Original CTest names/results differ from JUnit/LastTest')
+-    require('100% tests passed out of 277' in runtime and 'Total Test time (real) = 1301.49 sec' in runtime, 'Original CTest terminal result')
++    require('100% tests passed out of 277' in runtime and 'Total Test time (real) = ' + FIXED['ctest_seconds'] + ' sec' in runtime, 'Original CTest terminal result')
+     with zipfile.ZipFile(io.BytesIO(archive_bytes['native'])) as archive:
+         juce_raw = archive.read('ci-juce-provenance.txt')
++        lasttest_raw = archive.read('Testing/Temporary/LastTest.log')
+     juce = dict(line.split('=', 1) for line in juce_raw.decode().splitlines() if '=' in line)
+     for key, value in dict(actual_sha=JUCE, actual_version='8.0.11', source_clean='true', verification='PASS',
+                            workflow_commit=SOURCE, workflow_run=str(RUN), source_override='').items():
+@@ -298,15 +320,30 @@
+     require(f'Verified clean JUCE 8.0.11 at {JUCE};' in text, 'Original clean JUCE verification')
+ 
+     validators = observation['validators']
+-    require(len(validators) == 1 and validators[0]['target'] == 'macos-arm64'
++    require(len(validators) == 1 and validators[0]['target'] == TARGET
+             and validators[0]['validation_invocations'] == validators[0]['required_lanes'] == 5
+             and validators[0]['validation_retries'] == 0, 'Five original lanes only')
+     require([lane['lane'] for lane in validators[0]['lanes']]
+             == ['vst3', 'au', 'au-gui', 'au-gui-seed', 'au-gui-seed-c76'], 'Exact five-lane roster')
+     parser_path = repo / 'docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py'
+-    parser_spec = importlib.util.spec_from_file_location('a44_pinned_a52_parser', parser_path)
++    parser_spec = importlib.util.spec_from_file_location('a48_pinned_a52_parser', parser_path)
+     parser_module = importlib.util.module_from_spec(parser_spec)
+     parser_spec.loader.exec_module(parser_module)
++    lasttest_cases = parser_module.lasttest_cases(parser_module.decode(lasttest_raw))
++    audit = lasttest_cases['cs80_library_audit_tests']
++    audit_case = next(case for case in native['testcases'] if case['name'] == 'cs80_library_audit_tests')
++    require(audit['lasttest_status'] == 'Passed' and audit_case['result'] == 'passed'
++            and audit['output'].count('library audit passed: 301 curated + 222 original circuit programs') == 1,
++            'Actual fresh complete LibraryAudit did not pass')
++    audit_proof = dict(name='cs80_library_audit_tests', original_ctest_result='Passed',
++                      junit_seconds=audit_case['seconds'], lasttest_output=audit['output'],
++                      output_sha256=sha(audit['output'].encode()), all_523_programs_completed=True,
++                      source_sha256=sha(source['tests/LibraryAuditTests.cpp']),
++                      predecessor_failure_preserved='c5549f7d Intel run 45385716988 job 138415960996 remains failed; this original ee0dabca execution is a separate source/run result.')
++    new_tests = [case for case in native['testcases'] if case['name'] in {
++        'cs80_piano_partial_decay_tests', 'cs80_body_noise_rate_tests',
++        'cs80_string_body_formant_tests', 'cs80_low_choir_spectrum_tests'}]
++    require(len(new_tests) == 4 and all(case['result'] == 'passed' for case in new_tests), 'Actual four new tests')
+     outcomes = []
+     with zipfile.ZipFile(io.BytesIO(archive_bytes['validator'])) as archive:
+         download = parsed(archive.read('pluginval-download.json'))
+@@ -349,6 +386,8 @@
+                                  exit_basis='Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.',
+                                  seed=lane['console']['summary']['seeds'][0], strictness=10, programs=523,
+                                  gui=lane['gui_required'], console=lane['console'], report=lane['report'],
++                                 retained_warnings=[line for line in console.decode().splitlines() if 'WARNING:' in line],
++                                 optional_steinberg_validator_skipped="INFO: Skipping vst3 validator as validator path hasn't been set" in console.decode(),
+                                  log_first_line=group['records'][0]['number'], log_last_line=group['records'][-1]['number']))
+         au_files = {phase: archive.read('au-payload-' + phase + '-validation.sha256') for phase in ('before', 'after')}
+     require(au_files['before'] == au_files['after'], 'AU before/after executable bytes')
+@@ -365,19 +404,38 @@
+     require(text.count('diff -qr "$AU_SOURCE" "$AU_DEST"') == 2, 'Unexpected AU comparison count')
+     install, payload = load(CI / 'install-acceptance.json'), load(CI / 'archive-payload-binding.json')
+     require(install['status'] == 'artifact_bytes_verified' and install['source'] == SOURCE
+-            and install['source_tree'] == TREE and install['target'] == 'macos-arm64'
++            and install['source_tree'] == TREE and install['target'] == TARGET
+             and install['preset_library_revision'] == REVISION and install['run_id'] == RUN
+             and install['run_attempt'] == ATTEMPT and install['inventory_entries'] == 39
+             and set(install['formats']) == {'AU', 'VST3', 'Standalone'}, 'Installation acceptance context')
+-    require(len(install['binary_headers']) == 3 and all(b['architecture'] == 'arm64'
++    require(len(install['binary_headers']) == 3 and all(b['architecture'] == ARCH
+             and b['header_check'] == 'PASS' and b['mode'] == '0o755' for b in install['binary_headers']), 'All native executable architectures/roles')
+     require(payload['status'] == 'archive_consistency_and_au_executable_binding_verified'
+-            and payload['expected'] == dict(architecture='arm64', attempt=ATTEMPT, repository=REPOSITORY,
++            and payload['expected'] == dict(architecture=ARCH, attempt=ATTEMPT, repository=REPOSITORY,
+                                             revision=REVISION, run=RUN, source=SOURCE), 'Mac payload binding context')
+     for format_name, bundle in payload['packaged_bundles'].items():
+         require(not any(entry['type'] == 'symlink' for entry in bundle['inventory']), 'Actual bundle has symlinks; diff scope requires separate review')
+         header = next(item for item in install['binary_headers'] if item['path'] == bundle['executable'])
+         require(header['sha256'] == bundle['executable_sha256'], 'Independent package binary hashes disagree')
++    actual_headers = []
++    with zipfile.ZipFile(io.BytesIO(archive_bytes['install'])) as outer:
++        inner_raw = outer.read(install['inner_archive']['file'])
++    require((len(inner_raw), sha(inner_raw)) == (install['inner_archive']['bytes'], install['inner_archive']['sha256']), 'Actual inner archive bytes')
++    root = install['inner_archive']['file'].removesuffix('.tar.gz')
++    with tarfile.open(fileobj=io.BytesIO(inner_raw), mode='r:gz') as inner:
++        for format_name, bundle in payload['packaged_bundles'].items():
++            member = inner.getmember(root + '/' + bundle['executable'])
++            require(member.isfile() and member.mode == 0o755, 'Actual executable member role/mode')
++            with inner.extractfile(member) as stream:
++                raw = stream.read()
++            require(sha(raw) == bundle['executable_sha256'], 'Actual executable byte identity')
++            require(raw[:4] == b'\xcf\xfa\xed\xfe' and len(raw) >= 32, 'Actual payload is not thin little-endian Mach-O 64')
++            cpu, subtype, role = struct.unpack_from('<III', raw, 4)
++            require(cpu == CPU and role == (2 if format_name == 'Standalone' else 8), 'Actual Mach-O native CPU/role')
++            actual_headers.append(dict(format=format_name, path=bundle['executable'], bytes=len(raw),
++                                       sha256=sha(raw), mode='0o755', magic=raw[:4].hex(),
++                                       cpu_type=hex(cpu), cpu_subtype=hex(subtype), mach_o_filetype=role,
++                                       thin_native_64_bit=True, header_role='executable' if role == 2 else 'bundle'))
+     au_digest = payload['packaged_bundles']['AU']['executable_sha256']
+     require(all(row['sha256'] == au_digest for row in payload['au_before'] + payload['au_after']), 'Packaged AU differs from original checked executable')
+     require(au_files['before'].decode().split()[0] == au_digest, 'Original hash/member/package binding')
+@@ -385,7 +443,7 @@
+     package_runtime = '\n'.join(line['text'] for line in package['runtime'])
+     require('"sha256": "' + install['inner_archive']['sha256'] + '"' in package_runtime
+             and '"archive": "packages/' + install['inner_archive']['file'] + '"' in package_runtime
+-            and '"architecture": "arm64"' in package_runtime, 'Original packaged inner archive identity')
++            and '"architecture": "' + ARCH + '"' in package_runtime, 'Original packaged inner archive identity')
+     for path, record in payload['source_contract_files'].items():
+         require((len(source[path]), sha(source[path])) == (record['bytes'], record['sha256']), 'Payload source contract drift')
+     require(payload['validator_input_paths']['vst3']['path'] == WORKSPACE + '/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3', 'VST3 validated source path')
+@@ -397,16 +455,20 @@
+ 
+     proof = dict(
+         schema=1, status='original_platform_execution_bound', source_commit=SOURCE, source_tree=TREE,
+-        factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target='macos-arm64',
++        factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET,
+         acquisition='Repository-owner authenticated connector inputs retained by root; this offline checker verifies those exact retained bytes and their internal original-execution chain.',
+         run_snapshot_status=runs[0]['status'], run_snapshot_conclusion=runs[0]['conclusion'],
+         original_job=job, original_run_attempt_bound=True, artifact_producing_attempts_bound=True,
+         original_commands=command_proof, uploads=uploads, original_ctest_normal_exit=0,
+         ctest_exit_basis='Exact unsuppressed original serial ctest command, successful original API Test step, 277 ordered console names/results matching bound JUnit/LastTest, and original terminal completion.',
+         original_ctest_console_names_match_bound_junit_lasttest=True, native_counts=COUNTS,
+-        native_content_contract=identity(A29 / 'macos-arm64-native-contract.json', read(A29 / 'macos-arm64-native-contract.json')),
++        ctest_seconds=FIXED['ctest_seconds'], library_audit=audit_proof, new_tests=new_tests,
++        native_content_contract=identity(EVIDENCE / 'native-contract.json', read(EVIDENCE / 'native-contract.json')),
+         juce=juce, juce_native_member=identity('ci-juce-provenance.txt', juce_raw),
+         pluginval_download=download, validator_invocations=5, validation_retries=0, validator_outcomes=outcomes,
++        pluginval_transport_attempts=len(download['attempts']),
++        pluginval_transport_scope='Downloader attempts are retained in full; they are acquisition transports, not validation invocations or validation retries.',
++        actual_native_binary_headers=actual_headers,
+         whole_au_directory_comparisons_passed=True, au_signing_before_copy_verified=True,
+         au_before_after_member=identity('au-payload-before/after-validation.sha256', au_files['before']),
+         au_packaged_executable_sha256=au_digest,
+@@ -419,15 +481,16 @@
+         source_contract_files={path:identity(path, raw) for path, raw in source.items()},
+         input_files={path:identity(path, raw) for path, raw in cache.items()},
+         platform_qualified=False, cross_platform_qualified=False, release_qualified=False,
+-        scope='Original ARM execution and payload bindings only; final platform receipt additionally joins document/notice acceptance. No other native target, audition or public download is accepted here.',
++        scope='Original target-specific Mac execution and payload bindings only; final platform receipt additionally joins document/notice acceptance. No other native target, audition or public download is accepted here.',
+     )
+     return proof, install, payload, native_contract, cache
+ 
+ 
+-def main():
++def main(fixed, verifier_path):
++    configure(fixed)
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[5])
+-    parser.add_argument('--archives', type=Path, default=Path('/tmp/cs80-ci-1cee5a/c5549f7d'))
++    parser.add_argument('--archives', type=Path, default=Path('/tmp/cs80-ci-1cee5a/ee0dabca'))
+     parser.add_argument('--documents-receipt', type=Path, required=True)
+     parser.add_argument('--out-dir', type=Path, required=True)
+     args = parser.parse_args()
+@@ -435,13 +498,13 @@
+     for output in outputs:
+         require(not output.exists() and not output.is_symlink(), 'Refusing to overwrite evidence: ' + str(output))
+     proof, install, payload, native, cache = check(args.repo.resolve(), args.archives)
+-    # The independent A30 document/notice supplement is a required final gate.
++    # The actual A30-derived source-specific document/notice supplement is a required final gate.
+     document_raw = args.documents_receipt.read_bytes()
+-    require(sha(document_raw) == 'c35f2afed640e3b91a5eff1eecc45210efe4ce49494712540bb589a34cdb6cb2',
+-            'Reviewed A30 document/notice supplement changed')
++    require(sha(document_raw) == FIXED['documents_sha256'],
++            'Reviewed actual A48 document/notice supplement changed')
+     documents = parsed(document_raw)
+     require(documents.get('source') == SOURCE and documents.get('revision') == REVISION
+-            and documents.get('target') == 'macos-arm64', 'Document supplement source/revision/target')
++            and documents.get('target') == TARGET, 'Document supplement source/revision/target')
+     require(documents.get('status') == 'source_specific_docs_and_notices_verified'
+             and documents.get('artifact_id') == ARTIFACTS['install'][0]
+             and documents.get('outer_bytes') == ARTIFACTS['install'][2]
+@@ -459,31 +522,36 @@
+     receipt = dict(
+         schema=1, status='platform_qualified', platform_qualified=True,
+         cross_platform_qualified=False, release_qualified=False, source_commit=SOURCE, source_tree=TREE,
+-        factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target='macos-arm64',
++        factory_revision=REVISION, run_id=RUN, run_attempt=ATTEMPT, job_id=JOB, target=TARGET,
+         verified_at_utc=proof['verified_at_utc'], original_run_attempt_bound=True,
+         artifact_producing_attempts_bound=True, native_results_accepted=True,
+         native_counts=COUNTS, nested_python_skips=5, formal_skips=native['formal_skips'],
+-        skip_review=identity(A29 / 'macos-arm64-skip-review.json', cache[str(A29 / 'macos-arm64-skip-review.json')]),
++        skip_review=identity(EVIDENCE / 'skip-review.json', cache[str(EVIDENCE / 'skip-review.json')]),
+         exact_source_derived_native_names_verified=True, all_four_new_tests_passed=True,
+         ui_body_identity_phase_complete=True, original_ctest_normal_exit=0,
++        ctest_seconds=proof['ctest_seconds'], library_audit=proof['library_audit'], new_tests=proof['new_tests'],
+         juce=proof['juce'], pluginval_version='1.0.4', validator_lanes=5, validator_invocations=5,
+         validation_retries=0, validator_original_normal_exits=[0, 0, 0, 0, 0],
+         validator_outcomes=proof['validator_outcomes'], total_required_global_validator_lanes=15,
+         whole_au_directory_comparisons_passed=True, au_signing_before_copy_verified=True,
+         validated_bundle_identity_established=True, vst3_binding_basis=proof['vst3_binding_basis'],
+         installation_inventory_entries=39, binary_headers=install['binary_headers'],
++        actual_native_binary_headers=proof['actual_native_binary_headers'],
++        pluginval_transport_attempts=proof['pluginval_transport_attempts'],
++        pluginval_transport_scope=proof['pluginval_transport_scope'],
+         packaged_bundle_inventories={name:{key:bundle[key] for key in ('root', 'inventory_entries', 'inventory_sha256', 'executable_sha256')}
+                                      for name, bundle in payload['packaged_bundles'].items()},
+         uploads=proof['uploads'], inner_archive=install['inner_archive'],
+         document_notice_acceptance=identity(args.documents_receipt, document_raw),
+         original_execution_binding=identity(outputs[0], proof_raw),
+-        verifier=identity(Path(__file__), Path(__file__).read_bytes()),
++        verifier=identity(verifier_path, verifier_path.read_bytes()),
++        qualification_engine=identity(Path(__file__), Path(__file__).read_bytes()),
+         remaining_release_gates=['Other three native platforms and all 15 required global validator lanes.',
+                                  'Actual .7 audition archive acceptance and user listening acceptance.',
+                                  'Final fresh public GET/size/hash/retention checks for all five advertised downloads.',
+                                  'Final cross-platform aggregate and publication.'],
+-        limits=['Only this actual Apple Silicon source/run/job and these three artifacts are platform-qualified.',
+-                'The full run was in progress in the retained platform-completion snapshots; those original snapshots remain unchanged.',
++        limits=['Only this actual Mac target/source/run/job and these three artifacts are platform-qualified.',
++                'The original run status and conclusion are preserved from the retained platform-completion snapshots; no aggregate outcome is inferred.',
+                 'No Mac product executed on this Linux inspection host; original native CI execution supplies runtime evidence.',
+                 'Standalone is compiled, inventory/header checked, and covered by native processor/UI tests; no separate end-user launch check is claimed.',
+                 'The complete AU diff -qr comparisons establish ordinary-file content equality, not permissions/owner/ACL/xattr equivalence or signature validity. Packaged modes are checked independently.',
+@@ -499,8 +567,5 @@
+ 
+ 
+ if __name__ == '__main__':
+-    try:
+-        main()
+-    except (ValueError, KeyError, OSError, subprocess.SubprocessError, zipfile.BadZipFile) as error:
+-        print('ARM qualification refused: ' + str(error), file=sys.stderr)
+-        sys.exit(2)
++    print('Use a fixed reviewed A48 macOS qualification wrapper; direct generic acceptance is unavailable.', file=sys.stderr)
++    sys.exit(2)
+--- docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py
++++ docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Supplement an existing A41 receipt with exact-source guides and notices."""
++"""A48 successor of A30: supplement A41 with exact-source guides and notices."""
+ from __future__ import annotations
+ import argparse
+ from collections import Counter
+@@ -107,12 +107,12 @@
+         source_records[relative] = {'bytes': len(raw), 'sha256': sha(raw)}
+         return raw
+ 
+-    with tempfile.TemporaryDirectory(prefix='a30-source-docs-') as directory:
++    with tempfile.TemporaryDirectory(prefix='a48-source-docs-') as directory:
+         snapshot = Path(directory)
+         script = snapshot / 'scripts/package-ci-artifacts.py'
+         script.parent.mkdir()
+         script.write_bytes(source_blob('scripts/package-ci-artifacts.py'))
+-        spec = importlib.util.spec_from_file_location('a30_pinned_packager', script)
++        spec = importlib.util.spec_from_file_location('a48_pinned_packager', script)
+         packager = importlib.util.module_from_spec(spec)
+         spec.loader.exec_module(packager)
+         for source, destination in GUIDES.items():
+@@ -152,8 +152,8 @@
+         'juce_license': {'path': 'licenses/JUCE-LICENSE.md', 'bytes': len(payloads['licenses/JUCE-LICENSE.md']),
+                          'sha256': sha(payloads['licenses/JUCE-LICENSE.md']),
+                          'independent_dependency_source_byte_comparison': False,
+-                         'provenance_boundary': 'Pinned packager reads configured clean JUCE source LICENSE.md. Original source verification and unchanged build/package sequence are reviewed by A44; this supplement proves presence and inventoried bytes only.'},
+-        'source_time_guides': 'Exact c5549f7d source-time pending qualification guides, including historical .4 downloads, are retained. Existing external URLs are intentionally unchanged. This does not publish final online guides or qualify a download.',
++                         'provenance_boundary': 'Pinned packager reads configured clean JUCE source LICENSE.md. Original source verification and unchanged build/package sequence are reviewed by A48; this supplement proves presence and inventoried bytes only.'},
++        'source_time_guides': 'Exact requested-source pending qualification guides, including historical .4 downloads, are retained. Existing external URLs are intentionally unchanged. This does not publish final online guides or qualify a download.',
+         'generic_helper_boundary': 'A41 verifies complete declared inventory but does not require guides/notices or compare their content to source. This supplement adds those requirements for the checked actual bytes.',
+         'current_external_validator_requirement': {'total': 15, 'linux': 3, 'windows': 2, 'macos_arm64': 5, 'macos_x86_64': 5,
+             'note': 'A41 historical remaining_gates prose says 13; the current source workflow, not that prose, defines the .7 gates.'},

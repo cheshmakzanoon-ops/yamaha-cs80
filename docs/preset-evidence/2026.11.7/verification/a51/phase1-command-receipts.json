@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-24T13:41:49.432010+00:00",
+  "cwd": "/tmp/cs80-session-1cee5a",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.5/verification/a57-probe-public-artifact.py",
+        "--artifact-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-api.json",
+        "--run-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/run-api-at-platform-completion.json",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--artifact-name",
+        "cs80-macos-15-install-bundle",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/macos-arm64-full-get-0001.json"
+      ],
+      "observed_exit_code": 0,
+      "probe_started_at_utc": "2026-11-24T13:39:05.702140+00:00",
+      "probe_completed_at_utc": "2026-11-24T13:39:23.475901+00:00",
+      "receipt_sha256": "3d03a9da6128ff22127d5ccd2ffff7a940c87518b538737e4198b68a5824b126"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.7/verification/a51/phase1-macos-arm64-binding.py"
+      ],
+      "observed_exit_code": 0,
+      "effect": "Checked retained metadata, original upload/attempt, full GET, and expiry; wrote new phase1 binding, mapping, and review."
+    }
+  ],
+  "public_download_transport_count": 1,
+  "public_download_failed_transports": 0,
+  "large_archive_copy_created": false,
+  "signed_redirect_queries_retained": false
+}

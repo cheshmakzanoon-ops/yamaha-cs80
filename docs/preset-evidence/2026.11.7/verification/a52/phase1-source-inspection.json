@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "status": "frozen_source_contract_checked_no_actual_artifact_acceptance",
+  "inspected_at_utc": "2026-11-24T13:32:46.002610+00:00",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "workspace_head_observed_only": "39811916ef812b5c5cb5805cd532358ab684529f",
+  "workspace_head_is_not_binary_source": true,
+  "frozen_readset": {
+    ".github/workflows/build.yml": {
+      "git_blob": "944f0014ab3e8960bd194f5db7ea987ff35e116f",
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    "CMakeLists.txt": {
+      "git_blob": "87db991113725bad5f96e9dd823558cbd81d7794",
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92"
+    },
+    "scripts/verify-ci-juce-source.cmake": {
+      "git_blob": "6ab74336ad65d1edc17a957b49208ac3c1d81ca9",
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "git_blob": "d65dbb6de2f47abd682eae2fdab51a27363f5797",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290"
+    },
+    "scripts/download-pluginval-windows.py": {
+      "git_blob": "54068ad98ce33c10a34739347d7e01735a6710de",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a"
+    },
+    "scripts/run-pluginval-linux.sh": {
+      "git_blob": "bce2d486160692e994697bbcee0346952289a87e",
+      "bytes": 2542,
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105"
+    },
+    "scripts/patch-juce-automation.py": {
+      "git_blob": "cc4324c835e9e17b4706edf4cc0679c07032259c",
+      "bytes": 8606,
+      "sha256": "aed34b453aa8bcaf5bcde01d1b39aac14019e353f2491e86164345747d7a24be"
+    },
+    "scripts/patch-juce-state-mirror.py": {
+      "git_blob": "cabbea550deb9ad82c1e0a6aa1df6c26c0a60b7f",
+      "bytes": 3452,
+      "sha256": "7fa4ce5c077ddba57c96e3308eb53ef8f30afe1dc834c048a181f6840053fdea"
+    }
+  },
+  "source_checks": {
+    "cmake_fetch_immutable_juce_sha": true,
+    "workflow_three_native_definitions_require_exact_juce_sha": true,
+    "workflow_three_native_definitions_require_exact_juce_version": true,
+    "verifier_reads_successful_configure_cache": true,
+    "verifier_rejects_source_override": true,
+    "verifier_enforces_own_git_root": true,
+    "verifier_records_complete_git_status": true,
+    "verifier_requires_clean_matching_sha_version": true,
+    "packager_checks_tracked_product_tree_against_head": true,
+    "packager_requires_source_bound_passing_juce_report": true,
+    "packager_requires_exact_fetched_dependency_path": true,
+    "packager_reads_juce_license_directly_from_configured_source": true,
+    "packager_embeds_original_report_bytes": true,
+    "packager_source_and_revision_metadata": true,
+    "packager_no_signing_claim": true,
+    "mac_au_ad_hoc_sign_then_copy_then_compare": true,
+    "linux_pluginval_version_url_without_independent_archive_pin": true
+  },
+  "initial_api_receipt_checks": {
+    "context.json": true,
+    "initial-run-api.json": true,
+    "initial-jobs-api.json": true,
+    "source-commit-api.json": true
+  },
+  "initial_raw_inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/initial-api-retrieval-receipt.json",
+      "bytes": 727,
+      "sha256": "e0743a8436197286bb7641ccbd30ada66183871ce3ab234e07452a940fecde13"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/context.json",
+      "bytes": 805,
+      "sha256": "741f90e159f46c895f53fd2c06116fdb39e9445e49be443dd9d890a4d4b7a349"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/initial-run-api.json",
+      "bytes": 14780,
+      "sha256": "b9cc564ac22524114ef93a4fcb1917c4f6da61c75e4812b05c5ccf33b55918aa"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/initial-jobs-api.json",
+      "bytes": 7065,
+      "sha256": "946e8e364935051835f2f40676a832278371000b1f2aba8e37660b128fc6d04e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/source-commit-api.json",
+      "bytes": 1398,
+      "sha256": "205a224f58019dfba9559e3c7878f7cbf2b3001b396be2f0538ae361c1471f0a"
+    }
+  ],
+  "a40_context": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/consumer-context.json",
+    "bytes": 2295,
+    "sha256": "9b3b7b958aab23eef13479bf6494c2aa2c37b496e9935629c2e2d4c9c4253316"
+  },
+  "a40_helper_pin_checks": {
+    "verify-native-contract.py": true,
+    "bind-audition-ci.py": true,
+    "verify-audition-archive.py": true
+  },
+  "independently_compared_unchanged_trees": {
+    ".github": true,
+    "cmake": true,
+    "scripts": true,
+    "src/core": true,
+    "src/plugin": true,
+    "src/vendor": true,
+    "assets": true,
+    "installer": true
+  },
+  "pluginval_source_constants": {
+    "macos": {
+      "VERSION": "1.0.4",
+      "RELEASE_ID": 188928656,
+      "ASSET_ID": 210999197,
+      "EXPECTED_SIZE": 9202795,
+      "EXPECTED_SHA256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+    },
+    "windows": {
+      "VERSION": "1.0.4",
+      "RELEASE_ID": 188928656,
+      "ASSET_ID": 210999198,
+      "EXPECTED_SIZE": 2408590,
+      "EXPECTED_SHA256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+    }
+  },
+  "linux_pluginval_archive_digest_pin": null,
+  "actual_native_platforms_inspected": [],
+  "actual_install_packages_inspected": [],
+  "actual_build_to_package_provenance_accepted": false,
+  "release_qualified": false
+}
