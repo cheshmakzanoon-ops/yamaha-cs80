@@ -53,10 +53,11 @@ jobs:
         run: cmake --build build --parallel "$(nproc)"
 
       - name: Test
-        # UI timers, persistence and timing-sensitive cases are not qualified
-        # for whole-suite concurrency. Keep the complete test suite serial.
+        # CMake keeps every test exclusive except 108 explicitly audited,
+        # headless VST3 witnesses. GUI, persistence and timing tests remain
+        # globally exclusive. Preserve one complete native evidence stream.
         run: >
-          ctest --test-dir build --output-on-failure --no-tests=error
+          ctest --test-dir build --parallel 2 --output-on-failure --no-tests=error
           --output-junit "${{ github.workspace }}/build/ctest-results.xml"
 
       - name: Capture curated preset auditions

@@ -3068,3 +3068,9 @@ if (CS80_BUILD_TESTS AND UNIX)
             --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
     set_tests_properties(cs80_filter_envelope_reference_tests PROPERTIES TIMEOUT 120)
 endif()
+
+# Scheduling policy comes last so every current and future registration above
+# is exclusive unless its exact name has an audited exception.
+if(CS80_BUILD_TESTS)
+    include(cmake/CTestScheduling.cmake)
+endif()
