@@ -147,7 +147,7 @@ string-course tuning while retaining varied hammer phase and contact. The bodies
 have physically motivated features, but they are not samples or complete measured
 acoustic-piano models.
 [Key source](../src/core/curated/Keys.inc) ·
-[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_5.md#struck-excitation-and-aftersound)
+[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_6.md)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -357,14 +357,15 @@ Material defaults to **Standard**. Choose a compatible base model and material:
 | --- | --- |
 | Bell | Tubular bell, Gong plate, Temple bell, Agogo bell |
 | Celesta | Music box comb |
-| Tine | Kalimba tine |
-| Steel | Banjo membrane, Koto bridge |
-| Nylon | Harp soundboard |
+| Tine electric piano | Kalimba tine |
+| Steel strings | Banjo membrane, Koto bridge |
+| Nylon strings | Harp soundboard |
 
-Unsupported model/material combinations use Standard. These are separate from
-Variant, and do not change either existing selector's automation range. The nine
-existing factory programs select their materials automatically. **Steel** is the
-compatible model ID for Koto; the label is not a claim about the physical strings
+An incompatible Material remains selected and saved, but renders Standard
+until you choose its compatible Model and play a fresh note. Material is
+separate from Variant and does not change either existing selector's automation
+range. The nine existing factory programs select their materials automatically.
+**Steel strings** is the compatible model ID for Koto; the label is not a claim about the physical strings
 of every koto. New materials use nominal Resonant size **1×**; changing size
 shifts the authored body response where that material uses one.
 
@@ -384,7 +385,8 @@ These excitations are available on **PANEL sources**. Selecting a hardware tone
 or memory source suppresses them, preserving those separate source paths.
 Their fourteen saved controls are exposed in the DAW's parameter list and automation
 editor. The custom Studio editor and standalone interface do not yet provide
-dedicated body-control widgets.
+dedicated body-control widgets. To find the new selectors in a host, search for
+**Body I material (next note)** or **Body II material (next note)**.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
 selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
 

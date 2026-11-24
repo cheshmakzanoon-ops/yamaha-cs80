@@ -5,22 +5,35 @@ existing CI workflow already builds. The packaging step adds no paid dependency,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Source candidate — 2026.11.5 playing-response and material refinement
+## Source candidate — 2026.11.6 instrument materials and playing response
 
-This source snapshot contains the **2026.11.5** factory library: all 521
-existing musical programs have revised sound controls, with all 523 identities
-and both initialization programs preserved. The appended material/vowel
-variants retain the preceding 200-core/306-host parameter prefix. See the
-[revision report](CIRCUIT_LIBRARY_2026_11_5.md) and [preset guide](PRESET_GUIDE.md).
+This source snapshot contains the **2026.11.6** factory library. It retains the
+full-bank 2026.11.5 revision of all 521 existing musical programs and refines
+piano course tuning, moving wind/brass resonances, and nine existing bell and
+plucked instruments. All 523 names, categories, ordering and program addresses
+remain stable; both initialization programs preserve their prior values. No
+presets are added. Twenty descriptive tags differ from the published .4 bank.
+See the [revision report](CIRCUIT_LIBRARY_2026_11_6.md) and
+[preset guide](PRESET_GUIDE.md).
 
-**Native build and archive qualification for this source is pending at the
-time these bundled guides are written.** The verified artifacts, source hashes,
-test totals and links in the following section refer to the preceding
-2026.11.4 build. They do not qualify a package built from this candidate.
-Each new archive's own manifest identifies its source. The repository's
+The two Material parameters append after the unchanged 202-core/308-host
+prefix, bringing totals to **204 core parameters and 310 host positions**.
+Older projects retain their saved settings. Select an existing factory program
+and use **LOAD / RELOAD**, then play fresh notes, to hear the revised recipe.
+
+**Native build and archive qualification for this source is pending when these
+bundled guides are written.** Source `fcc3c8e` passed Apple Silicon native tests
+and five validator lanes, while its Windows suite rejected a byte-authenticated
+fixture whose final newline had been translated by Git checkout. A narrow Git
+attribute preserves that fixture's original bytes; its exact checksum gate is
+unchanged. Earlier successful results keep their original source identities.
+The four installation links below still refer to the qualified 2026.11.4 build
+and do not qualify this candidate. Each new archive's manifest identifies its
+source. The repository's
 [current download section](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads)
-will identify the exact newly qualified source and archives after their
-independent build, validator and content checks finish.
+will identify the newly qualified source and archives after independent native,
+validator, payload and actual audition checks finish. Archived guides remain a
+source-time snapshot; later publication documentation does not rewrite them.
 
 ## Previous qualified revision — 2026.11.4 instrument voicing
 

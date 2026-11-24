@@ -34,8 +34,15 @@ correction is also retained. Deliberately electronic ring, PWM, fifth and
 motion programs keep those identities; organ and quill-keyboard touch behavior
 remains appropriate to their intended mechanisms.
 
-Revision 2026.11.6 builds on that complete bank. It does not present the nine
-new material selections as the entire scope of the user's preset revision.
+Revision 2026.11.6 builds on that complete bank. Of the 521 musical programs,
+493 change controls beyond conservative exclusions for static levels and pan.
+The remaining 28 lower rank VCA baselines with existing touch routes: those
+baselines enter an additive velocity/pressure sum, so they change playing
+contrast rather than merely applying a common output gain. They are not claimed
+to have other direct shaping edits. The nine new material selections are one
+part of the cumulative revision, not its full scope.
+
+[Exact inventory and response-scope review](preset-evidence/2026.11.6/reviews/a56.md)
 
 ## Stable piano strings with varied strikes
 
@@ -67,17 +74,22 @@ that remain fixed in Hz rather than carrying the complete onset spectrum to a
 new pitch. Returning to the accepted note restores its original response. The
 note keeps its original excitation and onset profile.
 
-The rendered regression compares moving-pitch notes with independently started
-destination notes at **44.1, 48 and 96 kHz**, three body sizes and downward/upward
-intervals. The integrated correction passes **957 checks**; the preceding source
-fails **549** of the same checks. Worst normalized harmonic error is
+The rendered regression compares moving-pitch flute, oboe, bassoon and brass
+notes with independently started destination notes at **44.1, 48 and 96 kHz**,
+three body sizes and downward/upward intervals. Clarinet participates in the
+bounded bend/return-to-onset checks; its accepted register/fingering profile
+remains captured, so it is outside the fresh-destination matrix. The integrated
+correction passes **957 checks**; the preceding source fails **549** of the same
+checks. Worst normalized harmonic error is
 **0.202533 dB**, against the test's **0.23 dB** bound, compared with
 **14.025267 dB** before correction. These are comparisons between synthesized
 gestures. The numerical body profiles remain authored choices.
 
-The change uses existing storage and control-rate processing, with no new
-allocation or per-sample transcendental calculation. This is not a complete
-plugin/DAW performance benchmark.
+The wind/brass correction reuses the existing bowed/vocal response arrays.
+Its added response work runs at note onset or a pitch-changing control boundary,
+with no new per-sample transcendental operation. The separate
+[processing-cost measurements](#processing-cost) describe its measured overhead
+and the Material selector's object-size increase.
 
 [Regression](../tests/WindBodyFormantTests.cpp) ·
 [Measured results and acoustics references](preset-evidence/2026.11.6/reviews/root-wind.md)
@@ -102,13 +114,13 @@ removed from the affected recipes.
 | Koto | A sharp plectrum spectrum, low body/air clusters and a broader wooden response. | Both ranks use 8′; restrained initial settling and live bends retain body color. |
 | Harp | Broad finger contact, pluck-position notches and longer lower aftersound. | Both ranks now share 8′ pitch; the previous upper octave glint is removed. |
 
-The modal profiles occupy existing fixed storage. The new Gong uses a bounded
-linear approximation with delayed mode entrances; it does not solve nonlinear
+The modal profiles reuse the existing fixed mode bank. The new Gong uses a
+bounded linear approximation with delayed mode entrances; it does not solve nonlinear
 mode coupling. Tube frequency ratios draw on published measurements, while
 amplitudes and losses remain authored. Banjo, Koto and Harp use literature to
 inform their mechanisms without fitting a particular recorded instrument. The
-compatible **Steel** model ID for Koto is a state-contract choice, not a claim
-about its physical string material.
+compatible **Steel strings** model ID for Koto is a state-contract choice,
+not a claim about its physical string material.
 
 [Modal sources, implementation and direct checks](preset-evidence/2026.11.6/reviews/a07.md) ·
 [Plucked material sources and checks](preset-evidence/2026.11.6/reviews/a09.md) ·
@@ -141,10 +153,32 @@ isolates its resonator at the same pitch.
 
 [Integrated plucked measurements and preserved original limits](preset-evidence/2026.11.6/reviews/a11.md)
 
-These scoped results do not replace the complete-bank audit or native
-qualification. Bell recipe measurements and complete integration results are
-tracked against their exact candidate inputs under
-[preset-evidence/2026.11.6](preset-evidence/2026.11.6/).
+The five integrated bell recipes pass **127 checks**, and the unchanged
+23-program mallet regression passes **136 checks**. The calibrated Gong keeps
+**7.192–7.504 dB** soft/firm contrast while passing the original bank RMS floor.
+The complete 523-program LibraryAudit also passes its unchanged level and
+headroom limits. These results close the local calibration checks; native
+qualification and the actual delivered archives remain separate gates.
+
+[Bell recipe measurements](preset-evidence/2026.11.6/reviews/a10.md) ·
+[Original and corrected integration outcomes](preset-evidence/2026.11.6/verification/root-integration/)
+
+### Processing cost
+
+The **48-mode** capacity, **24-entry** response arrays and **16-sample** control
+period are unchanged. Material selection and alignment increase the measured
+body object from **6,088 to 6,096 bytes** with GCC 14.2.0: eight bytes per body.
+
+A paired local microbenchmark runs sixteen bodies at 96 kHz internally and
+48 kHz output. During continuous pitch movement, wind/brass body costs rise
+by approximately **5–15%**, and Banjo/Koto/Harp by **12% / 24% / 14%** against
+their previous generic profiles. The richer twenty-mode Gong costs **1.925×**
+the old generic bell in that moving-pitch workload. The 378 paired measurements
+produce finite output and record zero note-on/tick allocations. These are
+**body-only measurements**, with documented timing variability; they do not
+measure whole-plugin CPU or guarantee a DAW callback deadline.
+
+[Method, complete ratios, raw measurements and scope](preset-evidence/2026.11.6/reviews/a31.md)
 
 ## Saved sessions and automation
 
@@ -152,8 +186,10 @@ The two new parameters, `body1_material` and `body2_material`, append at core
 indexes **202/203** and host indexes **308/309**. Totals become **204 core
 parameters** and **310 host positions**, with **14 body controls**. Each Material
 has ten choices: Standard plus nine profiles. Standard is neutral, and an
-incompatible model/material pair uses Standard. Material selection is captured
-on the next accepted note; it does not retune a body already ringing.
+incompatible model/material pair renders Standard while retaining the selected
+Material in host display and saved state. Choose a compatible Model and play a
+fresh note to hear that Material. Material selection is captured on the next
+accepted note; it does not retune a body already ringing.
 
 All **202 preceding core parameter definitions** and **308 host positions**
 remain in their original order. An independent metadata comparison includes
