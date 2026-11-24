@@ -334,6 +334,74 @@ void engineGateAndTiming()
               "footswitch cancellation and live master sustain both retime body damping continuously");
     }
 }
+
+void damperBoundaryRetimingAndReuse()
+{
+    for (int model : {body::piano, body::tine, body::reed})
+    {
+        auto firstPending = strike(model, 96000.0, 36);
+        firstPending.noteOff(0.7f);
+        firstPending.setRelease(0.25f);
+        auto firstPendingCopy = firstPending;
+        check(render(firstPending, 96000.0, 36, 0.002) == render(firstPendingCopy, 96000.0, 36, 0.002),
+              "first pending release copies before any geometry or target is consumed");
+        auto everySample = strike(model, 96000.0, 36);
+        (void) render(everySample, 96000.0, 36, 16.0 / 96000.0);
+        auto atBoundary = everySample;
+        everySample.noteOff(0.4f); atBoundary.noteOff(0.4f);
+        bool same = true;
+        for (int n = 0; n < 2048; ++n)
+        {
+            const float seconds = 0.025f + 1.75f * static_cast<float>((n * 17) % 257) / 256.0f;
+            everySample.setRelease(seconds);
+            // The two inputs agree at every consumption boundary. Intermediate
+            // timing values must not alter energy, phase or contact progress.
+            if ((n & 15) == 0) atBoundary.setRelease(seconds);
+            const float frequency = static_cast<float>(hz(36) * (n < 777 ? 1.0 : 1.122462048));
+            same = everySample.tick(frequency, 0.75f) == atBoundary.tick(frequency, 0.75f) && same;
+        }
+        check(same, "release retargets consume the latest exact value at the existing control boundary");
+
+        // Leave a pending retarget between boundaries, then return A->B->A.
+        (void) everySample.tick(static_cast<float>(hz(36)), 0.75f);
+        everySample.setRelease(0.7f);
+        auto copied = everySample;
+        everySample.setRelease(0.2f); everySample.setRelease(0.7f);
+        check(everySample.tick(std::numeric_limits<float>::quiet_NaN(), 0.75f) == 0.0f
+              && everySample.tick(0.0f, 0.75f) == 0.0f,
+              "invalid frequency cannot consume a pending damper target");
+        check(render(everySample, 96000.0, 36, 0.002) == render(copied, 96000.0, 36, 0.002),
+              "pending damper state copies exactly and superseded targets leave no history");
+    }
+
+    for (double rate : {48000.0, 96000.0})
+        for (int model : {body::off, body::piano, body::tine, body::reed})
+            for (int note : {0, 36, 84, 91, 96})
+                for (float size : {0.5f, 2.5f})
+                {
+                    auto reused = strike(body::piano, rate, 12);
+                    reused.noteOff(0.025f);
+                    (void) render(reused, rate, 12, 0.003);
+                    // Different mode count, ratios, damper family and strength
+                    // must replace the outgoing geometry on the next strike.
+                    body::InstrumentBody fresh;
+                    fresh.prepare(rate, rate);
+                    for (auto* b : {&reused, &fresh})
+                        b->noteOn(model, static_cast<float>(note), 0.85f, 0.75f,
+                                  1.0f, 0x614c8ce0u, size);
+                    reused.noteOff(0.6f); fresh.noteOff(0.6f);
+                    bool same = true;
+                    for (int n = 0; n < 1024; ++n)
+                    {
+                        const float seconds = 0.025f + 1.3f * static_cast<float>((n * 13) % 193) / 192.0f;
+                        reused.setRelease(seconds); fresh.setRelease(seconds);
+                        const float frequency = static_cast<float>(hz(note) * (n < 333 ? 1.0 : 0.840896415));
+                        const float a = reused.tick(frequency, 0.75f), b = fresh.tick(frequency, 0.75f);
+                        same = a == b && std::isfinite(a) && same;
+                    }
+                    check(same, "released restrike replaces cached damper geometry and timing exactly");
+                }
+}
 }
 
 int main()
@@ -342,6 +410,7 @@ int main()
     isolationAndLifetime();
     liveTimingAndPitch();
     engineGateAndTiming();
+    damperBoundaryRetimingAndReuse();
     std::printf("Instrument damper: %d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;
 }
