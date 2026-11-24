@@ -125,6 +125,13 @@ def selections():
         groups.append(dict(folder=f'low-choir-oo-foundation-{foundation}',
                            names=['Blade Choir', 'Midnight Pads 55'],
                            velocity=.85, pressure=0, hold=6, tail=1, note=foundation + 12))
+    # Append matched register and velocity excerpts for three existing voices;
+    # all 238 earlier requests retain their exact names, order and settings.
+    for note in (48, 60, 72):
+        for label, velocity in (('soft', .25), ('firm', .85)):
+            groups.append(dict(folder=f'voice-register-{note}-{label}',
+                               names=['Ocarina', 'Crystal Strings', 'Mellow Organ'],
+                               velocity=velocity, pressure=0, hold=5, tail=2, note=note))
     return groups
 
 
@@ -238,6 +245,9 @@ def audition_readme(groups, summary, source, revision):
         'The Ah requests play MIDI 36/48 and the Oo requests play MIDI 48/60, all at velocity 0.85, pressure zero, six-second holds and one-second release excerpts. Choir Pad at played 48 and Dark Choir at played 48/60 remain in the existing choir-vowels folders and are not duplicated.',
         'These low-foundation examples expose the upper vocal bands at low pitch while retaining each complete preset\'s filters, upper layers and effects; they do not isolate vowels or establish acoustic similarity.',
         'The original 225 requests are unchanged; 13 low-register captures are appended. Existing sustained-effort folders already provide soft/firm wind comparisons.',
+        'Voice-register folders compare the existing Ocarina, Crystal Strings and Mellow Organ at played MIDI 48, 60 and 72, each at velocities 0.25 and 0.85 with pressure zero, five-second holds and two-second key-release excerpts.',
+        'These equal-key comparisons retain each complete preset: Ocarina has a 4-foot main body, Crystal Strings an 8-foot body with a light 2-foot upper layer, and Mellow Organ an 8-foot registration. Their sounding foundations and velocity responses are not assumed to match.',
+        'The original 238 requests are unchanged; 18 voice-register captures are appended. Each clip starts a fresh engine and holds one note; a single cold note does not establish repeatability or repeated-note consistency.',
         'The capture CLI does not schedule pitch bends or select render quality. These fixed-note, 48 kHz clips do not verify bend behavior or noise consistency across quality modes; those require the dedicated DSP tests.',
         '',
         'Tracked sources are checked against the recorded commit before and after capture; the executable hash must also stay unchanged.',

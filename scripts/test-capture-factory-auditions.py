@@ -45,6 +45,7 @@ LOW_CHOIR_DERIVATIVES = ["Golden Pads 52", "Blade Choir", "Midnight Pads 55"]
 ORIGINAL_ARTICULATION = ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"]
 MATERIAL_PROFILES = ["Tubular Bells", "Gong", "Temple Bell", "Agogo", "Music Box",
                      "Banjo", "Koto", "Harp", "Kalimba"]
+REGISTER_VOICES = ["Ocarina", "Crystal Strings", "Mellow Organ"]
 PARAMETER_IDS = [f"fixture_parameter_{i}" for i in range(204)]
 PARAMETER_VALUES = [0.0] * 202 + [.125, .75]
 SOURCE = "3" * 40
@@ -69,7 +70,7 @@ class CaptureChild:
             names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS
                                        + TEXTURES + SUSTAINED + SUSTAINED_BASS
                                        + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION + MATERIAL_PROFILES
-                                       + LOW_CHOIR_DERIVATIVES))
+                                       + LOW_CHOIR_DERIVATIVES + REGISTER_VOICES))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
             programs = [{"host_index": i, "name": name, "category": "Fixture", "values": PARAMETER_VALUES}
                         for i, name in enumerate(names)]
@@ -184,11 +185,11 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
         self.assertEqual([(g["names"], g["note"]) for g in groups[9:12]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len(groups), 54)
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 92)
+        self.assertEqual(len(groups), 60)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 95)
         readme = (out / "README.txt").read_text()
-        self.assertIn("238 unnormalized circuit-synth auditions of 92 existing programs", readme)
-        self.assertIn("1361.2 seconds total", readme)
+        self.assertIn("256 unnormalized circuit-synth auditions of 95 existing programs", readme)
+        self.assertIn("1487.2 seconds total", readme)
         self.assertIn("Material-profile folders compare Tubular Bells, Gong, Temple Bell", readme)
         self.assertIn("same-foundation comparisons do not isolate resonant size alone", readme)
         self.assertIn("Single-note examples do not establish acoustic similarity", readme)
@@ -234,7 +235,7 @@ class AuditionTests(unittest.TestCase):
     def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
         groups = helper.selections()
         self.assertEqual(helper.roster_summary(groups),
-                         dict(wav_count=238, selected_program_count=92, audio_seconds=1361.2))
+                         dict(wav_count=256, selected_program_count=95, audio_seconds=1487.2))
         by_folder = {group["folder"]: group for group in groups}
         quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
         self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
@@ -273,7 +274,9 @@ class AuditionTests(unittest.TestCase):
                 self.assertEqual(group["names"], ["Clarinet", "Bass Clarinet"])
                 self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
                                  (note, velocity, 0, 3, 1))
-        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 550_000_000)
+        # Retain the earlier payload cap on the unchanged 238-request prefix.
+        # The appended 126 seconds have a separate exact total-payload check.
+        self.assertLess(helper.roster_summary(groups[:54])["audio_seconds"] * 48000 * 8, 550_000_000)
 
     def test_material_and_vowel_comparisons_preserve_matched_conditions(self):
         groups = {group["folder"]: group for group in helper.selections()}
@@ -314,7 +317,7 @@ class AuditionTests(unittest.TestCase):
 
     def test_low_register_requests_preserve_all_225_earlier_requests(self):
         groups = helper.selections()
-        existing, added = groups[:46], groups[46:]
+        existing, added = groups[:46], groups[46:54]
         # Frozen before appending the .7 coverage: this constrains every name,
         # order, folder and setting, including default-note spelling.
         encoded = json.dumps(existing, sort_keys=True, separators=(",", ":")).encode()
@@ -340,6 +343,33 @@ class AuditionTests(unittest.TestCase):
                              ("Blade Choir", 12), ("Midnight Pads 55", 12)):
             for foundation in (36, 48):
                 self.assertEqual(requests.count((name, foundation + offset, .85, 0, 6, 1)), 1)
+
+    def test_voice_register_requests_preserve_all_238_earlier_requests(self):
+        groups = helper.selections()
+        existing, added = groups[:54], groups[54:]
+        encoded = json.dumps(existing, sort_keys=True, separators=(",", ":")).encode()
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(),
+                         "889f32cc511e7ae693803a4aec8118b2ac09f147cf2886a56af966e16115871a")
+        self.assertEqual(helper.roster_summary(existing),
+                         dict(wav_count=238, selected_program_count=92, audio_seconds=1361.2))
+        self.assertEqual(helper.roster_summary(added),
+                         dict(wav_count=18, selected_program_count=3, audio_seconds=126.0))
+        self.assertEqual(len(added), 6)
+        self.assertEqual([group["folder"] for group in added],
+                         [f"voice-register-{note}-{label}" for note in (48, 60, 72)
+                          for label in ("soft", "firm")])
+        for soft, firm in zip(added[::2], added[1::2]):
+            self.assertEqual(soft["names"], REGISTER_VOICES)
+            self.assertEqual((soft["pressure"], soft["hold"], soft["tail"]), (0, 5, 2))
+            self.assertEqual((soft["velocity"], firm["velocity"]), (.25, .85))
+            self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
+                             {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
+        self.assertEqual([group["note"] for group in added], [48, 48, 60, 60, 72, 72])
+        self.assertEqual(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 571_084_800)
+        readme = helper.audition_readme(groups, helper.roster_summary(groups), SOURCE, "2026.11.8")
+        self.assertIn("Voice-register folders compare the existing Ocarina, Crystal Strings and Mellow Organ", readme)
+        self.assertIn("The original 238 requests are unchanged; 18 voice-register captures are appended", readme)
+        self.assertIn("a single cold note does not establish repeatability or repeated-note consistency", readme)
 
     def test_readme_uses_inventory_revision_and_states_actual_low_register_scope(self):
         groups = helper.selections()
