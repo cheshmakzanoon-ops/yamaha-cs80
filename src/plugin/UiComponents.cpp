@@ -102,6 +102,8 @@ juce::String formatParamValue(int parameterIndex, float value)
         case cs80::P_outputLevel: return value >= 0.5f ? "HIGH" : "LOW";
         case cs80::P_body1Model:
         case cs80::P_body2Model: return cs80::body::name(juce::roundToInt(value));
+        case cs80::P_body1Variant:
+        case cs80::P_body2Variant: return cs80::body::variantName(juce::roundToInt(value));
         default: break;
     }
     if (parameterIndex < cs80::P_numGlobals)

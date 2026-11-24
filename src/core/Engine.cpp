@@ -384,9 +384,9 @@ void Engine::refreshEnvelopeTimes() noexcept
             auto& rank = voice.ranks[ch];
             const auto& settings = rankSettings[ch];
             if (voice.active)
-                rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale * rank.tol.ampEnvTime),
-                                   std::max(0.001f, settings.vD * global.envTimeScale * rank.tol.ampEnvTime),
-                                   std::max({settings.vR, global.keyRelease, performanceRelease})
+                rank.aenv.setTimes(std::max(0.001f, settings.vA * rank.bodyArticulation.attack * global.envTimeScale * rank.tol.ampEnvTime),
+                                   std::max(0.001f, settings.vD * rank.bodyArticulation.decay * global.envTimeScale * rank.tol.ampEnvTime),
+                                   std::max({settings.vR * rank.bodyArticulation.release, global.keyRelease, performanceRelease})
                                        * global.envTimeScale * rank.tol.ampEnvTime);
             rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale * rank.tol.filterEnvTime),
                                std::max(0.001f, settings.fD * global.envTimeScale * rank.tol.filterEnvTime),
@@ -451,6 +451,7 @@ void Engine::reset()
             r.fenv.reset();
             r.aenv.reset();
             r.instrumentBody.reset();
+            r.bodyArticulation = {};
             r.previousInstrumentBody.reset();
             r.instrumentBodyFilter.reset();
             r.previousInstrumentBodyFilter.reset();
@@ -999,6 +1000,7 @@ void Engine::buildSettings()
         // source-table isolation or a hardware-tab electrical reconstruction.
         const bool bodyAllowed = global.renderPolicy == RenderPolicy::sourcePerformance && hardwareSources[ch] == 13;
         r.bodyModel = bodyAllowed ? static_cast<int>(std::lround(params[bodyParam(ch, 0)])) : 0;
+        r.bodyVariant = bodyAllowed ? static_cast<int>(std::lround(params[bodyVariantParam(ch)])) : 0;
         r.bodyMix = bodyAllowed ? params[bodyParam(ch, 1)] : 0.0f;
         r.bodyBrightness = params[bodyParam(ch, 2)];
         r.bodyDecay = params[bodyParam(ch, 3)];
@@ -1533,23 +1535,10 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         // reset it (this also clears a stage left behind by a hard panic).
         if (!preserveAudioState || !wasActive)
             r.aenv.reset();
-        r.fenv.noteOn(filterInitialTarget(ch),
-                      filterAttackTarget(ch),
-                      std::max(0.001f, rs.fA * global.envTimeScale * r.tol.filterEnvTime),
-                      std::max(0.001f, rs.fD * global.envTimeScale * r.tol.filterEnvTime),
-                      std::max(0.001f, rs.fR * global.envTimeScale * r.tol.filterEnvTime),
-                      0.0f,
-                      preserveEnvelope);
-        r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale * r.tol.ampEnvTime),
-                      std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
-                      rs.vS,
-                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
-        // Private, reproducible excitation variation; do not consume the
-        // oscillator/noise RNG or depend on host block partitioning.
-        // Spectral formants, stiffness and partial loss belong to the sounding
-        // register. A 16-foot rank at C4 has a C3 body; Scala/MTS and the tuning
-        // reference participate too. Transient bends and vibrato remain live
-        // frequency controls and do not rebuild the physical excitation.
+        // The optional body's envelope and excitation share one sounding
+        // register: a 16-foot rank at C4 has a C3 body, including Scala/MTS,
+        // tuning reference and rank detune. Neither a later model selection
+        // nor a ribbon movement reconstructs this captured profile.
         float bodyNote = static_cast<float>(note);
         if (rs.bodyModel != 0)
         {
@@ -1558,6 +1547,18 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)];
             bodyNote = 69.0f + 12.0f * std::log2(std::max(bodyHz, 0.01f) / 440.0f);
         }
+        r.bodyArticulation = body::captureArticulation(rs.bodyModel, bodyNote, v.velocity, rs.bodyMix);
+        r.fenv.noteOn(filterInitialTarget(ch),
+                      filterAttackTarget(ch),
+                      std::max(0.001f, rs.fA * global.envTimeScale * r.tol.filterEnvTime),
+                      std::max(0.001f, rs.fD * global.envTimeScale * r.tol.filterEnvTime),
+                      std::max(0.001f, rs.fR * global.envTimeScale * r.tol.filterEnvTime),
+                      0.0f,
+                      preserveEnvelope);
+        r.aenv.noteOn(std::max(0.001f, rs.vA * r.bodyArticulation.attack * global.envTimeScale * r.tol.ampEnvTime),
+                      std::max(0.001f, rs.vD * r.bodyArticulation.decay * global.envTimeScale * r.tol.ampEnvTime),
+                      rs.vS,
+                      std::max(0.001f, rs.vR * r.bodyArticulation.release * global.envTimeScale * r.tol.ampEnvTime));
         // The circuit VCA deliberately retains an audible release level on
         // reassignment. Preserve the old body as well, then hand its waveform
         // to the new strike over 3 ms. Its last sounding pitch is retained;
@@ -1579,9 +1580,13 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
             r.bodyHandoffRemaining = 0;
         }
         r.instrumentBodyFilter.reset();
+        // Private excitation seed: do not consume the oscillator/noise RNG or
+        // depend on host blocks. Bends remain live pitch controls and do not
+        // rebuild this note's excitation or articulation.
         r.instrumentBody.noteOn(rs.bodyModel, bodyNote, v.velocity,
                                 params[bodyParam(ch, 2)], rs.bodyDecay,
-                                static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu), rs.bodySize);
+                                static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu),
+                                rs.bodySize, rs.bodyVariant);
     }
 
     if (! ringKeyDown)
@@ -1614,7 +1619,7 @@ void Engine::releaseVoice(Voice& v)
         // software extensions; the exact potentiometer law remains unmeasured.
         // An assigned, plugged and open footswitch disables only this term.
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
-        r.aenv.setRelease(std::max({rs.vR, global.keyRelease, performanceRelease})
+        r.aenv.setRelease(std::max({rs.vR * r.bodyArticulation.release, global.keyRelease, performanceRelease})
                           * global.envTimeScale * r.tol.ampEnvTime);
         r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
                           * global.envTimeScale * r.tol.filterEnvTime);
@@ -1893,7 +1898,7 @@ void Engine::cancelSustainTails()
             const auto& rs = rankSettings[ch];
             // setRelease keeps stage, value and elapsed stage time, so the
             // bent fast-release window is not restarted.
-            r.aenv.setRelease(std::max(rs.vR, global.keyRelease) * global.envTimeScale * r.tol.ampEnvTime);
+            r.aenv.setRelease(std::max(rs.vR * r.bodyArticulation.release, global.keyRelease) * global.envTimeScale * r.tol.ampEnvTime);
             r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale * r.tol.filterEnvTime);
         }
     }

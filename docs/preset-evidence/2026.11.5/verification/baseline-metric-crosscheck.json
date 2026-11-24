@@ -1,0 +1,102 @@
+{
+  "status": "measurement_checker_crosscheck_only",
+  "archive_accepted": false,
+  "source": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+  "clips": [
+    {
+      "name": "Stage Keys",
+      "baseline_wav_sha256": "a8052daedb007280cf0c5d56a748eecfb14d8c4970d3411c8d0182b2991682f5",
+      "frames": 192000,
+      "absolute_metric_errors": {
+        "peak_dbfs": 2.1290311735810974e-09,
+        "rms_dbfs": 4.447734625045996e-09,
+        "early_rms_dbfs": 3.056008779367403e-09,
+        "body_rms_dbfs": 4.7109125489441794e-09,
+        "tail_rms_dbfs": 2.2151283474158845e-08,
+        "peak_window_seconds": 0.0,
+        "centroid_hz": 3.872128218063153e-08,
+        "low_power": 3.316241725670466e-11,
+        "mid_power": 4.711342427299314e-12,
+        "high_power": 4.5126055669975074e-13,
+        "tilt": 5.819910525728389e-14,
+        "stereo_correlation": 2.0183854587685346e-11
+      }
+    },
+    {
+      "name": "Aftertouch Vibrato Lead",
+      "baseline_wav_sha256": "729b6bb409e46fb77307005443ade0abee734313c427bde597df11cd808f581e",
+      "frames": 192000,
+      "absolute_metric_errors": {
+        "peak_dbfs": 3.7751135550934123e-10,
+        "rms_dbfs": 1.9508021864567127e-09,
+        "early_rms_dbfs": 3.6912126688548597e-09,
+        "body_rms_dbfs": 2.3829720419143996e-09,
+        "tail_rms_dbfs": 1.3878775462217163e-08,
+        "peak_window_seconds": 0.0,
+        "centroid_hz": 3.8093276089057326e-08,
+        "low_power": 2.7636004595876784e-11,
+        "mid_power": 1.2607748178794509e-11,
+        "high_power": 2.4764218453654507e-13,
+        "tilt": 1.895024068221396e-12,
+        "stereo_correlation": 2.1990187448750476e-11
+      }
+    },
+    {
+      "name": "Pressure Lead",
+      "baseline_wav_sha256": "6617bc1d753e5d3327e42b20155a75ffe2ebc33c03556a08f686dd154c7472a0",
+      "frames": 192000,
+      "absolute_metric_errors": {
+        "peak_dbfs": 0.0,
+        "rms_dbfs": 0.0,
+        "early_rms_dbfs": 0.0,
+        "body_rms_dbfs": 0.0,
+        "tail_rms_dbfs": 0.0,
+        "peak_window_seconds": 0.0,
+        "centroid_hz": 0.0,
+        "low_power": 0.0,
+        "mid_power": 0.0,
+        "high_power": 0.0,
+        "tilt": 0.0,
+        "stereo_correlation": 0.0
+      }
+    },
+    {
+      "name": "Wind",
+      "baseline_wav_sha256": "ceec65148e897bde16bf6c2bdea62b3bac75b4c58524b667637d482de1fc8d5c",
+      "frames": 230400,
+      "absolute_metric_errors": {
+        "peak_dbfs": 1.8478871766092198e-09,
+        "rms_dbfs": 4.4280454858380836e-09,
+        "early_rms_dbfs": 4.66242511265591e-09,
+        "body_rms_dbfs": 3.13423953457459e-09,
+        "tail_rms_dbfs": 3.1394833399644995e-09,
+        "peak_window_seconds": 0.0,
+        "centroid_hz": 4.8049855649878737e-08,
+        "low_power": 6.417089082333405e-12,
+        "mid_power": 4.8043902189931487e-11,
+        "high_power": 1.6291690219105703e-12,
+        "tilt": 1.3693907119360915e-12,
+        "stereo_correlation": 3.0472402379189134e-11
+      }
+    },
+    {
+      "name": "Marimba",
+      "baseline_wav_sha256": "db30c546d802d61f8432013606168d01896da6480ed9730d8b17c8c2ebecd9f9",
+      "frames": 192000,
+      "absolute_metric_errors": {
+        "peak_dbfs": 3.3724667503065575e-09,
+        "rms_dbfs": 2.30904362297224e-09,
+        "early_rms_dbfs": 8.222933445267699e-10,
+        "body_rms_dbfs": 2.4280097932205535e-09,
+        "tail_rms_dbfs": 6.704169663862558e-09,
+        "peak_window_seconds": 0.0,
+        "centroid_hz": 4.705839273810852e-09,
+        "low_power": 1.568043654989748e-14,
+        "mid_power": 3.584266217160348e-11,
+        "high_power": 1.7753090664207605e-12,
+        "tilt": 1.136365307408127e-13,
+        "stereo_correlation": 8.12128142513302e-13
+      }
+    }
+  ]
+}

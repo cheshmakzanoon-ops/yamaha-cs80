@@ -1,0 +1,84 @@
+{
+  "_template_status": "UNFILLED EXAMPLE ONLY. No current artifact, source, run or result is asserted. Replace paths/provenance and independently verify every external gate. The historical parser records provenance as unverified claims.",
+  "provenance": {
+    "factory_revision": "2026.11.5",
+    "source": "REPLACE_FULL_QUALIFIED_SOURCE_SHA",
+    "tree": "REPLACE_SOURCE_TREE_SHA",
+    "run_id": "REPLACE_ACTUAL_BUILD_RUN_ID",
+    "attempt": "REPLACE_REVIEWED_ATTEMPT"
+  },
+  "native": [
+    {
+      "target": "linux-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-linux-test-evidence.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-windows-test-evidence.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-macos-15-test-evidence.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-macos-15-intel-test-evidence.zip"
+    }
+  ],
+  "validators": [
+    {
+      "target": "linux-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-reports.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-windows.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-macos-15.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-macos-15-intel.zip"
+    }
+  ],
+  "_external_reconciliation_not_enforced_by_parser": {
+    "provisional_registered_counts": {
+      "linux-x86_64": 602,
+      "windows-x86_64": 244,
+      "macos-arm64": 266,
+      "macos-x86_64": 266
+    },
+    "all_new_tests_must_be_present_and_passed": [
+      "cs80_struck_body_dynamics_tests",
+      "cs80_instrument_body_variant_tests",
+      "cs80_vocal_body_tests",
+      "cs80_body_articulation_engine_tests",
+      "cs80_original_articulation_tests",
+      "cs80_keyboard_response_tests",
+      "cs80_mallet_preset_refinement_tests",
+      "cs80_bass_plucked_refinement_tests",
+      "cs80_brass_organ_refinement_tests",
+      "cs80_wind_string_refinement_tests",
+      "cs80_pad_poly_refinement_tests",
+      "cs80_fx_refinement_tests",
+      "cs80_modern_preset_refinement_tests",
+      "cs80_lead_refinement_tests",
+      "cs80_preset_response_coverage_tests"
+    ],
+    "require_juce_source": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "require_juce_version": "8.0.11",
+    "parser_release_qualified_must_remain_false": true,
+    "external_gates": [
+      "Authentic API artifact ID/name/bytes/SHA256/source/run/expiry; original upload step binds reviewed attempt.",
+      "All six original jobs and required build/test/validator/package/upload steps succeeded for one exact source/run/attempt.",
+      "Compare actual JUnit test names/counts and explicitly review all skips, disabled cases and unknowns.",
+      "Require JUCE provenance even though the parser tolerates a missing provenance file.",
+      "Review original exits and every Linux retry against source-pinned wrapper eligibility; diagnostic reruns cannot replace original lanes.",
+      "Each final console and report has one validation-start marker; the parser records but does not enforce this count.",
+      "Match complete Linux/Windows packaged VST3 bundles to the original validator inputs; verify Mac VST3 paths and AU before/after bundle identity.",
+      "Verify actual installation archive integrity and actual audition acceptance separately."
+    ]
+  }
+}

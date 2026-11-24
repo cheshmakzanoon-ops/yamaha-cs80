@@ -39,6 +39,9 @@ INSTRUMENTS = ["Trombone Glide", "Theatre Organ", "Oboe", "Bassoon", "Guitar I",
 TEXTURES = ["Evolving Pad", "Breathing Pad", "Thunder", "Rain", "Surf", "Wind"]
 SUSTAINED = ["Solo Violin", "Flute", "Clarinet", "Oboe", "English Horn", "Covered Horn", "Muted Trumpet"]
 SUSTAINED_BASS = ["Solo Cello", "Bass Clarinet", "Bassoon"]
+MATERIALS = ["Xylophone", "Steel Drum", "Marimba", "Vibraphone"]
+CHOIRS = ["Choir Pad", "Dark Choir"]
+ORIGINAL_ARTICULATION = ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"]
 SOURCE = "3" * 40
 SOURCE_STATE = dict(source_commit=SOURCE, source_tree="5" * 40, tracked_source_clean=True)
 # A tiny valid stereo IEEE-float WAV, used only as an unchanged-byte witness.
@@ -59,7 +62,8 @@ class CaptureChild:
         option = lambda name: command[command.index(name) + 1]
         if "--inventory" in command:
             names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS
-                                       + TEXTURES + SUSTAINED + SUSTAINED_BASS))
+                                       + TEXTURES + SUSTAINED + SUSTAINED_BASS
+                                       + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
             programs = [{"host_index": i, "name": name, "category": "Fixture"} for i, name in enumerate(names)]
             if self.fault == "short inventory":
@@ -150,9 +154,9 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((manifest["repository"], manifest["run_id"], manifest["run_attempt"]),
                          ("owner/repo", "42", "2"))
         self.assertEqual(manifest["capture_binary_sha256"], hashlib.sha256(self.capture.read_bytes()).hexdigest())
-        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (138, 138))
-        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (870, 870))
-        self.assertEqual(manifest["selected_program_count"], 74)
+        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (171, 171))
+        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (1033.2, 1033.2))
+        self.assertEqual(manifest["selected_program_count"], 81)
         self.assertEqual(manifest["library_revision"], "2026.11.4")
         self.assertEqual(manifest["inventory_command"], child.commands[0])
         self.assertEqual(manifest["capture_commands"], child.commands[1:])
@@ -168,11 +172,11 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
         self.assertEqual([(g["names"], g["note"]) for g in groups[9:12]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len(groups), 30)
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 74)
+        self.assertEqual(len(groups), 40)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 81)
         readme = (out / "README.txt").read_text()
-        self.assertIn("138 unnormalized circuit-synth auditions of 74 existing programs", readme)
-        self.assertIn("870 seconds total", readme)
+        self.assertIn("171 unnormalized circuit-synth auditions of 81 existing programs", readme)
+        self.assertIn("1033.2 seconds total", readme)
         self.assertIn("same-foundation comparisons do not isolate resonant size alone", readme)
         self.assertIn("Single-note examples do not establish acoustic similarity", readme)
         for group in groups:
@@ -217,7 +221,7 @@ class AuditionTests(unittest.TestCase):
     def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
         groups = helper.selections()
         self.assertEqual(helper.roster_summary(groups),
-                         dict(wav_count=138, selected_program_count=74, audio_seconds=870))
+                         dict(wav_count=171, selected_program_count=81, audio_seconds=1033.2))
         by_folder = {group["folder"]: group for group in groups}
         quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
         self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
@@ -257,6 +261,24 @@ class AuditionTests(unittest.TestCase):
                 self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
                                  (note, velocity, 0, 3, 1))
         self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 480_000_000)
+
+    def test_material_and_vowel_comparisons_preserve_matched_conditions(self):
+        groups = {group["folder"]: group for group in helper.selections()}
+        for note in (48, 60, 72):
+            soft = groups[f"mallet-material-{note}-soft"]
+            firm = groups[f"mallet-material-{note}-firm"]
+            self.assertEqual(soft["names"], ["Xylophone", "Steel Drum", "Marimba", "Vibraphone"])
+            self.assertEqual((soft["note"], soft["hold"], soft["tail"]), (note, 3.5, .8))
+            self.assertEqual((soft["velocity"], firm["velocity"]), (.25, .85))
+            self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
+                             {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
+            choir = groups[f"choir-vowels-{note}"]
+            self.assertEqual(choir["names"], ["Choir Pad", "Dark Choir"])
+            self.assertEqual((choir["note"], choir["velocity"], choir["pressure"], choir["hold"], choir["tail"]),
+                             (note, .85, 0, 6, 1))
+        original = groups["original-articulation"]
+        self.assertEqual(original["names"], ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"])
+        self.assertEqual((original["note"], original["hold"], original["tail"]), (60, 5, 1))
 
     def test_default_note_alias_is_rejected_before_rendering_audio(self):
         groups = helper.selections()

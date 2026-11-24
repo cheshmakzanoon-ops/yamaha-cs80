@@ -1,0 +1,15 @@
+test_archive_manifest_gates_reject_transfer_faults_without_audio_acceptance (__main__.AuditionArchiveBoundaryTests.test_archive_manifest_gates_reject_transfer_faults_without_audio_acceptance) ... ok
+test_checksums_require_every_member_once (__main__.AuditionArchiveBoundaryTests.test_checksums_require_every_member_once) ... ok
+test_duplicate_and_nonfinite_json_are_rejected (__main__.AuditionArchiveBoundaryTests.test_duplicate_and_nonfinite_json_are_rejected) ... ok
+test_float_wav_metrics_recover_known_samples (__main__.AuditionArchiveBoundaryTests.test_float_wav_metrics_recover_known_samples) ... ok
+test_float_wav_rejects_format_length_and_sample_corruption (__main__.AuditionArchiveBoundaryTests.test_float_wav_rejects_format_length_and_sample_corruption) ... ok
+test_inventory_equality_is_binary32_and_includes_metadata (__main__.AuditionArchiveBoundaryTests.test_inventory_equality_is_binary32_and_includes_metadata) ... ok
+test_report_never_overwrites_existing_evidence (__main__.AuditionArchiveBoundaryTests.test_report_never_overwrites_existing_evidence) ... ok
+test_roster_is_171_clips_81_names_40_groups_without_claiming_acceptance (__main__.AuditionArchiveBoundaryTests.test_roster_is_171_clips_81_names_40_groups_without_claiming_acceptance) ... ok
+test_wrong_source_revision_is_rejected (__main__.AuditionArchiveBoundaryTests.test_wrong_source_revision_is_rejected) ... ok
+test_zip_rejects_every_entry_type_and_path_boundary_before_reads (__main__.AuditionArchiveBoundaryTests.test_zip_rejects_every_entry_type_and_path_boundary_before_reads) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.504s
+
+OK

@@ -1,0 +1,820 @@
+Start testing: Nov 23 23:04 MST
+----------------------------------------------------------
+158/215 Testing: cs80_keyboard_response_tests
+158/215 Test: cs80_keyboard_response_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_keyboard_response_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_keyboard_response_tests" start time: Nov 23 23:04 MST
+Output:
+----------------------------------------------------------
+Stage Keys dynamics 9.552 dB; held aftersound -28.318 dB relative to onset
+Soft Keys dynamics 9.496 dB; held aftersound -30.389 dB relative to onset
+Honky Keys dynamics 9.375 dB; held aftersound -33.843 dB relative to onset
+Velocity Keys dynamics 10.749 dB; held aftersound -30.883 dB relative to onset
+Electric Piano I dynamics 9.576 dB; held aftersound -21.411 dB relative to onset
+Electric Piano II dynamics 9.530 dB; held aftersound -20.822 dB relative to onset
+Tine Piano dynamics 9.335 dB; held aftersound -22.140 dB relative to onset
+Reed Piano dynamics 10.078 dB; held aftersound -22.730 dB relative to onset
+KeyboardResponseTests: 124 checks, 0 failures
+<end of output>
+Test time =  37.91 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_response_tests" end time: Nov 23 23:04 MST
+"cs80_keyboard_response_tests" time elapsed: 00:00:37
+----------------------------------------------------------
+
+161/215 Testing: cs80_brass_organ_refinement_tests
+161/215 Test: cs80_brass_organ_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_brass_organ_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_brass_organ_refinement_tests" start time: Nov 23 23:04 MST
+Output:
+----------------------------------------------------------
+BRASS Brass Swell I           soft/firm 8.653 dB
+BRASS Brass Swell II          soft/firm 8.831 dB
+PRESSURE range 21.867 dB
+BRASS Pressure Swell Brass    soft/firm 4.546 dB
+BRASS Resonant Swell Brass    soft/firm 7.869 dB
+BRASS Noir Swell Brass        soft/firm 7.496 dB
+BRASS Sforzando Brass         soft/firm 9.697 dB
+BRASS Brass Stab              soft/firm 9.853 dB
+BRASS Horn Section            soft/firm 8.588 dB
+BRASS Covered Horn            soft/firm 8.154 dB
+BRASS Muted Trumpet           soft/firm 8.663 dB
+BRASS Trombone Glide          soft/firm 8.074 dB
+BRASS Fanfare Brass           soft/firm 9.292 dB
+BRASS Brass Ensemble 16       soft/firm 8.452 dB
+BRASS Low Brass               soft/firm 7.899 dB
+BRASS Velvet Brass            soft/firm 8.051 dB
+BRASS Bright Brass Poly       soft/firm 8.981 dB
+BRASS Brass Pad Swell         soft/firm 7.495 dB
+BRASS Fifth Brass             soft/firm 9.219 dB
+BRASS Wah Brass               soft/firm 8.632 dB
+BRASS Synth Horns             soft/firm 8.137 dB
+BRASS Brass Bite              soft/firm 9.705 dB
+BRASS Distant Brass           soft/firm 7.779 dB
+BRASS Brass Crescendo         soft/firm 8.073 dB
+BRASS Cuivre Brass            soft/firm 8.571 dB
+BRASS Tuba                    soft/firm 8.454 dB
+BRASS Brass Octaves           soft/firm 9.192 dB
+BRASS Swell And Fall          soft/firm 8.407 dB
+BRASS Reed Brass              soft/firm 9.185 dB
+BRASS Brass Glide Lead        soft/firm 9.857 dB
+BRASS Tremolo Brass           soft/firm 8.134 dB
+BRASS Contour Brass           soft/firm 9.278 dB
+BRASS Ring Breath Brass       soft/firm 8.310 dB
+ORGAN Flute Organ 8+4         dynamics 0.000 dB; 75-105 ms key damping -50.323 dB
+ORGAN Flute Organ 16+8        dynamics 0.000 dB; 75-105 ms key damping -43.642 dB
+ORGAN Percussive Organ        dynamics 0.000 dB; 75-105 ms key damping -68.511 dB
+ORGAN Reed Organ              dynamics 0.000 dB; 75-105 ms key damping -47.700 dB
+ORGAN Church Organ            dynamics 0.000 dB; 75-105 ms key damping -39.544 dB
+ORGAN Chapel Organ            dynamics 0.000 dB; 75-105 ms key damping -43.220 dB
+ORGAN Theatre Organ           dynamics 0.000 dB; 75-105 ms key damping -42.089 dB
+ORGAN Tremolo Organ           dynamics 0.000 dB; 75-105 ms key damping -39.501 dB
+ORGAN Mellow Organ            dynamics 0.000 dB; 75-105 ms key damping -44.591 dB
+ORGAN Bright Organ            dynamics 0.000 dB; 75-105 ms key damping -55.872 dB
+ORGAN Pipe Organ              dynamics 0.000 dB; 75-105 ms key damping -43.364 dB
+ORGAN Combo Organ             dynamics 0.000 dB; 75-105 ms key damping -59.589 dB
+ORGAN Fifth Organ             dynamics 0.000 dB; 75-105 ms key damping -49.441 dB
+ORGAN Organ Vibrato           dynamics 0.000 dB; 75-105 ms key damping -51.229 dB
+BrassOrganRefinementTests: 200 checks, 0 failures
+<end of output>
+Test time =  44.08 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_brass_organ_refinement_tests" end time: Nov 23 23:05 MST
+"cs80_brass_organ_refinement_tests" time elapsed: 00:00:44
+----------------------------------------------------------
+
+169/215 Testing: cs80_preset_voicing_tests
+169/215 Test: cs80_preset_voicing_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_voicing_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_preset_voicing_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+MIX ONSET Pan Flute           transient/body   -19.9 dB; reconstruction error  -142.4 dB relative
+TRANSIENT Pan Flute           transient late/onset   -94.1 dB; body late/early   -0.1 dB; full late  -32.3 dBFS
+TRANSIENT Sine Bass           transient late/onset   -97.0 dB; body late/early   -0.0 dB; full late  -25.3 dBFS
+MIX ONSET Nylon Pluck         transient/body   -23.6 dB; reconstruction error  -142.0 dB relative
+PERCUSSION octave/other   51.3 dB; full octave/root onset  -15.0 dB; octave late/early  -24.1 dB; root late/early  +0.0 dB
+REGISTER  Piccolo             intended  -26.9 dBFS; strongest lower octave   -85.5 dB relative
+REGISTER  Ocarina             intended  -28.5 dBFS; strongest lower octave   -91.7 dB relative
+REGISTER  Whistle             intended  -23.2 dBFS; strongest lower octave  -104.2 dB relative
+VELOCITY  Velocity Keys       hard/soft attack  +14.2 dB; body  +13.6 dB; soft body  -55.6 dBFS
+VELOCITY  Velocity Lead       hard/soft attack  +13.5 dB; body  +13.7 dB; soft body  -39.9 dBFS
+STRIKE    Electric Piano I    note 48: hard/soft onset  +8.36 dB; soft onset  -40.6 dBFS
+STRIKE    Electric Piano I    note 60: hard/soft onset  +8.35 dB; soft onset  -40.7 dBFS
+STRIKE    Electric Piano I    note 84: hard/soft onset  +7.92 dB; soft onset  -40.4 dBFS
+CONTROL   Electric Piano I    compressed hard/soft onset  +0.22 dB
+STRIKE    Electric Piano II   note 48: hard/soft onset  +8.47 dB; soft onset  -41.6 dBFS
+STRIKE    Electric Piano II   note 60: hard/soft onset  +8.26 dB; soft onset  -37.8 dBFS
+STRIKE    Electric Piano II   note 84: hard/soft onset  +8.05 dB; soft onset  -36.9 dBFS
+CONTROL   Electric Piano II   compressed hard/soft onset  +0.13 dB
+STRIKE    Kalimba             note 48: hard/soft onset  +8.67 dB; soft onset  -42.4 dBFS
+STRIKE    Kalimba             note 60: hard/soft onset  +8.64 dB; soft onset  -42.7 dBFS
+STRIKE    Kalimba             note 84: hard/soft onset  +7.43 dB; soft onset  -41.5 dBFS
+CONTROL   Kalimba             compressed hard/soft onset  +0.20 dB
+TINE      note 48: hard H3/root   -2.6 dB; hard/soft colour  +3.3 dB; late/early colour  -17.2 dB
+TINE      note 60: hard H3/root   -2.4 dB; hard/soft colour  +3.4 dB; late/early colour  -19.7 dB
+TINE      note 84: hard H3/root   -2.2 dB; hard/soft colour  +3.0 dB; late/early colour  -23.6 dB
+KEYS      Electric Piano I    onset overtones/root  -11.1 dB; held late/onset  -27.3 dB
+KEYS      Electric Piano II   onset overtones/root  -13.3 dB; held late/onset  -27.0 dB
+KEYS      Reed Piano          onset overtones/root   -8.0 dB; held late/onset  -28.5 dB
+KEYS      Saw Pulse Piano     onset overtones/root    9.7 dB; held late/onset  -29.2 dB
+KEYS      Stage Keys          onset overtones/root    0.5 dB; held late/onset  -29.9 dB
+PRESSURE  unpressed  -240.0 dBFS; pressed  -25.9 dBFS; released/pressed   -63.4 dB
+HELD      Brass Stab          late/onset   -63.7 dB; onset  -39.2 dBFS
+HELD      Pizzicato Strings   late/onset   -62.9 dB; onset  -31.6 dBFS
+HELD      Spiccato Strings    late/onset   -82.6 dB; onset  -35.9 dBFS
+HELD      Poly Stab           late/onset   -61.9 dB; onset  -29.4 dBFS
+HELD      Flute Organ 8+4     late/onset    -0.1 dB; onset  -33.5 dBFS
+SWELL     Slow Pad            bloom/opening  +16.8 dB; final/bloom   -0.0 dB; held 3.0 s
+SWELL     Slow Strings        bloom/opening  +17.5 dB; final/bloom   +0.4 dB; held 2.6 s
+SWELL     Bowed Swell Strings bloom/opening  +14.9 dB; final/bloom   -1.0 dB; held 3.2 s
+SWELL     Brass Pad Swell     bloom/opening  +22.1 dB; final/bloom   +0.0 dB; held 3.2 s
+SWELL     Sweep Pad           bloom/opening  +13.3 dB; final/bloom   -1.3 dB; held 4.8 s
+Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated.
+<end of output>
+Test time =  12.97 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_voicing_tests" end time: Nov 23 23:05 MST
+"cs80_preset_voicing_tests" time elapsed: 00:00:12
+----------------------------------------------------------
+
+162/215 Testing: cs80_wind_string_refinement_tests
+162/215 Test: cs80_wind_string_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_wind_string_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_wind_string_refinement_tests" start time: Nov 23 23:04 MST
+Output:
+----------------------------------------------------------
+RESPONSE,Ensemble Strings,60,7.977012,-45.605655,-37.628644,-2.259198
+RESPONSE,Slow Strings,60,6.305946,-42.660798,-36.354852,-2.557927
+RESPONSE,Violins,60,8.395094,-46.612807,-38.217713,-9.842133
+RESPONSE,Cellos,60,8.288591,-44.313960,-36.025369,-7.874740
+RESPONSE,Octave Strings,60,8.891212,-45.272981,-36.381769,-5.926862
+RESPONSE,PWM Strings,60,6.916346,-30.250133,-23.333787,-9.779411
+RESPONSE,Thin Strings,60,6.457816,-40.789517,-34.331701,-3.314411
+RESPONSE,Dark Strings,60,7.865194,-40.968208,-33.103013,-4.113781
+RESPONSE,Tremolo Strings,60,9.373268,-43.378333,-34.005065,-13.301579
+RESPONSE,Solo Violin,60,9.052035,-44.521691,-35.469655,-22.609573
+RESPONSE,Solo Cello,60,8.601161,-43.317658,-34.716496,-16.150737
+RESPONSE,Pizzicato Strings,60,10.995151,-44.680112,-33.684961,-84.926199
+RESPONSE,Swell Strings,60,-0.684318,-49.862185,-50.546503,-5.155303
+RESPONSE,Chamber Strings,60,7.190162,-45.612878,-38.422716,-7.504241
+RESPONSE,Wide Strings,60,7.648886,-43.506167,-35.857281,-0.682562
+RESPONSE,Crystal Strings,60,8.997724,-47.811871,-38.814147,-5.796879
+RESPONSE,Fifth Strings,60,7.279205,-48.116624,-40.837419,-5.090708
+RESPONSE,Analog Orchestra,60,6.942165,-35.912480,-28.970315,-3.388326
+RESPONSE,Spiccato Strings,60,7.589767,-46.005818,-38.416051,-80.195023
+RESPONSE,Bowed Swell Strings,60,6.012921,-48.098747,-42.085825,2.391201
+RESPONSE,Synth Strings Saw,60,6.424113,-37.404167,-30.980054,0.608390
+GATE,String Machine,-16.492736
+RESPONSE,String Machine,60,0.000000,-31.771525,-31.771525,-5.914248
+RESPONSE,Contour Strings,60,8.653490,-47.927566,-39.274076,-1.466739
+RESPONSE,Ring Strings,60,6.920259,-39.484367,-32.564107,-0.825162
+RESPONSE,Velvet Strings,60,6.930124,-41.358889,-34.428764,-6.888702
+RESPONSE,Tutti Strings,60,8.588742,-45.072487,-36.483745,-7.817248
+RESPONSE,Marcato Strings,60,8.663979,-48.455373,-39.791394,-18.861537
+RESPONSE,Air Strings,60,6.146594,-42.107081,-35.960486,-4.700831
+RESPONSE,Flute,60,10.037246,-40.417361,-30.380115,-38.797951
+RESPONSE,Breathy Flute,60,9.515177,-40.557801,-31.042624,-28.366485
+RESPONSE,Pan Flute,60,10.406136,-41.634103,-31.227967,-45.788393
+RESPONSE,Recorder,60,9.511498,-40.101403,-30.589905,-50.213371
+RESPONSE,Clarinet,60,9.887181,-41.849605,-31.962424,-44.756156
+RESPONSE,Bass Clarinet,60,9.591033,-42.051110,-32.460077,-31.804463
+RESPONSE,Oboe,60,10.685162,-47.211202,-36.526040,-41.840352
+RESPONSE,English Horn,60,10.052270,-46.477079,-36.424809,-28.885929
+RESPONSE,Bassoon,60,10.095332,-45.258826,-35.163494,-43.154677
+RESPONSE,Soprano Reed,60,10.604075,-47.083422,-36.479348,-41.706584
+RESPONSE,Ocarina,60,9.608078,-40.192925,-30.584847,-43.372977
+RESPONSE,Piccolo,60,10.494444,-39.321767,-28.827323,-50.956364
+RESPONSE,Whistle,60,10.520057,-35.759944,-25.239887,-53.345712
+RESPONSE,Shakuhachi,60,9.920047,-40.794301,-30.874254,-26.239264
+RESPONSE,Flute,48,10.056663,-40.357427,-30.300764,-38.922133
+RESPONSE,Flute,72,10.658555,-41.382467,-30.723913,-38.694716
+RESPONSE,Clarinet,48,9.806174,-41.899399,-32.093225,-44.645332
+RESPONSE,Clarinet,72,10.930550,-45.306348,-34.375797,-44.001348
+RESPONSE,Bass Clarinet,48,9.479987,-42.211782,-32.731794,-31.502902
+RESPONSE,Bass Clarinet,72,10.755729,-45.589600,-34.833871,-31.807135
+RESPONSE,Oboe,48,10.230505,-48.205264,-37.974759,-41.014978
+RESPONSE,Oboe,72,12.159780,-46.849674,-34.689894,-42.707640
+RESPONSE,English Horn,48,9.697155,-48.054252,-38.357098,-28.581801
+RESPONSE,English Horn,72,11.444965,-45.926719,-34.481755,-29.365552
+RESPONSE,Bassoon,48,9.737327,-45.946256,-36.208928,-44.569707
+RESPONSE,Bassoon,72,11.774681,-45.568427,-33.793746,-44.249398
+RESPONSE,Piccolo,48,10.427409,-39.195419,-28.768010,-51.307762
+RESPONSE,Piccolo,72,13.032788,-42.528121,-29.495333,-50.206852
+RESPONSE,Solo Violin,48,8.960924,-45.514354,-36.553430,-22.201218
+RESPONSE,Solo Violin,72,10.162468,-44.495953,-34.333485,-22.791000
+RESPONSE,Solo Cello,48,8.740694,-44.064451,-35.323757,-16.660978
+RESPONSE,Solo Cello,72,9.613340,-43.653631,-34.040290,-16.352269
+RESPONSE,Pizzicato Strings,48,11.006890,-44.494703,-33.487814,-85.123437
+RESPONSE,Pizzicato Strings,72,12.717093,-47.106757,-34.389664,-84.221431
+RESPONSE,Spiccato Strings,48,7.495711,-47.081510,-39.585798,-79.025276
+RESPONSE,Spiccato Strings,72,8.708712,-46.162816,-37.454104,-81.156970
+RESPONSE,Tutti Strings,48,8.776819,-48.645726,-39.868907,-4.993842
+RESPONSE,Tutti Strings,72,9.036721,-45.558427,-36.521706,-7.135292
+PRESSURE,Swell Strings,14.288808,-15.386022
+Wind/string refinement: 502 checks, 0 failures
+<end of output>
+Test time =  58.01 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_wind_string_refinement_tests" end time: Nov 23 23:05 MST
+"cs80_wind_string_refinement_tests" time elapsed: 00:00:58
+----------------------------------------------------------
+
+159/215 Testing: cs80_mallet_preset_refinement_tests
+159/215 Test: cs80_mallet_preset_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_mallet_preset_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_mallet_preset_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+TOUCH Ring Bell I         8.880 dB
+TOUCH Ring Bell II        9.276 dB
+TOUCH Tubular Bells       9.084 dB
+TOUCH Glockenspiel        8.992 dB
+TOUCH Celeste Bells       8.837 dB
+TOUCH Music Box           8.694 dB
+TOUCH Gong                8.688 dB
+TOUCH Temple Bell         8.930 dB
+TOUCH Marimba             8.865 dB
+TOUCH Vibraphone          8.809 dB
+TOUCH Xylophone           9.027 dB
+TOUCH Crystal Bell        9.053 dB
+TOUCH Bell Pad            8.726 dB
+TOUCH Ring Sweep Bell     9.254 dB
+TOUCH Steel Drum          9.675 dB
+TOUCH Chimes              8.958 dB
+TOUCH Dark Bell           8.825 dB
+TOUCH Bell Choir          8.849 dB
+TOUCH Metallic Keys       8.493 dB
+TOUCH Agogo               9.007 dB
+TOUCH Clock Bells         8.633 dB
+TOUCH Ring Mallet         9.290 dB
+TOUCH Ambient Bells       9.501 dB
+MATERIAL Xylophone    note 48 third -8.934 dB; control difference 94.928 dB
+MATERIAL Steel Drum   note 48 third -11.819 dB; control difference 75.180 dB
+MATERIAL Xylophone    note 60 third -11.261 dB; control difference 116.446 dB
+MATERIAL Steel Drum   note 60 third -12.218 dB; control difference 93.736 dB
+MATERIAL Xylophone    note 72 third -14.062 dB; control difference 122.876 dB
+MATERIAL Steel Drum   note 72 third -14.640 dB; control difference 113.399 dB
+VIBRAPHONE DAMPING -72.435 dB relative to held note
+WOOD AFTERSOUND marimba -17.196 dB; xylophone -30.903 dB
+MalletPresetRefinement: 136 checks, 0 failures
+<end of output>
+Test time =   9.84 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mallet_preset_refinement_tests" end time: Nov 23 23:05 MST
+"cs80_mallet_preset_refinement_tests" time elapsed: 00:00:09
+----------------------------------------------------------
+
+160/215 Testing: cs80_bass_plucked_refinement_tests
+160/215 Test: cs80_bass_plucked_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_bass_plucked_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_bass_plucked_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+TOUCH Analog Bass        8.408 dB
+TOUCH Resonance Bass     8.736 dB
+TOUCH Sine Bass          9.253 dB
+TOUCH Sub Bass           9.381 dB
+TOUCH Pluck Bass         9.270 dB
+TOUCH Fretless Glide     8.975 dB
+TOUCH Funk Bass          9.144 dB
+TOUCH Brass Bass         7.954 dB
+TOUCH Octave Bass        8.446 dB
+TOUCH Pulse Bass         8.360 dB
+TOUCH Round Bass         8.024 dB
+TOUCH Velocity Bass      9.635 dB
+TOUCH Rubber Bass        8.289 dB
+TOUCH Dark Bass          7.498 dB
+TOUCH Bright Bass        8.662 dB
+TOUCH Picked Bass        9.294 dB
+TOUCH Upright Pluck      9.178 dB
+TOUCH Fifth Bass         8.304 dB
+TOUCH Squelch Bass       8.920 dB
+TOUCH Ring Bass          8.392 dB
+TOUCH Sub Wobble Bass    8.123 dB
+TOUCH Pressure Bass      7.539 dB
+TOUCH Contour Bass       8.908 dB
+TOUCH Guitar I           8.916 dB
+TOUCH Guitar II          9.206 dB
+TOUCH Funky Pluck I      8.991 dB
+TOUCH Funky Pluck II     8.656 dB
+TOUCH Harp               8.927 dB
+TOUCH Koto               9.228 dB
+TOUCH Banjo              9.066 dB
+TOUCH Mandolin           9.065 dB
+TOUCH Drone Pluck        8.407 dB
+TOUCH Nylon Pluck        8.846 dB
+TOUCH Steel Pluck        9.091 dB
+TOUCH Muted Pluck        9.476 dB
+TOUCH Kalimba            10.026 dB
+TOUCH Zither             8.836 dB
+TOUCH Dulcimer Pluck     9.203 dB
+TOUCH Pressure Pluck     8.750 dB
+BODY  Guitar I           -30.045 dB aftersound
+BODY  Guitar II          -22.502 dB aftersound
+BODY  Nylon Pluck        -29.625 dB aftersound
+BODY  Steel Pluck        -21.304 dB aftersound
+BODY  Dulcimer Pluck     -24.514 dB aftersound
+PEDAL key damping -55.523 dB
+BassPluckedRefinementTests: 149 checks, 0 failures
+<end of output>
+Test time =  14.30 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_bass_plucked_refinement_tests" end time: Nov 23 23:05 MST
+"cs80_bass_plucked_refinement_tests" time elapsed: 00:00:14
+----------------------------------------------------------
+
+156/215 Testing: cs80_body_articulation_engine_tests
+156/215 Test: cs80_body_articulation_engine_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_body_articulation_engine_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_body_articulation_engine_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+REGISTER Piano strings bass/treble envelope decay=1.97239 release=1.69511
+REGISTER Tine electric piano bass/treble envelope decay=1.56868 release=1.44565
+REGISTER Reed electric piano bass/treble envelope decay=1.71837 release=1.52425
+REGISTER Nylon strings bass/treble envelope decay=1.56868 release=1.52425
+REGISTER Marimba bass/treble envelope decay=1.97239 release=1.52425
+ATTACK Bowed strings envelope firm/soft=1.31107 audio early/held soft=0.29258 firm=0.39964
+ATTACK Flute envelope firm/soft=1.26592 audio early/held soft=0.33584 firm=0.43495
+ATTACK Clarinet envelope firm/soft=1.21852 audio early/held soft=0.33847 firm=0.42104
+ATTACK Oboe envelope firm/soft=1.21852 audio early/held soft=0.33287 firm=0.41836
+ATTACK Bassoon envelope firm/soft=1.24377 audio early/held soft=0.31699 firm=0.40844
+ATTACK Brass envelope firm/soft=1.29157 audio early/held soft=0.32893 firm=0.43605
+FOOTAGE Piano strings rate=44100 release relative error=0.000148804453 envelope 0.056103345 / 0.056103345 pitch 130.810867 / 130.811829
+FOOTAGE Tine electric piano rate=44100 release relative error=6.23362212e-05 envelope 0.0515396632 / 0.0515396632 pitch 130.810867 / 130.811829
+FOOTAGE Marimba rate=44100 release relative error=6.02557259e-05 envelope 0.0540893525 / 0.0540893525 pitch 130.810867 / 130.811829
+FOOTAGE Bowed strings rate=44100 release relative error=0.000145768701 envelope 0.04234837 / 0.04234837 pitch 130.810867 / 130.811829
+FOOTAGE Piano strings rate=48000 release relative error=0.000148834918 envelope 0.056103345 / 0.056103345 pitch 130.810867 / 130.811829
+FOOTAGE Tine electric piano rate=48000 release relative error=6.23573363e-05 envelope 0.0515396632 / 0.0515396632 pitch 130.810867 / 130.811829
+FOOTAGE Marimba rate=48000 release relative error=6.02773087e-05 envelope 0.0540893525 / 0.0540893525 pitch 130.810867 / 130.811829
+FOOTAGE Bowed strings rate=48000 release relative error=0.000145786917 envelope 0.0423481837 / 0.0423481837 pitch 130.810867 / 130.811829
+FOOTAGE Piano strings rate=96000 release relative error=0.000149154793 envelope 0.056103345 / 0.056103345 pitch 130.810867 / 130.811829
+FOOTAGE Tine electric piano rate=96000 release relative error=6.30518522e-05 envelope 0.0515396632 / 0.0515396632 pitch 130.810867 / 130.811829
+FOOTAGE Marimba rate=96000 release relative error=6.05945125e-05 envelope 0.0540893525 / 0.0540893525 pitch 130.810867 / 130.811829
+FOOTAGE Bowed strings rate=96000 release relative error=0.00014618784 envelope 0.04234666 / 0.04234666 pitch 130.810867 / 130.811829
+Body articulation integration: 284 checks, 0 failures
+<end of output>
+Test time =   3.95 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_body_articulation_engine_tests" end time: Nov 23 23:05 MST
+"cs80_body_articulation_engine_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+171/215 Testing: cs80_preset_precision_tests
+171/215 Test: cs80_preset_precision_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_precision_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_preset_precision_tests" start time: Nov 23 23:04 MST
+Output:
+----------------------------------------------------------
+VIBRAPHONE note=48 velocity=0.30 H4/H1=-20.578 H2/H1=-114.873 oldH4/H1=-60.477 dB
+VIBRAPHONE note=48 velocity=0.85 H4/H1=-18.726 H2/H1=-114.871 oldH4/H1=-60.539 dB
+VIBRAPHONE note=60 velocity=0.30 H4/H1=-20.777 H2/H1=-132.516 oldH4/H1=-66.363 dB
+VIBRAPHONE note=60 velocity=0.85 H4/H1=-19.035 H2/H1=-132.470 oldH4/H1=-66.431 dB
+VIBRAPHONE note=72 velocity=0.30 H4/H1=-21.743 H2/H1=-140.704 oldH4/H1=-68.130 dB
+VIBRAPHONE note=72 velocity=0.85 H4/H1=-20.327 H2/H1=-140.987 oldH4/H1=-68.196 dB
+TREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.3905 wetOnly=0.0069 dB peak-to-peak
+TREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3917 wetOnly=0.0014 dB peak-to-peak
+TREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.3909 wetOnly=0.0006 dB peak-to-peak
+TREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.6539 wetOnly=0.0036 dB peak-to-peak
+TREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.6496 wetOnly=0.0009 dB peak-to-peak
+TREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.6517 wetOnly=0.0018 dB peak-to-peak
+TREMOLO Tremolo Pad    note=48 frequency=3.8 pulse=2.9582 wetOnly=0.0993 dB peak-to-peak
+TREMOLO Tremolo Pad    note=60 frequency=3.8 pulse=2.9525 wetOnly=0.1432 dB peak-to-peak
+TREMOLO Tremolo Pad    note=72 frequency=3.8 pulse=3.0252 wetOnly=0.1914 dB peak-to-peak
+TREMOLO Tremolo Poly   note=48 frequency=5.4 pulse=2.3710 wetOnly=0.0591 dB peak-to-peak
+TREMOLO Tremolo Poly   note=60 frequency=5.4 pulse=2.3784 wetOnly=0.0666 dB peak-to-peak
+TREMOLO Tremolo Poly   note=72 frequency=5.4 pulse=2.4008 wetOnly=0.0942 dB peak-to-peak
+BASS note=36 Rubber late/onset=-226.75 old=-21.18; Picked body/onset=-8.46 old=-15.75 dB
+BASS note=48 Rubber late/onset=-223.16 old=-20.70; Picked body/onset=-8.68 old=-16.44 dB
+BASS note=60 Rubber late/onset=-260.63 old=-20.92; Picked body/onset=-9.51 old=-17.79 dB
+NYLON note=48 velocity=0.30 overtones/body=-8.583 old=-15.453 dB
+NYLON note=48 velocity=0.85 overtones/body=-8.085 old=-15.373 dB
+NYLON note=60 velocity=0.30 overtones/body=-9.862 old=-15.178 dB
+NYLON note=60 velocity=0.85 overtones/body=-9.367 old=-15.099 dB
+NYLON note=72 velocity=0.30 overtones/body=-11.001 old=-15.892 dB
+NYLON note=72 velocity=0.85 overtones/body=-10.502 old=-15.779 dB
+Preset precision: 285 checks, 0 failures; 230.4 seconds of actual circuit audio
+<end of output>
+Test time =  35.57 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_precision_tests" end time: Nov 23 23:05 MST
+"cs80_preset_precision_tests" time elapsed: 00:00:35
+----------------------------------------------------------
+
+151/215 Testing: cs80_struck_body_dynamics_tests
+151/215 Test: cs80_struck_body_dynamics_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_struck_body_dynamics_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_struck_body_dynamics_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+STRIKE Piano strings        minimum_fundamental_step=+0.00042 dB minimum_rms_step=+0.00987 dB peak=0.540040
+STRIKE Tine electric piano  minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00026 dB peak=0.451995
+STRIKE Reed electric piano  minimum_fundamental_step=+0.36983 dB minimum_rms_step=+0.39392 dB peak=0.393722
+STRIKE Clavichord           minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.01154 dB peak=0.353238
+STRIKE Nylon strings        minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00381 dB peak=0.509575
+STRIKE Steel strings        minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.01496 dB peak=0.460349
+STRIKE Plucked bass         minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00568 dB peak=0.482693
+STRIKE Bell                 minimum_fundamental_step=-0.00001 dB minimum_rms_step=+0.00817 dB peak=0.707784
+STRIKE Vibraphone           minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00017 dB peak=0.683940
+STRIKE Marimba              minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00051 dB peak=0.644622
+STRIKE Celesta              minimum_fundamental_step=-0.00000 dB minimum_rms_step=+0.00288 dB peak=0.697838
+Struck-body dynamics: 3439 checks, 0 failures
+<end of output>
+Test time =   2.88 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_struck_body_dynamics_tests" end time: Nov 23 23:05 MST
+"cs80_struck_body_dynamics_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+170/215 Testing: cs80_preset_character_tests
+170/215 Test: cs80_preset_character_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_preset_character_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_preset_character_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.7 dB relative
+BREATH      Flute  -25.7 dB, Breathy Flute  -18.3 dB air/body
+RECONSTRUCT Harp                 0.000-1.200 s error  -143.8 dB relative
+RECONSTRUCT Harp                 0.004-0.020 s error  -143.9 dB relative
+RECONSTRUCT Harp                 0.800-1.100 s error  -143.7 dB relative
+STRIKE      Harp                 onset/body  -12.5 dB, late/body   -61.8 dB
+RECONSTRUCT Kalimba              0.000-1.200 s error  -143.5 dB relative
+RECONSTRUCT Kalimba              0.004-0.020 s error  -143.6 dB relative
+RECONSTRUCT Kalimba              0.800-1.100 s error  -143.5 dB relative
+STRIKE      Kalimba              onset/body  -14.9 dB, late/body  -120.8 dB
+RECONSTRUCT Sine Bass            0.000-1.200 s error  -143.3 dB relative
+RECONSTRUCT Sine Bass            0.004-0.020 s error  -143.5 dB relative
+RECONSTRUCT Sine Bass            0.800-1.100 s error  -143.3 dB relative
+STRIKE      Sine Bass            onset/body  -21.2 dB, late/body  -137.1 dB
+RECONSTRUCT Upright Pluck        0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Upright Pluck        0.004-0.020 s error  -143.3 dB relative
+RECONSTRUCT Upright Pluck        0.800-1.100 s error  -143.3 dB relative
+STRIKE      Upright Pluck        onset/body  -21.5 dB, late/body  -117.7 dB
+STEREO      Noir Swell Brass     side/mid  -20.4 dB, correlation 0.98206, balance +0.16 dB, mono 0.040 / pitch 0.534 dB
+STEREO      Brass Ensemble 16    side/mid  -22.1 dB, correlation 0.98831, balance -0.29 dB, mono 0.027 / pitch 0.108 dB
+STEREO      Neo-Noir Pad         side/mid  -20.0 dB, correlation 0.98113, balance +0.35 dB, mono 0.043 / pitch 0.042 dB
+STEREO      Arctic Pad           side/mid  -24.0 dB, correlation 0.99325, balance +0.42 dB, mono 0.017 / pitch 0.005 dB
+STEREO      Synthwave Chords     side/mid  -19.9 dB, correlation 0.98579, balance +0.97 dB, mono 0.045 / pitch 0.066 dB
+Preset character regressions: 128/128 checks passed; 31.4 seconds generated.
+<end of output>
+Test time =   4.87 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_character_tests" end time: Nov 23 23:05 MST
+"cs80_preset_character_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+157/215 Testing: cs80_original_articulation_tests
+157/215 Test: cs80_original_articulation_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_original_articulation_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_original_articulation_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+Frozen Leads 121: relative onset 0.405875, source 0.709542; release 0.048135, source 0.009178
+Soft Leads 128: relative onset 0.535202, source 0.808595; release 0.054960, source 0.030137
+Amber Sequences 157: accent late/early 0.103352, fixed-time control 0.014260; gate 0.1450 s
+Distant Sequences 159: accent late/early 0.029694, fixed-time control 0.007144; gate 0.2320 s
+Neon Sequences 160: accent late/early 0.053562, fixed-time control 0.108547; gate 0.0563 s
+Distant Sequences 173: accent late/early 0.027442, fixed-time control 0.009309; gate 0.2109 s
+Neon Sequences 174: accent late/early 0.110923, fixed-time control 0.144753; gate 0.0644 s
+Original articulation: 63 checks, 0 failures
+<end of output>
+Test time =   1.90 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_original_articulation_tests" end time: Nov 23 23:05 MST
+"cs80_original_articulation_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+152/215 Testing: cs80_instrument_body_variant_tests
+152/215 Test: cs80_instrument_body_variant_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_instrument_body_variant_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_instrument_body_variant_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+MATERIAL rate=44100 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=44100 note=60 xylo_third_over_fourth=+116.25 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=44100 note=72 xylo_third_over_fourth=+136.33 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=48000 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=48000 note=60 xylo_third_over_fourth=+116.24 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=48000 note=72 xylo_third_over_fourth=+136.34 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=96000 note=48 xylo_third_over_fourth=+99.28 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=96000 note=60 xylo_third_over_fourth=+116.23 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=96000 note=72 xylo_third_over_fourth=+136.48 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+Instrument body variants: 1132 checks, 0 failures
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_instrument_body_variant_tests" end time: Nov 23 23:05 MST
+"cs80_instrument_body_variant_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+153/215 Testing: cs80_vocal_body_tests
+153/215 Test: cs80_vocal_body_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_vocal_body_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_vocal_body_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+VOWEL rate=44100 ah_770_over_440=+8.879 dB oo_330_over_110=+6.732 dB
+VOWEL rate=48000 ah_770_over_440=+8.880 dB oo_330_over_110=+6.732 dB
+VOWEL rate=96000 ah_770_over_440=+8.880 dB oo_330_over_110=+6.732 dB
+VOWEL tracking worst normalized harmonic error 0.040741 dB
+VOWEL Choir ah onset ratio firm/soft 1.7072; velocity tilt +2.165 dB; pressure tilt +2.460 dB
+VOWEL Choir oo onset ratio firm/soft 1.6301; velocity tilt +2.160 dB; pressure tilt +2.458 dB
+VocalBodyTests: 895 checks, 0 failures
+<end of output>
+Test time =   4.33 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vocal_body_tests" end time: Nov 23 23:05 MST
+"cs80_vocal_body_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+164/215 Testing: cs80_fx_refinement_tests
+164/215 Test: cs80_fx_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_fx_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_fx_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+WIND gust deviation 0.648 dB; old-period difference 0.613 dB
+SURF rise 32.041 dB, crest 1.50 s, drain -55.765 dB; foam/low falls -46.232 / -19.066 dB
+THUNDER high-band crack/roll 0.33414 / 0.06167; tail -36.982 dB; roll variation 0.566 dB
+RAIN smooth/stepped maximum two-ms gain changes 0.0407 / 0.5523 dB
+CLOCKWORK within-tick decay -17.562 dB; between-tick attenuation -60.143 dB
+BREATH pressure range 9.926 dB
+ROBOT voiced-material residual -1.078 dB relative to pulse control
+FxRefinementTests: 30 checks, 0 failures
+<end of output>
+Test time =  10.46 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_fx_refinement_tests" end time: Nov 23 23:05 MST
+"cs80_fx_refinement_tests" time elapsed: 00:00:10
+----------------------------------------------------------
+
+165/215 Testing: cs80_modern_preset_refinement_tests
+165/215 Test: cs80_modern_preset_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_modern_preset_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_modern_preset_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+TOUCH Delay Brass          note 60 7.464 dB
+TOUCH Plate Pad            note 60 7.779 dB
+TOUCH Phaser Strings       note 60 8.936 dB
+TOUCH Drive Lead           note 60 8.445 dB
+TOUCH Arp Poly             note 60 7.739 dB
+TOUCH Arp Bells            note 60 8.372 dB
+TOUCH Arp Bass             note 60 8.162 dB
+TOUCH LFO Sweep Pad        note 60 7.912 dB
+TOUCH LFO Pan Keys         note 60 9.338 dB
+TOUCH PWM LFO Strings      note 60 8.637 dB
+TOUCH Stereo Delay Pluck   note 60 9.222 dB
+TOUCH Ambient Bells        note 60 9.496 dB
+TOUCH Ensemble Plus        note 60 8.159 dB
+TOUCH Space Lead           note 60 8.427 dB
+TOUCH Random Arp           note 60 7.709 dB
+TOUCH Drive Bass           note 48 7.908 dB
+TOUCH Phased Polysynth     note 60 8.232 dB
+TOUCH Tremolo LFO Organ    note 60 0.000 dB
+TOUCH Phaser Strings       note 48 9.113 dB
+TOUCH Phaser Strings       note 72 8.076 dB
+TOUCH PWM LFO Strings      note 48 8.651 dB
+TOUCH PWM LFO Strings      note 72 7.968 dB
+TOUCH Ensemble Plus        note 48 8.692 dB
+TOUCH Ensemble Plus        note 72 7.637 dB
+TOUCH LFO Pan Keys         note 48 9.420 dB
+TOUCH LFO Pan Keys         note 72 8.103 dB
+TOUCH Stereo Delay Pluck   note 48 9.290 dB
+TOUCH Stereo Delay Pluck   note 72 8.133 dB
+BODY LFO Pan Keys         aftersound -28.887 dB; improvement over choked control 9.846 dB
+BODY Stereo Delay Pluck   aftersound -33.386 dB; improvement over choked control 22.208 dB
+BODY Ambient Bells        aftersound -24.048 dB; improvement over choked control 7.554 dB
+ECHO Delay Brass          wet versus dry 51.027 dB
+ECHO Space Lead           wet versus dry 73.796 dB
+ECHO Stereo Delay Pluck   wet versus dry 48.828 dB
+MOTION LFO Sweep Pad        spectral ratio span 1.402; log standard deviation 0.087
+MOTION PWM LFO Strings      spectral ratio span 13.702; log standard deviation 0.670
+MOTION Phaser Strings       spectral ratio span 1.212; log standard deviation 0.061
+MOTION Phased Polysynth     spectral ratio span 1.413; log standard deviation 0.095
+ORGAN key damping -57.956 dB
+ModernPresetRefinementTests: 123 checks, 0 failures
+<end of output>
+Test time =  35.47 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_preset_refinement_tests" end time: Nov 23 23:06 MST
+"cs80_modern_preset_refinement_tests" time elapsed: 00:00:35
+----------------------------------------------------------
+
+167/215 Testing: cs80_preset_response_coverage_tests
+167/215 Test: cs80_preset_response_coverage_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/c98fb40a9529/yamaha-cs80/scripts/compare-preset-response.py" "--self-test"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_preset_response_coverage_tests" start time: Nov 23 23:06 MST
+Output:
+----------------------------------------------------------
+Inventory comparison self-test: two valid fixtures and 16 rejected mutations passed
+<end of output>
+Test time =   0.82 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_response_coverage_tests" end time: Nov 23 23:06 MST
+"cs80_preset_response_coverage_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+166/215 Testing: cs80_lead_refinement_tests
+166/215 Test: cs80_lead_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_lead_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_lead_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+RESPONSE,Touch Lead,67,11.532434,-38.036677,-26.504242,-78.273508
+RESPONSE,Aftertouch Vibrato Lead,67,5.526832,-36.333732,-30.806901,-73.995469
+RESPONSE,Ribbon Glide Lead,67,10.344778,-37.201654,-26.856876,-74.663974
+RESPONSE,Noir Lead,67,10.301616,-40.255781,-29.954165,-47.687604
+RESPONSE,Neo-Noir Brass Lead,67,10.881628,-45.408492,-34.526864,-45.705090
+RESPONSE,Glide Lead,67,10.599406,-36.555952,-25.956546,-75.628979
+RESPONSE,Sine Lead,67,10.611317,-36.386872,-25.775556,-84.341451
+RESPONSE,Whistle Lead,67,11.044574,-37.193104,-26.148530,-82.875798
+RESPONSE,Square Lead,67,11.200534,-36.173087,-24.972552,-92.371557
+RESPONSE,Narrow Pulse Lead,67,11.422313,-35.964548,-24.542236,-91.541505
+RESPONSE,Resonant Lead,67,11.499284,-38.537133,-27.037849,-78.225958
+RESPONSE,Screaming Lead,67,11.829271,-40.784090,-28.954818,-75.717690
+RESPONSE,Fifth Lead,67,10.669869,-37.876966,-27.207097,-75.880395
+RESPONSE,Octave Lead,67,10.767384,-37.195279,-26.427896,-77.689656
+RESPONSE,Soft Lead,67,10.029951,-36.773304,-26.743353,-72.942941
+RESPONSE,Init Bend Lead,67,11.589343,-38.521429,-26.932086,-81.830928
+RESPONSE,Pressure Lead,67,11.055824,-37.007900,-25.952076,-76.084998
+RESPONSE,Velocity Lead,67,12.444248,-39.433907,-26.989659,-80.375964
+RESPONSE,Detuned Lead,67,10.488968,-38.993050,-28.504081,-74.476582
+RESPONSE,Sub Vibrato Lead,67,10.325492,-36.089978,-25.764486,-74.563408
+RESPONSE,Trill Lead,67,11.346005,-35.857914,-24.511908,-95.329756
+RESPONSE,Glissando Lead,67,10.547453,-36.468883,-25.921430,-75.719898
+RESPONSE,Brass Lead,67,11.164777,-42.489200,-31.324423,-78.913553
+RESPONSE,Reed Lead,67,10.059898,-40.404984,-30.345087,-86.095566
+RESPONSE,Wah Lead,67,10.779911,-38.669334,-27.889422,-75.424990
+RESPONSE,Ring Lead,67,10.773650,-38.019481,-27.245831,-51.963054
+RESPONSE,Hollow Lead,67,10.423958,-35.681319,-25.257361,-83.379178
+RESPONSE,Ether Lead,67,10.298398,-39.448414,-29.150016,-64.790118
+RESPONSE,Solo Synth,67,11.678068,-37.810714,-26.132646,-83.695535
+RESPONSE,Contour Lead,67,11.940651,-39.813103,-27.872452,-77.125497
+RESPONSE,Sine Lead,48,11.954677,-38.238523,-26.283847,-83.409445
+RESPONSE,Whistle Lead,48,12.234397,-38.814514,-26.580117,-85.639209
+RESPONSE,Brass Lead,48,11.892349,-43.925091,-32.032742,-78.441801
+RESPONSE,Reed Lead,48,10.456401,-40.471843,-30.015442,-86.506500
+RESPONSE,Contour Lead,48,11.046613,-38.184948,-27.138335,-76.668778
+RESPONSE,Sine Lead,79,9.243177,-34.368554,-25.125376,-82.572984
+RESPONSE,Whistle Lead,79,9.785981,-35.361289,-25.575307,-77.254032
+RESPONSE,Brass Lead,79,11.063459,-43.403148,-32.339689,-77.778620
+RESPONSE,Reed Lead,79,9.517207,-39.968954,-30.451747,-85.756390
+RESPONSE,Contour Lead,79,13.008585,-40.177388,-27.168803,-80.084058
+PRESSURE,Pressure Lead,214.047924
+VIBRATO,Aftertouch Vibrato Lead,0.190229,46.671734
+PRESSURE,Aftertouch Vibrato Lead,9.732975
+PRESSURE,Ether Lead,9.437136
+SINE,Sine Lead,0.436374,-30.953055
+SINE,Whistle Lead,0.353055,-41.227995
+SINE,Ether Lead,0.133668,-9.963548
+INTERVAL,Fifth Lead,392.585353
+INTERVAL,Octave Lead,523.524218
+GESTURES,trill_cents,200.109613,glide_early_hz,321.395634,glide_late_hz,390.213846,gliss_settled_steps,19,ribbon_ratio,1.350127
+Lead refinement: 234 checks, 0 failures
+<end of output>
+Test time =  31.20 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_lead_refinement_tests" end time: Nov 23 23:06 MST
+"cs80_lead_refinement_tests" time elapsed: 00:00:31
+----------------------------------------------------------
+
+163/215 Testing: cs80_pad_poly_refinement_tests
+163/215 Test: cs80_pad_poly_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_pad_poly_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_pad_poly_refinement_tests" start time: Nov 23 23:05 MST
+Output:
+----------------------------------------------------------
+RESPONSE,Slow Pad,60,7.992545,-33.246541,-25.253995
+RESPONSE,Ring Drift Pad,60,8.135687,-34.489413,-26.353726
+RESPONSE,Choir Pad,60,8.754120,-44.391642,-35.637522
+RESPONSE,Dark Choir,60,7.660509,-40.994954,-33.334445
+RESPONSE,Sweep Pad,60,8.830096,-34.898894,-26.068798
+RESPONSE,Breathing Pad,60,8.051405,-34.097098,-26.045693
+RESPONSE,Glass Pad,60,8.388593,-34.577103,-26.188510
+RESPONSE,Warm Pad,60,7.889131,-34.343182,-26.454051
+RESPONSE,Wide Pad,60,8.474268,-35.959473,-27.485206
+RESPONSE,Octave Pad,60,7.893823,-35.142069,-27.248246
+RESPONSE,Fifth Pad,60,8.252511,-33.778930,-25.526419
+RESPONSE,Evolving Pad,60,8.586655,-34.833922,-26.247266
+RESPONSE,Noise Pad,60,8.227075,-34.571265,-26.344190
+RESPONSE,Pressure Pad,60,3.173160,-46.665712,-43.492552
+RESPONSE,Sine Pad,60,8.441158,-35.907394,-27.466236
+RESPONSE,Hollow Pad,60,8.322054,-34.248488,-25.926434
+RESPONSE,Resonant Pad,60,8.537819,-34.675393,-26.137575
+RESPONSE,Pulse Pad,60,8.618294,-33.902130,-25.283836
+RESPONSE,Tremolo Pad,60,8.432956,-33.846944,-25.413988
+RESPONSE,Neo-Noir Pad,60,8.015978,-34.697607,-26.681629
+RESPONSE,Rain Pad,60,8.048514,-33.363248,-25.314734
+RESPONSE,Cathedral Pad,60,7.792020,-34.225099,-26.433079
+RESPONSE,Shimmer Pad,60,8.308459,-34.637369,-26.328910
+RESPONSE,Low Drone,60,7.499066,-32.694682,-25.195616
+RESPONSE,Ether Pad,60,8.116230,-34.049814,-25.933583
+RESPONSE,Velvet Pad,60,7.881618,-34.213182,-26.331564
+RESPONSE,Analog Haze,60,8.282320,-36.959237,-28.676918
+RESPONSE,Bowed Glass,60,8.858256,-36.419096,-27.560840
+RESPONSE,Night Pad,60,8.143056,-35.511738,-27.368682
+RESPONSE,Arctic Pad,60,8.499043,-38.552997,-30.053954
+DECAY,Poly Stab,-74.683742
+RESPONSE,Poly Stab,60,10.755183,-42.534708,-31.779525
+DECAY,Poly Brass Stab,-72.406101
+RESPONSE,Poly Brass Stab,60,10.640086,-40.507485,-29.867399
+RESPONSE,PWM Poly,60,10.523474,-36.688424,-26.164950
+RESPONSE,Resonant Poly,60,10.476948,-39.230158,-28.753210
+RESPONSE,Detuned Poly,60,9.838716,-39.393951,-29.555235
+RESPONSE,Poly Sweep,60,10.092647,-36.975499,-26.882852
+RESPONSE,Velocity Poly,60,11.840099,-41.024176,-29.184077
+DECAY,Poly Pluck,-34.967872
+RESPONSE,Poly Pluck,60,11.073734,-38.134584,-27.060851
+RESPONSE,Octave Poly,60,10.499752,-35.952689,-25.452937
+RESPONSE,Fifth Poly,60,9.981943,-35.309328,-25.327384
+RESPONSE,Bright Poly,60,10.355762,-36.352849,-25.997088
+RESPONSE,Dark Poly,60,9.930624,-34.581620,-24.650996
+RESPONSE,Hollow Poly,60,10.179679,-36.824824,-26.645144
+RESPONSE,Wide Poly,60,9.933242,-36.978413,-27.045171
+RESPONSE,Poly Swell,60,4.355360,-44.473423,-40.118062
+RESPONSE,Saw Pulse Poly,60,10.377080,-36.570494,-26.193414
+RESPONSE,Synthwave Chords,60,9.396116,-36.310779,-26.914663
+RESPONSE,Square Poly,60,10.351987,-37.000192,-26.648204
+RESPONSE,Sine Poly,60,11.109726,-37.970527,-26.860801
+RESPONSE,Contour Poly,60,10.142849,-36.728444,-26.585595
+RESPONSE,Ring Poly,60,10.152264,-39.630369,-29.478105
+RESPONSE,Glide Poly,60,9.951221,-37.130891,-27.179670
+RESPONSE,Tremolo Poly,60,9.914213,-34.004825,-24.090612
+RESPONSE,Poly Sub Pulse,60,10.203960,-36.854609,-26.650648
+RESPONSE,Choir Pad,48,8.792658,-48.065733,-39.273075
+RESPONSE,Dark Choir,48,7.883477,-45.483777,-37.600300
+RESPONSE,Sine Pad,48,8.440593,-35.912397,-27.471804
+RESPONSE,Low Drone,48,7.490875,-32.983728,-25.492853
+RESPONSE,Arctic Pad,48,8.566285,-39.715297,-31.149012
+RESPONSE,Velocity Poly,48,12.368218,-41.879613,-29.511395
+RESPONSE,Square Poly,48,10.295672,-36.113679,-25.818006
+RESPONSE,Sine Poly,48,11.109257,-37.971434,-26.862177
+RESPONSE,Octave Poly,48,10.538641,-37.893147,-27.354506
+RESPONSE,Choir Pad,72,8.024664,-38.127807,-30.103143
+RESPONSE,Dark Choir,72,7.288188,-32.953963,-25.665775
+RESPONSE,Sine Pad,72,7.348157,-34.069219,-26.721062
+RESPONSE,Low Drone,72,7.050647,-32.220556,-25.169909
+RESPONSE,Arctic Pad,72,7.901700,-37.148382,-29.246681
+RESPONSE,Velocity Poly,72,11.268425,-40.286551,-29.018126
+RESPONSE,Square Poly,72,9.589868,-35.398621,-25.808753
+RESPONSE,Sine Poly,72,9.417259,-35.523412,-26.106154
+RESPONSE,Octave Poly,72,9.920907,-36.422993,-26.502086
+PRESSURE,Pressure Pad,19.873594
+PRESSURE,Poly Swell,17.363730
+RELEASE,PWM Poly,-30.229618
+RELEASE,Bright Poly,-41.801659
+RELEASE,Square Poly,-29.560548
+RELEASE,Saw Pulse Poly,-29.985877
+RELEASE,Contour Poly,-28.008691
+Pad/poly refinement: 311 checks, 0 failures
+<end of output>
+Test time =  65.37 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pad_poly_refinement_tests" end time: Nov 23 23:06 MST
+"cs80_pad_poly_refinement_tests" time elapsed: 00:01:05
+----------------------------------------------------------
+
+End testing: Nov 23 23:06 MST

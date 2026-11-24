@@ -593,10 +593,16 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
             host.setParamValue(cs80::chParam(0, cs80::CP_lpfRes), 0.09f);
             host.setParamValue(cs80::chParam(0, cs80::CP_fD), 1.48399985f);
             host.setParamValue(cs80::chParam(0, cs80::CP_vD), 0.953999937f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_vLevel), 0.55f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_initLevel), 0.34f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_afterLevel), 0.22f);
             host.setParamValue(cs80::chParam(1, cs80::CP_lpfCutoff), 5720.0f);
             host.setParamValue(cs80::chParam(1, cs80::CP_lpfRes), 0.06f);
             host.setParamValue(cs80::chParam(1, cs80::CP_fD), 1.90799987f);
             host.setParamValue(cs80::chParam(1, cs80::CP_vD), 1.27199996f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_vLevel), 0.50f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_initLevel), 0.28f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_afterLevel), 0.18f);
             host.setParamValue(cs80::P_kbdBrillianceLow, 0.0f);
             host.setParamValue(cs80::P_kbdBrillianceHigh, 0.0f);
             host.setParamValue(cs80::P_kbdLevelLow, 0.0f);

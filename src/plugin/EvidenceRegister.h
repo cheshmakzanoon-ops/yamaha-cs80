@@ -500,6 +500,12 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "body2_size", 0, "-", "EXT", Basis::modernExtension,
       "Sets rank II's resonant geometry for the next note. A larger body lowers its formants without transposing the key.",
       "An authored software resonance scale, not a measured dimension. Neutral size is 1x; saved older sounds use that default." },
+    { "body1_variant", 0, "-", "EXT", Basis::modernExtension,
+      "Selects rank I's next-note resonator: Xylophone with Marimba, Steelpan with Vibraphone, or Choir ah/oo with Organ. Standard keeps the original body.",
+      "Authored modal variants, not sampled instruments. Other model/variant pairs use Standard; older saved sounds default to Standard." },
+    { "body2_variant", 0, "-", "EXT", Basis::modernExtension,
+      "Selects rank II's next-note resonator: Xylophone with Marimba, Steelpan with Vibraphone, or Choir ah/oo with Organ. Standard keeps the original body.",
+      "Authored modal variants, not sampled instruments. Other model/variant pairs use Standard; older saved sounds default to Standard." },
 };
 
 inline constexpr int kControlHelpSize = (int) (sizeof(kControlHelp) / sizeof(kControlHelp[0]));

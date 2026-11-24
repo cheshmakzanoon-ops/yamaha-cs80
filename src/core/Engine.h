@@ -33,6 +33,7 @@
 #include "ToleranceModel.h"
 #include "InstrumentBody.h"
 #include "InstrumentBodyFilter.h"
+#include "BodyArticulation.h"
 
 #include <array>
 #include <cstdint>
@@ -105,6 +106,7 @@ struct RankSettings
     float afterLevel = 0.0f;
     float pan = 0.0f;
     int bodyModel = 0;
+    int bodyVariant = 0;
     float bodyMix = 0.0f;
     float bodyBrightness = 0.5f;
     float bodyDecay = 1.0f;
@@ -477,6 +479,9 @@ private:
         ReconstructedOscillator wsc;
         body::InstrumentBody instrumentBody;
         body::InstrumentBodyFilter instrumentBodyFilter;
+        // Captured with the body's accepted note; live model selection must
+        // not retime a sounding note or its eventual pedal/key release.
+        body::Articulation bodyArticulation;
         // A reused audible VCA must not discard a ringing body in one sample.
         // Fixed storage retains the previous excitation for a short handoff;
         // it is dormant during normal held notes and when bodies are disabled.

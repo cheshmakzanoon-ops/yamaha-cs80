@@ -137,6 +137,13 @@ struct Program
         return each(r, [&](int c) { p[bodySizeParam(c)] = size; });
     }
 
+    // Saved modal material, appended separately from the published model
+    // selector so existing normalized model automation retains its meaning.
+    Program& bodyVariant(Rank r, body::Variant variant)
+    {
+        return each(r, [&](int c) { p[bodyVariantParam(c)] = static_cast<float>(variant); });
+    }
+
     // Global controls.
     Program& g(int index, float v) { p[index] = v; return *this; }
     Program& mix(float v) { return g(P_mix, v); }

@@ -28,6 +28,8 @@
 // complex rotation; no trigonometry, allocation or locks occur in its sample
 // loop.  Host-rate Nyquist, not the oversampled internal rate, bounds the modes.
 
+#include "InstrumentBodyVariants.h"
+
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -46,6 +48,8 @@ enum Model : int
 
 inline constexpr int modelCount = celesta + 1;
 inline constexpr int maxModel = celesta;
+static_assert(organ == 15 && vibes == 17 && marimba == 18,
+              "saved material variants retain their published model identities");
 
 inline constexpr const char* name(int model) noexcept
 {
@@ -80,6 +84,7 @@ public:
         modes = {};
         count = 0;
         model = off;
+        variant = standard;
         controlCountdown = 0;
         normalizationCountdown = 2048;
         coefficientRefresh = 0;
@@ -101,10 +106,12 @@ public:
     // brightness is normalized [0,1]; decay scales relative partial losses.
     // Overall amplitude/decay/damping still comes from the external rank ADSR.
     void noteOn(int selectedModel, float midiNote, float velocity, float brightness,
-                float decay, std::uint32_t seed, float size = 1.0f) noexcept
+                float decay, std::uint32_t seed, float size = 1.0f,
+                int selectedVariant = standard) noexcept
     {
         reset();
         model = std::clamp(selectedModel, 0, maxModel);
+        variant = compatibleVariant(model, selectedVariant);
         if (model == off) return;
 
         const double note = finiteClamp(midiNote, 0.0, 127.0, 60.0);
@@ -116,7 +123,7 @@ public:
         // A quill and an organ key do not have a piano hammer's velocity law.
         // Fixed phases also prevent caller seed conventions from leaking
         // velocity into the deliberately touch-independent registrations.
-        if (model == organ || model == harpsichord)
+        if ((model == organ && !vocal()) || model == harpsichord)
         {
             strike = 0.7;
             seed = 0x43733830u;
@@ -137,7 +144,7 @@ public:
         pickupLoss = std::exp(-controlPeriod * pickupRate / (sampleRate * decayScale));
 
         sustained = model >= bowed && model <= organ;
-        expressive = model >= bowed && model <= brass;
+        expressive = (model >= bowed && model <= brass) || vocal();
         // Equivalent fingering register follows the bore length; a bass
         // clarinet reaches the corresponding timbre transition an octave
         // below the standard-size body. Smoothstep avoids a split-key seam.
@@ -146,7 +153,8 @@ public:
         clarinetRegister = registerPosition * registerPosition * (3.0 - 2.0 * registerPosition);
         bowedMiddleScale = std::pow(bodySize, 0.65);
         bowedBridgeScale = std::pow(bodySize, 0.40);
-        const double attack = model == bowed ? 0.0045
+        const double attack = vocal() ? 0.008 + 0.012 * (1.0 - strike)
+                            : model == bowed ? 0.0045
                             : model == brass ? 0.0023
                             : model == flute ? 0.0028 : 0.00055;
         onsetCoefficient = std::exp(-1.0 / (sampleRate * attack));
@@ -156,24 +164,23 @@ public:
 
         double maximumSum = 0.0;
         if (model == bell || model == vibes || model == marimba || model == celesta)
-            makeBarModes();
+            maximumSum = makeBarModes();
         else if (model == tine)
             maximumSum = makeTineModes();
         else
-            makeHarmonicModes(note);
+            maximumSum = makeHarmonicModes(note);
 
-        transientControls = model != organ;
+        transientControls = model != organ || vocal();
 
         // Bound the sum of absolute mode amplitudes at every colour setting.
         // This is an authored excitation level, not a hidden output limiter or
         // post-render normalization.  It does not grow as upper modes decay.
-        // Tine excitation supplies the full-strike bound: normalizing its
-        // quieter strikes separately would boost the fundamental as the
-        // upper partials recede, compressing the intended touch response.
-        if (model != tine)
-            for (int i = 0; i < count; ++i)
-                maximumSum += std::max(modes[static_cast<std::size_t>(i)].dark,
-                                       modes[static_cast<std::size_t>(i)].bright);
+        // Every touch-sensitive struck body supplies its full-strike bound.
+        // Normalizing a quieter strike by its smaller spectral sum would
+        // boost its fundamental and compress the intended touch response.
+        // Reference weights share the actual note, geometry and mode coverage;
+        // they never consume random draws or rebuild the oscillator bank.
+        // Sustained bodies and fixed-touch quills retain their authored sum.
         const double scale = 0.72 / std::max(maximumSum, 1.0e-12);
         for (int i = 0; i < count; ++i)
         {
@@ -181,7 +188,7 @@ public:
             m.dark *= scale;
             m.bright *= scale;
         }
-        if (model == bowed)
+        if (model == bowed || vocal())
         {
             bowedResponseBound = 0.0;
             bowedBoundGain = 1.0;
@@ -189,7 +196,7 @@ public:
             {
                 const auto index = static_cast<std::size_t>(i);
                 const auto& m = modes[index];
-                bowedResponseInverse[index] = 1.0 / bowedFormant(keyHz * m.ratio);
+                bowedResponseInverse[index] = 1.0 / fixedFormant(keyHz * m.ratio);
                 bowedResponseGain[index] = 1.0;
                 bowedResponseBound += std::max(m.dark, m.bright);
             }
@@ -281,8 +288,8 @@ private:
     };
 
     std::array<Mode, maximumModes> modes {};
-    // Bowed excitation has 24 harmonic modes. Keep its response history out
-    // of every Mode so struck models do not pay 48 slots of extra storage.
+    // Bowed and vocal excitation have 24 harmonic modes. Keep their shared
+    // response history outside Mode so struck models need no extra storage.
     std::array<double, harmonicModeCount> bowedResponseInverse {}, bowedResponseGain {};
     double bowedResponseBound = 0.0, bowedBoundGain = 1.0;
     double sampleRate = 96000.0, outputRate = 48000.0;
@@ -300,12 +307,14 @@ private:
     double airAmount = 0.0, hitAmount = 0.0;
     std::uint32_t state = 0x7a4f39b1u;
     std::uint32_t motionState = 0x613c47a9u;
-    int model = off, count = 0, controlCountdown = 0, normalizationCountdown = 2048;
+    int model = off, variant = standard, count = 0, controlCountdown = 0, normalizationCountdown = 2048;
     int motionCountdown = 0;
     unsigned int coefficientRefresh = 0;
     bool sustained = false;
     bool expressive = false;
     bool transientControls = false, gainRamping = false;
+
+    bool vocal() const noexcept { return variant == choirAh || variant == choirOo; }
 
     static double finiteClamp(double value, double low, double high, double fallback) noexcept
     {
@@ -351,6 +360,8 @@ private:
 
     double hitSeconds() const noexcept
     {
+        if (variant == xylophone) return 0.0016 - 0.0006 * strike;
+        if (variant == steelpan) return 0.0034 - 0.0008 * strike;
         switch (model)
         {
             case piano: return 0.004 - 0.0018 * strike;
@@ -367,6 +378,24 @@ private:
 
     void configureExcitation() noexcept
     {
+        if (vocal())
+        {
+            // Quiet turbulent air under a voiced source, with no hammer
+            // transient or pitch jitter. The existing band-shaped path keeps
+            // this breath below the harmonic vowel rather than adding hiss.
+            airAmount = 0.0012 + 0.0008 * (1.0 - strike);
+            return;
+        }
+        if (variant == xylophone)
+        {
+            hitAmount = 0.010 + 0.015 * strike;
+            return;
+        }
+        if (variant == steelpan)
+        {
+            hitAmount = 0.006 + 0.010 * strike;
+            return;
+        }
         switch (model)
         {
             case piano: hitAmount = 0.009 + 0.018 * strike * strike; break;
@@ -420,7 +449,36 @@ private:
              + 0.72 * resonance(frequency * bowedBridgeScale, 2900.0, 1000.0);
     }
 
+    double vocalFormant(double frequency) const noexcept
+    {
+        // The vocal folds set harmonic pitch; tract resonances shape the
+        // vowel in Hz. They must not transpose with a keyboard note or bend.
+        // Source/filter distinction and vowel identity through R1/R2:
+        // https://www.phys.unsw.edu.au/jw/voice.html
+        // These broad ah/oo profiles, widths and higher clusters are authored
+        // singing colours, not a fit to a measured singer or phonetic corpus.
+        if (variant == choirOo)
+            return 0.012 + 1.00 * bodyResonance(frequency, 330.0, 75.0)
+                         + 0.55 * bodyResonance(frequency, 850.0, 115.0)
+                         + 0.10 * bodyResonance(frequency, 2400.0, 280.0)
+                         + 0.045 * bodyResonance(frequency, 3200.0, 420.0);
+        return 0.012 + 1.00 * bodyResonance(frequency, 760.0, 130.0)
+                     + 0.82 * bodyResonance(frequency, 1180.0, 160.0)
+                     + 0.28 * bodyResonance(frequency, 2800.0, 340.0)
+                     + 0.12 * bodyResonance(frequency, 3500.0, 460.0);
+    }
+
+    double fixedFormant(double frequency) const noexcept
+    {
+        return vocal() ? vocalFormant(frequency) : bowedFormant(frequency);
+    }
+
     double stringWeight(int harmonic, double colour) const noexcept
+    {
+        return stringWeight(harmonic, colour, strike);
+    }
+
+    double stringWeight(int harmonic, double colour, double excitation) const noexcept
     {
         const double h = static_cast<double>(harmonic);
         const double frequency = keyHz * h;
@@ -432,7 +490,7 @@ private:
                 // the old fixed 24-mode ceiling allowed. Keep a smooth
                 // contact bandwidth in Hz as well as the harmonic rolloff.
                 const double bassBreadth = std::clamp(std::sqrt(261.625565 / keyHz), 1.0, 1.75);
-                const double hardness = (2.1 + 15.0 * strike * strike + 8.0 * colour) * bassBreadth;
+                const double hardness = (2.1 + 15.0 * excitation * excitation + 8.0 * colour) * bassBreadth;
                 const double position = 0.116 + 0.007 * initialColour;
                 const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
                 // Hammer contact suppresses high modes at gentle strikes.
@@ -446,8 +504,8 @@ private:
                 // A reed pickup has much stronger even harmonics and a broad
                 // midrange bark than the predominantly odd tine registration.
                 const double even = harmonic % 2 == 0 ? 0.84 : 1.0;
-                const double bark = 1.0 + 0.55 * strike * bodyResonance(frequency, 1400.0, 1000.0);
-                return even * bark * std::pow(h, -1.25) * std::exp(-(h - 1.0) / (2.0 + 5.0 * strike + 8.0 * colour));
+                const double bark = 1.0 + 0.55 * excitation * bodyResonance(frequency, 1400.0, 1000.0);
+                return even * bark * std::pow(h, -1.25) * std::exp(-(h - 1.0) / (2.0 + 5.0 * excitation + 8.0 * colour));
             }
             case clav:
             {
@@ -455,7 +513,7 @@ private:
                 const double body = 0.70 + 0.35 * bodyResonance(frequency, 270.0, 220.0)
                                          + 0.18 * bodyResonance(frequency, 1400.0, 900.0);
                 return body * comb * std::pow(h, -0.95)
-                     * std::exp(-(h - 1.0) / (4.0 + 10.0 * colour + 4.0 * strike));
+                     * std::exp(-(h - 1.0) / (4.0 + 10.0 * colour + 4.0 * excitation));
             }
             case harpsichord:
             {
@@ -473,7 +531,7 @@ private:
                 const double body = 0.65 + 0.45 * bodyResonance(frequency, model == bass ? 130.0 : 210.0, 130.0)
                                         + 0.25 * bodyResonance(frequency, 620.0, 370.0);
                 return body * comb * std::pow(h, -falloff)
-                     * std::exp(-(h - 1.0) / (3.0 + 12.0 * colour + 5.0 * strike));
+                     * std::exp(-(h - 1.0) / (3.0 + 12.0 * colour + 5.0 * excitation));
             }
             case bowed:
             {
@@ -481,8 +539,8 @@ private:
                 // than the broad upper bridge/body response. Multiplying the
                 // probe frequency scales both each center and its width.
                 const double formant = bowedFormant(frequency);
-                return formant * std::pow(h, -0.92 - 0.25 * (1.0 - strike))
-                     * std::exp(-(h - 1.0) / (3.0 + 16.0 * colour + 8.0 * strike));
+                return formant * std::pow(h, -0.92 - 0.25 * (1.0 - excitation))
+                     * std::exp(-(h - 1.0) / (3.0 + 16.0 * colour + 8.0 * excitation));
             }
             case flute:
             {
@@ -490,40 +548,49 @@ private:
                 const double weight = harmonic <= 6 ? weights[harmonic - 1] : 0.003 / (h - 5.0);
                 const double radiation = 0.75 + 0.35 * bodyResonance(frequency, 1800.0, 1700.0);
                 return weight * radiation
-                     * std::exp(-(h - 1.0) * (0.04 + 0.62 * (1.0 - colour) + 0.48 * (1.0 - strike)));
+                     * std::exp(-(h - 1.0) * (0.04 + 0.62 * (1.0 - colour) + 0.48 * (1.0 - excitation)));
             }
             case clarinet:
             {
-                const double lowEven = 0.045 + 0.15 * colour + 0.02 * strike;
-                const double highEven = 0.55 + 0.35 * colour + 0.10 * strike;
+                const double lowEven = 0.045 + 0.15 * colour + 0.02 * excitation;
+                const double highEven = 0.55 + 0.35 * colour + 0.10 * excitation;
                 const double even = harmonic % 2 == 0
                     ? lowEven + clarinetRegister * (highEven - lowEven) : 1.0;
                 const double radiation = 0.82 + 0.28 * bodyResonance(frequency, 1500.0, 900.0);
-                return even * radiation * std::pow(h, -0.85 - 0.20 * (1.0 - strike))
-                     * std::exp(-(h - 1.0) / (3.5 + 10.0 * colour + 5.0 * strike));
+                return even * radiation * std::pow(h, -0.85 - 0.20 * (1.0 - excitation))
+                     * std::exp(-(h - 1.0) / (3.5 + 10.0 * colour + 5.0 * excitation));
             }
             case oboe:
             {
                 const double formant = 0.28 + 1.65 * bodyResonance(frequency, 1300.0, 650.0)
                                            + 0.75 * bodyResonance(frequency, 2800.0, 1000.0);
-                return formant * std::pow(h, -0.77 - 0.22 * (1.0 - strike))
-                     * std::exp(-(h - 1.0) / (4.0 + 13.0 * colour + 5.0 * strike));
+                return formant * std::pow(h, -0.77 - 0.22 * (1.0 - excitation))
+                     * std::exp(-(h - 1.0) / (4.0 + 13.0 * colour + 5.0 * excitation));
             }
             case bassoon:
             {
                 const double formant = 0.34 + 1.25 * bodyResonance(frequency, 500.0, 280.0)
                                            + 0.80 * bodyResonance(frequency, 1500.0, 700.0);
-                return formant * std::pow(h, -0.88 - 0.25 * (1.0 - strike))
-                     * std::exp(-(h - 1.0) / (3.5 + 12.0 * colour + 4.0 * strike));
+                return formant * std::pow(h, -0.88 - 0.25 * (1.0 - excitation))
+                     * std::exp(-(h - 1.0) / (3.5 + 12.0 * colour + 4.0 * excitation));
             }
             case brass:
             {
                 const double formant = 0.55 + 0.65 * bodyResonance(frequency, 1250.0, 1100.0);
-                return formant * std::pow(h, -0.68 - 0.28 * (1.0 - strike))
-                     * std::exp(-(h - 1.0) / (1.7 + 18.0 * colour + 4.0 * strike));
+                return formant * std::pow(h, -0.68 - 0.28 * (1.0 - excitation))
+                     * std::exp(-(h - 1.0) / (1.7 + 18.0 * colour + 4.0 * excitation));
             }
             case organ:
             {
+                if (vocal())
+                {
+                    // A gently declining glottal spectrum carries every
+                    // harmonic through the tract, unlike a sparse organ
+                    // registration. Effort changes its tilt, not its pitch.
+                    const double slope = -1.45 + 0.45 * colour + 0.15 * excitation;
+                    return vocalFormant(frequency) * std::pow(h, slope)
+                         * std::exp(-(h - 1.0) / (10.0 + 18.0 * colour));
+                }
                 switch (harmonic)
                 {
                     case 1: return 1.0;
@@ -564,7 +631,7 @@ private:
         }
     }
 
-    void makeHarmonicModes(double note) noexcept
+    double makeHarmonicModes(double note) noexcept
     {
         const double treble = std::clamp((note - 48.0) / 40.0, 0.0, 1.6);
         const double stiffness = model == piano ? 0.000045 + 0.00020 * treble * treble
@@ -578,6 +645,17 @@ private:
             ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : harmonicModeCount;
         const int harmonics = static_cast<int>(std::ceil(harmonicBudget));
         const std::uint32_t principalPhaseSeed = state;
+        double maximumSum = 0.0;
+        const bool referenceStrike = !sustained && model != harpsichord && strike != 1.0;
+        const auto includeBound = [&](int harmonic, double coverage, double dark, double bright)
+        {
+            if (referenceStrike)
+            {
+                dark = coverage * stringWeight(harmonic, 0.0, 1.0);
+                bright = coverage * stringWeight(harmonic, 1.0, 1.0);
+            }
+            maximumSum += std::max(dark, bright);
+        };
         for (int harmonic = 1; harmonic <= harmonics; ++harmonic)
         {
             const double h = static_cast<double>(harmonic);
@@ -588,7 +666,7 @@ private:
             const double dark = coverage * stringWeight(harmonic, 0.0);
             const double bright = coverage * stringWeight(harmonic, 1.0);
             if (dark == 0.0 && bright == 0.0) continue;
-            const double phase = model == organ ? 0.11 * harmonic
+            const double phase = model == organ && !vocal() ? 0.11 * harmonic
                                : model == harpsichord ? 0.0 : 0.075 * randomBipolar();
             double loss = stringLoss(harmonic);
             double partialAttack = 0.0;
@@ -615,12 +693,14 @@ private:
                     case oboe: partialAttack = (0.004 + 0.028 * upper) * effortTime; break;
                     case bassoon: partialAttack = (0.007 + 0.036 * upper) * effortTime; break;
                     case brass: partialAttack = (0.004 + 0.037 * upper) * effortTime; break;
+                    case organ: partialAttack = (0.012 + 0.030 * upper) * effortTime; break;
                     default: break;
                 }
             }
             const unsigned int pickup = model == reed && harmonic > 1
                 ? static_cast<unsigned int>(std::min(harmonic - 1, 4)) : 0u;
             addMode(ratio, dark, bright, loss, phase, partialAttack, pickup);
+            includeBound(harmonic, coverage, dark, bright);
         }
         if (model == piano)
         {
@@ -649,11 +729,15 @@ private:
                                    * (harmonic % 2 ? 1.0 : -1.0);
                 const double ratio = h * std::sqrt((1.0 + stiffness * h * h) / (1.0 + stiffness))
                                    * std::exp2(cents / 1200.0);
-                addMode(ratio, course * stringWeight(harmonic, 0.0), course * stringWeight(harmonic, 1.0),
+                const double dark = course * stringWeight(harmonic, 0.0);
+                const double bright = course * stringWeight(harmonic, 1.0);
+                addMode(ratio, dark, bright,
                         0.70 * stringLoss(harmonic) + 0.12 * (h - 1.0),
                         0.12 * randomBipolar(), 0.0035 / std::sqrt(h));
+                includeBound(harmonic, course, dark, bright);
             }
         }
+        return maximumSum;
     }
 
     double makeTineModes() noexcept
@@ -692,8 +776,55 @@ private:
         return maximumSum;
     }
 
-    void makeBarModes() noexcept
+    double makeVariantBarModes() noexcept
     {
+        // These authored material profiles correct an instrument-family
+        // mismatch without changing the published model selector. Yamaha
+        // describes its xylophone's tuned third versus the marimba's fourth:
+        // https://www.yamaha.com/en/musical_instrument_guide/marimba/structure/structure003.html
+        // Rossing/Hansen/Hampton describe steelpan octave and twelfth (or
+        // two-octave) modes: https://pubmed.ncbi.nlm.nih.gov/10955647/
+        // Higher ratios, weights and losses below are original voicing
+        // choices, not measurements or a reconstruction of either instrument.
+        constexpr std::array<double, 8> xyloRatios {1.0, 3.0, 5.95, 9.92, 14.8, 20.6, 27.4, 35.2};
+        constexpr std::array<double, 8> xyloDark {1.0, 0.20, 0.055, 0.020, 0.008, 0.003, 0.001, 0.0};
+        constexpr std::array<double, 8> xyloBright {1.0, 0.72, 0.27, 0.13, 0.060, 0.025, 0.009, 0.003};
+        constexpr std::array<double, 8> xyloLoss {1.10, 5.3, 10.8, 19.0, 29.0, 42.0, 57.0, 74.0};
+        constexpr std::array<double, 8> panRatios {1.0, 2.0, 3.0, 4.0, 5.43, 7.07, 9.21, 12.4};
+        constexpr std::array<double, 8> panDark {1.0, 0.26, 0.11, 0.045, 0.015, 0.008, 0.003, 0.001};
+        constexpr std::array<double, 8> panBright {1.0, 0.70, 0.45, 0.23, 0.11, 0.055, 0.025, 0.010};
+        constexpr std::array<double, 8> panLoss {0.52, 1.45, 2.3, 3.5, 7.5, 12.0, 19.0, 29.0};
+        const bool wooden = variant == xylophone;
+        const auto& ratios = wooden ? xyloRatios : panRatios;
+        const auto& dark = wooden ? xyloDark : panDark;
+        const auto& bright = wooden ? xyloBright : panBright;
+        const auto& losses = wooden ? xyloLoss : panLoss;
+        const double edge = wooden ? 0.25 + 0.75 * std::pow(strike, 1.5)
+                                   : 0.18 + 0.82 * strike * strike;
+        const double bandwidth = wooden ? 6500.0 + 25500.0 * strike
+                                        : 4000.0 + 13000.0 * strike;
+        const double maximumBandwidth = wooden ? 32000.0 : 17000.0;
+        const double lossScale = registerLossScale(wooden ? 0.40 : 0.28);
+        const double highRegister = std::max(0.0, std::log2(keyHz / 261.625565));
+        double maximumSum = 0.0;
+        for (std::size_t i = 0; i < ratios.size(); ++i)
+        {
+            const double highLoss = 0.10 * highRegister * static_cast<double>(i);
+            const double contact = i == 0 ? 1.0
+                : edge * std::exp(-highLoss - keyHz * ratios[i] / bandwidth);
+            const double referenceContact = i == 0 ? 1.0
+                : std::exp(-highLoss - keyHz * ratios[i] / maximumBandwidth);
+            maximumSum += std::max(dark[i], bright[i]) * referenceContact;
+            addMode(ratios[i], dark[i] * contact, bright[i] * contact,
+                    losses[i] * lossScale, 0.045 * randomBipolar(),
+                    (wooden ? 0.00022 : 0.00055) + 0.00085 / (1.0 + static_cast<double>(i)));
+        }
+        return maximumSum;
+    }
+
+    double makeBarModes() noexcept
+    {
+        if (variant != standard) return makeVariantBarModes();
         // Tuned bars do not share a harmonic series.  Vibraphone and marimba
         // intentionally emphasize the tuned fourth, while bell/celesta use
         // their own inharmonic profiles.  Higher modes decay independently.
@@ -707,22 +838,23 @@ private:
         const double edge = 0.30 + 0.70 * strike;
         const double lossScale = registerLossScale(model == marimba ? 0.42 : 0.28);
         const double highRegister = std::max(0.0, std::log2(keyHz / 261.625565));
+        double maximumSum = 0.0;
         for (int i = 0; i < number; ++i)
         {
             const double index = static_cast<double>(i);
-            double dark = i == 0 ? 1.0 : std::exp(-1.35 * index) * edge;
-            double bright = i == 0 ? 1.0 : std::exp(-0.75 * index) * edge;
+            double dark = i == 0 ? 1.0 : std::exp(-1.35 * index);
+            double bright = i == 0 ? 1.0 : std::exp(-0.75 * index);
             double loss = i == 0 ? 0.075 : 0.65 * index + 0.35 * index * index;
             if (model == vibes)
             {
-                dark = i == 0 ? 1.0 : (i == 1 ? 0.045 : 0.010 / index) * edge;
-                bright = i == 0 ? 1.0 : (i == 1 ? 0.17 : 0.040 / index) * edge;
+                dark = i == 0 ? 1.0 : (i == 1 ? 0.045 : 0.010 / index);
+                bright = i == 0 ? 1.0 : (i == 1 ? 0.17 : 0.040 / index);
                 loss = i == 0 ? 0.09 : 0.90 * index + 0.60 * index * index;
             }
             else if (model == marimba)
             {
-                dark = i == 0 ? 1.0 : std::exp(-1.95 * index) * edge;
-                bright = i == 0 ? 1.0 : std::exp(-1.05 * index) * edge;
+                dark = i == 0 ? 1.0 : std::exp(-1.95 * index);
+                bright = i == 0 ? 1.0 : std::exp(-1.05 * index);
                 loss = i == 0 ? 0.65 : 3.0 * index + 2.0 * index * index;
             }
             else if (model == celesta)
@@ -736,11 +868,19 @@ private:
             const double contact = i == 0 ? 1.0
                 : std::exp(-0.12 * highRegister * index
                            - keyHz * ratios[i] / (7000.0 + 16000.0 * strike));
+            const double referenceContact = i == 0 ? 1.0
+                : std::exp(-0.12 * highRegister * index - keyHz * ratios[i] / 23000.0);
+            maximumSum += std::max(dark * referenceContact, bright * referenceContact);
+            if (i != 0) { dark *= edge; bright *= edge; }
             addMode(ratios[i], dark * contact, bright * contact, loss * lossScale,
                     0.045 * randomBipolar(), 0.00035 + 0.0012 / (1.0 + index));
         }
         if (model == bell || model == celesta)
+        {
             addMode(1.0012, 0.075, 0.075, 0.10 * lossScale, 0.09, 0.0022);
+            maximumSum += 0.075;
+        }
+        return maximumSum;
     }
 
     void updateControls(double frequency, float brightness, float pressure) noexcept
@@ -764,11 +904,11 @@ private:
             // target changes only at a private, sample-counted interval.
             motionLow += motionCoefficient * (motionTarget - motionLow);
             motionSmooth += motionCoefficient * (motionLow - motionSmooth);
-            const double depth = model == bowed ? 0.018 : model == brass ? 0.020
+            const double depth = vocal() ? 0.008 : model == bowed ? 0.018 : model == brass ? 0.020
                                : model == flute ? 0.015 : 0.012;
             motion = depth * motionSmooth;
         }
-        const double pressureColour = model == brass || model == oboe || model == bassoon ? 0.30
+        const double pressureColour = vocal() ? 0.24 : model == brass || model == oboe || model == bassoon ? 0.30
                                     : model == bowed || model == clarinet || model == flute ? 0.18 : 0.0;
         const double colour = std::clamp(finiteClamp(brightness, 0.0, 1.0, initialColour)
                             + pressureColour * liveEffort + motion, 0.0, 1.0);
@@ -781,7 +921,7 @@ private:
         pickupMotion *= pickupLoss;
         if (pickupMotion < 1.0e-8) pickupMotion = 0.0;
         transientControls = pickupMotion > 0.0;
-        if (model == bowed && pitchChanged)
+        if ((model == bowed || vocal()) && pitchChanged)
         {
             // tick() accepts float pitch. Returning to that exact onset pitch
             // restores the original weights without a rounding-sized colour
@@ -798,7 +938,7 @@ private:
                 {
                     const auto index = static_cast<std::size_t>(i);
                     const auto& m = modes[index];
-                    bowedResponseGain[index] = bowedFormant(frequency * m.ratio)
+                    bowedResponseGain[index] = fixedFormant(frequency * m.ratio)
                                              * bowedResponseInverse[index];
                     bound += std::max(m.dark, m.bright) * bowedResponseGain[index];
                 }
@@ -852,7 +992,7 @@ private:
                     pickup *= excursion;
                 double target = (m.dark + colour * (m.bright - m.dark))
                               * antialias * (1.0 - m.onsetMissing) * pickup;
-                if (model == bowed)
+                if (model == bowed || vocal())
                     target *= bowedResponseGain[static_cast<std::size_t>(i)] * bowedBoundGain;
                 m.gainStep = (target - m.gain) / controlPeriod;
             }

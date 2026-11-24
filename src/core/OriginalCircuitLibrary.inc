@@ -30,6 +30,64 @@ void scaleChannel(ParamValues& p, int ch, int parameter, float factor)
     p[index] = std::clamp(p[index] * factor, def.min, def.max);
 }
 
+// A bypass sine never enters the rank filters. Give those voices a deliberate
+// dynamic contour instead of writing an inaudible low-pass "colour" change.
+// The constants describe musical finishes, not measured instrument responses.
+void finishSine(ParamValues& p, int ch, Finish style)
+{
+    struct Shape { float attack, decay, sustain, release, initial, pressure; };
+    constexpr Shape shapes[] = {
+        {1.18f, 1.15f, 1.00f, 1.18f, 1.04f, 1.05f}, // amber
+        {1.65f, 1.20f, 1.00f, 1.28f, 1.02f, 1.12f}, // velvet
+        {1.95f, 1.30f, 0.98f, 1.55f, 0.94f, 1.06f}, // distant
+        {0.65f, 0.90f, 0.98f, 0.76f, 1.10f, 0.95f}, // neon
+        {1.30f, 1.35f, 0.94f, 1.16f, 1.02f, 1.00f}, // hollow
+        {0.86f, 1.08f, 1.00f, 0.84f, 1.06f, 1.08f}, // golden
+        {2.10f, 1.35f, 1.00f, 1.65f, 1.04f, 1.20f}, // frozen
+        {0.55f, 0.80f, 0.98f, 0.66f, 1.12f, 1.00f}, // electric
+        {1.75f, 1.30f, 0.97f, 1.42f, 0.96f, 1.08f}, // midnight
+        {2.60f, 1.60f, 1.00f, 1.70f, 1.00f, 1.10f}, // slow
+        {0.72f, 0.92f, 1.00f, 0.90f, 1.12f, 1.00f}, // bright
+        {1.50f, 1.12f, 0.97f, 1.12f, 0.98f, 1.05f}, // dark
+        {1.05f, 1.04f, 1.00f, 1.20f, 1.00f, 1.10f}, // wide
+        {1.90f, 1.25f, 1.00f, 1.24f, 1.06f, 1.15f}  // soft
+    };
+    const auto& shape = shapes[static_cast<int>(style)];
+    scaleChannel(p, ch, CP_vA, shape.attack);
+    scaleChannel(p, ch, CP_vD, shape.decay);
+    scaleChannel(p, ch, CP_vS, shape.sustain);
+    scaleChannel(p, ch, CP_vR, shape.release);
+    const int initial = chParam(ch, CP_initLevel), fixed = chParam(ch, CP_vLevel);
+    const float previousInitial = p[initial];
+    scaleChannel(p, ch, CP_initLevel, shape.initial);
+    // Preserve the approximate mid-velocity level while changing the dynamic
+    // slope. The ordinary final bank calibration still owns absolute loudness.
+    p[fixed] = std::clamp(p[fixed] + 0.65f * (previousInitial - p[initial]),
+                          kChannelDefs[CP_vLevel].min, kChannelDefs[CP_vLevel].max);
+    scaleChannel(p, ch, CP_afterLevel, shape.pressure);
+}
+
+const char* sineFinishDescription(Finish style)
+{
+    constexpr const char* details[] = {
+        "The pure sine has a rounded entrance and a longer, gently released body.",
+        "The pure sine has a cushioned entrance and a broader pressure-shaped ending.",
+        "The pure sine enters gradually and falls into a softer, lingering body.",
+        "The pure sine has a quick accented entrance and a compact ending.",
+        "The pure sine's opening relaxes into a slightly recessed held level.",
+        "The pure sine speaks clearly with a clean release and responsive pressure level.",
+        "The pure sine has a slower, steady entrance and a long pressure-shaped ending.",
+        "The pure sine has an immediate dynamic attack and a short release.",
+        "The pure sine enters softly and lingers at a slightly recessed held level.",
+        "The pure sine has a deliberately slow entrance and a long, connected ending.",
+        "The pure sine has a definite quick entrance and a more responsive dynamic accent.",
+        "The pure sine enters gently and settles into a slightly recessed held level.",
+        "The pure sine retains its simple spectrum with a more connected pressure-shaped ending.",
+        "The pure sine has a cushioned entrance, expressive dynamics and a rounded ending."
+    };
+    return details[static_cast<int>(style)];
+}
+
 void finish(FactoryPreset& preset, Finish style)
 {
     auto& p = preset.values;
@@ -107,13 +165,27 @@ void finish(FactoryPreset& preset, Finish style)
             detail = "A restrained upper contour and a cushioned main entrance; struck instruments retain their articulation."; break;
     }
     const auto source = p;
-    bool anyBody = false;
+    bool anyBody = false, anyFiltered = false, anySine = false;
     for (int ch = 0; ch < 2; ++ch)
     {
         const int other = 1 - ch;
         const int model = static_cast<int>(source[bodyParam(ch, 0)]);
         const bool hasBody = model != body::off && source[bodyParam(ch, 1)] > 0.0f;
+        const bool filteredExcitation = source[chParam(ch, CP_vcfLevel)] > 0.0f
+            && (source[chParam(ch, CP_saw)] > 0.5f || source[chParam(ch, CP_pulse)] > 0.5f
+                || source[chParam(ch, CP_noise)] > 0.0f);
+        const bool sineExcitation = source[chParam(ch, CP_sine)] > 0.0f;
+        const bool audibleRank = (ch == 0 ? source[P_mix] < 1.0f : source[P_mix] > 0.0f)
+            && (hasBody || filteredExcitation || sineExcitation);
+        if (!audibleRank) continue;
         anyBody = anyBody || hasBody;
+        if (!hasBody && !filteredExcitation && sineExcitation)
+        {
+            anySine = true;
+            finishSine(p, ch, style);
+            continue;
+        }
+        anyFiltered = true;
         const bool struckBody = hasBody && ((model >= body::piano && model <= body::bass)
                                            || model >= body::bell);
         const bool shortAccent = source[chParam(ch, CP_vS)] <= 0.10f
@@ -145,6 +217,15 @@ void finish(FactoryPreset& preset, Finish style)
         scaleChannel(p, ch, CP_fD, shortAccent ? std::pow(decay, 0.20f) : std::pow(decay, 0.75f));
         scaleChannel(p, ch, CP_vR, releaseFactor);
         scaleChannel(p, ch, CP_fR, std::min(releaseFactor, 1.12f));
+        if (!hasBody && filteredExcitation && source[chParam(ch, CP_lpfOn)] > 0.5f)
+        {
+            // A filtered circuit's opening crest is part of its identity.
+            // Shape that audible trajectory with the finish, retaining zero
+            // contours as zero and leaving any bypass sine untouched.
+            constexpr float crest[] = {0.92f, 0.85f, 0.80f, 1.18f, 0.94f, 1.08f, 1.0f,
+                                       1.22f, 0.78f, 0.90f, 1.28f, 0.72f, 1.04f, 0.84f};
+            scaleChannel(p, ch, CP_fAl, crest[static_cast<int>(style)]);
+        }
         if (hasBody)
         {
             p[bodyParam(ch, 2)] = std::clamp(p[bodyParam(ch, 2)]
@@ -154,10 +235,12 @@ void finish(FactoryPreset& preset, Finish style)
         }
     }
     // Keep a named darker/softer variation coherent in the upper keyboard
-    // rather than changing a single C4 cutoff. Do not add pitch movement or
-    // alter a source recipe's velocity, pressure, modulation rates or register.
-    p[P_kbdBrillianceHigh] = std::clamp(p[P_kbdBrillianceHigh]
-        + (anyBody ? 0.055f : 0.075f) * std::log2(cutoff), -1.0f, 1.0f);
+    // rather than changing a single C4 cutoff. Pure bypass-sine programs keep
+    // this deliberately inactive colour control unchanged; their finish acts
+    // through the audible amplitude/touch path above, with no new pitch motion.
+    if (anyFiltered)
+        p[P_kbdBrillianceHigh] = std::clamp(p[P_kbdBrillianceHigh]
+            + (anyBody ? 0.055f : 0.075f) * std::log2(cutoff), -1.0f, 1.0f);
     if (style == Finish::wide)
     {
         const float mix = source[P_mix];
@@ -179,7 +262,35 @@ void finish(FactoryPreset& preset, Finish style)
         p[chParam(1, CP_pan)] = center + width * left * left / (left * left + right * right);
     }
     preset.description += " ";
-    preset.description += detail;
+    preset.description += anySine && !anyFiltered ? sineFinishDescription(style) : detail;
+}
+
+void paceSequence(ParamValues& p, const ParamValues& source)
+{
+    const float gate = (p[P_arpMode] == 3.0f ? 0.45f : 0.58f) / p[P_arpRate];
+    const float oldGate = (source[P_arpMode] == 3.0f ? 0.45f : 0.58f) / source[P_arpRate];
+    const float ratio = std::clamp(gate / oldGate, 0.40f, 2.5f);
+    const float gap = 1.0f / p[P_arpRate] - gate;
+    for (int ch = 0; ch < 2; ++ch)
+    {
+        const int model = static_cast<int>(p[bodyParam(ch, 0)]);
+        const bool ringingMain = ch == 0 && model >= body::bell
+            && p[bodyParam(ch, 1)] > 0.0f;
+        const auto limitTime = [&](int parameter, float factor, float ceiling)
+        {
+            const int index = chParam(ch, parameter);
+            p[index] = std::clamp(std::min(p[index] * factor, ceiling),
+                                 kChannelDefs[parameter].min, kChannelDefs[parameter].max);
+        };
+        limitTime(CP_vA, std::sqrt(ratio), 0.10f * gate);
+        limitTime(CP_fA, std::sqrt(ratio), 0.16f * gate);
+        if (ringingMain) continue; // Keep the bell's resonance and echo space.
+        const bool accent = ch == 1;
+        scaleChannel(p, ch, CP_vD, std::pow(ratio, accent ? 0.90f : 0.65f));
+        scaleChannel(p, ch, CP_fD, std::pow(ratio, accent ? 0.95f : 0.75f));
+        limitTime(CP_vR, std::pow(ratio, 0.75f), gap * (accent ? 0.35f : 0.50f));
+        limitTime(CP_fR, std::pow(ratio, 0.75f), gap * 0.50f);
+    }
 }
 
 FactoryPreset voiced(const char* name, const char* category, const char* source, Finish style)
@@ -233,6 +344,7 @@ std::vector<FactoryPreset> build()
                 for (int k = 0; k < 4; ++k)
                     std::swap(p.values[bodyParam(0, k)], p.values[bodyParam(1, k)]);
                 std::swap(p.values[bodySizeParam(0)], p.values[bodySizeParam(1)]);
+                std::swap(p.values[bodyVariantParam(0)], p.values[bodyVariantParam(1)]);
                 p.values[P_mix] = 1.0f - p.values[P_mix];
                 // The named card stays on concert pitch after the rank swap.
                 // DETUNE II is one-sided, so a negative compensation would
@@ -253,8 +365,8 @@ std::vector<FactoryPreset> build()
     add("Cinema Strings", "Strings", "Ensemble Strings", Finish::wide);
     add("Glass Strings", "Strings", "Crystal Strings", Finish::bright);
     add("Distant Oceans", "Strings", "Dark Strings", Finish::distant);
-    out.back().values[chParam(0, CP_hpfCutoff)] = 420.0f;
-    out.back().values[chParam(1, CP_hpfCutoff)] = 380.0f;
+    out.back().values[chParam(0, CP_hpfCutoff)] = 260.0f;
+    out.back().values[chParam(1, CP_hpfCutoff)] = 260.0f;
     out.back().description += " A high-pass contour keeps the distant texture light beneath a melody.";
     add("Dry Ensemble", "Strings", "Chamber Strings", Finish::golden);
     out.back().values[P_chorusOn] = 0.0f;
@@ -338,7 +450,7 @@ std::vector<FactoryPreset> build()
             if (p.name == "Dark FX 148")
             {
                 // The covered Thunder variation needs enough low rumble to
-                // follow its crack. Keep the main LP below Thunder's 270 Hz,
+                // follow its crack. Keep the main LP below Thunder's 240 Hz,
                 // but avoid losing the body through the generic dark finish.
                 p.values[chParam(0, CP_lpfCutoff)] = 165.0f;
                 p.values[chParam(0, CP_vLevel)] = 1.0f;
@@ -349,6 +461,14 @@ std::vector<FactoryPreset> build()
                 p.values[P_arpRate] = sequenceRates[n];
                 p.values[P_arpMode] = static_cast<float>(sequenceModes[n]);
                 p.values[P_arpOctaves] = static_cast<float>(sequenceOctaves[n]);
+                paceSequence(p.values, recipe(source).values);
+                if (p.name == "Slow Sequences 166")
+                {
+                    // At two notes per second, let the ringing main bell carry
+                    // the phrase while the shorter upper strike stays an accent.
+                    p.values[chParam(0, CP_hpfCutoff)] = 20.0f;
+                    p.values[P_mix] = 0.08f;
+                }
                 // The source voice's prose describes its original arpeggio.
                 // Rebuild timing/direction text after the overrides, retaining
                 // only the instrument body and the adjective's finish detail.

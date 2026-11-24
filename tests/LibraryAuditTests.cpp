@@ -92,7 +92,8 @@ bool isDiscrete(int i)
     if (i == chParam(0, CP_feet) || i == chParam(1, CP_feet)) return true;
     return i == P_glideMode || i == P_subWave || i == P_subOriginalFunction || i == P_lfo1Dest
         || i == P_lfo2Dest || i == P_lfo3Dest || i == P_fx1Type || i == P_fx2Type || i == P_fx3Type
-        || i == P_arpMode || i == P_arpOctaves || i == P_body1Model || i == P_body2Model;
+        || i == P_arpMode || i == P_arpOctaves || i == P_body1Model || i == P_body2Model
+        || i == P_body1Variant || i == P_body2Variant;
 }
 
 bool usesModernLayer(const ParamValues& v)
@@ -435,7 +436,10 @@ int calibrate(const char* path, bool original = false)
         double gainDb = target - dbfs(l.windowRms);
         gainDb = std::min(gainDb, kCalibratePhrasePeakDbfs - dbfs(l.phrasePeak));
         gainDb = std::min(gainDb, kCalibrateStressPeakDbfs - dbfs(l.stressPeak));
-        const double next = std::clamp(volume * std::pow(10.0, gainDb / 20.0), kMinVolume, kMaxVolume);
+        // Initialization patches are stable programming starting points, not
+        // performance voicings. Recalibration must preserve their stored trim.
+        const double next = p.category == "Init" ? volume
+            : std::clamp(volume * std::pow(10.0, gainDb / 20.0), kMinVolume, kMaxVolume);
         std::fprintf(file, "    { \"%s\", %.3ff },\n", p.name.c_str(), next);
     }
     return std::fclose(file) == 0 ? 0 : 3;

@@ -1,0 +1,43 @@
+{
+  "scope": "Synthetic parser semantics only; no .5 native evidence or release is accepted.",
+  "checks": 37,
+  "failures": 0,
+  "parser_sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+  "observations": {
+    "windows-x86_64": {
+      "registered": 244,
+      "passed": 244,
+      "failed": 0,
+      "formal_skipped": 0,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "macos-arm64": {
+      "registered": 266,
+      "passed": 266,
+      "failed": 0,
+      "formal_skipped": 0,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "macos-x86_64": {
+      "registered": 266,
+      "passed": 266,
+      "failed": 0,
+      "formal_skipped": 0,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "linux-x86_64": {
+      "registered": 602,
+      "passed": 602,
+      "failed": 0,
+      "formal_skipped": 0,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "expected_roster_is_external": true,
+    "missing_juce_provenance_is_optional": true,
+    "prior_retry_eligibility_is_external": true
+  }
+}

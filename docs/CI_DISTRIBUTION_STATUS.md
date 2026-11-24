@@ -5,7 +5,24 @@ existing CI workflow already builds. The packaging step adds no paid dependency,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Current verified revision — 2026.11.4 instrument voicing
+## Source candidate — 2026.11.5 playing-response and material refinement
+
+This source snapshot contains the **2026.11.5** factory library: all 521
+existing musical programs have revised sound controls, with all 523 identities
+and both initialization programs preserved. The appended material/vowel
+variants retain the preceding 200-core/306-host parameter prefix. See the
+[revision report](CIRCUIT_LIBRARY_2026_11_5.md) and [preset guide](PRESET_GUIDE.md).
+
+**Native build and archive qualification for this source is pending at the
+time these bundled guides are written.** The verified artifacts, source hashes,
+test totals and links in the following section refer to the preceding
+2026.11.4 build. They do not qualify a package built from this candidate.
+Each new archive's own manifest identifies its source. The repository's
+[current download section](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads)
+will identify the exact newly qualified source and archives after their
+independent build, validator and content checks finish.
+
+## Previous qualified revision — 2026.11.4 instrument voicing
 
 **All six jobs passed in [build 45246863788, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788).**
 The installation bundles contain exact source `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, tree

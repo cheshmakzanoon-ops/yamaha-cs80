@@ -83,6 +83,19 @@ def selections():
             groups.append(dict(folder=f'clarinet-register-{note}-{label}',
                                names=['Clarinet', 'Bass Clarinet'], velocity=velocity,
                                pressure=0, hold=3, tail=1, note=note))
+    # Matched gestures expose material spectra, contact and independent decay.
+    # These are the existing programs with their revised resonators, not new
+    # factory addresses or post-normalized demonstrations.
+    for note in (48, 60, 72):
+        for label, velocity in (('soft', .25), ('firm', .85)):
+            groups.append(dict(folder=f'mallet-material-{note}-{label}',
+                               names=['Xylophone', 'Steel Drum', 'Marimba', 'Vibraphone'],
+                               velocity=velocity, pressure=0, hold=3.5, tail=.8, note=note))
+        groups.append(dict(folder=f'choir-vowels-{note}', names=['Choir Pad', 'Dark Choir'],
+                           velocity=.85, pressure=0, hold=6, tail=1, note=note))
+    groups.append(dict(folder='original-articulation',
+                       names=['Frozen Leads 121', 'Soft Leads 128', 'Neon Sequences 174'],
+                       velocity=.85, pressure=0, hold=5, tail=1, note=60))
     return groups
 
 
@@ -90,7 +103,7 @@ def roster_summary(groups):
     """Validate render requests before creating directories or invoking children."""
     folders, requests, names = set(), set(), set()
     count = 0
-    seconds = 0.0
+    durations = []
     for group in groups:
         folder = group['folder']
         if not isinstance(folder, str) or re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', folder) is None:
@@ -117,10 +130,10 @@ def roster_summary(groups):
             requests.add(request)
         names.update(selected)
         count += len(selected)
-        seconds += len(selected) * (group['hold'] + group['tail'])
+        durations.append(len(selected) * (group['hold'] + group['tail']))
     if not count:
         raise RuntimeError('Empty audition roster')
-    return dict(wav_count=count, selected_program_count=len(names), audio_seconds=seconds)
+    return dict(wav_count=count, selected_program_count=len(names), audio_seconds=math.fsum(durations))
 
 
 def validate_resolved_requests(groups, programs):

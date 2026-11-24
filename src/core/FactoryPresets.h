@@ -35,7 +35,7 @@ inline constexpr int legacyProgramCount = 222;
 // The curated circuit-engine library (docs/workstreams/ws6-library.md). Every
 // program sets SOURCE PERFORMANCE on, so recalling it selects the circuit engine.
 // A sound-data revision, independent of host program numbers or session schema.
-inline constexpr const char* curatedLibraryRevision = "2026.11.4";
+inline constexpr const char* curatedLibraryRevision = "2026.11.5";
 const std::vector<FactoryPreset>& curatedLibrary();
 
 // The host-facing program list. Host program numbers 0..221 keep their shipped

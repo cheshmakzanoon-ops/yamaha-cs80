@@ -115,6 +115,27 @@ void testTypedValueUnits(Check check)
                   "ambiguous, malformed and numeric body choices reject without mutation");
         }
     }
+    for (int parameter : { cs80::P_body1Variant, cs80::P_body2Variant })
+    {
+        for (int variant = 0; variant <= cs80::body::maxVariant; ++variant)
+        {
+            const auto shown = cs80::ui::formatParamValue(parameter, (float) variant);
+            float parsed = -12345.f;
+            check(shown == cs80::body::variantName(variant)
+                      && cs80::ui::parseParamValue(parameter, shown, 0.f, parsed) && parsed == (float) variant,
+                  "material variants display and parse all saved choices");
+        }
+        float parsed = -12345.f;
+        check(cs80::ui::parseParamValue(parameter, "  xYlOpHoNe  ", 0.f, parsed)
+                  && parsed == (float) cs80::body::xylophone,
+              "material variant names accept trimmed case-insensitive entry");
+        for (const char* text : { "S", "Choir", "Steelpan junk", "3", "NaN" })
+        {
+            parsed = -12345.f;
+            check(!cs80::ui::parseParamValue(parameter, text, 0.f, parsed) && parsed == -12345.f,
+                  "ambiguous and invalid material variants reject without mutation");
+        }
+    }
     for (int parameter : { cs80::P_body1Decay, cs80::P_body2Decay })
     {
         for (float value : { .25f, .5f, 1.f, 2.f, 4.f })

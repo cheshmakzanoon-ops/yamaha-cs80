@@ -1,0 +1,371 @@
+Start testing: Nov 23 22:36 MST
+----------------------------------------------------------
+152/210 Testing: cs80_instrument_body_variant_tests
+152/210 Test: cs80_instrument_body_variant_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_instrument_body_variant_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_instrument_body_variant_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+MATERIAL rate=44100 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=44100 note=60 xylo_third_over_fourth=+116.25 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=44100 note=72 xylo_third_over_fourth=+136.33 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=48000 note=48 xylo_third_over_fourth=+99.27 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=48000 note=60 xylo_third_over_fourth=+116.24 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=48000 note=72 xylo_third_over_fourth=+136.34 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+MATERIAL rate=96000 note=48 xylo_third_over_fourth=+99.28 dB pan_second=-8.65 dB pan_third=-13.99 dB xylo_softening=-16.29 dB pan_softening=-7.56 dB
+MATERIAL rate=96000 note=60 xylo_third_over_fourth=+116.23 dB pan_second=-9.02 dB pan_third=-14.62 dB xylo_softening=-21.40 dB pan_softening=-9.16 dB
+MATERIAL rate=96000 note=72 xylo_third_over_fourth=+136.48 dB pan_second=-10.45 dB pan_third=-17.29 dB xylo_softening=-28.08 dB pan_softening=-11.11 dB
+Instrument body variants: 1132 checks, 0 failures
+<end of output>
+Test time =   0.69 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_instrument_body_variant_tests" end time: Nov 23 22:36 MST
+"cs80_instrument_body_variant_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+153/210 Testing: cs80_bowed_body_formant_tests
+153/210 Test: cs80_bowed_body_formant_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_bowed_body_formant_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_bowed_body_formant_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+BOWED rate=44100 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.001419 dB
+BOWED rate=44100 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.002027 dB
+BOWED rate=44100 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.006519 dB
+BOWED rate=44100 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.004980 dB
+BOWED rate=44100 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.004932 dB
+BOWED rate=44100 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.002414 dB
+BOWED rate=44100 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.001538 dB
+BOWED rate=44100 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.001832 dB
+BOWED rate=44100 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.007053 dB
+BOWED rate=44100 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.005259 dB
+BOWED rate=44100 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.005159 dB
+BOWED rate=44100 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.002653 dB
+BOWED rate=44100 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.001715 dB
+BOWED rate=44100 size=1.80 from=48.00 to=36.00 maximum_ratio_error=0.001794 dB
+BOWED rate=44100 size=1.80 from=60.00 to=72.00 maximum_ratio_error=0.008889 dB
+BOWED rate=44100 size=1.80 from=72.00 to=60.00 maximum_ratio_error=0.005073 dB
+BOWED rate=44100 size=1.80 from=60.00 to=60.35 maximum_ratio_error=0.004850 dB
+BOWED rate=44100 size=1.80 from=60.00 to=59.65 maximum_ratio_error=0.002313 dB
+BOWED rate=48000 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.004010 dB
+BOWED rate=48000 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.001024 dB
+BOWED rate=48000 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.007816 dB
+BOWED rate=48000 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.008889 dB
+BOWED rate=48000 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.003297 dB
+BOWED rate=48000 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.005326 dB
+BOWED rate=48000 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.004468 dB
+BOWED rate=48000 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.000909 dB
+BOWED rate=48000 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.009754 dB
+BOWED rate=48000 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.009376 dB
+BOWED rate=48000 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.003141 dB
+BOWED rate=48000 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.005645 dB
+BOWED rate=48000 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.005700 dB
+BOWED rate=48000 size=1.80 from=48.00 to=36.00 maximum_ratio_error=0.000859 dB
+BOWED rate=48000 size=1.80 from=60.00 to=72.00 maximum_ratio_error=0.012651 dB
+BOWED rate=48000 size=1.80 from=72.00 to=60.00 maximum_ratio_error=0.008999 dB
+BOWED rate=48000 size=1.80 from=60.00 to=60.35 maximum_ratio_error=0.003035 dB
+BOWED rate=48000 size=1.80 from=60.00 to=59.65 maximum_ratio_error=0.005524 dB
+BOWED rate=96000 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.003500 dB
+BOWED rate=96000 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.000599 dB
+BOWED rate=96000 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.009637 dB
+BOWED rate=96000 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.009422 dB
+BOWED rate=96000 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.004276 dB
+BOWED rate=96000 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.004937 dB
+BOWED rate=96000 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.003907 dB
+BOWED rate=96000 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.000576 dB
+BOWED rate=96000 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.012102 dB
+BOWED rate=96000 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.009932 dB
+BOWED rate=96000 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.004072 dB
+BOWED rate=96000 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.005159 dB
+BOWED rate=96000 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.004988 dB
+BOWED rate=96000 size=1.80 from=48.00 to=36.00 maximum_ratio_error=0.000820 dB
+BOWED rate=96000 size=1.80 from=60.00 to=72.00 maximum_ratio_error=0.015587 dB
+BOWED rate=96000 size=1.80 from=72.00 to=60.00 maximum_ratio_error=0.009520 dB
+BOWED rate=96000 size=1.80 from=60.00 to=60.35 maximum_ratio_error=0.003919 dB
+BOWED rate=96000 size=1.80 from=60.00 to=59.65 maximum_ratio_error=0.004994 dB
+Bowed body formants: 492 checks, 0 failures
+<end of output>
+Test time =   2.45 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_bowed_body_formant_tests" end time: Nov 23 22:36 MST
+"cs80_bowed_body_formant_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+149/210 Testing: cs80_instrument_body_tests
+149/210 Test: cs80_instrument_body_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_instrument_body_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_instrument_body_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+DECAY Piano strings        upper/fundamental change  -14.61 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 72 velocity 0.30: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay
+MALLET note 72 velocity 0.85: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay
+REGISTER DECAY Tine electric piano  low -1.762 dB high -4.085 dB
+REGISTER DECAY Reed electric piano  low -3.434 dB high -7.110 dB
+REGISTER DECAY Nylon strings        low -3.625 dB high -7.505 dB
+REGISTER DECAY Steel strings        low -1.526 dB high -3.160 dB
+REGISTER DECAY Plucked bass         low -2.290 dB high -4.740 dB
+REGISTER DECAY Vibraphone           low -0.901 dB high -1.613 dB
+REGISTER DECAY Marimba              low -5.906 dB high -14.141 dB
+REGISTER DECAY Celesta              low -2.919 dB high -3.719 dB
+PIANO TWO-STAGE prompt -5.921 dB, aftersound -4.900 dB
+PICKUP CURVATURE Tine electric piano  +0.885 dB
+PICKUP CURVATURE Reed electric piano  +1.678 dB
+PIANO REGISTER CONTINUITY worst matched residual -75.242 dB
+SUSTAINED Bowed strings        equal-RMS effort +5.635 dB; onset growth +7.870 dB
+SUSTAINED Flute                equal-RMS effort +7.081 dB; onset growth +2.055 dB
+SUSTAINED Clarinet             equal-RMS effort +4.093 dB; onset growth +4.869 dB
+SUSTAINED Oboe                 equal-RMS effort +4.544 dB; onset growth +4.680 dB
+SUSTAINED Bassoon              equal-RMS effort +4.404 dB; onset growth +5.293 dB
+SUSTAINED Brass                equal-RMS effort +5.865 dB; onset growth +5.945 dB
+BODY SIZE Bowed strings        size 2.10 max partial-balance change 4.910 dB
+BODY SIZE Flute                size 1.80 max partial-balance change 0.373 dB
+BODY SIZE Clarinet             size 2.00 max partial-balance change 15.131 dB
+BODY SIZE Oboe                 size 1.35 max partial-balance change 3.157 dB
+BODY SIZE Bassoon              size 1.80 max partial-balance change 8.980 dB
+BODY SIZE Brass                size 1.80 max partial-balance change 3.871 dB
+CLARINET register even/odd -12.818 to 1.798 dB; max half-step 1.821 dB
+CLARINET register even/odd -12.819 to 1.800 dB; max half-step 1.818 dB
+LIVE PRESSURE Bowed strings        spectrum +0.588 dB; first-2ms/settled difference 0.1442
+LIVE PRESSURE Flute                spectrum +1.757 dB; first-2ms/settled difference 0.1263
+LIVE PRESSURE Clarinet             spectrum +0.523 dB; first-2ms/settled difference 0.1344
+LIVE PRESSURE Oboe                 spectrum +1.066 dB; first-2ms/settled difference 0.1455
+LIVE PRESSURE Bassoon              spectrum +1.298 dB; first-2ms/settled difference 0.1419
+LIVE PRESSURE Brass                spectrum +2.106 dB; first-2ms/settled difference 0.1449
+TIMBRE MOTION brass 0.1758 dB held range, 0.0888 dB maximum 200ms step
+Instrument bodies: 2077 checks, 0 failures; 41062350 generated samples
+<end of output>
+Test time =   3.31 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_instrument_body_tests" end time: Nov 23 22:36 MST
+"cs80_instrument_body_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+159/210 Testing: cs80_bass_plucked_refinement_tests
+159/210 Test: cs80_bass_plucked_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_bass_plucked_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_bass_plucked_refinement_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+TOUCH Analog Bass        8.408 dB
+TOUCH Resonance Bass     8.736 dB
+TOUCH Sine Bass          9.253 dB
+TOUCH Sub Bass           9.381 dB
+TOUCH Pluck Bass         9.270 dB
+TOUCH Fretless Glide     8.975 dB
+TOUCH Funk Bass          9.144 dB
+TOUCH Brass Bass         7.954 dB
+TOUCH Octave Bass        8.446 dB
+TOUCH Pulse Bass         8.360 dB
+TOUCH Round Bass         8.024 dB
+TOUCH Velocity Bass      9.635 dB
+TOUCH Rubber Bass        8.289 dB
+TOUCH Dark Bass          7.498 dB
+TOUCH Bright Bass        8.662 dB
+TOUCH Picked Bass        9.294 dB
+TOUCH Upright Pluck      9.178 dB
+TOUCH Fifth Bass         8.304 dB
+TOUCH Squelch Bass       8.920 dB
+TOUCH Ring Bass          8.392 dB
+TOUCH Sub Wobble Bass    8.123 dB
+TOUCH Pressure Bass      7.539 dB
+TOUCH Contour Bass       8.908 dB
+TOUCH Guitar I           8.916 dB
+TOUCH Guitar II          9.206 dB
+TOUCH Funky Pluck I      8.991 dB
+TOUCH Funky Pluck II     8.656 dB
+TOUCH Harp               8.927 dB
+TOUCH Koto               9.228 dB
+TOUCH Banjo              9.066 dB
+TOUCH Mandolin           9.065 dB
+TOUCH Drone Pluck        8.407 dB
+TOUCH Nylon Pluck        8.846 dB
+TOUCH Steel Pluck        9.091 dB
+TOUCH Muted Pluck        9.476 dB
+TOUCH Kalimba            10.026 dB
+TOUCH Zither             8.836 dB
+TOUCH Dulcimer Pluck     9.203 dB
+TOUCH Pressure Pluck     8.750 dB
+BODY  Guitar I           -30.045 dB aftersound
+BODY  Guitar II          -22.502 dB aftersound
+BODY  Nylon Pluck        -29.625 dB aftersound
+BODY  Steel Pluck        -21.304 dB aftersound
+BODY  Dulcimer Pluck     -24.514 dB aftersound
+PEDAL key damping -55.523 dB
+BassPluckedRefinementTests: 149 checks, 0 failures
+<end of output>
+Test time =  15.53 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_bass_plucked_refinement_tests" end time: Nov 23 22:37 MST
+"cs80_bass_plucked_refinement_tests" time elapsed: 00:00:15
+----------------------------------------------------------
+
+160/210 Testing: cs80_brass_organ_refinement_tests
+160/210 Test: cs80_brass_organ_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_brass_organ_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_brass_organ_refinement_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+BRASS Brass Swell I           soft/firm 8.653 dB
+BRASS Brass Swell II          soft/firm 8.831 dB
+PRESSURE range 21.867 dB
+BRASS Pressure Swell Brass    soft/firm 4.546 dB
+BRASS Resonant Swell Brass    soft/firm 7.869 dB
+BRASS Noir Swell Brass        soft/firm 7.496 dB
+BRASS Sforzando Brass         soft/firm 9.697 dB
+BRASS Brass Stab              soft/firm 9.853 dB
+BRASS Horn Section            soft/firm 8.588 dB
+BRASS Covered Horn            soft/firm 8.154 dB
+BRASS Muted Trumpet           soft/firm 8.663 dB
+BRASS Trombone Glide          soft/firm 8.074 dB
+BRASS Fanfare Brass           soft/firm 9.292 dB
+BRASS Brass Ensemble 16       soft/firm 8.452 dB
+BRASS Low Brass               soft/firm 7.899 dB
+BRASS Velvet Brass            soft/firm 8.051 dB
+BRASS Bright Brass Poly       soft/firm 8.981 dB
+BRASS Brass Pad Swell         soft/firm 7.495 dB
+BRASS Fifth Brass             soft/firm 9.219 dB
+BRASS Wah Brass               soft/firm 8.632 dB
+BRASS Synth Horns             soft/firm 8.137 dB
+BRASS Brass Bite              soft/firm 9.705 dB
+BRASS Distant Brass           soft/firm 7.779 dB
+BRASS Brass Crescendo         soft/firm 8.073 dB
+BRASS Cuivre Brass            soft/firm 8.571 dB
+BRASS Tuba                    soft/firm 8.454 dB
+BRASS Brass Octaves           soft/firm 9.192 dB
+BRASS Swell And Fall          soft/firm 8.407 dB
+BRASS Reed Brass              soft/firm 9.185 dB
+BRASS Brass Glide Lead        soft/firm 9.857 dB
+BRASS Tremolo Brass           soft/firm 8.134 dB
+BRASS Contour Brass           soft/firm 9.278 dB
+BRASS Ring Breath Brass       soft/firm 8.310 dB
+ORGAN Flute Organ 8+4         dynamics 0.000 dB; 75-105 ms key damping -50.323 dB
+ORGAN Flute Organ 16+8        dynamics 0.000 dB; 75-105 ms key damping -43.642 dB
+ORGAN Percussive Organ        dynamics 0.000 dB; 75-105 ms key damping -68.511 dB
+ORGAN Reed Organ              dynamics 0.000 dB; 75-105 ms key damping -47.700 dB
+ORGAN Church Organ            dynamics 0.000 dB; 75-105 ms key damping -39.544 dB
+ORGAN Chapel Organ            dynamics 0.000 dB; 75-105 ms key damping -43.220 dB
+ORGAN Theatre Organ           dynamics 0.000 dB; 75-105 ms key damping -42.089 dB
+ORGAN Tremolo Organ           dynamics 0.000 dB; 75-105 ms key damping -39.501 dB
+ORGAN Mellow Organ            dynamics 0.000 dB; 75-105 ms key damping -44.591 dB
+ORGAN Bright Organ            dynamics 0.000 dB; 75-105 ms key damping -55.872 dB
+ORGAN Pipe Organ              dynamics 0.000 dB; 75-105 ms key damping -43.364 dB
+ORGAN Combo Organ             dynamics 0.000 dB; 75-105 ms key damping -59.589 dB
+ORGAN Fifth Organ             dynamics 0.000 dB; 75-105 ms key damping -49.441 dB
+ORGAN Organ Vibrato           dynamics 0.000 dB; 75-105 ms key damping -51.229 dB
+BrassOrganRefinementTests: 200 checks, 0 failures
+<end of output>
+Test time =  60.82 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_brass_organ_refinement_tests" end time: Nov 23 22:37 MST
+"cs80_brass_organ_refinement_tests" time elapsed: 00:01:00
+----------------------------------------------------------
+
+161/210 Testing: cs80_wind_string_refinement_tests
+161/210 Test: cs80_wind_string_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_wind_string_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_wind_string_refinement_tests" start time: Nov 23 22:36 MST
+Output:
+----------------------------------------------------------
+RESPONSE,Ensemble Strings,60,7.977012,-45.605655,-37.628644,-2.259198
+RESPONSE,Slow Strings,60,6.305946,-42.660798,-36.354852,-2.557927
+RESPONSE,Violins,60,8.395094,-46.612807,-38.217713,-9.842133
+RESPONSE,Cellos,60,8.288591,-44.313960,-36.025369,-7.874740
+RESPONSE,Octave Strings,60,8.891212,-45.272981,-36.381769,-5.926862
+RESPONSE,PWM Strings,60,6.916346,-30.422856,-23.506510,-9.779411
+RESPONSE,Thin Strings,60,6.457816,-40.789517,-34.331701,-3.314411
+RESPONSE,Dark Strings,60,7.865194,-40.968208,-33.103013,-4.113781
+RESPONSE,Tremolo Strings,60,9.373268,-43.378333,-34.005065,-13.301579
+RESPONSE,Solo Violin,60,9.052035,-44.521691,-35.469655,-22.609573
+RESPONSE,Solo Cello,60,8.601161,-43.317658,-34.716496,-16.150737
+RESPONSE,Pizzicato Strings,60,10.995151,-44.680112,-33.684961,-84.926199
+RESPONSE,Swell Strings,60,-0.684318,-49.862185,-50.546503,-5.155303
+RESPONSE,Chamber Strings,60,7.190162,-45.612878,-38.422716,-7.504241
+RESPONSE,Wide Strings,60,7.648886,-43.506167,-35.857281,-0.682562
+RESPONSE,Crystal Strings,60,8.997724,-47.811871,-38.814147,-5.796879
+RESPONSE,Fifth Strings,60,7.279205,-48.116624,-40.837419,-5.090708
+RESPONSE,Analog Orchestra,60,6.942165,-35.912480,-28.970315,-3.388326
+RESPONSE,Spiccato Strings,60,7.589767,-46.005818,-38.416051,-80.195023
+RESPONSE,Bowed Swell Strings,60,6.012921,-48.098747,-42.085825,2.391201
+RESPONSE,Synth Strings Saw,60,6.424113,-37.404167,-30.980054,0.608390
+GATE,String Machine,-16.492736
+RESPONSE,String Machine,60,0.000000,-31.771525,-31.771525,-5.914248
+RESPONSE,Contour Strings,60,8.653490,-47.927566,-39.274076,-1.466739
+RESPONSE,Ring Strings,60,6.920259,-39.484367,-32.564107,-0.825162
+RESPONSE,Velvet Strings,60,6.930124,-41.358889,-34.428764,-6.888702
+RESPONSE,Tutti Strings,60,8.588742,-45.072487,-36.483745,-7.817248
+RESPONSE,Marcato Strings,60,8.663979,-48.455373,-39.791394,-18.861537
+RESPONSE,Air Strings,60,6.146594,-42.107081,-35.960486,-4.700831
+RESPONSE,Flute,60,10.037246,-40.417361,-30.380115,-38.797951
+RESPONSE,Breathy Flute,60,9.515177,-40.557801,-31.042624,-28.366485
+RESPONSE,Pan Flute,60,10.406136,-41.634103,-31.227967,-45.788393
+RESPONSE,Recorder,60,9.511498,-40.101403,-30.589905,-50.213371
+RESPONSE,Clarinet,60,9.887181,-41.849605,-31.962424,-44.756156
+RESPONSE,Bass Clarinet,60,9.591033,-42.051110,-32.460077,-31.804463
+RESPONSE,Oboe,60,10.685162,-47.211202,-36.526040,-41.840352
+RESPONSE,English Horn,60,10.052270,-46.477079,-36.424809,-28.885929
+RESPONSE,Bassoon,60,10.095332,-45.258826,-35.163494,-43.154677
+RESPONSE,Soprano Reed,60,10.604075,-47.083422,-36.479348,-41.706584
+RESPONSE,Ocarina,60,9.608078,-40.192925,-30.584847,-43.372977
+RESPONSE,Piccolo,60,10.494444,-39.321767,-28.827323,-50.956364
+RESPONSE,Whistle,60,10.520057,-35.759944,-25.239887,-53.345712
+RESPONSE,Shakuhachi,60,9.920047,-40.794301,-30.874254,-26.239264
+RESPONSE,Flute,48,10.056663,-40.357427,-30.300764,-38.922133
+RESPONSE,Flute,72,10.658555,-41.382467,-30.723913,-38.694716
+RESPONSE,Clarinet,48,9.806174,-41.899399,-32.093225,-44.645332
+RESPONSE,Clarinet,72,10.930550,-45.306348,-34.375797,-44.001348
+RESPONSE,Bass Clarinet,48,9.479987,-42.211782,-32.731794,-31.502902
+RESPONSE,Bass Clarinet,72,10.755729,-45.589600,-34.833871,-31.807135
+RESPONSE,Oboe,48,10.230505,-48.205264,-37.974759,-41.014978
+RESPONSE,Oboe,72,12.159780,-46.849674,-34.689894,-42.707640
+RESPONSE,English Horn,48,9.697155,-48.054252,-38.357098,-28.581801
+RESPONSE,English Horn,72,11.444965,-45.926719,-34.481755,-29.365552
+RESPONSE,Bassoon,48,9.737327,-45.946256,-36.208928,-44.569707
+RESPONSE,Bassoon,72,11.774681,-45.568427,-33.793746,-44.249398
+RESPONSE,Piccolo,48,10.427409,-39.195419,-28.768010,-51.307762
+RESPONSE,Piccolo,72,13.032788,-42.528121,-29.495333,-50.206852
+RESPONSE,Solo Violin,48,8.960924,-45.514354,-36.553430,-22.201218
+RESPONSE,Solo Violin,72,10.162468,-44.495953,-34.333485,-22.791000
+RESPONSE,Solo Cello,48,8.740694,-44.064451,-35.323757,-16.660978
+RESPONSE,Solo Cello,72,9.613340,-43.653631,-34.040290,-16.352269
+RESPONSE,Pizzicato Strings,48,11.006890,-44.494703,-33.487814,-85.123437
+RESPONSE,Pizzicato Strings,72,12.717093,-47.106757,-34.389664,-84.221431
+RESPONSE,Spiccato Strings,48,7.495711,-47.081510,-39.585798,-79.025276
+RESPONSE,Spiccato Strings,72,8.708712,-46.162816,-37.454104,-81.156970
+RESPONSE,Tutti Strings,48,8.776819,-48.645726,-39.868907,-4.993842
+RESPONSE,Tutti Strings,72,9.036721,-45.558427,-36.521706,-7.135292
+PRESSURE,Swell Strings,14.288808,-15.386022
+Wind/string refinement: 502 checks, 0 failures
+<end of output>
+Test time =  87.87 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_wind_string_refinement_tests" end time: Nov 23 22:38 MST
+"cs80_wind_string_refinement_tests" time elapsed: 00:01:27
+----------------------------------------------------------
+
+End testing: Nov 23 22:38 MST

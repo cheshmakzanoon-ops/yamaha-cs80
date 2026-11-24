@@ -252,6 +252,10 @@ enum : int
     // published eight body controls so old automation slots stay unchanged.
     P_body1Size,
     P_body2Size,
+    // Distinct resonator shapes append separately: extending the existing
+    // model range would change the meaning of saved normalized automation.
+    P_body1Variant,
+    P_body2Variant,
     P_numParams
 };
 
@@ -280,6 +284,11 @@ inline constexpr int bodyParam(int channel, int offset) noexcept
 inline constexpr int bodySizeParam(int channel) noexcept
 {
     return channel == 0 ? P_body1Size : P_body2Size;
+}
+
+inline constexpr int bodyVariantParam(int channel) noexcept
+{
+    return channel == 0 ? P_body1Variant : P_body2Variant;
 }
 
 struct ParamDef
@@ -496,9 +505,12 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "body2_decay", "BODY II PARTIAL DECAY (NEXT NOTE)", 0.25f, 4.0f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
     { "body1_size", "BODY I RESONANT SIZE (NEXT NOTE)", 0.5f, 2.5f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
     { "body2_size", "BODY II RESONANT SIZE (NEXT NOTE)", 0.5f, 2.5f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
+    { "body1_variant", "BODY I RESONATOR VARIANT (NEXT NOTE)", 0.0f, 4.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body2_variant", "BODY II RESONATOR VARIANT (NEXT NOTE)", 0.0f, 4.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
 };
 static_assert(P_body1Model == 190, "all previously shipped core indexes must remain stable");
 static_assert(P_body1Size == 198 && P_body2Size == 199, "body size appends after published body indexes");
+static_assert(P_body1Variant == 200 && P_body2Variant == 201, "body variants preserve all 200 published core indexes");
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);
 

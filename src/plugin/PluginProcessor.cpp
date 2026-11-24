@@ -4,6 +4,7 @@
 
 #include "PluginEditor.h"
 #include "core/VoiceModes.h"
+#include "core/InstrumentBodyVariants.h"
 #include "PluginProcessorLibrary.h"
 #include "ParameterStateChildIndex.h"
 #include "CircuitPolicyParameter.h"
@@ -440,6 +441,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // AU ordering hint rather than inserted into either existing rank group.
     for (int rank = 0; rank < 2; ++rank)
         layout.add(make(cs80::bodySizeParam(rank), 17));
+
+    // Do not extend the model choices or insert into their groups: both
+    // choices append after all 306 published host slots, including geometry.
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        juce::StringArray choices;
+        for (int variant = 0; variant <= cs80::body::maxVariant; ++variant)
+            choices.add(cs80::body::variantName(variant));
+        layout.add(std::make_unique<juce::AudioParameterChoice>(
+            juce::ParameterID { parameterId(cs80::bodyVariantParam(rank)), 18 },
+            rank == 0 ? "Body I resonator variant (next note)" : "Body II resonator variant (next note)",
+            choices, cs80::body::standard));
+    }
 
     return layout;
 }

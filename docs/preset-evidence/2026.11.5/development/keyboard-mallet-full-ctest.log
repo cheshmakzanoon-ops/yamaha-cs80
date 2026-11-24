@@ -1,0 +1,74 @@
+Start testing: Nov 23 22:23 MST
+----------------------------------------------------------
+158/206 Testing: cs80_mallet_preset_refinement_tests
+158/206 Test: cs80_mallet_preset_refinement_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_mallet_preset_refinement_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_mallet_preset_refinement_tests" start time: Nov 23 22:23 MST
+Output:
+----------------------------------------------------------
+TOUCH Ring Bell I         8.880 dB
+TOUCH Ring Bell II        9.276 dB
+TOUCH Tubular Bells       9.084 dB
+TOUCH Glockenspiel        8.992 dB
+TOUCH Celeste Bells       8.837 dB
+TOUCH Music Box           8.694 dB
+TOUCH Gong                8.688 dB
+TOUCH Temple Bell         8.930 dB
+TOUCH Marimba             8.865 dB
+TOUCH Vibraphone          8.809 dB
+TOUCH Xylophone           9.027 dB
+TOUCH Crystal Bell        9.053 dB
+TOUCH Bell Pad            8.726 dB
+TOUCH Ring Sweep Bell     9.254 dB
+TOUCH Steel Drum          9.675 dB
+TOUCH Chimes              8.958 dB
+TOUCH Dark Bell           8.825 dB
+TOUCH Bell Choir          8.849 dB
+TOUCH Metallic Keys       8.493 dB
+TOUCH Agogo               9.007 dB
+TOUCH Clock Bells         8.633 dB
+TOUCH Ring Mallet         9.290 dB
+TOUCH Ambient Bells       6.850 dB
+MATERIAL Xylophone    note 48 third -8.934 dB; control difference 94.928 dB
+MATERIAL Steel Drum   note 48 third -11.819 dB; control difference 75.180 dB
+MATERIAL Xylophone    note 60 third -11.261 dB; control difference 116.446 dB
+MATERIAL Steel Drum   note 60 third -12.218 dB; control difference 93.736 dB
+MATERIAL Xylophone    note 72 third -14.062 dB; control difference 122.876 dB
+MATERIAL Steel Drum   note 72 third -14.640 dB; control difference 113.399 dB
+VIBRAPHONE DAMPING -72.435 dB relative to held note
+WOOD AFTERSOUND marimba -17.196 dB; xylophone -30.903 dB
+MalletPresetRefinement: 136 checks, 0 failures
+<end of output>
+Test time =  13.63 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mallet_preset_refinement_tests" end time: Nov 23 22:23 MST
+"cs80_mallet_preset_refinement_tests" time elapsed: 00:00:13
+----------------------------------------------------------
+
+157/206 Testing: cs80_keyboard_response_tests
+157/206 Test: cs80_keyboard_response_tests
+Command: "/workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset/cs80_keyboard_response_tests"
+Directory: /workspace/scratch/c98fb40a9529/yamaha-cs80/build-preset
+"cs80_keyboard_response_tests" start time: Nov 23 22:23 MST
+Output:
+----------------------------------------------------------
+Stage Keys dynamics 9.552 dB; held aftersound -28.318 dB relative to onset
+Soft Keys dynamics 9.496 dB; held aftersound -30.389 dB relative to onset
+Honky Keys dynamics 9.375 dB; held aftersound -33.843 dB relative to onset
+Velocity Keys dynamics 10.749 dB; held aftersound -30.883 dB relative to onset
+Electric Piano I dynamics 9.576 dB; held aftersound -21.411 dB relative to onset
+Electric Piano II dynamics 9.530 dB; held aftersound -20.822 dB relative to onset
+Tine Piano dynamics 9.335 dB; held aftersound -22.140 dB relative to onset
+Reed Piano dynamics 10.078 dB; held aftersound -22.730 dB relative to onset
+KeyboardResponseTests: 124 checks, 0 failures
+<end of output>
+Test time =  42.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_response_tests" end time: Nov 23 22:24 MST
+"cs80_keyboard_response_tests" time elapsed: 00:00:42
+----------------------------------------------------------
+
+End testing: Nov 23 22:24 MST

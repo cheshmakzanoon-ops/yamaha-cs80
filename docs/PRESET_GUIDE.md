@@ -1,6 +1,6 @@
 # Factory preset guide
 
-The **2026.11.4 factory library** contains **523 existing programs**. Its **521
+The **2026.11.5 factory library** contains **523 existing programs**. Its **521
 musical programs** have been reprogrammed; **Init Patch** and **Init Circuit**
 remain starting points. All names, categories and program addresses keep their
 existing order. No presets have been added or removed.
@@ -13,8 +13,10 @@ resonant size distinguishes related instruments without transposing the note.
 Envelopes, touch, register and effects complete the individual sounds.
 These are authored synthesized interpretations, not samples
 or a demonstrated exact match to an acoustic instrument or physical CS-80.
-The [2026.11.4 revision report](CIRCUIT_LIBRARY_2026_11_4.md) explains the sound
+The [2026.11.5 revision report](CIRCUIT_LIBRARY_2026_11_5.md) explains the sound
 changes, new controls and evidence. The
+[2026.11.4 report](CIRCUIT_LIBRARY_2026_11_4.md) records the preceding filtering
+and resonant-size work. The
 [2026.11.3 instrument-voicing report](CIRCUIT_LIBRARY_2026_11_3.md) documents the
 introduction of these instrument bodies. The
 [2026.11.2 circuit library report](CIRCUIT_LIBRARY_2026_11_2.md) documents the earlier original-bank
@@ -165,7 +167,8 @@ then add it to hear the authored level, brightness and vibrato response.
 
 **Marimba / Xylophone / Clock Bells:** try Marimba around MIDI 48–72 and the
 higher registrations around MIDI 48–67. Marimba's rounded body outlasts its
-short wooden knock. Xylophone uses a brighter 4′ body and very brief 2′ strike.
+short wooden knock. Xylophone uses a brighter 4′ body and very brief 4′ strike
+at the same register, with a strong upper mode near three times the fundamental.
 Clock Bells combines 4′ and 2⅔′ ranks a fifth apart, with different decay
 lengths. Play single notes first so the two ringing pitches remain easy to hear.
 [Bell source](../src/core/curated/Bells.inc)
@@ -249,13 +252,13 @@ may suggest, and why Clock Bells' two ranks form a fifth rather than an octave.
 
 The **modern** tag identifies sounds using software effects, modulation or
 arpeggiation within the same circuit instrument. In the later 301-address
-collection, 24 programs carry this tag. The 18 programs in the [Modern collection source](../src/core/curated/Modern.inc)
+collection, 26 programs carry this tag. The 18 programs in the [Modern collection source](../src/core/curated/Modern.inc)
 are Delay Brass, Plate Pad, Phaser Strings, Drive Lead, Arp Poly, Arp Bells,
 Arp Bass, LFO Sweep Pad, LFO Pan Keys, PWM LFO Strings, Stereo Delay Pluck,
 Ambient Bells, Ensemble Plus, Space Lead, Random Arp, Drive Bass,
-Phased Polysynth and Tremolo LFO Organ. Six further programs carry that tag:
+Phased Polysynth and Tremolo LFO Organ. Eight further programs carry that tag:
 **Rain Pad**, **Random Filter**, **Random Pitch Blips**, **Bubbles**, **Rain**
-and **Clockwork**. [Pad source](../src/core/curated/Pads.inc) · [FX source](../src/core/curated/Fx.inc)
+and **Clockwork**, plus **Wind** and **Thunder**. [Pad source](../src/core/curated/Pads.inc) · [FX source](../src/core/curated/Fx.inc)
 
 Hold two to four notes around MIDI 48–60 for **Arp Poly**; use sparse picked
 figures around MIDI 48–72 for **Stereo Delay Pluck**. Give **LFO Sweep Pad**
@@ -279,8 +282,8 @@ arpeggiator pace does not automatically retime those effects.
 
 In the host's parameter list, **Instrument body I** and **Instrument body II**
 each provide **Model**, **Mix**, **Brightness** and **Partial decay**. Two
-appended **Resonant size** parameters control the corresponding ranks. Model,
-partial decay and size are captured on the **next accepted note**; mix and
+appended **Resonant size** and two **Variant** parameters control the corresponding
+ranks. Model, partial decay, size and variant are captured on the **next accepted note**; mix and
 brightness remain live. Selecting Off also takes effect on the next note,
 preserving an already-ringing body. On struck models, a larger Partial decay
 lets the modes ring longer. **Partial decay has no effect on sustained bowed,
@@ -294,6 +297,16 @@ without transposing the played note. It represents an authored voicing factor,
 not a measured instrument dimension.
 [Control definitions](../src/core/Params.h) ·
 [Per-control help](../src/plugin/EvidenceRegister.h)
+
+Variant defaults to **Standard**. **Xylophone bar** changes the Marimba model's
+bar tuning, contact and decay; **Steelpan shell** changes the Vibraphone model
+to a distinct shell spectrum. **Choir ah** and **Choir oo** use the Organ model
+as a voiced source with fixed vowel resonances, expressive entrance and breath.
+An incompatible model/variant combination uses Standard. These choices leave
+the established 0–19 Model selector and its normalized automation unchanged.
+The existing Xylophone, Steel Drum, Choir Pad and Dark Choir recipes select
+their appropriate variants automatically. These are synthesized vowels and
+material models, not recordings.
 
 At a high body mix, changing the rank's saw/pulse waveform may have little
 effect. The body blends with the filtered oscillator and sine signal **before
@@ -309,7 +322,7 @@ the complete note's articulation.
 
 These excitations are available on **PANEL sources**. Selecting a hardware tone
 or memory source suppresses them, preserving those separate source paths.
-Their ten saved controls are exposed in the DAW's parameter list and automation
+Their twelve saved controls are exposed in the DAW's parameter list and automation
 editor. The custom Studio editor and standalone interface do not yet provide
 dedicated body-control widgets.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
@@ -317,7 +330,7 @@ selector. [Revision details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playin
 
 ## Recalling a revised sound
 
-**2026.11.4 identifies a sound-data revision**, separate from the
+**2026.11.5 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable while the factory voicings change. A session or user
 preset restores its stored controls, so an older project can show a factory
@@ -325,7 +338,7 @@ name while still using its earlier recipe. Save a user copy to retain edits.
 
 To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
 factory entry and explicitly press **LOAD / RELOAD**. Enter or double-click
-also loads it. Play fresh notes afterward: body model, decay and size take
+also loads it. Play fresh notes afterward: body model, decay, size and variant take
 effect at note onset. Save the project if you want it to retain the new recipe.
 
 With **Audition** enabled, clicking a row already marked loaded can leave the
@@ -343,14 +356,15 @@ remains separate from factory selection.
 
 Old saved patches without body fields restore both models and mixes to their
 off defaults. **Reload the factory program to hear the new body and voicing**,
-then save your edited copy. The immediately preceding release's **198 core IDs
-and 304 host automation positions are preserved**; two appended size controls
-bring the totals to **200 and 306**. A preceding body-aware patch restores its
-eight body controls and defaults both sizes to 1. Session, user-preset and A/B
-recall include all ten controls. Existing body-enabled saved sounds use the
-revised excitation and filtering code, so retaining their parameter values
-does not freeze their old audio. The circuit path with bodies off is preserved.
-[Compatibility details](CIRCUIT_LIBRARY_2026_11_4.md#saved-projects-and-program-identities)
+then save your edited copy. The immediately preceding release's **200 core IDs
+and 306 host automation positions are preserved**; two appended variant controls
+bring the totals to **202 and 308**. A preceding body-aware patch without size
+fields defaults both sizes to 1; a patch without variants defaults both to
+Standard. Session, user-preset and A/B recall include all twelve controls.
+Existing body-enabled saved sounds use the revised excitation and articulation
+code, so retaining their parameter values does not freeze their old audio.
+The circuit path with bodies off is preserved.
+[Compatibility details](CIRCUIT_LIBRARY_2026_11_5.md#saved-sessions-and-automation)
 
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
@@ -405,10 +419,10 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.4 roster
-produces **138 WAVs covering 74 existing programs**, totaling **870 seconds
-(14 minutes 30 seconds)** in 30 folders, with the complete 523-program,
-200-parameter inventory, metrics,
+name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.5 roster
+produces **171 WAVs covering 81 existing programs**, totaling **1,033.2 seconds
+(17 minutes 13.2 seconds)** in 40 folders, with the complete 523-program,
+202-parameter inventory, metrics,
 source commit/tree, executable hash, provenance and checksums:
 
 - All 24 keyboard programs at firm velocity 0.85, held for four seconds with
@@ -441,6 +455,13 @@ source commit/tree, executable hash, provenance and checksums:
   velocities 0.3 and 0.85 with a three-second hold and one-second release:
   sixteen files. This grid compares equal played keys; Bass Clarinet's main
   body sounds an octave lower.
+- Xylophone, Steel Drum, Marimba and Vibraphone at MIDI 48, 60 and 72, each at
+  velocities 0.25 and 0.85 with a 3.5-second hold and 0.8-second release:
+  twenty-four files comparing material, register and strike response.
+- Choir Pad and Dark Choir at MIDI 48, 60 and 72, with a six-second hold and
+  one-second release: six files comparing the two vowel voices.
+- Frozen Leads 121, Soft Leads 128 and Neon Sequences 174, with a five-second
+  hold and one-second release: three original-address articulation examples.
 
 The matched-foundation examples compare complete presets, including their
 different articulation, filtering and support ranks. They do not isolate the
