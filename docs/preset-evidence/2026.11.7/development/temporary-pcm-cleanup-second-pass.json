@@ -1,0 +1,920 @@
+{
+  "schema": 1,
+  "purpose": "Reclaim only reproducible completed current-session PCM before acquiring final native installation/audition artifacts; no source, metrics, logs, binaries or unrelated scratch data removed.",
+  "scope": "A13 manifest-owned 72 WAVs and A16 exact-digest PCM files only; other generic /tmp agent directories are untouched.",
+  "evidence_bindings": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a13/capture-manifest.json",
+      "sha256": "54634406211c4bf7d4e353fd5f3a30761d5943f8897cf5a07e995c326df4e0cb"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a16/pcm-hashes.json",
+      "sha256": "ac6b406019093094d11b63acdcf1d3a46c558a385dfb794a016d042760db66be"
+    }
+  ],
+  "raw_pcm_no_longer_retained": true,
+  "files": [
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/359-Pressure-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "6abb0d9b9bfaa4a4e9e136c704967c42eec5201614366d4b62291d7aeadc65b0",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/353-Velocity-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "79ed520daefa8413469a8cefbf1965ccc7195574b786f473d755395b272f8766",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/352-Stage-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "205a551ffefaa55d0dae10bc60bdfe96e134df9dda9304f813a91eaf5ececaff",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/350-Soft-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "cffdf1f1699d7432d0d53ad03662f0a6b6704832dd7f2f56ede5266da5e437a6",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/349-Saw-Pulse-Piano.wav",
+      "bytes": 5068858,
+      "sha256": "cfbc532b7e72db4055ee39b40adaa4ac0cbfb0707ef43b3ed90a1ea52b64adb5",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/346-Honky-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "b4575e47ad830739bb32cdfdd7471c5925b1367eec663e1d009515a27c18dc9e",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/145-Golden-Keys-102.wav",
+      "bytes": 5068858,
+      "sha256": "842035c805c6df8c0e1405e7f18060a78d2221c4f72cd61b021161177fe9fb34",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/143-Neon-Keys-100.wav",
+      "bytes": 5068858,
+      "sha256": "0d40d80176d81caf290f34724b1388f98d1e941d912aa63e54477489144b61d9",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/141-Velvet-Keys-98.wav",
+      "bytes": 5068858,
+      "sha256": "f24512a9ef0f92aff541fa0015c9a70aec827d92bfd1a6dcb4183494e0d0822c",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-firm/38-Analog-Piano.wav",
+      "bytes": 5068858,
+      "sha256": "3dcfdbe17159f3689599eee39773fd06208551040d3f7956af61638961fb9107",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-soft/350-Soft-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "a640e45881626beba2cef44b072a7d8a9a1edd31156f07d58e94a54346b823ff",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-soft/352-Stage-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "53b3312f70a3016dd60c8f6024ad0f19733b7fb344326681ccc8f2acc66d131a",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-early/350-Soft-Keys.wav",
+      "bytes": 844858,
+      "sha256": "be6cb508c1c6b1fc2407987322a955c01b755bf58d4f895bf03cf29aada12a7c",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n36-early/352-Stage-Keys.wav",
+      "bytes": 844858,
+      "sha256": "068467f0f7c1e29e9af2f26120027894e7198b6ef5262f0127a55159409a7153",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/359-Pressure-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "727b1cb7a94c2b937989b0625dba66caa7e454def6cb156182b44caeadf15079",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/353-Velocity-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "8f752052dd09245915248fdf7344fb7b65d018078eb0c75fd06ecaf7aa3a35bc",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/352-Stage-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "caeeca48bb4fde75f9a42dd02532b55bb9a31196a2eadc39b57eeb067b4ab113",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/350-Soft-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "7fddc81467e12b8ffb16e8292b7bc8d1a131dd8b7fa32632cf082c3d8a57a3ff",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/349-Saw-Pulse-Piano.wav",
+      "bytes": 2764858,
+      "sha256": "40811aebcee00e2072f69c3ca6838cd8d45a6581391309a7575e95c85437b6f1",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/346-Honky-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "81d33de8427b0f1bb76cf5f81f9ce63a46459d66f5061095e95a543f1c4afe9d",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/145-Golden-Keys-102.wav",
+      "bytes": 2764858,
+      "sha256": "bada51aa187865e60ff2da0aeb1d0f4b18054261d8d620004992d20b1382501e",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/143-Neon-Keys-100.wav",
+      "bytes": 2764858,
+      "sha256": "efe6ba883cde15c6166bd86987859d1e71a8e2e658f9634b818a6d311553b59d",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/141-Velvet-Keys-98.wav",
+      "bytes": 2764858,
+      "sha256": "25fb68901c6b188466a9b60cb1d9e75439fb458bea299b1c5f69ebd2240d5b10",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-firm/38-Analog-Piano.wav",
+      "bytes": 2764858,
+      "sha256": "30bc6f237268d05c915b96788f26ead7782966d5c3eb01a150b4e1fcca2caf93",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-soft/350-Soft-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "5c69c994fa131b21ec172b1b06cd929d171ca60ebfb2391e173524a6363bd944",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-soft/352-Stage-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "eecdfef9c5d048ccb16bf9d70585c00481ab0561905ccc37b89ced4b7de0e615",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-early/350-Soft-Keys.wav",
+      "bytes": 844858,
+      "sha256": "c28dc7b211039f08ae0bb0444de687b125558cd45d7745e764181c52610823ce",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/pianos-n60-early/352-Stage-Keys.wav",
+      "bytes": 844858,
+      "sha256": "3a92198ff76ad7f28df564bbe616b5a9948a3f87d93150b968657689f4ba09aa",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.25/355-Reed-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "a84c5004c5beb5ae6b7195094ab0a0fad747bc321fc9122f3c0076c851bab882",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.25/338-Tine-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "2e89ebc9dd0d57e8f68b2f225cbc725ef849ab18a0fe27e30505638b02254be6",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.25/337-Electric-Piano-II.wav",
+      "bytes": 1536058,
+      "sha256": "5c68efce5da0f711ef05faff76eea2d579fa25fc6e5e4e97486b0123fb5ddfc2",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.25/336-Electric-Piano-I.wav",
+      "bytes": 1536058,
+      "sha256": "db42d2730608208d2b8cd12576524caf056a70ca31b6184464f6e87148b83cb4",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.85/355-Reed-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "3d737030acd7d3db515ea147eefd2686967c28fba814f52f29a0535422f617ab",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.85/338-Tine-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "0d66f88163ee07fc5e499d53390ab9ec08a89fd68cfda38b2e0b8edab9457ca5",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.85/337-Electric-Piano-II.wav",
+      "bytes": 1536058,
+      "sha256": "b0980d188459d484464d5f57acb989ce1c406f2aa5580eb234b5f71fd2e48a72",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/before/ep-n60-v0.85/336-Electric-Piano-I.wav",
+      "bytes": 1536058,
+      "sha256": "1763d0bc68cd20f8cb9f138b28819538c0fcfe9a5bdaf0160bbcded3e50b5bdd",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/359-Pressure-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "a503754792ef7dce338437d02c5acdfb0cfdfa113c570b531e1a39f15ae9f0d5",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/353-Velocity-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "5937578573bacad4c5269158ba9661be5437b7da3e81b1608d114543e674dffc",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/352-Stage-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "0a064a27dd95435ba0d5d2bda11388fffdf2f2e7892db384acef86be546a6787",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/350-Soft-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "9e313a23256fcaeeb09fdda712cde34426506a031e4a92feb2ff9b310a8b5456",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/349-Saw-Pulse-Piano.wav",
+      "bytes": 5068858,
+      "sha256": "d104d5f369928459509343738506b7ce4198f2595f33e93635d3f748bcf3f7c1",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/346-Honky-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "fdb3af55eada3e9fb5f0e86dd0a32b72822c460711e06885de0a4b0c1b881333",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/145-Golden-Keys-102.wav",
+      "bytes": 5068858,
+      "sha256": "50b61b9d8a61271d96bded1f8ba27e6f69dba2ce7f01b78695aa18e60ca5c938",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/143-Neon-Keys-100.wav",
+      "bytes": 5068858,
+      "sha256": "1ae255af1ee445fbcc76bf57186739f861eb390e81a46981985cc8c6cbd0b544",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/141-Velvet-Keys-98.wav",
+      "bytes": 5068858,
+      "sha256": "60a40155ba40641cdd2ce9dc672576641438c868fe10d2a00d044771d713cc50",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-firm/38-Analog-Piano.wav",
+      "bytes": 5068858,
+      "sha256": "f57d58753b4bc7cbb3699b188808a9ab19f5713bef22b4b2078940c144c41276",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-soft/350-Soft-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "b508f07f993219caac3d6df6d08aa7688b53d413b838c4ebce40c37bee35ec06",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-soft/352-Stage-Keys.wav",
+      "bytes": 5068858,
+      "sha256": "05c7e5670c93b976817bbfe53b367e192b4a24527cc36d2fe5615cb05afb6d09",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-early/350-Soft-Keys.wav",
+      "bytes": 844858,
+      "sha256": "21c3c43ed286be6ad3f0197c9fcf047c2a59a73f026377978a2dd4afc99b1a10",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n36-early/352-Stage-Keys.wav",
+      "bytes": 844858,
+      "sha256": "56a8bf0254a67ac8b4565bd0a4c5e2f8405e62cc4a7cdd776e4c2cf75526126f",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/359-Pressure-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "4e4ea0424538a72fdb4c586d155b7c11449fe08a668c9ae25bbd206a91f4c1e4",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/353-Velocity-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "51c389b7931408605317c9d519cbc525c74dd5fcac408a4172ef31270fb5fdb5",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/352-Stage-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "245150d79ce97a6a473bca095d9db074838c537e913961a75d02fd3e4e91649c",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/350-Soft-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "ffdaf35b74bc3bcfa5aa35b73861fe4a6db311f24de7ca27d6d65f010ac986f2",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/349-Saw-Pulse-Piano.wav",
+      "bytes": 2764858,
+      "sha256": "a02335121dee09bd28d75faa7c2a140664d06f5a3cc2a1e992a52f0a7a97adf9",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/346-Honky-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "88846c5a13a7ea4a7e6814d224dd9ac225b64a46141eff19699d462735c0018f",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/145-Golden-Keys-102.wav",
+      "bytes": 2764858,
+      "sha256": "2ee4ccaca5949d91ed554c0f2e94f88fc75a7490ebff4db06fe82cc6c28713f1",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/143-Neon-Keys-100.wav",
+      "bytes": 2764858,
+      "sha256": "93a27724b8662d26dc6409d23559893d984e8968625839649bdb5313eb2db025",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/141-Velvet-Keys-98.wav",
+      "bytes": 2764858,
+      "sha256": "48c37500a6294fcf634d3f639d739935584da089b16c1f7912d95929b8515566",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-firm/38-Analog-Piano.wav",
+      "bytes": 2764858,
+      "sha256": "5694090714ae1d9155e7cf9303876e10a2fec738cee2f32c705459d4a0b5f3c1",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-soft/350-Soft-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "65111c498b58b5717dc3a1e1ab13f3faf9263e93bc97021bd333d471c5f02bf3",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-soft/352-Stage-Keys.wav",
+      "bytes": 2764858,
+      "sha256": "88ba330e947fc19a6f7c5f3e9b9b477b8552b8fd693c62569ca3a62d2020aa76",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-early/350-Soft-Keys.wav",
+      "bytes": 844858,
+      "sha256": "96526aaca9a0daa9c582716289ba8c3f693947afcce9ea181e8a5c991ea11c50",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/pianos-n60-early/352-Stage-Keys.wav",
+      "bytes": 844858,
+      "sha256": "46af047d437a3aaf3f91acbf549656def9f1915d5e1ac24ea754ad71b6022aa3",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.25/355-Reed-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "a84c5004c5beb5ae6b7195094ab0a0fad747bc321fc9122f3c0076c851bab882",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.25/338-Tine-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "2e89ebc9dd0d57e8f68b2f225cbc725ef849ab18a0fe27e30505638b02254be6",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.25/337-Electric-Piano-II.wav",
+      "bytes": 1536058,
+      "sha256": "5c68efce5da0f711ef05faff76eea2d579fa25fc6e5e4e97486b0123fb5ddfc2",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.25/336-Electric-Piano-I.wav",
+      "bytes": 1536058,
+      "sha256": "db42d2730608208d2b8cd12576524caf056a70ca31b6184464f6e87148b83cb4",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.85/355-Reed-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "3d737030acd7d3db515ea147eefd2686967c28fba814f52f29a0535422f617ab",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.85/338-Tine-Piano.wav",
+      "bytes": 1536058,
+      "sha256": "0d66f88163ee07fc5e499d53390ab9ec08a89fd68cfda38b2e0b8edab9457ca5",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.85/337-Electric-Piano-II.wav",
+      "bytes": 1536058,
+      "sha256": "b0980d188459d484464d5f57acb989ce1c406f2aa5580eb234b5f71fd2e48a72",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a13/after/ep-n60-v0.85/336-Electric-Piano-I.wav",
+      "bytes": 1536058,
+      "sha256": "1763d0bc68cd20f8cb9f138b28819538c0fcfe9a5bdaf0160bbcded3e50b5bdd",
+      "ownership": "A13 current .7 capture manifest; case metrics exactly match retained capture-metrics.csv"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Delay_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "d610289b9d06a772ce5b99a4edc6a723dc7fe203386a22326b44eabb1ae881b7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Delay_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "d610289b9d06a772ce5b99a4edc6a723dc7fe203386a22326b44eabb1ae881b7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Delay_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "85c85add4a20c5e1e4913ac99fb191366782426d75453d3aaef39dbec5527286",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/French_Horn_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "87869f684566ac3edaf1e22c96cf4a6fd5a0341376af3efc6a3e4a837a40b171",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/French_Horn_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "87869f684566ac3edaf1e22c96cf4a6fd5a0341376af3efc6a3e4a837a40b171",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/French_Horn_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "df8092159f65d354c1b71674f5c83daaf8f83a39166ae4465a164e70641cc053",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Muted_Trumpet_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "0a65928df211490d0dad3e95d52000c1712e8f0ff292b368d83ded8f44ff9ab2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Muted_Trumpet_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "0a65928df211490d0dad3e95d52000c1712e8f0ff292b368d83ded8f44ff9ab2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Muted_Trumpet_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "ee390bb50bf9b023add348fa50498f7ace4ad7d8abd318a528665b151c4343fa",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Pressure_Swell_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "5162abd0c6ee52a51c81544a557700e3a1a991b411fc29ba99b77cc50b33890f",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Pressure_Swell_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "5162abd0c6ee52a51c81544a557700e3a1a991b411fc29ba99b77cc50b33890f",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Pressure_Swell_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "97bb561529eeb2b6a92e9e412ea94126a721f676e690aaf5223fc952ebeb07b5",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Synth_Horns_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Synth_Horns_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Synth_Horns_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "ecdd44b05ce8d8e3a934bd10ca54d78cda7b523438222211a02427745c7810b9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Trombone_Glide_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "faa9353fae079cf29ffc812641200ee993f8f6b8e87ed829a5c0a10b6437ccf7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Trombone_Glide_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "faa9353fae079cf29ffc812641200ee993f8f6b8e87ed829a5c0a10b6437ccf7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/before/pcm/Trombone_Glide_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "e28e0ab16303386ad7aefdedaec230b00322a43934f2ac97c1234073bbd3a1b9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Delay_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "12e80f18bf94230d11e8124170259de311e19a1bd3a5b973543e88277b6393c7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Delay_Brass_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "3019612d7e070a8e025d2f649f1d8cf5fa3f47c40931cfe423ad42a59fa89bff",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Delay_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "12e80f18bf94230d11e8124170259de311e19a1bd3a5b973543e88277b6393c7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Delay_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "85c85add4a20c5e1e4913ac99fb191366782426d75453d3aaef39dbec5527286",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Delay_Brass_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "2700f0c647a3e6e6d9a3d832970acba491d631e4fea85b4a20f1347d1d110664",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "4145f7251d71f37cb0def546108128b1c9b723a425f7ae02480b1b45daa713f8",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "169aa0856ef607b469d811ff2a06b7ac17f93a8ce0e0c62d48108ebf738cc4f8",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "4145f7251d71f37cb0def546108128b1c9b723a425f7ae02480b1b45daa713f8",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "533a447cf6f66461b2589cde4d0e3df12e342abf937d2c5d0e42e00f41f779f4",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "df8092159f65d354c1b71674f5c83daaf8f83a39166ae4465a164e70641cc053",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/French_Horn_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "7cc4669d9b4a9835f1456bdc9af7c0c0a4730efff60bf182713173625398bb93",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "072b47721f700012132cba4387c76abec30bdd0ba63980064e0a5680c7199c4d",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "b5e84b2984003868670d7d26cf874db302de41cd7374d4ebb88e7d5ef9b74ae1",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "072b47721f700012132cba4387c76abec30bdd0ba63980064e0a5680c7199c4d",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "e1113a6490908507867099b53eaf45079ec66a0c1d7175d6c561e0b732bd3846",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "ee390bb50bf9b023add348fa50498f7ace4ad7d8abd318a528665b151c4343fa",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Muted_Trumpet_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "1199c7a4eafe116a5c95d5b4d89c733b20547b4bcc0db27b4cbf8b29cac7c23c",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Pressure_Swell_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "b863ab192ce18738901d7b04b839a778779685970dae86bbb7e5ba7e8699733a",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Pressure_Swell_Brass_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "8bdfbf1248429c053331b0c21f8ef98cd0113a2242f03a627a8c0d3e274b43ce",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Pressure_Swell_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "b863ab192ce18738901d7b04b839a778779685970dae86bbb7e5ba7e8699733a",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Pressure_Swell_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "97bb561529eeb2b6a92e9e412ea94126a721f676e690aaf5223fc952ebeb07b5",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Pressure_Swell_Brass_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "7370753c933756c5450f67db33b8cb30d71bce22c4f4a930d030fcc9ad46adf4",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Synth_Horns_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Synth_Horns_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "ae70581c5fa893951e0252caf8882610b48f57f91ed11960ca0d51ee5c761ecb",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Synth_Horns_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Synth_Horns_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "ecdd44b05ce8d8e3a934bd10ca54d78cda7b523438222211a02427745c7810b9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Synth_Horns_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "d9a0dc8ebcad64b5a2c16d7bce77a5b1b460c95f925704cd7de52513d8960851",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "d9a9e7814b63eb5fb23b007130e3931915832d1efa44f689c3aa80e511756a17",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_hq_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "fa3914d3011181d0e962e7198e6b00672be61d85ddd012791f1c2e0f9bbef430",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "d9a9e7814b63eb5fb23b007130e3931915832d1efa44f689c3aa80e511756a17",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "6fb14fecd8079f36ae421d3f45c3dfcc6bc504d2f82bee8a1faef4ba1d824bc6",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "e28e0ab16303386ad7aefdedaec230b00322a43934f2ac97c1234073bbd3a1b9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/after/pcm/Trombone_Glide_standard_pressure.f32",
+      "bytes": 1267200,
+      "sha256": "610750f59b42f20ceb0da68d6b9eb0060d3c873de3c39b1b6f419f0ec5614b0f",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/frozen/pcm/French_Horn_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "dbfd2be039e3ecf0f12646650248ef49a44b87de3aece104fb14511effb8b5f9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/frozen/pcm/Muted_Trumpet_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "a8a5a6a67ed2135177c800ef6dbad55c5950f4fecbc2180dc57f6ce74d9e8dbe",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/frozen/pcm/Trombone_Glide_standard_bend.f32",
+      "bytes": 1267200,
+      "sha256": "a0203cfe1be04f727eb801a25bfc4e946c59f04ead41ff6e356dd665d15d67c1",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Delay_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "3052eba0dff89d3a71e787eb09da91d6a2cb80b285dc1f8e482ae9350b5f3d26",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Delay_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "3052eba0dff89d3a71e787eb09da91d6a2cb80b285dc1f8e482ae9350b5f3d26",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Delay_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "b7c9f98a4b26c1f9aa2fe99dc16b2b2a3c294b097e10d9c002f7b5ce3a40b454",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/French_Horn_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "3033d4643eb3a643d32155cc3151e04d46f77fe24eda4e7b84d5a571dcdc5ae7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/French_Horn_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "3033d4643eb3a643d32155cc3151e04d46f77fe24eda4e7b84d5a571dcdc5ae7",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/French_Horn_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "5813010ec34648ca728696d88ae369a71d4a053e0c842c1c91b1d9e57eae5aab",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Muted_Trumpet_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "6ffdc87c2609c3b7ed7360b00e4a50f669e04c745c9f5dcf0b2a39c83455580e",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Muted_Trumpet_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "6ffdc87c2609c3b7ed7360b00e4a50f669e04c745c9f5dcf0b2a39c83455580e",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Muted_Trumpet_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "da902e48b08fef1e52c16236516724faba5a0c38389d08e1cd17e53c243ad11a",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Pressure_Swell_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "17bcfe24983d45e2c89faa8724a4e2f212425cbfda8fd6a954362cd4e3ce96b3",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Pressure_Swell_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "17bcfe24983d45e2c89faa8724a4e2f212425cbfda8fd6a954362cd4e3ce96b3",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Pressure_Swell_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "d60243a4ea73f19b377909b5388f080c2e22c3de6306ab98380970bd7beec9a2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Synth_Horns_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Synth_Horns_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "b0942d5c24e65409d7e8caceab0d153af8ee465c19768cde0b447861a7a29fb2",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Synth_Horns_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "ecdd44b05ce8d8e3a934bd10ca54d78cda7b523438222211a02427745c7810b9",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Trombone_Glide_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "91762d7e8bb70dcafc4a3c4a4d2c468314c853df2292022b6315d8300b516c22",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Trombone_Glide_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "91762d7e8bb70dcafc4a3c4a4d2c468314c853df2292022b6315d8300b516c22",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/noair/pcm/Trombone_Glide_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "631aba5c2ab33b1333c7ed803e901d6bb26a90bb1e21ee6560992cf866b96a45",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-current/pcm/Delay_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "a5b9b5a277d5775f7581cc2953fa41d863180f68a9799a99a37c828b3e868abf",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-current/pcm/Delay_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "a5b9b5a277d5775f7581cc2953fa41d863180f68a9799a99a37c828b3e868abf",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-current/pcm/Delay_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "36bde797b25fd48c3d3af4bcb5679530e9554f1cdc74af8281d95341ae2d8df4",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-noair/pcm/Delay_Brass_hq_held.f32",
+      "bytes": 1267200,
+      "sha256": "83ccaf8feb13e2a3d61660e3d16362e69f6aa5f84d9252faab1e8d12c994c187",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-noair/pcm/Delay_Brass_offline_held.f32",
+      "bytes": 1267200,
+      "sha256": "83ccaf8feb13e2a3d61660e3d16362e69f6aa5f84d9252faab1e8d12c994c187",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    },
+    {
+      "path": "/tmp/cs80-a16/dry-noair/pcm/Delay_Brass_standard_held.f32",
+      "bytes": 1267200,
+      "sha256": "cad7f60bed90c0bde4917dcb69d265c2c9f54af757d111ade9d52987f08c02db",
+      "ownership": "Exact current .7 A16 retained PCM digest"
+    }
+  ],
+  "total_bytes": 318186576,
+  "removed_files": 150
+}

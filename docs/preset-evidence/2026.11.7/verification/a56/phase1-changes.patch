@@ -1,0 +1,623 @@
+diff --git a/README.md b/README.md
+index d3f47f6a..a2927130 100644
+--- a/README.md
++++ b/README.md
+@@ -21,6 +21,8 @@ The library keeps all **523 names, categories and program addresses**, including
+ the two initialization programs. No presets were added. This revision refines
+ instrument-body filtering, attacks, releases, register balance and playing
+ response; the continuation also corrects tine dynamics and bowed-body motion.
++The 2026.11.7 source candidate described below is still awaiting native and
++archive qualification; these download links identify the published 2026.11.4 build.
+ 
+ | Platform | Included formats | Verified installation download |
+ | --- | --- | --- |
+@@ -58,9 +60,10 @@ release assets. The [same run's Artifacts list](https://github.com/cheshmakzanoo
+ while retained. Archives were acquired through the GitHub connector and hashed;
+ an unauthenticated nightly.link route has not been independently verified.
+ 
+-**After installing, use Library → FACTORY LIBRARY → LOAD / RELOAD, then play
+-fresh notes.** Older projects restore stored settings. Clicking an already-loaded
+-row with Audition enabled may retain those settings.
++**After installing, release all keys and the sustain pedal, use Library →
++FACTORY LIBRARY → LOAD / RELOAD, then play fresh notes.** Older projects restore
++stored settings. Clicking an already-loaded row with Audition enabled may
++retain those settings.
+ 
+ Binary source is [`078c098`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/078c0981ffa1b5472342e0fb5ab8702bc3bd2889);
+ later documentation/evidence commits on `main` do not change those bytes. Each
+@@ -75,9 +78,13 @@ outcomes and evidence. Earlier outcomes remain in the
+ ## Play your first sound
+ 
+ Launch **Standalone** and select your audio output and MIDI input, or install
+-VST3/AU and load **CS-80 Reference** on a software-instrument track. A fresh
+-instance opens **Brass Swell I**. Hold a chord, then
+-open **Library** to explore the other voices. With polyphonic aftertouch,
++VST3/AU and load **CS-80 Reference** on a software-instrument track. For a first
++comparison, use a new empty project and a fresh instance, which opens
++**Brass Swell I**. Hold a chord, then release it and open **Library → FACTORY
++LIBRARY**, choose a row and press **LOAD / RELOAD** to explore the other voices.
++The main toolbar's **< / >** arrows load adjacent programs; Library's
++**PREV / NEXT** buttons select rows and load them only when **AUDITION** is on.
++With polyphonic aftertouch,
+ press just one note harder to brighten it; you can also drag down on a held
+ on-screen key to try pressure.
+ 
+@@ -97,11 +104,13 @@ on-screen key to try pressure.
+ The cumulative revision changes sound controls in **all 521 existing musical
+ factory programs** relative to the published 2026.11.4 bank. The
+ **523 names, categories and program addresses** remain intact, and both Init
+-programs preserve their preceding sound. No presets were added. The changes
++programs retain their published controls. No presets were added. The changes
+ cover the original 222-address collection and the later 301-program collection.
++The `.7` increment preserves every `.6` preset value and corrects four
++instrument-body rendering behaviors.
+ 
+-The programming now gives each family a more appropriate strike, sustained
+-body, release and playing response. Soft hammer strikes retain their lower
++The retained programming gives the families distinct strikes, sustained
++bodies, releases and playing responses. Soft hammer strikes retain their lower
+ energy and softer upper spectrum. Held piano and electric-piano notes leave
+ room for their independently decaying partials; releasing a key damps them.
+ Bow and breath entrances respond to playing effort and register. Xylophone,
+@@ -115,10 +124,10 @@ pitch changes. Nine existing voices gain dedicated material profiles: Tubular
+ Bells, Gong, Temple Bell, Agogo, Music Box, Kalimba, Banjo, Koto and Harp. Their
+ contact and ringing body now use the intended material in both ranks.
+ 
+-The 2026.11.7 continuation corrects four remaining synthesis problems. Upper
+-piano partials now lose their initial energy without an arbitrary change at the
+-sixth harmonic. Breath, bow and contact texture retains its authored strength
+-when the internal sample rate changes for higher-quality rendering. Guitar,
++In the 2026.11.7 renderer, upper piano partials lose their initial energy without
++an arbitrary change at the sixth harmonic. Separate noise-band and flutter
++compensation makes breath, bow and contact texture more consistent across the
++tested internal render rates. Guitar,
+ bass and plucked-keyboard harmonics move through a fixed body response during
+ bends. Low choir notes gain additional harmonics for their upper vowel regions,
+ within the existing 48-mode capacity. These corrections change the sound engine;
+@@ -134,11 +143,17 @@ either the Model or Variant range. Standard profiles remain available.
+ Deliberately synthetic sounds keep their ring modulation, PWM, interval, motion or pressure-led identities.
+ 
+ The [revision report](docs/CIRCUIT_LIBRARY_2026_11_7.md) explains the implementation,
+-measurements and limits. The
+-[complete coverage record](docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json)
+-checks every existing address, and the
+-[final audio accounting](docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json)
+-records the retained matched-condition comparisons and the two pad-level corrections.
++measurements and limits. The current
++[catalogue and parameter audit](docs/preset-evidence/2026.11.7/reviews/a12.md)
++checks every address and all **106,692 preset values**. The cumulative
++[signal accounting](docs/preset-evidence/2026.11.7/reviews/a33.md) records changed
++default audio metrics for **519 musical programs**, plus changed waveforms for
++the **two pressure-required Leads** when aftertouch is applied. Both Init
++programs match their earlier stereo output in the
++[twelve tested comparisons](docs/preset-evidence/2026.11.7/reviews/a27.md).
++These measurements establish changes and scoped preservation, not a listening
++preference. The three-second bank holds are supplemented by selected
++[long-note and chord checks](docs/preset-evidence/2026.11.7/reviews/a34.md).
+ The [preceding complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
+ passes the existing level and headroom limits. The combined 2026.11.7 bank,
+ native builds and expanded audition archive are being qualified against their
+@@ -150,14 +165,14 @@ own source. The Downloads table above continues to identify the published
+ | Analog Piano / Stage Keys / Soft Keys / Honky Keys | A softer quiet strike, stronger touch contrast, stable string-course tuning and more audible lower-partial aftersound. Compare soft and firm notes across the keyboard; hold a note, then release it or use the pedal. |
+ | Electric Piano I / Electric Piano II / Tine Piano / Reed Piano | Distinct tine and reed spectra, revised strike balance and independent partial decay. Compare low, middle and high registers at several velocities. |
+ | Guitar I / Guitar II / Nylon Pluck / Steel Pluck | Separate pluck, body and upper-partial loss profiles, with clearer touch contrast and key damping. Try single notes before chords. |
+-| Harp / Banjo / Koto / Kalimba | Dedicated finger, membrane, plectrum or supported-tine profiles. Harp and Kalimba now keep both ranks at the played pitch; vary touch, release and register. |
++| Harp / Banjo / Koto / Kalimba | Dedicated finger, membrane, plectrum or supported-tine profiles. Harp and Kalimba use the same nominal played register in both ranks; vary touch, release and register. |
+ | Solo Violin / Solo Cello / Flute / Clarinet / Oboe / Bassoon | Shaped bow or breath entrances, register-aware response and pressure expression. Hold a note, increase aftertouch, then ease it back. |
+ | Xylophone / Marimba / Steel Drum / Vibraphone | Distinct wooden-bar, metal-bar and shell resonances. Xylophone emphasizes a near-three-times upper mode; Steel Drum has octave and twelfth modes. Compare held notes, early release and pedal-held ringing. |
+ | Tubular Bells / Gong / Temple Bell / Agogo / Music Box | Separate tube, developing plate, beating shell, compact bell and comb-tooth spectra. Compare soft and firm strikes, then leave room for their different aftersounds. |
+ | Covered Horn / Trombone Glide | Revised breath and fundamental balance with controlled pressure, slide and initial scoop. |
+ | Percussive Organ / Theatre Organ | Steady strike dynamics with the intended footage, fading percussion or registration tremulant. Compare equal notes at different velocities. |
+ | Choir Pad / Dark Choir | Separate Ah and Oo resonance profiles, shaped entrances and breath/pressure response. Play several registers and use gentle pitch movement. |
+-| Pads / Polysynth / Leads / Sequences | Individually programmed bloom, touch, pressure and release. Long dense chords have additional headroom checks; sequence attacks and releases follow their actual gates. |
++| Pads / Polysynth / Leads / Sequences | Individually programmed bloom, touch, pressure and release. Selected long dense chords have additional headroom checks; sequence attacks and releases follow their actual gates. |
+ | Wind / Rain / Surf / Thunder / Clockwork | Irregular gusts, smooth rain motion, a surge with draining foam, a crack with a decaying low roll, or separated ticking. Hold long enough to hear each contour. |
+ 
+ The **14 body controls** are available in the DAW's parameter list and automation
+@@ -183,13 +198,19 @@ user patches and A/B slots keep their stored controls; merely selecting a row
+ or reopening an old project does not replace them. REVERT can restore the
+ settings present when Library opened.
+ 
+-The two Material parameters append after all **202 preceding core definitions**
++Factory LOAD applies the sound recipe and PANEL sources; it preserves physical
++setup, MSEG shapes and modulation routing. Existing host automation can also
++write later control values. Use a fresh instance in an empty project for the
++first comparison. See the
++[loading and session-scope review](docs/preset-evidence/2026.11.7/reviews/a43.md).
++
++The two Material parameters introduced in 2026.11.6 append after all **202 preceding core definitions**
+ and **308 host positions**, bringing the totals to **204 core parameters** and
+ **310 host positions**. Earlier IDs, ranges and choice meanings stay intact;
+ missing Material or Variant values in older state default to Standard. The
+-[compatibility review](docs/preset-evidence/2026.11.6/reviews/a34.md) checks the
+-previous metadata and host layout. Older sessions using Legacy or Pure still
+-resolve to the circuit engine under the
++[compatibility review](docs/preset-evidence/2026.11.7/reviews/a42.md) checks the
++retained metadata, host layout and saved-state paths. Older sessions using
++Legacy or Pure still resolve to the circuit engine under the
+ preceding migration contract. Their saved controls remain, but their old
+ rendering is not promised. Keep the older binary and a rendered reference when
+ an existing project's exact sound must be retained.
+@@ -260,13 +281,22 @@ describe the guards and fallbacks.
+ 
+ These are [matched instruction counts](docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication/)
+ for runtime `0c4abd85` versus the historical `db02cd8` baseline on Linux x86-64
+-(GCC 14.2 Release, 48 kHz, 16/32/64-frame buffers). Native replay for the
+-latest optimization pass matched tested audio and exposed state bit for bit;
++(GCC 14.2 Release, 48 kHz, 16/32/64-frame buffers). Native replay for
++that optimization pass matched tested audio and exposed state bit for bit;
+ Standard still reports **67 samples (1.40 ms at 48 kHz)** of plug-in latency.
+ That is not round-trip latency. Instruction counts show work removed, not a
+ DAW CPU percentage. [Physical CPU-budget qualification](docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md)
+ is still open.
+ 
++The `.7` low-choir correction adds work when a note uses more than 24 harmonics.
++In the bounded shared-Linux-host comparison at **48 kHz / 2×**, eight low notes
++take about **15% more Engine processing for Ah and 17% for Oo** than `.6`.
++An Engine's inline state grows by **12,800 bytes**. These are core measurements,
++not DAW CPU percentages or universal limits; the deepest notes still reach the
++**48-mode cap** before covering all upper vowel regions.
++[Runtime method and limits](docs/preset-evidence/2026.11.7/reviews/a37.md) ·
++[Low-register vocal coverage](docs/preset-evidence/2026.11.7/reviews/a35.md)
++
+ ## Build from source
+ 
+ Use a C++20 toolchain and CMake 3.25+ for the presets. The build pins JUCE
+diff --git a/docs/CIRCUIT_LIBRARY_2026_11_7.md b/docs/CIRCUIT_LIBRARY_2026_11_7.md
+index 442b689e..56fa6616 100644
+--- a/docs/CIRCUIT_LIBRARY_2026_11_7.md
++++ b/docs/CIRCUIT_LIBRARY_2026_11_7.md
+@@ -16,15 +16,25 @@ that use that mechanism; it does not mean every program changes audio again
+ in 2026.11.7.
+ 
+ **This is a source candidate awaiting native build and delivery qualification.**
++The frozen binary source is
++[`ee0dabcacb4cdff93f8803844f60348e0ceda6ed`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ee0dabcacb4cdff93f8803844f60348e0ceda6ed),
++tree `17115913cbb29157bd00539485bcc5f38b57219c`.
+ The local evidence below is scoped to the implemented changes. It does not
+ qualify a downloadable plugin, a completed audition archive or every host.
+-The [current download table](../README.md#downloads) identifies accepted
++The [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) identifies accepted
+ artifacts and their exact source. Existing archives retain their original
+ revision and binary identity. The preceding
+ [native qualification audit](preset-evidence/2026.11.7/reviews/a03.md) records
+ why results from the earlier unfinished candidates cannot be combined into
+ qualification for this source.
+ 
++The reviewed sound source `c5549f7d` has the same core/plugin sound code and
++factory recipes as this frozen source; the intervening repairs concern offline
++tool and audit-harness storage. The
++[source-continuity review](preset-evidence/2026.11.7/reviews/a40.md) preserves
++that evidence boundary. Later online documentation does not change the binary
++source or the guides frozen inside its archives.
++
+ These remain authored synthesized instruments. The changes repair specific
+ rendering behaviors; they do not establish equivalence to a recorded acoustic
+ instrument or physical CS-80. Expected listening effects below are inferences
+@@ -48,6 +58,38 @@ their actual effect depends on pitch, register and rendering rate. This is
+ separate from the retained 521-program revision of the published bank.
+ [Complete identity and coverage evidence](preset-evidence/2026.11.7/reviews/a12.md)
+ 
++Relative to published `.4`, **493 musical programs** change controls beyond the
++declared conservative level/pan exclusions; another **28** change active
++additive rank-VCA baselines that contribute to touch response. The matched
++default captures have changed audio-metric vectors for **519 musical programs**.
++The other two, **Pressure Lead** and **Electric Leads 136**, have changed
++waveforms at both tested pressure levels. This gives cumulative signal-change
++evidence for **521/521**, without claiming every note or gesture changes or
++that the result is perceptually preferable. Both Init programs preserve their
++published controls and match the earlier stereo output in the twelve retained
++comparison cases.
++[Cumulative accounting](preset-evidence/2026.11.7/reviews/a33.md) ·
++[Init comparisons](preset-evidence/2026.11.7/reviews/a27.md)
++
++The narrower `.6 → .7` comparison has **zero recipe edits** and **67 changed
++default metric vectors**: 54 standard-string programs, ten piano programs and
++three low-Oo programs. Its capture uses **48 kHz**, velocity **0.8**, zero
++pressure, a **three-second hold and one-second tail**, with no output
++normalization. MIDI notes are **48 for Bass, 67 for Winds/Leads, 72 for Bells
++and 60 for the other categories**. These short single-note measurements are
++supplemented by selected long holds, chords and controller gestures; they do
++not complete every entrance. Fourteen programs have an active mapped attack
++beyond the bank capture's three-second hold.
++[Measurement scope](preset-evidence/2026.11.7/reviews/a33.md) ·
++[Long entrances and sustained headroom](preset-evidence/2026.11.7/reviews/a34.md)
++
++The nine retained Materials and four Variants select compatible models in all
++**18 specialized programs / 34 active specialized ranks**. Their spectra,
++contact layers and losses are authored profiles. Separate ranks do not
++exchange energy through a solved shared resonator, and these profiles do not
++add complete coupled hammer/string, soundboard, membrane or shell mechanics.
++[Material and variant review](preset-evidence/2026.11.7/reviews/a41.md)
++
+ Deliberately electronic sounds keep their circuit, ring, PWM and motion
+ identities. The changes below operate inside the optional body path; they do
+ not introduce a second engine or turn every preset into an acoustic imitation.
+@@ -189,6 +231,15 @@ At default-size C2, 48 modes reach **3,139.5 Hz**: they restore the 2,800 Hz
+ region while still falling short of the 3,500 Hz region. Full 4,400 Hz coverage
+ begins near F♯2. These are authored spectrum checks, not a recorded-singer fit.
+ 
++The actual 16′ Oo foundation in **Dark Choir**, **Blade Choir** and
++**Midnight Pads 55** reaches a stricter low-register limit: at played MIDI 36,
++its approximately **32.70 Hz** fundamental puts mode 48 near **1.570 kHz**,
++below both upper vowel centers at approximately **2.105 and 2.807 kHz** after
++the saved size scaling. Its 8′ partner supplies a higher spectrum but does
++not remove the foundation's cap. The
++[all-seven-vocal-program review](preset-evidence/2026.11.7/reviews/a35.md)
++accounts for every Ah/Oo recipe and its sounding rank register.
++
+ [Harmonic budget and response storage](../src/core/InstrumentBody.h) ·
+ [Choir recipes](../src/core/curated/Pads.inc) ·
+ [Rendered choir evidence](preset-evidence/2026.11.7/reviews/a07.md)
+@@ -209,15 +260,22 @@ sound different because piano damping, texture compensation, string bends
+ and low choir coverage are engine behaviors. Preserve an earlier binary and
+ reference bounce if an arrangement must retain its exact previous rendering.
+ 
+-To use the cumulative factory programming, open **Library → FACTORY LIBRARY**,
+-choose the program, press **LOAD** or **RELOAD**, then play fresh notes.
++For a first comparison, use a new empty project and a fresh instrument instance.
++To use the cumulative factory programming, release all keys and the sustain
++pedal, open **Library → FACTORY LIBRARY**, choose the program, press **LOAD** or
++**RELOAD**, then play fresh notes.
+ An old project can display the same factory name while restoring an earlier
+ recipe. Browser **REVERT** restores the sound active when the browser opened.
++Factory loading applies the sound parameters and PANEL sources, while retaining
++physical setup, MSEG shapes and modulation routing. Existing host automation
++can write later parameter values; LOAD is not a complete session reset.
+ Hardware tone tabs retain their electrical recipes and suppress optional
+ bodies, as do the existing memory paths.
+ 
+ [Parameter definitions](../src/core/Params.h) ·
+ [Program identities and revision](../src/core/FactoryPresets.h) ·
++[Current compatibility review](preset-evidence/2026.11.7/reviews/a42.md) ·
++[Loading behavior](preset-evidence/2026.11.7/reviews/a43.md) ·
+ [Playing and recall guide](PRESET_GUIDE.md#recalling-a-revised-sound)
+ 
+ ## Processing and delivery scope
+@@ -239,6 +297,16 @@ Continuous string bends also perform the new response calculation. These are
+ body measurements on a shared host, not whole-plugin CPU percentages or a DAW
+ deadline guarantee. [Method and complete cost evidence](preset-evidence/2026.11.7/reviews/a11.md)
+ 
++The complete-Engine comparison supplies context for that isolated body cost.
++On the stated shared Linux host, with **48 kHz / 2×**, **256-frame blocks** and
++eight low notes, median paired `.7/.6` CPU ratios are **1.153 for Choir Pad
++(Ah)** and **1.167 for Dark Choir (Oo)**. The Engine's inline extent grows by
++**12,800 bytes**. These observations exclude the plugin wrapper, driver and DAW;
++they establish neither a universal maximum nor a callback deadline. The
++unchanged high-register control and shared-host variability also limit the
++precision of small overhead estimates.
++[Engine ownership, allocation and cost evidence](preset-evidence/2026.11.7/reviews/a37.md)
++
+ The configured audition roster retains all **225 requests** introduced in
+ 2026.11.6 and appends **13 existing-program clips** for low-piano tails and
+ low choir registers. It now requests **238 WAVs from 92 programs**, totaling
+@@ -246,11 +314,13 @@ low choir registers. It now requests **238 WAVs from 92 programs**, totaling
+ [Exact roster and preservation checks](preset-evidence/2026.11.7/reviews/a09.md).
+ A configured roster or local regression
+ pass does not establish that a complete archive exists. Accepted delivery
+-must bind the actual native tests, all required validator lanes, package
++must bind the actual native tests, all **15 required pluginval lanes**, package
+ payloads and audition files to one committed source and its hashes. Until
+ that work finishes, this report describes the candidate rather than replacing
+ the README's accepted downloads.
+ 
+ [Installation and build identification](INSTALL_AND_QUICKSTART.md) ·
+ [Audition reproduction](PRESET_GUIDE.md#reproduce-an-audition-from-source) ·
+-[Native qualification audit](preset-evidence/2026.11.7/reviews/a03.md)
++[Native qualification audit](preset-evidence/2026.11.7/reviews/a03.md) ·
++[Delivery contract](preset-evidence/2026.11.7/reviews/a30.md) ·
++[Sound-claim and all-family review](preset-evidence/2026.11.7/reviews/a54.md)
+diff --git a/docs/CI_DISTRIBUTION_STATUS.md b/docs/CI_DISTRIBUTION_STATUS.md
+index d23b8604..51855835 100644
+--- a/docs/CI_DISTRIBUTION_STATUS.md
++++ b/docs/CI_DISTRIBUTION_STATUS.md
+@@ -23,10 +23,24 @@ The two Material parameters introduced in 2026.11.6 retain their appended
+ addresses. Totals remain **204 core parameters and 310 host positions**;
+ 2026.11.7 adds no parameter and changes no range or automation order.
+ Older projects retain their saved settings. Select an existing factory program
+-and use **LOAD / RELOAD**, then play fresh notes, to hear the revised recipe.
+-
+-**Native build and archive qualification for this source is pending when these
+-bundled guides are written.** The preceding source `fcc3c8e` passed Apple Silicon native tests
++in **Library → FACTORY LIBRARY**, release all keys and the sustain pedal, and use
++**LOAD / RELOAD**, then play fresh notes, to hear the revised recipe. Use a new
++empty project and fresh instance for a first comparison: factory loading retains
++physical setup, MSEG shapes and modulation routing.
++[Loading scope](preset-evidence/2026.11.7/reviews/a43.md)
++
++**Native build and archive qualification for frozen source
++`ee0dabcacb4cdff93f8803844f60348e0ceda6ed` is pending.** Its tree is
++`17115913cbb29157bd00539485bcc5f38b57219c`; the native workflow is
++[45397189410, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410).
++No `.7` installation or audition archive is advertised as accepted here.
++The [source-continuity review](preset-evidence/2026.11.7/reviews/a40.md) binds
++the existing sound evidence to this source without qualifying its native products.
++Acceptance still requires all four native suites, all **15 required pluginval
++lanes**, actual package and audition inspection, and public-download verification.
++[Delivery contract](preset-evidence/2026.11.7/reviews/a30.md)
++
++The preceding source `fcc3c8e` passed Apple Silicon native tests
+ and five validator lanes, while its Windows suite rejected a byte-authenticated
+ fixture whose final newline had been translated by Git checkout. A narrow Git
+ attribute preserves that fixture's original bytes; its exact checksum gate is
+@@ -39,7 +53,15 @@ will identify the newly qualified source and archives after independent native,
+ validator, payload and actual audition checks finish. Archived guides remain a
+ source-time snapshot; later publication documentation does not rewrite them.
+ 
+-## Previous qualified revision — 2026.11.4 instrument voicing
++The cumulative `.4 → .7` sound accounting covers **521 musical programs**;
++`.7` itself retains every `.6` recipe value and corrects four rendering behaviors.
++The current reviews distinguish measured changes, source compatibility and
++remaining acoustic/listening limits from pending binary delivery.
++[Signal accounting](preset-evidence/2026.11.7/reviews/a33.md) ·
++[Compatibility](preset-evidence/2026.11.7/reviews/a42.md) ·
++[Sound-claim review](preset-evidence/2026.11.7/reviews/a54.md)
++
++## Current published packages — 2026.11.4 instrument voicing
+ 
+ **All six jobs passed in [build 45246863788, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788).**
+ The installation bundles contain exact source `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, tree
+diff --git a/docs/INSTALL_AND_QUICKSTART.md b/docs/INSTALL_AND_QUICKSTART.md
+index cdfe26d6..a4149995 100644
+--- a/docs/INSTALL_AND_QUICKSTART.md
++++ b/docs/INSTALL_AND_QUICKSTART.md
+@@ -18,7 +18,7 @@ wind/brass response and nine material profiles are retained. See the
+ 
+ At this source checkpoint, **2026.11.7 native builds and delivery qualification
+ are pending**. This guide does not announce a qualified download. The
+-[README download table](../README.md#downloads) identifies the available artifacts
++[current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) identifies the available artifacts
+ and their accepted source; a later source revision does not update those binaries.
+ Engine and isolation selectors remain removed. Older artifacts
+ may contain an earlier sound library. Use the guide bundled with your artifact
+@@ -27,6 +27,9 @@ repository README.
+ The repository retains earlier revision reports and download records. Their
+ bundled guides, manifest revision and `SOURCE.txt` identify those earlier
+ binaries; later source changes do not update an existing archive.
++An archived guide's source-pinned links may lead to an older download table.
++Use the live online table above for the completed qualification of the package's
++full source commit; the archived guide remains its original source-time snapshot.
+ 
+ The project version string alone is not a build identifier: development builds
+ can share the same version while containing different source commits.
+@@ -39,8 +42,10 @@ that every gate for a newer revision passed.
+ 
+ ## Choose and verify a build
+ 
+-From the repository's **Actions → build** run, choose a commit whose required
+-jobs all passed. Artifact availability alone does not establish that result.
++Start with the [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads),
++which identifies the accepted source and packages. In the linked **Actions →
++build** run, confirm that its required jobs passed and its exact-source
++qualification is complete. Artifact availability alone does not establish that result.
+ 
+ | Artifact | Computer / host architecture | Included |
+ |---|---|---|
+@@ -57,8 +62,9 @@ and emulation layers are not qualified by these runner builds.
+    the inner archive and manifest.
+ 2. Verify hashes: Linux `sha256sum -c SHA256SUMS`; macOS
+    `shasum -a 256 -c SHA256SUMS`. Windows PowerShell: run
+-   `Get-FileHash -Algorithm SHA256 .\cs80-reference-*.zip` and compare with the
+-   matching line in `SHA256SUMS` (also check the manifest if using it).
++   `Get-FileHash -Algorithm SHA256` for the inner ZIP and its matching
++   `.manifest.json` sidecar. Compare both hashes with their entries in
++   `SHA256SUMS`.
+ 3. Unpack the inner `.tar.gz` with `tar -xzf "archive-name.tar.gz"` on Linux/macOS;
+    use Windows **Extract All** for the inner `.zip`. Keep bundle directories
+    intact. Tar packaging preserves Unix executable permissions and internal
+@@ -111,7 +117,7 @@ and its matching metadata together. Keep using the exact-commit CI gates above.
+ 
+ ## Install only the formats you need
+ 
+-Quit the DAW before copying. If replacing an earlier build, first keep a backup
++Quit the DAW and any running Standalone copy before copying. If replacing an earlier build, first keep a backup
+ outside the plug-in scan folders; do not keep two copies with the same plug-in
+ identity inside those folders.
+ 
+@@ -131,8 +137,10 @@ documented rescan/revalidation procedure. Do not put these inside a DAW's
+ internal plug-in bundle. VST3 locations follow the [Steinberg developer documentation](https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html);
+ Apple documents the [Audio Units component folders](https://support.apple.com/en-ie/102239).
+ 
+-Standalone needs no DAW scan: keep its file/application in a folder you own and
+-launch it there. On macOS, `~/Applications` is suitable for the `.app`. No helper
++Standalone needs no DAW scan: launch the item under the package's `Standalone`
++folder (`CS-80 Reference.exe` on Windows, `CS-80 Reference.app` on macOS, or
++`CS-80 Reference` on Linux). Keep it in a folder you own; on macOS,
++`~/Applications` is suitable for the `.app`. No helper
+ installs drivers, registers startup services, changes security settings or adds
+ persistent system access.
+ 
+@@ -149,6 +157,10 @@ distributions. No additional audio driver is bundled on any platform.
+ 
+ ## First five minutes
+ 
++For a first comparison, start in a new empty project with a fresh instrument
++instance. An older project can restore an earlier recipe under the same factory
++name, along with its saved modulation and physical setup.
++
+ 1. In Standalone, open its audio/MIDI settings and select your output device and
+    MIDI keyboard. Start at **48 kHz / 256 samples** as a setup baseline, not a
+    measured performance guarantee for your computer. In a DAW, create an
+@@ -156,8 +168,13 @@ distributions. No additional audio driver is bundled on any platform.
+    MIDI input. Start with low monitoring volume.
+ 2. A fresh instance plays **Brass Swell I** on the circuit engine. Velocity,
+    pressure, pitch bend, CC1 modulation, CC11 expression and CC64 pedal hold
+-   remain available. Step through programs with **PREV / NEXT**, open **LIBRARY**,
+-   or play the hardware tone tabs. The default voice mode has eight circuits;
++   remain available. To choose another factory sound, release all keys and the
++   sustain pedal, open **LIBRARY → FACTORY LIBRARY**, select a row and explicitly
++   press **LOAD** (or **RELOAD**, if shown), then play fresh notes. If filters hide
++   the sound, press **CLEAR ALL**, then select **FACTORY LIBRARY** again. The main
++   toolbar's **< / >** arrows load adjacent programs. Library's **PREV / NEXT**
++   buttons select rows and load them only when **AUDITION** is enabled. The
++   hardware tone tabs choose separate electrical recipes. The default voice mode has eight circuits;
+    an additional held key waits for an available circuit rather than stealing
+    a held note. Expanded voice modes are available in Studio.
+ 3. For MPE, enable it in the host/controller and instrument. Incoming MIDI
+@@ -168,8 +185,9 @@ distributions. No additional audio driver is bundled on any platform.
+    drag farther down it for pressure.
+ 4. Open **Studio** for effects, LFOs, macros, drawable envelopes, the modulation
+    matrix, arpeggiation, MPE, microtuning and voice modes. These optional software
+-   features belong to the same circuit instrument. Each preset selects its
+-   own settings. The original six SUB functions are the factory default;
++   features belong to the same circuit instrument. Factory recipes apply their
++   sound parameters; separate MSEG shapes and modulation routing remain part of
++   the session. The original six SUB functions are the factory default;
+    **WAVEFORM SET** can select Extended functions independently. Keep normal
+    output headroom when editing levels or playing dense chords.
+ 5. Use **SAVE** (toolbar menu or Ctrl/Cmd+S) to name a user patch; an existing
+@@ -178,8 +196,13 @@ distributions. No additional audio driver is bundled on any platform.
+    live physical setup; a full DAW session also stores its session configuration.
+    Transient pedal gestures are not saved.
+ 
+-**Pressure Lead requires aftertouch.** It is intentionally silent before pressure
+-is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
++Factory **LOAD / RELOAD** applies the recipe and PANEL sources. It preserves
++physical setup, MSEG shapes and modulation routing, and existing host automation
++can write later control values. It does not reset a complete session.
++[Source-checked loading behavior](preset-evidence/2026.11.7/reviews/a43.md)
++
++**Pressure Lead and Electric Leads 136 require aftertouch.** They are intentionally
++silent before pressure is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
+ (the default), drag farther down an on-screen key. MIDI aftertouch also works
+ with KAS Scan Timing on. See the [preset guide](PRESET_GUIDE.md) for playing
+ suggestions across the revised bank.
+@@ -269,7 +292,8 @@ continue processing idle instances.
+   replace only this instrument's complete bundle/file; rescan afterward.
+ - To hear the revised factory sounds, open **LIBRARY → FACTORY LIBRARY**, choose
+   the desired factory entry, then explicitly press **LOAD** (or **RELOAD**, if
+-  that is the label shown). Enter or double-click also loads it. Play fresh notes
++  that is the label shown). Release all keys and the sustain pedal before loading.
++  Enter or double-click also loads it. Play fresh notes
+   afterward, and save the project
+   if you want it to retain that recipe. An older project can show the same
+   factory name while restoring its older settings; clicking an already-loaded
+diff --git a/docs/PRESET_GUIDE.md b/docs/PRESET_GUIDE.md
+index 89a07635..2e568ce6 100644
+--- a/docs/PRESET_GUIDE.md
++++ b/docs/PRESET_GUIDE.md
+@@ -7,9 +7,12 @@ existing order. This increment changes body rendering without changing any
+ 2026.11.6 preset values or parameter definitions. No presets have been added or removed.
+ 
+ Native builds and delivery qualification for this candidate are pending at this
+-source checkpoint. Use the [current download table](../README.md#downloads) to
++source checkpoint. Use the [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) to
+ identify available, qualified binaries; this guide alone does not establish
+ that a 2026.11.7 download has passed those gates.
++Guides inside an archive retain their source-time wording and links. The live
++online table identifies completed qualification for the package's full source
++commit; later documentation does not replace those archived guides.
+ 
+ The same circuit instrument supports optional string, tine, reed, wind and
+ bar excitations alongside its circuit voices. Their partials develop through
+@@ -37,6 +40,7 @@ revoicing and retirement of old engine settings. The
+ 
+ ## Start with your hands
+ 
++For a first comparison, use a new empty project and a fresh instrument instance.
+ A fresh instance opens **Brass Swell I**. Hold a three-note chord around MIDI
+ 48–67, wait for the brighter layer to arrive, then gradually add pressure.
+ Release the pressure before releasing the keys to hear the chord settle back.
+@@ -55,7 +59,7 @@ programs intentionally keep a comparatively even strike level.
+ a note after that strike. Polyphonic aftertouch lets you emphasize one held note;
+ channel aftertouch affects notes on that MIDI channel together. Polyphonic
+ aftertouch does not require MPE. Without a pressure keyboard, hold an on-screen
+-key and drag downward along it. See the [playing and performance instructions](INSTALL_AND_QUICKSTART.md#one-circuit-instrument).
++key and drag downward along it. See the [playing and performance instructions](INSTALL_AND_QUICKSTART.md#first-five-minutes).
+ 
+ For on-screen pressure, leave **KAS Scan Timing** off; if it is on, use MIDI
+ aftertouch instead. This optional physical setup setting is retained when you
+@@ -144,9 +148,14 @@ hear their releases rather than continually covering them with new chords.
+ open chord. Choir Pad uses an ah-like vowel and Dark Choir an oo-like vowel.
+ Low notes now use additional harmonics to reach more of their fixed vowel
+ resonances; pitch and Resonant size determine how many are needed, up to 48.
+-The deepest notes still meet that limit, and the panel filters and rank envelopes
+-continue to shape the complete sound. These remain synthesized voiced sources.
++The deepest notes still meet that limit: at played MIDI 36, Dark Choir's 16′
++foundation ends near **1.57 kHz**, below its two upper vowel regions. A downward
++bend keeps the modes captured at onset. The panel filters and rank envelopes
++continue to shape the complete sound, and low notes with added modes use more
++processing. These remain synthesized voiced sources.
+ [Choir revision](CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes) ·
++[All vocal recipes and limits](preset-evidence/2026.11.7/reviews/a35.md) ·
++[Measured processing scope](preset-evidence/2026.11.7/reviews/a37.md) ·
+ [Pad source](../src/core/curated/Pads.inc)
+ 
+ ### Strikes, plucks and breath
+@@ -406,6 +415,12 @@ range. The nine existing factory programs select their materials automatically.
+ of every koto. New materials use nominal Resonant size **1×**; changing size
+ shifts the authored body response where that material uses one.
+ 
++These are authored modal, spectral and loss profiles. A separate contact rank
++and ringing rank remain independent bodies; they do not exchange energy through
++a solved shared resonator. The profiles do not establish complete coupled
++instrument mechanics or a recorded-instrument match.
++[Material and variant scope](preset-evidence/2026.11.7/reviews/a41.md)
++
+ At a high body mix, changing the rank's saw/pulse waveform may have little
+ effect. The body blends with the filtered oscillator and sine signal **before
+ the VCA**. A separate linear filter now applies the rank's effective high-pass
+@@ -423,23 +438,27 @@ or memory source suppresses them, preserving those separate source paths.
+ Their fourteen saved controls are exposed in the DAW's parameter list and automation
+ editor. The custom Studio editor and standalone interface do not yet provide
+ dedicated body-control widgets. To find the new selectors in a host, search for
+-**Body I material (next note)** or **Body II material (next note)**.
++**Body I model (next note)** or **Body I material (next note)**, and the
++corresponding rank II names. Hosts can display or group these names differently.
+ The existing instrument remains one circuit engine, with no new Legacy/Pure
+ selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
+ 
+ ## Recalling a revised sound
+ 
+-**2026.11.7 identifies a sound-data revision**, separate from the
++**2026.11.7 identifies the factory-library revision**, separate from the
+ application's version and saved-session format. Names, order and host program
+ identities remain stable. This increment preserves the 2026.11.6 factory
+ parameter values and updates the body-rendering mechanisms. A session or user
+ preset restores its stored controls, so an older project can show a factory
+ name while still using its earlier recipe. Save a user copy to retain edits.
+ 
+-To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
++To apply the current recipe, release all keys and the sustain pedal, open
++**Library → FACTORY LIBRARY**, choose the
+ factory entry and explicitly press **LOAD** (or **RELOAD**, if shown). Enter or
+ double-click also loads it. Play fresh notes afterward: body model, decay, size,
+ variant and material take effect at note onset. Save the project if you want it to retain the new recipe.
++If search text or filters hide the sound, press **CLEAR ALL**, then choose
++**FACTORY LIBRARY** again.
+ 
+ With **Audition** enabled, clicking a row already marked loaded can leave the
+ current settings in place. Press **LOAD** (or **RELOAD**, if shown) even if the
+@@ -448,6 +467,15 @@ entry. **REVERT** restores the sound that was active when Library opened;
+ it can restore the older recipe and does not mean “load the latest factory
+ settings.”
+ 
++The main toolbar's **< / >** arrows load adjacent programs. Library's
++**PREV / NEXT** buttons select rows; they load those selections only when
++**AUDITION** is enabled. Factory loading writes the sound parameters and selects
++PANEL sources, while preserving physical setup, MSEG shapes and modulation
++routing. Existing host automation can write later values. LOAD/RELOAD is not a
++complete session reset, so use a fresh instance in a new empty project for a
++first comparison.
++[Source-checked loading behavior](preset-evidence/2026.11.7/reviews/a43.md)
++
+ A delivered factory selection by program number loads the current voicing at
+ that address. VST3 changes sent only through the Program processing queue remain
+ subject to a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification).
+@@ -457,7 +485,7 @@ remains separate from factory selection.
+ Old saved patches without body fields restore both models and mixes to their
+ off defaults. **Reload the factory program to hear the new body and voicing**,
+ then save your edited copy. The published 2026.11.4 bank's **200 core IDs and
+-306 host automation positions** remain in their original order. The 2026.11.5
++306 host parameter positions** remain in their original order. The 2026.11.5
+ source appended two variants; 2026.11.6 appended two materials, bringing the totals
+ to **204 core parameters and 310 host positions**. All previous 202 core parameter
+ definitions and 308 host positions are preserved. A body-aware patch without
+@@ -467,6 +495,7 @@ include all fourteen body controls.
+ 
+ Revision 2026.11.7 adds no parameters and changes no parameter ranges, defaults
+ or automation positions; the 2026.11.6 totals and material choices remain in place.
++[Current host and saved-state compatibility review](preset-evidence/2026.11.7/reviews/a42.md)
+ 
+ Existing body-enabled saved sounds use the revised excitation, tuning and
+ articulation code, so retaining their parameter values does not freeze their

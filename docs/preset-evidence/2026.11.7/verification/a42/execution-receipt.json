@@ -1,0 +1,16 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "completed_utc": "2026-11-24T13:12:51.532058+00:00",
+  "command": [
+    "python3",
+    "docs/preset-evidence/2026.11.7/verification/a42/verify-source.py"
+  ],
+  "exit_code": 0,
+  "source_audit_stdout_sha256": "6bfdcdee0255b7246ae2a1e72e2cdd0abbe71aa95387662fc633802f9a2b9074",
+  "local_links_checked": 18,
+  "python_ast_valid": true,
+  "native_host_execution_by_A42": false,
+  "native_evidence_handoff": "Root and platform reviewers will bind the named gates and UI body phase to original ee0dabca native receipts. A42 does not wait for CI or qualify a package.",
+  "audit_development_note": "An initial audit script assertion compared LF-normalized local JUCE with an unchanged CRLF Git blob. The final audit compares both normalized copies and separately records raw blob equality, which is true for all five files; no product failure or source change occurred."
+}

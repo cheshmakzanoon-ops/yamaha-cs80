@@ -1,0 +1,2223 @@
+{
+  "schema": 1,
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "status": "local_markdown_target_inventory_only",
+  "packaging_projection_is_not_archive_inspection": true,
+  "external_requests_performed": false,
+  "repository_or_same_document_links": 186,
+  "missing_source_paths": [],
+  "heading_fragments_requiring_manual_review": [],
+  "semantic_review_findings": [
+    "Early current-download relative README links project to the frozen source README, which deliberately still advertises .4. The main-branch URL in distribution status and at the end of the preset guide is the live publication pointer.",
+    "PRESET_GUIDE.md line 58 links playing/pressure guidance to #one-circuit-instrument; #first-five-minutes is the more direct semantic destination. The existing target is not missing."
+  ],
+  "documents": [
+    {
+      "file": "README.md",
+      "links": [
+        {
+          "line": 9,
+          "label": "Downloads",
+          "target": "#downloads",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 9,
+          "label": "First sound",
+          "target": "#play-your-first-sound",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 9,
+          "label": "Preset guide",
+          "target": "docs/PRESET_GUIDE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 10,
+          "label": "How it was modeled",
+          "target": "#from-schematic-to-sound",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 10,
+          "label": "CPU evidence",
+          "target": "#how-we-reduced-cpu-work",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 11,
+          "label": "Build from source",
+          "target": "#build-from-source",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 13,
+          "label": "CS-80 Reference editor showing the two synthesis layers, tone tabs, ribbon and keyboard",
+          "target": "tests/golden/main-1600x1000.png",
+          "kind": "repository_or_same_document",
+          "resolved": "tests/golden/main-1600x1000.png",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 15,
+          "label": "1600 \u00d7 1000",
+          "target": "tests/golden/main-1600x1000.png",
+          "kind": "repository_or_same_document",
+          "resolved": "tests/golden/main-1600x1000.png",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 15,
+          "label": "1120 \u00d7 700",
+          "target": "tests/golden/main-1120x700.png",
+          "kind": "repository_or_same_document",
+          "resolved": "tests/golden/main-1120x700.png",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 27,
+          "label": "Windows ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 28,
+          "label": "Apple Silicon ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 29,
+          "label": "Intel Mac ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 30,
+          "label": "Linux ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 32,
+          "label": "build 45246863788, attempt 1",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 39,
+          "label": "Complete qualification, hashes and original evidence",
+          "target": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 41,
+          "label": "audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 47,
+          "label": "Actual archive acceptance",
+          "target": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 48,
+          "label": "Delivered inventory identity",
+          "target": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 52,
+          "label": "installation guide",
+          "target": "docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INSTALL_AND_QUICKSTART.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 57,
+          "label": "same run's Artifacts list",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788#artifacts",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 65,
+          "label": "`078c098`",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 69,
+          "label": "revision report",
+          "target": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 71,
+          "label": "60-worker review",
+          "target": "docs/TEAM_REVIEW_2026_11_4.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/TEAM_REVIEW_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 73,
+          "label": "distribution history",
+          "target": "docs/CI_DISTRIBUTION_STATUS.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CI_DISTRIBUTION_STATUS.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 92,
+          "label": "circuit and session contract",
+          "target": "docs/PARITY_ISOLATION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PARITY_ISOLATION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 93,
+          "label": "editor gallery",
+          "target": "docs/screenshots/",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/screenshots",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 136,
+          "label": "revision report",
+          "target": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 138,
+          "label": "complete coverage record",
+          "target": "docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 140,
+          "label": "final audio accounting",
+          "target": "docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 142,
+          "label": "preceding complete-bank audit",
+          "target": "docs/preset-evidence/2026.11.6/verification/root-integration/",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.6/verification/root-integration",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 176,
+          "label": "preset guide",
+          "target": "docs/PRESET_GUIDE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 190,
+          "label": "compatibility review",
+          "target": "docs/preset-evidence/2026.11.6/reviews/a34.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.6/reviews/a34.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 204,
+          "label": "2026.11.1 report",
+          "target": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 210,
+          "label": "Yamaha CS-80 Service Manual",
+          "target": "https://therogoffs.com/cs80/manuals/CS80_Service_Manual/",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 219,
+          "label": "oscillator",
+          "target": "docs/OSCILLATOR_PROMOTION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/OSCILLATOR_PROMOTION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 219,
+          "label": "filter reconstruction",
+          "target": "docs/IG00156_NODAL_MODEL.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/IG00156_NODAL_MODEL.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 219,
+          "label": "filter code",
+          "target": "src/core/Ig00156Filter.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/Ig00156Filter.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 220,
+          "label": "circuit analysis",
+          "target": "docs/INITIAL_PITCH_TRANSIENT.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INITIAL_PITCH_TRANSIENT.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 220,
+          "label": "implementation",
+          "target": "src/core/TouchCircuit.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/TouchCircuit.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 221,
+          "label": "board trace",
+          "target": "docs/OE2_CIRCUIT_EVIDENCE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/OE2_CIRCUIT_EVIDENCE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 221,
+          "label": "real-time chorus model",
+          "target": "docs/BBD_CHORUS_MODEL.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/BBD_CHORUS_MODEL.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 225,
+          "label": "Yamaha owner's manual",
+          "target": "https://www.therogoffs.com/cs80/CS80E_2.pdf#page=25",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 227,
+          "label": "per-note pressure route",
+          "target": "docs/AFTERTOUCH_SUB_VCF.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/AFTERTOUCH_SUB_VCF.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 228,
+          "label": "Yamaha museum photograph",
+          "target": "https://www.yamaha.com/en/about/experience/innovation-road/collection/detail/2039/",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 229,
+          "label": "editor layout",
+          "target": "docs/PANEL_CONFORMANCE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PANEL_CONFORMANCE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 230,
+          "label": "adjustment sheets",
+          "target": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 231,
+          "label": "offline ring-oscillator reference",
+          "target": "docs/RING_TIME_REFERENCE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/RING_TIME_REFERENCE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 234,
+          "label": "Yamaha IC Guide Book",
+          "target": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 235,
+          "label": "oscillator reset and waveform shaper",
+          "target": "docs/OSCILLATOR_CIRCUIT_EVIDENCE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/OSCILLATOR_CIRCUIT_EVIDENCE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 236,
+          "label": "BBD handbook",
+          "target": "https://www.ka-electronics.com/images/pdf/Panasonic_BBD.pdf",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 237,
+          "label": "MN3001 clock and output timing reference",
+          "target": "docs/MN3001_CLOCK_EVENT_DESIGN.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/MN3001_CLOCK_EVENT_DESIGN.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 239,
+          "label": "source ledger",
+          "target": "docs/HARDWARE_REFERENCES.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/HARDWARE_REFERENCES.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 239,
+          "label": "coverage map",
+          "target": "docs/HARDWARE_COVERAGE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/HARDWARE_COVERAGE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 252,
+          "label": "AVX2 filter path",
+          "target": "docs/experiments/avx-default/",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/experiments/avx-default",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 253,
+          "label": "engineering reports",
+          "target": "docs/experiments/cumulative-cpu-2026-11-19/continued-exact-hotpaths/",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/experiments/cumulative-cpu-2026-11-19/continued-exact-hotpaths",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 261,
+          "label": "matched instruction counts",
+          "target": "docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication/",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 267,
+          "label": "Physical CPU-budget qualification",
+          "target": "docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 273,
+          "label": "dependencies in the build workflow",
+          "target": ".github/workflows/build.yml",
+          "kind": "repository_or_same_document",
+          "resolved": ".github/workflows/build.yml",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 288,
+          "label": "Engine architecture",
+          "target": "docs/ENGINE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/ENGINE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 288,
+          "label": "model register",
+          "target": "docs/STATUS.md#model-register",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/STATUS.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true
+        },
+        {
+          "line": 289,
+          "label": "DSP measurements",
+          "target": "docs/DSP_MEASUREMENTS.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/DSP_MEASUREMENTS.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 290,
+          "label": "Distribution and checksums",
+          "target": "docs/CI_DISTRIBUTION_STATUS.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CI_DISTRIBUTION_STATUS.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 291,
+          "label": "release qualification",
+          "target": "docs/release/RELEASE_QUALIFICATION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/release/RELEASE_QUALIFICATION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 292,
+          "label": "Fidelity requirements and contribution standards",
+          "target": "docs/ANALOG_FIDELITY_REQUIREMENT.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/ANALOG_FIDELITY_REQUIREMENT.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        },
+        {
+          "line": 297,
+          "label": "GNU Affero General Public License v3",
+          "target": "LICENSE",
+          "kind": "repository_or_same_document",
+          "resolved": "LICENSE",
+          "exists_at_source": true,
+          "heading_fragment_found": null
+        }
+      ]
+    },
+    {
+      "file": "docs/INSTALL_AND_QUICKSTART.md",
+      "links": [
+        {
+          "line": 17,
+          "label": "2026.11.7 sound revision",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md"
+        },
+        {
+          "line": 21,
+          "label": "README download table",
+          "target": "../README.md#downloads",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/README.md#downloads"
+        },
+        {
+          "line": 131,
+          "label": "Steinberg developer documentation",
+          "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 132,
+          "label": "Audio Units component folders",
+          "target": "https://support.apple.com/en-ie/102239",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 184,
+          "label": "preset guide",
+          "target": "PRESET_GUIDE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "PRESET_GUIDE.md"
+        },
+        {
+          "line": 196,
+          "label": "PANIC details",
+          "target": "PANIC_CONTROL.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PANIC_CONTROL.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PANIC_CONTROL.md"
+        },
+        {
+          "line": 207,
+          "label": "output-meter details",
+          "target": "OUTPUT_METER.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/OUTPUT_METER.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/OUTPUT_METER.md"
+        },
+        {
+          "line": 222,
+          "label": "session contract",
+          "target": "PARITY_ISOLATION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PARITY_ISOLATION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "line": 245,
+          "label": "expressive Source Performance benchmark",
+          "target": "performance/2026-10-30-source-performance/SUMMARY.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/performance/2026-10-30-source-performance/SUMMARY.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+        },
+        {
+          "line": 284,
+          "label": "documented controller dependency",
+          "target": "PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+        },
+        {
+          "line": 286,
+          "label": "preset guide",
+          "target": "PRESET_GUIDE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "PRESET_GUIDE.md"
+        }
+      ]
+    },
+    {
+      "file": "docs/PRESET_GUIDE.md",
+      "links": [
+        {
+          "line": 10,
+          "label": "current download table",
+          "target": "../README.md#downloads",
+          "kind": "repository_or_same_document",
+          "resolved": "README.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/README.md#downloads"
+        },
+        {
+          "line": 22,
+          "label": "2026.11.7 revision report",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md"
+        },
+        {
+          "line": 26,
+          "label": "2026.11.6 report",
+          "target": "CIRCUIT_LIBRARY_2026_11_6.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_6.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_6.md"
+        },
+        {
+          "line": 28,
+          "label": "2026.11.5 report",
+          "target": "CIRCUIT_LIBRARY_2026_11_5.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_5.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_5.md"
+        },
+        {
+          "line": 29,
+          "label": "2026.11.4 report",
+          "target": "CIRCUIT_LIBRARY_2026_11_4.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_4.md"
+        },
+        {
+          "line": 31,
+          "label": "2026.11.3 instrument-voicing report",
+          "target": "CIRCUIT_LIBRARY_2026_11_3.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_3.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_3.md"
+        },
+        {
+          "line": 33,
+          "label": "2026.11.2 circuit library report",
+          "target": "CIRCUIT_LIBRARY_2026_11_2.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_2.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_2.md"
+        },
+        {
+          "line": 35,
+          "label": "2026.11.1 refinement report",
+          "target": "PRESET_REFINEMENT_2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "line": 36,
+          "label": "original revision report",
+          "target": "PRESET_REVISION_2026_11.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REVISION_2026_11.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "line": 46,
+          "label": "Recalling a revised sound",
+          "target": "#recalling-a-revised-sound",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "#recalling-a-revised-sound"
+        },
+        {
+          "line": 58,
+          "label": "playing and performance instructions",
+          "target": "INSTALL_AND_QUICKSTART.md#one-circuit-instrument",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INSTALL_AND_QUICKSTART.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "INSTALL_AND_QUICKSTART.md#one-circuit-instrument"
+        },
+        {
+          "line": 68,
+          "label": "Lead voicings",
+          "target": "../src/core/curated/Leads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Leads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Leads.inc"
+        },
+        {
+          "line": 69,
+          "label": "Original-address variations",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 75,
+          "label": "original-address recipes",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 76,
+          "label": "later collection",
+          "target": "../src/core/CuratedLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/CuratedLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/CuratedLibrary.inc"
+        },
+        {
+          "line": 82,
+          "label": "Brass",
+          "target": "../src/core/curated/Brass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Brass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Brass.inc"
+        },
+        {
+          "line": 83,
+          "label": "Strings",
+          "target": "../src/core/curated/Strings.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Strings.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Strings.inc"
+        },
+        {
+          "line": 84,
+          "label": "Pads",
+          "target": "../src/core/curated/Pads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Pads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Pads.inc"
+        },
+        {
+          "line": 85,
+          "label": "Polysynth",
+          "target": "../src/core/curated/Polysynth.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Polysynth.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Polysynth.inc"
+        },
+        {
+          "line": 86,
+          "label": "Keys",
+          "target": "../src/core/curated/Keys.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Keys.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Keys.inc"
+        },
+        {
+          "line": 87,
+          "label": "Organ",
+          "target": "../src/core/curated/Organ.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Organ.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Organ.inc"
+        },
+        {
+          "line": 88,
+          "label": "Winds",
+          "target": "../src/core/curated/Winds.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Winds.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Winds.inc"
+        },
+        {
+          "line": 89,
+          "label": "Plucked",
+          "target": "../src/core/curated/Plucked.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Plucked.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Plucked.inc"
+        },
+        {
+          "line": 90,
+          "label": "Bass",
+          "target": "../src/core/curated/Bass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bass.inc"
+        },
+        {
+          "line": 91,
+          "label": "Leads",
+          "target": "../src/core/curated/Leads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Leads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Leads.inc"
+        },
+        {
+          "line": 92,
+          "label": "Bells",
+          "target": "../src/core/curated/Bells.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bells.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bells.inc"
+        },
+        {
+          "line": 93,
+          "label": "FX",
+          "target": "../src/core/curated/Fx.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Fx.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Fx.inc"
+        },
+        {
+          "line": 94,
+          "label": "Sequences",
+          "target": "../src/core/curated/Modern.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Modern.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Modern.inc"
+        },
+        {
+          "line": 95,
+          "label": "Hardware Studies",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 96,
+          "label": "Init",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 121,
+          "label": "Brass source",
+          "target": "../src/core/curated/Brass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Brass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Brass.inc"
+        },
+        {
+          "line": 126,
+          "label": "Brass source",
+          "target": "../src/core/curated/Brass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Brass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Brass.inc"
+        },
+        {
+          "line": 135,
+          "label": "String source",
+          "target": "../src/core/curated/Strings.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Strings.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Strings.inc"
+        },
+        {
+          "line": 141,
+          "label": "Pad source",
+          "target": "../src/core/curated/Pads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Pads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Pads.inc"
+        },
+        {
+          "line": 149,
+          "label": "Choir revision",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes"
+        },
+        {
+          "line": 150,
+          "label": "Pad source",
+          "target": "../src/core/curated/Pads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Pads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Pads.inc"
+        },
+        {
+          "line": 172,
+          "label": "Key source",
+          "target": "../src/core/curated/Keys.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Keys.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Keys.inc"
+        },
+        {
+          "line": 173,
+          "label": "Current instrument-body scope",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md"
+        },
+        {
+          "line": 179,
+          "label": "Original-address recipes",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 191,
+          "label": "Plucked source",
+          "target": "../src/core/curated/Plucked.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Plucked.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Plucked.inc"
+        },
+        {
+          "line": 198,
+          "label": "String-bend correction",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md#string-bends-through-a-fixed-body",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md#string-bends-through-a-fixed-body"
+        },
+        {
+          "line": 208,
+          "label": "Plucked source",
+          "target": "../src/core/curated/Plucked.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Plucked.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Plucked.inc"
+        },
+        {
+          "line": 215,
+          "label": "Wind source",
+          "target": "../src/core/curated/Winds.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Winds.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Winds.inc"
+        },
+        {
+          "line": 216,
+          "label": "Organ source",
+          "target": "../src/core/curated/Organ.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Organ.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Organ.inc"
+        },
+        {
+          "line": 223,
+          "label": "Wind source",
+          "target": "../src/core/curated/Winds.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Winds.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Winds.inc"
+        },
+        {
+          "line": 235,
+          "label": "Texture correction",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md#consistent-breath-contact-and-flutter-across-rates",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md#consistent-breath-contact-and-flutter-across-rates"
+        },
+        {
+          "line": 243,
+          "label": "Bell source",
+          "target": "../src/core/curated/Bells.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bells.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bells.inc"
+        },
+        {
+          "line": 248,
+          "label": "Bell source",
+          "target": "../src/core/curated/Bells.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bells.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bells.inc"
+        },
+        {
+          "line": 258,
+          "label": "Bell source",
+          "target": "../src/core/curated/Bells.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bells.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bells.inc"
+        },
+        {
+          "line": 264,
+          "label": "Bass source",
+          "target": "../src/core/curated/Bass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bass.inc"
+        },
+        {
+          "line": 269,
+          "label": "Bass source",
+          "target": "../src/core/curated/Bass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Bass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Bass.inc"
+        },
+        {
+          "line": 275,
+          "label": "FX source",
+          "target": "../src/core/curated/Fx.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Fx.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Fx.inc"
+        },
+        {
+          "line": 292,
+          "label": "Organ",
+          "target": "../src/core/curated/Organ.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Organ.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Organ.inc"
+        },
+        {
+          "line": 292,
+          "label": "Pads",
+          "target": "../src/core/curated/Pads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Pads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Pads.inc"
+        },
+        {
+          "line": 293,
+          "label": "Brass",
+          "target": "../src/core/curated/Brass.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Brass.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Brass.inc"
+        },
+        {
+          "line": 293,
+          "label": "Keys",
+          "target": "../src/core/curated/Keys.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Keys.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Keys.inc"
+        },
+        {
+          "line": 294,
+          "label": "Polysynth",
+          "target": "../src/core/curated/Polysynth.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Polysynth.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Polysynth.inc"
+        },
+        {
+          "line": 301,
+          "label": "Lead source",
+          "target": "../src/core/curated/Leads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Leads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Leads.inc"
+        },
+        {
+          "line": 311,
+          "label": "Ring trigger and mix",
+          "target": "../src/core/Engine.cpp",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/Engine.cpp",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/Engine.cpp"
+        },
+        {
+          "line": 316,
+          "label": "implemented ratios",
+          "target": "../src/core/Params.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/Params.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/Params.h"
+        },
+        {
+          "line": 334,
+          "label": "Modern collection source",
+          "target": "../src/core/curated/Modern.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Modern.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Modern.inc"
+        },
+        {
+          "line": 340,
+          "label": "Pad source",
+          "target": "../src/core/curated/Pads.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Pads.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Pads.inc"
+        },
+        {
+          "line": 340,
+          "label": "FX source",
+          "target": "../src/core/curated/Fx.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/curated/Fx.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/curated/Fx.inc"
+        },
+        {
+          "line": 353,
+          "label": "Circuit and session contract",
+          "target": "PARITY_ISOLATION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PARITY_ISOLATION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "line": 358,
+          "label": "Original sequence recipes",
+          "target": "../src/core/OriginalCircuitLibrary.inc",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/OriginalCircuitLibrary.inc",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/OriginalCircuitLibrary.inc"
+        },
+        {
+          "line": 378,
+          "label": "Control definitions",
+          "target": "../src/core/Params.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/Params.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/Params.h"
+        },
+        {
+          "line": 379,
+          "label": "Per-control help",
+          "target": "../src/plugin/EvidenceRegister.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/plugin/EvidenceRegister.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/plugin/EvidenceRegister.h"
+        },
+        {
+          "line": 419,
+          "label": "Signal routing",
+          "target": "../src/core/Engine.cpp",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/Engine.cpp",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/Engine.cpp"
+        },
+        {
+          "line": 428,
+          "label": "Body-filter routing details",
+          "target": "CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response"
+        },
+        {
+          "line": 453,
+          "label": "documented controller dependency",
+          "target": "PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+        },
+        {
+          "line": 478,
+          "label": "Compatibility details",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md#saved-sessions-and-factory-recall",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md#saved-sessions-and-factory-recall"
+        },
+        {
+          "line": 485,
+          "label": "Program contract",
+          "target": "../src/core/FactoryPresets.h",
+          "kind": "repository_or_same_document",
+          "resolved": "src/core/FactoryPresets.h",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/core/FactoryPresets.h"
+        },
+        {
+          "line": 494,
+          "label": "Migration details",
+          "target": "CIRCUIT_LIBRARY_2026_11_2.md#saved-sessions-and-host-automation",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_2.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_2.md#saved-sessions-and-host-automation"
+        },
+        {
+          "line": 500,
+          "label": "Build target",
+          "target": "../CMakeLists.txt",
+          "kind": "repository_or_same_document",
+          "resolved": "CMakeLists.txt",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/CMakeLists.txt"
+        },
+        {
+          "line": 501,
+          "label": "Capture tool",
+          "target": "../src/tools/preset_capture.cpp",
+          "kind": "repository_or_same_document",
+          "resolved": "src/tools/preset_capture.cpp",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/src/tools/preset_capture.cpp"
+        },
+        {
+          "line": 531,
+          "label": "build workflow",
+          "target": "../.github/workflows/build.yml",
+          "kind": "repository_or_same_document",
+          "resolved": ".github/workflows/build.yml",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/.github/workflows/build.yml"
+        },
+        {
+          "line": 532,
+          "label": "audition script",
+          "target": "../scripts/capture-factory-auditions.py",
+          "kind": "repository_or_same_document",
+          "resolved": "scripts/capture-factory-auditions.py",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/scripts/capture-factory-auditions.py"
+        },
+        {
+          "line": 544,
+          "label": "Exact roster",
+          "target": "preset-evidence/2026.11.7/reviews/a09.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.7/reviews/a09.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.7/reviews/a09.md"
+        },
+        {
+          "line": 606,
+          "label": "current download section",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        }
+      ]
+    },
+    {
+      "file": "docs/CI_DISTRIBUTION_STATUS.md",
+      "links": [
+        {
+          "line": 19,
+          "label": "revision report",
+          "target": "CIRCUIT_LIBRARY_2026_11_7.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_7.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_7.md"
+        },
+        {
+          "line": 20,
+          "label": "preset guide",
+          "target": "PRESET_GUIDE.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_GUIDE.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "PRESET_GUIDE.md"
+        },
+        {
+          "line": 37,
+          "label": "current download section",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 44,
+          "label": "build 45246863788, attempt 1",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 50,
+          "label": "revision report",
+          "target": "CIRCUIT_LIBRARY_2026_11_4.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_4.md"
+        },
+        {
+          "line": 55,
+          "label": "Windows ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 56,
+          "label": "Apple Silicon ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 57,
+          "label": "Intel Mac ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 58,
+          "label": "Linux ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 68,
+          "label": "Consolidated qualification and original evidence",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json"
+        },
+        {
+          "line": 84,
+          "label": "138-WAV audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 94,
+          "label": "Actual audition acceptance",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json"
+        },
+        {
+          "line": 95,
+          "label": "Delivered inventory identity",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json"
+        },
+        {
+          "line": 103,
+          "label": "original run's Artifacts list",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788#artifacts",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 115,
+          "label": "45246863831, attempt 1",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 124,
+          "label": "Supporting DSP evidence",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json"
+        },
+        {
+          "line": 127,
+          "label": "screenshot workflow 45246863473",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863473",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 134,
+          "label": "Screenshot acceptance and historical failure",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json"
+        },
+        {
+          "line": 137,
+          "label": "filter run 45244531626",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 141,
+          "label": "Filter source equivalence and results",
+          "target": "preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json"
+        },
+        {
+          "line": 151,
+          "label": "Completed team review",
+          "target": "TEAM_REVIEW_2026_11_4.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/TEAM_REVIEW_2026_11_4.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/TEAM_REVIEW_2026_11_4.md"
+        },
+        {
+          "line": 152,
+          "label": "Actual continuation ledger",
+          "target": "preset-evidence/2026.11.4/continuation/worker-ledger.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.4/continuation/worker-ledger.json"
+        },
+        {
+          "line": 157,
+          "label": "build 45176799427, attempt 1",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 163,
+          "label": "revision report",
+          "target": "CIRCUIT_LIBRARY_2026_11_3.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_3.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_3.md"
+        },
+        {
+          "line": 167,
+          "label": "Windows ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 168,
+          "label": "Apple Silicon ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 169,
+          "label": "Intel Mac ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 170,
+          "label": "Linux ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 179,
+          "label": "Consolidated qualification and original evidence",
+          "target": "preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json"
+        },
+        {
+          "line": 190,
+          "label": "90-WAV audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 197,
+          "label": "Actual audition acceptance",
+          "target": "preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json"
+        },
+        {
+          "line": 198,
+          "label": "Delivered inventory identity",
+          "target": "preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json"
+        },
+        {
+          "line": 231,
+          "label": "Source history",
+          "target": "preset-evidence/2026.11.3/source-fixture-correction.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/source-fixture-correction.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/source-fixture-correction.json"
+        },
+        {
+          "line": 242,
+          "label": "DSP run 45176799301",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 243,
+          "label": "screenshot run 45176799293",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 255,
+          "label": "Current supporting CI review",
+          "target": "preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json"
+        },
+        {
+          "line": 256,
+          "label": "Historical a81851b supporting review",
+          "target": "preset-evidence/2026.11.3/ci/source-a81851b/supporting-ci-final.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.3/ci/source-a81851b/supporting-ci-final.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.3/ci/source-a81851b/supporting-ci-final.json"
+        },
+        {
+          "line": 257,
+          "label": "60-agent ledger",
+          "target": "TEAM_REVIEW_2026_11_3.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/TEAM_REVIEW_2026_11_3.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/TEAM_REVIEW_2026_11_3.md"
+        },
+        {
+          "line": 262,
+          "label": "build 45112404257, attempt 1",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 269,
+          "label": "revision report",
+          "target": "CIRCUIT_LIBRARY_2026_11_2.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/CIRCUIT_LIBRARY_2026_11_2.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/CIRCUIT_LIBRARY_2026_11_2.md"
+        },
+        {
+          "line": 274,
+          "label": "Windows ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 275,
+          "label": "Apple Silicon ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 276,
+          "label": "Intel Mac ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 277,
+          "label": "Linux ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 287,
+          "label": "Consolidated qualification and original evidence",
+          "target": "preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json"
+        },
+        {
+          "line": 297,
+          "label": "68-WAV audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 306,
+          "label": "Actual audition acceptance",
+          "target": "preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json"
+        },
+        {
+          "line": 312,
+          "label": "installation guide",
+          "target": "INSTALL_AND_QUICKSTART.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INSTALL_AND_QUICKSTART.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "INSTALL_AND_QUICKSTART.md"
+        },
+        {
+          "line": 341,
+          "label": "build 45044040694, attempt 1 \u2014 failed",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 349,
+          "label": "Windows candidate ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 350,
+          "label": "Apple Silicon candidate ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 351,
+          "label": "Intel Mac candidate ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 352,
+          "label": "Linux experimental ZIP \u2014 GUI validation failed",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 360,
+          "label": "Windows native evidence",
+          "target": "preset-evidence/2026.11.1/ci/native-windows-x86_64.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/native-windows-x86_64.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/native-windows-x86_64.json"
+        },
+        {
+          "line": 361,
+          "label": "Apple Silicon native evidence",
+          "target": "preset-evidence/2026.11.1/ci/native-macos-arm64.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/native-macos-arm64.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/native-macos-arm64.json"
+        },
+        {
+          "line": 362,
+          "label": "Intel Mac native evidence",
+          "target": "preset-evidence/2026.11.1/ci/native-macos-x86_64.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/native-macos-x86_64.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/native-macos-x86_64.json"
+        },
+        {
+          "line": 363,
+          "label": "Linux gates and original exits",
+          "target": "preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+        },
+        {
+          "line": 365,
+          "label": "consolidated qualification",
+          "target": "preset-evidence/2026.11.1/ci/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/release-qualification.json"
+        },
+        {
+          "line": 375,
+          "label": "Four-archive installation evidence",
+          "target": "preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json"
+        },
+        {
+          "line": 376,
+          "label": "Five public GETs, hashes and withheld publisher",
+          "target": "preset-evidence/2026.11.1/final-ci/public-candidates/summary.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json"
+        },
+        {
+          "line": 378,
+          "label": "V3 archive aggregate",
+          "target": "preset-evidence/2026.11.1/ci/final-install-artifacts.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/final-install-artifacts.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/final-install-artifacts.json"
+        },
+        {
+          "line": 380,
+          "label": "complete validator payload comparison",
+          "target": "preset-evidence/2026.11.1/ci/final-validator-payload-identity.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/final-validator-payload-identity.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/final-validator-payload-identity.json"
+        },
+        {
+          "line": 384,
+          "label": "24-WAV audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 389,
+          "label": "Actual CI audition proof",
+          "target": "preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json"
+        },
+        {
+          "line": 395,
+          "label": "installation guide",
+          "target": "INSTALL_AND_QUICKSTART.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INSTALL_AND_QUICKSTART.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "INSTALL_AND_QUICKSTART.md"
+        },
+        {
+          "line": 398,
+          "label": "refinement report",
+          "target": "PRESET_REFINEMENT_2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "line": 407,
+          "label": "2026.11.1 60-agent assignment review",
+          "target": "TEAM_REVIEW_2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/TEAM_REVIEW_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/TEAM_REVIEW_2026_11_1.md"
+        },
+        {
+          "line": 411,
+          "label": "Recorded download acceptance",
+          "target": "preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md"
+        },
+        {
+          "line": 412,
+          "label": "Teardown source audit",
+          "target": "preset-evidence/2026.11.1/ci/teardown-source-audit.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11.1/ci/teardown-source-audit.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11.1/ci/teardown-source-audit.md"
+        },
+        {
+          "line": 418,
+          "label": "refinement report",
+          "target": "PRESET_REFINEMENT_2026_11_1.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "line": 423,
+          "label": "build 45029235535",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 427,
+          "label": "Combined verification record",
+          "target": "preset-evidence/2026.11/ci/release-qualification.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/release-qualification.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/release-qualification.json"
+        },
+        {
+          "line": 428,
+          "label": "Latest run status",
+          "target": "preset-evidence/2026.11/ci/run-latest-attempt.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/run-latest-attempt.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/run-latest-attempt.json"
+        },
+        {
+          "line": 437,
+          "label": "revision report",
+          "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/PRESET_REVISION_2026_11.md",
+          "exists_at_source": true,
+          "heading_fragment_found": true,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+        },
+        {
+          "line": 442,
+          "label": "Windows ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 443,
+          "label": "Apple Silicon ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 444,
+          "label": "Intel Mac ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 445,
+          "label": "Linux ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 452,
+          "label": "Archive verification",
+          "target": "preset-evidence/2026.11/ci/final-install-artifacts.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/final-install-artifacts.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/final-install-artifacts.json"
+        },
+        {
+          "line": 453,
+          "label": "Validator payload identity",
+          "target": "preset-evidence/2026.11/ci/final-validator-payload-identity.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/final-validator-payload-identity.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/final-validator-payload-identity.json"
+        },
+        {
+          "line": 454,
+          "label": "Public download verification",
+          "target": "preset-evidence/2026.11/ci/final-download-links.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/final-download-links.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/final-download-links.json"
+        },
+        {
+          "line": 456,
+          "label": "twelve-WAV audition ZIP",
+          "target": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761870353.zip",
+          "kind": "external_unchanged",
+          "externally_requested": false
+        },
+        {
+          "line": 461,
+          "label": "Audition verification",
+          "target": "preset-evidence/2026.11/ci/final-audition.json",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/preset-evidence/2026.11/ci/final-audition.json",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/preset-evidence/2026.11/ci/final-audition.json"
+        },
+        {
+          "line": 466,
+          "label": "installation guide",
+          "target": "INSTALL_AND_QUICKSTART.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/INSTALL_AND_QUICKSTART.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "INSTALL_AND_QUICKSTART.md"
+        },
+        {
+          "line": 492,
+          "label": "release/RELEASE_QUALIFICATION.md",
+          "target": "release/RELEASE_QUALIFICATION.md",
+          "kind": "repository_or_same_document",
+          "resolved": "docs/release/RELEASE_QUALIFICATION.md",
+          "exists_at_source": true,
+          "heading_fragment_found": null,
+          "source_packaging_link_projection": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/release/RELEASE_QUALIFICATION.md"
+        }
+      ]
+    }
+  ]
+}

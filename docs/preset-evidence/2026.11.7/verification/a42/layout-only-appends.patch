@@ -1,0 +1,34 @@
+--- 078c0981-published-4-createParameterLayout
++++ ee0dabca-final-7-createParameterLayout
+@@ -243,5 +243,31 @@
+     for (int rank = 0; rank < 2; ++rank)
+         layout.add(make(cs80::bodySizeParam(rank), 17));
+ 
++    // Do not extend the model choices or insert into their groups: both
++    // choices append after all 306 published host slots, including geometry.
++    for (int rank = 0; rank < 2; ++rank)
++    {
++        juce::StringArray choices;
++        for (int variant = 0; variant <= cs80::body::maxVariant; ++variant)
++            choices.add(cs80::body::variantName(variant));
++        layout.add(std::make_unique<juce::AudioParameterChoice>(
++            juce::ParameterID { parameterId(cs80::bodyVariantParam(rank)), 18 },
++            rank == 0 ? "Body I resonator variant (next note)" : "Body II resonator variant (next note)",
++            choices, cs80::body::standard));
++    }
++
++    // Preserve all 308 previous host slots and the normalized ranges of their
++    // choices. A missing material in an older state is explicitly Standard.
++    for (int rank = 0; rank < 2; ++rank)
++    {
++        juce::StringArray choices;
++        for (int material = 0; material <= cs80::body::maxMaterial; ++material)
++            choices.add(cs80::body::materialName(material));
++        layout.add(std::make_unique<juce::AudioParameterChoice>(
++            juce::ParameterID { parameterId(cs80::bodyMaterialParam(rank)), 19 },
++            rank == 0 ? "Body I material (next note)" : "Body II material (next note)",
++            choices, cs80::body::defaultMaterial));
++    }
++
+     return layout;
+ }

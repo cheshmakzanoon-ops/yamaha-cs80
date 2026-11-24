@@ -1,0 +1,48 @@
+{
+  "source_root": "/workspace/scratch/c98fb40a9529/juce-validation",
+  "commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "pins_in_each_product_version": {
+    "published_4": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "preceding_5": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "baseline_6": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "final_7": "c352e2489000ffeb9e397051377d75eef2efe641"
+  },
+  "files": {
+    "modules/juce_audio_processors/utilities/juce_AudioProcessorValueTreeState.cpp": {
+      "git_raw_sha256": "ab2f26b9e68c7496fac28011ca43ce7fffe646e390750cb5a6fca0ee7a5353fa",
+      "git_lf_sha256": "b3bd9f8f1670cf286ff7d558e45d2a79032a8888ee6083c106946d51c584fd9a",
+      "local_raw_sha256": "ab2f26b9e68c7496fac28011ca43ce7fffe646e390750cb5a6fca0ee7a5353fa",
+      "local_matches_git_blob_exactly": true,
+      "local_matches_pin_after_crlf_normalization": true
+    },
+    "modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.cpp": {
+      "git_raw_sha256": "285f5ebf78ff80bc6728c006bcade77836988b7e0a23f973e5b80379e809677d",
+      "git_lf_sha256": "63e8a0da242d5245b4ea18c0a449cbda0d11c3fc5a2b209dbf733d09d33bce89",
+      "local_raw_sha256": "285f5ebf78ff80bc6728c006bcade77836988b7e0a23f973e5b80379e809677d",
+      "local_matches_git_blob_exactly": true,
+      "local_matches_pin_after_crlf_normalization": true
+    },
+    "modules/juce_audio_processors_headless/processors/juce_AudioProcessorParameterGroup.cpp": {
+      "git_raw_sha256": "71b8a3a6f51d871ac4e7cf8dba7cde2745d1770cceebe4cf6cb63a356a66df68",
+      "git_lf_sha256": "923ba51f21a303b6f166a16e907f56149f4f1a91139decdaf410cb0769579182",
+      "local_raw_sha256": "71b8a3a6f51d871ac4e7cf8dba7cde2745d1770cceebe4cf6cb63a356a66df68",
+      "local_matches_git_blob_exactly": true,
+      "local_matches_pin_after_crlf_normalization": true
+    },
+    "modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp": {
+      "git_raw_sha256": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+      "git_lf_sha256": "adf5c18774c42bfab7d50478525f84dcab43e12ff8d9879749137d80c61336f0",
+      "local_raw_sha256": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+      "local_matches_git_blob_exactly": true,
+      "local_matches_pin_after_crlf_normalization": true
+    },
+    "modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm": {
+      "git_raw_sha256": "16a5246f380a93c1f33f9afeef810702748039720ea094208765c0c8c916fe86",
+      "git_lf_sha256": "a4a8f4efb3b20977a1dfa8865c02800834e8790043975428b28358417d1315f5",
+      "local_raw_sha256": "16a5246f380a93c1f33f9afeef810702748039720ea094208765c0c8c916fe86",
+      "local_matches_git_blob_exactly": true,
+      "local_matches_pin_after_crlf_normalization": true
+    }
+  },
+  "scope": "Pinned JUCE source inspection; no compiler, wrapper or native host execution"
+}

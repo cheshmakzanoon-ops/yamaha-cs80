@@ -1,0 +1,484 @@
+{
+  "scope": "Source/selector/articulation accounting plus explicitly reused PCM evidence; no new audio captures",
+  "review": {
+    "path": "docs/preset-evidence/2026.11.7/reviews/a41.md",
+    "sha256": "b45a70f88e60bbefaf31fcfe08a96fd639dde69889a0dd90254827830aa0f08b"
+  },
+  "sound_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "final_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "final_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "head_at_run": "39811916ef812b5c5cb5805cd532358ab684529f",
+  "baseline": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "inventory": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+    "baseline_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+    "programs": 523,
+    "parameters": 204,
+    "exact_values": 106692,
+    "complete_records_equal": true
+  },
+  "summary": {
+    "materials": 9,
+    "variants": 4,
+    "specialized_programs": 18,
+    "specialized_ranks": 34,
+    "all_program_ranks_accounted": 1046,
+    "ignored_nonzero_selectors": 0,
+    "metadata_compatibility_cases": 300,
+    "articulation_probe_cases": 480,
+    "new_presets": 0,
+    "new_pcm_renders": 0
+  },
+  "probe": {
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O2",
+      "-I",
+      "/tmp/cs80-session-1cee5a/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a41/metadata_probe.cpp",
+      "-o",
+      "/tmp/cs80-a41-1cee5a/metadata_probe"
+    ],
+    "executable_sha256": "61c2d57991371de85e169619939d94e66f83da41723a776d9cd44940283be8d5",
+    "compiler_version": "c++ (Debian 14.2.0-19) 14.2.0"
+  },
+  "sources": [
+    {
+      "path": "src/core/InstrumentBody.h",
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "bytes": 72714,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/InstrumentBodyMaterials.h",
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "bytes": 1620,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/InstrumentBodyVariants.h",
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "bytes": 1259,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/BodyArticulation.h",
+      "sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7",
+      "bytes": 3326,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "bytes": 26057,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "bytes": 11002,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "bytes": 2815,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "bytes": 31027,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "sha256": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+      "bytes": 11073,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/curated/Keys.inc",
+      "sha256": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+      "bytes": 26759,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "sha256": "ba06efeddf11f47816f0e052721fedd7895e357fbb45107b0ea9465d8c339a8e",
+      "bytes": 19059,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "sha256": "a232a297b70a753542b3da82b60136941e8188cc56ef107a25c2ce46f7b06499",
+      "bytes": 23340,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "bytes": 28629,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "sha256": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3",
+      "bytes": 24328,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/MaterialBodyTests.cpp",
+      "sha256": "66eb731a3a3352c83f3cb5518d31aa0008f67b6d63c0ec3345298ccf799cfe8d",
+      "bytes": 11811,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/InstrumentBodyVariantTests.cpp",
+      "sha256": "02393959d705ba941fe128212054517108f853fc8e2e3b11e3872160140a042d",
+      "bytes": 12635,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/PluckedMaterialTests.cpp",
+      "sha256": "8a029c8fffcb7f9463d5ce3137a550f81a0d2ea29ca19b33a77415a554cbf497",
+      "bytes": 9914,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/BellMaterialPresetTests.cpp",
+      "sha256": "fb051105e19a66c57c486702a1370956f6fdc200d829dcabd884c4bc2df58d2a",
+      "bytes": 8292,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/PluckedMaterialPresetTests.cpp",
+      "sha256": "2869a1728950837ead97128cd69c67f2a25b080c063ef53d7fd1f372a6c46c43",
+      "bytes": 6609,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/StruckBodyDynamicsTests.cpp",
+      "sha256": "39efd5d4b5187e992e8fa2a7e74d341aac80213f58224f84c1493844822ecff0",
+      "bytes": 8955,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/VocalBodyTests.cpp",
+      "sha256": "961cf7475090f44d7c50bddf4e587f28b34ade1b211a16e98c5b79eb4f8cded7",
+      "bytes": 10126,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/PianoCourseGeometryTests.cpp",
+      "sha256": "f857734f0def4b5ec39bcdbdfdefd4dadee7ed3071dcfa57f98636063e4c0565",
+      "bytes": 10143,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/PianoPartialDecayTests.cpp",
+      "sha256": "dfbf923374f3a21da27f103195c1e026719c40b754637c12fc31517ceecd1f93",
+      "bytes": 8577,
+      "matches_sound_and_final": true
+    },
+    {
+      "path": "tests/LowChoirSpectrumTests.cpp",
+      "sha256": "a806486540235c7ccc7f0fb7ab551bfbac6afa0d9ad7e47a59f509ad324dc034",
+      "bytes": 11874,
+      "matches_sound_and_final": true
+    }
+  ],
+  "retained_body_functions": [
+    {
+      "name": "makeMaterialModes",
+      "sha256": "a4c53a8c1cb09cdce86265fd6d10d6f91f2408342045d295e4d34e8486c14c16",
+      "bytes": 8508,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "makeVariantBarModes",
+      "sha256": "8f7987b8a3b617880ee824e5aae28f8514a8d7a790812c556557ce309410841b",
+      "bytes": 3045,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "pluckedMaterialResponse",
+      "sha256": "e5bad6d5c1ddde805c2af88d14ef4d293d487df775f6bd66a43152a577169875",
+      "bytes": 1004,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "pluckedMaterialWeight",
+      "sha256": "a9a7c58ca0121f7c1dff86cf9ca7cf429aadda7e056337a1623442d91a025c38",
+      "bytes": 3238,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "stringLoss",
+      "sha256": "ceae7fa16c215d2b1406d95c86a2df6af20d6c761915160c9b3001cdd4be1ba6",
+      "bytes": 1937,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "configureExcitation",
+      "sha256": "261f9f1824319002286a81189da9076e0a2c3675c28ebd561538c77d9c362fa8",
+      "bytes": 2397,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "hitSeconds",
+      "sha256": "dfa7159d7937154533183b9364be9d9e9959a5c98f494ac73853950ef49bad31",
+      "bytes": 1027,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "makeTineModes",
+      "sha256": "2e1dd68c79d2dbe047c3df6dc8090363fd6e0e898814f888309667736b2ac525",
+      "bytes": 2163,
+      "exactly_retained_from_baseline6": true
+    },
+    {
+      "name": "makeBarModes",
+      "sha256": "76ba588ef5003ae02ac50f679414c4ab2e68acf969be3a4936f97ac1c80d8fa7",
+      "bytes": 3321,
+      "exactly_retained_from_baseline6": true
+    }
+  ],
+  "reused_evidence": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a12.md",
+      "sha256": "ac4b583d8d34a0e7e36a5e0555d8722cedb68a8bdf4ff255dd2d7ccaaf83fdc3",
+      "bytes": 4996,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a15.md",
+      "sha256": "a1f5205ad0cad8305b11cb347fa000f06088e56a0d598e9e28dc6ae7c0c2ccba",
+      "bytes": 4823,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a17.md",
+      "sha256": "9e06b726a0b5b3e94a5c8029a821891cdfe5d92b87188cdb008508255ee6be29",
+      "bytes": 4909,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a35.md",
+      "sha256": "20c6d3015222dd5c60e39110540ababd851c6ce26ef71f4bd6dcd3e4d4a29948",
+      "bytes": 16263,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a36.md",
+      "sha256": "92a5e86e6ca9b7e04dff5dabe00bffe675fe4903787ce1d79a70ef760333b792",
+      "bytes": 9542,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a07.md",
+      "sha256": "faa98885f9f6bd46c6fb7bd63e96e67965e055b5fd9eea3071e680b5ba5db6d9",
+      "bytes": 4751,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a21.md",
+      "sha256": "bfa7b30d8499b2b5d1d5dc51f25dcbcd0249ef9b46e2b46c5792b8ecff35e827",
+      "bytes": 8880,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/receipt.json",
+      "sha256": "b4517b11558026a2cafab635d2adf0f36f89317bc35589e6483236cd3a599301",
+      "bytes": 3150,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/summary.json",
+      "sha256": "f175f860356c506e9e2934fa72141f2f132efa8bb4e1f8ae87a65cdf0437ee72",
+      "bytes": 740,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/binding.json",
+      "sha256": "46412e8de901636faf9b64288367487acb7770dfea8c7d8cb141ec97eba0fea7",
+      "bytes": 2314,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/results.json",
+      "sha256": "2ff4761a0749718d7c2c2cae42a9f85e4dcc625837a67dd843c67266e0aa8a43",
+      "bytes": 3968,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a17/binding.json",
+      "sha256": "0527c2109297103bd036d6c0638c6ba98c01a257dd10c09989f7083d4a9b91fa",
+      "bytes": 1979,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a35/review.json",
+      "sha256": "bdc9b45cc86ff0e3d42dcb7431d9a841c63f6ed7ee64ea5664e733f75b6d01a8",
+      "bytes": 81033,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a36/provenance.json",
+      "sha256": "dac8b0cec7de9bf3ce1909563929500d6bdfe4d7d093d53d8705d0b3b88537e4",
+      "bytes": 2478,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/receipt.json",
+      "sha256": "e2e0300dbef0a11cdc304af42118ea4eb91e42ef53681fabb76e846c23290208",
+      "bytes": 18698,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_material_body_tests.log",
+      "sha256": "c729acd53c6ddc9c68f961039a6104d1fe1864a9bb6e7d8d0c06c1ad7eebb140",
+      "bytes": 1658,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_instrument_body_variant_tests.log",
+      "sha256": "4b7cb44d4c31c159ac960be31614164c166f8d64d025dfe6ed13321e1039d1b0",
+      "bytes": 1403,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a27/cs80_instrument_body_engine_tests.log",
+      "sha256": "4bcf022db8f745eadd422032f40e59262d3b7014b8b3f3c74480503d6f73588d",
+      "bytes": 987,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a15/material-preset-tests.log",
+      "sha256": "ccce9c13ba416038b516e1ba79127b71f50ea76156db62e9bf09d21ff1f9fa4b",
+      "bytes": 2147,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a07/current.log",
+      "sha256": "411faec0861488daa502b3bb2fa141714ca17ad340b0d9cfaa59a9bf1cf9f826",
+      "bytes": 1826,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a07/vocal-regression.log",
+      "sha256": "62b2a730e1b22c0c98515561f8a736dc19e2c02c487e4fa152c3636254579571",
+      "bytes": 493,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/reviews/a07.md",
+      "sha256": "7709a8db74f2ccc13939cf4818efc6da2627982d2bf81ed350eaeba0f8971007",
+      "bytes": 4536,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/reviews/a09.md",
+      "sha256": "4698536a4c678f8b187d2dcc405d1e96b46f619892de85829c725f4e982693e5",
+      "bytes": 5723,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/reviews/a10.md",
+      "sha256": "d9202c7c4bb3a19acc3544d4ea1b4def87688e48edbfd7ea30c4cf5d7b4371ef",
+      "bytes": 7363,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/reviews/a11.md",
+      "sha256": "73c320aee19e283a5542808001e6322c8547b7b383ba33c58b438d382c260862",
+      "bytes": 8033,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a09/plucked-material-tests.log",
+      "sha256": "344263d974a472ddf0c6e78e4e27268eaf9337d21499bdb9ace72998f096f083",
+      "bytes": 3300,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a09/measured-summary.json",
+      "sha256": "def1341e9a006cc0507b3407a3788102630ee7105eee9b2d935c26cd6e560a85",
+      "bytes": 6390,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/development/a10/material-preset-tests.log",
+      "sha256": "1fc96b0e853095766d7ecd8ac585462d3b02a297017934214a14233489c5ed31",
+      "bytes": 1514,
+      "reused_not_rerun_by_a41": true
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/development/a11/preset-tests.log",
+      "sha256": "1b8b74b62c7cd7559f543c36c4868cf93b90d1d728bf9c184db7de75bbc0a622",
+      "bytes": 2147,
+      "reused_not_rerun_by_a41": true
+    }
+  ],
+  "checks": 76,
+  "failures": 0,
+  "pass_within_stated_scope": true,
+  "limitations": [
+    "No new PCM matrix or listening assessment",
+    "Mode-ratio and decay checks are modeled-signal measurements, not acoustic validation",
+    "No nonlinear coupling/contact/complete-instrument or sample-recording equivalence claim",
+    "No packaged-binary or native-host qualification"
+  ],
+  "outputs": {
+    "README.md": {
+      "bytes": 2832,
+      "sha256": "26672382c4a94013ee67c669897086da2d681dc01a50af31b39e153f4b2b8773"
+    },
+    "checks.json": {
+      "bytes": 9000,
+      "sha256": "9cc358cd5c147fed98bb897de4af6c94a339fda65e59aad71fa3365eaaaa0502"
+    },
+    "rank-inventory.csv": {
+      "bytes": 8722,
+      "sha256": "ae9159461e75658ce1a0b6ad73d041d2759590596997fdbb6c61bdad3eb5cc7f"
+    },
+    "all-rank-selectors.json": {
+      "bytes": 1097488,
+      "sha256": "799bcf58bfde745280b9bf355bf1d16ab050df9d24c9dc7ebc010690725ab703"
+    },
+    "recipes.json": {
+      "bytes": 135194,
+      "sha256": "7de20baa4e41981a45c5fc22ca5446a0b208ed9fc6fbbe793965e977a662d6b0"
+    },
+    "metadata.json": {
+      "bytes": 88017,
+      "sha256": "6c0d94475fc3f5bb8df3b0572524ff9a68ea674642bb2423db81906854f7c615"
+    },
+    "compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verify.py": {
+      "bytes": 17604,
+      "sha256": "8227051098d8c8fdd5ffc68b285224e5ee7a3f8e7e973a30a1c5bbca65e14d6c"
+    },
+    "metadata_probe.cpp": {
+      "bytes": 2039,
+      "sha256": "b65c12c03b63a6dfa2a20e70ba888575addafca77031c4ef731e042f69164fa3"
+    }
+  }
+}

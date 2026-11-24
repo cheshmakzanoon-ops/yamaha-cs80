@@ -16,14 +16,24 @@ that use that mechanism; it does not mean every program changes audio again
 in 2026.11.7.
 
 **This is a source candidate awaiting native build and delivery qualification.**
+The frozen binary source is
+[`ee0dabcacb4cdff93f8803844f60348e0ceda6ed`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ee0dabcacb4cdff93f8803844f60348e0ceda6ed),
+tree `17115913cbb29157bd00539485bcc5f38b57219c`.
 The local evidence below is scoped to the implemented changes. It does not
 qualify a downloadable plugin, a completed audition archive or every host.
-The [current download table](../README.md#downloads) identifies accepted
+The [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) identifies accepted
 artifacts and their exact source. Existing archives retain their original
 revision and binary identity. The preceding
 [native qualification audit](preset-evidence/2026.11.7/reviews/a03.md) records
 why results from the earlier unfinished candidates cannot be combined into
 qualification for this source.
+
+The reviewed sound source `c5549f7d` has the same core/plugin sound code and
+factory recipes as this frozen source; the intervening repairs concern offline
+tool and audit-harness storage. The
+[source-continuity review](preset-evidence/2026.11.7/reviews/a40.md) preserves
+that evidence boundary. Later online documentation does not change the binary
+source or the guides frozen inside its archives.
 
 These remain authored synthesized instruments. The changes repair specific
 rendering behaviors; they do not establish equivalence to a recorded acoustic
@@ -47,6 +57,38 @@ The four new mechanisms are structurally available to **256 existing programs**;
 their actual effect depends on pitch, register and rendering rate. This is
 separate from the retained 521-program revision of the published bank.
 [Complete identity and coverage evidence](preset-evidence/2026.11.7/reviews/a12.md)
+
+Relative to published `.4`, **493 musical programs** change controls beyond the
+declared conservative level/pan exclusions; another **28** change active
+additive rank-VCA baselines that contribute to touch response. The matched
+default captures have changed audio-metric vectors for **519 musical programs**.
+The other two, **Pressure Lead** and **Electric Leads 136**, have changed
+waveforms at both tested pressure levels. This gives cumulative signal-change
+evidence for **521/521**, without claiming every note or gesture changes or
+that the result is perceptually preferable. Both Init programs preserve their
+published controls and match the earlier stereo output in the twelve retained
+comparison cases.
+[Cumulative accounting](preset-evidence/2026.11.7/reviews/a33.md) ·
+[Init comparisons](preset-evidence/2026.11.7/reviews/a27.md)
+
+The narrower `.6 → .7` comparison has **zero recipe edits** and **67 changed
+default metric vectors**: 54 standard-string programs, ten piano programs and
+three low-Oo programs. Its capture uses **48 kHz**, velocity **0.8**, zero
+pressure, a **three-second hold and one-second tail**, with no output
+normalization. MIDI notes are **48 for Bass, 67 for Winds/Leads, 72 for Bells
+and 60 for the other categories**. These short single-note measurements are
+supplemented by selected long holds, chords and controller gestures; they do
+not complete every entrance. Fourteen programs have an active mapped attack
+beyond the bank capture's three-second hold.
+[Measurement scope](preset-evidence/2026.11.7/reviews/a33.md) ·
+[Long entrances and sustained headroom](preset-evidence/2026.11.7/reviews/a34.md)
+
+The nine retained Materials and four Variants select compatible models in all
+**18 specialized programs / 34 active specialized ranks**. Their spectra,
+contact layers and losses are authored profiles. Separate ranks do not
+exchange energy through a solved shared resonator, and these profiles do not
+add complete coupled hammer/string, soundboard, membrane or shell mechanics.
+[Material and variant review](preset-evidence/2026.11.7/reviews/a41.md)
 
 Deliberately electronic sounds keep their circuit, ring, PWM and motion
 identities. The changes below operate inside the optional body path; they do
@@ -189,6 +231,15 @@ At default-size C2, 48 modes reach **3,139.5 Hz**: they restore the 2,800 Hz
 region while still falling short of the 3,500 Hz region. Full 4,400 Hz coverage
 begins near F♯2. These are authored spectrum checks, not a recorded-singer fit.
 
+The actual 16′ Oo foundation in **Dark Choir**, **Blade Choir** and
+**Midnight Pads 55** reaches a stricter low-register limit: at played MIDI 36,
+its approximately **32.70 Hz** fundamental puts mode 48 near **1.570 kHz**,
+below both upper vowel centers at approximately **2.105 and 2.807 kHz** after
+the saved size scaling. Its 8′ partner supplies a higher spectrum but does
+not remove the foundation's cap. The
+[all-seven-vocal-program review](preset-evidence/2026.11.7/reviews/a35.md)
+accounts for every Ah/Oo recipe and its sounding rank register.
+
 [Harmonic budget and response storage](../src/core/InstrumentBody.h) ·
 [Choir recipes](../src/core/curated/Pads.inc) ·
 [Rendered choir evidence](preset-evidence/2026.11.7/reviews/a07.md)
@@ -209,15 +260,22 @@ sound different because piano damping, texture compensation, string bends
 and low choir coverage are engine behaviors. Preserve an earlier binary and
 reference bounce if an arrangement must retain its exact previous rendering.
 
-To use the cumulative factory programming, open **Library → FACTORY LIBRARY**,
-choose the program, press **LOAD** or **RELOAD**, then play fresh notes.
+For a first comparison, use a new empty project and a fresh instrument instance.
+To use the cumulative factory programming, release all keys and the sustain
+pedal, open **Library → FACTORY LIBRARY**, choose the program, press **LOAD** or
+**RELOAD**, then play fresh notes.
 An old project can display the same factory name while restoring an earlier
 recipe. Browser **REVERT** restores the sound active when the browser opened.
+Factory loading applies the sound parameters and PANEL sources, while retaining
+physical setup, MSEG shapes and modulation routing. Existing host automation
+can write later parameter values; LOAD is not a complete session reset.
 Hardware tone tabs retain their electrical recipes and suppress optional
 bodies, as do the existing memory paths.
 
 [Parameter definitions](../src/core/Params.h) ·
 [Program identities and revision](../src/core/FactoryPresets.h) ·
+[Current compatibility review](preset-evidence/2026.11.7/reviews/a42.md) ·
+[Loading behavior](preset-evidence/2026.11.7/reviews/a43.md) ·
 [Playing and recall guide](PRESET_GUIDE.md#recalling-a-revised-sound)
 
 ## Processing and delivery scope
@@ -239,6 +297,16 @@ Continuous string bends also perform the new response calculation. These are
 body measurements on a shared host, not whole-plugin CPU percentages or a DAW
 deadline guarantee. [Method and complete cost evidence](preset-evidence/2026.11.7/reviews/a11.md)
 
+The complete-Engine comparison supplies context for that isolated body cost.
+On the stated shared Linux host, with **48 kHz / 2×**, **256-frame blocks** and
+eight low notes, median paired `.7/.6` CPU ratios are **1.153 for Choir Pad
+(Ah)** and **1.167 for Dark Choir (Oo)**. The Engine's inline extent grows by
+**12,800 bytes**. These observations exclude the plugin wrapper, driver and DAW;
+they establish neither a universal maximum nor a callback deadline. The
+unchanged high-register control and shared-host variability also limit the
+precision of small overhead estimates.
+[Engine ownership, allocation and cost evidence](preset-evidence/2026.11.7/reviews/a37.md)
+
 The configured audition roster retains all **225 requests** introduced in
 2026.11.6 and appends **13 existing-program clips** for low-piano tails and
 low choir registers. It now requests **238 WAVs from 92 programs**, totaling
@@ -246,11 +314,13 @@ low choir registers. It now requests **238 WAVs from 92 programs**, totaling
 [Exact roster and preservation checks](preset-evidence/2026.11.7/reviews/a09.md).
 A configured roster or local regression
 pass does not establish that a complete archive exists. Accepted delivery
-must bind the actual native tests, all required validator lanes, package
+must bind the actual native tests, all **15 required pluginval lanes**, package
 payloads and audition files to one committed source and its hashes. Until
 that work finishes, this report describes the candidate rather than replacing
 the README's accepted downloads.
 
 [Installation and build identification](INSTALL_AND_QUICKSTART.md) ·
 [Audition reproduction](PRESET_GUIDE.md#reproduce-an-audition-from-source) ·
-[Native qualification audit](preset-evidence/2026.11.7/reviews/a03.md)
+[Native qualification audit](preset-evidence/2026.11.7/reviews/a03.md) ·
+[Delivery contract](preset-evidence/2026.11.7/reviews/a30.md) ·
+[Sound-claim and all-family review](preset-evidence/2026.11.7/reviews/a54.md)

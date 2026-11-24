@@ -1,0 +1,35 @@
+{
+  "method": "Independent comparison of authenticated retained Git inventories; no new capture execution",
+  "inventories": {
+    "published_4": {
+      "git_commit": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+      "path": "docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json",
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "bytes": 704822
+    },
+    "baseline_6": {
+      "git_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "path": "docs/preset-evidence/2026.11.6/verification/a15/inventory.json",
+      "sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+      "bytes": 710464
+    },
+    "final_7": {
+      "git_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+      "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+      "bytes": 710464
+    }
+  },
+  "programs": 523,
+  "identity_fields": [
+    "index",
+    "host_index",
+    "name",
+    "category"
+  ],
+  "identity_exact_4_6_7": true,
+  "records_and_values_exact_6_7": true,
+  "value_count": 106692,
+  "ordered_binary32_values_sha256": "aedb533d123874448b4df31f3c25aa7cb109d4109c6dc22ee9548ebcdeb42273",
+  "identity_sha256": "0a596050f9b3b60430c77b8f31136dabd41996712c1f2f3d2e3df509cd8a2fc9"
+}

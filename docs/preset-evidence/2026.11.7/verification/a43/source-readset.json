@@ -1,0 +1,605 @@
+{
+  "schema": 1,
+  "status": "text_only_source_and_documentation_review",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "documentation_checkpoint": "39811916ef812b5c5cb5805cd532358ab684529f",
+  "factory_revision": "2026.11.7",
+  "build_context_from_assignment": {
+    "run_id": 45397189410,
+    "attempt": 1,
+    "status_at_assignment": "in_progress"
+  },
+  "current_ci_or_artifact_status_queried": false,
+  "product_execution_performed": false,
+  "installation_performed": false,
+  "external_urls_requested": false,
+  "tests_run": false,
+  "source_files": [
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 21161,
+      "sha256": "fd7be5120570861aa98d2c5aef16904d0d91fe5a3671170af108bfbb2b4bc2d3",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 35971,
+      "sha256": "c0070cc1258b2672549f02836d31291c2fd484df45519e66d96550ab03758686",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 18521,
+      "sha256": "c4a1397decd8e6e670b8713fbd05afb20ed6f319e2c8be094028684f8ed833a1",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "bytes": 37423,
+      "sha256": "8cd25a3ad41da07e64ab3b5683801bc5131bae5d865933eafb2494054b57b18b",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "bytes": 168644,
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "bytes": 26057,
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/core/curated/Brass.inc",
+      "bytes": 31902,
+      "sha256": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/AdvancedPanel.cpp",
+      "bytes": 241575,
+      "sha256": "c88d3090508a47daf50b78d2ca78be4cd8bdd84c94b871242ace677eccab90bb",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/AdvancedPanel.h",
+      "bytes": 280,
+      "sha256": "556d4a563c22449dddff4561c2d884a8e7b6e64cdf4c17482d22a28febdf9e57",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ArtCommon.cpp",
+      "bytes": 19419,
+      "sha256": "07bc08191a1dfd5a58a425efdfbb20612dc534970bd7cd7c5a9fac83af34e556",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ArtCommon.h",
+      "bytes": 6100,
+      "sha256": "abf8c778483feed6184c3bb150d7e602b570e1f2f3a386406614471da104defd",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/CapturedKeyboardEvents.h",
+      "bytes": 1505,
+      "sha256": "a6437747ed1026b1bedbe93420a1f3b95001b6647f6c1dfb858c071b6705bcef",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/CentreRow.cpp",
+      "bytes": 8779,
+      "sha256": "bc580ee0fd5a2fd22745d6d55d0d4b04559cd2cdb0ad4f8301c7880efdaccd9d",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/CentreRow.h",
+      "bytes": 1707,
+      "sha256": "70c830150837b2c5bfc64a266d969636a66e2c1bdcf9b1163a31b0726da29e45",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ChannelRow.cpp",
+      "bytes": 4050,
+      "sha256": "0a65537abe36c00953350225a129bc65dc0b4c2f978069fe020cd2ce3cf42c45",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ChannelRow.h",
+      "bytes": 971,
+      "sha256": "ef39b5e8a33ab0b0505cc302be261fe402f33e9bc7dedf799f5dd68ffb80113a",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/CircuitPolicyParameter.h",
+      "bytes": 1216,
+      "sha256": "b8dcd989647e7983ca0a3fcfdfe739384d76dd2c8ad6700543d062a2f3176234",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/EditorPreferences.cpp",
+      "bytes": 1566,
+      "sha256": "959624e10b3dedd8ac7301f0d90bfeed5fd497d5c2b8ab9179eaeb6348eeb1a7",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/EditorPreferences.h",
+      "bytes": 1181,
+      "sha256": "997fd0d821ec49fac2a13218bc016f72c434228205ea1e5c3acd8d2c0142f74d",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/EvidenceRegister.h",
+      "bytes": 39585,
+      "sha256": "67edd376b42cd8da480396cb82c241e00a0718b67ac9e95cacda7976664217ab",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/HardwareKeyboard.h",
+      "bytes": 67844,
+      "sha256": "bfbc290a25c2a1938a06f3eb25c5991e50713fa0e2fa4d706f0b4497c27aaf52",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/HostAutomationBridge.h",
+      "bytes": 12411,
+      "sha256": "f716257b6364fb38136999d2a85adbe3c810baa97ce6474249546cb2a7cdceae",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/KeyboardEventQueue.h",
+      "bytes": 7391,
+      "sha256": "520dfeeaef5345afecd285af65ca427a2a8c3425e4b94d85665e72eb3e11e427",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/KeyboardGestureCapture.h",
+      "bytes": 1494,
+      "sha256": "3806eea72ba11d17f053d2af072945124e98eaccb5e742e9c78f4ad18777e4c9",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/KeyboardPressureOwnership.h",
+      "bytes": 3464,
+      "sha256": "7ef0dffd4ed7ba4b9dd0698dfaed62c71a76058d3a56ff76254d8b5cd7893e06",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/KeyboardTuningPage.cpp",
+      "bytes": 18684,
+      "sha256": "1992ae588812577407404fb8719705ad64080a7c7162e1006fc15de9b73b08d3",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/KeyboardTuningPage.h",
+      "bytes": 3459,
+      "sha256": "64d055827bb60bce11d0451c9f749339111ddb090123c7ba6fd5ed7dd1235f5e",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/LfoScopePreview.h",
+      "bytes": 3343,
+      "sha256": "3ee73faca1b5a3ccce874b1b359b958fc53eceaba88654351c77085d2deeeb8b",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MemoryEditing.h",
+      "bytes": 4233,
+      "sha256": "50ad6cf9962e944dd2962aba502d2a78adf6112b6607b3ccae34564029d600b2",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MemoryLid.cpp",
+      "bytes": 24153,
+      "sha256": "4a9d122227a88c0b8fd50985c64f5b0a4c91415030e23ba1520827e626322be1",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MemoryLid.h",
+      "bytes": 5541,
+      "sha256": "4fff1cd4b41724559c0b02fbde46dec2f9c53ead7d9456129d4bcdfe24201aad",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MidiLearn.h",
+      "bytes": 7126,
+      "sha256": "6823bb4d167a2b529a91a2b62a970bc0f02e463de018296d410d9d6067f7d71f",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.cpp",
+      "bytes": 9489,
+      "sha256": "0b9d5d34d340e58795b4b530ff31bae1a06262819796078b401cbf6248b6b503",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.h",
+      "bytes": 4006,
+      "sha256": "6ea08787aa03d401e6fc743afc15c32fc34d64958143a0d3463895523ccaecd5",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ModernModulationUi.cpp",
+      "bytes": 62734,
+      "sha256": "970052939ff470fd1a0768db0180a87b8b4cc35d5a78838f44e95aaec91c7de2",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ModernModulationUi.h",
+      "bytes": 10707,
+      "sha256": "a14cb4864c105c2e99a6695284237cae5c1a18bb723a8e73bb92f0384204f59c",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ModernStateInteger.h",
+      "bytes": 2571,
+      "sha256": "3a5860e437f024cf3f2b4f274b557262e285261cc897e035229e10488ec8c4a9",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MpeStatus.h",
+      "bytes": 2783,
+      "sha256": "0f4e3d5b821e49f40ff5edade204556b16574892a0fc4f90c1114e7311bc7cbb",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MsegPointValues.h",
+      "bytes": 4826,
+      "sha256": "354188be1426039d2349242a57bcf643b8e99dc519c2251d1d0b7b192ec34e59",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MsegStateText.h",
+      "bytes": 3124,
+      "sha256": "6c1bc26a7c53e930505249549c966814275c814e7307c581d0b3b7eb4fd26a9b",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.cpp",
+      "bytes": 6098,
+      "sha256": "c5e7e36945e91e185174de7fcf35e8be486061e79986d5f8c60d1404d889b885",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.h",
+      "bytes": 1756,
+      "sha256": "eb9efdd9b9a375b9f554c0f0dd8abe470fe384bdd21bcddc7030e269c735bbf7",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/OutputMeter.h",
+      "bytes": 5941,
+      "sha256": "2522de2f3008ad62ead52f53622c05a4ef3bac0ed109d6bdc5178380cbf558dd",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/OutputMeterDisplay.h",
+      "bytes": 2648,
+      "sha256": "41a7e59d0a63218a6e74db183609e4eeee7b39a5280f9d0aaea0cecec872edc8",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PanelLayout.h",
+      "bytes": 5791,
+      "sha256": "7f3c576a7103b5fb6df186ba68d229c74ebdcecc243512c1480f3ad48087066d",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PanelWidgets.cpp",
+      "bytes": 3681,
+      "sha256": "a567212cbf1eb270ce0baf3da93051f6c0b46212ce469f857b974b0dab412519",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PanelWidgets.h",
+      "bytes": 19232,
+      "sha256": "314281974a5235fc431ea574346ed9a50b572e899ccfe0be36d548dc89ecd032",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterComboBox.cpp",
+      "bytes": 8701,
+      "sha256": "55411e03cfb9b6e87c1c2d3fedbe6287aa62ff83974cb3f817c3bff50c2ab858",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterComboBox.h",
+      "bytes": 1997,
+      "sha256": "e09e49d7235037c292dfaa1d98bb366ddd2d6dbb32fe3e3a084f0262ba5da474",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterContextButton.cpp",
+      "bytes": 9264,
+      "sha256": "0af2ad1c2cb03d426895f3aafeab825d7fb66862a255cdfeb0e54f97194a740e",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterContextButton.h",
+      "bytes": 2161,
+      "sha256": "6af912df4d54a19c57876ca57441765524e7f0a90f536bc9d5b66c1413a093d2",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterSlider.h",
+      "bytes": 1176,
+      "sha256": "1d525f3b125447468ee9cd5100df4be2ab81e4586e071f295566d8731ef03266",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterStateChildIndex.h",
+      "bytes": 886,
+      "sha256": "87f660dfb47ecfd35955aa5758f9aa5bb7b6847de1cd582eede5490fa444e7b2",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterStateMirror.h",
+      "bytes": 2014,
+      "sha256": "0b609c55ca73ab5bcb2b820b24eed94e5271b3f28819c1e99feeadf9d2fbcfa2",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/ParameterWatch.h",
+      "bytes": 1367,
+      "sha256": "cc1b020ed31ace16b0b79759b52573c556bd3fe24127dd06ec486cc915579a01",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PerformanceDeck.cpp",
+      "bytes": 12194,
+      "sha256": "54bf58ce4f98d8173dbcc218f5eb925c50ba3d2b9dbce605b4ab2de8bd1fd9a0",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PerformanceDeck.h",
+      "bytes": 2090,
+      "sha256": "d5b53fcffc5326453477391532cfd466773fc04611d23cbe1e14e7428b88bb1b",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginEditor.cpp",
+      "bytes": 122968,
+      "sha256": "9fe6e695b7a6ae7d74a9a566ba04b82ed676dffc899071fbcafb0ecc95ec99bc",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginEditor.h",
+      "bytes": 1191,
+      "sha256": "2a4899e6420260f8c6340aabdad71c56d645e11ccbd33ceb88f6676c0e279c4c",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "bytes": 95647,
+      "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "bytes": 28198,
+      "sha256": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorAutomation.cpp",
+      "bytes": 7516,
+      "sha256": "0f30e9ce4ca5b3ecc0987d1c5bfd6c10976a7eb6549e9abd1bc4c15a27af6e3f",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.cpp",
+      "bytes": 22323,
+      "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorLibrary.h",
+      "bytes": 2133,
+      "sha256": "aa5dd1edd4c4ad7e9ae72ca197cd1d26920f037ed814cbb40e85dd6dd96f0d93",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.cpp",
+      "bytes": 183655,
+      "sha256": "793bbec4b4b19323deb3f6f1174b7bfc471a1dab16b896cefd718100d3589860",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetBrowser.h",
+      "bytes": 14210,
+      "sha256": "22d677aab5242a30073308904fc9c555086114b4060d3961c28a788d95052d8d",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetBrowserSound.h",
+      "bytes": 735,
+      "sha256": "26da5535bff1723db4965b0c6b6ab3a2250405baefcf5ac3a0fe79cd2658e864",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetDisplayName.h",
+      "bytes": 597,
+      "sha256": "266b968ac395e6d2f44982eccbaa352e31ffabd4e62aefbed5ccec6f1b016e0c",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetFileValues.h",
+      "bytes": 2310,
+      "sha256": "a96291961553a0487ec3e7ccdf018f045320d9ef3f4eb97ebdf0bbd3aac15fed",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetOrigin.h",
+      "bytes": 807,
+      "sha256": "f1021eeeaed1bfa4a1f84ffff706d0e6a28c0ab16730668b4475ec6a7199003a",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetPreviewMath.h",
+      "bytes": 453,
+      "sha256": "85d39cc0adc7bb0a8ae7f3c3bae5a8ba6cb0bddf03b699df7e5ff0569badec3e",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/PresetXml.h",
+      "bytes": 5379,
+      "sha256": "9f94b218a353605bb90ffc0b2ba53c38414d08683f3be0c105b4cebe43aa670d",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioDrawers.cpp",
+      "bytes": 26236,
+      "sha256": "c5017db013698e55f91a53992475ec5f0a81438012c6b192923f4765bf4ea714",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioDrawers.h",
+      "bytes": 3070,
+      "sha256": "d277c7a5181c29563dd334f8a30b3ed5ca3d050ce3b8b66b148711f6b8afc854",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioMount.h",
+      "bytes": 5483,
+      "sha256": "488bf5a6ce2704148842cfe67d4f7b8b541e69535b310f01078ab18cbf4b9a25",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioToolbar.cpp",
+      "bytes": 22578,
+      "sha256": "40891a1a81f1f09eadf29180042831fda907d4471e177cdc50107de5cb49a817",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioToolbar.h",
+      "bytes": 3948,
+      "sha256": "7aa24db73fe5ab7d3e28209c14e06b7612d5cabb6d5a70532b5fab5b8baf28f3",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioTour.cpp",
+      "bytes": 8447,
+      "sha256": "52a8d2d9943a0f8e93d1e60dbd32a40fff3a86c8a84dc0bea81f8cd3dfc5bb02",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioTour.h",
+      "bytes": 2138,
+      "sha256": "0c2719f48d59d8d8a17a42e14040da354a3b486d600d31181aac97cfc416a627",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/StudioView.h",
+      "bytes": 5604,
+      "sha256": "3e8f38af75846314b2c19333c0996de3e84711cedc5e4a19239da465a44cd83c",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/TuningInspection.h",
+      "bytes": 2586,
+      "sha256": "3221f7fa3d6eb97ba106f742fceb1a99c47b8cd5e9ec3c4f28434fafd854339e",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/UiComponents.cpp",
+      "bytes": 244993,
+      "sha256": "461dff048a7f26c04fb3f067f17dde4e5345ac5356a8455c03c867651af499dc",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/UiComponents.h",
+      "bytes": 33081,
+      "sha256": "1ad902f7e0250d0dbe070d1c04f97bcc1ae73275850d2e4fc80bf04679fd3f7e",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.cpp",
+      "bytes": 12530,
+      "sha256": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.h",
+      "bytes": 6285,
+      "sha256": "9a8ba28ae82417119af95485b8093c17e0602e2bd8518e09aab17f25ede4434c",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/VoiceActivity.h",
+      "bytes": 1619,
+      "sha256": "e63f3d43d265a5137dbc400a32ff00255cfaf569903f53838149628fbad69089",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "src/plugin/VoiceInspection.h",
+      "bytes": 3348,
+      "sha256": "e05cb6f252f92b9eb2081fac02fd2c14a727ebc72b0db368e970b210fae6280a",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "tests/PresetIdentityTests.h",
+      "bytes": 20758,
+      "sha256": "4952c4b440caade1f3c424f860f4e3caf20f4b3e5b8631c741615446be947380",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "tests/PresetPreferencesTests.h",
+      "bytes": 7538,
+      "sha256": "6f1d84c3f3cc604d018f6e882e5f049dfc76650c0e684732a8542189145b0409",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "tests/PresetRefreshTests.h",
+      "bytes": 10573,
+      "sha256": "4c9dcb815feb38636d0f969d03f744b27e67f0e66e3ddd0d450a81036564b2be",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "tests/PresetRevertTests.h",
+      "bytes": 43335,
+      "sha256": "94f7bb9b1121a1793f31f10d5b22f606c79a71c8e958e3b0162b2512af9153f3",
+      "equals_documentation_checkpoint": true
+    },
+    {
+      "path": "tests/ProgramLibraryHostTests.h",
+      "bytes": 25512,
+      "sha256": "c7d5c2481fd0a6a1efcbcdac2b9961b02f387420d1a93ec9409e129fcc2d4a30",
+      "equals_documentation_checkpoint": true
+    }
+  ],
+  "body_symbol_scan": {
+    "pattern": "body1_|body2_|P_body|bodyParam|Instrument body|GenericAudioProcessorEditor",
+    "files_with_matches": [
+      "src/plugin/EvidenceRegister.h",
+      "src/plugin/PluginProcessor.cpp",
+      "src/plugin/UiComponents.cpp"
+    ],
+    "limit": "Text matches and explicit editor construction support the source finding; they are not a host UI or accessibility execution."
+  }
+}

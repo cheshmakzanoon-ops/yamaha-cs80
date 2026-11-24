@@ -23,10 +23,24 @@ The two Material parameters introduced in 2026.11.6 retain their appended
 addresses. Totals remain **204 core parameters and 310 host positions**;
 2026.11.7 adds no parameter and changes no range or automation order.
 Older projects retain their saved settings. Select an existing factory program
-and use **LOAD / RELOAD**, then play fresh notes, to hear the revised recipe.
+in **Library → FACTORY LIBRARY**, release all keys and the sustain pedal, and use
+**LOAD / RELOAD**, then play fresh notes, to hear the revised recipe. Use a new
+empty project and fresh instance for a first comparison: factory loading retains
+physical setup, MSEG shapes and modulation routing.
+[Loading scope](preset-evidence/2026.11.7/reviews/a43.md)
 
-**Native build and archive qualification for this source is pending when these
-bundled guides are written.** The preceding source `fcc3c8e` passed Apple Silicon native tests
+**Native build and archive qualification for frozen source
+`ee0dabcacb4cdff93f8803844f60348e0ceda6ed` is pending.** Its tree is
+`17115913cbb29157bd00539485bcc5f38b57219c`; the native workflow is
+[45397189410, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410).
+No `.7` installation or audition archive is advertised as accepted here.
+The [source-continuity review](preset-evidence/2026.11.7/reviews/a40.md) binds
+the existing sound evidence to this source without qualifying its native products.
+Acceptance still requires all four native suites, all **15 required pluginval
+lanes**, actual package and audition inspection, and public-download verification.
+[Delivery contract](preset-evidence/2026.11.7/reviews/a30.md)
+
+The preceding source `fcc3c8e` passed Apple Silicon native tests
 and five validator lanes, while its Windows suite rejected a byte-authenticated
 fixture whose final newline had been translated by Git checkout. A narrow Git
 attribute preserves that fixture's original bytes; its exact checksum gate is
@@ -39,7 +53,15 @@ will identify the newly qualified source and archives after independent native,
 validator, payload and actual audition checks finish. Archived guides remain a
 source-time snapshot; later publication documentation does not rewrite them.
 
-## Previous qualified revision — 2026.11.4 instrument voicing
+The cumulative `.4 → .7` sound accounting covers **521 musical programs**;
+`.7` itself retains every `.6` recipe value and corrects four rendering behaviors.
+The current reviews distinguish measured changes, source compatibility and
+remaining acoustic/listening limits from pending binary delivery.
+[Signal accounting](preset-evidence/2026.11.7/reviews/a33.md) ·
+[Compatibility](preset-evidence/2026.11.7/reviews/a42.md) ·
+[Sound-claim review](preset-evidence/2026.11.7/reviews/a54.md)
+
+## Current published packages — 2026.11.4 instrument voicing
 
 **All six jobs passed in [build 45246863788, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788).**
 The installation bundles contain exact source `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, tree

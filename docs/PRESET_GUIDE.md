@@ -7,9 +7,12 @@ existing order. This increment changes body rendering without changing any
 2026.11.6 preset values or parameter definitions. No presets have been added or removed.
 
 Native builds and delivery qualification for this candidate are pending at this
-source checkpoint. Use the [current download table](../README.md#downloads) to
+source checkpoint. Use the [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) to
 identify available, qualified binaries; this guide alone does not establish
 that a 2026.11.7 download has passed those gates.
+Guides inside an archive retain their source-time wording and links. The live
+online table identifies completed qualification for the package's full source
+commit; later documentation does not replace those archived guides.
 
 The same circuit instrument supports optional string, tine, reed, wind and
 bar excitations alongside its circuit voices. Their partials develop through
@@ -37,6 +40,7 @@ revoicing and retirement of old engine settings. The
 
 ## Start with your hands
 
+For a first comparison, use a new empty project and a fresh instrument instance.
 A fresh instance opens **Brass Swell I**. Hold a three-note chord around MIDI
 48–67, wait for the brighter layer to arrive, then gradually add pressure.
 Release the pressure before releasing the keys to hear the chord settle back.
@@ -55,7 +59,7 @@ programs intentionally keep a comparatively even strike level.
 a note after that strike. Polyphonic aftertouch lets you emphasize one held note;
 channel aftertouch affects notes on that MIDI channel together. Polyphonic
 aftertouch does not require MPE. Without a pressure keyboard, hold an on-screen
-key and drag downward along it. See the [playing and performance instructions](INSTALL_AND_QUICKSTART.md#one-circuit-instrument).
+key and drag downward along it. See the [playing and performance instructions](INSTALL_AND_QUICKSTART.md#first-five-minutes).
 
 For on-screen pressure, leave **KAS Scan Timing** off; if it is on, use MIDI
 aftertouch instead. This optional physical setup setting is retained when you
@@ -144,9 +148,14 @@ hear their releases rather than continually covering them with new chords.
 open chord. Choir Pad uses an ah-like vowel and Dark Choir an oo-like vowel.
 Low notes now use additional harmonics to reach more of their fixed vowel
 resonances; pitch and Resonant size determine how many are needed, up to 48.
-The deepest notes still meet that limit, and the panel filters and rank envelopes
-continue to shape the complete sound. These remain synthesized voiced sources.
+The deepest notes still meet that limit: at played MIDI 36, Dark Choir's 16′
+foundation ends near **1.57 kHz**, below its two upper vowel regions. A downward
+bend keeps the modes captured at onset. The panel filters and rank envelopes
+continue to shape the complete sound, and low notes with added modes use more
+processing. These remain synthesized voiced sources.
 [Choir revision](CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes) ·
+[All vocal recipes and limits](preset-evidence/2026.11.7/reviews/a35.md) ·
+[Measured processing scope](preset-evidence/2026.11.7/reviews/a37.md) ·
 [Pad source](../src/core/curated/Pads.inc)
 
 ### Strikes, plucks and breath
@@ -406,6 +415,12 @@ range. The nine existing factory programs select their materials automatically.
 of every koto. New materials use nominal Resonant size **1×**; changing size
 shifts the authored body response where that material uses one.
 
+These are authored modal, spectral and loss profiles. A separate contact rank
+and ringing rank remain independent bodies; they do not exchange energy through
+a solved shared resonator. The profiles do not establish complete coupled
+instrument mechanics or a recorded-instrument match.
+[Material and variant scope](preset-evidence/2026.11.7/reviews/a41.md)
+
 At a high body mix, changing the rank's saw/pulse waveform may have little
 effect. The body blends with the filtered oscillator and sine signal **before
 the VCA**. A separate linear filter now applies the rank's effective high-pass
@@ -423,23 +438,27 @@ or memory source suppresses them, preserving those separate source paths.
 Their fourteen saved controls are exposed in the DAW's parameter list and automation
 editor. The custom Studio editor and standalone interface do not yet provide
 dedicated body-control widgets. To find the new selectors in a host, search for
-**Body I material (next note)** or **Body II material (next note)**.
+**Body I model (next note)** or **Body I material (next note)**, and the
+corresponding rank II names. Hosts can display or group these names differently.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
 selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
 
 ## Recalling a revised sound
 
-**2026.11.7 identifies a sound-data revision**, separate from the
+**2026.11.7 identifies the factory-library revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable. This increment preserves the 2026.11.6 factory
 parameter values and updates the body-rendering mechanisms. A session or user
 preset restores its stored controls, so an older project can show a factory
 name while still using its earlier recipe. Save a user copy to retain edits.
 
-To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
+To apply the current recipe, release all keys and the sustain pedal, open
+**Library → FACTORY LIBRARY**, choose the
 factory entry and explicitly press **LOAD** (or **RELOAD**, if shown). Enter or
 double-click also loads it. Play fresh notes afterward: body model, decay, size,
 variant and material take effect at note onset. Save the project if you want it to retain the new recipe.
+If search text or filters hide the sound, press **CLEAR ALL**, then choose
+**FACTORY LIBRARY** again.
 
 With **Audition** enabled, clicking a row already marked loaded can leave the
 current settings in place. Press **LOAD** (or **RELOAD**, if shown) even if the
@@ -447,6 +466,15 @@ desired factory name is already displayed. A saved user patch with the same name
 entry. **REVERT** restores the sound that was active when Library opened;
 it can restore the older recipe and does not mean “load the latest factory
 settings.”
+
+The main toolbar's **< / >** arrows load adjacent programs. Library's
+**PREV / NEXT** buttons select rows; they load those selections only when
+**AUDITION** is enabled. Factory loading writes the sound parameters and selects
+PANEL sources, while preserving physical setup, MSEG shapes and modulation
+routing. Existing host automation can write later values. LOAD/RELOAD is not a
+complete session reset, so use a fresh instance in a new empty project for a
+first comparison.
+[Source-checked loading behavior](preset-evidence/2026.11.7/reviews/a43.md)
 
 A delivered factory selection by program number loads the current voicing at
 that address. VST3 changes sent only through the Program processing queue remain
@@ -457,7 +485,7 @@ remains separate from factory selection.
 Old saved patches without body fields restore both models and mixes to their
 off defaults. **Reload the factory program to hear the new body and voicing**,
 then save your edited copy. The published 2026.11.4 bank's **200 core IDs and
-306 host automation positions** remain in their original order. The 2026.11.5
+306 host parameter positions** remain in their original order. The 2026.11.5
 source appended two variants; 2026.11.6 appended two materials, bringing the totals
 to **204 core parameters and 310 host positions**. All previous 202 core parameter
 definitions and 308 host positions are preserved. A body-aware patch without
@@ -467,6 +495,7 @@ include all fourteen body controls.
 
 Revision 2026.11.7 adds no parameters and changes no parameter ranges, defaults
 or automation positions; the 2026.11.6 totals and material choices remain in place.
+[Current host and saved-state compatibility review](preset-evidence/2026.11.7/reviews/a42.md)
 
 Existing body-enabled saved sounds use the revised excitation, tuning and
 articulation code, so retaining their parameter values does not freeze their

@@ -1,0 +1,495 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "native_context": {
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "contract_reference": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract.json",
+    "anchor": "\"status\": \"contract_prepared_not_native_acceptance\"",
+    "line": 3,
+    "sha256": "917392950e0dac4e0518dd6bea3ea7b398eb4aa56c98ba3f40dbfec9446df90d"
+  },
+  "scope": "Source and registration mapping; no actual native result is inferred from registration or method presence.",
+  "entries": [
+    {
+      "id": "host_parameter_identity",
+      "behavior": "Native JUCE processor: all body positions, AU hints, types, choices, defaults and frozen 200/202 core + 306/308 host prefixes",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "check(parameters.size() == 310",
+          "line": 100,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "src/plugin/PluginProcessor.cpp",
+          "anchor": "Cs80AudioProcessor::createParameterLayout()",
+          "line": 201,
+          "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "The core probe and source-derived IDs are separate; executing this method is the actual processor boundary."
+    },
+    {
+      "id": "actual_parameter_tree",
+      "behavior": "Actual JUCE group flattening and flat PARAM persistence",
+      "source": [
+        {
+          "path": "tests/EngineHostTests.h",
+          "anchor": "void testParameterGroupsHost",
+          "line": 399,
+          "sha256": "4591fe88020f7b73b183aadd8b121febf1e930c8fb5e1bc059caf0f388bf0a3c"
+        }
+      ],
+      "ctest_names": [
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Checks actual processor tree; does not instantiate every native wrapper in every DAW."
+    },
+    {
+      "id": "body_persistence",
+      "behavior": "All fourteen controls through session and user-file round trips; pre-body, first-body, .4 and .5 missing fields; audio-block publication; range clamp/choice snap",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "session round trip replaces all fourteen live body controls",
+          "line": 297,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "2026.11.4 sessions retain ten body controls",
+          "line": 373,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "2026.11.5 sessions preserve twelve preceding controls",
+          "line": 400,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "src/plugin/PluginProcessor.cpp",
+          "anchor": "Cs80AudioProcessor::normaliseRestoredState",
+          "line": 1495,
+          "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Earlier-version fixtures remove absent fields from actual current serialized state; they are not saved DAW project binaries."
+    },
+    {
+      "id": "inactive_ab",
+      "behavior": "Both vectors and missing body/size/variant/material fields in inactive A/B slot",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "A/B recall restores body models",
+          "line": 434,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "2026.11.5 inactive A/B slots preserve twelve controls",
+          "line": 477,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "src/plugin/PluginProcessorLibrary.cpp",
+          "anchor": "void Cs80AudioProcessor::readLibraryState",
+          "line": 392,
+          "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Inactive A/B uses declared fallback for every core field; the main loader has a separate Original SUB exception."
+    },
+    {
+      "id": "body_undo",
+      "behavior": "One balanced edit gesture per each of fourteen controls; undo/redo retains exact physical values and the other controls",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "undo restores a body gesture",
+          "line": 504,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "src/plugin/UndoHistory.cpp",
+          "anchor": "void UndoableParameterState::parameterGestureChanged",
+          "line": 142,
+          "sha256": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "This covers body value history; additional undo replay/save tests cover history classification and host notifications."
+    },
+    {
+      "id": "factory_midi",
+      "behavior": "Every one of 523 factory/MIDI programs replaces all fourteen body values; same-block Program Change + next note includes body-off/return transitions",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "for (int index = 0; index < (int) programs.size(); ++index)",
+          "line": 515,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "same-block Program Change and next note render the recalled body",
+          "line": 596,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "src/plugin/PluginProcessorLibrary.cpp",
+          "anchor": "bool Cs80AudioProcessor::handleProgramChange",
+          "line": 51,
+          "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Direct JUCE MIDI Program Change is separate from the VST3 wrapper Program parameter processing queue."
+    },
+    {
+      "id": "held_note",
+      "behavior": "Both sizes plus four variants and nine materials on each rank retain held-note samples and change the next note",
+      "source": [
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "each live size edit leaves its already sounding body bit-identical",
+          "line": 652,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        },
+        {
+          "path": "tests/InstrumentBodyHostTests.h",
+          "anchor": "each live variant or material selection leaves its sounding body bit-identical",
+          "line": 715,
+          "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+        }
+      ],
+      "ctest_names": [
+        "cs80_modern_recall_host_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_modern_recall_host_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Finite/nonzero energy and positive next-note difference guard against inert controls. This is bounded fixture audio, not acoustic approval."
+    },
+    {
+      "id": "duplicates_and_factory_index",
+      "behavior": "Real user/session restore checks last duplicate authority, unique canonical known children, retained unknown data, live user-preset setup exceptions, and clamped program metadata without reloading recipe",
+      "source": [
+        {
+          "path": "tests/PresetFileHostTests.h",
+          "anchor": "duplicate import retains last sound value",
+          "line": 90,
+          "sha256": "5000995f5c9a6f9656d71d941b5c65cfb8c42507e4c96567cc65ec965a6239f7"
+        },
+        {
+          "path": "tests/PresetFileHostTests.h",
+          "anchor": "factory-index normalization retains the custom preset name",
+          "line": 204,
+          "sha256": "5000995f5c9a6f9656d71d941b5c65cfb8c42507e4c96567cc65ec965a6239f7"
+        }
+      ],
+      "ctest_names": [
+        "cs80_preset_file_recall_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_preset_file_recall_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "The three live user-preset exceptions are oversampling, output jack and tuning mode; body fields are not excluded."
+    },
+    {
+      "id": "schema_and_policy",
+      "behavior": "All schema markers, complete numeric Original SUB mode admission and retired source/isolation policy normalization through real save/restore",
+      "source": [
+        {
+          "path": "tests/SessionSchemaHostTests.h",
+          "anchor": "const std::array<Case, 29> cases",
+          "line": 25,
+          "sha256": "76231acc6984c9e4fa3a83c2c97cec0e59a44bafc4d1e53afc5a4cb134ecf490"
+        },
+        {
+          "path": "src/plugin/PluginProcessor.cpp",
+          "anchor": "Only complete finite numeric 0/1 values are taken literally.",
+          "line": 1544,
+          "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88"
+        }
+      ],
+      "ctest_names": [
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Original SUB missing/invalid fallback is 0; fresh default and generic inactive-slot fallback are not the same special migration rule."
+    },
+    {
+      "id": "save_and_undo",
+      "behavior": "Session/file save before timer flush, main/background saves and automation publication without adding automation undo steps",
+      "source": [
+        {
+          "path": "tests/SessionUndoHostTests.h",
+          "anchor": "void testSessionUndoHost",
+          "line": 12,
+          "sha256": "d682f4bcb8df0693bd346572908f7418f2699fe7748480644de909b2830131a5"
+        },
+        {
+          "path": "tests/UndoReplayGestureTests.h",
+          "anchor": "testSessionUndoHost(check);",
+          "line": 330,
+          "sha256": "97941243feaa5b927888d6db004cf4b39a6c89fefc9afc82a1ded49d4d74ff4d"
+        },
+        {
+          "path": "src/plugin/UndoHistory.cpp",
+          "anchor": "juce::ValueTree UndoableParameterState::copyStateForSave()",
+          "line": 267,
+          "sha256": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78"
+        }
+      ],
+      "ctest_names": [
+        "cs80_undo_replay_gesture_tests",
+        "cs80_ui_smoke"
+      ],
+      "required_on": {
+        "cs80_undo_replay_gesture_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ],
+        "cs80_ui_smoke": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Snapshot atomics are per parameter; no transaction across concurrent automation is promised."
+    },
+    {
+      "id": "child_index",
+      "behavior": "80 detached ValueTree differential fixtures with 310 IDs; binary/XML order, callback/read traces, non-PARAM children, duplicate-heavy input and original input immutability",
+      "source": [
+        {
+          "path": "tests/ParameterStateChildIndexTests.cpp",
+          "anchor": "int main()",
+          "line": 269,
+          "sha256": "772c1afb4b96338aa9f881abb2f6ea0c186cb141876d2094d5bfef4af3107c36"
+        },
+        {
+          "path": "tests/ParameterStateChildIndexTests.cpp",
+          "anchor": "void compare(",
+          "line": 232,
+          "sha256": "772c1afb4b96338aa9f881abb2f6ea0c186cb141876d2094d5bfef4af3107c36"
+        }
+      ],
+      "ctest_names": [
+        "cs80_parameter_state_index_tests"
+      ],
+      "required_on": {
+        "cs80_parameter_state_index_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "No processor/APVTS/GUI is constructed; deterministic mock normalization does not test full schema, Bool or Choice semantics."
+    },
+    {
+      "id": "state_mirror",
+      "behavior": "Production APVTS callback bridge and real processor mirror race/nesting/undo checks",
+      "source": [
+        {
+          "path": "tests/StateMirrorHostTests.cpp",
+          "anchor": "int main()",
+          "line": 30,
+          "sha256": "6384fed32433af176ba841aaf8a69b0e1549f96b8ba1a5a33e40fdaf8185ae04"
+        },
+        {
+          "path": "scripts/patch-juce-state-mirror.py",
+          "anchor": "REPLACEMENT =",
+          "line": 17,
+          "sha256": "7fa4ce5c077ddba57c96e3308eb53ef8f30afe1dc834c048a181f6840053fdea"
+        }
+      ],
+      "ctest_names": [
+        "cs80_state_mirror_host_tests",
+        "cs80_state_mirror_bridge_tests"
+      ],
+      "required_on": {
+        "cs80_state_mirror_host_tests": [
+          "linux-x86_64"
+        ],
+        "cs80_state_mirror_bridge_tests": [
+          "linux-x86_64",
+          "windows-x86_64",
+          "macos-arm64",
+          "macos-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "Real mirror host target is Linux-only in the frozen native roster; patch fixtures alone are not native processor execution."
+    },
+    {
+      "id": "vst3_program_boundary",
+      "behavior": "Accepted native VST3 legacy MIDI Program Change event path with queued ordinary parameter curves",
+      "source": [
+        {
+          "path": "tests/Vst3AutomationProgramBoundaryTests.h",
+          "anchor": "void testVst3ProgramBoundaries",
+          "line": 74,
+          "sha256": "ddb0dc878b3323a8602a753716eda74fd098ba4906a1d918c175a8550aef6d0d"
+        }
+      ],
+      "ctest_names": [
+        "cs80_vst3_automation_tests"
+      ],
+      "required_on": {
+        "cs80_vst3_automation_tests": [
+          "linux-x86_64"
+        ]
+      },
+      "review_status": "source inspected; no fresh A42 native execution",
+      "limit": "This event-path test cannot clear the separate documented controller dependency of processing-queue-only wrapper Program parameter automation."
+    }
+  ]
+}

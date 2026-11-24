@@ -18,7 +18,7 @@ wind/brass response and nine material profiles are retained. See the
 
 At this source checkpoint, **2026.11.7 native builds and delivery qualification
 are pending**. This guide does not announce a qualified download. The
-[README download table](../README.md#downloads) identifies the available artifacts
+[current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) identifies the available artifacts
 and their accepted source; a later source revision does not update those binaries.
 Engine and isolation selectors remain removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
@@ -27,6 +27,9 @@ repository README.
 The repository retains earlier revision reports and download records. Their
 bundled guides, manifest revision and `SOURCE.txt` identify those earlier
 binaries; later source changes do not update an existing archive.
+An archived guide's source-pinned links may lead to an older download table.
+Use the live online table above for the completed qualification of the package's
+full source commit; the archived guide remains its original source-time snapshot.
 
 The project version string alone is not a build identifier: development builds
 can share the same version while containing different source commits.
@@ -39,8 +42,10 @@ that every gate for a newer revision passed.
 
 ## Choose and verify a build
 
-From the repository's **Actions → build** run, choose a commit whose required
-jobs all passed. Artifact availability alone does not establish that result.
+Start with the [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads),
+which identifies the accepted source and packages. In the linked **Actions →
+build** run, confirm that its required jobs passed and its exact-source
+qualification is complete. Artifact availability alone does not establish that result.
 
 | Artifact | Computer / host architecture | Included |
 |---|---|---|
@@ -57,8 +62,9 @@ and emulation layers are not qualified by these runner builds.
    the inner archive and manifest.
 2. Verify hashes: Linux `sha256sum -c SHA256SUMS`; macOS
    `shasum -a 256 -c SHA256SUMS`. Windows PowerShell: run
-   `Get-FileHash -Algorithm SHA256 .\cs80-reference-*.zip` and compare with the
-   matching line in `SHA256SUMS` (also check the manifest if using it).
+   `Get-FileHash -Algorithm SHA256` for the inner ZIP and its matching
+   `.manifest.json` sidecar. Compare both hashes with their entries in
+   `SHA256SUMS`.
 3. Unpack the inner `.tar.gz` with `tar -xzf "archive-name.tar.gz"` on Linux/macOS;
    use Windows **Extract All** for the inner `.zip`. Keep bundle directories
    intact. Tar packaging preserves Unix executable permissions and internal
@@ -111,7 +117,7 @@ and its matching metadata together. Keep using the exact-commit CI gates above.
 
 ## Install only the formats you need
 
-Quit the DAW before copying. If replacing an earlier build, first keep a backup
+Quit the DAW and any running Standalone copy before copying. If replacing an earlier build, first keep a backup
 outside the plug-in scan folders; do not keep two copies with the same plug-in
 identity inside those folders.
 
@@ -131,8 +137,10 @@ documented rescan/revalidation procedure. Do not put these inside a DAW's
 internal plug-in bundle. VST3 locations follow the [Steinberg developer documentation](https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html);
 Apple documents the [Audio Units component folders](https://support.apple.com/en-ie/102239).
 
-Standalone needs no DAW scan: keep its file/application in a folder you own and
-launch it there. On macOS, `~/Applications` is suitable for the `.app`. No helper
+Standalone needs no DAW scan: launch the item under the package's `Standalone`
+folder (`CS-80 Reference.exe` on Windows, `CS-80 Reference.app` on macOS, or
+`CS-80 Reference` on Linux). Keep it in a folder you own; on macOS,
+`~/Applications` is suitable for the `.app`. No helper
 installs drivers, registers startup services, changes security settings or adds
 persistent system access.
 
@@ -149,6 +157,10 @@ distributions. No additional audio driver is bundled on any platform.
 
 ## First five minutes
 
+For a first comparison, start in a new empty project with a fresh instrument
+instance. An older project can restore an earlier recipe under the same factory
+name, along with its saved modulation and physical setup.
+
 1. In Standalone, open its audio/MIDI settings and select your output device and
    MIDI keyboard. Start at **48 kHz / 256 samples** as a setup baseline, not a
    measured performance guarantee for your computer. In a DAW, create an
@@ -156,8 +168,13 @@ distributions. No additional audio driver is bundled on any platform.
    MIDI input. Start with low monitoring volume.
 2. A fresh instance plays **Brass Swell I** on the circuit engine. Velocity,
    pressure, pitch bend, CC1 modulation, CC11 expression and CC64 pedal hold
-   remain available. Step through programs with **PREV / NEXT**, open **LIBRARY**,
-   or play the hardware tone tabs. The default voice mode has eight circuits;
+   remain available. To choose another factory sound, release all keys and the
+   sustain pedal, open **LIBRARY → FACTORY LIBRARY**, select a row and explicitly
+   press **LOAD** (or **RELOAD**, if shown), then play fresh notes. If filters hide
+   the sound, press **CLEAR ALL**, then select **FACTORY LIBRARY** again. The main
+   toolbar's **< / >** arrows load adjacent programs. Library's **PREV / NEXT**
+   buttons select rows and load them only when **AUDITION** is enabled. The
+   hardware tone tabs choose separate electrical recipes. The default voice mode has eight circuits;
    an additional held key waits for an available circuit rather than stealing
    a held note. Expanded voice modes are available in Studio.
 3. For MPE, enable it in the host/controller and instrument. Incoming MIDI
@@ -168,8 +185,9 @@ distributions. No additional audio driver is bundled on any platform.
    drag farther down it for pressure.
 4. Open **Studio** for effects, LFOs, macros, drawable envelopes, the modulation
    matrix, arpeggiation, MPE, microtuning and voice modes. These optional software
-   features belong to the same circuit instrument. Each preset selects its
-   own settings. The original six SUB functions are the factory default;
+   features belong to the same circuit instrument. Factory recipes apply their
+   sound parameters; separate MSEG shapes and modulation routing remain part of
+   the session. The original six SUB functions are the factory default;
    **WAVEFORM SET** can select Extended functions independently. Keep normal
    output headroom when editing levels or playing dense chords.
 5. Use **SAVE** (toolbar menu or Ctrl/Cmd+S) to name a user patch; an existing
@@ -178,8 +196,13 @@ distributions. No additional audio driver is bundled on any platform.
    live physical setup; a full DAW session also stores its session configuration.
    Transient pedal gestures are not saved.
 
-**Pressure Lead requires aftertouch.** It is intentionally silent before pressure
-is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
+Factory **LOAD / RELOAD** applies the recipe and PANEL sources. It preserves
+physical setup, MSEG shapes and modulation routing, and existing host automation
+can write later control values. It does not reset a complete session.
+[Source-checked loading behavior](preset-evidence/2026.11.7/reviews/a43.md)
+
+**Pressure Lead and Electric Leads 136 require aftertouch.** They are intentionally
+silent before pressure is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
 (the default), drag farther down an on-screen key. MIDI aftertouch also works
 with KAS Scan Timing on. See the [preset guide](PRESET_GUIDE.md) for playing
 suggestions across the revised bank.
@@ -269,7 +292,8 @@ continue processing idle instances.
   replace only this instrument's complete bundle/file; rescan afterward.
 - To hear the revised factory sounds, open **LIBRARY → FACTORY LIBRARY**, choose
   the desired factory entry, then explicitly press **LOAD** (or **RELOAD**, if
-  that is the label shown). Enter or double-click also loads it. Play fresh notes
+  that is the label shown). Release all keys and the sustain pedal before loading.
+  Enter or double-click also loads it. Play fresh notes
   afterward, and save the project
   if you want it to retain that recipe. An older project can show the same
   factory name while restoring its older settings; clicking an already-loaded

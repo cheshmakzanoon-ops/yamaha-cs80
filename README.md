@@ -21,6 +21,8 @@ The library keeps all **523 names, categories and program addresses**, including
 the two initialization programs. No presets were added. This revision refines
 instrument-body filtering, attacks, releases, register balance and playing
 response; the continuation also corrects tine dynamics and bowed-body motion.
+The 2026.11.7 source candidate described below is still awaiting native and
+archive qualification; these download links identify the published 2026.11.4 build.
 
 | Platform | Included formats | Verified installation download |
 | --- | --- | --- |
@@ -58,9 +60,10 @@ release assets. The [same run's Artifacts list](https://github.com/cheshmakzanoo
 while retained. Archives were acquired through the GitHub connector and hashed;
 an unauthenticated nightly.link route has not been independently verified.
 
-**After installing, use Library → FACTORY LIBRARY → LOAD / RELOAD, then play
-fresh notes.** Older projects restore stored settings. Clicking an already-loaded
-row with Audition enabled may retain those settings.
+**After installing, release all keys and the sustain pedal, use Library →
+FACTORY LIBRARY → LOAD / RELOAD, then play fresh notes.** Older projects restore
+stored settings. Clicking an already-loaded row with Audition enabled may
+retain those settings.
 
 Binary source is [`078c098`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/078c0981ffa1b5472342e0fb5ab8702bc3bd2889);
 later documentation/evidence commits on `main` do not change those bytes. Each
@@ -75,9 +78,13 @@ outcomes and evidence. Earlier outcomes remain in the
 ## Play your first sound
 
 Launch **Standalone** and select your audio output and MIDI input, or install
-VST3/AU and load **CS-80 Reference** on a software-instrument track. A fresh
-instance opens **Brass Swell I**. Hold a chord, then
-open **Library** to explore the other voices. With polyphonic aftertouch,
+VST3/AU and load **CS-80 Reference** on a software-instrument track. For a first
+comparison, use a new empty project and a fresh instance, which opens
+**Brass Swell I**. Hold a chord, then release it and open **Library → FACTORY
+LIBRARY**, choose a row and press **LOAD / RELOAD** to explore the other voices.
+The main toolbar's **< / >** arrows load adjacent programs; Library's
+**PREV / NEXT** buttons select rows and load them only when **AUDITION** is on.
+With polyphonic aftertouch,
 press just one note harder to brighten it; you can also drag down on a held
 on-screen key to try pressure.
 
@@ -97,11 +104,13 @@ on-screen key to try pressure.
 The cumulative revision changes sound controls in **all 521 existing musical
 factory programs** relative to the published 2026.11.4 bank. The
 **523 names, categories and program addresses** remain intact, and both Init
-programs preserve their preceding sound. No presets were added. The changes
+programs retain their published controls. No presets were added. The changes
 cover the original 222-address collection and the later 301-program collection.
+The `.7` increment preserves every `.6` preset value and corrects four
+instrument-body rendering behaviors.
 
-The programming now gives each family a more appropriate strike, sustained
-body, release and playing response. Soft hammer strikes retain their lower
+The retained programming gives the families distinct strikes, sustained
+bodies, releases and playing responses. Soft hammer strikes retain their lower
 energy and softer upper spectrum. Held piano and electric-piano notes leave
 room for their independently decaying partials; releasing a key damps them.
 Bow and breath entrances respond to playing effort and register. Xylophone,
@@ -115,10 +124,10 @@ pitch changes. Nine existing voices gain dedicated material profiles: Tubular
 Bells, Gong, Temple Bell, Agogo, Music Box, Kalimba, Banjo, Koto and Harp. Their
 contact and ringing body now use the intended material in both ranks.
 
-The 2026.11.7 continuation corrects four remaining synthesis problems. Upper
-piano partials now lose their initial energy without an arbitrary change at the
-sixth harmonic. Breath, bow and contact texture retains its authored strength
-when the internal sample rate changes for higher-quality rendering. Guitar,
+In the 2026.11.7 renderer, upper piano partials lose their initial energy without
+an arbitrary change at the sixth harmonic. Separate noise-band and flutter
+compensation makes breath, bow and contact texture more consistent across the
+tested internal render rates. Guitar,
 bass and plucked-keyboard harmonics move through a fixed body response during
 bends. Low choir notes gain additional harmonics for their upper vowel regions,
 within the existing 48-mode capacity. These corrections change the sound engine;
@@ -134,11 +143,17 @@ either the Model or Variant range. Standard profiles remain available.
 Deliberately synthetic sounds keep their ring modulation, PWM, interval, motion or pressure-led identities.
 
 The [revision report](docs/CIRCUIT_LIBRARY_2026_11_7.md) explains the implementation,
-measurements and limits. The
-[complete coverage record](docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json)
-checks every existing address, and the
-[final audio accounting](docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json)
-records the retained matched-condition comparisons and the two pad-level corrections.
+measurements and limits. The current
+[catalogue and parameter audit](docs/preset-evidence/2026.11.7/reviews/a12.md)
+checks every address and all **106,692 preset values**. The cumulative
+[signal accounting](docs/preset-evidence/2026.11.7/reviews/a33.md) records changed
+default audio metrics for **519 musical programs**, plus changed waveforms for
+the **two pressure-required Leads** when aftertouch is applied. Both Init
+programs match their earlier stereo output in the
+[twelve tested comparisons](docs/preset-evidence/2026.11.7/reviews/a27.md).
+These measurements establish changes and scoped preservation, not a listening
+preference. The three-second bank holds are supplemented by selected
+[long-note and chord checks](docs/preset-evidence/2026.11.7/reviews/a34.md).
 The [preceding complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
 passes the existing level and headroom limits. The combined 2026.11.7 bank,
 native builds and expanded audition archive are being qualified against their
@@ -150,14 +165,14 @@ own source. The Downloads table above continues to identify the published
 | Analog Piano / Stage Keys / Soft Keys / Honky Keys | A softer quiet strike, stronger touch contrast, stable string-course tuning and more audible lower-partial aftersound. Compare soft and firm notes across the keyboard; hold a note, then release it or use the pedal. |
 | Electric Piano I / Electric Piano II / Tine Piano / Reed Piano | Distinct tine and reed spectra, revised strike balance and independent partial decay. Compare low, middle and high registers at several velocities. |
 | Guitar I / Guitar II / Nylon Pluck / Steel Pluck | Separate pluck, body and upper-partial loss profiles, with clearer touch contrast and key damping. Try single notes before chords. |
-| Harp / Banjo / Koto / Kalimba | Dedicated finger, membrane, plectrum or supported-tine profiles. Harp and Kalimba now keep both ranks at the played pitch; vary touch, release and register. |
+| Harp / Banjo / Koto / Kalimba | Dedicated finger, membrane, plectrum or supported-tine profiles. Harp and Kalimba use the same nominal played register in both ranks; vary touch, release and register. |
 | Solo Violin / Solo Cello / Flute / Clarinet / Oboe / Bassoon | Shaped bow or breath entrances, register-aware response and pressure expression. Hold a note, increase aftertouch, then ease it back. |
 | Xylophone / Marimba / Steel Drum / Vibraphone | Distinct wooden-bar, metal-bar and shell resonances. Xylophone emphasizes a near-three-times upper mode; Steel Drum has octave and twelfth modes. Compare held notes, early release and pedal-held ringing. |
 | Tubular Bells / Gong / Temple Bell / Agogo / Music Box | Separate tube, developing plate, beating shell, compact bell and comb-tooth spectra. Compare soft and firm strikes, then leave room for their different aftersounds. |
 | Covered Horn / Trombone Glide | Revised breath and fundamental balance with controlled pressure, slide and initial scoop. |
 | Percussive Organ / Theatre Organ | Steady strike dynamics with the intended footage, fading percussion or registration tremulant. Compare equal notes at different velocities. |
 | Choir Pad / Dark Choir | Separate Ah and Oo resonance profiles, shaped entrances and breath/pressure response. Play several registers and use gentle pitch movement. |
-| Pads / Polysynth / Leads / Sequences | Individually programmed bloom, touch, pressure and release. Long dense chords have additional headroom checks; sequence attacks and releases follow their actual gates. |
+| Pads / Polysynth / Leads / Sequences | Individually programmed bloom, touch, pressure and release. Selected long dense chords have additional headroom checks; sequence attacks and releases follow their actual gates. |
 | Wind / Rain / Surf / Thunder / Clockwork | Irregular gusts, smooth rain motion, a surge with draining foam, a crack with a decaying low roll, or separated ticking. Hold long enough to hear each contour. |
 
 The **14 body controls** are available in the DAW's parameter list and automation
@@ -183,13 +198,19 @@ user patches and A/B slots keep their stored controls; merely selecting a row
 or reopening an old project does not replace them. REVERT can restore the
 settings present when Library opened.
 
-The two Material parameters append after all **202 preceding core definitions**
+Factory LOAD applies the sound recipe and PANEL sources; it preserves physical
+setup, MSEG shapes and modulation routing. Existing host automation can also
+write later control values. Use a fresh instance in an empty project for the
+first comparison. See the
+[loading and session-scope review](docs/preset-evidence/2026.11.7/reviews/a43.md).
+
+The two Material parameters introduced in 2026.11.6 append after all **202 preceding core definitions**
 and **308 host positions**, bringing the totals to **204 core parameters** and
 **310 host positions**. Earlier IDs, ranges and choice meanings stay intact;
 missing Material or Variant values in older state default to Standard. The
-[compatibility review](docs/preset-evidence/2026.11.6/reviews/a34.md) checks the
-previous metadata and host layout. Older sessions using Legacy or Pure still
-resolve to the circuit engine under the
+[compatibility review](docs/preset-evidence/2026.11.7/reviews/a42.md) checks the
+retained metadata, host layout and saved-state paths. Older sessions using
+Legacy or Pure still resolve to the circuit engine under the
 preceding migration contract. Their saved controls remain, but their old
 rendering is not promised. Keep the older binary and a rendered reference when
 an existing project's exact sound must be retained.
@@ -260,12 +281,21 @@ describe the guards and fallbacks.
 
 These are [matched instruction counts](docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication/)
 for runtime `0c4abd85` versus the historical `db02cd8` baseline on Linux x86-64
-(GCC 14.2 Release, 48 kHz, 16/32/64-frame buffers). Native replay for the
-latest optimization pass matched tested audio and exposed state bit for bit;
+(GCC 14.2 Release, 48 kHz, 16/32/64-frame buffers). Native replay for
+that optimization pass matched tested audio and exposed state bit for bit;
 Standard still reports **67 samples (1.40 ms at 48 kHz)** of plug-in latency.
 That is not round-trip latency. Instruction counts show work removed, not a
 DAW CPU percentage. [Physical CPU-budget qualification](docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md)
 is still open.
+
+The `.7` low-choir correction adds work when a note uses more than 24 harmonics.
+In the bounded shared-Linux-host comparison at **48 kHz / 2×**, eight low notes
+take about **15% more Engine processing for Ah and 17% for Oo** than `.6`.
+An Engine's inline state grows by **12,800 bytes**. These are core measurements,
+not DAW CPU percentages or universal limits; the deepest notes still reach the
+**48-mode cap** before covering all upper vowel regions.
+[Runtime method and limits](docs/preset-evidence/2026.11.7/reviews/a37.md) ·
+[Low-register vocal coverage](docs/preset-evidence/2026.11.7/reviews/a35.md)
 
 ## Build from source
 

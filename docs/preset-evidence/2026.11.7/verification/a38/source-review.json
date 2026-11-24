@@ -1,0 +1,65 @@
+{
+  "reviewer": "A38",
+  "sound_freeze": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "final_binary_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "final_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "body_headers_identical_at_sound_and_binary_source": true,
+  "tracked_working_source_changes_at_review": [],
+  "inputs_sha256": {
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "tests/InstrumentBodyEngineTests.cpp": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6",
+    "tests/BodyArticulationEngineTests.cpp": "918520b06a4a9a6c61f669a737bcb4e22121a46f2aae6be922957e05fd320db3",
+    "docs/preset-evidence/2026.11.7/reviews/a04.md": "0ec55b52ca4602b0978dfdc4a662f99805cf17770fcc4eab9f474f8ca2b8b695",
+    "docs/preset-evidence/2026.11.7/reviews/a05.md": "a19e05fc836655eed7deaae11eee6b31be64b380d0d027944e40a010d3d59627",
+    "docs/preset-evidence/2026.11.7/reviews/a06.md": "63ff321aa229300752466470906243d8eff6b0f8fc7fef79e33947227818707d",
+    "docs/preset-evidence/2026.11.7/reviews/a07.md": "faa98885f9f6bd46c6fb7bd63e96e67965e055b5fd9eea3071e680b5ba5db6d9",
+    "docs/preset-evidence/2026.11.7/reviews/a11.md": "c4c50735a58f200d5d4bda6cd200ce5caeb5976f97c6f272914521ce435739bd",
+    "docs/preset-evidence/2026.11.7/probes/a11-combined-cpu/benchmark.cpp": "ba916c5c26c4fa775351439db30250b41e1ab9a676ff2ef0a41b8a08d5b0dc5c",
+    "docs/preset-evidence/2026.11.7/probes/a11-combined-cpu/snapshots.json": "c8f8fc1d2aa71cb8daeb6e1660f6b1590039925834721e12f0a302044c9d13d9"
+  },
+  "source_derived_boundaries": {
+    "oscillator_capacity": 48,
+    "response_inverse_capacity": 48,
+    "response_gain_capacity": 48,
+    "choir_budget": "clamp(4400 / (bodySize * keyHz), 24, 48)",
+    "choir_count": "ceil(budget); all admitted vocal weights are positive over the finite valid parameter domain",
+    "piano_maximum": "42 principal modes plus 6 second-course modes",
+    "response_loops": "only indices [0, count); count is capped by addMode and set only at reset/noteOn",
+    "boundaries": [
+      {
+        "body_size": 0.5,
+        "48_mode_cap_below_hz": 183.33333333333334,
+        "48_mode_boundary_midi": 53.843587129994475,
+        "24_mode_floor_above_hz": 366.6666666666667,
+        "24_mode_boundary_midi": 65.84358712999448
+      },
+      {
+        "body_size": 1.0,
+        "48_mode_cap_below_hz": 91.66666666666667,
+        "48_mode_boundary_midi": 41.843587129994475,
+        "24_mode_floor_above_hz": 183.33333333333334,
+        "24_mode_boundary_midi": 53.843587129994475
+      },
+      {
+        "body_size": 2.5,
+        "48_mode_cap_below_hz": 36.666666666666664,
+        "48_mode_boundary_midi": 25.980449991346127,
+        "24_mode_floor_above_hz": 73.33333333333333,
+        "24_mode_boundary_midi": 37.98044999134613
+      }
+    ]
+  },
+  "sanitizer_scope": "GCC 14.2.0 Linux x86_64, ASan and UBSan, one-TU body tests, leak detection disabled",
+  "not_executed": [
+    "full Engine sanitizer build",
+    "native plugin lifecycle",
+    "other compiler/OS sanitizer runs",
+    "new all-family bank captures",
+    "fault-inducing or constrained-stack probes"
+  ],
+  "result": "No blocking combined body bounds/lifecycle defect found in this bounded review."
+}

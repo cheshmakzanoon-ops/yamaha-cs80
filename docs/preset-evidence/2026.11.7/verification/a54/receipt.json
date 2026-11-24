@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "scope": "Read-only sound-claim/evidence consistency review; no new product tests, audio renders, listening or native acceptance",
+  "sound_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "binary_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "binary_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "checkout_head_at_review": "39811916ef812b5c5cb5805cd532358ab684529f",
+  "checks": [
+    {
+      "name": "frozen final tree",
+      "passed": true
+    },
+    {
+      "name": "core and plugin source continuity",
+      "passed": true
+    },
+    {
+      "name": "current core and plugin retain frozen source",
+      "passed": true
+    },
+    {
+      "name": "A12 exact complete inventory",
+      "passed": true
+    },
+    {
+      "name": "unchanged .6 values and parameter contract",
+      "passed": true
+    },
+    {
+      "name": "zero new recipes or identities",
+      "passed": true
+    },
+    {
+      "name": "catalogue partition",
+      "passed": true
+    },
+    {
+      "name": "cumulative control partition",
+      "passed": true
+    },
+    {
+      "name": "conditional mechanism populations",
+      "passed": true
+    },
+    {
+      "name": "cumulative signal partition",
+      "passed": true
+    },
+    {
+      "name": "new default metric population",
+      "passed": true
+    },
+    {
+      "name": "default measurement duration rate and note partition",
+      "passed": true
+    },
+    {
+      "name": "bounded capture safety counts",
+      "passed": true
+    },
+    {
+      "name": "twelve exact stereo Init cases",
+      "passed": true
+    },
+    {
+      "name": "bounded low choir CPU observations",
+      "passed": true
+    },
+    {
+      "name": "existing sanitizer receipts remain bounded successful executions",
+      "passed": true
+    },
+    {
+      "name": "A40 source-only continuity",
+      "passed": true
+    },
+    {
+      "name": "all specialized selectors accounted",
+      "passed": true
+    },
+    {
+      "name": "temporary PCM retention boundary recorded",
+      "passed": true
+    }
+  ],
+  "checks_count": 19,
+  "failed_checks": 0,
+  "passed_within_scope": true,
+  "exact_acoustic_or_hyperrealism_goal_established": false,
+  "listening_approval_claimed": false,
+  "fresh_native_or_archive_qualification_claimed": false,
+  "all_family_temporary_pcm_still_present_claimed": false,
+  "cumulative_accounting": {
+    "all_programs": 523,
+    "musical": 521,
+    "init": 2,
+    "original_address_musical": 221,
+    "curated_musical": 300,
+    "parameter_changes_beyond_conservative_level_pan": 493,
+    "active_additive_vca_baseline_only": 28,
+    "rank_baseline_only_by_category": {
+      "Bass": 19,
+      "Brass": 1,
+      "Hardware Studies": 3,
+      "Keys": 1,
+      "Plucked": 4
+    },
+    "new_7_recipe_edits": 0,
+    "changed_default_signal_vectors": 519,
+    "additional_pressure_required_programs": 2,
+    "union_musical_with_signal_change_evidence": 521,
+    "published4_current7_whole_bank_captures": 1046,
+    "whole_bank_audio_seconds": 4184,
+    "a23_pressure_extra_captures": 8,
+    "a23_pressure_extra_audio_seconds": 19.2,
+    "no_new_whole_bank_render_by_a33": true
+  },
+  "mechanism_counts": {
+    "body": {
+      "programs": 272,
+      "active_ranks": 477
+    },
+    "piano_partial_decay": {
+      "programs": 10,
+      "active_ranks": 20
+    },
+    "noise_rate_normalization": {
+      "programs": 256,
+      "active_ranks": 447
+    },
+    "generic_string_formants": {
+      "programs": 54,
+      "active_ranks": 100
+    },
+    "low_choir_harmonics": {
+      "programs": 7,
+      "active_ranks": 12
+    }
+  },
+  "new_default_metric_changes": 67,
+  "structurally_eligible_union": 256,
+  "init_cases": 12,
+  "init_stereo_float_samples_per_revision": 1504800,
+  "low_eight_note_choir_cpu_ratios": {
+    "ah_low_eight": 1.1526675660235928,
+    "oo_low_eight": 1.1668798056910994
+  },
+  "inputs": {
+    "docs/preset-evidence/2026.11.7/verification/a12/receipt.json": {
+      "bytes": 3150,
+      "sha256": "b4517b11558026a2cafab635d2adf0f36f89317bc35589e6483236cd3a599301"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a12/current-value-classification.json": {
+      "bytes": 570302,
+      "sha256": "673616cef193c29ef7ef81eb126edf3f7ff37be5263d681b568360f45de8ff3a"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a12/mechanism-coverage.json": {
+      "bytes": 101393,
+      "sha256": "1a64129ae4a8245396dc13f49a372def2e082606ecfb8ad399ce54cbc0293f40"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a33/metrics-summary.json": {
+      "bytes": 105706,
+      "sha256": "c336044150137568bd73beaafb68c0102acac62e1d5371d8c7d23f28589b9412"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a33/receipt.json": {
+      "bytes": 3390,
+      "sha256": "b44277a74c1c0ccb1db55580647f1bef24b148d4d0a39cc0137d253a4d0c9b5d"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a27/audio.json": {
+      "bytes": 8002,
+      "sha256": "47f088b014689e9be63cbad55053e3bf66a0acfb15ef1ea7c83f42e7d9424b0b"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a37/summary.json": {
+      "bytes": 14687,
+      "sha256": "360a81c74d73b6681cdb2e1d76cef4be7f0fd612fa78137811261a42a80bc401"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a38/sanitizer-receipt.json": {
+      "bytes": 4906,
+      "sha256": "e1aae519b8be770c372bef5af352b894f43c8131814d43539a92ba755c510e71"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a38/lifecycle-receipt.json": {
+      "bytes": 2146,
+      "sha256": "f3f79253bd0f374fabee2cbb2ff6b712a296bd7440feb3e4edafcafc6fb2931a"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/source-continuity.json": {
+      "bytes": 9801,
+      "sha256": "d0fe9cdd19f0e86662044a71569fbb5f14201552dd78ec345e23071121468975"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a41/receipt.json": {
+      "bytes": 17227,
+      "sha256": "a8af2852cb83ed7319430543dccc79a992f2637bdc2a6d11809268c411719c3a"
+    },
+    "docs/preset-evidence/2026.11.7/development/temporary-pcm-cleanup-second-pass.json": {
+      "bytes": 42688,
+      "sha256": "90535c706f57daac1b19e47e7a3d2d466f9717c570e1508138fa3fc7a3e074f9"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a04.md": {
+      "bytes": 7353,
+      "sha256": "0ec55b52ca4602b0978dfdc4a662f99805cf17770fcc4eab9f474f8ca2b8b695"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a05.md": {
+      "bytes": 8414,
+      "sha256": "a19e05fc836655eed7deaae11eee6b31be64b380d0d027944e40a010d3d59627"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a06.md": {
+      "bytes": 9298,
+      "sha256": "63ff321aa229300752466470906243d8eff6b0f8fc7fef79e33947227818707d"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a07.md": {
+      "bytes": 4751,
+      "sha256": "faa98885f9f6bd46c6fb7bd63e96e67965e055b5fd9eea3071e680b5ba5db6d9"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a11.md": {
+      "bytes": 4676,
+      "sha256": "c4c50735a58f200d5d4bda6cd200ce5caeb5976f97c6f272914521ce435739bd"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a12.md": {
+      "bytes": 4996,
+      "sha256": "ac4b583d8d34a0e7e36a5e0555d8722cedb68a8bdf4ff255dd2d7ccaaf83fdc3"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a13.md": {
+      "bytes": 5298,
+      "sha256": "9bbb81252daa59efe36eadccc4440e9b08173b9d57218580b78a1773f7ef02e7"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a14.md": {
+      "bytes": 4525,
+      "sha256": "520762d0c92bf4ca7071fe2053ff2a1b36c0ba9e4fe1dba82f1c16a211cb6087"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a15.md": {
+      "bytes": 4823,
+      "sha256": "a1f5205ad0cad8305b11cb347fa000f06088e56a0d598e9e28dc6ae7c0c2ccba"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a16.md": {
+      "bytes": 4932,
+      "sha256": "17a0326553e8aa46bca906398bf4695f2c8db561f5528321571e06bf0657fe4c"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a17.md": {
+      "bytes": 4909,
+      "sha256": "9e06b726a0b5b3e94a5c8029a821891cdfe5d92b87188cdb008508255ee6be29"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a18.md": {
+      "bytes": 4728,
+      "sha256": "784f97094e15d2cd50ddec47e8b93fbfc30a33a576c27a8a1dd1d95668e0f359"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a19.md": {
+      "bytes": 9460,
+      "sha256": "d0762a2b7670ebde743b8a10b8d9523c9288130950859c62790f1b97339865f6"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a20.md": {
+      "bytes": 9304,
+      "sha256": "94cc68b435024b4b18db9ce53da2fba553df14850efcf24279021ba32bfbc9c1"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a21.md": {
+      "bytes": 8880,
+      "sha256": "bfa7b30d8499b2b5d1d5dc51f25dcbcd0249ef9b46e2b46c5792b8ecff35e827"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a22.md": {
+      "bytes": 9314,
+      "sha256": "d80db63e47ef28b93bbdb1d92b202fbb28948fc3af01aac1c514a16da6d953f7"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a23.md": {
+      "bytes": 6599,
+      "sha256": "327a70408ed05dfce1782912e4f2992e6067e854dad761848aa96ef19aa94077"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a24.md": {
+      "bytes": 11863,
+      "sha256": "bf42b1d6ba2b9293e2563ef7f093e11063dd25f1e3017b1eb76c981b09396868"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a25.md": {
+      "bytes": 8906,
+      "sha256": "92e2abfa83557fa77e19845e851422611c87a8e733cd1139ab842132d3310dcd"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a26.md": {
+      "bytes": 11590,
+      "sha256": "6e692dab1a7b652ab34722b452f9b2210685a8ae01c356428bf5b52803d04124"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a27.md": {
+      "bytes": 7757,
+      "sha256": "0eb9d5505fddb79434bc1a6bfe28a87087b4c971f02bbc35ac173bb58bc72b16"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a33.md": {
+      "bytes": 11293,
+      "sha256": "6e69835f199a4a1e0ca6f519396e02a54dd2d5c886c23e7674bd649861398719"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a34.md": {
+      "bytes": 14023,
+      "sha256": "fdcc321cf98b3b4f3ff5461c54cae77b36a4c1a3bd0ab781614977320cedef22"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a35.md": {
+      "bytes": 16263,
+      "sha256": "20c6d3015222dd5c60e39110540ababd851c6ce26ef71f4bd6dcd3e4d4a29948"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a36.md": {
+      "bytes": 9542,
+      "sha256": "92a5e86e6ca9b7e04dff5dabe00bffe675fe4903787ce1d79a70ef760333b792"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a37.md": {
+      "bytes": 13316,
+      "sha256": "aac737618f4b4caea0b370f051421b43f981128f3edc2c583589bf92c20c0577"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a38.md": {
+      "bytes": 12381,
+      "sha256": "f221dc43941530672d89818c4c03ee33900620aa3260ae741a7854e42866edd4"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a40.md": {
+      "bytes": 10158,
+      "sha256": "6b393ca570aa7adc250487d7991d00a7251c84dc791a8e23423381d3bb2fa417"
+    },
+    "docs/preset-evidence/2026.11.7/reviews/a41.md": {
+      "bytes": 24615,
+      "sha256": "b45a70f88e60bbefaf31fcfe08a96fd639dde69889a0dd90254827830aa0f08b"
+    },
+    "README.md": {
+      "bytes": 21161,
+      "sha256": "fd7be5120570861aa98d2c5aef16904d0d91fe5a3671170af108bfbb2b4bc2d3"
+    },
+    "docs/CIRCUIT_LIBRARY_2026_11_7.md": {
+      "bytes": 15048,
+      "sha256": "efe0b886a9cb119fc3f30bcca9d00786a8cc727e748b0fa854e9fb7ce5eeb1e1"
+    },
+    "docs/PRESET_GUIDE.md": {
+      "bytes": 37423,
+      "sha256": "8cd25a3ad41da07e64ab3b5683801bc5131bae5d865933eafb2494054b57b18b"
+    },
+    "src/core/InstrumentBody.h": {
+      "bytes": 72714,
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc"
+    },
+    "src/core/Params.h": {
+      "bytes": 26057,
+      "sha256": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a27/verify.py": {
+      "bytes": 11897,
+      "sha256": "cbae319f1f1f57d84f94668b01ce3f1b50df93759af88c947015b03c049a6b81"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a12/metadata-contract.json": {
+      "bytes": 83820,
+      "sha256": "7860e216b6539b014670f763535420dbcdc1bb7e796ed0d83f78510bf3338e1f"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a27/controls.json": {
+      "bytes": 24346,
+      "sha256": "85b38996b50df4dffa1601526e5fcd3331905f9034a6518b23284395dc77081c"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a23/published-pressure-comparison.json": {
+      "bytes": 9948,
+      "sha256": "3493362b07bc3f611f2a33858a04b7dbceda89631e1cd035f0b78b9c3fa8e069"
+    },
+    "docs/preset-evidence/2026.11.7/verification/a33/causal-velocity-summary.json": {
+      "bytes": 3853,
+      "sha256": "b3a996d30082adcfe122fdbc9ef8561222c76dd4e06d01a7edbc57fe22b89d32"
+    }
+  },
+  "review_script_sha256": "b6f91eb65b7a2c314f4b4b4437df688324c386d529a6dc82df75775a3797f3b0"
+}

@@ -267,8 +267,9 @@
     {
       "id": "a38",
       "role": "Combined modal-array bounds, reset and ordinary sanitizer review",
-      "status": "in_progress",
-      "agent": "/root/a38_combined_boundary_review"
+      "status": "completed",
+      "agent": "/root/a38_combined_boundary_review",
+      "report": "reviews/a38.md"
     },
     {
       "id": "a39",
@@ -287,14 +288,23 @@
     {
       "id": "a41",
       "role": "Nine materials and four variants: exact recipe and physical-claim review",
-      "status": "in_progress",
-      "agent": "/root/a41_material_identity_review"
+      "status": "completed",
+      "agent": "/root/a41_material_identity_review",
+      "report": "reviews/a41.md"
     },
     {
       "id": "a42",
       "role": "Host parameter, program and saved-session compatibility",
-      "status": "in_progress",
-      "agent": "/root/a42_host_state_compatibility"
+      "status": "completed",
+      "agent": "/root/a42_host_state_compatibility",
+      "report": "reviews/a42.md"
+    },
+    {
+      "id": "a43",
+      "role": "Installation and exact factory-reload user flow",
+      "status": "completed",
+      "agent": "/root/a43_install_loading_flow",
+      "report": "reviews/a43.md"
     },
     {
       "id": "a44",
@@ -309,13 +319,62 @@
       "status": "completed",
       "agent": "/root/a45_intel_diagnosis",
       "report": "reviews/a45.md"
+    },
+    {
+      "id": "a46",
+      "role": "Actual final-source Windows platform and consumer qualification",
+      "status": "in_progress",
+      "agent": "/root/a46_windows_qualification"
+    },
+    {
+      "id": "a47",
+      "role": "Actual final-source Linux platform and original retry-history qualification",
+      "status": "in_progress",
+      "agent": "/root/a47_linux_qualification"
+    },
+    {
+      "id": "a48",
+      "role": "Actual final-source ARM and Intel Mac platform/validator qualification",
+      "status": "in_progress",
+      "agent": "/root/a48_macos_qualification"
+    },
+    {
+      "id": "a52",
+      "role": "Independent four-platform build and dependency provenance",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a52_build_provenance",
+      "report": "reviews/a52.md",
+      "phase1_complete": true
+    },
+    {
+      "id": "a54",
+      "role": "Final sound-claim, evidence and realism-limit review",
+      "status": "completed",
+      "agent": "/root/a54_sound_claims_review",
+      "report": "reviews/a54.md"
+    },
+    {
+      "id": "a55",
+      "role": "Complete per-address family and gesture coverage matrix",
+      "status": "completed",
+      "agent": "/root/a55_family_coverage_matrix",
+      "report": "reviews/a55.md"
+    },
+    {
+      "id": "a56",
+      "role": "Final online guides, download publication and consistency",
+      "status": "awaiting_release_inputs",
+      "agent": "/root/a56_publication_docs",
+      "report": "reviews/a56.md",
+      "phase1_complete": true,
+      "phase2": "Await accepted native platforms, validators, installers, audition and public routes before final download publication."
     }
   ],
   "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
   "candidate_build_run": 45397189410,
-  "documentation_head_observed": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
-  "assigned_count": 44,
-  "completed_count": 41,
+  "documentation_head_observed": "39811916ef812b5c5cb5805cd532358ab684529f",
+  "assigned_count": 52,
+  "completed_count": 47,
   "candidate_build_note": "Fresh four-platform native run for ownership-only audit/capture repair. Previous c554: ARM platform-qualified, Intel and Windows original failures retained, Linux canceled on successor push. No cross-platform/release qualification yet.",
   "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
 }

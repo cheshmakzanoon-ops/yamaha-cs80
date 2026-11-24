@@ -1,0 +1,531 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "plugin_files_identical_from_6": 80,
+  "paths": {
+    "src/core/FxModels.h": {
+      "sha256": "b2cd5a53030e76d3ff6378404168adcc5d873a9a2820da3bf6bf0f1df1625282",
+      "unchanged_from_published_4": true
+    },
+    "src/core/ModernLayer.h": {
+      "sha256": "8bba54f736e0215d3ce8c7be457990ffe0242c1322ba47faf6beae3d36a808d8",
+      "unchanged_from_published_4": true
+    },
+    "src/plugin/CircuitPolicyParameter.h": {
+      "sha256": "b8dcd989647e7983ca0a3fcfdfe739384d76dd2c8ad6700543d062a2f3176234",
+      "bytes": 1216,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/HostAutomationBridge.h": {
+      "sha256": "f716257b6364fb38136999d2a85adbe3c810baa97ce6474249546cb2a7cdceae",
+      "bytes": 12411,
+      "unchanged_from_baseline_6": true
+    },
+    "scripts/patch-juce-automation.py": {
+      "sha256": "aed34b453aa8bcaf5bcde01d1b39aac14019e353f2491e86164345747d7a24be",
+      "unchanged_from_published_4": true
+    },
+    "scripts/patch-juce-state-mirror.py": {
+      "sha256": "7fa4ce5c077ddba57c96e3308eb53ef8f30afe1dc834c048a181f6840053fdea",
+      "unchanged_from_published_4": true
+    },
+    "cmake/HostAutomation.cmake": {
+      "sha256": "81be97bf3dc0b03176ab90addf31faf15867088a02cf6836579b5f4b209c1735",
+      "unchanged_from_published_4": true
+    },
+    "cmake/ParameterStateMirror.cmake": {
+      "sha256": "c09cd687bc05f5d2b1490b2dbbdd78dc4d770272003072267f06015af8a75ba2",
+      "unchanged_from_published_4": true
+    },
+    "src/core/InstrumentBodyVariants.h": {
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "unchanged_from": "preceding_5"
+    },
+    "src/core/InstrumentBodyMaterials.h": {
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "unchanged_from": "baseline_6"
+    },
+    "src/plugin/AdvancedPanel.cpp": {
+      "sha256": "c88d3090508a47daf50b78d2ca78be4cd8bdd84c94b871242ace677eccab90bb",
+      "bytes": 241575,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/AdvancedPanel.h": {
+      "sha256": "556d4a563c22449dddff4561c2d884a8e7b6e64cdf4c17482d22a28febdf9e57",
+      "bytes": 280,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ArtCommon.cpp": {
+      "sha256": "07bc08191a1dfd5a58a425efdfbb20612dc534970bd7cd7c5a9fac83af34e556",
+      "bytes": 19419,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ArtCommon.h": {
+      "sha256": "abf8c778483feed6184c3bb150d7e602b570e1f2f3a386406614471da104defd",
+      "bytes": 6100,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/CapturedKeyboardEvents.h": {
+      "sha256": "a6437747ed1026b1bedbe93420a1f3b95001b6647f6c1dfb858c071b6705bcef",
+      "bytes": 1505,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/CentreRow.cpp": {
+      "sha256": "bc580ee0fd5a2fd22745d6d55d0d4b04559cd2cdb0ad4f8301c7880efdaccd9d",
+      "bytes": 8779,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/CentreRow.h": {
+      "sha256": "70c830150837b2c5bfc64a266d969636a66e2c1bdcf9b1163a31b0726da29e45",
+      "bytes": 1707,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ChannelRow.cpp": {
+      "sha256": "0a65537abe36c00953350225a129bc65dc0b4c2f978069fe020cd2ce3cf42c45",
+      "bytes": 4050,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ChannelRow.h": {
+      "sha256": "ef39b5e8a33ab0b0505cc302be261fe402f33e9bc7dedf799f5dd68ffb80113a",
+      "bytes": 971,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/EditorPreferences.cpp": {
+      "sha256": "959624e10b3dedd8ac7301f0d90bfeed5fd497d5c2b8ab9179eaeb6348eeb1a7",
+      "bytes": 1566,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/EditorPreferences.h": {
+      "sha256": "997fd0d821ec49fac2a13218bc016f72c434228205ea1e5c3acd8d2c0142f74d",
+      "bytes": 1181,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/EvidenceRegister.h": {
+      "sha256": "67edd376b42cd8da480396cb82c241e00a0718b67ac9e95cacda7976664217ab",
+      "bytes": 39585,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/HardwareKeyboard.h": {
+      "sha256": "bfbc290a25c2a1938a06f3eb25c5991e50713fa0e2fa4d706f0b4497c27aaf52",
+      "bytes": 67844,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/KeyboardEventQueue.h": {
+      "sha256": "520dfeeaef5345afecd285af65ca427a2a8c3425e4b94d85665e72eb3e11e427",
+      "bytes": 7391,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/KeyboardGestureCapture.h": {
+      "sha256": "3806eea72ba11d17f053d2af072945124e98eaccb5e742e9c78f4ad18777e4c9",
+      "bytes": 1494,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/KeyboardPressureOwnership.h": {
+      "sha256": "7ef0dffd4ed7ba4b9dd0698dfaed62c71a76058d3a56ff76254d8b5cd7893e06",
+      "bytes": 3464,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/KeyboardTuningPage.cpp": {
+      "sha256": "1992ae588812577407404fb8719705ad64080a7c7162e1006fc15de9b73b08d3",
+      "bytes": 18684,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/KeyboardTuningPage.h": {
+      "sha256": "64d055827bb60bce11d0451c9f749339111ddb090123c7ba6fd5ed7dd1235f5e",
+      "bytes": 3459,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/LfoScopePreview.h": {
+      "sha256": "3ee73faca1b5a3ccce874b1b359b958fc53eceaba88654351c77085d2deeeb8b",
+      "bytes": 3343,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MemoryEditing.h": {
+      "sha256": "50ad6cf9962e944dd2962aba502d2a78adf6112b6607b3ccae34564029d600b2",
+      "bytes": 4233,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MemoryLid.cpp": {
+      "sha256": "4a9d122227a88c0b8fd50985c64f5b0a4c91415030e23ba1520827e626322be1",
+      "bytes": 24153,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MemoryLid.h": {
+      "sha256": "4fff1cd4b41724559c0b02fbde46dec2f9c53ead7d9456129d4bcdfe24201aad",
+      "bytes": 5541,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MidiLearn.h": {
+      "sha256": "6823bb4d167a2b529a91a2b62a970bc0f02e463de018296d410d9d6067f7d71f",
+      "bytes": 7126,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ModernLayerState.cpp": {
+      "sha256": "0b9d5d34d340e58795b4b530ff31bae1a06262819796078b401cbf6248b6b503",
+      "bytes": 9489,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ModernLayerState.h": {
+      "sha256": "6ea08787aa03d401e6fc743afc15c32fc34d64958143a0d3463895523ccaecd5",
+      "bytes": 4006,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ModernModulationUi.cpp": {
+      "sha256": "970052939ff470fd1a0768db0180a87b8b4cc35d5a78838f44e95aaec91c7de2",
+      "bytes": 62734,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ModernModulationUi.h": {
+      "sha256": "a14cb4864c105c2e99a6695284237cae5c1a18bb723a8e73bb92f0384204f59c",
+      "bytes": 10707,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ModernStateInteger.h": {
+      "sha256": "3a5860e437f024cf3f2b4f274b557262e285261cc897e035229e10488ec8c4a9",
+      "bytes": 2571,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MpeStatus.h": {
+      "sha256": "0f4e3d5b821e49f40ff5edade204556b16574892a0fc4f90c1114e7311bc7cbb",
+      "bytes": 2783,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MsegPointValues.h": {
+      "sha256": "354188be1426039d2349242a57bcf643b8e99dc519c2251d1d0b7b192ec34e59",
+      "bytes": 4826,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MsegStateText.h": {
+      "sha256": "6c1bc26a7c53e930505249549c966814275c814e7307c581d0b3b7eb4fd26a9b",
+      "bytes": 3124,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MtsEspClient.cpp": {
+      "sha256": "c5e7e36945e91e185174de7fcf35e8be486061e79986d5f8c60d1404d889b885",
+      "bytes": 6098,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/MtsEspClient.h": {
+      "sha256": "eb9efdd9b9a375b9f554c0f0dd8abe470fe384bdd21bcddc7030e269c735bbf7",
+      "bytes": 1756,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/OutputMeter.h": {
+      "sha256": "2522de2f3008ad62ead52f53622c05a4ef3bac0ed109d6bdc5178380cbf558dd",
+      "bytes": 5941,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/OutputMeterDisplay.h": {
+      "sha256": "41a7e59d0a63218a6e74db183609e4eeee7b39a5280f9d0aaea0cecec872edc8",
+      "bytes": 2648,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PanelLayout.h": {
+      "sha256": "7f3c576a7103b5fb6df186ba68d229c74ebdcecc243512c1480f3ad48087066d",
+      "bytes": 5791,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PanelWidgets.cpp": {
+      "sha256": "a567212cbf1eb270ce0baf3da93051f6c0b46212ce469f857b974b0dab412519",
+      "bytes": 3681,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PanelWidgets.h": {
+      "sha256": "314281974a5235fc431ea574346ed9a50b572e899ccfe0be36d548dc89ecd032",
+      "bytes": 19232,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterComboBox.cpp": {
+      "sha256": "55411e03cfb9b6e87c1c2d3fedbe6287aa62ff83974cb3f817c3bff50c2ab858",
+      "bytes": 8701,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterComboBox.h": {
+      "sha256": "e09e49d7235037c292dfaa1d98bb366ddd2d6dbb32fe3e3a084f0262ba5da474",
+      "bytes": 1997,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterContextButton.cpp": {
+      "sha256": "0af2ad1c2cb03d426895f3aafeab825d7fb66862a255cdfeb0e54f97194a740e",
+      "bytes": 9264,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterContextButton.h": {
+      "sha256": "6af912df4d54a19c57876ca57441765524e7f0a90f536bc9d5b66c1413a093d2",
+      "bytes": 2161,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterSlider.h": {
+      "sha256": "1d525f3b125447468ee9cd5100df4be2ab81e4586e071f295566d8731ef03266",
+      "bytes": 1176,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterStateChildIndex.h": {
+      "sha256": "87f660dfb47ecfd35955aa5758f9aa5bb7b6847de1cd582eede5490fa444e7b2",
+      "bytes": 886,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterStateMirror.h": {
+      "sha256": "0b609c55ca73ab5bcb2b820b24eed94e5271b3f28819c1e99feeadf9d2fbcfa2",
+      "bytes": 2014,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/ParameterWatch.h": {
+      "sha256": "cc1b020ed31ace16b0b79759b52573c556bd3fe24127dd06ec486cc915579a01",
+      "bytes": 1367,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PerformanceDeck.cpp": {
+      "sha256": "54bf58ce4f98d8173dbcc218f5eb925c50ba3d2b9dbce605b4ab2de8bd1fd9a0",
+      "bytes": 12194,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PerformanceDeck.h": {
+      "sha256": "d5b53fcffc5326453477391532cfd466773fc04611d23cbe1e14e7428b88bb1b",
+      "bytes": 2090,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginEditor.cpp": {
+      "sha256": "9fe6e695b7a6ae7d74a9a566ba04b82ed676dffc899071fbcafb0ecc95ec99bc",
+      "bytes": 122968,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginEditor.h": {
+      "sha256": "2a4899e6420260f8c6340aabdad71c56d645e11ccbd33ceb88f6676c0e279c4c",
+      "bytes": 1191,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginProcessor.cpp": {
+      "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+      "bytes": 95647,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginProcessor.h": {
+      "sha256": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+      "bytes": 28198,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginProcessorAutomation.cpp": {
+      "sha256": "0f30e9ce4ca5b3ecc0987d1c5bfd6c10976a7eb6549e9abd1bc4c15a27af6e3f",
+      "bytes": 7516,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginProcessorLibrary.cpp": {
+      "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+      "bytes": 22323,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PluginProcessorLibrary.h": {
+      "sha256": "aa5dd1edd4c4ad7e9ae72ca197cd1d26920f037ed814cbb40e85dd6dd96f0d93",
+      "bytes": 2133,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetBrowser.cpp": {
+      "sha256": "793bbec4b4b19323deb3f6f1174b7bfc471a1dab16b896cefd718100d3589860",
+      "bytes": 183655,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetBrowser.h": {
+      "sha256": "22d677aab5242a30073308904fc9c555086114b4060d3961c28a788d95052d8d",
+      "bytes": 14210,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetBrowserSound.h": {
+      "sha256": "26da5535bff1723db4965b0c6b6ab3a2250405baefcf5ac3a0fe79cd2658e864",
+      "bytes": 735,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetDisplayName.h": {
+      "sha256": "266b968ac395e6d2f44982eccbaa352e31ffabd4e62aefbed5ccec6f1b016e0c",
+      "bytes": 597,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetFileValues.h": {
+      "sha256": "a96291961553a0487ec3e7ccdf018f045320d9ef3f4eb97ebdf0bbd3aac15fed",
+      "bytes": 2310,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetOrigin.h": {
+      "sha256": "f1021eeeaed1bfa4a1f84ffff706d0e6a28c0ab16730668b4475ec6a7199003a",
+      "bytes": 807,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetPreviewMath.h": {
+      "sha256": "85d39cc0adc7bb0a8ae7f3c3bae5a8ba6cb0bddf03b699df7e5ff0569badec3e",
+      "bytes": 453,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/PresetXml.h": {
+      "sha256": "9f94b218a353605bb90ffc0b2ba53c38414d08683f3be0c105b4cebe43aa670d",
+      "bytes": 5379,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioDrawers.cpp": {
+      "sha256": "c5017db013698e55f91a53992475ec5f0a81438012c6b192923f4765bf4ea714",
+      "bytes": 26236,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioDrawers.h": {
+      "sha256": "d277c7a5181c29563dd334f8a30b3ed5ca3d050ce3b8b66b148711f6b8afc854",
+      "bytes": 3070,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioMount.h": {
+      "sha256": "488bf5a6ce2704148842cfe67d4f7b8b541e69535b310f01078ab18cbf4b9a25",
+      "bytes": 5483,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioToolbar.cpp": {
+      "sha256": "40891a1a81f1f09eadf29180042831fda907d4471e177cdc50107de5cb49a817",
+      "bytes": 22578,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioToolbar.h": {
+      "sha256": "7aa24db73fe5ab7d3e28209c14e06b7612d5cabb6d5a70532b5fab5b8baf28f3",
+      "bytes": 3948,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioTour.cpp": {
+      "sha256": "52a8d2d9943a0f8e93d1e60dbd32a40fff3a86c8a84dc0bea81f8cd3dfc5bb02",
+      "bytes": 8447,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioTour.h": {
+      "sha256": "0c2719f48d59d8d8a17a42e14040da354a3b486d600d31181aac97cfc416a627",
+      "bytes": 2138,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/StudioView.h": {
+      "sha256": "3e8f38af75846314b2c19333c0996de3e84711cedc5e4a19239da465a44cd83c",
+      "bytes": 5604,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/TuningInspection.h": {
+      "sha256": "3221f7fa3d6eb97ba106f742fceb1a99c47b8cd5e9ec3c4f28434fafd854339e",
+      "bytes": 2586,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/UiComponents.cpp": {
+      "sha256": "461dff048a7f26c04fb3f067f17dde4e5345ac5356a8455c03c867651af499dc",
+      "bytes": 244993,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/UiComponents.h": {
+      "sha256": "1ad902f7e0250d0dbe070d1c04f97bcc1ae73275850d2e4fc80bf04679fd3f7e",
+      "bytes": 33081,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/UndoHistory.cpp": {
+      "sha256": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78",
+      "bytes": 12530,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/UndoHistory.h": {
+      "sha256": "9a8ba28ae82417119af95485b8093c17e0602e2bd8518e09aab17f25ede4434c",
+      "bytes": 6285,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/VoiceActivity.h": {
+      "sha256": "e63f3d43d265a5137dbc400a32ff00255cfaf569903f53838149628fbad69089",
+      "bytes": 1619,
+      "unchanged_from_baseline_6": true
+    },
+    "src/plugin/VoiceInspection.h": {
+      "sha256": "e05cb6f252f92b9eb2081fac02fd2c14a727ebc72b0db368e970b210fae6280a",
+      "bytes": 3348,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/InstrumentBodyHostTests.h": {
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+      "bytes": 43689,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/ParameterStateChildIndexTests.cpp": {
+      "sha256": "772c1afb4b96338aa9f881abb2f6ea0c186cb141876d2094d5bfef4af3107c36",
+      "bytes": 17811,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/SessionSchemaHostTests.h": {
+      "sha256": "76231acc6984c9e4fa3a83c2c97cec0e59a44bafc4d1e53afc5a4cb134ecf490",
+      "bytes": 6317,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/SessionUndoHostTests.h": {
+      "sha256": "d682f4bcb8df0693bd346572908f7418f2699fe7748480644de909b2830131a5",
+      "bytes": 7590,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/ProgramLibraryHostTests.h": {
+      "sha256": "c7d5c2481fd0a6a1efcbcdac2b9961b02f387420d1a93ec9409e129fcc2d4a30",
+      "bytes": 25512,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/PresetRecallHostTests.h": {
+      "sha256": "323d2964c5c703c1edf09c8986b52ab07c247a2d8d0a1be7324fafe11b9acdc4",
+      "bytes": 5286,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/PresetFileHostTests.h": {
+      "sha256": "5000995f5c9a6f9656d71d941b5c65cfb8c42507e4c96567cc65ec965a6239f7",
+      "bytes": 14508,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/EngineHostTests.h": {
+      "sha256": "4591fe88020f7b73b183aadd8b121febf1e930c8fb5e1bc059caf0f388bf0a3c",
+      "bytes": 26534,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/PluginHostMetadata.h": {
+      "sha256": "93b2ed77e20673832ab1f88dd93c64de596419acbd0ac2bf280bdd0e2eb189fd",
+      "bytes": 10169,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/Vst3AutomationProgramBoundaryTests.h": {
+      "sha256": "ddb0dc878b3323a8602a753716eda74fd098ba4906a1d918c175a8550aef6d0d",
+      "bytes": 9160,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/StateMirrorHostTests.cpp": {
+      "sha256": "6384fed32433af176ba841aaf8a69b0e1549f96b8ba1a5a33e40fdaf8185ae04",
+      "bytes": 5622,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/StateMirrorBridgeTests.py": {
+      "sha256": "fef21df03f56aca79f943ae1821ae9d5e0e8008566804d8246a3bde05a4b562b",
+      "bytes": 4044,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/UndoReplayGestureTests.h": {
+      "sha256": "97941243feaa5b927888d6db004cf4b39a6c89fefc9afc82a1ded49d4d74ff4d",
+      "bytes": 19017,
+      "unchanged_from_baseline_6": true
+    },
+    "tests/PresetFileValuesTests.cpp": {
+      "sha256": "02913dfe4127439bdfd1e9346c4cd58661bc8dae3a0ac5ce8378c135aea2f1dd",
+      "bytes": 6952,
+      "unchanged_from_baseline_6": true
+    },
+    "src/tools/ui_snapshot.cpp": {
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e",
+      "bytes": 219971,
+      "unchanged_from_baseline_6": true
+    }
+  },
+  "function_sha256": {
+    "bool Cs80AudioProcessor::isMemoryControl(int local)": "806152aa44fed24479bd80912da41537a9599e06c973918c0b17720c92c907e0",
+    "juce::String Cs80AudioProcessor::hardwareSourceParameterId(int channel)": "e9513357a67bcb52aa929ce01a2984e665a8f4f35b69fbf31a75911c124e6da9",
+    "juce::String Cs80AudioProcessor::memoryParameterId(int bank, int local)": "9fca88589066605b42b37867e3678eb983845cb6fb461ed9f96c9bbb752e431d",
+    "CanonicalBoolParameter": "e9d8ce348501ba050b2ac9c7dd316a3738f0614462f8837dddeb8dee749e6d9f",
+    "Cs80AudioProcessor::parameterId": "993fab246ec0d7d6cbd1b7ec4d0f264b3a724d9b422052ff78cd9fb588f13a44",
+    "inline float normaliseParam(int index, float value)": "3565a9ce2eabbee9d385605eebcac57f21a7fcd9178da58193284bc882e05b88",
+    "inline float denormaliseParam(int index, float normalised)": "00c357785abc5563781a5c95ba6cd91de77c236d86c0cc16cefc173757e1a965",
+    "shipping_CMake_identity_sources_and_compile_definitions": "b5498de3d588a3a5cf0585919f1f51e39a85cbd2661ce5175ed4c40f2bbe616f",
+    "const char* hardwareToneName(": "a803dfd9055cc93c6831a76bddfb4592cb14dfc345303423472beea5f4799684",
+    "int curatedProgramCount()": "a7c0633b2c71758d490ee1197f448df7b3b16186653e12c6e629a46a4bde9575",
+    "int programIndexForCurated(": "bae0c372f343d34eb97bc0dab99a4596c7c8ddf89f36964d04cabb9393f52cb4",
+    "int curatedIndexForProgram(": "01404379a1a0ba2263a806319c875fbe695e419f814e1f193a252a98671baa1e",
+    "int programIndexForMidi(": "8e2b27126a06df96fe91a56f5521b16beb3398a596ac85b2090cab41133e370d"
+  },
+  "model_names_sha256": "ed7537a06149d403e981f7d4c4c36ace7eb3a578fef69a868ebae1fe9665390d",
+  "model_enum_sha256": "dc476ec461a202200df710f105170b67b9093ce423dd6c3623c24b991c7361eb"
+}

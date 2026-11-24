@@ -1,0 +1,306 @@
+[
+  {
+    "passed": true,
+    "description": "A12 current inventory has its authenticated digest"
+  },
+  {
+    "passed": true,
+    "description": "baseline inventory is the authenticated .6 Git blob"
+  },
+  {
+    "passed": true,
+    "description": "complete inventory bytes equal .6 after changing only revision text"
+  },
+  {
+    "passed": true,
+    "description": "523 complete identities and 204 core values per program"
+  },
+  {
+    "passed": true,
+    "description": "all names, categories, addresses, descriptions, tags and 106692 values retained"
+  },
+  {
+    "passed": true,
+    "description": "material 0: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 1: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 2: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 3: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 4: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 5: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 6: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 7: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 8: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "material 9: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "variant 0: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "variant 1: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "variant 2: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "variant 3: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "variant 4: compiled compatibility matches every published model"
+  },
+  {
+    "passed": true,
+    "description": "no published model accepts both a nonzero Material and a nonzero Variant"
+  },
+  {
+    "passed": true,
+    "description": "Organ base retains neutral outer articulation for every probed Ah/Oo-compatible case"
+  },
+  {
+    "passed": true,
+    "description": "all and only the 18 expected existing identities select a specialization"
+  },
+  {
+    "passed": true,
+    "description": "no saved nonzero selector is ignored by compatibility across all 1046 ranks"
+  },
+  {
+    "passed": true,
+    "description": "all 34 specialized ranks have positive body mix, rank balance and possible VCA route"
+  },
+  {
+    "passed": true,
+    "description": "nine materials occur on exactly 18 active ranks"
+  },
+  {
+    "passed": true,
+    "description": "two struck-bar/shell variants occur on exactly four active ranks"
+  },
+  {
+    "passed": true,
+    "description": "Ah/Oo occur on exactly twelve active ranks"
+  },
+  {
+    "passed": true,
+    "description": "none of the specialized ranks enters new .7 piano-loss or generic-string-formant paths"
+  },
+  {
+    "passed": true,
+    "description": "three separately named dulcimer identities accounted without conflating their recipes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/InstrumentBody.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/InstrumentBodyMaterials.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/InstrumentBodyVariants.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/BodyArticulation.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/Engine.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/Engine.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/Params.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/FactoryPresets.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/FactoryPresets.h: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/OriginalCircuitLibrary.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/CuratedLibrary.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Keys.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Plucked.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Bells.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Pads.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Fx.inc: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/MaterialBodyTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/InstrumentBodyVariantTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/PluckedMaterialTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/BellMaterialPresetTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/PluckedMaterialPresetTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/StruckBodyDynamicsTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/VocalBodyTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/PianoCourseGeometryTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/PianoPartialDecayTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "tests/LowChoirSpectrumTests.cpp: exact frozen sound and final-source bytes"
+  },
+  {
+    "passed": true,
+    "description": "src/core/InstrumentBodyMaterials.h: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/InstrumentBodyVariants.h: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/BodyArticulation.h: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Keys.inc: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Plucked.inc: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Bells.inc: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Pads.inc: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "src/core/curated/Fx.inc: retained exactly from .6"
+  },
+  {
+    "passed": true,
+    "description": "makeMaterialModes: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "makeVariantBarModes: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "pluckedMaterialResponse: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "pluckedMaterialWeight: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "stringLoss: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "configureExcitation: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "hitSeconds: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "makeTineModes: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "makeBarModes: exact .6 profile/excitation/loss function retained"
+  },
+  {
+    "passed": true,
+    "description": "cs80_instrument_body_variant_tests: retained successful log matches source-bound A27 receipt"
+  },
+  {
+    "passed": true,
+    "description": "cs80_material_body_tests: retained successful log matches source-bound A27 receipt"
+  },
+  {
+    "passed": true,
+    "description": "cs80_instrument_body_engine_tests: retained successful log matches source-bound A27 receipt"
+  }
+]
