@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "status": "actual_package_crosscheck_passed",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "target": "windows-x86_64",
+  "verified_at_utc": "2026-11-24T13:48:43.720445+00:00",
+  "artifact": {
+    "id": 14925251949,
+    "name": "cs80-windows-install-bundle",
+    "size_in_bytes": 6409200,
+    "digest": "sha256:8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+    "created_at": "2026-11-24T13:36:19Z",
+    "expires_at": "2027-02-22T12:49:05Z",
+    "workflow_run": {
+      "id": 45397189410,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed"
+    }
+  },
+  "outer_zip": {
+    "file": "windows-install.zip",
+    "bytes": 6409200,
+    "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-windows-x86_64-ee0dabcacb4c.manifest.json",
+      "cs80-reference-windows-x86_64-ee0dabcacb4c.zip"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-windows-x86_64-ee0dabcacb4c.zip",
+    "bytes": 6403884,
+    "sha256": "e8afc12ce60a000b7f62d5478a098b0e6baaf6a5a99484339f34c6eb3f1a04ac"
+  },
+  "independent_install_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/install-acceptance.json",
+    "bytes": 10227,
+    "sha256": "9bb7f103297606b810325c4ec183098520e5d26ddad7d52699ba37f711a99b49"
+  },
+  "independent_document_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/docs-and-notices.json",
+    "bytes": 46133,
+    "sha256": "4cfb89d465c1bd3a43bd9402b7b59eb4aed779f08f9a5462a4471063acf62079"
+  },
+  "direct_archive_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/direct-archive-crosscheck.json",
+    "bytes": 3542,
+    "sha256": "82c6444234a05409e576ec3f4e1b653351ef4aed0f2958709f272202154a2b96"
+  },
+  "accepted_reference_comparison": null,
+  "input_files": {
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-retrieval-receipt.json": {
+      "bytes": 2842,
+      "sha256": "5edb6a9a9c2531f0682f0f3ef9567bf02320b2d13d28721c5a00b6324728d868"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/artifact-collection-api-at-producer-completion.json": {
+      "bytes": 4967,
+      "sha256": "d3a11152a21323790f9948f9e92ae155648c112de04459a8c034c79292d11110"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-producer-completion.json": {
+      "bytes": 14801,
+      "sha256": "c9449d16806ef0e64e8ef047454b20b3aff67947a19080fe425fa0747bf96691"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json": {
+      "bytes": 750,
+      "sha256": "1629b1dafdc24007b1752e6bc458abec83c81a34749abdb09b6a8d8c25c61d74"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/jobs-api-at-producer-completion.json": {
+      "bytes": 23056,
+      "sha256": "627f86c09b02e530f2160fc4dc750e1b3311fdd286c4966c3b44ba8a0fb69f17"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json": {
+      "bytes": 747,
+      "sha256": "6b734fc21012052715a4a2118c182e02b1f9cd113e3b54c7008f2cebec7785ba"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json": {
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log": {
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-producer-completion.json": {
+      "bytes": 14779,
+      "sha256": "4874deeec043af4c21dd6a1c4ceebfa2630db334cf8f8c0f24606936636fbc5e"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json": {
+      "bytes": 740,
+      "sha256": "c6302d789bc7afabfbac0618834eb366187c7b028358781e107a94936aae5c9f"
+    },
+    "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip": {
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb"
+    }
+  },
+  "inputs_unchanged": true,
+  "helper_pins": {
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+    "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py": "5d3ac203c38356f736f07351507723069dc9528e6cee9e9b577a520bf71ae2ee"
+  },
+  "verifier_sha256": "fb0cbef9b368d291ea11640f8a0c32e7eb1929444da26fe50961a6f782378727",
+  "commands": [
+    {
+      "name": "inspect-install",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-producer-completion.json",
+        "--platform",
+        "windows",
+        "--architecture",
+        "x86_64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--artifact-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/install-acceptance.json"
+      ],
+      "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+      "started_at_utc": "2026-11-24T13:48:42.898378+00:00",
+      "elapsed_seconds": 0.34397642399926553,
+      "returncode": 0,
+      "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/inspect-install.log",
+      "log_identity": {
+        "bytes": 235,
+        "sha256": "58f8e839fbe6632f3bf0c074f2531d4031c22599246c6037971f9026de7734b7"
+      }
+    },
+    {
+      "name": "inspect-docs-notices",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--acceptance",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/install-acceptance.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/docs-and-notices.json"
+      ],
+      "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+      "started_at_utc": "2026-11-24T13:48:43.242822+00:00",
+      "elapsed_seconds": 0.32248016800076584,
+      "returncode": 0,
+      "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/inspect-docs-notices.log",
+      "log_identity": {
+        "bytes": 371,
+        "sha256": "a21811ecc57a2847ee8b745469ac3d6e5b1a26b69f267a23a0924f462b7f253d"
+      }
+    }
+  ],
+  "platform_qualification_claimed": false,
+  "release_qualified": false,
+  "scope": "Actual installation bytes, exact source contract and retained authenticated acquisition; native/validator/original-exit acceptance and public availability remain external."
+}

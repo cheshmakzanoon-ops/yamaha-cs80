@@ -1,0 +1,17 @@
+UI SMOKE START: processor=555792 bytes engine=504776 bytes
+UI SMOKE PHASE: JUCE initialization
+UI SMOKE TIMING: phase=JUCE initialization seconds=0.000770 total_seconds=0.000770
+UI SMOKE PHASE: host metadata
+HOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406724 active=1
+HOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1
+UI SMOKE TIMING: phase=host metadata seconds=6.789314 total_seconds=6.790084
+UI SMOKE PHASE: output meter host
+Typed-value formatter compatibility: 1020 cases, 1020 accepted, digest 9a2c9c5c6ee5edc3
+UI SMOKE TIMING: phase=output meter host seconds=14.042651 total_seconds=20.832735
+UI SMOKE PHASE: source performance host
+UI SMOKE TIMING: phase=source performance host seconds=0.469664 total_seconds=21.302399
+UI SMOKE PHASE: ws3 keyboard/tuning host
+UI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=2.949323 total_seconds=24.251722
+UI SMOKE PHASE: preset recall host
+UI SMOKE TIMING: phase=preset recall host second...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]

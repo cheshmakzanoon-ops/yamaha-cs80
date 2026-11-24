@@ -1,0 +1,292 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "macos-arm64",
+  "reviewed": true,
+  "review_note": "A53 independently parsed original JUnit, complete numbered LastTest and original producer console, reconciled frozen source predicates and default unittest method order, and preserved dynamic-reason uncertainty. Formal return-77 capability skips are separate from nested Python skips.",
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "nested_python_skips": {
+    "total": 5,
+    "suites": [
+      {
+        "ctest_test": "cs80_package_binary_identity_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 13,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 13 tests in 0.074s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 7 tests in 2.040s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "total": 2,
+        "summaries": [
+          {
+            "tests_run": 12,
+            "result": "OK",
+            "skipped": 2,
+            "summary": "Ran 12 tests in 0.984s\n\nOK (skipped=2)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 7 tests in 0.327s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      }
+    ]
+  },
+  "method_source_review": {
+    "cs80_package_binary_identity_tests": {
+      "source": "scripts/test-package-binary-identity.py",
+      "source_sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480",
+      "method_order": [
+        "test_elf_pie_standalone",
+        "test_invalid_headers",
+        "test_malformed_fat_slices",
+        "test_native_windows_junction_is_rejected",
+        "test_other_elf_class_endian",
+        "test_pe_bad_offset_and_32bit",
+        "test_pe_optional_header_size",
+        "test_rejected_before_output",
+        "test_supported_targets",
+        "test_universal_macho",
+        "test_windows_reparse_rejected_before_walk_or_binary_read",
+        "test_wrong_image_kind",
+        "test_wrong_target_each_product"
+      ],
+      "qualified_method_order": [
+        "IdentityTests.test_elf_pie_standalone",
+        "IdentityTests.test_invalid_headers",
+        "IdentityTests.test_malformed_fat_slices",
+        "IdentityTests.test_native_windows_junction_is_rejected",
+        "IdentityTests.test_other_elf_class_endian",
+        "IdentityTests.test_pe_bad_offset_and_32bit",
+        "IdentityTests.test_pe_optional_header_size",
+        "IdentityTests.test_rejected_before_output",
+        "IdentityTests.test_supported_targets",
+        "IdentityTests.test_universal_macho",
+        "IdentityTests.test_windows_reparse_rejected_before_walk_or_binary_read",
+        "IdentityTests.test_wrong_image_kind",
+        "IdentityTests.test_wrong_target_each_product"
+      ],
+      "actual_nonverbose_pattern": "...s.........",
+      "skipped_methods": [
+        {
+          "method": "test_native_windows_junction_is_rejected",
+          "line": 214,
+          "decorators": [
+            "unittest.skipUnless(os.name == 'nt', 'Native Windows junction fixture')"
+          ],
+          "inline_skip_branches": [
+            {
+              "line": 223,
+              "text": "self.skipTest('Junction creation unavailable: ' + result.stderr.strip())"
+            }
+          ]
+        }
+      ],
+      "explicit_method_reasons": [],
+      "mapping_basis": "Inference from exact original nonverbose pattern and frozen-source default unittest class-then-method alphabetical order; terminal summary supplies the count."
+    },
+    "cs80_packaging_notice_tests": {
+      "source": "scripts/test-packaging-notices.py",
+      "source_sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f",
+      "method_order": [
+        "test_actual_ci_payload_and_archive_bytes",
+        "test_bundled_guide_links_keep_local_documents_and_pin_source",
+        "test_changed_source_revision_propagates_without_packager_update",
+        "test_missing_or_invalid_source_revision_is_rejected",
+        "test_missing_preset_guide_is_rejected",
+        "test_native_installer_notice_source_mappings",
+        "test_synthetic_deb_notice_bytes"
+      ],
+      "qualified_method_order": [
+        "NoticeTests.test_actual_ci_payload_and_archive_bytes",
+        "NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source",
+        "NoticeTests.test_changed_source_revision_propagates_without_packager_update",
+        "NoticeTests.test_missing_or_invalid_source_revision_is_rejected",
+        "NoticeTests.test_missing_preset_guide_is_rejected",
+        "NoticeTests.test_native_installer_notice_source_mappings",
+        "NoticeTests.test_synthetic_deb_notice_bytes"
+      ],
+      "actual_nonverbose_pattern": null,
+      "skipped_methods": [
+        {
+          "method": "test_synthetic_deb_notice_bytes",
+          "line": 220,
+          "decorators": [
+            "unittest.skipUnless(sys.platform == \"linux\" and platform.machine().lower() in (\"x86_64\", \"amd64\")\n                         and all(shutil.which(tool) for tool in\n                         (\"bash\", \"cc\", \"readelf\", \"dpkg-deb\", \"dpkg\", \"dpkg-shlibdeps\")),\n                         \"Native Linux amd64, Debian packaging tools and cc required\")"
+          ],
+          "inline_skip_branches": []
+        }
+      ],
+      "explicit_method_reasons": [
+        [
+          "test_synthetic_deb_notice_bytes",
+          "'Native Linux amd64, Debian packaging tools and cc required'"
+        ]
+      ],
+      "mapping_basis": "Explicit original LastTest method and reason text."
+    },
+    "cs80_windows_installer_preflight_tests": {
+      "source": "scripts/test-windows-installer-preflight.py",
+      "source_sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4",
+      "method_order": [
+        "test_compile_guard_contract",
+        "test_linked_payload_rejected",
+        "test_missing_standalone",
+        "test_native_directory_junction_rejected",
+        "test_native_inno_accepts_valid_and_rejects_bad_payloads",
+        "test_non_pe_empty_and_truncated",
+        "test_pe32_optional_header",
+        "test_reparse_points_rejected_before_descent",
+        "test_resources_only_bundle",
+        "test_valid_pair_and_spaces",
+        "test_wrong_architecture_each_product",
+        "test_wrong_role_each_product"
+      ],
+      "qualified_method_order": [
+        "PreflightTests.test_compile_guard_contract",
+        "PreflightTests.test_linked_payload_rejected",
+        "PreflightTests.test_missing_standalone",
+        "PreflightTests.test_native_directory_junction_rejected",
+        "PreflightTests.test_native_inno_accepts_valid_and_rejects_bad_payloads",
+        "PreflightTests.test_non_pe_empty_and_truncated",
+        "PreflightTests.test_pe32_optional_header",
+        "PreflightTests.test_reparse_points_rejected_before_descent",
+        "PreflightTests.test_resources_only_bundle",
+        "PreflightTests.test_valid_pair_and_spaces",
+        "PreflightTests.test_wrong_architecture_each_product",
+        "PreflightTests.test_wrong_role_each_product"
+      ],
+      "actual_nonverbose_pattern": "...ss.......",
+      "skipped_methods": [
+        {
+          "method": "test_native_directory_junction_rejected",
+          "line": 128,
+          "decorators": [
+            "unittest.skipUnless(os.name == 'nt', 'Native directory-junction fixture requires Windows')"
+          ],
+          "inline_skip_branches": [
+            {
+              "line": 136,
+              "text": "self.skipTest('Directory-junction creation unavailable: ' + result.stdout + result.stderr)"
+            }
+          ]
+        },
+        {
+          "method": "test_native_inno_accepts_valid_and_rejects_bad_payloads",
+          "line": 149,
+          "decorators": [
+            "unittest.skipUnless(os.name == 'nt' and find_iscc(), 'Native ISCC compilation requires Windows and Inno Setup 6')"
+          ],
+          "inline_skip_branches": []
+        }
+      ],
+      "explicit_method_reasons": [],
+      "mapping_basis": "Inference from exact original nonverbose pattern and frozen-source default unittest class-then-method alphabetical order; terminal summary supplies the count."
+    },
+    "cs80_render_cli_tests": {
+      "source": "tests/test_render_cli.py",
+      "source_sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868",
+      "method_order": [
+        "test_buffered_write_failure_is_reported",
+        "test_help",
+        "test_long_render_has_bounded_buffers",
+        "test_long_render_stops_on_write_failure",
+        "test_rejected_before_output",
+        "test_supported_rates_match_wav",
+        "test_only_shadow_reservation_is_recognized"
+      ],
+      "qualified_method_order": [
+        "RenderArguments.test_buffered_write_failure_is_reported",
+        "RenderArguments.test_help",
+        "RenderArguments.test_long_render_has_bounded_buffers",
+        "RenderArguments.test_long_render_stops_on_write_failure",
+        "RenderArguments.test_rejected_before_output",
+        "RenderArguments.test_supported_rates_match_wav",
+        "ResourceLimitDiagnostics.test_only_shadow_reservation_is_recognized"
+      ],
+      "actual_nonverbose_pattern": "..s....",
+      "skipped_methods": [
+        {
+          "method": "test_long_render_has_bounded_buffers",
+          "line": 138,
+          "decorators": [
+            "unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only resource limits')"
+          ],
+          "inline_skip_branches": [
+            {
+              "line": 141,
+              "text": "self.skipTest('address-space limit unavailable')"
+            },
+            {
+              "line": 147,
+              "text": "self.skipTest(probe.stderr.decode(errors='replace').strip())"
+            },
+            {
+              "line": 152,
+              "text": "self.skipTest('ASan shadow reservation is incompatible with the 256 MiB virtual-address cap; '\n                          'long-render write-failure coverage runs separately without that cap')"
+            }
+          ]
+        }
+      ],
+      "explicit_method_reasons": [],
+      "mapping_basis": "Inference from exact original nonverbose pattern and frozen-source default unittest class-then-method alphabetical order; terminal summary supplies the count.",
+      "runtime_reason_limit": "Bounded-buffer method is identified, but nonverbose output does not distinguish missing/unavailable RLIMIT_AS from the specific incompatible ASan shadow-address-space cap branch. No exact dynamic reason or capped-memory execution is claimed. Separate uncapped long-write-failure test passes."
+    }
+  },
+  "limitations": [
+    "Formal capability skips are not passing SIMD/PRA executions.",
+    "Nonverbose dot patterns establish inferred method identity, not an emitted runtime reason."
+  ]
+}

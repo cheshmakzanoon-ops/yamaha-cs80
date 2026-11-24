@@ -1,0 +1,268 @@
+[
+  {
+    "target": "macos-arm64",
+    "lane": "vst3",
+    "required_workflow_step": "Validate VST3 with pluginval",
+    "producing_attempt": 1,
+    "original_job_id": 138455976227,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x1c41232",
+    "strictness": 10,
+    "programs": 523,
+    "gui": false,
+    "original_normal_exit": 0,
+    "exit_basis": "Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [],
+    "explicit_skips": [
+      "INFO: Skipping vst3 validator as validator path hasn't been set"
+    ],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    },
+    "console": {
+      "path": "pluginval-vst3.log",
+      "bytes": 7399,
+      "sha256": "b585e44619b4196a495096a3531da04616278fa76e698b37f71d3e8b67f6ca06"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-vst3",
+      "bytes": 7272,
+      "sha256": "4892a70439f77574fb19b57ae316a5f37b750de277c6bb91b59c28cb582fc7e2"
+    }
+  },
+  {
+    "target": "macos-arm64",
+    "lane": "au",
+    "required_workflow_step": "Validate AU with pluginval",
+    "producing_attempt": 1,
+    "original_job_id": 138455976227,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0xf949b5",
+    "strictness": 10,
+    "programs": 523,
+    "gui": false,
+    "original_normal_exit": 0,
+    "exit_basis": "Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [
+      "!!! WARNING: Current program is -1... Is this correct?"
+    ],
+    "explicit_skips": [],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    },
+    "console": {
+      "path": "pluginval-au.log",
+      "bytes": 7307,
+      "sha256": "25cf28f72d6a8031be8f9bf0effdb7bb57a68e663b164d8bcb3adf53f5af02e5"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-au",
+      "bytes": 7213,
+      "sha256": "c6bf600f4a22fa4c2e1adffedd12961289c5557695515b96a760ed8a37aeba4c"
+    }
+  },
+  {
+    "target": "macos-arm64",
+    "lane": "au-gui",
+    "required_workflow_step": "Validate AU with pluginval GUI",
+    "producing_attempt": 1,
+    "original_job_id": 138455976227,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x6632057",
+    "strictness": 10,
+    "programs": 523,
+    "gui": true,
+    "original_normal_exit": 0,
+    "exit_basis": "Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [
+      "!!! WARNING: Current program is -1... Is this correct?"
+    ],
+    "explicit_skips": [],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    },
+    "console": {
+      "path": "pluginval-au-gui.log",
+      "bytes": 7990,
+      "sha256": "68be8b591b506a4f3bc1117b9db2e43f712f598e466638555bbed5f9dfc83561"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-au-gui",
+      "bytes": 7896,
+      "sha256": "d47673ecdc43694f81b8aef472caa92d98e24388a40e6593edb921f4454a3266"
+    }
+  },
+  {
+    "target": "macos-arm64",
+    "lane": "au-gui-seed",
+    "required_workflow_step": "Validate AU GUI fixed-seed regression",
+    "producing_attempt": 1,
+    "original_job_id": 138455976227,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x2b4eef5",
+    "strictness": 10,
+    "programs": 523,
+    "gui": true,
+    "original_normal_exit": 0,
+    "exit_basis": "Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [
+      "!!! WARNING: Current program is -1... Is this correct?"
+    ],
+    "explicit_skips": [],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    },
+    "console": {
+      "path": "pluginval-au-seed-regression.log",
+      "bytes": 7990,
+      "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-au-seed-regression",
+      "bytes": 7896,
+      "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+    }
+  },
+  {
+    "target": "macos-arm64",
+    "lane": "au-gui-seed-c76",
+    "required_workflow_step": "Validate AU GUI regression seed 0x3c99748",
+    "producing_attempt": 1,
+    "original_job_id": 138455976227,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x3c99748",
+    "strictness": 10,
+    "programs": 523,
+    "gui": true,
+    "original_normal_exit": 0,
+    "exit_basis": "Completed/success original API step; exact source command with set -euo pipefail, --validate-in-process, tee, and unsuppressed terminal SUCCESS grep; full original console equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [
+      "!!! WARNING: Current program is -1... Is this correct?"
+    ],
+    "explicit_skips": [],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+      "bytes": 24530,
+      "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+    },
+    "console": {
+      "path": "pluginval-au-seed-c76-regression.log",
+      "bytes": 7990,
+      "sha256": "42687c66e799c189ebb2f419f7be5f64e7ea9340bf79ec2ff4629af54e1a7591"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-au-seed-c76-regression",
+      "bytes": 7896,
+      "sha256": "fd738180a0eeb84e22b2df5a4790256e80eb7d3d59819968eddd13b05a76575f"
+    }
+  },
+  {
+    "target": "windows-x86_64",
+    "lane": "headless",
+    "required_workflow_step": "Validate VST3 headless",
+    "producing_attempt": 1,
+    "original_job_id": 138483772246,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x3e82dcb",
+    "strictness": 10,
+    "programs": 523,
+    "gui": false,
+    "original_normal_exit": 0,
+    "exit_basis": "Successful original PowerShell step and exact unsuppressed source command with immediate LASTEXITCODE check; complete runtime equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [],
+    "explicit_skips": [
+      "INFO: Skipping vst3 validator as validator path hasn't been set"
+    ],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+      "bytes": 30463,
+      "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+    },
+    "console": {
+      "path": "pluginval-windows.log",
+      "bytes": 7382,
+      "sha256": "b63d900b1df4941133b8499f7a88fda1c2a8cbcd1e118ff8b86170c12dbbf88b"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-windows",
+      "bytes": 7168,
+      "sha256": "413d508c45efe923434dff7786720f5f93ab2d7471ae9b852c9ce7b3c233e7d5"
+    }
+  },
+  {
+    "target": "windows-x86_64",
+    "lane": "headless-seed",
+    "required_workflow_step": "Validate state regression seed 0x5037a0c",
+    "producing_attempt": 1,
+    "original_job_id": 138483772246,
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189410,
+    "pluginval_version": "1.0.4",
+    "seed": "0x5037a0c",
+    "strictness": 10,
+    "programs": 523,
+    "gui": false,
+    "original_normal_exit": 0,
+    "exit_basis": "Successful original PowerShell step and exact unsuppressed source command with immediate LASTEXITCODE check; complete runtime equals archived console.",
+    "validation_invocations": 1,
+    "validation_retries": 0,
+    "warnings": [],
+    "explicit_skips": [
+      "INFO: Skipping vst3 validator as validator path hasn't been set"
+    ],
+    "preserved_failed_attempts": [],
+    "original_process_binding": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+      "bytes": 30463,
+      "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+    },
+    "console": {
+      "path": "pluginval-windows-seed-regression.log",
+      "bytes": 7382,
+      "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45"
+    },
+    "report": {
+      "path": "pluginval-reports/cs80-windows-seed-regression",
+      "bytes": 7168,
+      "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616"
+    }
+  }
+]

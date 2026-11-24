@@ -1,0 +1,305 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 138456160979,
+      "run_id": 45397242252,
+      "workflow_name": "Upstream validator comparison",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKFa0w",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456160979",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252/job/138456160979",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-24T12:49:26Z",
+      "started_at": "2026-11-24T12:51:23Z",
+      "completed_at": "2026-11-24T12:51:31Z",
+      "name": "Official beta3 / gui-current-regression / 0x3ca4063",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T12:51:24Z",
+          "completed_at": "2026-11-24T12:51:27Z"
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-11-24T12:51:27Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:30Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456160979",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045257,
+      "runner_name": "GitHub Actions 1000045257",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456161372,
+      "run_id": 45397242252,
+      "workflow_name": "Upstream validator comparison",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKFcXA",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456161372",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252/job/138456161372",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-24T12:49:26Z",
+      "started_at": "2026-11-24T13:00:27Z",
+      "completed_at": "2026-11-24T13:00:39Z",
+      "name": "Official beta3 / headless-subset / 0x4f31605",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T13:00:28Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:35Z"
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-11-24T13:00:35Z",
+          "completed_at": "2026-11-24T13:00:35Z"
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-11-24T13:00:35Z",
+          "completed_at": "2026-11-24T13:00:35Z"
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-11-24T13:00:35Z",
+          "completed_at": "2026-11-24T13:00:35Z"
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-11-24T13:00:35Z",
+          "completed_at": "2026-11-24T13:00:35Z"
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-24T13:00:35Z",
+          "completed_at": "2026-11-24T13:00:36Z"
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-24T13:00:36Z",
+          "completed_at": "2026-11-24T13:00:36Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-24T13:00:36Z",
+          "completed_at": "2026-11-24T13:00:36Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456161372",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045279,
+      "runner_name": "GitHub Actions 1000045279",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456161510,
+      "run_id": 45397242252,
+      "workflow_name": "Upstream validator comparison",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKFc5g",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456161510",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397242252/job/138456161510",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-24T12:49:26Z",
+      "started_at": "2026-11-24T13:00:28Z",
+      "completed_at": "2026-11-24T13:00:33Z",
+      "name": "Official beta3 / gui-inclusive / 0x63421ca",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T13:00:29Z",
+          "completed_at": "2026-11-24T13:00:30Z"
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-11-24T13:00:30Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:31Z"
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-24T13:00:31Z",
+          "completed_at": "2026-11-24T13:00:32Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-24T13:00:32Z",
+          "completed_at": "2026-11-24T13:00:32Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456161510",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045280,
+      "runner_name": "GitHub Actions 1000045280",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

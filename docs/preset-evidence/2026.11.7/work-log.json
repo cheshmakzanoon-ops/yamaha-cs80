@@ -323,10 +323,12 @@
     {
       "id": "a46",
       "role": "Actual final-source Windows platform and consumer qualification",
-      "status": "awaiting_actual_artifacts",
+      "status": "completed",
       "agent": "/root/a46_windows_qualification",
-      "report": "reviews/a46.md",
-      "phase1_complete": true
+      "report": "ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+      "phase1_complete": true,
+      "preparation_report": "reviews/a46.md",
+      "actual_handoff": "verification/a46/actual-handoff.json"
     },
     {
       "id": "a47",
@@ -346,18 +348,34 @@
       "phase1_scope": "Fresh ee0 Apple Silicon qualified; Intel actual qualification pending."
     },
     {
+      "id": "a49",
+      "role": "Intel native GUI meter failure diagnosis and bounded remediation",
+      "status": "completed",
+      "agent": "/root/a49_intel_meter_diagnosis",
+      "report": "reviews/a49.md"
+    },
+    {
+      "id": "a50",
+      "role": "Actual expanded audition archive content and original CI acceptance",
+      "status": "in_progress",
+      "agent": "/root/a50_actual_audition_acceptance",
+      "report": "reviews/a50.md"
+    },
+    {
       "id": "a51",
       "role": "Actual five public artifact downloads and expiry mapping",
       "status": "awaiting_actual_artifacts",
       "agent": "/root/a51_public_downloads",
       "report": "reviews/a51.md",
       "phase1_complete": true,
-      "phase1_scope": "Apple Silicon actual public full GET accepted; four public routes pending."
+      "phase1_scope": "Apple Silicon actual public full GET accepted; four public routes pending.",
+      "phase2_complete": true,
+      "phase2_scope": "Actual ARM and Windows complete public GET and upload binding accepted; Intel/Linux/audition pending."
     },
     {
       "id": "a52",
       "role": "Independent four-platform build and dependency provenance",
-      "status": "awaiting_actual_artifacts",
+      "status": "in_progress",
       "agent": "/root/a52_build_provenance",
       "report": "reviews/a52.md",
       "phase1_complete": true
@@ -365,9 +383,11 @@
     {
       "id": "a53",
       "role": "Independent exact native rosters, skip reasons and host-boundary coverage",
-      "status": "in_progress",
+      "status": "awaiting_actual_artifacts",
       "agent": "/root/a53_native_skip_reconciliation",
-      "report": "reviews/a53.md"
+      "report": "reviews/a53.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending."
     },
     {
       "id": "a54",
@@ -395,16 +415,34 @@
     {
       "id": "a57",
       "role": "Independent four-platform installation and payload cross-check",
-      "status": "in_progress",
+      "status": "awaiting_actual_artifacts",
       "agent": "/root/a57_installation_crosscheck",
-      "report": "reviews/a57.md"
+      "report": "reviews/a57.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual ARM and Windows independently reviewed; final Intel and Linux pending."
+    },
+    {
+      "id": "a58",
+      "role": "Independent actual release and original-attempt reconciliation",
+      "status": "awaiting_actual_artifacts",
+      "agent": "/root/a58_release_reconciliation",
+      "report": "reviews/a58.md",
+      "phase1_complete": true,
+      "phase1_scope": "Actual three native observations including Intel failure, two packages/platform receipts, seven validator lanes independently reconciled; no release acceptance."
+    },
+    {
+      "id": "a59",
+      "role": "Exact current 60-agent ledger and completion review",
+      "status": "in_progress",
+      "agent": "/root/a59_team_ledger_review",
+      "report": "reviews/a59.md"
     }
   ],
   "candidate_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
   "candidate_build_run": 45397189410,
-  "documentation_head_observed": "a7195f01051e0f02aa53ff3bc3201e0889c7eddb",
-  "assigned_count": 55,
-  "completed_count": 47,
-  "candidate_build_note": "Fresh ee0 Apple Silicon platform qualified and publicly downloaded. Windows producer succeeded; separate original validator pending. Intel and Linux still running. Previous c554 failures/cancellation retained. No cross-platform/release qualification yet.",
+  "documentation_head_observed": "01a8f60a15a6323b0fd3ffea3c9db84ddf8fc435",
+  "assigned_count": 59,
+  "completed_count": 49,
+  "candidate_build_note": "ARM and Windows attempt1 platforms qualified. Both public installer full GETs pass. Intel original attempt1 has one preserved GUI meter screenshot failure; all523LibraryAudit passed. Independent A49 finds no justified source/test change and recommends one unchanged full Intel job rerun after Linux workflow completes. Immediate retry refused by active-workflow state; no retry started. Separate DSP workflow45397189426 all5jobs succeeded. No cross-platform/release qualification yet.",
   "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
 }

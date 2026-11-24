@@ -1,0 +1,138 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "source_files": {
+    "tests/InstrumentBodyHostTests.h": {
+      "bytes": 43689,
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+    },
+    "src/plugin/PluginProcessor.cpp": {
+      "bytes": 95647,
+      "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88"
+    },
+    "tests/EngineHostTests.h": {
+      "bytes": 26534,
+      "sha256": "4591fe88020f7b73b183aadd8b121febf1e930c8fb5e1bc059caf0f388bf0a3c"
+    },
+    "src/plugin/PluginProcessorLibrary.cpp": {
+      "bytes": 22323,
+      "sha256": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1"
+    },
+    "src/plugin/UndoHistory.cpp": {
+      "bytes": 12530,
+      "sha256": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78"
+    },
+    "tests/PresetFileHostTests.h": {
+      "bytes": 14508,
+      "sha256": "5000995f5c9a6f9656d71d941b5c65cfb8c42507e4c96567cc65ec965a6239f7"
+    },
+    "tests/SessionSchemaHostTests.h": {
+      "bytes": 6317,
+      "sha256": "76231acc6984c9e4fa3a83c2c97cec0e59a44bafc4d1e53afc5a4cb134ecf490"
+    },
+    "tests/SessionUndoHostTests.h": {
+      "bytes": 7590,
+      "sha256": "d682f4bcb8df0693bd346572908f7418f2699fe7748480644de909b2830131a5"
+    },
+    "tests/UndoReplayGestureTests.h": {
+      "bytes": 19017,
+      "sha256": "97941243feaa5b927888d6db004cf4b39a6c89fefc9afc82a1ded49d4d74ff4d"
+    },
+    "tests/ParameterStateChildIndexTests.cpp": {
+      "bytes": 17811,
+      "sha256": "772c1afb4b96338aa9f881abb2f6ea0c186cb141876d2094d5bfef4af3107c36"
+    },
+    "tests/StateMirrorHostTests.cpp": {
+      "bytes": 5622,
+      "sha256": "6384fed32433af176ba841aaf8a69b0e1549f96b8ba1a5a33e40fdaf8185ae04"
+    },
+    "scripts/patch-juce-state-mirror.py": {
+      "bytes": 3452,
+      "sha256": "7fa4ce5c077ddba57c96e3308eb53ef8f30afe1dc834c048a181f6840053fdea"
+    },
+    "tests/Vst3AutomationProgramBoundaryTests.h": {
+      "bytes": 9160,
+      "sha256": "ddb0dc878b3323a8602a753716eda74fd098ba4906a1d918c175a8550aef6d0d"
+    },
+    "CMakeLists.txt": {
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92"
+    },
+    ".github/workflows/build.yml": {
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    "src/tools/ui_snapshot.cpp": {
+      "bytes": 219971,
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e"
+    },
+    "tests/FilterBatchCapTests.cpp": {
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729"
+    },
+    "tests/StereoPraExactTests.cpp": {
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0"
+    },
+    "src/core/Ig00156Batch.h": {
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985"
+    },
+    "src/core/Ig00156Batch.cpp": {
+      "bytes": 21447,
+      "sha256": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+    },
+    "scripts/test-package-binary-identity.py": {
+      "bytes": 11758,
+      "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480"
+    },
+    "scripts/test-packaging-notices.py": {
+      "bytes": 15702,
+      "sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f"
+    },
+    "scripts/test-windows-installer-preflight.py": {
+      "bytes": 10817,
+      "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4"
+    },
+    "scripts/test-pluginval-diagnostic-log.py": {
+      "bytes": 10985,
+      "sha256": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a"
+    },
+    "tests/test_preset_capture.py": {
+      "bytes": 14940,
+      "sha256": "a8064c16ec6982302e00b490c579ac0431e275da77b36adb78553cbb2c06067d"
+    },
+    "tests/test_render_cli.py": {
+      "bytes": 8752,
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868"
+    },
+    "tests/test_truth_render.py": {
+      "bytes": 34515,
+      "sha256": "4506c62089fb278cffc001e5a0858158a7e2d700f32d2ef35962d8fbf0ce7d47"
+    },
+    "tests/test_vca_reference.py": {
+      "bytes": 14517,
+      "sha256": "a7e7cdfcee124658de398d6e92b83101a392631e7dd7b8bd0f710b5e12e14562"
+    },
+    "tests/test_float_wav.py": {
+      "bytes": 8371,
+      "sha256": "dd3e42f5ff1992320fc911ef1f07beb7e3f2fd3e996715aca1bc9e33cdd4772a"
+    }
+  },
+  "a40_checker": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+    "bytes": 13517,
+    "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+  },
+  "a42_coverage_map": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a42/coverage-map.json",
+    "bytes": 18077,
+    "sha256": "1e54a0f68688e47d71e6645857666242ab878c4a173f772f4ff4ade3c5845c0a"
+  },
+  "a42_source_anchors_match": true
+}

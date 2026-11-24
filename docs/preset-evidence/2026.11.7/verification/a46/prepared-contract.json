@@ -1,0 +1,572 @@
+{
+  "schema": 1,
+  "status": "prepared_exact_windows_contract_no_actual_ee0_artifact_acceptance",
+  "recorded_at_utc": "2026-11-24T13:32:09.453785+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "factory_revision": "2026.11.7",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "target": "windows-x86_64",
+  "producer_job_id": 138455976256,
+  "consumer_job_id": null,
+  "consumer_job_name": "pluginval / Windows VST3 (strictness 10)",
+  "native_expected": {
+    "registered": 255,
+    "passed": 253,
+    "formal_skipped": 2,
+    "failed": 0,
+    "unknown": 0,
+    "disabled": 0,
+    "all_names": [
+      "cs80_active_tail_continuity_tests",
+      "cs80_arp_pedal_lifecycle_tests",
+      "cs80_arp_rate_lifecycle_tests",
+      "cs80_arp_repeat_lifecycle_tests",
+      "cs80_bass_plucked_refinement_tests",
+      "cs80_bbd_chorus_tests",
+      "cs80_bell_material_preset_tests",
+      "cs80_benchmark_preflight_tests",
+      "cs80_body_articulation_engine_tests",
+      "cs80_body_noise_rate_tests",
+      "cs80_bowed_body_formant_tests",
+      "cs80_brass_organ_refinement_tests",
+      "cs80_callback_cpu_benchmark_tests",
+      "cs80_callback_cpu_measurement_tests",
+      "cs80_captured_keyboard_events_tests",
+      "cs80_ci_bundle_verification_tests",
+      "cs80_ci_juce_provenance_tests",
+      "cs80_circuit_policy_host_tests",
+      "cs80_circuit_source_host_tests",
+      "cs80_context_menu_keyboard_tests",
+      "cs80_continuous_voice_circuit_audit_tests",
+      "cs80_continuous_voice_circuit_tests",
+      "cs80_controller_reset_host_tests",
+      "cs80_controller_reset_tests",
+      "cs80_core_tests",
+      "cs80_decimal_conversion_tests",
+      "cs80_delay_line_tests",
+      "cs80_drive_control_cache_tests",
+      "cs80_dsp_probe_tests",
+      "cs80_ensemble_rate_cache_tests",
+      "cs80_envelope_precision_tests",
+      "cs80_envelope_rc_model_tests",
+      "cs80_event_timeline_tests",
+      "cs80_evidence_register_tests",
+      "cs80_experimental_oscillator_tests",
+      "cs80_external_interpolator_tests",
+      "cs80_factory_audition_artifact_tests",
+      "cs80_fast_math_tests",
+      "cs80_filter_batch_cap_missing_tests",
+      "cs80_filter_batch_cap_tests",
+      "cs80_filter_batch_cap_truncated_tests",
+      "cs80_filter_batch_engine_tests",
+      "cs80_filter_batch_scheduling_tests",
+      "cs80_filter_default_history_missing_tests",
+      "cs80_filter_default_history_tests",
+      "cs80_filter_default_history_truncated_tests",
+      "cs80_filter_idle_fallback_missing_tests",
+      "cs80_filter_idle_fallback_tests",
+      "cs80_filter_idle_fallback_truncated_tests",
+      "cs80_float_wav_tests",
+      "cs80_free_running_voice_tests",
+      "cs80_fx_loudness_core_tests",
+      "cs80_fx_loudness_gate_tests",
+      "cs80_fx_refinement_tests",
+      "cs80_fx_tape_lifecycle_tests",
+      "cs80_hardware_control_tests",
+      "cs80_hardware_source_history_tests",
+      "cs80_high_resolution_velocity_tests",
+      "cs80_host_automation_curve_tests",
+      "cs80_host_wrapper_platform_tests",
+      "cs80_ig00150_sub_tests",
+      "cs80_ig00151_vca_tests",
+      "cs80_ig00151_zero_ei_tests",
+      "cs80_ig00156_batch_tests",
+      "cs80_ig00156_cache_tests",
+      "cs80_ig00156_filter_tests",
+      "cs80_ig00156_nodal_tests",
+      "cs80_ig00156_reference_tests",
+      "cs80_ig00156_step_diagnostics_tests",
+      "cs80_ig00156_top_octave_tests",
+      "cs80_instrument_body_engine_tests",
+      "cs80_instrument_body_tests",
+      "cs80_instrument_body_variant_tests",
+      "cs80_kas_scanner_tests",
+      "cs80_keyboard_contour_key_map_tests",
+      "cs80_keyboard_contour_reference_tests",
+      "cs80_keyboard_event_queue_tests",
+      "cs80_keyboard_handoff_host_tests",
+      "cs80_keyboard_pressure_audit_tests",
+      "cs80_keyboard_response_tests",
+      "cs80_keyboard_tuning_ui_tests",
+      "cs80_lead_refinement_tests",
+      "cs80_legacy_sub_lfo_oracle_tests",
+      "cs80_level_control_tests",
+      "cs80_lfo_random_switching_tests",
+      "cs80_lfo_random_variable_rate_tests",
+      "cs80_lfo_scope_preview_tests",
+      "cs80_library_audit_tests",
+      "cs80_live_envelope_level_tests",
+      "cs80_live_envelope_timing_tests",
+      "cs80_loaded_control_rank_tests",
+      "cs80_loaded_control_reference_tests",
+      "cs80_loaded_control_transient_tests",
+      "cs80_low_choir_spectrum_tests",
+      "cs80_main_vst3_only_automation_tests",
+      "cs80_mallet_preset_refinement_tests",
+      "cs80_material_body_tests",
+      "cs80_memory_centered_log_rational",
+      "cs80_memory_control_routing_tests",
+      "cs80_memory_interval_extrema",
+      "cs80_memory_panel_port_map_tests",
+      "cs80_memory_panel_ports_tests",
+      "cs80_memory_panel_tests",
+      "cs80_memory_qualification_probe_self_tests",
+      "cs80_memory_receiver_truth_tests",
+      "cs80_memory_sparse_update_tests",
+      "cs80_memory_verified_diode_tests",
+      "cs80_midi_learn_tests",
+      "cs80_mn3001_packet_tests",
+      "cs80_mod_matrix_route_actions_tests",
+      "cs80_mod_matrix_routing_ui_tests",
+      "cs80_mod_matrix_tests",
+      "cs80_modern_fx_tests",
+      "cs80_modern_lfo_tests",
+      "cs80_modern_preset_refinement_tests",
+      "cs80_modern_recall_host_tests",
+      "cs80_modern_slider_gesture_tests",
+      "cs80_modern_state_integer_tests",
+      "cs80_mono_mseg_routing_tests",
+      "cs80_mpe_master_bend_routing_tests",
+      "cs80_mpe_master_smoothing_tests",
+      "cs80_mpe_member_onset_host_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_mpe_pressure_combination_tests",
+      "cs80_mpe_released_target_host_tests",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_timbre_combination_tests",
+      "cs80_mseg_combined_interaction_tests",
+      "cs80_mseg_editor_lifecycle_tests",
+      "cs80_mseg_point_values_tests",
+      "cs80_mseg_retrigger_rate_tests",
+      "cs80_mseg_shape_copy_tests",
+      "cs80_mseg_state_text_tests",
+      "cs80_mseg_tests",
+      "cs80_mseg_transport_rate_tests",
+      "cs80_mts_dormant_engine_host_tests",
+      "cs80_mts_esp_channel_tests",
+      "cs80_mts_esp_fallback_tests",
+      "cs80_mts_esp_integration_tests",
+      "cs80_mts_esp_native_tests",
+      "cs80_mts_esp_windows_macro_tests",
+      "cs80_noise_tests",
+      "cs80_oe2_filters_tests",
+      "cs80_oe2_stereo_chorus_tests",
+      "cs80_original_articulation_tests",
+      "cs80_oscillator_promotion_tests",
+      "cs80_output_listening_tests",
+      "cs80_output_meter_audit_tests",
+      "cs80_output_meter_display_tests",
+      "cs80_output_meter_tests",
+      "cs80_output_tap_circuit_tests",
+      "cs80_output_tap_integration_tests",
+      "cs80_output_taps_tests",
+      "cs80_oversampling_tests",
+      "cs80_package_binary_identity_tests",
+      "cs80_packaging_notice_tests",
+      "cs80_pad_poly_refinement_tests",
+      "cs80_panel_golden_tests",
+      "cs80_parameter_combo_context_tests",
+      "cs80_parameter_state_index_tests",
+      "cs80_parity_capture_tests",
+      "cs80_parity_harness_tests",
+      "cs80_parity_mode_tests",
+      "cs80_patch_history_tests",
+      "cs80_pedal_release_tests",
+      "cs80_performance_control_tests",
+      "cs80_performance_wheel_keyboard_tests",
+      "cs80_piano_course_geometry_tests",
+      "cs80_piano_partial_decay_tests",
+      "cs80_pitch_bend_range_tests",
+      "cs80_plate_reverb_rate_tests",
+      "cs80_plucked_material_preset_tests",
+      "cs80_plucked_material_tests",
+      "cs80_pluginval_macos_download_tests",
+      "cs80_pluginval_windows_download_tests",
+      "cs80_poly_pressure_routing_tests",
+      "cs80_pra_optical_cell_tests",
+      "cs80_pra_wah_circuit_tests",
+      "cs80_pra_wah_integration_tests",
+      "cs80_pra_wah_tests",
+      "cs80_preset_capture_tests",
+      "cs80_preset_character_tests",
+      "cs80_preset_click_tests",
+      "cs80_preset_display_name_tests",
+      "cs80_preset_file_recall_tests",
+      "cs80_preset_file_values_tests",
+      "cs80_preset_identity_tests",
+      "cs80_preset_load_tests",
+      "cs80_preset_precision_tests",
+      "cs80_preset_preferences_tests",
+      "cs80_preset_preview_math_tests",
+      "cs80_preset_refresh_tests",
+      "cs80_preset_response_2026_11_6_comparison_tests",
+      "cs80_preset_response_coverage_tests",
+      "cs80_preset_revert_tests",
+      "cs80_preset_save_storage_tests",
+      "cs80_preset_search_tests",
+      "cs80_preset_voicing_tests",
+      "cs80_preset_xml_tests",
+      "cs80_programmer_control_identity_tests",
+      "cs80_pump_until_tests",
+      "cs80_quiet_fx_rack_tests",
+      "cs80_qwerty_note_ownership_tests",
+      "cs80_randomise_tests",
+      "cs80_render_cli_tests",
+      "cs80_resonance_control_tests",
+      "cs80_ring_curve_gesture_tests",
+      "cs80_ring_modulator_circuit_tests",
+      "cs80_scanner_ordering_tests",
+      "cs80_scanner_overflow_tests",
+      "cs80_sixteen_voice_release_host_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_smoothing_tests",
+      "cs80_snapshot_cli_tests",
+      "cs80_source_factory_boundary_tests",
+      "cs80_source_factory_integration_tests",
+      "cs80_source_factory_tone_tests",
+      "cs80_source_performance_audit_tests",
+      "cs80_source_performance_tests",
+      "cs80_state_mirror_bridge_tests",
+      "cs80_stereo_pra_exact_tests",
+      "cs80_string_body_formant_tests",
+      "cs80_struck_body_dynamics_tests",
+      "cs80_studio_lfo_context_tests",
+      "cs80_studio_switch_context_tests",
+      "cs80_switch_context_tests",
+      "cs80_tape_echo_control_cache_tests",
+      "cs80_tape_echo_time_tests",
+      "cs80_teardown_probe",
+      "cs80_tine_strike_dynamics_tests",
+      "cs80_tolerance_drift_tests",
+      "cs80_toolbar_menu_lifetime_tests",
+      "cs80_touch_circuit_tests",
+      "cs80_transient_control_tests",
+      "cs80_truth_input_sha256_tests",
+      "cs80_truth_render_tests",
+      "cs80_tuning_frequency_domain_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_tuning_robustness_tests",
+      "cs80_typed_value_unit_tests",
+      "cs80_ui_smoke",
+      "cs80_undo_replay_gesture_tests",
+      "cs80_unison_detune_latch_tests",
+      "cs80_unison_glide_tests",
+      "cs80_validator_diagnostic_selection_tests",
+      "cs80_vca_reference_tests",
+      "cs80_vocal_body_tests",
+      "cs80_voice_activity_host_tests",
+      "cs80_voice_activity_tests",
+      "cs80_voice_activity_ui_tests",
+      "cs80_voice_release_tests",
+      "cs80_wind_body_formant_tests",
+      "cs80_wind_string_refinement_tests",
+      "cs80_windows_installer_preflight_tests",
+      "cs80_wsc_held_endpoint_tests"
+    ],
+    "required_new_tests": [
+      "cs80_body_noise_rate_tests",
+      "cs80_low_choir_spectrum_tests",
+      "cs80_piano_partial_decay_tests",
+      "cs80_string_body_formant_tests"
+    ],
+    "required_formal_skip_names": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "actual_nested_python_skip_count": null,
+    "roster_derivation_verified": true,
+    "roster_derivation_scope": "Frozen source derivation only; no actual native test result."
+  },
+  "validator_expected": {
+    "version": "1.0.4",
+    "strictness": 10,
+    "programs": 523,
+    "required_windows_lanes": 2,
+    "global_required_lanes": 15,
+    "actual_invocations": null,
+    "required_validation_retries": 0
+  },
+  "artifacts": [
+    {
+      "role": "native",
+      "expected_name": "cs80-windows-test-evidence",
+      "planned_archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "planned_api": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "artifact_id": null,
+      "bytes": null,
+      "sha256": null,
+      "actual_archive_inspected": false,
+      "original_upload_attempt_bound": false
+    },
+    {
+      "role": "validator",
+      "expected_name": "cs80-pluginval-windows",
+      "planned_archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip",
+      "planned_api": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-api.json",
+      "artifact_id": null,
+      "bytes": null,
+      "sha256": null,
+      "actual_archive_inspected": false,
+      "original_upload_attempt_bound": false
+    },
+    {
+      "role": "vst3",
+      "expected_name": "cs80-windows-vst3",
+      "planned_archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+      "planned_api": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json",
+      "artifact_id": null,
+      "bytes": null,
+      "sha256": null,
+      "actual_archive_inspected": false,
+      "original_upload_attempt_bound": false
+    },
+    {
+      "role": "install",
+      "expected_name": "cs80-windows-install-bundle",
+      "planned_archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "planned_api": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "artifact_id": null,
+      "bytes": null,
+      "sha256": null,
+      "actual_archive_inspected": false,
+      "original_upload_attempt_bound": false
+    }
+  ],
+  "required_gates": [
+    {
+      "gate": "original_identity",
+      "contract": "Authentic raw run/job/step/artifact API records and original logs bind source, tree, run 45397189410, attempt 1, Windows producer 138455976256 and the newly allocated original validator consumer. Current docs-only main is not the compiled source.",
+      "actual_verified": false
+    },
+    {
+      "gate": "producer_success",
+      "contract": "Original checkout, Configure, clean JUCE verification, Build, Test, VST3 upload, package, install upload and native-evidence upload all succeed in source-defined order; exact original commands and no intervening unreviewed producer step.",
+      "actual_verified": false
+    },
+    {
+      "gate": "native_names_and_results",
+      "contract": "Exactly all 255 source-derived names, 253 passed, the two individually reviewed formal capability skips, zero failed/unknown/disabled; full JUnit/LastTest names and complete numbered LastTest session.",
+      "actual_verified": false
+    },
+    {
+      "gate": "native_skips",
+      "contract": "Review actual formal skip text and each nested Python summary separately against frozen source; preserve any nonverbose-output limitation. Internal assertions and nested Python skips do not add CTest executions.",
+      "actual_verified": false
+    },
+    {
+      "gate": "repaired_parity_capture",
+      "contract": "cs80_parity_capture_tests must pass the unchanged 13-case harness, including live-adr-v1; retain c554 original 0xC00000FD failure without reinterpretation. The ee0 heap-ownership repair cannot inherit a historical Windows pass.",
+      "actual_verified": false
+    },
+    {
+      "gate": "new_gates_and_ui",
+      "contract": "All four .7 additions pass and the instrument body host identity and recall phase has start, completion timing and terminal UI pass in order.",
+      "actual_verified": false
+    },
+    {
+      "gate": "ctest_original_exit",
+      "contract": "Original direct source CTest command with --no-tests=error completes in successful original Test step; 100% tests passed, 0 tests failed out of 255. Exit zero is inferred from unsuppressed command and successful step; no raw child exit is invented.",
+      "actual_verified": false
+    },
+    {
+      "gate": "artifact_uploads",
+      "contract": "Each of four distinct API IDs, actual ZIP byte counts/digests, exact artifact name, source/run/repository, expiry and original successful upload time/ID/size/digest/cumulative-byte records agree.",
+      "actual_verified": false
+    },
+    {
+      "gate": "pluginval_pin",
+      "contract": "Official Windows pluginval 1.0.4 release 188928656 / asset 210999198 / pluginval_Windows.zip / 2408590 bytes / c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab; verified receipt plus original fetch command/version output; transfer retries kept separate from validation.",
+      "actual_verified": false
+    },
+    {
+      "gate": "two_original_lanes",
+      "contract": "Exactly two original headless strictness-10 / validate-in-process / timeout 120000-ms lanes exposing 523 programs; randomized lane has no supplied seed; state regression uses 0x5037a0c. One start and terminal clean SUCCESS per lane, original normal exit zero, zero validation retries.",
+      "actual_verified": false
+    },
+    {
+      "gate": "console_original_binding",
+      "contract": "Each report equals its console apart from selected-path header; each complete console equals timestamp-unwrapped original runtime with raw hashes retained. Exact source PowerShell prologue and immediate LASTEXITCODE check plus successful original step bind exit; SUCCESS alone is insufficient.",
+      "actual_verified": false
+    },
+    {
+      "gate": "consumer_download",
+      "contract": "Unconditionally bind the original Download Windows VST3 step to product artifact ID/size/expected SHA256/calculated SHA256/completion/extraction destination and both exact selected bundle paths, independently of sidecar presence.",
+      "actual_verified": false
+    },
+    {
+      "gate": "installation",
+      "contract": "Unchanged A41 helper verifies exact three-member outer ZIP, inner manifest/checksums/inventory, exact source/revision/run, Windows x86_64 PE32+ VST3/standalone image roles, safe structure and no Windows symlinks.",
+      "actual_verified": false
+    },
+    {
+      "gate": "documentation",
+      "contract": "All 13 required metadata files regular/nonempty/0644; three guides equal source packaged_markdown; all seven repository notices use one common raw-source or complete demonstrated LF-to-CRLF mode. Preserve actual raw hashes; no mixed/partial/BOM/text/newline change or other normalization.",
+      "actual_verified": false
+    },
+    {
+      "gate": "juce_license_chain",
+      "contract": "JUCE license presence/inventory hash plus original clean pin 8.0.11 / c352e2489000ffeb9e397051377d75eef2efe641 / source-configure-build-package sequence. Independent JUCE source-byte comparison remains false unless independently obtained.",
+      "actual_verified": false
+    },
+    {
+      "gate": "complete_vst3_equality",
+      "contract": "Unchanged A36 helper compares every selected VST3 bundle member/resource/topology with installed payload. Only exact regular top-level AMD64 .exp/.lib compiler-sidecar pair with required formats and original consumption proof may be excluded.",
+      "actual_verified": false
+    },
+    {
+      "gate": "composition",
+      "contract": "Fresh final Windows platform receipt binds every helper/hash/input report plus original evidence and limitations. Release/global qualification stay false; all other targets, auditions, listening/publication/signing/DAW scope remain separate.",
+      "actual_verified": false
+    }
+  ],
+  "helper_pins": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py",
+      "bytes": 9657,
+      "sha256": "2f4c7584a2de26f7b1c2e205ed28c05cd75515ffca3094e760ac851bfb239132"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+      "bytes": 17700,
+      "sha256": "5d3ac203c38356f736f07351507723069dc9528e6cee9e9b577a520bf71ae2ee"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a46/bind-windows-originals.py",
+      "bytes": 31368,
+      "sha256": "15c84f6f72ed9ea44e38f14f666c8793aac1621b6b849d8e96bf50d3750d7c83"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92"
+    },
+    {
+      "path": "scripts/download-pluginval-windows.py",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a"
+    },
+    {
+      "path": "scripts/verify-ci-juce-source.cmake",
+      "bytes": 4586,
+      "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    {
+      "path": "tests/FilterBatchCapTests.cpp",
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729"
+    },
+    {
+      "path": "tests/StereoPraExactTests.cpp",
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0"
+    },
+    {
+      "path": "src/core/Ig00156Batch.cpp",
+      "bytes": 21447,
+      "sha256": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+    },
+    {
+      "path": "src/core/Ig00156Batch.h",
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985"
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "bytes": 27988,
+      "sha256": "4557d682e67e7061d362fb8a9a550a9566cfdee91cfd03ee490c4d5e4ef72e8c"
+    },
+    {
+      "path": "src/tools/parity_capture.cpp",
+      "bytes": 15989,
+      "sha256": "745dae18d1a05c087008bb70d3e5c0bdeebf26b970b51dc5f2efd3231a521714"
+    },
+    {
+      "path": "tests/LibraryAuditTests.cpp",
+      "bytes": 23613,
+      "sha256": "958e67fc42fa3438c5dd47425f9f4dc8012650e44d814283aa0e3d2bbc4f69cd"
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "bytes": 219971,
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e"
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "bytes": 43689,
+      "sha256": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c"
+    }
+  ],
+  "native_contract_reference": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/contract.json",
+    "bytes": 67113,
+    "sha256": "917392950e0dac4e0518dd6bea3ea7b398eb4aa56c98ba3f40dbfec9446df90d"
+  },
+  "source_checkout_demonstration": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a46/windows-notice-checkout-transform-ee0dabca.json",
+    "bytes": 11514,
+    "sha256": "3e54c9c62a5067daef989d82a5de040f173493821ffcc4084159f9aa838b27aa"
+  },
+  "raw_input_policy": "Root owns authentic acquisition and raw API/log/archive inputs. A46 creates new derived reports only; never overwrite raw originals or prior-source evidence.",
+  "actual_artifacts_checked": false,
+  "original_ctest_exit_verified": false,
+  "original_validator_exits_verified": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "global_qualified": false
+}

@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "status": "partial_original_native_reconciliation",
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "platform_matrix": [
+    {
+      "target": "linux-x86_64",
+      "producer_job_id": 138455975798,
+      "expected_registered": 613,
+      "exact_expected_names_sha256": "ece7c2c225b394c73cfcbd9e639d958f53b10107021a53a0bdc874569c3b0e9d",
+      "actual_native_evidence_inspected": false,
+      "actual_counts": null,
+      "nested_python_skips": null,
+      "status": "pending_actual_artifact_review",
+      "capability_scope": "Only cs80_filter_batch_cap_tests and cs80_stereo_pra_exact_tests may formally skip; actual outcome is never inferred from this rule."
+    },
+    {
+      "target": "windows-x86_64",
+      "producer_job_id": 138455976256,
+      "expected_registered": 255,
+      "exact_expected_names_sha256": "23e8131b42f70bfe7d702d1528f5a78ff7f1fa3cadd15c21d62e1277b7bd650f",
+      "actual_native_evidence_inspected": true,
+      "actual_counts": {
+        "registered": 255,
+        "passed": 253,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "nested_python_skips": 11,
+      "status": "original_native_reconciled",
+      "capability_scope": "Only cs80_filter_batch_cap_tests and cs80_stereo_pra_exact_tests may formally skip; actual outcome is never inferred from this rule."
+    },
+    {
+      "target": "macos-arm64",
+      "producer_job_id": 138455976227,
+      "expected_registered": 277,
+      "exact_expected_names_sha256": "289ea7925e7ce16907cee6d5be7d15d319070463d2414b58830c154fa03588a0",
+      "actual_native_evidence_inspected": true,
+      "actual_counts": {
+        "registered": 277,
+        "passed": 275,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "nested_python_skips": 5,
+      "status": "original_native_reconciled",
+      "capability_scope": "Only cs80_filter_batch_cap_tests and cs80_stereo_pra_exact_tests may formally skip; actual outcome is never inferred from this rule."
+    },
+    {
+      "target": "macos-x86_64",
+      "producer_job_id": 138455976307,
+      "expected_registered": 277,
+      "exact_expected_names_sha256": "289ea7925e7ce16907cee6d5be7d15d319070463d2414b58830c154fa03588a0",
+      "actual_native_evidence_inspected": false,
+      "actual_counts": null,
+      "nested_python_skips": null,
+      "status": "pending_actual_artifact_review",
+      "capability_scope": "Only cs80_filter_batch_cap_tests and cs80_stereo_pra_exact_tests may formally skip; actual outcome is never inferred from this rule."
+    }
+  ],
+  "expected_global_registered": 1422,
+  "observed_native_totals": {
+    "registered": 532,
+    "passed": 528,
+    "failed": 0,
+    "formal_skipped": 4,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "observed_nested_python_skips": 16,
+  "pending_expected_registered": 890,
+  "all_four_native_targets_checked": false,
+  "global_native_results_accepted": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "counting_scope": "One CTest name execution per platform. Nested Python skips, internal assertions, duplicated JUnit/stdout text and unregistered platform cases are never added to CTest totals.",
+  "limits": [
+    "This bounded reconciliation executes no product binary and cannot substitute for validators, packaging, auditions, public download or release gates.",
+    "A42 Linux-only real state-mirror host and VST3 Program-boundary results remain pending until original Linux evidence is reviewed.",
+    "Processing-queue-only wrapper Program parameter automation retains its documented controller dependency; native event-path tests cannot clear it."
+  ]
+}

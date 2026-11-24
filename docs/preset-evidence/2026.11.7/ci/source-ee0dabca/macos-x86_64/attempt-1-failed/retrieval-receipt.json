@@ -1,0 +1,47 @@
+{
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "job_id": 138455976307,
+  "status": "original_failure_preserved",
+  "retrieved_at_utc": "2026-11-24T13:54:08.203616+00:00",
+  "transport": "Authenticated repository-owner GitHub connector. Full original API objects extracted from exact run collections and serialized with indentation. Decoded original job log retained UTF-8 without newline changes. No signed download URL retained.",
+  "files": {
+    "native-api.json": {
+      "bytes": 754,
+      "sha256": "a037418596b0c82712f752c500fc8f3e6d5e8d9fea22f0ab38ae34f270edb223"
+    },
+    "producer-job-api.json": {
+      "bytes": 5989,
+      "sha256": "5a149434f5d85cb08f028cd0093395561f645c63395a5b7e07322e6cebff639c"
+    },
+    "attempt1-api-at-failure.json": {
+      "bytes": 14806,
+      "sha256": "0214298a96afce78e58b5add0f43ace8f52736db156e291521fc52800c49a93c"
+    },
+    "jobs-api-at-failure.json": {
+      "bytes": 26561,
+      "sha256": "feab406531e8d68390aac7a6ad155b76b61e95d936eccf6792b8080ae8b3dc6f"
+    },
+    "artifact-collection-api-at-failure.json": {
+      "bytes": 6617,
+      "sha256": "79eb700cb055554123415a78efee0d97cd172a2f4df1105e1cfd31c70fbfacb7"
+    },
+    "producer-job.log": {
+      "bytes": 220409,
+      "sha256": "a0cbecb2b5fced07e3cd6563e2d6666448d6c0443a3fafea1136549a77dd970a"
+    }
+  },
+  "archives": [
+    {
+      "kind": "native",
+      "artifact_id": 14925757474,
+      "local_path": "/tmp/cs80-ci-1cee5a/ee0dabca/macos-x86_64-attempt1-failed-native.zip",
+      "bytes": 90653,
+      "sha256": "a0f12e2384f2f37461ca31a17a43dee205ea683830f7fe8a7a5cd47b50df2dde",
+      "api_identity_matched": true
+    }
+  ],
+  "platform_qualified": false,
+  "release_qualified": false
+}

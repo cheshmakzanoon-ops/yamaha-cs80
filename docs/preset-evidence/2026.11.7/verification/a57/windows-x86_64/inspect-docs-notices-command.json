@@ -1,0 +1,25 @@
+{
+  "name": "inspect-docs-notices",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+    "--repo",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "--archive",
+    "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+    "--acceptance",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/install-acceptance.json",
+    "--out",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/docs-and-notices.json"
+  ],
+  "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "started_at_utc": "2026-11-24T13:48:43.242822+00:00",
+  "elapsed_seconds": 0.32248016800076584,
+  "returncode": 0,
+  "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/inspect-docs-notices.log",
+  "log_identity": {
+    "bytes": 371,
+    "sha256": "a21811ecc57a2847ee8b745469ac3d6e5b1a26b69f267a23a0924f462b7f253d"
+  }
+}

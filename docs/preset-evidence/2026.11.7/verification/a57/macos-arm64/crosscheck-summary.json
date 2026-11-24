@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "status": "actual_package_crosscheck_passed",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "target": "macos-arm64",
+  "verified_at_utc": "2026-11-24T13:47:30.808270+00:00",
+  "artifact": {
+    "id": 14923244833,
+    "name": "cs80-macos-15-install-bundle",
+    "size_in_bytes": 14989471,
+    "digest": "sha256:0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+    "created_at": "2026-11-24T13:30:27Z",
+    "expires_at": "2027-02-22T12:49:05Z",
+    "workflow_run": {
+      "id": 45397189410,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed"
+    }
+  },
+  "outer_zip": {
+    "file": "macos-arm64-install.zip",
+    "bytes": 14989471,
+    "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-macos-arm64-ee0dabcacb4c.manifest.json",
+      "cs80-reference-macos-arm64-ee0dabcacb4c.tar.gz"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-macos-arm64-ee0dabcacb4c.tar.gz",
+    "bytes": 14980721,
+    "sha256": "7e5a28002ebb68bc6b767dcd1cea5de8a40d07381c36631fd7a05ee512996532"
+  },
+  "independent_install_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/install-acceptance.json",
+    "bytes": 14209,
+    "sha256": "1c5ab0a90a5b20f3c8e41c91db1b2059cc7375919757c38f05d4b4e598423b90"
+  },
+  "independent_document_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/docs-and-notices.json",
+    "bytes": 32828,
+    "sha256": "f383c9f31643ab19d4c49fbe0b6e6daef826f967b4a66bd46c56aec691d2fe5d"
+  },
+  "direct_archive_receipt": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/direct-archive-crosscheck.json",
+    "bytes": 4714,
+    "sha256": "4707f0475296340c36d2753509ddd1a7790fe65ab06fae6805d629ac217b630d"
+  },
+  "accepted_reference_comparison": {
+    "path": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-acceptance.json",
+    "bytes": 14209,
+    "sha256": "24ac1d60ac214fe0ba76e2f13e64b97186ddf08b6a2cb1064b5dbaea04d24549",
+    "exact_equal_fields": [
+      "source",
+      "source_tree",
+      "preset_library_revision",
+      "run_id",
+      "run_attempt",
+      "target",
+      "artifact",
+      "outer_zip",
+      "inner_archive",
+      "manifest_sha256",
+      "checksum_manifest_sha256",
+      "inventory",
+      "binary_headers",
+      "source_contract_files",
+      "signing_status"
+    ]
+  },
+  "input_files": {
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/retrieval-receipt.json": {
+      "bytes": 2665,
+      "sha256": "1c8999da31d092f9bdb435eb3f76790e1f7314f040a397cd3676776d26a5ea6c"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/attempt1-api-at-platform-completion.json": {
+      "bytes": 14806,
+      "sha256": "9545ea767022d43cbb0857759018001e9f85ddefa07307b6c962e93893273470"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/run-api-at-platform-completion.json": {
+      "bytes": 14784,
+      "sha256": "39279467ce21a9acee15d945898b60d39760bfebd5e9c90d8e7b4ce3f33ca1c9"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log": {
+      "bytes": 256051,
+      "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job-api.json": {
+      "bytes": 5977,
+      "sha256": "6b3c08d29f6e23f00405d608c5b538b905a2612e2f691458c1eac56e8903f062"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/validator-api.json": {
+      "bytes": 744,
+      "sha256": "14f8cad1902288325a8fba8eff42adbdeadba9ad4de7c58fd291c50a1fd83e8f"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-api.json": {
+      "bytes": 752,
+      "sha256": "605a2893b66809f4a95e4c1f1b113d704db320a9eadc0969be416a00c01b87f8"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/native-api.json": {
+      "bytes": 748,
+      "sha256": "38a89e56acea7becba0f5f21c671c94ace36b8f9bcfb32db463ab64c03045f7d"
+    },
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/artifact-collection-api.json": {
+      "bytes": 2499,
+      "sha256": "1f641add913896bd69fd472d5d4e5a1e2cc078983934459cd991258c1b002921"
+    },
+    "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip": {
+      "bytes": 14989471,
+      "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6"
+    }
+  },
+  "inputs_unchanged": true,
+  "helper_pins": {
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+    "docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d"
+  },
+  "verifier_sha256": "0727bc10f6008a84f0f3a7476c4bcaf07ea044f19ff0fb6d6b556c7eea594875",
+  "commands": [
+    {
+      "name": "inspect-install",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/attempt1-api-at-platform-completion.json",
+        "--platform",
+        "macos",
+        "--architecture",
+        "arm64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip",
+        "--artifact-api",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/install-api.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/install-acceptance.json"
+      ],
+      "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+      "started_at_utc": "2026-11-24T13:47:28.001411+00:00",
+      "elapsed_seconds": 1.3580735539981106,
+      "returncode": 0,
+      "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/inspect-install.log",
+      "log_identity": {
+        "bytes": 229,
+        "sha256": "6e46d8a7c94ee3d636b542110f232829750c64321ca8a2b361c04f884efd5946"
+      }
+    },
+    {
+      "name": "inspect-docs-notices",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip",
+        "--acceptance",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/install-acceptance.json",
+        "--out",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/docs-and-notices.json",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed"
+      ],
+      "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+      "started_at_utc": "2026-11-24T13:47:29.359834+00:00",
+      "elapsed_seconds": 1.1503909540006134,
+      "returncode": 0,
+      "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/inspect-docs-notices.log",
+      "log_identity": {
+        "bytes": 271,
+        "sha256": "dcbd606851283ce683ad91715f583511eee0fa6fa115f1131f7fce5f267b973c"
+      }
+    }
+  ],
+  "platform_qualification_claimed": false,
+  "release_qualified": false,
+  "scope": "Actual installation bytes, exact source contract and retained authenticated acquisition; native/validator/original-exit acceptance and public availability remain external."
+}

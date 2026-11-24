@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "status": "partial_two_of_five_public_routes_verified",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "recorded_at_utc": "2026-11-24T14:08:38.452913+00:00",
+  "verified_public_route_count": 2,
+  "expected_public_route_count": 5,
+  "all_five_public_downloads_verified": false,
+  "release_qualified": false,
+  "verified_downloads": [
+    {
+      "target": "macos-arm64",
+      "label": "macOS Apple Silicon installation bundle",
+      "artifact_id": 14923244833,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14923244833.zip",
+      "bytes": 14989471,
+      "sha256": "0427c77f8982d54563933cc244de4e6cb6c2cd60269afd3e7d9aef25c21648b6",
+      "expired": false,
+      "expires_at_utc": "2027-02-22T12:49:05Z",
+      "expires_at_America_Halifax": "2027-02-22T08:49:05-04:00",
+      "expiry_timezone_abbreviation": "AST",
+      "probe_started_at_utc": "2026-11-24T13:39:05.702140+00:00",
+      "probe_completed_at_utc": "2026-11-24T13:39:23.475901+00:00",
+      "full_unauthenticated_get_verified": true,
+      "original_producer_upload_attempt_bound": true,
+      "external_platform_qualification": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/platform-qualification.json",
+        "bytes": 24530,
+        "sha256": "f5050d2a2798ed2e4fde9686da8d40bc9ced669811fd3ebeddb1eed1e72b358b"
+      },
+      "public_get_receipt": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/macos-arm64-full-get-0001.json",
+        "bytes": 2540,
+        "sha256": "3d03a9da6128ff22127d5ccd2ffff7a940c87518b538737e4198b68a5824b126"
+      },
+      "identity_binding_receipt": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a51/phase1-macos-arm64-binding.json",
+        "bytes": 5550,
+        "sha256": "f174e58cd9824ec666364d1d77fc60a6e99853e1719fd690b2baf1c1d28eda0d"
+      },
+      "producing_attempt": 1
+    },
+    {
+      "target": "windows-x86_64",
+      "label": "Windows x64 installation bundle",
+      "artifact_id": 14925251949,
+      "artifact_name": "cs80-windows-install-bundle",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14925251949.zip",
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+      "expired": false,
+      "expires_at_utc": "2027-02-22T12:49:05Z",
+      "expires_at_America_Halifax": "2027-02-22T08:49:05-04:00",
+      "expiry_timezone_abbreviation": "AST",
+      "producing_attempt": 1,
+      "producer_job_id": 138455976256,
+      "validator_consumer_job_id": 138483772246,
+      "probe_started_at_utc": "2026-11-24T14:05:57.202963+00:00",
+      "probe_completed_at_utc": "2026-11-24T14:06:19.194618+00:00",
+      "full_unauthenticated_get_verified": true,
+      "original_producer_upload_attempt_bound": true,
+      "external_platform_qualification": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+        "bytes": 160850,
+        "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+      },
+      "public_get_receipt": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/windows-x86_64-full-get-0001.json",
+        "bytes": 2535,
+        "sha256": "d46c64708646d501dc995a73abedaad5d4bb4c6223d3378dbd572132c2625aa5"
+      },
+      "identity_binding_receipt": {
+        "path": "docs/preset-evidence/2026.11.7/verification/a51/phase2-windows-binding.json",
+        "bytes": 6601,
+        "sha256": "d86c368bd4e0b6a2bbd1797cece6eca53ebc71d34f7911a08009755fa1f6a253"
+      }
+    }
+  ],
+  "pending_targets": [
+    "macos-x86_64",
+    "linux-x86_64",
+    "factory-audition"
+  ],
+  "earliest_expiry_over_all_five_utc": null,
+  "earliest_expiry_over_all_five_America_Halifax": null,
+  "fallback_artifacts_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410#artifacts",
+  "fallback_scope": "Same source/run Artifacts page; not independently fetched in this phase. May require GitHub sign-in. It relies on the same retained artifacts, so cannot recover an expired or deleted artifact.",
+  "retention_notice": "The API-reported expiry is a retention limit, not a guaranteed availability window. Deletion, retention changes, and service availability can end access sooner. These are temporary workflow artifacts, not permanent release assets.",
+  "public_route_scope": "Successful full retrieval only at each recorded observation time. No later availability, whole release acceptance, publisher signing/notarization, or user listening approval is implied.",
+  "final_phase_rule": "Bind actual authenticated current-source Intel, Linux, and audition artifacts to their actual producing attempts; preserve failed transports separately; verify full public byte count/hash; compute the all-five minimum expiry only when all five are identified.",
+  "previous_mapping": {
+    "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/download-mapping-phase1.json",
+    "bytes": 3457,
+    "sha256": "b8eb878ed7fd4472a11defe7e897d2ebbcd50bd2ac4cee104054db62b2225bbd"
+  },
+  "earliest_expiry_of_verified_subset_utc": "2027-02-22T12:49:05Z",
+  "verified_subset_expiry_is_not_complete_five_download_expiry": true,
+  "pending_target_context_from_coordinator_handoff": {
+    "macos-x86_64": "Original attempt 1 failed one UI meter/timer assertion. A49 found no justified source change and recommended a complete unchanged job rerun after Linux finishes. Earlier rerun API response was 403; no rerun had started at the handoff. This is not a failed public GET, and no replacement artifact is inferred.",
+    "linux-x86_64": "Actual public-route handoff pending.",
+    "factory-audition": "Actual public-route handoff pending."
+  },
+  "attempt_preservation_rule": "Every producer/run attempt and every public transport receives separate retained evidence. A later rerun does not erase the original Intel failure or change original ARM/Windows producing attempt 1."
+}

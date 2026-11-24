@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "status": "a58_preparation_partial_review_complete_global_acceptance_false",
+  "checked_at_utc": "2026-11-24T14:08:12.957385+00:00",
+  "local_markdown_targets_checked": 15,
+  "missing_local_targets": [],
+  "json_files_parsed": 9,
+  "trailing_whitespace_findings": [],
+  "protected_tracked_changes": [],
+  "protected_untracked_inputs": [],
+  "actual_command_outcomes": [
+    {
+      "command": "python3 -B docs/preset-evidence/2026.11.7/verification/a58/reconcile-phase1.py --repo . --out-dir docs/preset-evidence/2026.11.7/verification/a58/phase1",
+      "observed_exit": 0,
+      "scope": "Partial evidence review including preserved product failure."
+    },
+    {
+      "command": "python3 -B docs/preset-evidence/2026.11.7/verification/a58/reconcile-supplement.py --repo . --out docs/preset-evidence/2026.11.7/verification/a58/phase1-supplement.json",
+      "observed_exit": 0,
+      "scope": "Later Windows receipt and rejected Intel rerun request."
+    }
+  ],
+  "windows_final_receipt_root_handoff_identity_confirmed": true,
+  "release_qualified": false,
+  "retained_owned_files": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "bytes": 13122,
+      "sha256": "468d4a330191c03b3341a585b6e5fa6b52baa44e70c999f5a82b14cd9e483c39"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/REFERENCE_MATRIX.md",
+      "bytes": 12992,
+      "sha256": "4bb8548ef8413b2188c714f8ecba9599b11f2ecc956eba5147777b455857d1ac"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/artifact-attempt-matrix.json",
+      "bytes": 12861,
+      "sha256": "9c862b996edf1a8fbbee6ff040013447e1102c4051278eaaf7289af768cc43ac"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/input-records.json",
+      "bytes": 14492,
+      "sha256": "34a9e7520cf8d90012cc5e2273844a25dfcb350aa8fa867879792980286524a3"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/intel-original-failure.json",
+      "bytes": 5262,
+      "sha256": "a802b54b5d77ebca91c7e6503a235042f6da682c841465c9ee2f39b2141ddb4c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/native-observations.json",
+      "bytes": 13703,
+      "sha256": "30fd291f38ba7123d21753a7059f9498f5885facd5cd8afeb3a6bcee756c651c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/reproducer.json",
+      "bytes": 477,
+      "sha256": "74ed2e913a2b1d1b0ac66177160c08492ccec38b660cd282ed17946928f4f67b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/snapshot.json",
+      "bytes": 2926,
+      "sha256": "40facdb6c451417d75e9a03b70acdfcc28b599a2b879f883b740400dc8aa4bb5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/validator-lanes.json",
+      "bytes": 10236,
+      "sha256": "957d608e1ea4448eff53c6129a6a2f9a286228a502eb4f767a52303d953cb0f3"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1-supplement.json",
+      "bytes": 6642,
+      "sha256": "9cc9c1a19e3cf4adc22fdfdbd2fcae09df8df76200589c02d03f294da04bd8fc"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/reconcile-phase1.py",
+      "bytes": 23652,
+      "sha256": "8b83e575ef9cca603627b9fab880ab0349de7f36d8e31f68088fcc149d4b8982"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/reconcile-supplement.py",
+      "bytes": 5862,
+      "sha256": "04219539c6ecd784a4aafa14a3a81d3e8c4c1bba1aed182cfc2e0bd095137796"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/supporting-reference-status.json",
+      "bytes": 4885,
+      "sha256": "06ba832fc3ce42082b8ef0450bda34537615d0631ed5b6df7c52fcdbc942f6ae"
+    }
+  ],
+  "local_markdown_links": [
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/snapshot.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1-supplement.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/native-observations.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/intel-original-failure.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../ci/source-ee0dabca/macos-x86_64/attempt-1-failed/rerun-request-while-active.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/validator-lanes.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/artifact-attempt-matrix.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/REFERENCE_MATRIX.md"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/supporting-reference-status.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/reconcile-phase1.py"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/input-records.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/phase1/reproducer.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/reviews/a58.md",
+      "target": "../verification/a58/reconcile-supplement.py"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/verification/a58/REFERENCE_MATRIX.md",
+      "target": "phase1/snapshot.json"
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.7/verification/a58/REFERENCE_MATRIX.md",
+      "target": "phase1-supplement.json"
+    }
+  ]
+}

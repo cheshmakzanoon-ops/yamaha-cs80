@@ -1,0 +1,48 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "a48_input": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/skip-review.json",
+    "bytes": 8706,
+    "sha256": "de1aca2f99da1ef1513a85a5e917d4afa68ea8c02b192bd158ad3f62aea61d66"
+  },
+  "formal_skips_equal": true,
+  "nested_python_skips_equal": true,
+  "metadata_discrepancy": {
+    "suite": "cs80_render_cli_tests",
+    "a48_displayed_order": [
+      "test_buffered_write_failure_is_reported",
+      "test_help",
+      "test_long_render_has_bounded_buffers",
+      "test_long_render_stops_on_write_failure",
+      "test_only_shadow_reservation_is_recognized",
+      "test_rejected_before_output",
+      "test_supported_rates_match_wav"
+    ],
+    "source_default_qualified_order": [
+      "RenderArguments.test_buffered_write_failure_is_reported",
+      "RenderArguments.test_help",
+      "RenderArguments.test_long_render_has_bounded_buffers",
+      "RenderArguments.test_long_render_stops_on_write_failure",
+      "RenderArguments.test_rejected_before_output",
+      "RenderArguments.test_supported_rates_match_wav",
+      "ResourceLimitDiagnostics.test_only_shadow_reservation_is_recognized"
+    ],
+    "a53_method_order": [
+      "test_buffered_write_failure_is_reported",
+      "test_help",
+      "test_long_render_has_bounded_buffers",
+      "test_long_render_stops_on_write_failure",
+      "test_rejected_before_output",
+      "test_supported_rates_match_wav",
+      "test_only_shadow_reservation_is_recognized"
+    ],
+    "reason": "unittest loads TestCase classes alphabetically, then their methods alphabetically. RenderArguments precedes ResourceLimitDiagnostics. A48 displayed all methods in a single global sort.",
+    "actual_pattern": "..s....",
+    "actual_skipped_method": "test_long_render_has_bounded_buffers",
+    "skip_identity_unchanged": true,
+    "skip_counts_unchanged": true,
+    "native_result_unchanged": true,
+    "historical_or_peer_files_modified": false
+  },
+  "release_qualified": false
+}

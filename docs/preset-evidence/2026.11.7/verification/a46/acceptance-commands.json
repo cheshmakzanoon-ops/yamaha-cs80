@@ -1,0 +1,180 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "cwd": "/tmp/cs80-session-1cee5a",
+  "commands": [
+    {
+      "label": "parse-native-and-two-validator-lanes",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+        "--inputs",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "Root supplies native and text-report ZIPs; fill native-inputs from template. Single-target scope intentionally omits --require-complete."
+    },
+    {
+      "label": "bind-parser-to-native-and-text-report-archives",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--target",
+        "windows-x86_64",
+        "--observations",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+        "--native-zip",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+        "--native-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+        "--validator-zip",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip",
+        "--validator-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-api.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/parser-archive-binding.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "Original APIs for native and text-report artifacts, plus parser report."
+    },
+    {
+      "label": "enforce-full-native-content-contract",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--inputs",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+        "--target",
+        "windows-x86_64",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-content-contract.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "Actual skip-review is complete and reviewed; enforce exactly 253 passes/two allowed formal skips again in final composition."
+    },
+    {
+      "label": "inspect-complete-install-artifact",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+        "--platform",
+        "windows",
+        "--architecture",
+        "x86_64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--artifact-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "Root supplies original install ZIP/API and exact run-attempt API."
+    },
+    {
+      "label": "inspect-exact-windows-docs-and-notices",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--acceptance",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/docs-and-notices.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "Fresh successful exact-source A41 receipt; original checkout/package provenance remains independently required."
+    },
+    {
+      "label": "compare-installed-vst3-to-actual-consumed-product",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--run-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+        "--platform",
+        "windows",
+        "--install-archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--install-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+        "--validator-archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+        "--validator-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json",
+        "--consumer-log",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job.log",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/payload-binding.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "The --validator-archive here is PRODUCT windows-vst3.zip, never windows-validator.zip text reports."
+    },
+    {
+      "label": "bind-original-ci-jobs-commands-uploads-and-consumer",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a46/bind-windows-originals.py",
+        "--repo",
+        "/tmp/cs80-session-1cee5a",
+        "--inputs",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json"
+      ],
+      "status": "prepared_not_executed_on_actual_ee0_artifacts",
+      "prerequisite": "All exact original successful job APIs/logs, four ZIP/API objects, exact-attempt jobs and artifacts collections, root acquisition receipts. This helper still leaves platform/release false."
+    }
+  ],
+  "overwrite_policy": "All output paths must be new. Preserve any failed check and write a separately named successor when justified.",
+  "final_gate": "Only after all reports, root-authenticated acquisition, individual skip/warning reviews and original repaired parity evidence agree: write NEW platform-qualification.json with release/global false."
+}

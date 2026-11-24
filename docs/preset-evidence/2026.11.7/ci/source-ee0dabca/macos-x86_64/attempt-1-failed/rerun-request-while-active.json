@@ -1,0 +1,20 @@
+{
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "requested_job_id": 138455976307,
+  "request_purpose": "Repeat the complete unchanged Intel native/validator job to investigate the original GUI meter failure; no gate or source change.",
+  "tool_result": {
+    "error": "GitHub API error 403: {\"message\":\"The workflow run containing this job is already running\",\"documentation_url\":\"https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run\",\"status\":\"403\"}",
+    "error_code": "FORBIDDEN",
+    "error_data": {
+      "message": "The workflow run containing this job is already running",
+      "documentation_url": "https://docs.github.com/rest/actions/workflow-runs#re-run-a-job-from-a-workflow-run",
+      "status": "403"
+    }
+  },
+  "retry_started": false,
+  "original_failure_preserved": true,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "recorded_at_utc": "2026-11-24T13:56:53.970843+00:00"
+}

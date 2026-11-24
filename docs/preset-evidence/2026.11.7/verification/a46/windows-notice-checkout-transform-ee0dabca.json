@@ -1,0 +1,338 @@
+{
+  "schema": 1,
+  "status": "source_checkout_transform_prepared_no_actual_archive",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "revision": "2026.11.7",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "target": "windows-x86_64",
+  "recorded_at_utc": "2026-11-24T13:20:37.837805+00:00",
+  "helper_sha256": {
+    "docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py": "2f4c7584a2de26f7b1c2e205ed28c05cd75515ffca3094e760ac851bfb239132",
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+  },
+  "source_files": {
+    ".github/workflows/build.yml": {
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+    },
+    "LICENSE": {
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    "assets/fonts/barlow-condensed/OFL.txt": {
+      "bytes": 4377,
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+    },
+    "assets/fonts/barlow-condensed/SOURCE.txt": {
+      "bytes": 994,
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+    },
+    "src/vendor/mts-esp/LICENSE": {
+      "bytes": 661,
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+    },
+    "src/vendor/libxml2/Copyright": {
+      "bytes": 1314,
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+    },
+    "src/vendor/libxml2/SOURCE.txt": {
+      "bytes": 667,
+      "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+    },
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt": {
+      "bytes": 1406,
+      "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+    },
+    ".gitattributes": {
+      "bytes": 204,
+      "sha256": "2e282213e917d805d7fc9659b46dca165d69923b90e3b8fab6f4315de10e8f07"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "docs/INSTALL_AND_QUICKSTART.md": {
+      "bytes": 18521,
+      "sha256": "c4a1397decd8e6e670b8713fbd05afb20ed6f319e2c8be094028684f8ed833a1"
+    },
+    "docs/PRESET_GUIDE.md": {
+      "bytes": 37423,
+      "sha256": "8cd25a3ad41da07e64ab3b5683801bc5131bae5d865933eafb2494054b57b18b"
+    },
+    "docs/CI_DISTRIBUTION_STATUS.md": {
+      "bytes": 35971,
+      "sha256": "c0070cc1258b2672549f02836d31291c2fd484df45519e66d96550ab03758686"
+    }
+  },
+  "isolated_source_checkout": true,
+  "shared_index_or_refs_modified": false,
+  "controlled_configuration": {
+    "core.autocrlf": "true",
+    "core.eol": "crlf",
+    "global_and_system_configuration": "disabled",
+    "global_and_system_attributes": "disabled"
+  },
+  "checkout_commands": [
+    [
+      "git",
+      "-C",
+      "/tmp/a46-windows-prepare-lhgj4ii6/controlled-checkout",
+      "-c",
+      "core.autocrlf=true",
+      "-c",
+      "core.eol=crlf",
+      "-c",
+      "core.attributesFile=/dev/null",
+      "read-tree",
+      "ee0dabcacb4cdff93f8803844f60348e0ceda6ed"
+    ],
+    [
+      "git",
+      "-C",
+      "/tmp/a46-windows-prepare-lhgj4ii6/controlled-checkout",
+      "-c",
+      "core.autocrlf=true",
+      "-c",
+      "core.eol=crlf",
+      "-c",
+      "core.attributesFile=/dev/null",
+      "checkout-index",
+      "--",
+      ".gitattributes",
+      "LICENSE",
+      "assets/fonts/barlow-condensed/OFL.txt",
+      "assets/fonts/barlow-condensed/SOURCE.txt",
+      "src/vendor/mts-esp/LICENSE",
+      "src/vendor/libxml2/Copyright",
+      "src/vendor/libxml2/SOURCE.txt",
+      "src/vendor/libxml2/ADDITIONAL-NOTICES.txt"
+    ]
+  ],
+  "attributes_command": [
+    "git",
+    "-C",
+    "/tmp/a46-windows-prepare-lhgj4ii6/controlled-checkout",
+    "-c",
+    "core.autocrlf=true",
+    "-c",
+    "core.eol=crlf",
+    "-c",
+    "core.attributesFile=/dev/null",
+    "check-attr",
+    "--cached",
+    "text",
+    "eol",
+    "filter",
+    "working-tree-encoding",
+    "--",
+    "LICENSE",
+    "assets/fonts/barlow-condensed/OFL.txt",
+    "assets/fonts/barlow-condensed/SOURCE.txt",
+    "src/vendor/mts-esp/LICENSE",
+    "src/vendor/libxml2/Copyright",
+    "src/vendor/libxml2/SOURCE.txt",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt"
+  ],
+  "attributes": [
+    "LICENSE: text: unspecified",
+    "LICENSE: eol: unspecified",
+    "LICENSE: filter: unspecified",
+    "LICENSE: working-tree-encoding: unspecified",
+    "assets/fonts/barlow-condensed/OFL.txt: text: unspecified",
+    "assets/fonts/barlow-condensed/OFL.txt: eol: unspecified",
+    "assets/fonts/barlow-condensed/OFL.txt: filter: unspecified",
+    "assets/fonts/barlow-condensed/OFL.txt: working-tree-encoding: unspecified",
+    "assets/fonts/barlow-condensed/SOURCE.txt: text: unspecified",
+    "assets/fonts/barlow-condensed/SOURCE.txt: eol: unspecified",
+    "assets/fonts/barlow-condensed/SOURCE.txt: filter: unspecified",
+    "assets/fonts/barlow-condensed/SOURCE.txt: working-tree-encoding: unspecified",
+    "src/vendor/mts-esp/LICENSE: text: unspecified",
+    "src/vendor/mts-esp/LICENSE: eol: unspecified",
+    "src/vendor/mts-esp/LICENSE: filter: unspecified",
+    "src/vendor/mts-esp/LICENSE: working-tree-encoding: unspecified",
+    "src/vendor/libxml2/Copyright: text: unspecified",
+    "src/vendor/libxml2/Copyright: eol: unspecified",
+    "src/vendor/libxml2/Copyright: filter: unspecified",
+    "src/vendor/libxml2/Copyright: working-tree-encoding: unspecified",
+    "src/vendor/libxml2/SOURCE.txt: text: unspecified",
+    "src/vendor/libxml2/SOURCE.txt: eol: unspecified",
+    "src/vendor/libxml2/SOURCE.txt: filter: unspecified",
+    "src/vendor/libxml2/SOURCE.txt: working-tree-encoding: unspecified",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt: text: unspecified",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt: eol: unspecified",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt: filter: unspecified",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt: working-tree-encoding: unspecified"
+  ],
+  "scoped_clean_diff_command": [
+    "git",
+    "-C",
+    "/tmp/a46-windows-prepare-lhgj4ii6/controlled-checkout",
+    "-c",
+    "core.autocrlf=true",
+    "-c",
+    "core.eol=crlf",
+    "-c",
+    "core.attributesFile=/dev/null",
+    "diff",
+    "--quiet",
+    "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "--",
+    ".gitattributes",
+    "LICENSE",
+    "assets/fonts/barlow-condensed/OFL.txt",
+    "assets/fonts/barlow-condensed/SOURCE.txt",
+    "src/vendor/mts-esp/LICENSE",
+    "src/vendor/libxml2/Copyright",
+    "src/vendor/libxml2/SOURCE.txt",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt"
+  ],
+  "scoped_clean_diff_exit": 0,
+  "notices": [
+    {
+      "source_path": "LICENSE",
+      "packaged_path": "LICENSE",
+      "source": {
+        "bytes": 34523,
+        "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+      },
+      "source_lf_count": 661,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 35184,
+        "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "assets/fonts/barlow-condensed/OFL.txt",
+      "packaged_path": "licenses/BarlowCondensed-OFL.txt",
+      "source": {
+        "bytes": 4377,
+        "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+      },
+      "source_lf_count": 93,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 4470,
+        "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "assets/fonts/barlow-condensed/SOURCE.txt",
+      "packaged_path": "licenses/BarlowCondensed-SOURCE.txt",
+      "source": {
+        "bytes": 994,
+        "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+      },
+      "source_lf_count": 16,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 1010,
+        "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "src/vendor/mts-esp/LICENSE",
+      "packaged_path": "licenses/MTS-ESP-LICENSE.txt",
+      "source": {
+        "bytes": 661,
+        "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+      },
+      "source_lf_count": 5,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 666,
+        "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "src/vendor/libxml2/Copyright",
+      "packaged_path": "licenses/libxml2-Copyright.txt",
+      "source": {
+        "bytes": 1314,
+        "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+      },
+      "source_lf_count": 24,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 1338,
+        "sha256": "f06bad318a967a790be27cc90235573a2548a2125f6c54b6129d1c802ed201a8"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "src/vendor/libxml2/SOURCE.txt",
+      "packaged_path": "licenses/libxml2-SOURCE.txt",
+      "source": {
+        "bytes": 667,
+        "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+      },
+      "source_lf_count": 15,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 682,
+        "sha256": "0afbd154bd05bb26fd9d6fc2db195da5b7347b5cdde10dd39d320a6c3cfbbe2c"
+      },
+      "exact_full_lf_to_crlf": true
+    },
+    {
+      "source_path": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
+      "packaged_path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "source": {
+        "bytes": 1406,
+        "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+      },
+      "source_lf_count": 38,
+      "source_cr_count": 0,
+      "source_nul_count": 0,
+      "controlled_checkout": {
+        "bytes": 1444,
+        "sha256": "773ec3c805a88806812048182c3b0fa90b4bc18012ea4dc131e01ba3729bd337"
+      },
+      "exact_full_lf_to_crlf": true
+    }
+  ],
+  "guides": [
+    {
+      "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+      "packaged_path": "INSTALL_AND_QUICKSTART.md",
+      "expected": {
+        "bytes": 19220,
+        "sha256": "747e177ad44ea2bf748da25d2c704bf48929cccb3d2e23a2bdad207da70e1acd"
+      }
+    },
+    {
+      "source_path": "docs/PRESET_GUIDE.md",
+      "packaged_path": "PRESET_GUIDE.md",
+      "expected": {
+        "bytes": 44635,
+        "sha256": "4a7d19ee6b83de3a1458d582fa4d64528b7a586561b55060f2d05b0b5371ad33"
+      }
+    },
+    {
+      "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "packaged_path": "DISTRIBUTION_STATUS.md",
+      "expected": {
+        "bytes": 40415,
+        "sha256": "0c423d7d73a48a2b2f1729b305cd997d8fcbe9bb025a4f39fec9fc0fc4b68abf"
+      }
+    }
+  ],
+  "actual_ci_git_configuration_observed": false,
+  "actual_artifacts_checked": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "checker_sha256": "5d3ac203c38356f736f07351507723069dc9528e6cee9e9b577a520bf71ae2ee"
+}

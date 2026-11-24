@@ -1,0 +1,106 @@
+[
+  {
+    "label": "bind-parser-to-native-and-text-report-archives",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--source",
+      "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "--run-id",
+      "45397189410",
+      "--attempt",
+      "1",
+      "--target",
+      "windows-x86_64",
+      "--observations",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+      "--native-zip",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "--native-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "--validator-zip",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip",
+      "--validator-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-api.json",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/parser-archive-binding.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:52:39.471000+00:00",
+    "elapsed_seconds": 0.09519662899765535,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-bind-parser-to-native-and-text-report-archives.log",
+      "bytes": 140,
+      "sha256": "e2e0ba57e36be26aad8ead272499e81d1449184306e28afedce2982d16ff16cc"
+    }
+  },
+  {
+    "label": "enforce-full-native-content-contract",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--inputs",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+      "--target",
+      "windows-x86_64",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-content-contract.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:52:39.471218+00:00",
+    "elapsed_seconds": 0.195761359998869,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a40/source-ee0dabca/verify-native-contract.py",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-enforce-full-native-content-contract.log",
+      "bytes": 98,
+      "sha256": "4563404579c2f8419342ad234fe59b2f32f7e69aa42df9e0cacec36a632e46bd"
+    }
+  },
+  {
+    "label": "inspect-exact-windows-docs-and-notices",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--archive",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "--acceptance",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/docs-and-notices.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:52:39.471537+00:00",
+    "elapsed_seconds": 0.34214985499784234,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+      "bytes": 17700,
+      "sha256": "5d3ac203c38356f736f07351507723069dc9528e6cee9e9b577a520bf71ae2ee"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-inspect-exact-windows-docs-and-notices.log",
+      "bytes": 329,
+      "sha256": "8d901e595e4139d3517cd2991ee1dd27a6dccca01301d300af5b1c16884c65a3"
+    }
+  }
+]

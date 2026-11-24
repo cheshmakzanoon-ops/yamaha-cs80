@@ -1,0 +1,2513 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "macos-arm64",
+  "counts": {
+    "registered": 277,
+    "passed": 275,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "testcases": [
+    {
+      "name": "cs80_wsc_held_endpoint_tests",
+      "number": 1,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0100538,
+      "output_sha256": "70bf3d645e5aec8a6091f084a68dda394e6857808ed7d4c6f060434b007fcc26",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_legacy_sub_lfo_oracle_tests",
+      "number": 2,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.43858,
+      "output_sha256": "af7a8b6fb006ecf02787a0069c08b2aaa85a02c3cd10e207117760640fe862bf",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_ig00156_batch_tests",
+      "number": 3,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0135431,
+      "output_sha256": "dc03f287932120aeda8f676a1693fde7de7d4bb91270b4a86425a7f586ec5731",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_engine_tests",
+      "number": 4,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.37336,
+      "output_sha256": "11935e701a37ce375f6a0b8b928a009df31789876d1bc1faa5a28959737ca305",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_scheduling_tests",
+      "number": 5,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.17598,
+      "output_sha256": "870fed96c268973da07d1d99b11649f961a10d7a00f94b13c09884a30ac1e388",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00151_zero_ei_tests",
+      "number": 6,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0228829,
+      "output_sha256": "7e5a28e60430d423651cb2690a48c41f0ffdd3326ab98d0f961999a5d86cdfc0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_event_timeline_tests",
+      "number": 7,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00410362,
+      "output_sha256": "156a213314b3a93ab9475c2f31caee51e880ae3325632f888b6362d114df1f16",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pump_until_tests",
+      "number": 8,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00315367,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_admission_tests",
+      "number": 9,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 15.0071,
+      "output_sha256": "848818d726d26e887a7fda2252ad72f06132278b678d2c3d066cf12dec8a28cb",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_package_binary_identity_tests",
+      "number": 10,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.381118,
+      "output_sha256": "664a8738ac99a052ca2b0316fb51da9fcd7949a07a3f7d8a033d471b7b5d4a87",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_packaging_notice_tests",
+      "number": 11,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.13686,
+      "output_sha256": "87a251f894ba49cbd83091ae47f994f3732a5d81f567e9d58cdb5a550c53c026",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_factory_audition_artifact_tests",
+      "number": 12,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.21402,
+      "output_sha256": "320f0f325393e1620859d868fe7896f85544c6f0df7c0d7cf389100d2de04e86",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_response_2026_11_6_comparison_tests",
+      "number": 13,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.20267,
+      "output_sha256": "55c5b0a8d4d4ccf973f0374b28cfa8de878eeb0c61ba79e03d834f678cf6bb04",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_ci_juce_provenance_tests",
+      "number": 14,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.19862,
+      "output_sha256": "93ebac4ac80bf034a268d555390aca71400a7da547bb1fac6bdbd70543ab192c",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_pluginval_windows_download_tests",
+      "number": 15,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.167833,
+      "output_sha256": "afae4b31062ee74e07f3c0b1281ae5546eec16e0ba38cbbda9b5433ba14598aa",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pluginval_macos_download_tests",
+      "number": 16,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.121076,
+      "output_sha256": "4e5ef55798e16c34781d19d4735e7668802d9c77474981610be1cc200469e937",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ci_bundle_verification_tests",
+      "number": 17,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.243582,
+      "output_sha256": "f6c9fae60da2639921358a29f109cc8493c9b2742078d75d9b8f2d8d86704d59",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_windows_installer_preflight_tests",
+      "number": 18,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.08187,
+      "output_sha256": "bc2acce0ae24e1fd158448b3fe1082c6bc7c31457c0355f786ee0c204ac00767",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_parity_harness_tests",
+      "number": 19,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.4958,
+      "output_sha256": "0dd4fd1b9512fcd599729bbe58977f96ee58c7da31c5193dfa6abf10bb6807f1",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_trash_safety_tests",
+      "number": 20,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.785812,
+      "output_sha256": "3fad8b12adc3ef207d1e4e13174b85387b5616a9b76e015c5f87d77e8e94f290",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_signature_math_tests",
+      "number": 21,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 8.22248,
+      "output_sha256": "e0baaf48dab472448ce1f644d371b1f6e110173dd2b00bce1ae2db5c35c8ada3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_macos_installer_architecture_tests",
+      "number": 22,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.72733,
+      "output_sha256": "48f106425c538bc7283d919965791f98903236d1c69a5a25f51515de7ffdfb28",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_continuous_voice_circuit_tests",
+      "number": 23,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0273996,
+      "output_sha256": "05dca6856f1d89ca0e665d38cad4d2ac3d6193d516f6c91c1c43502fb9825b0b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_continuous_voice_circuit_audit_tests",
+      "number": 24,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.751671,
+      "output_sha256": "061a158ee262f6177839f863d824581ae698daf8d27faa551ddab610c50dcaaa",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_lfo_scope_preview_tests",
+      "number": 25,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00825112,
+      "output_sha256": "66904eac588e50ee4c009884f5470bfc5500d610c96edd62a735ba11a5af4aae",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_preview_math_tests",
+      "number": 26,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00864254,
+      "output_sha256": "03a388f112d5726993a595675285429a6ee15af36f79237386994a74ec63c4b3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_meter_display_tests",
+      "number": 27,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00412283,
+      "output_sha256": "4f95996d1263ed4e55b981b526fbcf70c0ed494854dc12c230491571c5ba8cf4",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_voice_activity_tests",
+      "number": 28,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00756267,
+      "output_sha256": "b09aa34883fba8693a42b545163bdad956a122f01df2173675a8b0d7920d3868",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_meter_tests",
+      "number": 29,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00805471,
+      "output_sha256": "47fd6ebd9cf1b05bc08e145337ae17a520874384079016e471f8f78ea63808d0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_meter_audit_tests",
+      "number": 30,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0137733,
+      "output_sha256": "8b5340a1f73265f004c302c534cd0c2756bba3ff61391cf060577da420c0d233",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_pressure_audit_tests",
+      "number": 31,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.352728,
+      "output_sha256": "90122e944ab9df9f4c767908a3154b470f838bd3fdcc3faaa0cb9752aeebdba6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_captured_keyboard_events_tests",
+      "number": 32,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.002384,
+      "output_sha256": "42f1156ecc7b5ace05dac21dceb0b1003b87103c1ba5b2cf04a9025f352f2b56",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_event_queue_tests",
+      "number": 33,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00426817,
+      "output_sha256": "fe4c04ff69b8452d6d338aff5729653263fe9e6da7a5eb1a43a90db0bc2be1a8",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_epoch_interleaving_tests",
+      "number": 34,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.65824,
+      "output_sha256": "9302bc66fd9aa808aedbbf1e99c50e5bb7db535828a46419491a9fc80cefee7e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_parity_mode_tests",
+      "number": 35,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.29716,
+      "output_sha256": "e843fc592c2b76eafed0a5664929b7067dd7d28bb409e607521507e217ab2f2c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_source_performance_tests",
+      "number": 36,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.1783,
+      "output_sha256": "10d597bb76f42db09dca51a1da476dedfd3a56e07443836994928f56201ee6bf",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_source_performance_audit_tests",
+      "number": 37,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.4271,
+      "output_sha256": "0f2303975079d67835e6f6a78bb886261b7a8f00c323621838de9585c7a3d73d",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_envelope_precision_tests",
+      "number": 38,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 54.5944,
+      "output_sha256": "e678b393864a6e8d2d4371e3f4ae38529bb6ff45507f6bfd0196c24684ea8f1a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_default_history_tests",
+      "number": 39,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0322281,
+      "output_sha256": "a9139740dea2d7a2c4fb79ef02e16eea4baf21e4ccc412f28cfd7543a324b378",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_default_history_missing_tests",
+      "number": 40,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0195775,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_default_history_truncated_tests",
+      "number": 41,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0356222,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_idle_fallback_tests",
+      "number": 42,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0473222,
+      "output_sha256": "333f8aa69ad6ae8de6f1aa2254f99d93eb414c03734ba6fea662d80fd73f7b04",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_idle_fallback_missing_tests",
+      "number": 43,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0161719,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_idle_fallback_truncated_tests",
+      "number": 44,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0132214,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "number": 45,
+      "result": "formal_skipped",
+      "lasttest_status": "Passed",
+      "seconds": 0.0212848,
+      "output_sha256": "ba9ee8b1a8224515215fc53574e4450605e55c4083a044677fecb6be612df98c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_cap_missing_tests",
+      "number": 46,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0146991,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_batch_cap_truncated_tests",
+      "number": 47,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0120295,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00156_cache_tests",
+      "number": 48,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0991739,
+      "output_sha256": "b900991404936606d77d28d93facbef93ff9d30ef6e8816e5b577b3aeb9977b3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00156_filter_tests",
+      "number": 49,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.489492,
+      "output_sha256": "aaf62a457a3396e33f77199b31076ab5d1690b7d3932dac6df9dd1f1c685d079",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_envelope_rc_model_tests",
+      "number": 50,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.223106,
+      "output_sha256": "c6eaf3df24831094dbd26f813a84e762bf26bc90b5c7d62019f1bf01becf473a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_live_envelope_level_tests",
+      "number": 51,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.44573,
+      "output_sha256": "974a00c663187651c99813643748eb8fbd70191b9d31505f94d2c6d2892f6649",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_live_envelope_timing_tests",
+      "number": 52,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.97896,
+      "output_sha256": "f05670a16f7d9cba3ad47c26a4c637772d184074b9fa2a58cf832f3a348858c0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_active_tail_continuity_tests",
+      "number": 53,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 12.3218,
+      "output_sha256": "d11e6621b47476717dcf306df4f204a0555af940618d92b719ad827a66367ebc",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_core_tests",
+      "number": 54,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.8916,
+      "output_sha256": "9ac7b4501ca248a9a111b51081ba177a644c4f1a61767e078a55fd68ba684c8d",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_voice_release_tests",
+      "number": 55,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.02012,
+      "output_sha256": "97f6db9ef8e9458a1675a6559703cc4d08b299539745e19e7687ad77a2b744de",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_sixteen_voice_release_tests",
+      "number": 56,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.14915,
+      "output_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_unison_glide_tests",
+      "number": 57,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.79885,
+      "output_sha256": "ab19ee488945cb014641df05dc3b02859595d948e380cb66223337f6cda55b11",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_unison_detune_latch_tests",
+      "number": 58,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.187631,
+      "output_sha256": "db35bb08b48cd783c67f649adb814e8f12a69319e0bd7825247f2d31dc38108c",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_pedal_release_tests",
+      "number": 59,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.944282,
+      "output_sha256": "b5f74258a5654eb477a9cfaf671c2bf4b6e600cb5f90eb2e0588e4f214f952df",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_high_resolution_velocity_tests",
+      "number": 60,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00371317,
+      "output_sha256": "b32947592583501d098a38ff0a7dcccd64b64894cd5f84ca8ff5d411b8e4b485",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_controller_reset_tests",
+      "number": 61,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 8.25805,
+      "output_sha256": "d5d7d67d457c11ffa2cfc6720cbc9b63f6ed202a2a52b76e94383c3f40d5ea46",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_experimental_oscillator_tests",
+      "number": 62,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.4062,
+      "output_sha256": "fea4f935a134463b3d26f71faae1f9d21804f2407886b82977795383938bbc52",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_source_factory_integration_tests",
+      "number": 63,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 208.45,
+      "output_sha256": "11e90a1a6d03f73143d7b7504d9b08ef866545f0ed571e39648e5dfe1d38c10d",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_source_factory_tone_tests",
+      "number": 64,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0641395,
+      "output_sha256": "3f310e35f894cb1d9b4937759cb58dc562ed3fbb471204c80cc93ab2b578ac00",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_hardware_control_tests",
+      "number": 65,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00490042,
+      "output_sha256": "169236fd954dbebb8311cab831b613a35bb9377de3d32cab9dc86fdf6b8217a0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00156_reference_tests",
+      "number": 66,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0282516,
+      "output_sha256": "44291e7c04c2947ae6410f281d6b5a97869cb3123a16f45b1c32941e76b8b13b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_contour_reference_tests",
+      "number": 67,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00557529,
+      "output_sha256": "688aea310485e3e25e7556f7d5a643699d85fb78ac6becf2f58919a9bd5c9596",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_loaded_control_reference_tests",
+      "number": 68,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00322442,
+      "output_sha256": "af3497bf213d7908d6b7048ce10b55dee4a336a1bba9dc0aca7833ba0f9e214b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_loaded_control_rank_tests",
+      "number": 69,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00598408,
+      "output_sha256": "5922f49e95776a2b0d9fcb327e97d043fe02ae9dd1d95fb966a33ba7380c3bdb",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_loaded_control_transient_tests",
+      "number": 70,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0103234,
+      "output_sha256": "7b6169cf2bc86b897ee3e55d5631399c73c3a651e69effc043e6b7d6806176c2",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_tap_integration_tests",
+      "number": 71,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.36658,
+      "output_sha256": "0dbe30c83f6c3715e5c8c13ec7b1921fdae761e80d2b92525869a357458700e0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_tap_circuit_tests",
+      "number": 72,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.21089,
+      "output_sha256": "4f1c37c6c2d93732414d230c5a42a7c358370b3e6177fd640204baac8c5a81c2",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_output_taps_tests",
+      "number": 73,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00496587,
+      "output_sha256": "6f1db6da4437c6bc5f60444cd057e372a3feb73f3490d7bcc505dcce259f2b07",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_level_control_tests",
+      "number": 74,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0206441,
+      "output_sha256": "d743491c26c93f7d41c64e7892866f933c8b962097e02627c6ad8b6803047bd5",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_resonance_control_tests",
+      "number": 75,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0108708,
+      "output_sha256": "a2123d35f81ecda84cfe2110b5269bfad834d350cfcecaf2bce7726e25e8a6c6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_oe2_filters_tests",
+      "number": 76,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00969717,
+      "output_sha256": "a7378bb2204d0cbab1b6a4f5ac8aa854fc2d5069eded0987f3b09ed7391a2dfa",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "number": 77,
+      "result": "formal_skipped",
+      "lasttest_status": "Passed",
+      "seconds": 0.00283396,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pra_wah_integration_tests",
+      "number": 78,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.44076,
+      "output_sha256": "f66719fdfad3cd1c2387f3d2e6c5358f82ba03daed07bb3ac689e523808ed53e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pra_wah_circuit_tests",
+      "number": 79,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.804052,
+      "output_sha256": "2a1386c2605b6cd15667ed9fede97799237fd34384d55a3be4dd100c6706a350",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pra_wah_tests",
+      "number": 80,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0377311,
+      "output_sha256": "8544b1beeed7fc96a8cb194d398e5441fbf3c533ffd3d4d57807c7d99240ea8a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_bbd_chorus_tests",
+      "number": 81,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.780172,
+      "output_sha256": "0ed7344a73a0d7d8ade878b98ba2706c66a5ff0b6107c556f0fa7c8f43489cb8",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mn3001_packet_tests",
+      "number": 82,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0246607,
+      "output_sha256": "c7a6c4adfd83cbb822781ec8e143e53ea634236a4f67f5a953026c9eba65d5f4",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_performance_control_tests",
+      "number": 83,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.1143,
+      "output_sha256": "1bdc911b61eaf92b79169f7d24af53321f0a5d21ca13791a274143ba9123468f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_validator_diagnostic_selection_tests",
+      "number": 84,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.24028,
+      "output_sha256": "9f78f0146c4f3ad2b74eac6832a8183edb8e5f6b081686ba962e66b5ab007ed1",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_validator_retry_tests",
+      "number": 85,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.84141,
+      "output_sha256": "db7be3b6d18e153a28f4ed4cf453fc3decdadb850bf44f756f0d21cb0e461a2d",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_validator_exit_classification_tests",
+      "number": 86,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.556512,
+      "output_sha256": "71775862eff3b1cf309fae5dcc7e3dde6b07102c933d337192f14c4fc6e619ee",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00156_nodal_tests",
+      "number": 87,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 20.2694,
+      "output_sha256": "d75d299d18d5bce1f511befbbb92087dd1a9a0583b1696a7b1acfa989501aae2",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_ig00156_top_octave_tests",
+      "number": 88,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.47484,
+      "output_sha256": "d0b4ea7bf4edabd6c13f8fb7d500b69016f3ac055ff5082ea346e2a98765e50a",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_oscillator_promotion_tests",
+      "number": 89,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.65791,
+      "output_sha256": "2b5b0e4c9b22d501044ba76d8e8dc4f19b5c6d636729bbe95898ac165e91093c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00151_vca_tests",
+      "number": 90,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.42618,
+      "output_sha256": "1807467c14542cbab07a615115c3a1a8df58830ab7ff7ba6c70c1f3c2b139970",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_tolerance_drift_tests",
+      "number": 91,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 7.15485,
+      "output_sha256": "b93008e5bb763ab938ff9d29c62925a01e55780cc2da8cfc7aec22f982552a90",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_fx_loudness_core_tests",
+      "number": 92,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.101886,
+      "output_sha256": "0e5f2628dd978e501963438f5088292626903de2562ad4f37e4fe1fef0b6e35c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_fx_loudness_gate_tests",
+      "number": 93,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0165201,
+      "output_sha256": "ec0deb59af302b66370656a5eeaba25cbeb2b74f2657b30d98665fbec9c86eee",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_arp_rate_lifecycle_tests",
+      "number": 94,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.209631,
+      "output_sha256": "54acdd553f6173aee5981c0e80ec5a8ddf1c094523619f7809c4aafcbe8e55ea",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_arp_pedal_lifecycle_tests",
+      "number": 95,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.195435,
+      "output_sha256": "124ba823b6e2801c0d05ad98e2422e051270218644baff4322a30866aa89d975",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_arp_repeat_lifecycle_tests",
+      "number": 96,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0909792,
+      "output_sha256": "46814f52745c4933e5f152d80b00d4006b53833f6b7f09a961d9cb23d2f37f64",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_quiet_fx_rack_tests",
+      "number": 97,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.15151,
+      "output_sha256": "d039505a78827e757cc3c3203ae3a1b77cbf4d6914a0ea3a1a53960376384f93",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_fx_tape_lifecycle_tests",
+      "number": 98,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.039077,
+      "output_sha256": "87c9f8a309a8fdec3b4f6f5fb901f657b6405bed667eb97199f6a0947e1a49cf",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_external_interpolator_tests",
+      "number": 99,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.7953,
+      "output_sha256": "20804f99166e47142267fffcd853d08d0e76a84fb95058404a2bb4822c4fa1be",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_oversampling_tests",
+      "number": 100,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.27665,
+      "output_sha256": "bb80f0fa8e6f79e75126b8acf0e565a8569d06d871583a29cb4641885dfe2a7c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_smoothing_tests",
+      "number": 101,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.27182,
+      "output_sha256": "d74a0949b1ce3c42fa1dc41ab857af9ece194df198b4c5c7c45149b07ab5aa3f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_pitch_bend_range_tests",
+      "number": 102,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.1693,
+      "output_sha256": "2299dbb1b6d7d03a014dffdfd12935de2a97f1e81b0eb01bdead157aa757a79a",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_mpe_member_onset_tests",
+      "number": 103,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.99744,
+      "output_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_timbre_combination_tests",
+      "number": 104,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.679028,
+      "output_sha256": "265773373b57f885e50cbe20136ceab1f6f032c7535d627fb78d069b45a051f9",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_pressure_combination_tests",
+      "number": 105,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.392673,
+      "output_sha256": "301d0d2b4023777223d27d211a84a086d4274b58edc6b2b47bf919ec2cbd881a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_released_target_tests",
+      "number": 106,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.58269,
+      "output_sha256": "e542d3fb9909359dfc8805ce1db1e709ea3e660bdd0273926a4b1fe8acc25535",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_master_smoothing_tests",
+      "number": 107,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.242032,
+      "output_sha256": "a7fa0455b8d20e8c82e42d1a13a515b5264f7ecfc1dffa27eae057801fdd50c6",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_output_listening_tests",
+      "number": 108,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.13768,
+      "output_sha256": "cdca4ea7f350e4994ce403c63d241e8fd15507200e09e5f9801cc88616ea1d60",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_noise_tests",
+      "number": 109,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.39389,
+      "output_sha256": "81b1ed5dc41c7b8113e13e003b0d09343b1af84d9c1e7a0a2f6d46351ca9c479",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_poly_pressure_routing_tests",
+      "number": 110,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.826922,
+      "output_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_host_automation_curve_tests",
+      "number": 111,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.27941,
+      "output_sha256": "37633e55a92d8463ff546c0531f88f6a0307a3bf998dd07693aa28ec4bc94299",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_free_running_voice_tests",
+      "number": 112,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.93715,
+      "output_sha256": "db497342b66943598e3d6932aa038b6329bf4b080aaf6f18acd2b3a0cf978bab",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_kas_scanner_tests",
+      "number": 113,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.58096,
+      "output_sha256": "6e19dae681955eb0ea8c217785b5970a616d590e329fe89a616e0a18cc989589",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_scanner_ordering_tests",
+      "number": 114,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.789526,
+      "output_sha256": "de2d4808faa6554b4ed7f8e148df5aceb51c33d5a5d08d3cbd65ba7d3a174372",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_scanner_overflow_tests",
+      "number": 115,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.979104,
+      "output_sha256": "3efa002db7b7b592ad200c74615b8f2d376a78c8621e115af3c264e69cb8b722",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_contour_key_map_tests",
+      "number": 116,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 9.0284,
+      "output_sha256": "f1176d929e25e238a165bad877482325b95e45eba4c98578490cf54d2de3791f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_touch_circuit_tests",
+      "number": 117,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.59638,
+      "output_sha256": "85324b700903617ce5968a216b6baa1450cecae31c16fe75315c02fa5a060ae3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_master_bend_routing_tests",
+      "number": 118,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.05709,
+      "output_sha256": "1684abacdfc5dd986586be292e71fdf3d8297e96bc9cd8da8f289e616be722ae",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_tuning_midi_tests",
+      "number": 119,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 12.8826,
+      "output_sha256": "80d1234774a0595e911c7e1d18132be61f2164decf085ebf1821dffcc8919464",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_tuning_frequency_domain_tests",
+      "number": 120,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00572125,
+      "output_sha256": "5d8cc6c8aa479153bbee042417222f837d36b258a227b9be97d1ebb6ab4e7bf7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_tuning_robustness_tests",
+      "number": 121,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00639883,
+      "output_sha256": "ae6774941f0ba4054e728bac2bb3469998417b837a86687bbdb1bf1e1741c181",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_esp_native_tests",
+      "number": 122,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.006186,
+      "output_sha256": "41342f486110cb58bea750d9e3a15106ab451ce582b714e8670277a6654adc0f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_esp_integration_tests",
+      "number": 123,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.254478,
+      "output_sha256": "a10b361580252dd6dd19a2dd98e88a8981c1a84d41759207ee05aee761862692",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_esp_channel_tests",
+      "number": 124,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00614125,
+      "output_sha256": "ca879bdc7a00ff19f294357e97e454a5ec651bce1c49131e178358f6e4e8db5a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_esp_fallback_tests",
+      "number": 125,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00308192,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_esp_windows_macro_tests",
+      "number": 126,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00299846,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00150_sub_tests",
+      "number": 127,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 8.56792,
+      "output_sha256": "6e7e987607764ed7c245f02f781ecd25288719bb15d3402f21f9c072da29dee9",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ring_modulator_circuit_tests",
+      "number": 128,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.61205,
+      "output_sha256": "80ccffdf5c6cfc68428281b138535a17521b933f060b540298783ea8ab1fa8d8",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_oe2_stereo_chorus_tests",
+      "number": 129,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.779453,
+      "output_sha256": "97c344995ae35b1dc063d1c3bc7908bace16b520a150a1fc529edf432d594764",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_pra_optical_cell_tests",
+      "number": 130,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.51297,
+      "output_sha256": "02d46931a59967c38d65cdfa99ae699f8f0bddb2c60f3062254c0fd6ad71f245",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_lfo_random_switching_tests",
+      "number": 131,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0743842,
+      "output_sha256": "238e0db0126905b7de82fc42c4b9922c13c5bc2da636343f4027742458e55701",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_lfo_random_variable_rate_tests",
+      "number": 132,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.108585,
+      "output_sha256": "24b9be6b763ba6ecd526fdb24ea328c721c140c9713fe44439146bcc3538869a",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_modern_lfo_tests",
+      "number": 133,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.305,
+      "output_sha256": "48535e9e03593c2ecaf8ace4de9eed2632fde380f2ed4a99d7bb2f6e1cc71c06",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_tests",
+      "number": 134,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.45362,
+      "output_sha256": "41e46d6d29d4d69e3844d0c54a3d41c9fa23d3a4873f3833342c2687f5f21e4a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_transport_rate_tests",
+      "number": 135,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.112753,
+      "output_sha256": "0e1738e4ee9078791eb7f101476dfe3f286ffbfe0ebce3c5e5151a8fb51db72b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mono_mseg_routing_tests",
+      "number": 136,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.369599,
+      "output_sha256": "0c323885336d5326ad53cba9a387dc819a87b4189b7c0e9ecbf1eef3eefbb391",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_retrigger_rate_tests",
+      "number": 137,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.478647,
+      "output_sha256": "83c63a6db1b147043583dbd054f9424ec9d215b1e4079302f19eb35226592236",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_combined_interaction_tests",
+      "number": 138,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0183269,
+      "output_sha256": "90e8d260919d457fe02f974fad00e74c2a96b667341e6463b03c5f267110de2c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mod_matrix_tests",
+      "number": 139,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 20.7903,
+      "output_sha256": "9bbb9c56bc3a7afd7ed2f7adf6aee239d282ae9c3ce8013683af1d7651c3d956",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_modern_fx_tests",
+      "number": 140,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 32.291,
+      "output_sha256": "51de6825b021d8f6ac50a1170682a16ffdd125435affcaafe05ac2e1fe8744f2",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_delay_line_tests",
+      "number": 141,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.021483,
+      "output_sha256": "3fee0a63bd7643b0b3a54db3728bb1040be602a4634c28d6edb1bb179788e2f0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_plate_reverb_rate_tests",
+      "number": 142,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.82365,
+      "output_sha256": "a59d6937f16548a0480bf349d3e485294e186a09d6b2b15240d986663813bc38",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_tape_echo_time_tests",
+      "number": 143,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.52863,
+      "output_sha256": "70396a2ad750f868a674e5830f644d82a07269d809c6ef3ed89fb0db5bc87efa",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_drive_control_cache_tests",
+      "number": 144,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.283889,
+      "output_sha256": "9ae913b1490bbc24f4005ba84159de8aa033883f98263fce496367e643d33066",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ensemble_rate_cache_tests",
+      "number": 145,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.26794,
+      "output_sha256": "53ea91984b8c0ee1d3655b530c21f11b3e8db91012e705cd94df94793d4e46d7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_tape_echo_control_cache_tests",
+      "number": 146,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.72307,
+      "output_sha256": "245f69fde3adbaeeefbe11a6115c1bfb1b669494634aabbd1fd9cb0ed240ecfe",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_instrument_body_tests",
+      "number": 147,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.42475,
+      "output_sha256": "16053f8dddabf5f955429314ca425b4706d4874efe28d52ed61b9ea4954b4c41",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_tine_strike_dynamics_tests",
+      "number": 148,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.151375,
+      "output_sha256": "9d4101a02dcafc2126134d38f97705032fc357d1f9c340c373654ac89196ad46",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_struck_body_dynamics_tests",
+      "number": 149,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.85905,
+      "output_sha256": "47fd83b3ffd3994047ca38711eca753901efc65b12671f48c523e95ec1001144",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_instrument_body_variant_tests",
+      "number": 150,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.515587,
+      "output_sha256": "4b7cb44d4c31c159ac960be31614164c166f8d64d025dfe6ed13321e1039d1b0",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_vocal_body_tests",
+      "number": 151,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.69963,
+      "output_sha256": "62b2a730e1b22c0c98515561f8a736dc19e2c02c487e4fa152c3636254579571",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_bowed_body_formant_tests",
+      "number": 152,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.7908,
+      "output_sha256": "2f2c55cb182e6506fb30182f381901facfdef552e09c0b653df35991a97c052e",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_piano_course_geometry_tests",
+      "number": 153,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.72125,
+      "output_sha256": "f732447329029d06b2570e836b1bcc10c09988d79c758db5d0ed6dc1db8d7767",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_piano_partial_decay_tests",
+      "number": 154,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.62047,
+      "output_sha256": "6127dc37a9fc0c600dae0ba0b7558a67c687ba8f57c61c570216b1b440929627",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_body_noise_rate_tests",
+      "number": 155,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.95042,
+      "output_sha256": "bd5375ef2b4fc937df9e46c2d49437d356be7b63c7ecb831b3bfbbfb1d75be1f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_string_body_formant_tests",
+      "number": 156,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.66366,
+      "output_sha256": "c01f8c940dc71e6baae69f622803b5b323caf87247a6b0f255025d68ec3f75cf",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_low_choir_spectrum_tests",
+      "number": 157,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.21082,
+      "output_sha256": "411faec0861488daa502b3bb2fa141714ca17ad340b0d9cfaa59a9bf1cf9f826",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_wind_body_formant_tests",
+      "number": 158,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.22554,
+      "output_sha256": "0bd39f0bb92dcb6baea7839ff0fd936062b53db1c78095f8e86d32d2967c9af9",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_material_body_tests",
+      "number": 159,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.467583,
+      "output_sha256": "c729acd53c6ddc9c68f961039a6104d1fe1864a9bb6e7d8d0c06c1ad7eebb140",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_plucked_material_tests",
+      "number": 160,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.63325,
+      "output_sha256": "6ab78d1d61c460bf83288df213cf83ca099235ef0a1569a5083e99232246cf36",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "number": 161,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.99291,
+      "output_sha256": "7144ac66d4d9bc7e5e08e0d1a0fd2b034671fe60c3ae4db0c525971e4c4f5148",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_body_articulation_engine_tests",
+      "number": 162,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.0253,
+      "output_sha256": "bf72d66d3e0a0e83a7edd87444edd3730279bdbf4ceea835cfce5989681936af",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_original_articulation_tests",
+      "number": 163,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.63852,
+      "output_sha256": "65f3421114577814dd6b0a3d46330f081a0dce39aa3d53bd307f2d5e318e86ea",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_response_tests",
+      "number": 164,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 29.4886,
+      "output_sha256": "9dec78a0b1e6e76442a89e63e6b95c081487244569d008ae568851c81e6945e9",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mallet_preset_refinement_tests",
+      "number": 165,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 7.83084,
+      "output_sha256": "e2b68f1091fe34fe4af3637d4978336781e1871d9edd76d0012d95c22ef77fbc",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_bell_material_preset_tests",
+      "number": 166,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 17.2798,
+      "output_sha256": "2c7ca0e39f8c0f2ec15b81835084eb97b9aa1373300d2255b0141d63c7428319",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_plucked_material_preset_tests",
+      "number": 167,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 11.6476,
+      "output_sha256": "8dced582add2605b00235add30bf43326df16e7af981d09757230889c008ec71",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_bass_plucked_refinement_tests",
+      "number": 168,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.3623,
+      "output_sha256": "41fc5077d64ef787b8d15fa10ff99545bba5afaff36625c2e98977201e96fd1f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_brass_organ_refinement_tests",
+      "number": 169,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 33.6445,
+      "output_sha256": "655702807f15269b998fce1958c239a4009b12612cd35f70541e0f4b39e63169",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_wind_string_refinement_tests",
+      "number": 170,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 45.2511,
+      "output_sha256": "60e979086c7005e36fc8ac349e287fff377b21453583af55923172325da8c124",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_pad_poly_refinement_tests",
+      "number": 171,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 64.9998,
+      "output_sha256": "1607b03fc38d4eb224aa1da72eebf83d42af896b4d115129ccf94c90cd57ed0c",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_fx_refinement_tests",
+      "number": 172,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 9.26089,
+      "output_sha256": "1fe2552346bc82252abace1c53ecf6b485c5aee444c60d7c6afe9ca8da0c0f41",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_modern_preset_refinement_tests",
+      "number": 173,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 28.2863,
+      "output_sha256": "87d399890ed57d2b945ee3b20d5a37e61517b14daec077353a2a16ee45236dcc",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_lead_refinement_tests",
+      "number": 174,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 26.3817,
+      "output_sha256": "0c3439a1d7a30d071af10370a693a14f4e7a94c8d442267233a114d8e442de7a",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_response_coverage_tests",
+      "number": 175,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.637804,
+      "output_sha256": "ceb79eca48b4ea79236109d0f0881d17f3382d69869cc78c13e51b22741f7ebd",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "number": 176,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 309.396,
+      "output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "number": 177,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 10.4307,
+      "output_sha256": "e103aeca51d390e9ae0936d4ee40340a431cceec493d85ac275caf5d3d94e6ef",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_character_tests",
+      "number": 178,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 3.69083,
+      "output_sha256": "85d71c98b874f5d0ac08daa89ab0826a05d90dff30fca9e256a1c85c595cb54f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "number": 179,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 29.1839,
+      "output_sha256": "284b2463b8a172e09bd5e0770beb6cf938601e54373d931fbd3efa6dc0abf44f",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_capture_tests",
+      "number": 180,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.84075,
+      "output_sha256": "2c5313315180f2770699a83d882e14c66a03f63f457286c409aaeb213e9b952d",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_randomise_tests",
+      "number": 181,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 35.5505,
+      "output_sha256": "69650752fbea5c1840319b0c3624bd1bbbe4ad4af43c461cad42fa43a9bdb0d7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_source_factory_boundary_tests",
+      "number": 182,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.622043,
+      "output_sha256": "23098a56e8b102db6cb02501b917eec75e071f12b02fdb99afbec2e78e033928",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_panel_tests",
+      "number": 183,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.942866,
+      "output_sha256": "ffaba837b0d5db2ad6257255bfb037fa122630507d0b6e5cdfde4c60d6727d98",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_panel_ports_tests",
+      "number": 184,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 19.5165,
+      "output_sha256": "db15253bc55895e133db3ec1847afa23da9c3fc89700d0836d619dcd8d46f2db",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_panel_port_map_tests",
+      "number": 185,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.1288,
+      "output_sha256": "1233fc60694bd88a2fbd99529d95b9ae3da37d74fc4757b310354ff29fab99f1",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_port_map_negative_controls",
+      "number": 186,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 12.2316,
+      "output_sha256": "aca8a58a6165c9d45cb13d5db0d8bca0a322aeca0cbf832884fb6bf578979d1e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_control_routing_tests",
+      "number": 187,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.02824,
+      "output_sha256": "45f9d59fff1e1d202e4bc135d483f185da606d257cfc87aa27f043a9fb3b7830",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_receiver_truth_tests",
+      "number": 188,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.65315,
+      "output_sha256": "a46c1715e0d52f7de43e48abd9c013e6e447b8a98f97112d0e072d1d2172fb27",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_qualification_probe_self_tests",
+      "number": 189,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00988983,
+      "output_sha256": "f8ff812da43349b7fccb487a451779664ceaf1038a01a3d7204ffecf0d382d23",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_verified_diode_tests",
+      "number": 190,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 8.06044,
+      "output_sha256": "2d7e84495b58245bd356525984151112d36c2a724f10a4d30d55ac5cb9264549",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_centered_log_rational",
+      "number": 191,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.416572,
+      "output_sha256": "23e9dc97cc05af8bc377046287d2eab4c1cc4c26d388f172fafe3fc0b2d3a55a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_interval_extrema",
+      "number": 192,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.345239,
+      "output_sha256": "9fefa2219eef3d3606921e4a276d364e4f4af3b3375ee2eb427b4f0dfecfdffa",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_sparse_update_tests",
+      "number": 193,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 21.039,
+      "output_sha256": "18a178f1b89d81e29b744c0e551ef8239eacfbd5d0fff52dfa188c3a48def3e7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_sparse_negative_controls",
+      "number": 194,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.08234,
+      "output_sha256": "1a9bce9a48a6e35fe03d20aca81ef0f8344164df48c3281fd271f93320e28c46",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_memory_routing_negative_controls",
+      "number": 195,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 7.8014,
+      "output_sha256": "7b29817e61aa2c519fa9ec14ce2ec7bb4e98b2b8048951315c0fa1087d0d2ce2",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_programmer_control_identity_tests",
+      "number": 196,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.023404,
+      "output_sha256": "f73dced72c209990478e5151776ce8f7cd4c210f9005fe7f4f967108c96a5dfb",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_fast_math_tests",
+      "number": 197,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0457704,
+      "output_sha256": "2476ac7a8c42307290b002da12a563ba20814e970d37de4de53adb5fa4b37d72",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_evidence_register_tests",
+      "number": 198,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00875921,
+      "output_sha256": "0eb4c1a4f495646e0f9f93c0901933ca8fa7e21e5f39a0d4c79eab63b9e10107",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_midi_learn_tests",
+      "number": 199,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0810708,
+      "output_sha256": "aaf62a457a3396e33f77199b31076ab5d1690b7d3932dac6df9dd1f1c685d079",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_render_cli_tests",
+      "number": 200,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.41129,
+      "output_sha256": "6c1c6ffd1f29343d4c8a04cbc0912c17438f93b4e858aa45007bb3d0da2d5428",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_callback_cpu_measurement_tests",
+      "number": 201,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00294054,
+      "output_sha256": "31c960c429ab1a73ddd7e72188c2a2274036da7b1b43ecf36113a5bc1fbcac58",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_callback_cpu_benchmark_tests",
+      "number": 202,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 11.0414,
+      "output_sha256": "129a0e728e139728a6f59a016cc992ff7da56f7b0f18f9ec076bcaa6e3ff8259",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_benchmark_preflight_tests",
+      "number": 203,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.308441,
+      "output_sha256": "13776c3dae1886542afebd793c5293fee6f765d7dc0e87bf738741d5f619261e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_parity_capture_tests",
+      "number": 204,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.80037,
+      "output_sha256": "2e75a08a8082639ec3f6dd53ab5622fe148c39ba8a64dcca7a68d2a1fc967c03",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_dsp_probe_tests",
+      "number": 205,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.974797,
+      "output_sha256": "5bb68c9baf0b2d896501dedb10e02105b401e8663bd7b605c565f2acc8a4a35c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_modern_state_integer_tests",
+      "number": 206,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0259913,
+      "output_sha256": "e7adf85d963a39f9aeb9e2ea318c8ecbc5c1b1b4cf7e8282a53a55dc16eab456",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_display_name_tests",
+      "number": 207,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0336197,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_file_values_tests",
+      "number": 208,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0292026,
+      "output_sha256": "7fe5fe3c9da0b8a9525947ddc0a11278e88915255836683e457a6197613cf4a7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_state_text_tests",
+      "number": 209,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0502582,
+      "output_sha256": "c493b63e093b17b32508e5d150f93dcfdfc02ca17dbedfcaa32b19bccdf95aca",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_parameter_state_index_tests",
+      "number": 210,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.95092,
+      "output_sha256": "25a462f8cf98415f685617e55356f94973c8aa5266bcd2f09139e7b4f3e7f539",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_state_mirror_bridge_tests",
+      "number": 211,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.127576,
+      "output_sha256": "87e0fc072e190b6834bcdb944df770cdde91fa9dcf2ead9314a50335f200ed3f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_panel_golden_tests",
+      "number": 212,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.92365,
+      "output_sha256": "b5c70fca26403aed301a9bf2fd4bb8c23bccc4e157edc91f442b194d7ee89883",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_circuit_policy_host_tests",
+      "number": 213,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.117558,
+      "output_sha256": "a2dc5682f7fc7b1b31c6416484e76018badb2726d2c9928234233d4239a89e14",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_circuit_source_host_tests",
+      "number": 214,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 7.14205,
+      "output_sha256": "9d4f82ccf73f5f2566fceeacac8bfa2c90e6ef5e2e7a814824a84a05817244b0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_revert_tests",
+      "number": 215,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.44581,
+      "output_sha256": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_modern_recall_host_tests",
+      "number": 216,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.16925,
+      "output_sha256": "4017a4570309fcea564ab5f2a46a54812165f2921edc3b8028a3a26f491f0ac7",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_file_recall_tests",
+      "number": 217,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.501515,
+      "output_sha256": "8dc364fc90c61f042f2dfc4a4ebce3bfe2a50fa510169187bca99e5618a19db2",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_xml_tests",
+      "number": 218,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0987408,
+      "output_sha256": "779ee6fb9416dfd406a8a4d59609002ef9d1eacafb1ba01ce5a69af6bbf88977",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_load_tests",
+      "number": 219,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.40434,
+      "output_sha256": "0cf32c334f894ed4c7467a4168143fb9c61fd87be6a43e6ac40300063fe75e83",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_save_storage_tests",
+      "number": 220,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0762393,
+      "output_sha256": "fd0796e59e6c331e8ed067478aab2812feadb9034da3910592e5e948701bb95f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_identity_tests",
+      "number": 221,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.19417,
+      "output_sha256": "0323b35a89628b6d7c35a4d797a209f205af76fdd7466c8c1b64eff1dae9ae18",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_refresh_tests",
+      "number": 222,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.277424,
+      "output_sha256": "6c8a013943d171fa8049b7a99fe5be1f0ed257be5a06e72d631db23216f8d2f8",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_preset_search_tests",
+      "number": 223,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.752412,
+      "output_sha256": "ca69cea742ddfb8dbe7ce96ef782a0e5778acb9ceadc858de4c03fbee0404815",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_preferences_tests",
+      "number": 224,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.02944,
+      "output_sha256": "08f1a9563f168a82eb6db53d7620b4cf6dbcaad441ad4c58b3e68d9b3db2a96b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_preset_click_tests",
+      "number": 225,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.116252,
+      "output_sha256": "f411205423e047a52770742f798018937000838e43f9223d7e02fdcdb98c7ad3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_undo_replay_gesture_tests",
+      "number": 226,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.08011,
+      "output_sha256": "e693357be74923762f02bda3b7df9c0f55da82026027bbf54c10d60cea431c18",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_hardware_source_history_tests",
+      "number": 227,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.18051,
+      "output_sha256": "305f4e986ecffeef030f77e4db09bcc41c3d4ca74222fbea6cfc9f1f9dcf3a50",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_patch_history_tests",
+      "number": 228,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.262835,
+      "output_sha256": "05663328f9a7b3b8b577604d0f94aef42cd11feba2c6bbf3c655ab4c9e177c4c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mpe_released_target_host_tests",
+      "number": 229,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 11.4926,
+      "output_sha256": "eb44496f2e2214d72a68cb538cafed44f403a908e16614c03ca1780b28c4eb7b",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_mpe_member_onset_host_tests",
+      "number": 230,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.61013,
+      "output_sha256": "c3f71fcebaeaeb609a5bfd385220bb4aefca3bad3e6b131ab56c42595d716e5b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_sixteen_voice_release_host_tests",
+      "number": 231,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.780249,
+      "output_sha256": "40c0f8115f2f87f538d942bfa2648336f0f2ba30ef70e1711f160879959da389",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ring_curve_gesture_tests",
+      "number": 232,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.46757,
+      "output_sha256": "3cddd29a9fcb16cb03586d54d7d57d00699bc8b4abb85890a0c68882bcee9382",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mod_matrix_route_actions_tests",
+      "number": 233,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.190684,
+      "output_sha256": "d77107f3eaa8251593e5a74254729d565522cc3cadb3e3724e1f4b34df836519",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mod_matrix_routing_ui_tests",
+      "number": 234,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.105,
+      "output_sha256": "655f7d7cf3f862e1305654623e06312fbbd762010a1f09cd50ce0d410eba9cc6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_point_values_tests",
+      "number": 235,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.266467,
+      "output_sha256": "ac48fa6c33ec1c6a2bcd2e1f709a5711b158042da361453ef3f43353ca7f7ddc",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_shape_copy_tests",
+      "number": 236,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.110479,
+      "output_sha256": "dc44bae3c66e345b39c590e4fd8f43bc6f0130569a3cdec37e6aac6e780c6c07",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mseg_editor_lifecycle_tests",
+      "number": 237,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.20625,
+      "output_sha256": "0f9668788e384b9da34c1fb457a657d6531840ddc51241ecc74c30d66bafa8b0",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_modern_slider_gesture_tests",
+      "number": 238,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0803438,
+      "output_sha256": "3ee12443315bb9fd6a0eddcbf25a93f6a9d18409d16e2badfe08bf2b2e997ac6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_qwerty_note_ownership_tests",
+      "number": 239,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.61168,
+      "output_sha256": "b2ef96be5afd8f4e43467a343a3e9e18595135ded68be9f4d9d00b44c6aed292",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_toolbar_menu_lifetime_tests",
+      "number": 240,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0530582,
+      "output_sha256": "9eb35957db8f9aa453184323b545ac2f2abd911fc978f35c5a01a244a74c652b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_snapshot_cli_tests",
+      "number": 241,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.139941,
+      "output_sha256": "0f65be98a246e3182ed33e6e01d8570312ed6433d64865fa3d3192a13630d70e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_mts_dormant_engine_host_tests",
+      "number": 242,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.45554,
+      "output_sha256": "4cfc84b901713c13b27e78d8687e6d52ad0b36151f2c257ba1488a02ef2d5c62",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_controller_reset_host_tests",
+      "number": 243,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.81886,
+      "output_sha256": "120681c3cc7cfbdaf7c79b3bb3efe2cd5105082f985265bf092ce3a5977a626c",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_voice_activity_host_tests",
+      "number": 244,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.191291,
+      "output_sha256": "75049a055df6654c1a83c5d1584133a17ef10a13d71b0cc9e73e4447fe2fab37",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_voice_activity_ui_tests",
+      "number": 245,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.891,
+      "output_sha256": "26a39a6da674e06b63580e6973fd5398c991232250a6ab8586846f45d4349264",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_handoff_host_tests",
+      "number": 246,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.616529,
+      "output_sha256": "200f281a3c4db062e165f13f82232d3119d68050a154fb59c9c3a62d399d27eb",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_switch_context_tests",
+      "number": 247,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.08147,
+      "output_sha256": "8de7eaff08b378c7e7abc93c8914e725399cfc2bcd598a171b0d24eaf5d8ddb6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_studio_lfo_context_tests",
+      "number": 248,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.29082,
+      "output_sha256": "8b079197ff3cc0d6cc96f7d9e2bcad6337b9182b06d132d902e61ad4318f1952",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_studio_switch_context_tests",
+      "number": 249,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.866154,
+      "output_sha256": "8d5c984aff216c9814bd7100972da8f7928b3d5018ac2d7fc8c7f4a820692533",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_parameter_combo_context_tests",
+      "number": 250,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.171562,
+      "output_sha256": "4d8aa11c567225142f5a50296103749adf1258b571d8ee36a835363074b75ca8",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_context_menu_keyboard_tests",
+      "number": 251,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.31416,
+      "output_sha256": "d377164e8d71d00a5f5734713d4b48a96a9fa7093d97b49bbee3d889f0f84f57",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_typed_value_unit_tests",
+      "number": 252,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0792412,
+      "output_sha256": "b3fd1a09ff3417b842be49c2b7d0d89780086b211a6417c0d5e28b26c0a5e010",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_keyboard_tuning_ui_tests",
+      "number": 253,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0977113,
+      "output_sha256": "b4ac09e1490f70bfe3df6e0304b95f6ffcdc953b36ce3fe4ef5e4467beffa48f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_transient_control_tests",
+      "number": 254,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.327646,
+      "output_sha256": "ea1f31959613e6ffce435d370c04d07f60995bfa904d638fd99b99f9cd96ec43",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_performance_wheel_keyboard_tests",
+      "number": 255,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.241319,
+      "output_sha256": "136a259f34562516f39e64e6d478d03bd6ad1e29faca63c8aa988a0f7e7d8bfa",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "number": 256,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 114.802,
+      "output_sha256": "bd801a1c09ea254200fce3feae436ccbc28111a4939afee7e800dbfe0aba9028",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_teardown_probe",
+      "number": 257,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.44307,
+      "output_sha256": "2f7bc6e53e6031a56427b9011e0c5bb8a93246c529fb1383d861a5911bf9cf9f",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_host_wrapper_platform_tests",
+      "number": 258,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 4.03484,
+      "output_sha256": "d3a917371ee12c6d167528f4a2936a0f3db9a1f1465bff73436e00419715c959",
+      "junit_stdout_truncated": true
+    },
+    {
+      "name": "cs80_main_vst3_only_automation_tests",
+      "number": 259,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.20454,
+      "output_sha256": "db38e9d023941e71bf7a612417cde310d50b204e8eabe889386f40502fdf7afe",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_truth_render_tests",
+      "number": 260,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 1.59428,
+      "output_sha256": "02ab461177a2388f7dff135c01ed68ba90d92aaba6d1ab225e2dd4a19da98e05",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ig00156_step_diagnostics_tests",
+      "number": 261,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00663154,
+      "output_sha256": "047c7c7a1e65c314b93e6769de6d4420850ab97b77934e7465ed2b81b77a25f3",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_truth_input_sha256_tests",
+      "number": 262,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.0104576,
+      "output_sha256": "55e6f4491657d05169e0bad235a8f3d7369bf42380bd691af60741e22f606605",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_amplitude_production_comparison_tests",
+      "number": 263,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.14468,
+      "output_sha256": "7a20ea74fc5e7dc5df4c60e7a64484eff70f13fe91b43b20210cabacb75d475a",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_production_comparison_tests",
+      "number": 264,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 2.57647,
+      "output_sha256": "30924b4a20cf8f1e689d11909cada186c7615c51bf5a79f0dde1ea0f84f97f35",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_vca_reference_tests",
+      "number": 265,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.695881,
+      "output_sha256": "78d0b25e8ca05cd4653ef366e471901e7f44ef5d1cd4eb3a1eced00852c1ff22",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_decimal_conversion_tests",
+      "number": 266,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.008311,
+      "output_sha256": "fbc1823fea1d55824d0065a4e6561ead0c779cefbf51e204221ceb0dfd969334",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_decimal_conversion_locale_tests",
+      "number": 267,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.00487533,
+      "output_sha256": "fbc1823fea1d55824d0065a4e6561ead0c779cefbf51e204221ceb0dfd969334",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_float_wav_tests",
+      "number": 268,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.427766,
+      "output_sha256": "618af096267c5da2a817c6cde0a6c58de0da7e5d02e8701b17f35546f79cecf6",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_reference_chain_tests",
+      "number": 269,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 9.50967,
+      "output_sha256": "00305d6c55117b45ab6899c506c5c53ecfee1931f9733361a2216b5c3a019d1b",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_reference_chain_clock_tests",
+      "number": 270,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 9.52883,
+      "output_sha256": "f388c52a6bef50cdfecf4c1ad2aae9bc900f05e5cfbeb9baee0d8cb96eba10b7",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_amplitude_envelope_reference_tests",
+      "number": 271,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 5.11181,
+      "output_sha256": "95d15b3c83e178b7ed5da6d8adce969c72914aa1591c72cd2b736284ce436bd2",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_event_aware_envelope_vca_tests",
+      "number": 272,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.218999,
+      "output_sha256": "1fd580cff763011bee5c4e235c2eadcd4aef7c52c15a8fdcb5136b64a1e49682",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_ring_time_reference_tests",
+      "number": 273,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.247635,
+      "output_sha256": "47ba5070cb63e61a589b0af562b43eb1220f264b2409314e14022086f7195286",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_event_aware_envelope_sine_tests",
+      "number": 274,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.208435,
+      "output_sha256": "5e20053429885b321412fba59395b63778b765d57c8453726a880f0d8216f040",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_event_aware_ring_vca_tests",
+      "number": 275,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.277601,
+      "output_sha256": "9a64a727af89ef69b569f8ea34b49db0d4dca921765a7df6de6405440c08985e",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_event_aware_ring_vca_coincident_tests",
+      "number": 276,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 0.329027,
+      "output_sha256": "e8fbbcedca042af8c345718aebe20dc8a70e20081ad79d11f95d69aceb1c2cc8",
+      "junit_stdout_truncated": false
+    },
+    {
+      "name": "cs80_filter_envelope_reference_tests",
+      "number": 277,
+      "result": "passed",
+      "lasttest_status": "Passed",
+      "seconds": 6.50845,
+      "output_sha256": "cf1f3bb51a43b9b75cec87b7fa05e3403ba8a0d963618a41942d2f23e2b658d4",
+      "junit_stdout_truncated": false
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "source_context": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "retrieved_at_utc": "2026-11-24T14:01:05.848099+00:00",
+  "transport": "Authenticated repository-owner GitHub connector. API objects serialized with indentation; decoded original logs retained as UTF-8 without newline rewriting.",
+  "scope": "Completed same-source DSP workflow45397189426; separate failed upstream diagnostic45397242252 actually targets prior source run45385716988 and failed before product download. No release acceptance inferred.",
+  "files": {
+    "supporting-dsp/run-api-at-completion.json": {
+      "bytes": 14818,
+      "sha256": "9f65bcf5ce73017bc1cdb54e5e295ebe003374b98919cde6449d93974edbf60c"
+    },
+    "supporting-dsp/jobs-api-at-completion.json": {
+      "bytes": 17458,
+      "sha256": "6a6566ef4b0b4c73273768a73c5744b6f92a6bfc8db14376102430faa277b50b"
+    },
+    "supporting-dsp/artifact-collection-api.json": {
+      "bytes": 5195,
+      "sha256": "4b353ad7cdfa95673e3487d57cf3aa30f77221b3f0c81c1f36364c2a53b3ef41"
+    },
+    "supporting-upstream-prior-source/jobs-api-at-completion.json": {
+      "bytes": 10961,
+      "sha256": "89c08f36f507ae8d122f70cd13abdfcce61dcbfbbef05c94e21943c24bcedb9e"
+    },
+    "supporting-dsp/sanitizer-job-138456125317.log": {
+      "bytes": 127134,
+      "sha256": "bb4a7e411db4068e81cb6f676dc9355f083baed1e6d86d67bef9b82e513e6291"
+    },
+    "supporting-upstream-prior-source/job-138456160979.log": {
+      "bytes": 13068,
+      "sha256": "2b75a69b04fb0dd3d7a28d4b9f23fc7d1b87ce24d2e2f6297c72d3955bfb535e"
+    }
+  },
+  "release_qualified": false
+}

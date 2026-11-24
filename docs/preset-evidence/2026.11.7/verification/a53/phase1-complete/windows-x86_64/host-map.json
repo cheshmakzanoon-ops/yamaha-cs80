@@ -1,0 +1,258 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "windows-x86_64",
+  "entries": [
+    {
+      "id": "host_parameter_identity",
+      "behavior": "Native JUCE processor: all body positions, AU hints, types, choices, defaults and frozen 200/202 core + 306/308 host prefixes",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "The core probe and source-derived IDs are separate; executing this method is the actual processor boundary."
+    },
+    {
+      "id": "actual_parameter_tree",
+      "behavior": "Actual JUCE group flattening and flat PARAM persistence",
+      "ctests": [
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Checks actual processor tree; does not instantiate every native wrapper in every DAW."
+    },
+    {
+      "id": "body_persistence",
+      "behavior": "All fourteen controls through session and user-file round trips; pre-body, first-body, .4 and .5 missing fields; audio-block publication; range clamp/choice snap",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Earlier-version fixtures remove absent fields from actual current serialized state; they are not saved DAW project binaries."
+    },
+    {
+      "id": "inactive_ab",
+      "behavior": "Both vectors and missing body/size/variant/material fields in inactive A/B slot",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Inactive A/B uses declared fallback for every core field; the main loader has a separate Original SUB exception."
+    },
+    {
+      "id": "body_undo",
+      "behavior": "One balanced edit gesture per each of fourteen controls; undo/redo retains exact physical values and the other controls",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "This covers body value history; additional undo replay/save tests cover history classification and host notifications."
+    },
+    {
+      "id": "factory_midi",
+      "behavior": "Every one of 523 factory/MIDI programs replaces all fourteen body values; same-block Program Change + next note includes body-off/return transitions",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Direct JUCE MIDI Program Change is separate from the VST3 wrapper Program parameter processing queue."
+    },
+    {
+      "id": "held_note",
+      "behavior": "Both sizes plus four variants and nine materials on each rank retain held-note samples and change the next note",
+      "ctests": [
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "7702e9d3cb213a30c3de568f0ce9cd35ab70a9df942a81e501916660f2f3dab2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Finite/nonzero energy and positive next-note difference guard against inert controls. This is bounded fixture audio, not acoustic approval."
+    },
+    {
+      "id": "duplicates_and_factory_index",
+      "behavior": "Real user/session restore checks last duplicate authority, unique canonical known children, retained unknown data, live user-preset setup exceptions, and clamped program metadata without reloading recipe",
+      "ctests": [
+        {
+          "name": "cs80_preset_file_recall_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "8dc364fc90c61f042f2dfc4a4ebce3bfe2a50fa510169187bca99e5618a19db2",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "The three live user-preset exceptions are oversampling, output jack and tuning mode; body fields are not excluded."
+    },
+    {
+      "id": "schema_and_policy",
+      "behavior": "All schema markers, complete numeric Original SUB mode admission and retired source/isolation policy normalization through real save/restore",
+      "ctests": [
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Original SUB missing/invalid fallback is 0; fresh default and generic inactive-slot fallback are not the same special migration rule."
+    },
+    {
+      "id": "save_and_undo",
+      "behavior": "Session/file save before timer flush, main/background saves and automation publication without adding automation undo steps",
+      "ctests": [
+        {
+          "name": "cs80_undo_replay_gesture_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "e693357be74923762f02bda3b7df9c0f55da82026027bbf54c10d60cea431c18",
+          "scope": "Observed original CTest execution"
+        },
+        {
+          "name": "cs80_ui_smoke",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Snapshot atomics are per parameter; no transaction across concurrent automation is promised."
+    },
+    {
+      "id": "child_index",
+      "behavior": "80 detached ValueTree differential fixtures with 310 IDs; binary/XML order, callback/read traces, non-PARAM children, duplicate-heavy input and original input immutability",
+      "ctests": [
+        {
+          "name": "cs80_parameter_state_index_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "25a462f8cf98415f685617e55356f94973c8aa5266bcd2f09139e7b4f3e7f539",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "No processor/APVTS/GUI is constructed; deterministic mock normalization does not test full schema, Bool or Choice semantics."
+    },
+    {
+      "id": "state_mirror",
+      "behavior": "Production APVTS callback bridge and real processor mirror race/nesting/undo checks",
+      "ctests": [
+        {
+          "name": "cs80_state_mirror_host_tests",
+          "registered": false,
+          "result": null,
+          "output_sha256": null,
+          "scope": "Not registered on this platform; no execution claim"
+        },
+        {
+          "name": "cs80_state_mirror_bridge_tests",
+          "registered": true,
+          "result": "passed",
+          "output_sha256": "8b6d1cdf68ee89398dc98663b0cb2dbfb7ff4a959c7c674f86ee72c48f0df441",
+          "scope": "Observed original CTest execution"
+        }
+      ],
+      "limit": "Real mirror host target is Linux-only in the frozen native roster; patch fixtures alone are not native processor execution."
+    },
+    {
+      "id": "vst3_program_boundary",
+      "behavior": "Accepted native VST3 legacy MIDI Program Change event path with queued ordinary parameter curves",
+      "ctests": [
+        {
+          "name": "cs80_vst3_automation_tests",
+          "registered": false,
+          "result": null,
+          "output_sha256": null,
+          "scope": "Not registered on this platform; no execution claim"
+        }
+      ],
+      "limit": "This event-path test cannot clear the separate documented controller dependency of processing-queue-only wrapper Program parameter automation."
+    }
+  ],
+  "scope": "A42 source mapping joined only to native CTest cases actually registered/executed on this platform. Linux-only host-mirror and VST3 Program cases are not inferred."
+}

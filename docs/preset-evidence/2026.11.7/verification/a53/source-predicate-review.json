@@ -1,0 +1,190 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92",
+      "excerpts": [
+        {
+          "first_line": 267,
+          "last_line": 286,
+          "text": "    # Compile the production backend directly with the same no-contraction contract\n    # as the scalar comparison. Do not inherit platform-specific core tuning here.\n    add_executable(cs80_filter_batch_cap_tests tests/FilterBatchCapTests.cpp src/core/Ig00156Batch.cpp)\n    target_include_directories(cs80_filter_batch_cap_tests PRIVATE src)\n    target_compile_definitions(cs80_filter_batch_cap_tests PRIVATE CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1)\n    if(CMAKE_CXX_COMPILER_ID STREQUAL \"GNU\")\n        target_compile_options(cs80_filter_batch_cap_tests PRIVATE -ffp-contract=off)\n    endif()\n    if(NOT CS80_ENABLE_AVX2_FILTER_BATCH OR NOT CMAKE_CXX_COMPILER_ID STREQUAL \"GNU\")\n        target_compile_definitions(cs80_filter_batch_cap_tests PRIVATE CS80_DISABLE_AVX2_FILTER_BATCH=1)\n    endif()\n    add_test(NAME cs80_filter_batch_cap_tests COMMAND cs80_filter_batch_cap_tests\n        ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states.csv)\n    set_tests_properties(cs80_filter_batch_cap_tests PROPERTIES TIMEOUT 120 SKIP_RETURN_CODE 77)\n    foreach(kind IN ITEMS missing truncated)\n        add_test(NAME cs80_filter_batch_cap_${kind}_tests COMMAND ${CMAKE_COMMAND}\n            -DPROGRAM=$<TARGET_FILE:cs80_filter_batch_cap_tests>\n            -DINPUT=${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states-${kind}.csv\n            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/ExpectFixtureInputRejection.cmake)\n    endforeach()"
+        },
+        {
+          "first_line": 411,
+          "last_line": 414,
+          "text": "    add_executable(cs80_stereo_pra_exact_tests tests/StereoPraExactTests.cpp)\n    target_include_directories(cs80_stereo_pra_exact_tests PRIVATE src)\n    add_test(NAME cs80_stereo_pra_exact_tests COMMAND cs80_stereo_pra_exact_tests)\n    set_tests_properties(cs80_stereo_pra_exact_tests PROPERTIES SKIP_RETURN_CODE 77 TIMEOUT 60)"
+        },
+        {
+          "first_line": 769,
+          "last_line": 784,
+          "text": "    add_executable(cs80_piano_partial_decay_tests tests/PianoPartialDecayTests.cpp)\n    target_include_directories(cs80_piano_partial_decay_tests PRIVATE src)\n    add_test(NAME cs80_piano_partial_decay_tests COMMAND cs80_piano_partial_decay_tests)\n    set_tests_properties(cs80_piano_partial_decay_tests PROPERTIES TIMEOUT 60)\n    add_executable(cs80_body_noise_rate_tests tests/BodyNoiseRateTests.cpp)\n    target_include_directories(cs80_body_noise_rate_tests PRIVATE src)\n    add_test(NAME cs80_body_noise_rate_tests COMMAND cs80_body_noise_rate_tests)\n    set_tests_properties(cs80_body_noise_rate_tests PROPERTIES TIMEOUT 60)\n    add_executable(cs80_string_body_formant_tests tests/StringBodyFormantTests.cpp)\n    target_include_directories(cs80_string_body_formant_tests PRIVATE src)\n    add_test(NAME cs80_string_body_formant_tests COMMAND cs80_string_body_formant_tests)\n    set_tests_properties(cs80_string_body_formant_tests PROPERTIES TIMEOUT 120)\n    add_executable(cs80_low_choir_spectrum_tests tests/LowChoirSpectrumTests.cpp)\n    target_include_directories(cs80_low_choir_spectrum_tests PRIVATE src)\n    add_test(NAME cs80_low_choir_spectrum_tests COMMAND cs80_low_choir_spectrum_tests)\n    set_tests_properties(cs80_low_choir_spectrum_tests PROPERTIES TIMEOUT 120)"
+        },
+        {
+          "first_line": 2603,
+          "last_line": 2608,
+          "text": "    # Existing modern state/recall and A/B suites, independently of the full UI smoke.\n    add_test(NAME cs80_modern_recall_host_tests COMMAND CS80Snapshots --modern-recall-host-tests)\n    set_tests_properties(cs80_modern_recall_host_tests PROPERTIES TIMEOUT 120)\n    # Existing successful/normalized user-file recall suites, without native UI.\n    add_test(NAME cs80_preset_file_recall_tests COMMAND CS80Snapshots --preset-file-recall-tests)\n    set_tests_properties(cs80_preset_file_recall_tests PROPERTIES TIMEOUT 120)"
+        },
+        {
+          "first_line": 2635,
+          "last_line": 2638,
+          "text": "    # Real processor/FIFO ownership tests without constructing an editor or\n    # native peer. The existing full UI smoke test remains independent.\n    add_test(NAME cs80_undo_replay_gesture_tests COMMAND CS80Snapshots --undo-replay-gesture-tests)\n    set_tests_properties(cs80_undo_replay_gesture_tests PROPERTIES TIMEOUT 120)"
+        },
+        {
+          "first_line": 2720,
+          "last_line": 2736,
+          "text": "    # editor at two sizes, all advanced pages, and user preset storage. The\n    # console tool uses JUCE's software renderer, so it is registered on all\n    # three desktop platforms rather than only Unix.\n    if (CMAKE_SYSTEM_NAME STREQUAL \"Linux\")\n        add_test(NAME cs80_ui_smoke\n                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh\n                         $<TARGET_FILE:CS80Snapshots> --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)\n    else()\n        add_test(NAME cs80_ui_smoke\n                 COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)\n    endif()\n    set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)\n    if (APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL \"x86_64\")\n        # Preserve every smoke assertion and its internal wait limits while\n        # allowing the observed Intel runner slowdown across the whole suite.\n        set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 480)\n    endif()"
+        },
+        {
+          "first_line": 1205,
+          "last_line": 1208,
+          "text": "    if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL \"Linux\")\n        get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)\n        set(CS80_VST3_SDK \"${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK\")\n        add_executable(cs80_vst3_ring_automation_tests tests/Vst3RingAutomationTests.cpp"
+        },
+        {
+          "first_line": 2230,
+          "last_line": 2240,
+          "text": "        add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp\n            \"${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp\"\n            \"${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp\"\n            \"${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp\")\n        target_include_directories(cs80_vst3_automation_tests PRIVATE src \"${CS80_VST3_SDK}\")\n        target_link_libraries(cs80_vst3_automation_tests PRIVATE ${CMAKE_DL_LIBS})\n        add_dependencies(cs80_vst3_automation_tests CS80Reference_VST3)\n        add_test(NAME cs80_vst3_automation_tests COMMAND cs80_vst3_automation_tests\n            \"$<TARGET_FILE:CS80Reference_VST3>\"\n            \"${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json\")\n        set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)"
+        },
+        {
+          "first_line": 2500,
+          "last_line": 2507,
+          "text": "        add_executable(cs80_state_mirror_host_tests tests/StateMirrorHostTests.cpp)\n        target_include_directories(cs80_state_mirror_host_tests PRIVATE src\n            \"$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>\")\n        target_compile_definitions(cs80_state_mirror_host_tests PRIVATE\n            \"$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>\")\n        target_link_libraries(cs80_state_mirror_host_tests PRIVATE CS80Reference)\n        add_test(NAME cs80_state_mirror_host_tests COMMAND cs80_state_mirror_host_tests)\n        set_tests_properties(cs80_state_mirror_host_tests PROPERTIES TIMEOUT 120)"
+        }
+      ]
+    },
+    {
+      "path": "tests/FilterBatchCapTests.cpp",
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729",
+      "excerpts": [
+        {
+          "first_line": 39,
+          "last_line": 47,
+          "text": "   if(r[i].find(\"0x\")==std::string::npos||r[i].find_first_of(\"pP\")==std::string::npos)return 2;\n   double value=std::strtod(r[i].c_str(),&end);\n   if(end==r[i].c_str()||*end||!std::isfinite(value))return 2;c.v.push_back(value);\n  }\n  unsigned clock=unsigned(r[2][0]-'0');if(c.v[0]!=(clock==0?3000.:clock==1?88200.:96000.))return 2;\n  ++counts[clock];if(clock)cases.push_back(c);\n }\n if(counts[0]!=256||counts[1]!=256||counts[2]!=256||cases.size()!=512)return 2;\n auto kernel=B::selectKernel();if(!kernel){puts(\"SKIP: AVX2 unavailable or disabled; no SIMD qualification\");return 77;}"
+        }
+      ]
+    },
+    {
+      "path": "tests/StereoPraExactTests.cpp",
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0",
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 13,
+          "text": "// Test only the compiler/ISA/FP specialization that the product can select.\n// No private access, wall clock, host audio tolerance or hardware comparison.\n#if defined(__OPTIMIZE__) && !defined(__OPTIMIZE_SIZE__) \\\n    && defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && defined(__SSE2_MATH__) \\\n    && !defined(__clang__) && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) \\\n    && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(__ibmxl__) && !defined(_MSC_VER) \\\n    && !defined(__AVX__) && !defined(__FMA__) && !defined(__FMA4__) && !defined(__FP_FAST_FMA) \\\n    && !defined(__FP_FAST_FMAF) && !defined(__FAST_MATH__) && !defined(__ASSOCIATIVE_MATH__) \\\n    && !defined(__RECIPROCAL_MATH__) && !defined(__NO_SIGNED_ZEROS__) && !defined(__NO_TRAPPING_MATH__) \\\n    && !defined(__NO_MATH_ERRNO__) && !defined(__ROUNDING_MATH__) && !defined(__SUPPORT_SNAN__) \\\n    && (!defined(__FINITE_MATH_ONLY__) || __FINITE_MATH_ONLY__ == 0) \\\n    && defined(__FLT_EVAL_METHOD__) && __FLT_EVAL_METHOD__ == 0 && !defined(CS80_DISABLE_INLINE_RC_ENVELOPES) \\\n    && __GNUC__ == 14 && __GNUC_MINOR__ == 2 && !defined(CS80_DISABLE_STEREO_PRA) && !defined(CS80_DISABLE_AVX2_FILTER_BATCH)"
+        },
+        {
+          "first_line": 85,
+          "last_line": 89,
+          "text": " return (admitted[2]<tested[2]&&admitted[3]<tested[3])?0:3;\n}\n#else\nint main(){ return 77; }\n#endif"
+        }
+      ]
+    },
+    {
+      "path": "src/core/Ig00156Batch.h",
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985",
+      "excerpts": [
+        {
+          "first_line": 7,
+          "last_line": 25,
+          "text": "// Exactness is a build contract, not merely a CPU capability. In particular,\n// an FMA-enabled caller may contract the existing inline scalar expressions.\n// Conservatively keep its scalar path rather than change that audio contract.\n// Clang does not expose several individually enabled unsafe-math options via\n// these GNU macros. No header-level strict-build proof is available there:\n// keep ALL Clang callers/backends scalar, including nominally strict builds.\n// Do not compensate by overriding the caller's floating-point flags.\n#if defined(__x86_64__) && defined(__GNUC__) && !defined(__clang__) \\\n    && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) \\\n    && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(__ibmxl__) \\\n    && !defined(_MSC_VER) && !defined(__FMA__) && !defined(__FAST_MATH__) \\\n    && !defined(__ASSOCIATIVE_MATH__) && !defined(__RECIPROCAL_MATH__) \\\n    && !defined(__NO_SIGNED_ZEROS__) \\\n    && (!defined(__FINITE_MATH_ONLY__) || !__FINITE_MATH_ONLY__) \\\n    && (!defined(__FLT_EVAL_METHOD__) || __FLT_EVAL_METHOD__ == 0) \\\n    && !defined(CS80_DISABLE_AVX2_FILTER_BATCH)\n#define CS80_IG00156_EXACT_BATCH_BUILD 1\n#else\n#define CS80_IG00156_EXACT_BATCH_BUILD 0"
+        }
+      ]
+    },
+    {
+      "path": "src/core/Ig00156Batch.cpp",
+      "bytes": 21447,
+      "sha256": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c",
+      "excerpts": [
+        {
+          "first_line": 381,
+          "last_line": 399,
+          "text": "Ig00156Batch::Kernel Ig00156Batch::selectKernel(bool allowAcceleration) noexcept\n{\n    if(!allowAcceleration) return nullptr;\n    __builtin_cpu_init();\n    return __builtin_cpu_supports(\"avx2\") ? &Ig00156BatchAccess::process : nullptr;\n}\nbool Ig00156Batch::environmentSupported() noexcept\n{\n    const auto csr=_mm_getcsr();\n    return (csr & 0x6000U) == 0 && (csr & 0x1f80U) == 0x1f80U;\n}\n} // namespace cs80\n#else\nnamespace cs80\n{\nIg00156Batch::Kernel Ig00156Batch::selectKernel(bool) noexcept { return nullptr; }\nbool Ig00156Batch::environmentSupported() noexcept { return false; }\n}\n#endif"
+        }
+      ]
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "bytes": 219971,
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e",
+      "excerpts": [
+        {
+          "first_line": 2168,
+          "last_line": 2189,
+          "text": "    if (argc > 1 && std::strcmp(argv[1], \"--modern-recall-host-tests\") == 0)\n    {\n        juce::ScopedJuceInitialiser_GUI juceInit;\n        int checks = 0;\n        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };\n        cs80::tests::testModernLayerHost(checked);\n        cs80::tests::testModernLayerStateRangeHost(checked);\n        cs80::tests::testProgramLibraryHost(checked);\n        cs80::tests::testInstrumentBodyHost(checked);\n        std::printf(\"Modern/session/preset/A-B recall: %d checks, %d failures\\n\", checks, failures);\n        return failures == 0 ? 0 : 1;\n    }\n    if (argc > 1 && std::strcmp(argv[1], \"--preset-file-recall-tests\") == 0)\n    {\n        juce::ScopedJuceInitialiser_GUI juceInit;\n        int checks = 0;\n        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };\n        cs80::tests::testPresetRecallHost(checked);\n        cs80::tests::testPresetFileHost(checked);\n        std::printf(\"User-preset file/recall host: %d checks, %d failures\\n\", checks, failures);\n        return failures == 0 ? 0 : 1;\n    }"
+        },
+        {
+          "first_line": 2560,
+          "last_line": 2575,
+          "text": "    phases.begin(\"preset recall host\");\n    cs80::tests::testPresetRecallHost(check);\n    phases.begin(\"instrument body host identity and recall\");\n    cs80::tests::testInstrumentBodyHost(check);\n    phases.begin(\"preset file host\");\n    cs80::tests::testPresetFileHost(check);\n    phases.begin(\"session schema host\");\n    cs80::tests::testSessionSchemaHost(check);\n    phases.begin(\"session undo host\");\n    cs80::tests::testSessionUndoHost(check);\n    phases.begin(\"engine I/O host\");\n    cs80::tests::testOversamplingHost(check);\n    cs80::tests::testEngineDefaultHost(check);\n    cs80::tests::testListeningOutputHost(check);\n    cs80::tests::testParameterGroupsHost(check);\n    phases.begin(\"editor initial size\");"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_render_cli.py",
+      "bytes": 8752,
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868",
+      "excerpts": [
+        {
+          "first_line": 27,
+          "last_line": 44,
+          "text": "class ResourceLimitDiagnostics(unittest.TestCase):\n    def test_only_shadow_reservation_is_recognized(self):\n        diagnostic = (b'==123==ERROR: AddressSanitizer failed to allocate 0x10000000 bytes\\n'\n                      b'ReserveShadowMemoryRange failed while trying to map 0x10000000 bytes. '\n                      b\"Perhaps you're using ulimit -v\\n\")\n        result = subprocess.CompletedProcess([], -6, b'', diagnostic)\n        self.assertTrue(asan_shadow_reservation_failed(result))\n        for message in (b'', b'AddressSanitizer:DEADLYSIGNAL',\n                        b'ERROR: AddressSanitizer: heap-buffer-overflow',\n                        b'ERROR: AddressSanitizer failed to allocate 384000000 bytes',\n                        diagnostic.replace(b'ReserveShadowMemoryRange failed', b'other error')):\n            self.assertFalse(asan_shadow_reservation_failed(\n                subprocess.CompletedProcess([], -6, b'', message)))\n        self.assertFalse(asan_shadow_reservation_failed(\n            subprocess.CompletedProcess([], 0, b'', diagnostic)))\n\n\nclass RenderArguments(unittest.TestCase):"
+        },
+        {
+          "first_line": 73,
+          "last_line": 81,
+          "text": "    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only file size limit')\n    def test_buffered_write_failure_is_reported(self):\n        import resource\n\n        def limit_output():\n            signal.signal(signal.SIGXFSZ, signal.SIG_IGN)\n            resource.setrlimit(resource.RLIMIT_FSIZE, (64, 64))\n"
+        },
+        {
+          "first_line": 113,
+          "last_line": 156,
+          "text": "\n    def check_long_write_failure(self, address_space):\n        with tempfile.TemporaryDirectory() as tmp:\n            output = Path(tmp) / 'long.wav'\n            # Accepted duration formerly allocated 384 MB before rendering.\n            # Bounded buffers reach the deliberate disk limit instead. This\n            # does not spend 1000 seconds rendering or claim a full long WAV.\n            result = self.run_limited(['--seconds', '1000', '--out', str(output)], address_space)\n            if result.returncode == 77 and result.stderr.startswith(b'RLIMIT_AS unavailable: '):\n                self.assertFalse(output.exists())\n                self.skipTest(result.stderr.decode(errors='replace').strip())\n            self.assertEqual(result.returncode, 1, result.stderr)\n            self.assertIn(b'Could not write', result.stderr)\n            self.assertNotIn(b'Wrote ', result.stdout)\n            self.assertEqual(output.stat().st_size, 64)\n\n    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only file size limit')\n    def test_long_render_stops_on_write_failure(self):\n        # This functional regression remains active under ASan. No address-space\n        # cap is imposed, so ASan can reserve its large, mostly virtual shadow.\n        self.check_long_write_failure(address_space=False)\n\n    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only resource limits')\n    def test_long_render_has_bounded_buffers(self):\n        import resource\n        if not hasattr(resource, 'RLIMIT_AS'):\n            self.skipTest('address-space limit unavailable')\n        # Probe before any render: an ASan-instrumented process cannot even reach\n        # --help under this cap. Do not mistake that for a renderer allocation\n        # failure or suppress any ordinary sanitizer error or failed render.\n        probe = self.run_limited(['--help'], address_space=True)\n        if probe.returncode == 77 and probe.stderr.startswith(b'RLIMIT_AS unavailable: '):\n            self.skipTest(probe.stderr.decode(errors='replace').strip())\n        if asan_shadow_reservation_failed(probe):\n            uncapped = self.run_limited(['--help'], address_space=False)\n            self.assertEqual(uncapped.returncode, 0, uncapped.stderr)\n            self.assertIn(b'Usage:', uncapped.stderr)\n            self.skipTest('ASan shadow reservation is incompatible with the 256 MiB virtual-address cap; '\n                          'long-render write-failure coverage runs separately without that cap')\n        self.assertEqual(probe.returncode, 0, probe.stderr)\n        self.assertIn(b'Usage:', probe.stderr)\n        self.check_long_write_failure(address_space=True)"
+        },
+        {
+          "first_line": 158,
+          "last_line": 167,
+          "text": "    def test_help(self):\n        result = subprocess.run([RENDER, '--help'], capture_output=True, timeout=10)\n        self.assertEqual(result.returncode, 0)\n        self.assertIn(b'Usage:', result.stderr)\n\n\nif __name__ == '__main__':\n    unittest.main(argv=['test_render_cli.py', *remaining])"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_float_wav.py",
+      "bytes": 8371,
+      "sha256": "dd3e42f5ff1992320fc911ef1f07beb7e3f2fd3e996715aca1bc9e33cdd4772a",
+      "excerpts": [
+        {
+          "first_line": 130,
+          "last_line": 160,
+          "text": "            self.run_tool(tool,tool+'missing',['--wav-gain'],success=False)\n\n    def test_helper_bits_bounds_no_overwrite_and_failure_cleanup(self):\n        path=self.root/'fixture.wav'\n        def run(mode, **kwargs):\n            return subprocess.run([a.fixture,str(path),mode],capture_output=True,text=True,**kwargs)\n        self.assertEqual(run('normal').returncode,0)\n        rate,count,data,values=read_wav(path)\n        expected=b''.join(struct.pack('<f',v) for v in [0.,-0.,.25,-.25,2.,-2.,1.00000001])*100\n        self.assertEqual(data,expected)\n        self.assertEqual((rate,count),(48000,700))\n        original=path.read_bytes()\n        self.assertNotEqual(run('normal').returncode,0)\n        self.assertEqual(path.read_bytes(),original)\n        path.unlink()\n        for mode in ['nonfinite','overflow','size','rate']:\n            self.assertNotEqual(run(mode).returncode,0)\n            self.assertFalse(path.exists())\n        try:\n            import resource\n            import signal\n        except ImportError:\n            self.skipTest('POSIX file-size fault injection unavailable')\n        def limit():\n            signal.signal(signal.SIGXFSZ,signal.SIG_IGN)\n            resource.setrlimit(resource.RLIMIT_FSIZE,(100,100))\n        result=run('normal',preexec_fn=limit)\n        self.assertNotEqual(result.returncode,0,result.stderr)\n        self.assertFalse(path.exists(),result.stderr)\n\nif __name__ == '__main__':"
+        }
+      ]
+    }
+  ],
+  "formal_reviews": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "source_reason": "CTest return code 77 is registered. Frozen CMake disables the backend for non-GNU compilers; exact-build header requires x86_64 GNU and excludes Clang/MSVC plus unsafe FP modes. Unsupported selection returns null; the test prints its explicit no-SIMD-qualification message and returns 77. Original ARM AppleClang 17.0.0.17000013 and Windows MSVC 19.44.35230.0 are outside that contract.",
+      "actual_targets": [
+        "macos-arm64",
+        "windows-x86_64"
+      ],
+      "simd_execution_qualified": false
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "source_reason": "CTest return code 77 is registered. The compiled test requires the complete Linux x86_64 GCC 14.2 optimized strict FP/SSE2 specialization and feature toggles. Its else-main returns 77 without output; ARM macOS and Windows cannot enter the specialization.",
+      "actual_targets": [
+        "macos-arm64",
+        "windows-x86_64"
+      ],
+      "specialized_pra_execution_qualified": false
+    }
+  ],
+  "ctest_vs_python_scope": "Only JUnit skipped elements plus original console classify formal CTest skips. LastTest Test Passed. on those cases does not establish capability execution. Python terminal skipped totals are separate internal test-method counts.",
+  "a42_execution_mapping": "Frozen ui_snapshot calls testInstrumentBodyHost from both --modern-recall-host-tests and the completed instrument body UI phase; UI also calls preset-file, schema, session-undo and real processor parameter-group checks. A42 file hashes/anchors are checked for all thirteen mapped behaviors.",
+  "release_qualified": false,
+  "linux_only_host_registration": "Both cs80_state_mirror_host_tests and cs80_vst3_automation_tests are enclosed by if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL \"Linux\") at CMake line 1205, within CS80_BUILD_PLUGIN."
+}

@@ -1,0 +1,81 @@
+{
+  "target": "windows-x86_64",
+  "producer_job_id": 138455976256,
+  "actual_native_evidence_inspected": true,
+  "counts": {
+    "registered": 255,
+    "passed": 253,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": 11,
+  "formal_skip_names": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "exact_expected_name_set_verified": true,
+  "complete_numbered_lasttest_verified": true,
+  "original_console_name_results_verified": true,
+  "original_ctest_normal_exit": 0,
+  "original_exit_basis": "Exact unsuppressed source-matched CTest command, successful original API Test step, complete original console matched to JUnit/LastTest and terminal completion; root retains authenticated acquisition.",
+  "ctest_seconds": "1949.34",
+  "artifact_id": 14926075048,
+  "archive_sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97",
+  "input_files": [
+    {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "bytes": 84062,
+      "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "bytes": 747,
+      "sha256": "6b734fc21012052715a4a2118c182e02b1f9cd113e3b54c7008f2cebec7785ba"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json",
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-retrieval-receipt.json",
+      "bytes": 2842,
+      "sha256": "5edb6a9a9c2531f0682f0f3ef9567bf02320b2d13d28721c5a00b6324728d868"
+    }
+  ],
+  "members": {
+    "ci-juce-provenance.txt": {
+      "bytes": 585,
+      "sha256": "d32b6f7ed4ec57b0bf102f03563fd13653a3921adf1577d1dcb1df427baa44fa"
+    },
+    "ctest-results.xml": {
+      "bytes": 132443,
+      "sha256": "b9b128e8795b75cb38fa9797ef11e52f0ff7d5be739b32ceebc78a3375418991"
+    },
+    "Testing/Temporary/LastTest.log": {
+      "bytes": 381817,
+      "sha256": "3efa7b9abdbab84b5f87b8a9763d70877464854d5a41f9b1a4f07ecabdda5fe6"
+    }
+  },
+  "mapped_registered_host_cases": [
+    "cs80_modern_recall_host_tests",
+    "cs80_parameter_state_index_tests",
+    "cs80_preset_file_recall_tests",
+    "cs80_state_mirror_bridge_tests",
+    "cs80_ui_smoke",
+    "cs80_undo_replay_gesture_tests"
+  ],
+  "ui_body_phase_complete": true,
+  "all_four_new_tests_passed": true,
+  "native_content_reconciliation_passed": true,
+  "platform_qualified": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false
+}

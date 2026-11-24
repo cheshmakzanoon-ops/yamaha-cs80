@@ -1,0 +1,293 @@
+{
+  "schema": 1,
+  "status": "final_windows_attempt1_retained_identities",
+  "recorded_at_utc": "2026-11-24T14:05:06.077641+00:00",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "producer_job_id": 138455976256,
+  "consumer_job_id": 138483772246,
+  "platform_qualification": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+    "bytes": 160850,
+    "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+  },
+  "raw_root_inputs": [
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/artifact-collection-api-at-platform-completion.json",
+      "bytes": 5786,
+      "sha256": "9817ade30cd82760ce306d9232de4b489d46f2870164be82d4bb80c0584890db"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/artifact-collection-api-at-producer-completion.json",
+      "bytes": 4967,
+      "sha256": "d3a11152a21323790f9948f9e92ae155648c112de04459a8c034c79292d11110"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-platform-completion.json",
+      "bytes": 14806,
+      "sha256": "0214298a96afce78e58b5add0f43ace8f52736db156e291521fc52800c49a93c"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-producer-completion.json",
+      "bytes": 14801,
+      "sha256": "c9449d16806ef0e64e8ef047454b20b3aff67947a19080fe425fa0747bf96691"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "bytes": 750,
+      "sha256": "1629b1dafdc24007b1752e6bc458abec83c81a34749abdb09b6a8d8c25c61d74"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/jobs-api-at-platform-completion.json",
+      "bytes": 25673,
+      "sha256": "cedc9140d69f12bebc880b9e2f49c32815e16d9819516b6dd634d3026317b3ae"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/jobs-api-at-producer-completion.json",
+      "bytes": 23056,
+      "sha256": "627f86c09b02e530f2160fc4dc750e1b3311fdd286c4966c3b44ba8a0fb69f17"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "bytes": 747,
+      "sha256": "6b734fc21012052715a4a2118c182e02b1f9cd113e3b54c7008f2cebec7785ba"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json",
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-retrieval-receipt.json",
+      "bytes": 2842,
+      "sha256": "5edb6a9a9c2531f0682f0f3ef9567bf02320b2d13d28721c5a00b6324728d868"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/retrieval-receipt.json",
+      "bytes": 4486,
+      "sha256": "b914626a64b3dec3305a0228540f4976d908570741bc6b131dcd6236e8fd9938"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+      "bytes": 14784,
+      "sha256": "794a754b499dd03a045b3759f0c6a74faeb410a236d8db7b4570d1d8191f625a"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-producer-completion.json",
+      "bytes": 14779,
+      "sha256": "4874deeec043af4c21dd6a1c4ceebfa2630db334cf8f8c0f24606936636fbc5e"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-api.json",
+      "bytes": 742,
+      "sha256": "928ea2f0ceaf9ca4c77f18e03416fe249ece095903cd61e1c32fe7639da3dc32"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job-api.json",
+      "bytes": 3275,
+      "sha256": "ccb61533c7263f26a7932883619e5112e642a34b7f37fb8695a46a7215b82127"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job.log",
+      "bytes": 46300,
+      "sha256": "6f9c69d84309e84b5aa1723882c400b11df1c9b0282159499f188227acd535e2"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json",
+      "bytes": 740,
+      "sha256": "c6302d789bc7afabfbac0618834eb366187c7b028358781e107a94936aae5c9f"
+    }
+  ],
+  "a46_actual_outputs": [
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-actual-report-pins.json",
+      "bytes": 4272,
+      "sha256": "84bbe18a619a72cf5dda8e1607a57d421751d270037b09714112c1affd49ac8c"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-bind-original-ci-jobs-commands-uploads-and-consumer.log",
+      "bytes": 195,
+      "sha256": "31cc2e9117f0866c2bfef8c66991f1d43731cff2950db32b23d3d28821433c57"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-bind-parser-to-native-and-text-report-archives.log",
+      "bytes": 140,
+      "sha256": "e2e0ba57e36be26aad8ead272499e81d1449184306e28afedce2982d16ff16cc"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-compare-installed-vst3-to-actual-consumed-product.log",
+      "bytes": 6574,
+      "sha256": "616d33cc7655558d26c60171cf3fe7bd92b3654b5e491f95a97886744aa94a77"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-enforce-full-native-content-contract.log",
+      "bytes": 98,
+      "sha256": "4563404579c2f8419342ad234fe59b2f32f7e69aa42df9e0cacec36a632e46bd"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-command-receipts.json",
+      "bytes": 4220,
+      "sha256": "fdd3010a4baf96ddb95e61a6a05ee3f4e09bf540cccecc0babf1d9c7d1f58881"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-composition-first-command.json",
+      "bytes": 1189,
+      "sha256": "ee632fc4b17c7b1622592e5a9837992726f344dff62d2a0c257a580d11cdc8bf"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-composition-first.log",
+      "bytes": 599,
+      "sha256": "e3b1318eea0a4f588c647afd3f2904141b660333efeed040dd58553391528609"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-initial-command-receipts.json",
+      "bytes": 5823,
+      "sha256": "c3e893ef53a1d21b60e5d524897b3c6678a140641fa0ebcb4c2d9095b8336956"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-input-integrity.json",
+      "bytes": 6720,
+      "sha256": "518eb07e7ac4d672930af09623ae107dcf2fa58ddf6451501c085d4947d6db06"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-inspect-complete-install-artifact.log",
+      "bytes": 193,
+      "sha256": "e11c355fbc55bca8da9471e44f2ce7b16f4da3bad1933502fdccf7c7b424cba1"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-inspect-exact-windows-docs-and-notices.log",
+      "bytes": 329,
+      "sha256": "8d901e595e4139d3517cd2991ee1dd27a6dccca01301d300af5b1c16884c65a3"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-native-detail-review.json",
+      "bytes": 6768,
+      "sha256": "2a3b77c395aed8e676de5d632b393c9df41aa58bf81ecf4d4d6ad15fc57bf513"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-package-producer-proof.json",
+      "bytes": 4549,
+      "sha256": "2fba0103085af85b1959a3e94f06fe022da0d215bcd47cb7248b0f8477fb1476"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-parse-native-and-two-validator-lanes.log",
+      "bytes": 340,
+      "sha256": "5581715e5750d90656f2b80b00ac7a2bcf4903835057948b4f8e1b5ac32b27e5"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+      "bytes": 14621,
+      "sha256": "62e44c0b03b79ac58f5bd4679cb05912ba4f055c9f37f5a5eb91eb6685f61037"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-validator-review.json",
+      "bytes": 4483,
+      "sha256": "de2c47af108ba21070dbe5536876fa277db03d5406ed9ce5c90d70a10a33b9ad"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/docs-and-notices.json",
+      "bytes": 46091,
+      "sha256": "74e5ec8a08c9415cd9ddc4fd9dd320e18cf03a3ecce1c7d1179215d9d54f9917"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+      "bytes": 10227,
+      "sha256": "f88fbfa775013b97697ac20c2eab363c4208b0749a9c48979edfc1d7036eb4f5"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-content-contract.json",
+      "bytes": 6822,
+      "sha256": "a6229481837e4dbfc0a30fcd2619770603efc059bab58a9bb3b4408ffc9f2404"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+      "bytes": 745,
+      "sha256": "8667fa0a288393d0706f16f9045c33b55fbb63c5f1b0953ab9fdb06e9139755a"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+      "bytes": 95570,
+      "sha256": "cc832020ece046ad62e8da5df6ad925e22c2064b4eba3490bf2dcf3fa73962c9"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+      "bytes": 30463,
+      "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+      "bytes": 2356,
+      "sha256": "cb0488842888f3163c879962cedc6ca41e4e3db1408a7a178f2c1ff7fbb8f3fd"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/parser-archive-binding.json",
+      "bytes": 5252,
+      "sha256": "ccdce6e8ab2487eb6961738612a83b7c64873da49f05202e02a9d1ddb653bf2b"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/payload-binding.json",
+      "bytes": 6574,
+      "sha256": "616d33cc7655558d26c60171cf3fe7bd92b3654b5e491f95a97886744aa94a77"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+      "bytes": 160850,
+      "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/skip-review.json",
+      "bytes": 22602,
+      "sha256": "2a52a2a1be1b05f442ca95c47679c11f68866c28ad27f2fc7825e6b0ae6fc760"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/qualify-windows.py",
+      "bytes": 28251,
+      "sha256": "0b727cc78cdd7e67a33caf06f71b1c18eac4eeb30da3efaadc78b3c8972cdd98"
+    }
+  ],
+  "phase1_retained_manifest": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/retained-files.json",
+    "bytes": 4466,
+    "sha256": "10a3ff4fcec0984e8b05101cc46f8a7e0dea70b54a5b13a819ed0af053d407f8"
+  },
+  "archives": {
+    "native": {
+      "artifact_id": 14926075048,
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "bytes": 84062,
+      "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97"
+    },
+    "validator": {
+      "artifact_id": 14925398286,
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip",
+      "bytes": 5082,
+      "sha256": "28a102fce6fee3c7713c6ed96380d4b4c86c910593fbd0b10e7930facdd342e2"
+    },
+    "vst3": {
+      "artifact_id": 14924634293,
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+      "bytes": 3205643,
+      "sha256": "d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9"
+    },
+    "install": {
+      "artifact_id": 14925251949,
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb"
+    }
+  },
+  "manifest_self_included": false,
+  "handoff_written_after_manifest": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/actual-handoff.json",
+  "phase1_all_20_retained_files_unchanged": true,
+  "historical_all_13_protected_inputs_unchanged": true,
+  "platform_qualified": true,
+  "release_qualified": false,
+  "global_qualified": false
+}

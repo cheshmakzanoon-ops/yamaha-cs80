@@ -1,0 +1,23 @@
+{
+  "stage": "Windows preflight before output creation",
+  "returncode": 1,
+  "error": "Expected one explicit original-attempt snapshot",
+  "reason": "Input directory acquired a second attempt snapshot; no archive inspection or report write occurred. Subsequent selection will be restricted to the exact files named by the acquisition receipt.",
+  "program_sha256": "0727bc10f6008a84f0f3a7476c4bcaf07ea044f19ff0fb6d6b556c7eea594875",
+  "preserved_program": "docs/preset-evidence/2026.11.7/verification/a57/crosscheck-install-phase1.py",
+  "argv": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a57/crosscheck-install.py",
+    "--repo",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "--target",
+    "windows-x86_64",
+    "--archive",
+    "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+    "--input-dir",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64",
+    "--out-dir",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64"
+  ]
+}

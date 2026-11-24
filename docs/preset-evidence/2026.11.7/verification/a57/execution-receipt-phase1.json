@@ -1,0 +1,66 @@
+{
+  "status": "phase1_package_and_context_checks_completed",
+  "successful_commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a57/crosscheck-install.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--target",
+        "macos-arm64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip",
+        "--input-dir",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64",
+        "--out-dir",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64"
+      ],
+      "returncode": 0,
+      "program_preserved_as": "crosscheck-install-phase1.py"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a57/crosscheck-install.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--target",
+        "windows-x86_64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+        "--input-dir",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64",
+        "--acquisition-receipt",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-retrieval-receipt.json",
+        "--out-dir",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64"
+      ],
+      "returncode": 0,
+      "program_preserved_as": "crosscheck-install.py"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/preset-evidence/2026.11.7/verification/a57/reconcile-phase1.py"
+      ],
+      "returncode": 0,
+      "program_preserved_as": "reconcile-phase1.py"
+    }
+  ],
+  "native_product_executions": 0,
+  "operational_preflight_failures": [
+    "windows-preflight-ambiguity.json",
+    "windows-preflight-ambiguity2.json",
+    "reconcile-preflight-log-format.json",
+    "reconcile-preflight-windows-path.json"
+  ],
+  "additional_serialization_preflight": {
+    "exception": "TypeError: dict() got multiple values for keyword argument sha256",
+    "stage": "Combining public receipt identity with actual archive digest; no output report written",
+    "resolution": "Nest receipt identity separately from the outer archive digest; no gate/input change."
+  }
+}

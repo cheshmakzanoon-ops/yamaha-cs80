@@ -1,0 +1,390 @@
+{
+  "native": [
+    {
+      "ctest_test": "cs80_pluginval_macos_download_tests",
+      "lines": [
+        "........../opt/homebrew/Cellar/python@3.15/3.15.2/Frameworks/Python.framework/Versions/3.15/lib/python3.15/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 403: 'PRIVATE_DETAIL'>",
+        "  _warnings.warn(self.warn_message, ResourceWarning)"
+      ]
+    },
+    {
+      "ctest_test": "cs80_filter_batch_cap_tests",
+      "lines": [
+        "SKIP: AVX2 unavailable or disabled; no SIMD qualification"
+      ]
+    },
+    {
+      "ctest_test": "cs80_panel_golden_tests",
+      "lines": [
+        "golden main-1600x1000: changed 0.7652 % of pixels (limit 0.30 %), worst 8x8 block mean 64.52 (limit 8.0) [report only on this platform]",
+        "golden main-1120x700: changed 1.3670 % of pixels (limit 0.30 %), worst 8x8 block mean 52.28 (limit 8.0) [report only on this platform]"
+      ]
+    },
+    {
+      "ctest_test": "cs80_ui_smoke",
+      "lines": [
+        "golden main-1600x1000: changed 0.7652 % of pixels (limit 0.30 %), worst 8x8 block mean 64.52 (limit 8.0) [report only on this platform]",
+        "golden main-1120x700: changed 1.3670 % of pixels (limit 0.30 %), worst 8x8 block mean 52.28 (limit 8.0) [report only on this platform]"
+      ]
+    }
+  ],
+  "original_producer": [
+    {
+      "line": 67,
+      "text": "hint: to use in all of your new repositories, which will suppress this warning,"
+    },
+    {
+      "line": 239,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 245,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 250,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 256,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 260,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 266,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 271,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 277,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 280,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 286,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 290,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 296,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 299,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 305,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 310,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 316,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 321,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 327,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 332,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 338,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 344,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 350,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 355,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 361,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 366,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 372,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 376,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 382,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 386,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 392,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 438,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]"
+    },
+    {
+      "line": 439,
+      "text": "   61 |  JUCE_COMPILER_WARNING (\"This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored\")"
+    },
+    {
+      "line": 441,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'"
+    },
+    {
+      "line": 442,
+      "text": "  292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))"
+    },
+    {
+      "line": 447,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 668,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 674,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 681,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 687,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 692,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 698,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 703,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 709,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 713,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 719,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 722,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 728,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 731,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 737,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 742,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 748,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 754,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 760,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 765,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 771,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 776,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 782,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 787,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 793,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 798,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 804,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 808,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 814,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 818,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 824,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 841,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:448:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]"
+    },
+    {
+      "line": 847,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3757:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]"
+    },
+    {
+      "line": 850,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3758:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]"
+    },
+    {
+      "line": 853,
+      "text": "3 warnings generated."
+    },
+    {
+      "line": 861,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]"
+    },
+    {
+      "line": 862,
+      "text": "   61 |  JUCE_COMPILER_WARNING (\"This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored\")"
+    },
+    {
+      "line": 864,
+      "text": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'"
+    },
+    {
+      "line": 865,
+      "text": "  292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))"
+    },
+    {
+      "line": 870,
+      "text": "1 warning generated."
+    },
+    {
+      "line": 1889,
+      "text": "!!! WARNING: Current program is -1... Is this correct?"
+    },
+    {
+      "line": 2042,
+      "text": "!!! WARNING: Current program is -1... Is this correct?"
+    },
+    {
+      "line": 2208,
+      "text": "!!! WARNING: Current program is -1... Is this correct?"
+    },
+    {
+      "line": 2374,
+      "text": "!!! WARNING: Current program is -1... Is this correct?"
+    },
+    {
+      "line": 2528,
+      "text": "(node:53226) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead."
+    },
+    {
+      "line": 2529,
+      "text": "(Use `node --trace-deprecation ...` to show where the warning was created)"
+    },
+    {
+      "line": 2534,
+      "text": "(node:53226) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+    },
+    {
+      "line": 2561,
+      "text": "(node:53256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead."
+    },
+    {
+      "line": 2562,
+      "text": "(Use `node --trace-deprecation ...` to show where the warning was created)"
+    },
+    {
+      "line": 2569,
+      "text": "(node:53256) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+    },
+    {
+      "line": 2589,
+      "text": "(node:53258) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead."
+    },
+    {
+      "line": 2590,
+      "text": "(Use `node --trace-deprecation ...` to show where the warning was created)"
+    },
+    {
+      "line": 2597,
+      "text": "(node:53258) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+    },
+    {
+      "line": 2621,
+      "text": "##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/"
+    }
+  ],
+  "scope": "All matched original native warning/report-only/optional/skip lines and producer warning/deprecation/optional lines are retained; no warning is upgraded to a pass or failure by this reconciliation."
+}

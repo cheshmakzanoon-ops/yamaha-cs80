@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "status": "partial_windows_completion_and_rerun_refusal_reconciled",
+  "recorded_at_utc": "2026-11-24T14:04:48.715571+00:00",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "external_platforms_qualified": [
+    "macos-arm64",
+    "windows-x86_64"
+  ],
+  "windows_original_attempt": 1,
+  "windows_receipt": {
+    "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+    "bytes": 160850,
+    "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+  },
+  "windows_native_counts": {
+    "registered": 255,
+    "passed": 253,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "windows_actual_component_report_identities_verified": 16,
+  "intel_original_failure_preserved": true,
+  "intel_retry_started": false,
+  "intel_rerun_request_http_status": 403,
+  "intel_rerun_refusal_reason": "The workflow run containing this job is already running",
+  "replaces_prior_snapshot": false,
+  "all_four_platforms_qualified": false,
+  "release_qualified": false,
+  "remaining_gates_unchanged": [
+    "Intel accepted complete replacement attempt",
+    "Linux actual platform qualification",
+    "Actual audition content and CI binding",
+    "Four remaining full public GETs",
+    "Final provenance, skips, package, 60-review ledger and independent signoff"
+  ],
+  "inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/native-observations.json",
+      "bytes": 13703,
+      "sha256": "30fd291f38ba7123d21753a7059f9498f5885facd5cd8afeb3a6bcee756c651c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/artifact-attempt-matrix.json",
+      "bytes": 12861,
+      "sha256": "9c862b996edf1a8fbbee6ff040013447e1102c4051278eaaf7289af768cc43ac"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/phase1/validator-lanes.json",
+      "bytes": 10236,
+      "sha256": "957d608e1ea4448eff53c6129a6a2f9a286228a502eb4f767a52303d953cb0f3"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+      "bytes": 160850,
+      "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-input-integrity.json",
+      "bytes": 6720,
+      "sha256": "518eb07e7ac4d672930af09623ae107dcf2fa58ddf6451501c085d4947d6db06"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+      "bytes": 745,
+      "sha256": "8667fa0a288393d0706f16f9045c33b55fbb63c5f1b0953ab9fdb06e9139755a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+      "bytes": 2356,
+      "sha256": "cb0488842888f3163c879962cedc6ca41e4e3db1408a7a178f2c1ff7fbb8f3fd"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+      "bytes": 95570,
+      "sha256": "cc832020ece046ad62e8da5df6ad925e22c2064b4eba3490bf2dcf3fa73962c9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+      "bytes": 10227,
+      "sha256": "f88fbfa775013b97697ac20c2eab363c4208b0749a9c48979edfc1d7036eb4f5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/payload-binding.json",
+      "bytes": 6574,
+      "sha256": "616d33cc7655558d26c60171cf3fe7bd92b3654b5e491f95a97886744aa94a77"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+      "bytes": 30463,
+      "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-initial-command-receipts.json",
+      "bytes": 5823,
+      "sha256": "c3e893ef53a1d21b60e5d524897b3c6678a140641fa0ebcb4c2d9095b8336956"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/skip-review.json",
+      "bytes": 22602,
+      "sha256": "2a52a2a1be1b05f442ca95c47679c11f68866c28ad27f2fc7825e6b0ae6fc760"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-native-detail-review.json",
+      "bytes": 6768,
+      "sha256": "2a3b77c395aed8e676de5d632b393c9df41aa58bf81ecf4d4d6ad15fc57bf513"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/parser-archive-binding.json",
+      "bytes": 5252,
+      "sha256": "ccdce6e8ab2487eb6961738612a83b7c64873da49f05202e02a9d1ddb653bf2b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-content-contract.json",
+      "bytes": 6822,
+      "sha256": "a6229481837e4dbfc0a30fcd2619770603efc059bab58a9bb3b4408ffc9f2404"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/docs-and-notices.json",
+      "bytes": 46091,
+      "sha256": "74e5ec8a08c9415cd9ddc4fd9dd320e18cf03a3ecce1c7d1179215d9d54f9917"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-command-receipts.json",
+      "bytes": 4220,
+      "sha256": "fdd3010a4baf96ddb95e61a6a05ee3f4e09bf540cccecc0babf1d9c7d1f58881"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-validator-review.json",
+      "bytes": 4483,
+      "sha256": "de2c47af108ba21070dbe5536876fa277db03d5406ed9ce5c90d70a10a33b9ad"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-package-producer-proof.json",
+      "bytes": 4549,
+      "sha256": "2fba0103085af85b1959a3e94f06fe022da0d215bcd47cb7248b0f8477fb1476"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-x86_64/attempt-1-failed/rerun-request-while-active.json",
+      "bytes": 997,
+      "sha256": "f56d27b215be8bc6ce29b19d47194d790644384dc2b011d538dc762a2cb4c866"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a58/reconcile-supplement.py",
+      "bytes": 5862,
+      "sha256": "04219539c6ecd784a4aafa14a3a81d3e8c4c1bba1aed182cfc2e0bd095137796"
+    }
+  ],
+  "argv": [
+    "docs/preset-evidence/2026.11.7/verification/a58/reconcile-supplement.py",
+    "--repo",
+    ".",
+    "--out",
+    "docs/preset-evidence/2026.11.7/verification/a58/phase1-supplement.json"
+  ]
+}

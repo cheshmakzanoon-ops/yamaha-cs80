@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "bounded_partial_reconciliation_not_release_acceptance",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "recorded_at_utc": "2026-11-24T14:00:14.225925+00:00",
+  "documentation_head_at_inspection": "01a8f60a15a6323b0fd3ffea3c9db84ddf8fc435",
+  "source_protection": {
+    "tracked_changes": [],
+    "untracked_protected_inputs": []
+  },
+  "native_expected_registered": {
+    "linux-x86_64": 613,
+    "windows-x86_64": 255,
+    "macos-arm64": 277,
+    "macos-x86_64": 277
+  },
+  "native_expected_registered_total": 1422,
+  "native_observed_partial_totals": {
+    "registered": 809,
+    "passed": 802,
+    "failed": 1,
+    "formal_skipped": 6,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "native_observed_partial_nested_python_skips": 21,
+  "native_targets_observed": 3,
+  "all_four_native_accepted": false,
+  "accepted_external_platforms_at_this_snapshot": [
+    "macos-arm64"
+  ],
+  "windows_component_checks_reconciled": true,
+  "windows_final_platform_receipt_in_this_handoff": null,
+  "validator_lanes_reconciled": 7,
+  "validator_lanes_required": 15,
+  "validator_invocations_reconciled": 7,
+  "validator_retries_reconciled": 0,
+  "installation_packages_crosschecked_externally": 2,
+  "installation_packages_required": 4,
+  "audition_prepared_contract": {
+    "wav_count": 238,
+    "selected_program_count": 92,
+    "audio_seconds": 1361.2,
+    "folder_count": 54,
+    "regular_files": 297,
+    "checksums": 296,
+    "parameters": 204,
+    "programs": 523,
+    "stereo_frames": 65337600,
+    "raw_audio_bytes": 522700800
+  },
+  "audition_actual_observed": null,
+  "public_gets_reconciled": 1,
+  "public_gets_required": 5,
+  "earliest_expiry_across_all_five": null,
+  "all_60_review_completion_accepted": false,
+  "final_signoff_accepted": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "blocked_gates": [
+    "Intel attempt 1 native/UI failure; no accepted replacement attempt supplied.",
+    "Linux original native/validator/install evidence absent from this handoff.",
+    "Actual audition ZIP and content/CI acceptance absent.",
+    "Four remaining actual public GETs absent.",
+    "Final provenance/skip/package reconciliation, 60-review ledger and final signoff pending."
+  ],
+  "limits": [
+    "This zero-exit reviewer records the observed product failure; it is not a green product result.",
+    "Expected totals are contract requirements, not observed successful executions.",
+    "Three-target partial totals include the failed Intel attempt and must not be published as qualified native totals.",
+    "All archive producing attempts are taken from individual original job/upload records.",
+    "No new presets, product run, upload, network request, shared documentation edit, Git index edit or remote mutation."
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "attributes": {
+      "name": "cs80_output_meter_display_tests",
+      "classname": "cs80_output_meter_display_tests",
+      "time": "0.00343821",
+      "status": "run"
+    },
+    "fail_messages": [],
+    "output": "Output meter display: PASS\n"
+  },
+  {
+    "attributes": {
+      "name": "cs80_output_meter_tests",
+      "classname": "cs80_output_meter_tests",
+      "time": "0.00353753",
+      "status": "run"
+    },
+    "fail_messages": [],
+    "output": "Output meter: 20 checks, 0 failures\n"
+  },
+  {
+    "attributes": {
+      "name": "cs80_output_meter_audit_tests",
+      "classname": "cs80_output_meter_audit_tests",
+      "time": "0.0139622",
+      "status": "run"
+    },
+    "fail_messages": [],
+    "output": "Independent output-meter audit: 22769 checks, 0 failures\n"
+  },
+  {
+    "attributes": {
+      "name": "cs80_library_audit_tests",
+      "classname": "cs80_library_audit_tests",
+      "time": "0.212644",
+      "status": "fail"
+    },
+    "fail_messages": [],
+    "output": ""
+  },
+  {
+    "attributes": {
+      "name": "cs80_ui_smoke",
+      "classname": "cs80_ui_smoke",
+      "time": "148.751",
+      "status": "run"
+    },
+    "fail_messages": [],
+    "output": "UI SMOKE START: processor=555792 bytes engine=504776 bytes\nUI SMOKE PHASE: JUCE initialization\nUI SMOKE TIMING: phase=JUCE initialization seconds=0.000770 total_seconds=0.000770\nUI SMOKE PHASE: host metadata\nHOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406724 active=1\nHOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1\nUI SMOKE TIMING: phase=host metadata seconds=6.789314 total_seconds=6.790084\nUI SMOKE PHASE: output meter host\nTyped-value formatter compatibility: 1020 cases, 1020 accepted, digest 9a2c9c5c6ee5edc3\nUI SMOKE TIMING: phase=output meter host seconds=14.042651 total_seconds=20.832735\nUI SMOKE PHASE: source performance host\nUI SMOKE TIMING: phase=source performance host seconds=0.469664 total_seconds=21.302399\nUI SMOKE PHASE: ws3 keyboard/tuning host\nUI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=2.949323 total_seconds=24.251722\nUI SMOKE PHASE: preset recall host\nUI SMOKE TIMING: phase=preset recall host second...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]\n"
+  }
+]

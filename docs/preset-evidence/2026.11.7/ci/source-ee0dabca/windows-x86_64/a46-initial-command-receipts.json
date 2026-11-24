@@ -1,0 +1,148 @@
+[
+  {
+    "label": "parse-native-and-two-validator-lanes",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+      "--inputs",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-inputs.json",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:48:51.037247+00:00",
+    "elapsed_seconds": 0.09518113200101652,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-parse-native-and-two-validator-lanes.log",
+      "bytes": 340,
+      "sha256": "5581715e5750d90656f2b80b00ac7a2bcf4903835057948b4f8e1b5ac32b27e5"
+    }
+  },
+  {
+    "label": "inspect-complete-install-artifact",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--source",
+      "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "--revision",
+      "2026.11.7",
+      "--run-id",
+      "45397189410",
+      "--attempt",
+      "1",
+      "--run-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+      "--platform",
+      "windows",
+      "--architecture",
+      "x86_64",
+      "--archive",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "--artifact-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:48:51.037478+00:00",
+    "elapsed_seconds": 0.39983152900094865,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-inspect-complete-install-artifact.log",
+      "bytes": 193,
+      "sha256": "e11c355fbc55bca8da9471e44f2ce7b16f4da3bad1933502fdccf7c7b424cba1"
+    }
+  },
+  {
+    "label": "compare-installed-vst3-to-actual-consumed-product",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--source",
+      "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "--revision",
+      "2026.11.7",
+      "--run-id",
+      "45397189410",
+      "--attempt",
+      "1",
+      "--run-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+      "--platform",
+      "windows",
+      "--install-archive",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "--install-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "--validator-archive",
+      "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+      "--validator-api",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json",
+      "--consumer-log",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job.log",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/payload-binding.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:48:51.037926+00:00",
+    "elapsed_seconds": 0.29164850899906014,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-compare-installed-vst3-to-actual-consumed-product.log",
+      "bytes": 6574,
+      "sha256": "616d33cc7655558d26c60171cf3fe7bd92b3654b5e491f95a97886744aa94a77"
+    }
+  },
+  {
+    "label": "bind-original-ci-jobs-commands-uploads-and-consumer",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/preset-evidence/2026.11.7/verification/a46/bind-windows-originals.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--inputs",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+      "--out",
+      "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json"
+    ],
+    "cwd": "/tmp/cs80-session-1cee5a",
+    "started_at_utc": "2026-11-24T13:48:51.038246+00:00",
+    "elapsed_seconds": 0.16527634500016575,
+    "exit_code": 0,
+    "checker": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/bind-windows-originals.py",
+      "bytes": 31368,
+      "sha256": "15c84f6f72ed9ea44e38f14f666c8793aac1621b6b849d8e96bf50d3750d7c83"
+    },
+    "log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-bind-original-ci-jobs-commands-uploads-and-consumer.log",
+      "bytes": 195,
+      "sha256": "31cc2e9117f0866c2bfef8c66991f1d43731cff2950db32b23d3d28821433c57"
+    }
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "label": "notice-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/test-windows-docs.py"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.6012542247772217,
+    "log": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a46/notice-fixtures.log",
+      "bytes": 1322,
+      "sha256": "b8312c5e2ed07d6d871ea6aca7a75a48ce95f7169aa8f394f97e277c68ab584c"
+    }
+  },
+  {
+    "label": "source-checkout-prepare",
+    "command": [
+      "python3",
+      "-B",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/verify-windows-docs.py",
+      "--repo",
+      "/tmp/cs80-session-1cee5a",
+      "--prepare",
+      "--out",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/windows-notice-checkout-transform-ee0dabca.json"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.20436358451843262,
+    "log": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a46/source-checkout-prepare.log",
+      "bytes": 311,
+      "sha256": "9b1d42ebbb70bfc01e93142b2ad27f13e382bc2e7c3ae432bb64586b157a7158"
+    }
+  }
+]

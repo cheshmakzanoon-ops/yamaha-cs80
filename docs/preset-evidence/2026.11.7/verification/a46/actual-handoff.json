@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "status": "A46_actual_windows_qualification_complete",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "producer_job_id": 138455976256,
+  "consumer_job_id": 138483772246,
+  "platform_qualified": true,
+  "release_qualified": false,
+  "global_qualified": false,
+  "platform_receipt": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+    "bytes": 160850,
+    "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+  },
+  "actual_review": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-platform-review.md",
+    "bytes": 14621,
+    "sha256": "62e44c0b03b79ac58f5bd4679cb05912ba4f055c9f37f5a5eb91eb6685f61037"
+  },
+  "retained_identities": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-retained-files.json",
+    "bytes": 14221,
+    "sha256": "e5a859b0d4fde4a22bd2a0d462ce500bc2ec6c2e0f1a87c424351c2ffc43eb40"
+  },
+  "composition_command_receipt": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/a46-final-composition-first-command.json",
+    "bytes": 1189,
+    "sha256": "ee632fc4b17c7b1622592e5a9837992726f344dff62d2a0c257a580d11cdc8bf"
+  },
+  "composition_checker": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a46/qualify-windows.py",
+    "bytes": 28251,
+    "sha256": "0b727cc78cdd7e67a33caf06f71b1c18eac4eeb30da3efaadc78b3c8972cdd98"
+  },
+  "native_counts": {
+    "registered": 255,
+    "passed": 253,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": 11,
+  "nested_python_skip_suites": 8,
+  "validator_lanes": 2,
+  "validation_retries": 0,
+  "all_17_prepared_gates_verified": true,
+  "root_followup": "Preserve all original attempt-one inputs and outputs; publication/public GET and all other-platform or later-attempt/global gates remain root work. No missing Windows prerequisites."
+}

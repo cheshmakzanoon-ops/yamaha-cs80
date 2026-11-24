@@ -1,0 +1,570 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "windows-x86_64",
+  "reviewed": true,
+  "reviewed_at_utc": "2026-11-24T13:52:21.765800+00:00",
+  "review_note": "All two actual formal CTest capability skips and all eleven separately counted nested Python skips were individually reviewed against frozen source and the original complete LastTest output. Nonverbose positional skips are mapped to default sorted unittest class/method order; no unprinted dynamic reason is asserted. JUnit formal skip status remains authoritative over LastTest Passed wording.",
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "nested_python_skips": {
+    "total": 11,
+    "suites": [
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 7 tests in 18.239s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 12,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 12 tests in 4.260s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_validator_diagnostic_selection_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 9,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 9 tests in 4.017s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_preset_capture_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 10,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 10 tests in 3.310s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "total": 3,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 3,
+            "summary": "Ran 7 tests in 0.201s\n\nOK (skipped=3)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_truth_render_tests",
+        "total": 2,
+        "summaries": [
+          {
+            "tests_run": 16,
+            "result": "OK",
+            "skipped": 2,
+            "summary": "Ran 16 tests in 2.052s\n\nOK (skipped=2)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_vca_reference_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 12,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 12 tests in 0.497s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_float_wav_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 4,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 4 tests in 0.309s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      }
+    ]
+  },
+  "formal_reviews": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "reviewed": true,
+      "disposition": "accepted_declared_capability_skip",
+      "original_junit_skip": {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      "lasttest_status": "Passed",
+      "lasttest_output": "SKIP: AVX2 unavailable or disabled; no SIMD qualification\n",
+      "source_paths": [
+        "CMakeLists.txt",
+        "tests/FilterBatchCapTests.cpp",
+        "src/core/Ig00156Batch.cpp",
+        "src/core/Ig00156Batch.h"
+      ],
+      "reason": "The original native Configure identifies MSVC and source CMake explicitly disables this backend for non-GNU builds. selectKernel returns null, and the observed exact capability output returns source-declared CTest skip code 77. JUnit skip is authoritative even though LastTest labels the return-code skip Passed.",
+      "limitation": "No AVX2/SIMD backend qualification."
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "reviewed": true,
+      "disposition": "accepted_declared_capability_skip",
+      "original_junit_skip": {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      "lasttest_status": "Passed",
+      "lasttest_output": "",
+      "source_paths": [
+        "CMakeLists.txt",
+        "tests/StereoPraExactTests.cpp"
+      ],
+      "reason": "Frozen specialization requires Linux x86_64 GCC 14.2 and explicitly excludes MSVC. The Windows/MSVC build therefore uses the fallback main returning 77. JUnit records the exact declared SKIP_RETURN_CODE=77; no stdout reason was emitted.",
+      "limitation": "No Linux/GCC stereo-PRA specialization qualification and no invented runtime skip text."
+    }
+  ],
+  "nested_reviews": [
+    {
+      "ctest_test": "cs80_packaging_notice_tests",
+      "observed_skips": 1,
+      "observed_test_count": 7,
+      "source_path": "scripts/test-packaging-notices.py",
+      "source_file": {
+        "bytes": 15702,
+        "sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 7,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 7 tests in 18.239s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": null,
+      "observed_explicit_skip_lines": [
+        "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+      ],
+      "method_reviews": [
+        {
+          "test": "NoticeTests.test_synthetic_deb_notice_bytes",
+          "source_path": "scripts/test-packaging-notices.py",
+          "unittest_order_position": 7,
+          "source_guard": [
+            "unittest.skipUnless(sys.platform == \"linux\" and platform.machine().lower() in (\"x86_64\", \"amd64\")\n                         and all(shutil.which(tool) for tool in\n                         (\"bash\", \"cc\", \"readelf\", \"dpkg-deb\", \"dpkg\", \"dpkg-shlibdeps\")),\n                         \"Native Linux amd64, Debian packaging tools and cc required\")"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Native Linux amd64, Debian packaging tools and cc required",
+      "limitation": "Exact explicit runtime skip reason retained; this is nested unittest accounting only."
+    },
+    {
+      "ctest_test": "cs80_windows_installer_preflight_tests",
+      "observed_skips": 1,
+      "observed_test_count": 12,
+      "source_path": "scripts/test-windows-installer-preflight.py",
+      "source_file": {
+        "bytes": 10817,
+        "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 12,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 12 tests in 4.260s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": ".s..........",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "PreflightTests.test_linked_payload_rejected",
+          "source_path": "scripts/test-windows-installer-preflight.py",
+          "unittest_order_position": 2,
+          "source_guard": [
+            "unittest.skipIf(os.name == 'nt', 'Native Windows symlink creation may require extra privileges')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Windows symlink creation may need extra privileges; exact source decorator skips this fixture on os.name == nt.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_validator_diagnostic_selection_tests",
+      "observed_skips": 1,
+      "observed_test_count": 9,
+      "source_path": "scripts/test-pluginval-diagnostic-log.py",
+      "source_file": {
+        "bytes": 10985,
+        "sha256": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 9,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 9 tests in 4.017s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": "s........",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "DiagnosticSelectionTests.test_actual_replay_shell_preserves_lane_seed_and_exit",
+          "source_path": "scripts/test-pluginval-diagnostic-log.py",
+          "unittest_order_position": 1,
+          "source_guard": [
+            "unittest.skipUnless(os.name == \"posix\" and shutil.which(\"bash\"),\n                         \"Linux diagnostic shell fixture requires POSIX Bash\")"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Exact Linux diagnostic shell fixture requires POSIX and Bash; Windows does not satisfy the POSIX guard.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_preset_capture_tests",
+      "observed_skips": 1,
+      "observed_test_count": 10,
+      "source_path": "tests/test_preset_capture.py",
+      "source_file": {
+        "bytes": 14940,
+        "sha256": "a8064c16ec6982302e00b490c579ac0431e275da77b36adb78553cbb2c06067d"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 10,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 10 tests in 3.310s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": "s.........",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "PresetCaptureTests.test_buffered_output_failures_are_reported",
+          "source_path": "tests/test_preset_capture.py",
+          "unittest_order_position": 1,
+          "source_guard": [
+            "unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'), 'POSIX file-size limits')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Buffered-output failure injection uses POSIX child resource limits and SIGXFSZ, excluded by the Windows platform guard.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_render_cli_tests",
+      "observed_skips": 3,
+      "observed_test_count": 7,
+      "source_path": "tests/test_render_cli.py",
+      "source_file": {
+        "bytes": 8752,
+        "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 7,
+          "result": "OK",
+          "skipped": 3,
+          "summary": "Ran 7 tests in 0.201s\n\nOK (skipped=3)"
+        }
+      ],
+      "observed_progress": "s.ss...",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "RenderArguments.test_buffered_write_failure_is_reported",
+          "source_path": "tests/test_render_cli.py",
+          "unittest_order_position": 1,
+          "source_guard": [
+            "unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only file size limit')"
+          ],
+          "reviewed": true
+        },
+        {
+          "test": "RenderArguments.test_long_render_has_bounded_buffers",
+          "source_path": "tests/test_render_cli.py",
+          "unittest_order_position": 3,
+          "source_guard": [
+            "unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only resource limits')"
+          ],
+          "reviewed": true
+        },
+        {
+          "test": "RenderArguments.test_long_render_stops_on_write_failure",
+          "source_path": "tests/test_render_cli.py",
+          "unittest_order_position": 4,
+          "source_guard": [
+            "unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),\n                         'requires POSIX child-only file size limit')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "All three source decorators require POSIX/SIGXFSZ child resource limits. On Windows the guards skip before dynamic resource/ASan branches; no dynamic ASan failure is inferred.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_truth_render_tests",
+      "observed_skips": 2,
+      "observed_test_count": 16,
+      "source_path": "tests/test_truth_render.py",
+      "source_file": {
+        "bytes": 34515,
+        "sha256": "4506c62089fb278cffc001e5a0858158a7e2d700f32d2ef35962d8fbf0ce7d47"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 16,
+          "result": "OK",
+          "skipped": 2,
+          "summary": "Ran 16 tests in 2.052s\n\nOK (skipped=2)"
+        }
+      ],
+      "observed_progress": ".s.....s........",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "RenderTests.test_control_artifact_write_failures",
+          "source_path": "tests/test_truth_render.py",
+          "unittest_order_position": 2,
+          "source_guard": [
+            "unittest.skipUnless(__import__('os').name == 'posix', 'POSIX file-size failure injection')"
+          ],
+          "reviewed": true
+        },
+        {
+          "test": "RenderTests.test_input_write_failure_cleanup",
+          "source_path": "tests/test_truth_render.py",
+          "unittest_order_position": 8,
+          "source_guard": [
+            "unittest.skipUnless(__import__('os').name == 'posix', 'POSIX file-size failure injection')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Both source decorators require POSIX file-size failure injection; Windows excludes those two child resource-limit cases.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_vca_reference_tests",
+      "observed_skips": 1,
+      "observed_test_count": 12,
+      "source_path": "tests/test_vca_reference.py",
+      "source_file": {
+        "bytes": 14517,
+        "sha256": "a7e7cdfcee124658de398d6e92b83101a392631e7dd7b8bd0f710b5e12e14562"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 12,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 12 tests in 0.497s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": ".....s......",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "VcaReferenceTests.test_failed_write_rolls_back",
+          "source_path": "tests/test_vca_reference.py",
+          "unittest_order_position": 6,
+          "source_guard": [
+            "unittest.skipUnless(os.name=='posix','POSIX file-size failure injection')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "Source decorator requires POSIX file-size failure injection; Windows excludes this one child resource-limit case.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    },
+    {
+      "ctest_test": "cs80_float_wav_tests",
+      "observed_skips": 1,
+      "observed_test_count": 4,
+      "source_path": "tests/test_float_wav.py",
+      "source_file": {
+        "bytes": 8371,
+        "sha256": "dd3e42f5ff1992320fc911ef1f07beb7e3f2fd3e996715aca1bc9e33cdd4772a"
+      },
+      "observed_terminal_summary": [
+        {
+          "tests_run": 4,
+          "result": "OK",
+          "skipped": 1,
+          "summary": "Ran 4 tests in 0.309s\n\nOK (skipped=1)"
+        }
+      ],
+      "observed_progress": "s...",
+      "observed_explicit_skip_lines": [],
+      "method_reviews": [
+        {
+          "test": "WavTests.test_helper_bits_bounds_no_overwrite_and_failure_cleanup",
+          "source_path": "tests/test_float_wav.py",
+          "unittest_order_position": 1,
+          "source_guard": [
+            "try: import resource; import signal / except ImportError: self.skipTest('POSIX file-size fault injection unavailable')"
+          ],
+          "reviewed": true
+        }
+      ],
+      "reviewed": true,
+      "disposition": "accepted_source_platform_or_capability_guard",
+      "reason": "This method reaches a source ImportError-gated POSIX resource/signal import before the fault-injection tail. The nonverbose skip is attributed to this unique ordered method; the exception and reason text were not printed. Earlier ordinary checks precede the skip in source, but no POSIX fault injection is claimed.",
+      "limitation": "Runtime skip reason text is not retained by nonverbose unittest output; source guard and default ordered progress identify the skipped method(s)."
+    }
+  ],
+  "source_files": {
+    "CMakeLists.txt": {
+      "bytes": 220832,
+      "sha256": "27e3314f93f9cab0b61633b295021b9bffb274044b663a53faa74b201d65bd92"
+    },
+    "tests/FilterBatchCapTests.cpp": {
+      "bytes": 6284,
+      "sha256": "96fc4462c13240679b3ef775269fccffb30612bee56fdc2e189d65178ad74729"
+    },
+    "tests/StereoPraExactTests.cpp": {
+      "bytes": 6774,
+      "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0"
+    },
+    "src/core/Ig00156Batch.cpp": {
+      "bytes": 21447,
+      "sha256": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+    },
+    "src/core/Ig00156Batch.h": {
+      "bytes": 3585,
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985"
+    },
+    "scripts/test-packaging-notices.py": {
+      "bytes": 15702,
+      "sha256": "dae488d5b8261acb26bec13d9196e1726b67f8486e1053965c6655f5e088103f"
+    },
+    "scripts/test-windows-installer-preflight.py": {
+      "bytes": 10817,
+      "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4"
+    },
+    "scripts/test-pluginval-diagnostic-log.py": {
+      "bytes": 10985,
+      "sha256": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a"
+    },
+    "tests/test_preset_capture.py": {
+      "bytes": 14940,
+      "sha256": "a8064c16ec6982302e00b490c579ac0431e275da77b36adb78553cbb2c06067d"
+    },
+    "tests/test_render_cli.py": {
+      "bytes": 8752,
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868"
+    },
+    "tests/test_truth_render.py": {
+      "bytes": 34515,
+      "sha256": "4506c62089fb278cffc001e5a0858158a7e2d700f32d2ef35962d8fbf0ce7d47"
+    },
+    "tests/test_vca_reference.py": {
+      "bytes": 14517,
+      "sha256": "a7e7cdfcee124658de398d6e92b83101a392631e7dd7b8bd0f710b5e12e14562"
+    },
+    "tests/test_float_wav.py": {
+      "bytes": 8371,
+      "sha256": "dd3e42f5ff1992320fc911ef1f07beb7e3f2fd3e996715aca1bc9e33cdd4772a"
+    }
+  },
+  "actual_compiler_log_lines": [
+    "2026-11-24T12:50:01.8943799Z -- The CXX compiler identification is MSVC 19.44.35230.0"
+  ],
+  "observations": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+    "bytes": 95570,
+    "sha256": "cc832020ece046ad62e8da5df6ad925e22c2064b4eba3490bf2dcf3fa73962c9"
+  },
+  "native_archive": {
+    "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+    "bytes": 84062,
+    "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97"
+  },
+  "lasttest_member": {
+    "path": "Testing/Temporary/LastTest.log",
+    "bytes": 381817,
+    "sha256": "3efa7b9abdbab84b5f87b8a9763d70877464854d5a41f9b1a4f07ecabdda5fe6"
+  },
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

@@ -1,0 +1,86 @@
+{
+  "target": "macos-arm64",
+  "producer_job_id": 138455976227,
+  "actual_native_evidence_inspected": true,
+  "counts": {
+    "registered": 277,
+    "passed": 275,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": 5,
+  "formal_skip_names": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "exact_expected_name_set_verified": true,
+  "complete_numbered_lasttest_verified": true,
+  "original_console_name_results_verified": true,
+  "original_ctest_normal_exit": 0,
+  "original_exit_basis": "Exact unsuppressed source-matched CTest command, successful original API Test step, complete original console matched to JUnit/LastTest and terminal completion; root retains authenticated acquisition.",
+  "ctest_seconds": "1646.06",
+  "artifact_id": 14923599291,
+  "archive_sha256": "93cf1ac090abc9c437dbef5fa279a6f5baad9d2e1b9cb6c21e900ffd70eee55a",
+  "input_files": [
+    {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-native.zip",
+      "bytes": 86866,
+      "sha256": "93cf1ac090abc9c437dbef5fa279a6f5baad9d2e1b9cb6c21e900ffd70eee55a"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/native-api.json",
+      "bytes": 748,
+      "sha256": "38a89e56acea7becba0f5f21c671c94ace36b8f9bcfb32db463ab64c03045f7d"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job-api.json",
+      "bytes": 5977,
+      "sha256": "6b3c08d29f6e23f00405d608c5b538b905a2612e2f691458c1eac56e8903f062"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log",
+      "bytes": 256051,
+      "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+    },
+    {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/retrieval-receipt.json",
+      "bytes": 2665,
+      "sha256": "1c8999da31d092f9bdb435eb3f76790e1f7314f040a397cd3676776d26a5ea6c"
+    }
+  ],
+  "members": {
+    "Testing/Temporary/LastTest.log": {
+      "bytes": 392936,
+      "sha256": "90a92c7ef7b142738532b0fff2cb3baec8cda76efba47b981613a928746a7d1d"
+    },
+    "ctest-results.xml": {
+      "bytes": 139113,
+      "sha256": "7f87e5be2180df1ca56d64134703eae38ff67bb18f842a09757dbaedda01ee22"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 612,
+      "sha256": "7716bf3a6df312a717b460c086ba24fe60e38bb166f6e0053c49d55cba4abfbe"
+    }
+  },
+  "mapped_registered_host_cases": [
+    "cs80_modern_recall_host_tests",
+    "cs80_parameter_state_index_tests",
+    "cs80_preset_file_recall_tests",
+    "cs80_state_mirror_bridge_tests",
+    "cs80_ui_smoke",
+    "cs80_undo_replay_gesture_tests"
+  ],
+  "ui_body_phase_complete": true,
+  "all_four_new_tests_passed": true,
+  "native_content_reconciliation_passed": true,
+  "platform_qualified": false,
+  "cross_platform_qualified": false,
+  "release_qualified": false,
+  "a48_skip_review_agrees": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a48/macos-arm64/skip-review.json",
+    "bytes": 8706,
+    "sha256": "de1aca2f99da1ef1513a85a5e917d4afa68ea8c02b192bd158ad3f62aea61d66"
+  }
+}

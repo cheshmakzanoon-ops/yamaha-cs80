@@ -1,0 +1,262 @@
+UI SMOKE START: processor=555792 bytes engine=504776 bytes
+UI SMOKE PHASE: JUCE initialization
+UI SMOKE TIMING: phase=JUCE initialization seconds=0.000545 total_seconds=0.000545
+UI SMOKE PHASE: host metadata
+HOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406724 active=1
+HOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1
+UI SMOKE TIMING: phase=host metadata seconds=6.047589 total_seconds=6.048134
+UI SMOKE PHASE: output meter host
+Typed-value formatter compatibility: 1020 cases, 1020 accepted, digest 9a2c9c5c6ee5edc3
+UI SMOKE TIMING: phase=output meter host seconds=12.394104 total_seconds=18.442238
+UI SMOKE PHASE: source performance host
+UI SMOKE TIMING: phase=source performance host seconds=0.441341 total_seconds=18.883579
+UI SMOKE PHASE: ws3 keyboard/tuning host
+UI SMOKE TIMING: phase=ws3 keyboard/tuning host seconds=2.836211 total_seconds=21.719790
+UI SMOKE PHASE: preset recall host
+UI SMOKE TIMING: phase=preset recall host seconds=0.463598 total_seconds=22.183389
+UI SMOKE PHASE: instrument body host identity and recall
+UI SMOKE TIMING: phase=instrument body host identity and recall seconds=6.088931 total_seconds=28.272320
+UI SMOKE PHASE: preset file host
+UI SMOKE TIMING: phase=preset file host seconds=0.583242 total_seconds=28.855563
+UI SMOKE PHASE: session schema host
+UI SMOKE TIMING: phase=session schema host seconds=2.768680 total_seconds=31.624243
+UI SMOKE PHASE: session undo host
+UI SMOKE TIMING: phase=session undo host seconds=0.659088 total_seconds=32.283331
+UI SMOKE PHASE: engine I/O host
+UI SMOKE TIMING: phase=engine I/O host seconds=8.554713 total_seconds=40.838044
+UI SMOKE PHASE: editor initial size
+Editor initial size: 1448x905; logical usable display: 1920x970
+UI SMOKE TIMING: phase=editor initial size seconds=0.058531 total_seconds=40.896575
+UI SMOKE PHASE: external input host
+UI SMOKE TIMING: phase=external input host seconds=1.700230 total_seconds=42.596806
+UI SMOKE PHASE: circuit performance and retired policy host
+Factory recall contour: authored=0.0250000003725 canonical=0.0249999761581 restored=0.0249999761581
+UI SMOKE TIMING: phase=circuit performance and retired policy host seconds=3.670188 total_seconds=46.266994
+UI SMOKE PHASE: keyboard and expression host
+Expression persistence RMS: restored=0.0027231132 expected=0.00272404726 full=0.00908165294 relative_error=0.000342892784
+UI SMOKE TIMING: phase=keyboard and expression host seconds=2.721177 total_seconds=48.988171
+UI SMOKE PHASE: live envelope and factory source host
+UI SMOKE TIMING: phase=live envelope and factory source host seconds=4.267581 total_seconds=53.255752
+UI SMOKE PHASE: editor, state and automation
+Preset timer refresh: elapsed=160.9ms model='Timer Refresh Verified' label='Timer Refresh Verified' stateWrites=834
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-ext-enabled-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-sub-ext-enabled.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-1200x760.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-page1.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-page2.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-page3.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-page4.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/browser-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-restored-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-populated-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-populated-page1.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-populated-page2.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-populated-page3.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-populated-page4.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/memory-programmer-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/memory-programmer-selected-1600x1000.png
+UI SMOKE TIMING: phase=editor, state and automation seconds=26.420774 total_seconds=79.676526
+UI SMOKE PHASE: source performance captures
+FAIL: source screenshot meter reflects real rendered audio through its normal GUI timer
+source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0834435672, meter=SAMPLE PEAK <= -120 dBFS READ-ONLY
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-source-performance-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-source-performance-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/advanced-source-performance-about.png
+source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -0.2 dBFS READ-ONLY
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/main-source-performance-headroom-1600x1000.png
+UI SMOKE TIMING: phase=source performance captures seconds=6.355234 total_seconds=86.031760
+UI SMOKE PHASE: preset save and panic
+Preset rejection case 0, audition=0: missing file
+Preset rejection case 0, audition=1: missing file
+Preset rejection case 1, audition=0: <CS80_PARAMS><
+Preset rejection case 1, audition=1: <CS80_PARAMS><
+Preset rejection case 2, audition=0: <NOT_A_PRESET/>
+Preset rejection case 2, audition=1: <NOT_A_PRESET/>
+Preset rejection case 3, audition=0: <cs80_params/>
+Preset rejection case 3, audition=1: <cs80_params/>
+Preset rejection case 4, audition=0: 
+Preset rejection case 4, audition=1: 
+Preset rejection case 5, audition=0: <CS80_PARAMS
+Preset rejection case 5, audition=1: <CS80_PARAMS
+Preset rejection case 6, audition=0: <CS80_PARAMS 
+Preset rejection case 6, audition=1: <CS80_PARAMS 
+Preset rejection case 7, audition=0: <CS80_PARAMS presetName='truncated'
+Preset rejection case 7, audition=1: <CS80_PARAMS presetName='truncated'
+Preset rejection case 8, audition=0: <CS80_PARAMS>
+Preset rejection case 8, audition=1: <CS80_PARAMS>
+Preset rejection case 9, audition=0: <CS80_PARAMS></CS80_PARAMS
+Preset rejection case 9, audition=1: <CS80_PARAMS></CS80_PARAMS
+Preset rejection case 10, audition=0: <CS80_PARAMS></OTHER>
+Preset rejection case 10, audition=1: <CS80_PARAMS></OTHER>
+Preset rejection case 11, audition=0: <CS80_PARAMS><PARAM/></OTHER>
+Preset rejection case 11, audition=1: <CS80_PARAMS><PARAM/></OTHER>
+Preset rejection case 12, audition=0: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 12, audition=1: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 13, audition=0: <CS80_PARAMS/><CS80_PARAMS/>
+Preset rejection case 13, audition=1: <CS80_PARAMS/><CS80_PARAMS/>
+Preset rejection case 14, audition=0: <CS80_PARAMS/>junk
+Preset rejection case 14, audition=1: <CS80_PARAMS/>junk
+Preset rejection case 15, audition=0: <CS80_PARAMS/><!--
+Preset rejection case 15, audition=1: <CS80_PARAMS/><!--
+Preset rejection case 16, audition=0: <CS80_PARAMS/><?unfinished
+Preset rejection case 16, audition=1: <CS80_PARAMS/><?unfinished
+Preset rejection case 17, audition=0: <CS80_PARAMS/> <
+Preset rejection case 17, audition=1: <CS80_PARAMS/> <
+Preset rejection case 18, audition=0: <CS80_PARAMS/> </CS80_PARAMS>
+Preset rejection case 18, audition=1: <CS80_PARAMS/> </CS80_PARAMS>
+Preset rejection case 19, audition=0: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 19, audition=1: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 20, audition=0: <CS80_PARAMS presetName=bare/>
+Preset rejection case 20, audition=1: <CS80_PARAMS presetName=bare/>
+Preset rejection case 21, audition=0: <CS80_PARAMS presetName='a' presetName='b'/>
+Preset rejection case 21, audition=1: <CS80_PARAMS presetName='a' presetName='b'/>
+Preset rejection case 22, audition=0: <CS80_PARAMS presetName='&unknown;'/>
+Preset rejection case 22, audition=1: <CS80_PARAMS presetName='&unknown;'/>
+Preset rejection case 23, audition=0: <CS80_PARAMS presetName='&#0;'/>
+Preset rejection case 23, audition=1: <CS80_PARAMS presetName='&#0;'/>
+Preset rejection case 24, audition=0: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 24, audition=1: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=0: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=1: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 26, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+Preset rejection case 26, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+Preset rejection case 27, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+Preset rejection case 27, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+XXE sentinel path: /Users/runner/Library/Caches/CS80Snapshots/temp_e1c3054f-cs80-xml-admission/cs80-xml-xxe-sentinel.txt
+XML valid case 0: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 1: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 2: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 3: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 4: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 5: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 6: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 7: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 8: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 9: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 10: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+Browser XML case 0, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 0, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 1, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 1, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 2, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 2, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 3, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 3, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 4, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 4, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 5, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 5, audition=1: name=Admission, styles=6, fallback=6
+Browser XML case 6, audition=0: name=Admission, styles=6, fallback=6
+Browser XML case 6, audition=1: name=Admission, styles=6, fallback=6
+Browser dirty XML case 0: brilliance=0, used=0, edited=0
+Browser dirty XML case 1: brilliance=0, used=0, edited=0
+Browser dirty XML case 2: brilliance=0, used=0, edited=0
+Browser dirty XML case 3: brilliance=0, used=0, edited=0
+Browser dirty XML case 4: brilliance=0, used=0, edited=0
+Browser dirty XML case 5: brilliance=0, used=0, edited=0
+Browser dirty XML case 6: brilliance=0, used=0, edited=0
+UI SMOKE TIMING: phase=preset save and panic seconds=6.253118 total_seconds=92.284878
+UI SMOKE PHASE: program library, Program Change, A/B and randomise
+UI SMOKE TIMING: phase=program library, Program Change, A/B and randomise seconds=0.891282 total_seconds=93.176160
+UI SMOKE PHASE: pressure ownership and UI readiness
+Pointer fixture desktop window 0: 24Cs80AudioProcessorEditor '' 400,295 1120x700 visible=1
+Pointer fixture component at key60: N4cs802ui16HardwareKeyboardE '' (keyboard=1)
+Pointer fixture peer contains key60=1 foreground=0 settle=93 ms
+Pointer fixture: editor=400,295 1120x700; usable=0,25 1920x970; key60 screen=1063,926 hit=60
+UI SMOKE TIMING: phase=pressure ownership and UI readiness seconds=5.435766 total_seconds=98.611926
+UI SMOKE PHASE: original panel editor (ws7)
+golden main-1600x1000: changed 0.7635 % of pixels (limit 0.30 %), worst 8x8 block mean 64.52 (limit 8.0) [report only on this platform]
+golden main-1120x700: changed 1.3643 % of pixels (limit 0.30 %), worst 8x8 block mean 52.08 (limit 8.0) [report only on this platform]
+crinkle neighbour difference: 1x 0.01885, 2x 0.02039
+UI SMOKE TIMING: phase=original panel editor (ws7) seconds=3.751313 total_seconds=102.363239
+UI SMOKE PHASE: studio views
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-main-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-2-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-3-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-2-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-3-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-fx-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-fx-2-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-arp-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-settings-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-main-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-2-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-modulation-3-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-2-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-3-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-fx-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-fx-2-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-arp-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-settings-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-drawers-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-drawers-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-lfo-selected-waves-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-lfo-selected-waves-1120x700.png
+UI SMOKE TIMING: phase=studio views seconds=16.914053 total_seconds=119.277292
+UI SMOKE PHASE: ring curve gestures
+UI SMOKE TIMING: phase=ring curve gestures seconds=1.761604 total_seconds=121.038896
+UI SMOKE PHASE: studio interaction
+UI SMOKE TIMING: phase=studio interaction seconds=0.485841 total_seconds=121.524736
+UI SMOKE PHASE: studio MIDI learn
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-keyboard-midi-learn-1600x1000.png
+UI SMOKE TIMING: phase=studio MIDI learn seconds=1.360255 total_seconds=122.884991
+UI SMOKE PHASE: studio undo and redo
+UI SMOKE TIMING: phase=studio undo and redo seconds=2.622172 total_seconds=125.507163
+UI SMOKE PHASE: studio learning tools
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-1-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-2-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-3-1600x1000.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-1-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-2-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-3-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-4-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-5-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-6-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-7-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-tour-8-1120x700.png
+wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-help-card-1600x1000.png
+UI SMOKE TIMING: phase=studio learning tools seconds=6.540430 total_seconds=132.047594
+UI SMOKE PHASE: studio tab order, hit targets and contrast
+hit targets at 1120 x 700: 328 modern-layer targets checked, 0 undersized; 0 other panel targets undersized; 26 documented exceptions
+UI SMOKE TIMING: phase=studio tab order, hit targets and contrast seconds=1.892072 total_seconds=133.939666
+UI SMOKE PHASE: modern modulation and FX layer
+UI SMOKE TIMING: phase=modern modulation and FX layer seconds=1.702787 total_seconds=135.642453
+UI SMOKE PHASE: modern layer integer state ranges
+UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.122633 copy=0.001135 xml=0.007514 session_text=0.002268 fixture_write=0.011041 preset_load=0.021671 session_load=0.015438 audio=0.001216 save=0.024873 round_trip_load=0.031085
+UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.243602 copy=0.002370 xml=0.014905 session_text=0.004376 fixture_write=0.022488 preset_load=0.043822 session_load=0.030626 audio=0.002426 save=0.049437 round_trip_load=0.061724
+UI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.377952 copy=0.003922 xml=0.022953 session_text=0.006534 fixture_write=0.035751 preset_load=0.068297 session_load=0.047542 audio=0.003918 save=0.075598 round_trip_load=0.095931
+UI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.547885 copy=0.005559 xml=0.031376 session_text=0.008936 fixture_write=0.049591 preset_load=0.108949 session_load=0.065709 audio=0.005550 save=0.108431 round_trip_load=0.139375
+UI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=0.716931 copy=0.007676 xml=0.041527 session_text=0.011631 fixture_write=0.066530 preset_load=0.140491 session_load=0.086815 audio=0.007426 save=0.141448 round_trip_load=0.181473
+UI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=0.842618 copy=0.008986 xml=0.049123 session_text=0.013791 fixture_write=0.078856 preset_load=0.163182 session_load=0.102709 audio=0.008850 save=0.166460 round_trip_load=0.213368
+UI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=0.967358 copy=0.010264 xml=0.056481 session_text=0.015912 fixture_write=0.091138 preset_load=0.185908 session_load=0.118258 audio=0.010151 save=0.191465 round_trip_load=0.245165
+UI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=1.088848 copy=0.011481 xml=0.063894 session_text=0.018056 fixture_write=0.102104 preset_load=0.208029 session_load=0.134004 audio=0.011413 save=0.216026 round_trip_load=0.276054
+UI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=1.209771 copy=0.012618 xml=0.071217 session_text=0.020174 fixture_write=0.112966 preset_load=0.229925 session_load=0.149727 audio=0.012628 save=0.240746 round_trip_load=0.306846
+UI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=1.331595 copy=0.013816 xml=0.078593 session_text=0.022286 fixture_write=0.124349 preset_load=0.251879 session_load=0.165441 audio=0.013886 save=0.265341 round_trip_load=0.337840
+UI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=1.452425 copy=0.014991 xml=0.086029 session_text=0.024403 fixture_write=0.135220 preset_load=0.274283 session_load=0.180664 audio=0.015096 save=0.289958 round_trip_load=0.368580
+UI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=1.573875 copy=0.016217 xml=0.093450 session_text=0.026526 fixture_write=0.146082 preset_load=0.296450 session_load=0.196004 audio=0.016364 save=0.314796 round_trip_load=0.399676
+UI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=1.694058 copy=0.017344 xml=0.100767 session_text=0.028633 fixture_write=0.157290 preset_load=0.318128 session_load=0.211187 audio=0.017559 save=0.339532 round_trip_load=0.430333
+UI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=1.817179 copy=0.018666 xml=0.108185 session_text=0.030750 fixture_write=0.168957 preset_load=0.340428 session_load=0.226539 audio=0.018840 save=0.364672 round_trip_load=0.461584
+UI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=1.939286 copy=0.019867 xml=0.115613 session_text=0.032867 fixture_write=0.180054 preset_load=0.362485 session_load=0.242098 audio=0.020103 save=0.389744 round_trip_load=0.492715
+UI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=2.061360 copy=0.021086 xml=0.123057 session_text=0.034989 fixture_write=0.191215 preset_load=0.384493 session_load=0.257587 audio=0.021343 save=0.414401 round_trip_load=0.524227
+UI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=2.183553 copy=0.022350 xml=0.130483 session_text=0.037120 fixture_write=0.202231 preset_load=0.406848 session_load=0.273257 audio=0.022618 save=0.439174 round_trip_load=0.555387
+UI SMOKE TIMING: modern_state_ranges cases=216 paths=432 total_seconds=2.303690 copy=0.023431 xml=0.137918 session_text=0.039230 fixture_write=0.212902 preset_load=0.429024 session_load=0.288533 audio=0.023777 save=0.463697 round_trip_load=0.586022
+UI SMOKE TIMING: modern_state_ranges cases=228 paths=456 total_seconds=2.426778 copy=0.024669 xml=0.145443 session_text=0.041357 fixture_write=0.224047 preset_load=0.451339 session_load=0.304349 audio=0.025082 save=0.488699 round_trip_load=0.617359
+UI SMOKE TIMING: modern_state_ranges cases=240 paths=480 total_seconds=2.549892 copy=0.025929 xml=0.152918 session_text=0.043472 fixture_write=0.235324 preset_load=0.473980 session_load=0.320077 audio=0.026359 save=0.513456 round_trip_load=0.648718
+UI SMOKE TIMING: modern_state_ranges cases=252 paths=504 total_seconds=2.669750 copy=0.027090 xml=0.160336 session_text=0.045581 fixture_write=0.245823 preset_load=0.495556 session_load=0.335348 audio=0.027540 save=0.538350 round_trip_load=0.679382
+UI SMOKE TIMING: modern_state_ranges cases=263 paths=526 total_seconds=2.783497 copy=0.028254 xml=0.167280 session_text=0.047533 fixture_write=0.256861 preset_load=0.516608 session_load=0.349472 audio=0.028672 save=0.561003 round_trip_load=0.708017
+UI SMOKE TIMING: phase=modern layer integer state ranges seconds=2.860178 total_seconds=138.502631
+UI SMOKE PHASE: modern layer page painting and interaction
+UI SMOKE TIMING: modern_page=modern-modulation width=1100 height=640 total_seconds=0.133509 snapshot=0.007559 png=0.042419
+UI SMOKE TIMING: modern_page=modern-modulation width=1560 height=820 total_seconds=0.151390 snapshot=0.015979 png=0.071693
+UI SMOKE TIMING: modern_page=modern-keyboard width=1100 height=360 total_seconds=0.086831 snapshot=0.002402 png=0.021254
+UI SMOKE TIMING: modern_page=modern-fx width=1100 height=380 total_seconds=0.095799 snapshot=0.003008 png=0.021025
+UI SMOKE TIMING: phase=modern layer page painting and interaction seconds=1.095592 total_seconds=139.598223
+UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)
+UI SMOKE TIMING: phase=integration wiring (pages, toolbar, library, undo) seconds=0.581004 total_seconds=140.179227
+UI SMOKE TEST: 1 FAILURE(S)

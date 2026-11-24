@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a57/reconcile-phase1.py"
+  ],
+  "returncode": 1,
+  "stage": "Original-log parser preflight; no output report written",
+  "error": "Non-timestamped original log line",
+  "source_sha256": "7a5ef2ed6bb68f8b4afababfcd20bd9194739a8db12dd011e103db5070b1ca9b",
+  "observed_reason": "Original logs have a first-line UTF-8 BOM and later multi-line upload input continuations. Selected installation evidence remains timestamped. Parse the BOM only at start and retain every continuation; require continuations after selected successful install upload."
+}

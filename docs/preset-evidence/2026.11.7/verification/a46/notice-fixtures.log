@@ -1,0 +1,13 @@
+{"scope": "inert focused Windows notice/documentation fixtures; no actual archive or product executed", "methods": 7, "failures": 0, "errors": 0, "rejected_mutations": 139, "actual_artifacts_checked": false, "platform_qualified": false, "release_qualified": false}
+test_both_common_modes_exact (__main__.WindowsDocsTests.test_both_common_modes_exact) ... ok
+test_cli_refuses_overwrite_and_actual_inputs_in_prepare_mode (__main__.WindowsDocsTests.test_cli_refuses_overwrite_and_actual_inputs_in_prepare_mode) ... ok
+test_exact_passing_a41_context_is_required (__main__.WindowsDocsTests.test_exact_passing_a41_context_is_required) ... ok
+test_metadata_roster_modes_and_guides_are_not_normalized (__main__.WindowsDocsTests.test_metadata_roster_modes_and_guides_are_not_normalized) ... ok
+test_preparation_preserves_false_qualification_flags (__main__.WindowsDocsTests.test_preparation_preserves_false_qualification_flags) ... ok
+test_reject_every_notice_mixed_partial_bom_and_content_mutations (__main__.WindowsDocsTests.test_reject_every_notice_mixed_partial_bom_and_content_mutations) ... ok
+test_reject_path_exceptions_and_changed_checkout (__main__.WindowsDocsTests.test_reject_path_exceptions_and_changed_checkout) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.456s
+
+OK

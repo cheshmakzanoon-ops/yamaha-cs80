@@ -1,0 +1,39 @@
+{
+  "name": "inspect-install",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+    "--repo",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "--source",
+    "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "--revision",
+    "2026.11.7",
+    "--run-id",
+    "45397189410",
+    "--attempt",
+    "1",
+    "--run-api",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-producer-completion.json",
+    "--platform",
+    "windows",
+    "--architecture",
+    "x86_64",
+    "--archive",
+    "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+    "--artifact-api",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+    "--out",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/install-acceptance.json"
+  ],
+  "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "started_at_utc": "2026-11-24T13:48:42.898378+00:00",
+  "elapsed_seconds": 0.34397642399926553,
+  "returncode": 0,
+  "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/windows-x86_64/inspect-install.log",
+  "log_identity": {
+    "bytes": 235,
+    "sha256": "58f8e839fbe6632f3bf0c074f2531d4031c22599246c6037971f9026de7734b7"
+  }
+}

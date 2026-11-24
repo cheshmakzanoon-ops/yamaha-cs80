@@ -1,0 +1,773 @@
+{
+  "schema": 1,
+  "status": "windows_original_job_upload_and_consumer_binding_verified",
+  "factory_revision": "2026.11.7",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "target": "windows-x86_64",
+  "verified_at_utc": "2026-11-24T13:48:51.194435+00:00",
+  "producer_job_id": 138455976256,
+  "consumer_job_id": 138483772246,
+  "original_required_producer_steps": [
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T12:49:25Z",
+      "completed_at": "2026-11-24T12:49:40Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T12:49:40Z",
+      "completed_at": "2026-11-24T12:52:07Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T12:52:07Z",
+      "completed_at": "2026-11-24T12:52:08Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T12:52:08Z",
+      "completed_at": "2026-11-24T13:03:39Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-24T13:03:39Z",
+      "completed_at": "2026-11-24T13:36:10Z"
+    },
+    {
+      "name": "Upload Windows VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-24T13:36:10Z",
+      "completed_at": "2026-11-24T13:36:12Z"
+    },
+    {
+      "name": "Package Windows VST3 and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-24T13:36:12Z",
+      "completed_at": "2026-11-24T13:36:17Z"
+    },
+    {
+      "name": "Upload Windows install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-24T13:36:17Z",
+      "completed_at": "2026-11-24T13:36:19Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-24T13:36:19Z",
+      "completed_at": "2026-11-24T13:36:21Z"
+    }
+  ],
+  "original_required_consumer_steps": [
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T13:45:43Z",
+      "completed_at": "2026-11-24T13:45:57Z"
+    },
+    {
+      "name": "Download Windows VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T13:45:57Z",
+      "completed_at": "2026-11-24T13:45:58Z"
+    },
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T13:45:58Z",
+      "completed_at": "2026-11-24T13:46:01Z"
+    },
+    {
+      "name": "Validate VST3 headless",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T13:46:01Z",
+      "completed_at": "2026-11-24T13:46:07Z"
+    },
+    {
+      "name": "Validate state regression seed 0x5037a0c",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T13:46:07Z",
+      "completed_at": "2026-11-24T13:46:13Z"
+    },
+    {
+      "name": "Upload pluginval reports",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-24T13:46:13Z",
+      "completed_at": "2026-11-24T13:46:14Z"
+    }
+  ],
+  "producer_checkout": {
+    "step": {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T12:49:25Z",
+      "completed_at": "2026-11-24T12:49:40Z"
+    },
+    "workspace": "D:\\a\\yamaha-cs80\\yamaha-cs80",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "action_clean_true": true,
+    "original_fresh_repository_initialization": true,
+    "observed_ci_git_eol_configuration": null
+  },
+  "consumer_checkout": {
+    "step": {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T13:45:43Z",
+      "completed_at": "2026-11-24T13:45:57Z"
+    },
+    "workspace": "D:\\a\\yamaha-cs80\\yamaha-cs80",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "action_clean_true": true,
+    "original_fresh_repository_initialization": true,
+    "observed_ci_git_eol_configuration": null
+  },
+  "source_workflow": {
+    "path": ".github/workflows/build.yml",
+    "bytes": 35354,
+    "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb"
+  },
+  "command_bindings": {
+    "Configure": {
+      "step": {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-24T12:49:40Z",
+        "completed_at": "2026-11-24T12:52:07Z"
+      },
+      "source_commands": [
+        "cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64 `",
+        "  -DCS80_BUILD_PLUGIN=ON `",
+        "  -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log",
+        "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }"
+      ],
+      "command_sha256": "bbffe0f3a844ae2e2f42560958cabe2bcf91306853692f0bc813daa482aeabb6",
+      "first_command_utc": "2026-11-24T12:49:40.3006834Z",
+      "last_command_utc": "2026-11-24T12:49:40.3091509Z",
+      "exact_source_commands_verified": true
+    },
+    "Verify configured JUCE source": {
+      "step": {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T12:52:07Z",
+        "completed_at": "2026-11-24T12:52:08Z"
+      },
+      "source_commands": [
+        "cmake \"-DBUILD_DIR=build\" \"-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641\" \"-DEXPECTED_JUCE_VERSION=8.0.11\" -P scripts/verify-ci-juce-source.cmake"
+      ],
+      "command_sha256": "c282cd1007a12d3cb6882f2e40cc6cae06445b6ea36a3540da1d8af4e81b899e",
+      "first_command_utc": "2026-11-24T12:52:07.6345104Z",
+      "last_command_utc": "2026-11-24T12:52:07.6376920Z",
+      "exact_source_commands_verified": true
+    },
+    "Build": {
+      "step": {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T12:52:08Z",
+        "completed_at": "2026-11-24T13:03:39Z"
+      },
+      "source_commands": [
+        "cmake --build build --config Release --parallel"
+      ],
+      "command_sha256": "e4f5fc47ff4512ef760b5b86b6c0365a32fd147a370423853b9707369618c79c",
+      "first_command_utc": "2026-11-24T12:52:08.3811350Z",
+      "last_command_utc": "2026-11-24T12:52:08.3841603Z",
+      "exact_source_commands_verified": true
+    },
+    "Test": {
+      "step": {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-24T13:03:39Z",
+        "completed_at": "2026-11-24T13:36:10Z"
+      },
+      "source_commands": [
+        "ctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit \"D:\\a\\yamaha-cs80\\yamaha-cs80/build/ctest-results.xml\""
+      ],
+      "command_sha256": "02127b038f1bdb37029a449be3712bd13e606159d879f66bc08d5b6e914c3161",
+      "first_command_utc": "2026-11-24T13:03:39.7774548Z",
+      "last_command_utc": "2026-11-24T13:03:39.7805765Z",
+      "exact_source_commands_verified": true
+    },
+    "Package Windows VST3 and Standalone": {
+      "step": {
+        "name": "Package Windows VST3 and Standalone",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-24T13:36:12Z",
+        "completed_at": "2026-11-24T13:36:17Z"
+      },
+      "source_commands": [
+        "python scripts/package-ci-artifacts.py --self-test",
+        "python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages"
+      ],
+      "command_sha256": "44fd61f25a8c47d550db45a0982ff884899a8dc4eec76d5ce6462c1bfc678c11",
+      "first_command_utc": "2026-11-24T13:36:12.5443067Z",
+      "last_command_utc": "2026-11-24T13:36:12.5473922Z",
+      "exact_source_commands_verified": true
+    },
+    "Fetch pluginval 1.0.4": {
+      "step": {
+        "name": "Fetch pluginval 1.0.4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-24T13:45:58Z",
+        "completed_at": "2026-11-24T13:46:01Z"
+      },
+      "source_commands": [
+        "$ErrorActionPreference = 'Stop'",
+        "python scripts/download-pluginval-windows.py --output pluginval.zip --evidence pluginval-download.json",
+        "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }",
+        "Expand-Archive -Path pluginval.zip -DestinationPath pluginval -Force",
+        "Unblock-File -Path pluginval\\pluginval.exe",
+        "& .\\pluginval\\pluginval.exe --version | Tee-Object -FilePath pluginval-version.txt",
+        "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }"
+      ],
+      "command_sha256": "2f294126ed9c241a5d1fb81ee8da2595973731fefa7fe89f18172d1e152cc220",
+      "first_command_utc": "2026-11-24T13:45:58.4831482Z",
+      "last_command_utc": "2026-11-24T13:45:58.4932961Z",
+      "exact_source_commands_verified": true
+    },
+    "Validate VST3 headless": {
+      "step": {
+        "name": "Validate VST3 headless",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T13:46:01Z",
+        "completed_at": "2026-11-24T13:46:07Z"
+      },
+      "source_commands": [
+        "$ErrorActionPreference = 'Stop'",
+        "New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null",
+        "& .\\pluginval\\pluginval.exe `",
+        "  --strictness-level 10 `",
+        "  --validate-in-process `",
+        "  --skip-gui-tests `",
+        "  --timeout-ms 120000 `",
+        "  --output-dir pluginval-reports `",
+        "  --output-filename cs80-windows `",
+        "  \"vst3\\CS-80 Reference.vst3\" 2>&1 | Tee-Object -FilePath pluginval-windows.log",
+        "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }",
+        "if (-not (Select-String -Path pluginval-windows.log -Pattern '^SUCCESS$' -Quiet)) {",
+        "  Write-Output \"::error title=pluginval Windows::validator exited without printing SUCCESS\"",
+        "  exit 1",
+        "}"
+      ],
+      "command_sha256": "912085310badc1f3a1ccae3789ad22ad122e34ad34bfa0d218a9f11f42a78baa",
+      "first_command_utc": "2026-11-24T13:46:01.9797892Z",
+      "last_command_utc": "2026-11-24T13:46:01.9843929Z",
+      "exact_source_commands_verified": true
+    },
+    "Validate state regression seed 0x5037a0c": {
+      "step": {
+        "name": "Validate state regression seed 0x5037a0c",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T13:46:07Z",
+        "completed_at": "2026-11-24T13:46:13Z"
+      },
+      "source_commands": [
+        "$ErrorActionPreference = 'Stop'",
+        "New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null",
+        "& .\\pluginval\\pluginval.exe `",
+        "  --random-seed 0x5037a0c `",
+        "  --strictness-level 10 `",
+        "  --validate-in-process `",
+        "  --skip-gui-tests `",
+        "  --timeout-ms 120000 `",
+        "  --output-dir pluginval-reports `",
+        "  --output-filename cs80-windows-seed-regression `",
+        "  \"vst3\\CS-80 Reference.vst3\" 2>&1 | Tee-Object -FilePath pluginval-windows-seed-regression.log",
+        "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }",
+        "if (-not (Select-String -Path pluginval-windows-seed-regression.log -Pattern '^SUCCESS$' -Quiet)) {",
+        "  Write-Output \"::error title=pluginval Windows seeded regression::validator exited without printing SUCCESS\"",
+        "  exit 1",
+        "}"
+      ],
+      "command_sha256": "2a5a1f1f8a2383ee725a009d139e0e17a67d6f41376702d4e884fbd551797c6f",
+      "first_command_utc": "2026-11-24T13:46:07.6113130Z",
+      "last_command_utc": "2026-11-24T13:46:07.6155102Z",
+      "exact_source_commands_verified": true
+    }
+  },
+  "artifact_bindings": {
+    "native": {
+      "name": "cs80-windows-test-evidence",
+      "artifact_id": 14926075048,
+      "bytes": 84062,
+      "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97",
+      "producing_job_id": 138455976256,
+      "producing_attempt": 1,
+      "upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-11-24T13:36:19Z",
+        "completed_at": "2026-11-24T13:36:21Z"
+      },
+      "upload_start_utc": "2026-11-24T13:36:20.0048711Z",
+      "upload_finish_utc": "2026-11-24T13:36:21.2831593Z",
+      "api_created_at": "2026-11-24T13:36:21Z",
+      "api_updated_at": "2026-11-24T13:36:21Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "original_upload_id_size_digest_and_time_verified": true
+    },
+    "vst3": {
+      "name": "cs80-windows-vst3",
+      "artifact_id": 14924634293,
+      "bytes": 3205643,
+      "sha256": "d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9",
+      "producing_job_id": 138455976256,
+      "producing_attempt": 1,
+      "upload_step": {
+        "name": "Upload Windows VST3",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-24T13:36:10Z",
+        "completed_at": "2026-11-24T13:36:12Z"
+      },
+      "upload_start_utc": "2026-11-24T13:36:10.4709158Z",
+      "upload_finish_utc": "2026-11-24T13:36:12.5189841Z",
+      "api_created_at": "2026-11-24T13:36:12Z",
+      "api_updated_at": "2026-11-24T13:36:12Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "original_upload_id_size_digest_and_time_verified": true
+    },
+    "install": {
+      "name": "cs80-windows-install-bundle",
+      "artifact_id": 14925251949,
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+      "producing_job_id": 138455976256,
+      "producing_attempt": 1,
+      "upload_step": {
+        "name": "Upload Windows install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-24T13:36:17Z",
+        "completed_at": "2026-11-24T13:36:19Z"
+      },
+      "upload_start_utc": "2026-11-24T13:36:17.9596176Z",
+      "upload_finish_utc": "2026-11-24T13:36:19.9802256Z",
+      "api_created_at": "2026-11-24T13:36:19Z",
+      "api_updated_at": "2026-11-24T13:36:19Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "original_upload_id_size_digest_and_time_verified": true
+    },
+    "validator": {
+      "name": "cs80-pluginval-windows",
+      "artifact_id": 14925398286,
+      "bytes": 5082,
+      "sha256": "28a102fce6fee3c7713c6ed96380d4b4c86c910593fbd0b10e7930facdd342e2",
+      "producing_job_id": 138483772246,
+      "producing_attempt": 1,
+      "upload_step": {
+        "name": "Upload pluginval reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-24T13:46:13Z",
+        "completed_at": "2026-11-24T13:46:14Z"
+      },
+      "upload_start_utc": "2026-11-24T13:46:13.2465740Z",
+      "upload_finish_utc": "2026-11-24T13:46:14.5336107Z",
+      "api_created_at": "2026-11-24T13:46:14Z",
+      "api_updated_at": "2026-11-24T13:46:14Z",
+      "expires_at": "2027-02-22T12:49:05Z",
+      "original_upload_id_size_digest_and_time_verified": true
+    }
+  },
+  "original_ctest_exit_zero_verified": true,
+  "numeric_ctest_exit_directly_logged": false,
+  "ctest_exit_basis": "Successful original Test step, exact direct source CTest command, complete original terminal summary, and no error suppression.",
+  "original_clean_checkout_juce_build_test_package_sequence_verified": true,
+  "juce_provenance": {
+    "fields": {
+      "checked_at": "2026-11-24T12:52:07Z",
+      "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "expected_version": "8.0.11",
+      "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "workflow_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "workflow_run": "45397189410",
+      "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "source_override": "",
+      "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+      "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "origin": "https://github.com/juce-framework/JUCE.git",
+      "git_description": "8.0.11",
+      "source_clean": "true",
+      "actual_version": "8.0.11",
+      "verification": "PASS"
+    },
+    "path": "ci-juce-provenance.txt",
+    "bytes": 585,
+    "sha256": "d32b6f7ed4ec57b0bf102f03563fd13653a3921adf1577d1dcb1df427baa44fa"
+  },
+  "consumer_download_binding": {
+    "consumer_job_id": 138483772246,
+    "attempt": 1,
+    "download_step": {
+      "name": "Download Windows VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T13:45:57Z",
+      "completed_at": "2026-11-24T13:45:58Z"
+    },
+    "artifact_id": 14924634293,
+    "bytes": 3205643,
+    "sha256": "d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9",
+    "matched_original_rows": [
+      {
+        "timestamp": "2026-11-24T13:45:57.0724122Z",
+        "message": "##[group]Run actions/download-artifact@v5"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.0724707Z",
+        "message": "  name: cs80-windows-vst3"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.0724917Z",
+        "message": "  path: vst3"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.0725349Z",
+        "message": "  repository: cheshmakzanoon-ops/yamaha-cs80"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.0725602Z",
+        "message": "  run-id: 45397189410"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.5500987Z",
+        "message": "- cs80-windows-vst3 (ID: 14924634293, Size: 3205643, Expected Digest: sha256:d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9)"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:57.7816485Z",
+        "message": "Starting download of artifact to: D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:58.4523589Z",
+        "message": "SHA256 digest of downloaded artifact is d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9"
+      },
+      {
+        "timestamp": "2026-11-24T13:45:58.4524141Z",
+        "message": "Artifact download completed successfully."
+      }
+    ],
+    "selected_bundle_path": "D:\\a\\yamaha-cs80\\yamaha-cs80\\vst3\\CS-80 Reference.vst3",
+    "original_invocations": 2,
+    "independent_of_compiler_sidecar_presence": true
+  },
+  "validators": {
+    "required_lanes": 2,
+    "actual_invocations": 2,
+    "validation_retries": 0,
+    "lanes": [
+      {
+        "lane": "headless",
+        "original_step": {
+          "name": "Validate VST3 headless",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T13:46:01Z",
+          "completed_at": "2026-11-24T13:46:07Z"
+        },
+        "console": {
+          "path": "pluginval-windows.log",
+          "bytes": 7382,
+          "sha256": "b63d900b1df4941133b8499f7a88fda1c2a8cbcd1e118ff8b86170c12dbbf88b"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-windows",
+          "bytes": 7168,
+          "sha256": "413d508c45efe923434dff7786720f5f93ab2d7471ae9b852c9ce7b3c233e7d5"
+        },
+        "summary": {
+          "strictness": [
+            10
+          ],
+          "seeds": [
+            "0x3e82dcb"
+          ],
+          "program_counts": [
+            523
+          ],
+          "success_lines": 1,
+          "final_nonempty_line": "SUCCESS",
+          "failure_markers": [],
+          "warnings": [],
+          "editor_test_started": false,
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "clean_text_success": true,
+          "validation_start_count": 1
+        },
+        "first_output_utc": "2026-11-24T13:46:02.4395744Z",
+        "terminal_output_utc": "2026-11-24T13:46:07.4676647Z",
+        "original_normal_exit": 0,
+        "numeric_child_exit_directly_logged": false,
+        "exit_basis": "Successful original PowerShell step and exact unsuppressed source command with immediate LASTEXITCODE check; complete runtime equals archived console.",
+        "console_matches_original_runtime": true,
+        "console_report_equivalent": true,
+        "invocations": 1,
+        "validation_retries": 0
+      },
+      {
+        "lane": "state-seed-regression",
+        "original_step": {
+          "name": "Validate state regression seed 0x5037a0c",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T13:46:07Z",
+          "completed_at": "2026-11-24T13:46:13Z"
+        },
+        "console": {
+          "path": "pluginval-windows-seed-regression.log",
+          "bytes": 7382,
+          "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45"
+        },
+        "report": {
+          "path": "pluginval-reports/cs80-windows-seed-regression",
+          "bytes": 7168,
+          "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616"
+        },
+        "summary": {
+          "strictness": [
+            10
+          ],
+          "seeds": [
+            "0x5037a0c"
+          ],
+          "program_counts": [
+            523
+          ],
+          "success_lines": 1,
+          "final_nonempty_line": "SUCCESS",
+          "failure_markers": [],
+          "warnings": [],
+          "editor_test_started": false,
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "clean_text_success": true,
+          "validation_start_count": 1
+        },
+        "first_output_utc": "2026-11-24T13:46:08.0778781Z",
+        "terminal_output_utc": "2026-11-24T13:46:12.9806399Z",
+        "original_normal_exit": 0,
+        "numeric_child_exit_directly_logged": false,
+        "exit_basis": "Successful original PowerShell step and exact unsuppressed source command with immediate LASTEXITCODE check; complete runtime equals archived console.",
+        "console_matches_original_runtime": true,
+        "console_report_equivalent": true,
+        "invocations": 1,
+        "validation_retries": 0
+      }
+    ],
+    "pinned_download": {
+      "repository": "Tracktion/pluginval",
+      "version": "1.0.4",
+      "release_id": 188928656,
+      "asset_id": 210999198,
+      "asset_name": "pluginval_Windows.zip",
+      "expected_size": 2408590,
+      "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+      "attempts": [
+        {
+          "number": 1,
+          "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+          "reason": "downloaded",
+          "bytes": 2408590,
+          "final_host": "release-assets.githubusercontent.com",
+          "transfer_exit": 0
+        }
+      ],
+      "verified": true,
+      "actual_size": 2408590,
+      "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+    },
+    "pinned_download_member": {
+      "path": "pluginval-download.json",
+      "bytes": 718,
+      "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c"
+    },
+    "version_member": {
+      "path": "pluginval-version.txt",
+      "bytes": 19,
+      "sha256": "83c1d35a35bad95a0c3b2e63de3f8526c134a35093d604a6a22e684981199d6c"
+    }
+  },
+  "timestamp_tolerance": "API whole-second completed_at is inclusive through the following second; starts have no negative tolerance.",
+  "log_representation": "Raw logs retained by hash. Decode BOM/UTF-16/UTF-8 and CRLF; timestamp-free multiline upload path metadata inherits its immediately preceding framed path-input time. Runtime messages retain exact content; runner ANSI highlighting is removed only for source-command comparison.",
+  "input_records": {
+    "manifest": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-proof-inputs.json",
+      "bytes": 2356,
+      "sha256": "cb0488842888f3163c879962cedc6ca41e4e3db1408a7a178f2c1ff7fbb8f3fd"
+    },
+    "run_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-platform-completion.json",
+      "bytes": 14806,
+      "sha256": "0214298a96afce78e58b5add0f43ace8f52736db156e291521fc52800c49a93c"
+    },
+    "jobs_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/jobs-api-at-platform-completion.json",
+      "bytes": 25673,
+      "sha256": "cedc9140d69f12bebc880b9e2f49c32815e16d9819516b6dd634d3026317b3ae"
+    },
+    "artifacts_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/artifact-collection-api-at-platform-completion.json",
+      "bytes": 5786,
+      "sha256": "9817ade30cd82760ce306d9232de4b489d46f2870164be82d4bb80c0584890db"
+    },
+    "producer_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json",
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    "consumer_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job-api.json",
+      "bytes": 3275,
+      "sha256": "ccb61533c7263f26a7932883619e5112e642a34b7f37fb8695a46a7215b82127"
+    },
+    "producer_log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    "consumer_log": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job.log",
+      "bytes": 46300,
+      "sha256": "6f9c69d84309e84b5aa1723882c400b11df1c9b0282159499f188227acd535e2"
+    },
+    "native_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "bytes": 747,
+      "sha256": "6b734fc21012052715a4a2118c182e02b1f9cd113e3b54c7008f2cebec7785ba"
+    },
+    "native_archive": {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "bytes": 84062,
+      "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97"
+    },
+    "vst3_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/vst3-api.json",
+      "bytes": 740,
+      "sha256": "c6302d789bc7afabfbac0618834eb366187c7b028358781e107a94936aae5c9f"
+    },
+    "vst3_archive": {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-vst3.zip",
+      "bytes": 3205643,
+      "sha256": "d9a8a318c409ed19c9a85deab7183f15bc3ea751c93bb52e9a292e008aa7d9b9"
+    },
+    "install_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "bytes": 750,
+      "sha256": "1629b1dafdc24007b1752e6bc458abec83c81a34749abdb09b6a8d8c25c61d74"
+    },
+    "install_archive": {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-install.zip",
+      "bytes": 6409200,
+      "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb"
+    },
+    "validator_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-api.json",
+      "bytes": 742,
+      "sha256": "928ea2f0ceaf9ca4c77f18e03416fe249ece095903cd61e1c32fe7639da3dc32"
+    },
+    "validator_archive": {
+      "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip",
+      "bytes": 5082,
+      "sha256": "28a102fce6fee3c7713c6ed96380d4b4c86c910593fbd0b10e7930facdd342e2"
+    },
+    "acquisition_receipt_0": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-retrieval-receipt.json",
+      "bytes": 2842,
+      "sha256": "5edb6a9a9c2531f0682f0f3ef9567bf02320b2d13d28721c5a00b6324728d868"
+    },
+    "acquisition_receipt_1": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/retrieval-receipt.json",
+      "bytes": 4486,
+      "sha256": "b914626a64b3dec3305a0228540f4976d908570741bc6b131dcd6236e8fd9938"
+    }
+  },
+  "checker_sha256": "15c84f6f72ed9ea44e38f14f666c8793aac1621b6b849d8e96bf50d3750d7c83",
+  "helper_sha256": {
+    "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+    "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+  },
+  "api_authenticity_independently_established_by_this_offline_helper": false,
+  "authenticity_boundary": "Root must review the retained authenticated acquisition receipts. This helper checks raw input consistency and original binding only.",
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "remaining_gates": [
+    "A40 exact 255-name native content and separate formal/nested skip review.",
+    "A52 parsed-archive/member binding to these exact native/report inputs.",
+    "A41 complete package inventory and headers; A46 exact guides/notices.",
+    "A36 complete distributed-to-consumed VST3 equality and exact optional compiler-sidecar pair.",
+    "Final platform receipt composing all checks; all other platforms and release gates remain separate."
+  ]
+}

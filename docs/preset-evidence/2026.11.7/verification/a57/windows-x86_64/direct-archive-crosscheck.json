@@ -1,0 +1,75 @@
+{
+  "status": "independent_actual_inventory_and_headers_verified",
+  "manifest_metadata": {
+    "architecture": "x86_64",
+    "commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_version": "8.0.11",
+    "package_kind": "development CI artifact; not a release-qualification certificate",
+    "platform": "windows",
+    "preset_library_revision": "2026.11.7",
+    "product": "CS-80 Reference",
+    "runner_os": "Windows-2022Server-10.0.20348-SP0",
+    "schema_version": 1,
+    "signature_status": "not inspected; no release signing/notarization performed by this helper",
+    "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+    "workflow_run_id": "45397189410"
+  },
+  "inventory_counts": {
+    "file": 16,
+    "directory": 4
+  },
+  "inventory_entries": 20,
+  "actual_members_including_embedded_manifest": 21,
+  "complete_member_types_sizes_hashes_verified": true,
+  "tar_modes_verified": false,
+  "windows_zip_mode_equality_required": false,
+  "embedded_sidecar_manifest_equal": true,
+  "exact_outer_checksums_verified": true,
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "type": "file",
+      "bytes": 7393792,
+      "sha256": "7b99ca04decb3a325a019eca5c4e7daa52300e2a2aa3c678b216736c8ae161c5",
+      "inventory_mode": "0o666",
+      "actual_archive_mode": "0o666",
+      "role": "plugin",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "optional_header_magic": "0x20b",
+        "characteristics": "0x2022",
+        "dll": true
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference.exe",
+      "type": "file",
+      "bytes": 7594496,
+      "sha256": "82a9e0c1232e98f8e367e46469aa1697a31ab8195cc6629980b9b5d5836fb5d8",
+      "inventory_mode": "0o777",
+      "actual_archive_mode": "0o777",
+      "role": "standalone",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "optional_header_magic": "0x20b",
+        "characteristics": "0x22",
+        "dll": false
+      }
+    }
+  ],
+  "mac_bundle_plists": [],
+  "source_note": "Source commit: ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nPreset library revision: 2026.11.7\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee0dabcacb4cdff93f8803844f60348e0ceda6ed/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+  "juce_provenance": "checked_at=2026-11-24T12:52:07Z\r\nexpected_sha=c352e2489000ffeb9e397051377d75eef2efe641\r\nexpected_version=8.0.11\r\nexpected_source=D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\r\nworkflow_commit=ee0dabcacb4cdff93f8803844f60348e0ceda6ed\r\nworkflow_run=45397189410\r\nconfigured_source=D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\r\nsource_override=\r\nproject_source=D:/a/yamaha-cs80/yamaha-cs80\r\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\r\norigin=https://github.com/juce-framework/JUCE.git\r\ngit_description=8.0.11\r\nsource_clean=true\r\nactual_version=8.0.11\r\nverification=PASS\r\n",
+  "manifest_sha256": "091d40ee2e29dea5bcf7be9fb8fb0530d02bce83baaa4c2eb5d681795ab1a636",
+  "no_downloaded_product_executed": true,
+  "permanent_binary_extraction": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

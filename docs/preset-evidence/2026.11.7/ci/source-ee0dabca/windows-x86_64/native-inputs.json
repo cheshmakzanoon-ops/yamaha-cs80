@@ -1,0 +1,23 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "native": [
+    {
+      "target": "windows-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+      "api": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-api.json",
+      "skip_review": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/skip-review.json"
+    }
+  ],
+  "validators": [
+    {
+      "target": "windows-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-validator.zip"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "windows-x86_64",
+  "reviewed": false,
+  "review_note": "Fill only after actual same-source full formal/nested output review. No result accepted at preparation.",
+  "formal_skips": null,
+  "nested_python_skips": null,
+  "formal_source_contract": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "skip_return_code": 77,
+      "source_reason": "Non-GNU CMake builds define CS80_DISABLE_AVX2_FILTER_BATCH; null kernel causes explicit capability skip; no SIMD qualification.",
+      "actual_reviewed": false
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "skip_return_code": 77,
+      "source_reason": "Specialization is Linux x86_64 GCC 14.2 and explicitly excludes MSVC; fallback returns 77.",
+      "actual_reviewed": false
+    }
+  ]
+}

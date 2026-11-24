@@ -1,0 +1,150 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+    "run_id": 45397189410,
+    "attempt": 1
+  },
+  "target": "windows-x86_64",
+  "status": "actual_complete_native_detail_reviewed",
+  "counts": {
+    "registered": 255,
+    "passed": 253,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "exact_full_roster_matches": true,
+  "complete_name_set_sha256": "23e8131b42f70bfe7d702d1528f5a78ff7f1fa3cadd15c21d62e1277b7bd650f",
+  "new_tests": [
+    {
+      "name": "cs80_body_noise_rate_tests",
+      "result": "passed",
+      "seconds": 3.89564,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "bd5375ef2b4fc937df9e46c2d49437d356be7b63c7ecb831b3bfbbfb1d75be1f"
+    },
+    {
+      "name": "cs80_low_choir_spectrum_tests",
+      "result": "passed",
+      "seconds": 9.12909,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "411faec0861488daa502b3bb2fa141714ca17ad340b0d9cfaa59a9bf1cf9f826"
+    },
+    {
+      "name": "cs80_piano_partial_decay_tests",
+      "result": "passed",
+      "seconds": 2.35703,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "6127dc37a9fc0c600dae0ba0b7558a67c687ba8f57c61c570216b1b440929627"
+    },
+    {
+      "name": "cs80_string_body_formant_tests",
+      "result": "passed",
+      "seconds": 4.26214,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "c01f8c940dc71e6baae69f622803b5b323caf87247a6b0f255025d68ec3f75cf"
+    }
+  ],
+  "parity_capture": {
+    "result": {
+      "name": "cs80_parity_capture_tests",
+      "result": "passed",
+      "seconds": 4.10695,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "021254a0d42f76dfa06fcdaefa97b92ac19e4efe6780f15a70d9c6e4db5d9da2"
+    },
+    "source_harness": {
+      "bytes": 27988,
+      "sha256": "4557d682e67e7061d362fb8a9a550a9566cfdee91cfd03ee490c4d5e4ef72e8c"
+    },
+    "source_methods": {
+      "CaptureTests": [
+        "test_bad_arguments_fail",
+        "test_finite_nonzero_complete_channels",
+        "test_independent_process_byte_determinism",
+        "test_metadata_and_fixed_stimulus",
+        "test_metadata_mutations_are_detected",
+        "test_sample_mutations_are_detected",
+        "test_unwritable_destination_fails"
+      ],
+      "LiveCaptureTests": [
+        "test_fixture_switch_removes_only_known_stale_trace",
+        "test_live_independent_process_determinism_and_audio",
+        "test_live_metadata_mutations",
+        "test_live_metadata_replay_and_probe_law",
+        "test_live_probe_mutations",
+        "test_strict_json_and_failed_rerun_manifest"
+      ]
+    },
+    "harness_test_count": 13,
+    "harness_seconds": 4.026,
+    "ctest_seconds": 4.10695,
+    "zero_failures_errors_or_skips": true,
+    "original_lasttest_section": "194/255 Test: cs80_parity_capture_tests\nCommand: \"C:/hostedtoolcache/windows/Python/3.14.10/x64/python3.exe\" \"D:/a/yamaha-cs80/yamaha-cs80/tests/test_parity_capture.py\" \"--capture\" \"D:/a/yamaha-cs80/yamaha-cs80/build/Release/cs80_parity_capture.exe\"\nDirectory: D:/a/yamaha-cs80/yamaha-cs80/build\n\"cs80_parity_capture_tests\" start time: Nov 24 13:32 Coordinated Universal Time\nOutput:\n----------------------------------------------------------\n.............\n----------------------------------------------------------------------\nRan 13 tests in 4.026s\n\nOK\n<end of output>\nTest time =   4.11 sec\n----------------------------------------------------------\nTest Passed.\n\"cs80_parity_capture_tests\" end time: Nov 24 13:32 Coordinated Universal Time\n\"cs80_parity_capture_tests\" time elapsed: 00:00:04\n----------------------------------------------------------\n\n",
+    "original_lasttest_section_sha256": "6ba52970505809f69bcca0463230c28c8dd968a90edce2d57174f4699c7d51d6",
+    "actual_live_capture_cases_included": true
+  },
+  "ui_body_identity": {
+    "result": {
+      "name": "cs80_ui_smoke",
+      "result": "passed",
+      "seconds": 115.648,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "86262f0d197215b752522aa1a7cf66589ae5cad273b08939b22e50ec208c1177"
+    },
+    "complete_lasttest_used": true,
+    "required_ordered_markers": [
+      "UI SMOKE START: processor=555672 bytes engine=504776 bytes",
+      "UI SMOKE PHASE: instrument body host identity and recall",
+      "UI SMOKE TIMING: phase=instrument body host identity and recall seconds=4.797345 total_seconds=24.997241",
+      "UI SMOKE TEST PASSED"
+    ],
+    "body_phase_seconds": 4.797345,
+    "junit_output_truncated": true,
+    "junit_truncation_does_not_replace_complete_lasttest": true
+  },
+  "library_audit": {
+    "result": {
+      "name": "cs80_library_audit_tests",
+      "result": "passed",
+      "seconds": 402.774,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f"
+    },
+    "original_output": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs\n"
+  },
+  "skip_review": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/skip-review.json",
+    "bytes": 22602,
+    "sha256": "2a52a2a1be1b05f442ca95c47679c11f68866c28ad27f2fc7825e6b0ae6fc760"
+  },
+  "original_ci_binding": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+    "bytes": 30463,
+    "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+  },
+  "native_archive": {
+    "path": "/tmp/cs80-ci-1cee5a/ee0dabca/windows-native.zip",
+    "bytes": 84062,
+    "sha256": "5f1a1a5b5d3ff1a79640978d1d896d8a7736afe8ee4184a24b170ae329f0ee97"
+  },
+  "observations": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/native-validator-observations.json",
+    "bytes": 95570,
+    "sha256": "cc832020ece046ad62e8da5df6ad925e22c2064b4eba3490bf2dcf3fa73962c9"
+  },
+  "prior_failure": "c554 Windows run 45385716988 producer 138415960660 parity 0xC00000FD remains a preserved failed original. This fresh ee0 execution establishes the repaired success independently.",
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

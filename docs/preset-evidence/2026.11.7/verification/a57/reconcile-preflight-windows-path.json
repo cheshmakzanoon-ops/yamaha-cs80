@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a57/reconcile-phase1.py"
+  ],
+  "returncode": 1,
+  "stage": "Original Windows package-path parsing; no output report written",
+  "error": "Expected POSIX package separator but original Windows JSON contains its correct escaped backslash",
+  "source_sha256": "b270fee2d70a5e21d125a0d2f659ac97a15c5352b1f74efa43bf86aeb3a6b715",
+  "resolution": "Require the exact platform-specific package path, with JSON string escaping; no input changes."
+}

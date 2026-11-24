@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "status": "phase2_windows_public_route_bound",
+  "verified_at_utc": "2026-11-24T14:08:38.452913+00:00",
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "source_tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "factory_revision": "2026.11.7",
+  "run_id": 45397189410,
+  "run_attempt": 1,
+  "producer_job_id": 138455976256,
+  "consumer_job_id": 138483772246,
+  "target": "windows-x86_64",
+  "artifact_id": 14925251949,
+  "artifact_name": "cs80-windows-install-bundle",
+  "authenticated_raw_metadata_digests_match_root_receipt": true,
+  "root_receipt_and_A46_qualification_match_handoff_pins": true,
+  "external_A46_required_gate_count": 17,
+  "external_A46_required_gates_all_accepted": true,
+  "external_A46_report_identities_rechecked": 16,
+  "unchanged_probe_matches_frozen_source": true,
+  "original_producer_upload_attempt_binding_verified": true,
+  "original_upload": {
+    "name": "cs80-windows-install-bundle",
+    "artifact_id": 14925251949,
+    "bytes": 6409200,
+    "sha256": "8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb",
+    "producing_job_id": 138455976256,
+    "producing_attempt": 1,
+    "upload_step": {
+      "name": "Upload Windows install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-24T13:36:17Z",
+      "completed_at": "2026-11-24T13:36:19Z"
+    },
+    "upload_start_utc": "2026-11-24T13:36:17.9596176Z",
+    "upload_finish_utc": "2026-11-24T13:36:19.9802256Z",
+    "api_created_at": "2026-11-24T13:36:19Z",
+    "api_updated_at": "2026-11-24T13:36:19Z",
+    "expires_at": "2027-02-22T12:49:05Z",
+    "original_upload_id_size_digest_and_time_verified": true
+  },
+  "original_upload_log_lines": [
+    {
+      "line": 1584,
+      "text": "2026-11-24T13:36:19.5836389Z SHA256 digest of uploaded artifact zip is 8f8f885c72910a0af02055036203a6a2e0aa96a9390adce7c1ec480243ba0feb"
+    },
+    {
+      "line": 1586,
+      "text": "2026-11-24T13:36:19.9801403Z Artifact cs80-windows-install-bundle.zip successfully finalized. Artifact ID 14925251949"
+    },
+    {
+      "line": 1587,
+      "text": "2026-11-24T13:36:19.9802256Z Artifact cs80-windows-install-bundle has been successfully uploaded! Final size is 6409200 bytes. Artifact ID is 14925251949"
+    },
+    {
+      "line": 1588,
+      "text": "2026-11-24T13:36:19.9810164Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189410/artifacts/14925251949"
+    }
+  ],
+  "external_platform_qualification": {
+    "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/platform-qualification.json",
+    "bytes": 160850,
+    "sha256": "a86ab93d18fb390359f60be8a50ed9cc09b34c9b70aab8922c23581fa455c048"
+  },
+  "input_files": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/retrieval-receipt.json",
+      "bytes": 4486,
+      "sha256": "b914626a64b3dec3305a0228540f4976d908570741bc6b131dcd6236e8fd9938"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+      "bytes": 750,
+      "sha256": "1629b1dafdc24007b1752e6bc458abec83c81a34749abdb09b6a8d8c25c61d74"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+      "bytes": 14784,
+      "sha256": "794a754b499dd03a045b3759f0c6a74faeb410a236d8db7b4570d1d8191f625a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/attempt1-api-at-platform-completion.json",
+      "bytes": 14806,
+      "sha256": "0214298a96afce78e58b5add0f43ace8f52736db156e291521fc52800c49a93c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job-api.json",
+      "bytes": 3895,
+      "sha256": "d572cc302fc2afb0b5bd37ec48a7308fda4a68b9c3c985d4115aa26434ec6e8e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+      "bytes": 152673,
+      "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job-api.json",
+      "bytes": 3275,
+      "sha256": "ccb61533c7263f26a7932883619e5112e642a34b7f37fb8695a46a7215b82127"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/validator-job.log",
+      "bytes": 46300,
+      "sha256": "6f9c69d84309e84b5aa1723882c400b11df1c9b0282159499f188227acd535e2"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+      "bytes": 30463,
+      "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a57-probe-public-artifact.py",
+      "bytes": 8221,
+      "sha256": "ca863189b395c2952253de8f4b64538dd045f497db39b2bfcd12b40fd81bc06f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/windows-x86_64-full-get-0001.json",
+      "bytes": 2535,
+      "sha256": "d46c64708646d501dc995a73abedaad5d4bb4c6223d3378dbd572132c2625aa5"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/download-mapping-phase1.json",
+      "bytes": 3457,
+      "sha256": "b8eb878ed7fd4472a11defe7e897d2ebbcd50bd2ac4cee104054db62b2225bbd"
+    }
+  ],
+  "full_public_get_verified": true,
+  "probe_process_exit_code_observed": 0,
+  "public_transport_attempts": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/windows-x86_64-full-get-0001.json",
+      "bytes": 2535,
+      "sha256": "d46c64708646d501dc995a73abedaad5d4bb4c6223d3378dbd572132c2625aa5"
+    }
+  ],
+  "failed_public_transports_observed": 0,
+  "archive_retained_by_probe": false,
+  "expired_boolean": false,
+  "expires_at_is_future_at_probe_and_binding": true,
+  "expires_at_utc": "2027-02-22T12:49:05Z",
+  "expires_at_America_Halifax": "2027-02-22T08:49:05-04:00",
+  "expiry_timezone_abbreviation": "AST",
+  "run_status_at_metadata_snapshot": "in_progress",
+  "run_conclusion_at_metadata_snapshot": null,
+  "prior_ARM_get_and_binding_preserved_by_hash": true,
+  "release_qualified": false,
+  "all_five_public_downloads_verified": false,
+  "scope": "One newly observed Windows public route; original attempt and platform acceptance are external A46 evidence checked for identity/integrity. Prior ARM observation is preserved at its own timestamp. No product tests were rerun."
+}

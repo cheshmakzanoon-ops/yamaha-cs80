@@ -1,0 +1,31 @@
+{
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "targets": [
+    {
+      "target": "macos-arm64",
+      "original_log": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-arm64/producer-job.log",
+        "bytes": 256051,
+        "sha256": "988c6b34e66b695b158ee8066b4d203666337d38e7112f1c965dca289023e160"
+      },
+      "optional_validator_messages": [
+        {
+          "line": 1811,
+          "text": "2026-11-24T13:25:53.7509520Z INFO: Skipping vst3 validator as validator path hasn't been set"
+        }
+      ],
+      "scope": "Actual producer-log optional validator capability messages; separate from formal CTest, nested Python, and required pluginval lane outcomes. The empty Windows producer list does not imply that its separate validator consumer has been reviewed."
+    },
+    {
+      "target": "windows-x86_64",
+      "original_log": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+        "bytes": 152673,
+        "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+      },
+      "optional_validator_messages": [],
+      "scope": "Actual producer-log optional validator capability messages; separate from formal CTest, nested Python, and required pluginval lane outcomes. The empty Windows producer list does not imply that its separate validator consumer has been reviewed."
+    }
+  ],
+  "release_qualified": false
+}

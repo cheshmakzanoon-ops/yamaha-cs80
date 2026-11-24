@@ -1,0 +1,497 @@
+{
+  "total_count": 5,
+  "jobs": [
+    {
+      "id": 138456125317,
+      "run_id": 45397189426,
+      "workflow_name": "DSP numerical measurements",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKDPhQ",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456125317",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/job/138456125317",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T12:49:22Z",
+      "started_at": "2026-11-24T12:51:30Z",
+      "completed_at": "2026-11-24T13:56:35Z",
+      "name": "sanitizers",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T12:51:30Z",
+          "completed_at": "2026-11-24T12:51:32Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T12:51:32Z",
+          "completed_at": "2026-11-24T12:51:41Z"
+        },
+        {
+          "name": "Configure ASan and UBSan core build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T12:51:41Z",
+          "completed_at": "2026-11-24T12:51:43Z"
+        },
+        {
+          "name": "Build instrument and circuit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T12:51:43Z",
+          "completed_at": "2026-11-24T12:58:07Z"
+        },
+        {
+          "name": "Run sanitizer and validator-fixture tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T12:58:07Z",
+          "completed_at": "2026-11-24T13:56:31Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T13:56:31Z",
+          "completed_at": "2026-11-24T13:56:31Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T13:56:31Z",
+          "completed_at": "2026-11-24T13:56:31Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456125317",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045258,
+      "runner_name": "GitHub Actions 1000045258",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456125576,
+      "run_id": 45397189426,
+      "workflow_name": "DSP numerical measurements",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKDQiA",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456125576",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/job/138456125576",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T12:49:22Z",
+      "started_at": "2026-11-24T12:58:42Z",
+      "completed_at": "2026-11-24T12:58:57Z",
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T12:58:43Z",
+          "completed_at": "2026-11-24T12:58:44Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T12:58:44Z",
+          "completed_at": "2026-11-24T12:58:49Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T12:58:49Z",
+          "completed_at": "2026-11-24T12:58:49Z"
+        },
+        {
+          "name": "Test comparison failures and provenance gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T12:58:49Z",
+          "completed_at": "2026-11-24T12:58:53Z"
+        },
+        {
+          "name": "Compare deterministic synthetic stand-in traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T12:58:53Z",
+          "completed_at": "2026-11-24T12:58:53Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T12:58:53Z",
+          "completed_at": "2026-11-24T12:58:54Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T12:58:54Z",
+          "completed_at": "2026-11-24T12:58:54Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-24T12:58:54Z",
+          "completed_at": "2026-11-24T12:58:55Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-24T12:58:55Z",
+          "completed_at": "2026-11-24T12:58:55Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456125576",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045273,
+      "runner_name": "GitHub Actions 1000045273",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456125703,
+      "run_id": 45397189426,
+      "workflow_name": "DSP numerical measurements",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKDRBw",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456125703",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/job/138456125703",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T12:49:22Z",
+      "started_at": "2026-11-24T13:09:49Z",
+      "completed_at": "2026-11-24T13:10:44Z",
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T13:09:50Z",
+          "completed_at": "2026-11-24T13:09:50Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T13:09:50Z",
+          "completed_at": "2026-11-24T13:09:55Z"
+        },
+        {
+          "name": "Build immutable circuit and audio checkpoints with one compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T13:09:55Z",
+          "completed_at": "2026-11-24T13:10:29Z"
+        },
+        {
+          "name": "Require unchanged seven-tone V1 circuit numerics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T13:10:29Z",
+          "completed_at": "2026-11-24T13:10:29Z"
+        },
+        {
+          "name": "Require unchanged source-audio V2 and numerical history",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T13:10:29Z",
+          "completed_at": "2026-11-24T13:10:42Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T13:10:42Z",
+          "completed_at": "2026-11-24T13:10:42Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-24T13:10:42Z",
+          "completed_at": "2026-11-24T13:10:43Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-24T13:10:43Z",
+          "completed_at": "2026-11-24T13:10:43Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456125703",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045303,
+      "runner_name": "GitHub Actions 1000045303",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456125758,
+      "run_id": 45397189426,
+      "workflow_name": "DSP numerical measurements",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKDRPg",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456125758",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/job/138456125758",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T12:49:22Z",
+      "started_at": "2026-11-24T13:05:56Z",
+      "completed_at": "2026-11-24T13:09:56Z",
+      "name": "Default-off raw audio versus shipped baseline",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T13:05:56Z",
+          "completed_at": "2026-11-24T13:05:57Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T13:05:57Z",
+          "completed_at": "2026-11-24T13:06:02Z"
+        },
+        {
+          "name": "Build both revisions with the same compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T13:06:02Z",
+          "completed_at": "2026-11-24T13:06:23Z"
+        },
+        {
+          "name": "Require byte-identical default and noisy-reassignment traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T13:06:23Z",
+          "completed_at": "2026-11-24T13:09:53Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T13:09:53Z",
+          "completed_at": "2026-11-24T13:09:54Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T13:09:54Z",
+          "completed_at": "2026-11-24T13:09:54Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-24T13:09:54Z",
+          "completed_at": "2026-11-24T13:09:54Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456125758",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045299,
+      "runner_name": "GitHub Actions 1000045299",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138456125934,
+      "run_id": 45397189426,
+      "workflow_name": "DSP numerical measurements",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVaLxy88AAAAgPKDR7g",
+      "head_sha": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138456125934",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45397189426/job/138456125934",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T12:49:22Z",
+      "started_at": "2026-11-24T13:09:57Z",
+      "completed_at": "2026-11-24T13:11:05Z",
+      "name": "measure",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-24T13:09:58Z",
+          "completed_at": "2026-11-24T13:10:00Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-24T13:10:00Z",
+          "completed_at": "2026-11-24T13:10:07Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-24T13:10:07Z",
+          "completed_at": "2026-11-24T13:10:08Z"
+        },
+        {
+          "name": "Install pinned numerical plotting tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-24T13:10:08Z",
+          "completed_at": "2026-11-24T13:10:17Z"
+        },
+        {
+          "name": "Build standalone numerical probe",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-24T13:10:17Z",
+          "completed_at": "2026-11-24T13:10:50Z"
+        },
+        {
+          "name": "Measure and enforce regression bounds",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-24T13:10:50Z",
+          "completed_at": "2026-11-24T13:10:56Z"
+        },
+        {
+          "name": "Export actual-engine candidate with exact-source provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-24T13:10:56Z",
+          "completed_at": "2026-11-24T13:10:59Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-24T13:10:59Z",
+          "completed_at": "2026-11-24T13:11:00Z"
+        },
+        {
+          "name": "Upload live envelope candidate trace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-24T13:11:00Z",
+          "completed_at": "2026-11-24T13:11:01Z"
+        },
+        {
+          "name": "Upload source-traceable graphs and raw traces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-24T13:11:01Z",
+          "completed_at": "2026-11-24T13:11:03Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-24T13:11:03Z",
+          "completed_at": "2026-11-24T13:11:03Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-24T13:11:03Z",
+          "completed_at": "2026-11-24T13:11:03Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-24T13:11:03Z",
+          "completed_at": "2026-11-24T13:11:03Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138456125934",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045305,
+      "runner_name": "GitHub Actions 1000045305",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

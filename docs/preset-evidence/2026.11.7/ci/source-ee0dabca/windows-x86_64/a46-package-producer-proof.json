@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "status": "original_package_inner_hash_and_juce_chain_bound",
+  "factory_revision": "2026.11.7",
+  "source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "tree": "17115913cbb29157bd00539485bcc5f38b57219c",
+  "run_id": 45397189410,
+  "attempt": 1,
+  "target": "windows-x86_64",
+  "producer_job_id": 138455976256,
+  "package_step": {
+    "name": "Package Windows VST3 and Standalone",
+    "status": "completed",
+    "conclusion": "success",
+    "number": 9,
+    "started_at": "2026-11-24T13:36:12Z",
+    "completed_at": "2026-11-24T13:36:17Z"
+  },
+  "source_commands": [
+    "python scripts/package-ci-artifacts.py --self-test",
+    "python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages"
+  ],
+  "original_runtime_rows": [
+    {
+      "timestamp": "2026-11-24T13:36:16.5306133Z",
+      "message": "Packaging self-test passed: 34 fixture/rejection checks; synthetic artifacts only."
+    },
+    {
+      "timestamp": "2026-11-24T13:36:16.5306775Z",
+      "message": "Native symlink/chmod fixtures run on Unix CI; Windows packages reject all symlinks."
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8459873Z",
+      "message": "{"
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8460273Z",
+      "message": "  \"archive\": \"packages\\\\cs80-reference-windows-x86_64-ee0dabcacb4c.zip\","
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8460761Z",
+      "message": "  \"sha256\": \"e8afc12ce60a000b7f62d5478a098b0e6baaf6a5a99484339f34c6eb3f1a04ac\","
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8461110Z",
+      "message": "  \"formats\": ["
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8461292Z",
+      "message": "    \"VST3\","
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8461601Z",
+      "message": "    \"Standalone\""
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8461785Z",
+      "message": "  ],"
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8461976Z",
+      "message": "  \"architecture\": \"x86_64\""
+    },
+    {
+      "timestamp": "2026-11-24T13:36:17.8462190Z",
+      "message": "}"
+    }
+  ],
+  "original_package_json": {
+    "archive": "packages\\cs80-reference-windows-x86_64-ee0dabcacb4c.zip",
+    "sha256": "e8afc12ce60a000b7f62d5478a098b0e6baaf6a5a99484339f34c6eb3f1a04ac",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "architecture": "x86_64"
+  },
+  "actual_inner_archive": {
+    "file": "cs80-reference-windows-x86_64-ee0dabcacb4c.zip",
+    "bytes": 6403884,
+    "sha256": "e8afc12ce60a000b7f62d5478a098b0e6baaf6a5a99484339f34c6eb3f1a04ac"
+  },
+  "original_printed_inner_hash_matches_actual": true,
+  "package_self_test_message": "Packaging self-test passed: 34 fixture/rejection checks; synthetic artifacts only.",
+  "native_and_packaged_juce_provenance_bytes_equal": true,
+  "juce_provenance": {
+    "bytes": 585,
+    "sha256": "d32b6f7ed4ec57b0bf102f03563fd13653a3921adf1577d1dcb1df427baa44fa"
+  },
+  "juce_license": {
+    "path": "licenses/JUCE-LICENSE.md",
+    "bytes": 5038,
+    "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+    "independent_dependency_source_byte_comparison": false,
+    "provenance_boundary": "Presence/inventory bytes only here. Require original clean JUCE 8.0.11 c352e248 verification followed by unchanged source package command reading its LICENSE.md."
+  },
+  "original_clean_checkout_juce_build_test_package_sequence_verified": true,
+  "juce_pin": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "juce_version": "8.0.11",
+  "independent_juce_checkout_byte_comparison": false,
+  "source_packager": {
+    "bytes": 29516,
+    "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "producer_log": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/producer-job.log",
+    "bytes": 152673,
+    "sha256": "2c811ca7072ec279a3ad21b9fccccec60deae4df5f404f0a3ba071dd33834159"
+  },
+  "install_acceptance": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-acceptance.json",
+    "bytes": 10227,
+    "sha256": "f88fbfa775013b97697ac20c2eab363c4208b0749a9c48979edfc1d7036eb4f5"
+  },
+  "original_ci_binding": {
+    "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/original-ci-binding.json",
+    "bytes": 30463,
+    "sha256": "2b7280dfbeb82fe9d420c39536f6e08ce8f525059a2e9e4c5bdcfa3fdd5fc451"
+  },
+  "platform_qualified": false,
+  "release_qualified": false
+}

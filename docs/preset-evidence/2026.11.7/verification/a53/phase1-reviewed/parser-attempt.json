@@ -1,0 +1,7 @@
+{
+  "status": "independent_parser_structure_failure_no_native_result",
+  "error": "Ambiguous unittest classes: tests/test_render_cli.py",
+  "basis": "The first method-order implementation assumed one TestCase class per file. The frozen renderer source contains RenderArguments and ResourceLimitDiagnostics. The parser now retains default alphabetical class-then-method order and still requires the full seven-method count and exact actual dot/skip pattern. No tests, source predicates, expected outcomes or frozen checker were changed.",
+  "native_execution_failure": false,
+  "release_qualified": false
+}

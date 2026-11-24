@@ -1,0 +1,161 @@
+{
+  "created_at_utc": "2026-11-24T13:59:58.041628+00:00",
+  "assignment": "A49",
+  "frozen_source": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "head_at_read": "01a8f60a15a6323b0fd3ffea3c9db84ddf8fc435",
+  "prior_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "retrieval_receipt": {
+    "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/macos-x86_64/attempt-1-failed/retrieval-receipt.json",
+    "sha256": "1b065a01df9d882ace798bcda895f4d612c86820c62a98833603677acf904edb"
+  },
+  "source_comparison": [
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "sha256": "6ec9948ff25756e98bd52ee5e7945ecc781b79ec6c9a004cc973d70817ca175e",
+      "working_bytes_equal_frozen_source": true,
+      "prior_c5549f7d_bytes_equal_frozen_source": true
+    },
+    {
+      "path": "src/plugin/PluginEditor.cpp",
+      "sha256": "9fe6e695b7a6ae7d74a9a566ba04b82ed676dffc899071fbcafb0ecc95ec99bc",
+      "working_bytes_equal_frozen_source": true,
+      "prior_c5549f7d_bytes_equal_frozen_source": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "sha256": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+      "working_bytes_equal_frozen_source": true,
+      "prior_c5549f7d_bytes_equal_frozen_source": true
+    },
+    {
+      "path": "src/plugin/OutputMeter.h",
+      "sha256": "2522de2f3008ad62ead52f53622c05a4ef3bac0ed109d6bdc5178380cbf558dd",
+      "working_bytes_equal_frozen_source": true,
+      "prior_c5549f7d_bytes_equal_frozen_source": true
+    },
+    {
+      "path": "src/plugin/OutputMeterDisplay.h",
+      "sha256": "41a7e59d0a63218a6e74db183609e4eeee7b39a5280f9d0aaea0cecec872edc8",
+      "working_bytes_equal_frozen_source": true,
+      "prior_c5549f7d_bytes_equal_frozen_source": true
+    }
+  ],
+  "archives": [
+    {
+      "tag": "failed-ee0dabc",
+      "local_path": "/tmp/cs80-ci-1cee5a/ee0dabca/macos-x86_64-attempt1-failed-native.zip",
+      "bytes": 90653,
+      "sha256": "a0f12e2384f2f37461ca31a17a43dee205ea683830f7fe8a7a5cd47b50df2dde",
+      "ctest_xml_sha256": "c792b9540bfba3c24866fab78a834f13a6ca37f538d3351fb2da02e11272a49e",
+      "testcase_count": 277,
+      "status_counts": {
+        "fail": 1,
+        "notrun": 2,
+        "run": 274
+      },
+      "juce_provenance": "checked_at=2026-11-24T12:53:56Z\nexpected_sha=c352e2489000ffeb9e397051377d75eef2efe641\nexpected_version=8.0.11\nexpected_source=/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nworkflow_commit=ee0dabcacb4cdff93f8803844f60348e0ceda6ed\nworkflow_run=45397189410\nconfigured_source=/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nsource_override=\nproject_source=/Users/runner/work/yamaha-cs80/yamaha-cs80\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\norigin=https://github.com/juce-framework/JUCE.git\ngit_description=8.0.11\nsource_clean=true\nactual_version=8.0.11\nverification=PASS\n",
+      "lasttest_member_sha256": "7f27da143977aa9d872280c9122cbed1e2e84e8c49d84da20670d19196f21ba9",
+      "ui_smoke_lasttest_section": {
+        "file": "failed-ee0dabc-ui-smoke-lasttest-section.log",
+        "sha256": "162de50e82d9ffe74e940eff0476293e83b3bda7677355e423e56777982e1f7f",
+        "exact_byte_substring_of_original_member": true
+      }
+    },
+    {
+      "tag": "prior-c5549f7d",
+      "local_path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-x86_64-native.zip",
+      "bytes": 86707,
+      "sha256": "f0e2ae0152cb4fa910abe9b0bf512aac648868b7bd7801051a40f7655c9aacfb",
+      "ctest_xml_sha256": "8f4183280b53ea837850227741c978c40a7090626f5196f48f2aee135f0bf6fb",
+      "testcase_count": 277,
+      "status_counts": {
+        "fail": 1,
+        "notrun": 2,
+        "run": 274
+      },
+      "juce_provenance": "checked_at=2026-11-24T11:43:12Z\nexpected_sha=c352e2489000ffeb9e397051377d75eef2efe641\nexpected_version=8.0.11\nexpected_source=/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nworkflow_commit=c5549f7d095a5c5f49a5ad22ec0ccc819245d201\nworkflow_run=45385716988\nconfigured_source=/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nsource_override=\nproject_source=/Users/runner/work/yamaha-cs80/yamaha-cs80\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\norigin=https://github.com/juce-framework/JUCE.git\ngit_description=8.0.11\nsource_clean=true\nactual_version=8.0.11\nverification=PASS\n",
+      "lasttest_member_sha256": "3166592777566b8fa59558fe1942ca6269ce7a437a97afe2eb19d449be2ce6d5",
+      "ui_smoke_lasttest_section": {
+        "file": "prior-c5549f7d-ui-smoke-lasttest-section.log",
+        "sha256": "e9410fba16ca2b8219e7dbc1cd064932e6d8a065341237ec3e7e98291c82ba20",
+        "exact_byte_substring_of_original_member": true
+      }
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-Isrc",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a49/meter_state_probe.cpp",
+        "-o",
+        "/workspace/scratch/1cee5a9391a9/a49-work/meter_state_probe"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "exit_code": 0,
+      "duration_seconds": 0.7180548199976329,
+      "output_file": "docs/preset-evidence/2026.11.7/verification/a49/probe-build.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/scratch/1cee5a9391a9/a49-work/meter_state_probe"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "exit_code": 0,
+      "duration_seconds": 0.07685332199980621,
+      "output_file": "docs/preset-evidence/2026.11.7/verification/a49/probe-output.log",
+      "output_sha256": "a89ddfeaaf52b53ff32965c21644f27aefc0bbcb17ff16aeac4e5a0e20bb757f"
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_output_meter_tests"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "exit_code": 0,
+      "duration_seconds": 0.001087111002561869,
+      "output_file": "docs/preset-evidence/2026.11.7/verification/a49/cs80_output_meter_tests.log",
+      "output_sha256": "47fd6ebd9cf1b05bc08e145337ae17a520874384079016e471f8f78ea63808d0"
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_output_meter_display_tests"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "exit_code": 0,
+      "duration_seconds": 0.0013385740021476522,
+      "output_file": "docs/preset-evidence/2026.11.7/verification/a49/cs80_output_meter_display_tests.log",
+      "output_sha256": "4f95996d1263ed4e55b981b526fbcf70c0ed494854dc12c230491571c5ba8cf4"
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_output_meter_audit_tests"
+      ],
+      "cwd": "/tmp/cs80-session-1cee5a",
+      "exit_code": 0,
+      "duration_seconds": 0.009573147999617504,
+      "output_file": "docs/preset-evidence/2026.11.7/verification/a49/cs80_output_meter_audit_tests.log",
+      "output_sha256": "4081ca027f5eba627295124f21ad2ecb25863e1e2507e35dc39c7c876e85df81"
+    }
+  ],
+  "scope": "Production files unchanged. Probe is synthetic and uses production headers; it is not a native Intel GUI reproduction. Existing local meter binaries supply corroborating checks only, not release acceptance.",
+  "probe_source_sha256": "f785d60cc542d3dcf5cc2eae0049408b43502d0a893947c5674a8fb3bce8fc95",
+  "juce_source_inspection": {
+    "local_checkout": "/workspace/scratch/c98fb40a9529/juce-validation",
+    "observed_git_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "observed_git_status_short": "",
+    "matches_native_provenance": true,
+    "files": [
+      "modules/juce_events/timers/juce_Timer.cpp",
+      "modules/juce_events/native/juce_MessageManager_mac.mm",
+      "modules/juce_gui_basics/components/juce_Component.cpp",
+      "modules/juce_core/native/juce_SystemStats_mac.mm"
+    ]
+  },
+  "decision": "No production/harness/assertion/timeout/workflow change. Preserve attempt 1 and independently qualify one complete unchanged Intel job rerun after the active workflow completes. Dispatch scheduling remains a hypothesis, not a demonstrated native root cause."
+}

@@ -1,0 +1,156 @@
+{
+  "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+  "run_id": 45397189410,
+  "producing_attempt": 1,
+  "producer_job_id": 138455976307,
+  "target": "macos-x86_64",
+  "status": "original_failed_attempt_preserved",
+  "counts": {
+    "registered": 277,
+    "passed": 274,
+    "failed": 1,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": {
+    "total": 5,
+    "suites": [
+      {
+        "ctest_test": "cs80_package_binary_identity_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 13,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 13 tests in 0.182s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_packaging_notice_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 7 tests in 3.147s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "total": 2,
+        "summaries": [
+          {
+            "tests_run": 12,
+            "result": "OK",
+            "skipped": 2,
+            "summary": "Ran 12 tests in 1.926s\n\nOK (skipped=2)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      },
+      {
+        "ctest_test": "cs80_render_cli_tests",
+        "total": 1,
+        "summaries": [
+          {
+            "tests_run": 7,
+            "result": "OK",
+            "skipped": 1,
+            "summary": "Ran 7 tests in 0.521s\n\nOK (skipped=1)"
+          }
+        ],
+        "explicit_skip_lines": [],
+        "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+      }
+    ]
+  },
+  "failed_test": "cs80_ui_smoke",
+  "assertion_lines": [
+    "FAIL: source screenshot meter reflects real rendered audio through its normal GUI timer"
+  ],
+  "relevant_output_lines": [
+    "source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0834435672, meter=SAMPLE PEAK <= -120 dBFS READ-ONLY",
+    "source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -0.2 dBFS READ-ONLY",
+    "UI SMOKE TEST: 1 FAILURE(S)"
+  ],
+  "ui_output_sha256": "8b29f762fcbe2a846d04b9c9d10e71e5de4d8da80f1105f8a71f80af678b9e44",
+  "library_audit": {
+    "name": "cs80_library_audit_tests",
+    "result": "passed",
+    "seconds": 472.967,
+    "junit_stdout_truncated": false,
+    "lasttest_status": "Passed",
+    "lasttest_output_sha256": "7ea579040f532623508524b37e1f8db8cb3254e0ea400b5179c17c24be7cd73f"
+  },
+  "library_audit_output": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs\n",
+  "original_ctest_numeric_exit": 8,
+  "exit_basis": "Retained producer log explicitly reports Process completed with exit code 8 after the one-failure CTest summary.",
+  "downstream_steps": [
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Register built AU",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Validate VST3 with pluginval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Validate AU with pluginval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Validate AU with pluginval GUI",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Validate AU GUI fixed-seed regression",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Validate AU GUI regression seed 0x3c99748",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Package native macOS VST3, AU and Standalone",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "frozen_native_gate_refusal": "Native observation is not green",
+  "root_cause_established": false,
+  "flake_classification_established": false,
+  "successful_retry_observed": false,
+  "limits": [
+    "No timer/product root cause inferred from this bounded failure review.",
+    "Any later attempt retains a separate original job and artifact identity.",
+    "Diagnostic or single-test success cannot erase this failed full producer attempt."
+  ]
+}

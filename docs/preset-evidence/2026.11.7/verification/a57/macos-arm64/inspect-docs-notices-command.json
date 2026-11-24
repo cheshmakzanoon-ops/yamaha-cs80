@@ -1,0 +1,27 @@
+{
+  "name": "inspect-docs-notices",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.7/verification/a48/inspect-packaged-docs.py",
+    "--repo",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+    "--archive",
+    "/tmp/cs80-ci-1cee5a/ee0dabca/macos-arm64-install.zip",
+    "--acceptance",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/install-acceptance.json",
+    "--out",
+    "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/docs-and-notices.json",
+    "--source",
+    "ee0dabcacb4cdff93f8803844f60348e0ceda6ed"
+  ],
+  "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "started_at_utc": "2026-11-24T13:47:29.359834+00:00",
+  "elapsed_seconds": 1.1503909540006134,
+  "returncode": 0,
+  "log": "/workspace/scratch/1cee5a9391a9/yamaha-cs80/docs/preset-evidence/2026.11.7/verification/a57/macos-arm64/inspect-docs-notices.log",
+  "log_identity": {
+    "bytes": 271,
+    "sha256": "dcbd606851283ce683ad91715f583511eee0fa6fa115f1131f7fce5f267b973c"
+  }
+}

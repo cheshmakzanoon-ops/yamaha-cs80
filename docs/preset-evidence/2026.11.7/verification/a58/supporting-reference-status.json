@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "status": "supporting_raw_reference_identity_checked_not_native_or_sanitizer_qualification",
+  "recorded_at_utc": "2026-11-24T14:06:58.457444+00:00",
+  "supporting_dsp": {
+    "source_commit": "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+    "run_id": 45397189426,
+    "run_attempt": 1,
+    "original_run_status": "completed",
+    "original_run_conclusion": "success",
+    "original_successful_jobs": [
+      {
+        "id": 138456125317,
+        "name": "sanitizers",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 138456125576,
+        "name": "Synthetic reference comparison (not hardware evidence)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 138456125703,
+        "name": "Source circuit V1 and audio V2 compatibility",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 138456125758,
+        "name": "Default-off raw audio versus shipped baseline",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 138456125934,
+        "name": "measure",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "sanitizer_registered_cases_accepted_by_a58": null,
+    "sanitizer_formal_skips_accepted_by_a58": null,
+    "sanitizer_nested_skips_accepted_by_a58": null,
+    "complete_artifact_content_acceptance_by_a58": false,
+    "remaining_owner": "A52 original artifact and provenance review"
+  },
+  "upstream_prior_source": {
+    "workflow_run_id": 45397242252,
+    "original_job_id": 138456160979,
+    "actual_product_input_run_id": 45385716988,
+    "actual_product_input_source_from_prior_run_api": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "prior_run_api": {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/superseded-run-api.json",
+      "bytes": 15428,
+      "sha256": "6b0dd888df3234b98cc55894ddfd39e30d87bc4a7ecdcf77334dfc29bf1dafaa"
+    },
+    "diagnostic_SOURCE_SHA_export": null,
+    "diagnostic_SOURCE_SHA_export_was_blank": true,
+    "failure_lines": [
+      "2026-11-24T12:51:30.1621517Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact"
+    ],
+    "current_ee0_product_validator_execution_claimed": false
+  },
+  "release_qualified": false,
+  "all_ci_green_claimed": false,
+  "input_records": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-acquisition-receipt.json",
+      "bytes": 1584,
+      "sha256": "c010e15aa4b1d5528ad3e0c56ea63e7d822afde0de70c7eeee347b2cae896f59"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-dsp/run-api-at-completion.json",
+      "bytes": 14818,
+      "sha256": "9f65bcf5ce73017bc1cdb54e5e295ebe003374b98919cde6449d93974edbf60c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-dsp/jobs-api-at-completion.json",
+      "bytes": 17458,
+      "sha256": "6a6566ef4b0b4c73273768a73c5744b6f92a6bfc8db14376102430faa277b50b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-dsp/artifact-collection-api.json",
+      "bytes": 5195,
+      "sha256": "4b353ad7cdfa95673e3487d57cf3aa30f77221b3f0c81c1f36364c2a53b3ef41"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-upstream-prior-source/jobs-api-at-completion.json",
+      "bytes": 10961,
+      "sha256": "89c08f36f507ae8d122f70cd13abdfcce61dcbfbbef05c94e21943c24bcedb9e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-dsp/sanitizer-job-138456125317.log",
+      "bytes": 127134,
+      "sha256": "bb4a7e411db4068e81cb6f676dc9355f083baed1e6d86d67bef9b82e513e6291"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/supporting-upstream-prior-source/job-138456160979.log",
+      "bytes": 13068,
+      "sha256": "2b75a69b04fb0dd3d7a28d4b9f23fc7d1b87ce24d2e2f6297c72d3955bfb535e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/superseded-run-api.json",
+      "bytes": 15428,
+      "sha256": "6b0dd888df3234b98cc55894ddfd39e30d87bc4a7ecdcf77334dfc29bf1dafaa"
+    }
+  ],
+  "method": "Hash every file against the root acquisition receipt; read original DSP run/jobs identity and outcomes; inspect original upstream SOURCE_RUN_ID, blank SOURCE_SHA and artifact-selection error; map the triggering run to its separately retained original run API. No sanitizer count or skip inference; no artifact download or product execution.",
+  "reviewer_preflight_note": "An initial local assertion expecting an exported diagnostic SOURCE_SHA refused before any output. Inspection showed the original export blank after early artifact-selection failure; final attribution uses the separate prior-run API. No product, gate or input changed."
+}

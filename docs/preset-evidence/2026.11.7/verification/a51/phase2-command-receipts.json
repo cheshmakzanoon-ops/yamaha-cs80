@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-24T14:08:38.452913+00:00",
+  "cwd": "/tmp/cs80-session-1cee5a",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.5/verification/a57-probe-public-artifact.py",
+        "--artifact-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/install-api.json",
+        "--run-api",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/windows-x86_64/run-api-at-platform-completion.json",
+        "--source",
+        "ee0dabcacb4cdff93f8803844f60348e0ceda6ed",
+        "--run-id",
+        "45397189410",
+        "--attempt",
+        "1",
+        "--artifact-name",
+        "cs80-windows-install-bundle",
+        "--out",
+        "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/windows-x86_64-full-get-0001.json"
+      ],
+      "observed_exit_code": 0,
+      "probe_started_at_utc": "2026-11-24T14:05:57.202963+00:00",
+      "probe_completed_at_utc": "2026-11-24T14:06:19.194618+00:00",
+      "public_get_receipt": {
+        "path": "docs/preset-evidence/2026.11.7/ci/source-ee0dabca/public-downloads/windows-x86_64-full-get-0001.json",
+        "bytes": 2535,
+        "sha256": "d46c64708646d501dc995a73abedaad5d4bb4c6223d3378dbd572132c2625aa5"
+      }
+    }
+  ],
+  "binding_verifier": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a51/phase2-windows-binding.py",
+    "bytes": 17939,
+    "sha256": "f573094ad1c66a3cdf8f0da7ae4e97eeeaca64df82a241d1c0c40094212d628e"
+  },
+  "public_download_transport_count_this_phase": 1,
+  "public_download_failed_transports_this_phase": 0,
+  "large_archive_copy_created": false,
+  "signed_redirect_queries_retained": false
+}
