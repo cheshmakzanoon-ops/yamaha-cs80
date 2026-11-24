@@ -1,15 +1,16 @@
 # Factory preset guide
 
-The **2026.11.7 factory library source candidate** contains **523 existing programs**. Its **521
+The **2026.11.8 factory library source candidate** contains **523 existing programs**. Its **521
 musical programs** retain the cumulative reprogramming since the published 2026.11.4 bank;
 **Init Patch** and **Init Circuit** remain starting points. All names, categories and program addresses keep their
-existing order. This increment changes body rendering without changing any
-2026.11.6 preset values or parameter definitions. No presets have been added or removed.
+existing order. This increment improves piano contact and treble excitation,
+electric-piano pickups and release damping, and corrects 31 existing preset
+vectors. All 204 parameter definitions remain intact. No presets have been added or removed.
 
 Native builds and delivery qualification for this candidate are pending at this
 source checkpoint. Use the [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) to
 identify available, qualified binaries; this guide alone does not establish
-that a 2026.11.7 download has passed those gates.
+that a 2026.11.8 download has passed those gates.
 Guides inside an archive retain their source-time wording and links. The live
 online table identifies completed qualification for the package's full source
 commit; later documentation does not replace those archived guides.
@@ -22,7 +23,10 @@ resonant size distinguishes related instruments without transposing the note.
 Envelopes, touch, register and effects complete the individual sounds.
 These are authored synthesized interpretations, not samples
 or a demonstrated exact match to an acoustic instrument or physical CS-80.
-The [2026.11.7 revision report](CIRCUIT_LIBRARY_2026_11_7.md) explains smoother
+The [2026.11.8 revision report](CIRCUIT_LIBRARY_2026_11_8.md) explains the new
+keyboard mechanisms, electric-piano programming and steadier organ, Ocarina
+and Crystal Strings layers, with measured improvements and limitations.
+The preceding [2026.11.7 revision report](CIRCUIT_LIBRARY_2026_11_7.md) explains smoother
 upper-piano decay, rate-consistent breath and contact, fixed body resonances
 during standard string bends, and extended low choir harmonics. The retained
 piano tuning, wind/brass resonances and nine material profiles are documented
@@ -445,10 +449,10 @@ selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path
 
 ## Recalling a revised sound
 
-**2026.11.7 identifies the factory-library revision**, separate from the
+**2026.11.8 identifies the factory-library revision**, separate from the
 application's version and saved-session format. Names, order and host program
-identities remain stable. This increment preserves the 2026.11.6 factory
-parameter values and updates the body-rendering mechanisms. A session or user
+identities remain stable. This increment revises 31 existing factory vectors
+and updates the keyboard body-rendering mechanisms. A session or user
 preset restores its stored controls, so an older project can show a factory
 name while still using its earlier recipe. Save a user copy to retain edits.
 
@@ -493,18 +497,19 @@ size fields defaults both sizes to 1; a patch without variants or materials
 defaults each missing selector to Standard. Session, user-preset and A/B recall
 include all fourteen body controls.
 
-Revision 2026.11.7 adds no parameters and changes no parameter ranges, defaults
+Revision 2026.11.8 adds no parameters and changes no parameter ranges, defaults
 or automation positions; the 2026.11.6 totals and material choices remain in place.
 [Current host and saved-state compatibility review](preset-evidence/2026.11.7/reviews/a42.md)
 
 Existing body-enabled saved sounds use the revised excitation, tuning and
 articulation code, so retaining their parameter values does not freeze their
-old audio. Material still defaults to Standard, but the current piano damping,
-rate compensation, string-bend and low choir changes also apply to existing
-body-enabled patches where relevant. The earlier piano tuning and wind/brass
+old audio. Material still defaults to Standard, but piano contact, treble
+excitation, electric pickup response and instrument-specific release damping
+also apply to existing body-enabled patches where relevant. Earlier rate
+compensation, string-bend, low choir, piano tuning and wind/brass
 corrections are retained. Keep the
 earlier binary and a reference bounce if an existing project's exact rendering
-must be retained. [Compatibility details](CIRCUIT_LIBRARY_2026_11_7.md#saved-sessions-and-factory-recall)
+must be retained. [Compatibility details](CIRCUIT_LIBRARY_2026_11_8.md#catalogue-and-session-compatibility)
 
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
@@ -559,9 +564,9 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The 2026.11.7 roster
-requests **238 WAVs covering 92 existing programs**, totaling **1,361.2 seconds
-(22 minutes 41.2 seconds)** in 54 folders, with the complete 523-program,
+name `cs80-curated-preset-audition-<source SHA>`. The 2026.11.8 roster
+requests **256 WAVs covering 95 existing programs**, totaling **1,487.2 seconds
+(24 minutes 47.2 seconds)** in 60 folders, with the complete 523-program,
 204-parameter inventory, metrics,
 source commit/tree, executable hash, provenance and checksums:
 
@@ -570,7 +575,14 @@ extend low-piano tails at soft and firm touch and complete all five vocal pads
 at sounding main-rank foundations MIDI 36 and 48. Each piano addition holds
 for five seconds before a one-second release excerpt; each choir addition
 holds for six seconds before a one-second release excerpt. The requests load
-existing programs. They add no presets. [Exact roster](preset-evidence/2026.11.7/reviews/a09.md)
+existing programs. They add no presets. [Earlier roster](preset-evidence/2026.11.7/reviews/a09.md)
+
+All 238 preceding requests remain unchanged. Eighteen further clips compare
+Ocarina, Crystal Strings and Mellow Organ at played MIDI 48, 60 and 72, each
+at velocities 0.25 and 0.85, pressure zero, five-second holds and two-second
+release excerpts. These retain the complete programs and their differing
+registrations. Each starts a fresh engine; a single cold note does not
+establish repeated-note consistency.
 
 The retained requests include:
 

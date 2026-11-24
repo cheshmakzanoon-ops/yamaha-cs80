@@ -5,7 +5,30 @@ existing CI workflow already builds. The packaging step adds no paid dependency,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Source candidate — 2026.11.7 instrument texture and articulation
+## Source candidate — 2026.11.8 keyboard response and preset stability
+
+This source contains factory revision **2026.11.8**, preserving all 523 existing
+names, categories and addresses, both Init vectors, and all 204 core parameter
+definitions. It retains the cumulative programming of all 521 musical programs
+and improves piano contact/treble excitation, electric pickup response and
+instrument release damping. Thirty-one existing preset vectors receive EP,
+organ, Ocarina or Crystal Strings corrections. No programs are added.
+
+The audition exporter requests **256 unnormalized stereo WAVs from 95 existing
+programs**, totaling **1,487.2 seconds**, alongside the complete 523 × 204
+inventory. All 238 earlier requests are preserved. The 18 additions cover
+three existing corrected voices at matched register and velocity settings.
+This describes the requested roster, not acceptance of an uploaded archive.
+
+Native builds and actual archive qualification are pending at this source
+checkpoint. The [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads)
+identifies accepted source-bound downloads. All four native platforms and all
+15 required validator lanes remain required. Guides inside a bundle retain
+their source-time wording; later evidence does not change those binary bytes.
+See the [revision report](CIRCUIT_LIBRARY_2026_11_8.md) and
+[preset guide](PRESET_GUIDE.md) for changes, recall instructions and limits.
+
+## Earlier source candidate — 2026.11.7 instrument texture and articulation
 
 This source snapshot contains factory revision **2026.11.7**. It retains the
 full-bank revision of all 521 existing musical programs, the stable piano

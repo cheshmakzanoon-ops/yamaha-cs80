@@ -4,19 +4,19 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library source candidate **2026.11.7**: revoiced existing
+This guide covers factory library source candidate **2026.11.8**: revoiced existing
 programs and optional instrument bodies within one circuit instrument, the
 unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
 readout. The cumulative work since 2026.11.4 revises all **521 existing musical programs**;
 **Init Patch** and **Init Circuit** remain starting points, with all names and
-program addresses preserved. This increment keeps the 2026.11.6 preset settings
-and controls, while correcting upper-piano decay, keeping breath/contact texture
-consistent across render rates, fixing body resonances during standard string
-bends, and extending low choir harmonics. The earlier stable piano tuning,
-wind/brass response and nine material profiles are retained. See the
-[2026.11.7 sound revision](CIRCUIT_LIBRARY_2026_11_7.md).
+program addresses preserved. This increment improves piano contact and treble
+excitation, electric-piano pickup response and instrument-specific release
+damping. It also calibrates existing EP recipes and stabilizes organ, Ocarina
+and Crystal Strings layers. All 204 parameter definitions and the earlier
+piano tuning, rate compensation, wind/brass response and material profiles
+remain intact. See the [2026.11.8 sound revision](CIRCUIT_LIBRARY_2026_11_8.md).
 
-At this source checkpoint, **2026.11.7 native builds and delivery qualification
+At this source checkpoint, **2026.11.8 native builds and delivery qualification
 are pending**. This guide does not announce a qualified download. The
 [current online download table](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads) identifies the available artifacts
 and their accepted source; a later source revision does not update those binaries.

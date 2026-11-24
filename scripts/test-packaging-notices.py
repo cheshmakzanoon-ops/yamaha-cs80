@@ -107,7 +107,8 @@ class NoticeTests(unittest.TestCase):
         expected = {"licenses/" + name: data for name, data in self.expected.items()}
         guide = extras["PRESET_GUIDE.md"].decode()
         self.assertIn(f"[Lead voicings](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/src/core/curated/Leads.inc)", guide)
-        self.assertIn("[playing and performance instructions](INSTALL_AND_QUICKSTART.md#one-circuit-instrument)", guide)
+        self.assertIn("[playing and performance instructions](INSTALL_AND_QUICKSTART.md#first-five-minutes)", guide)
+        self.assertIn("## First five minutes", extras["INSTALL_AND_QUICKSTART.md"].decode())
         self.assertIn(f"[2026.11.2 circuit library report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/docs/CIRCUIT_LIBRARY_2026_11_2.md)", guide)
         self.assertNotIn("](../", guide)
         revision = metadata["preset_library_revision"]
