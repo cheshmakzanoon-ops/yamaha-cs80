@@ -709,7 +709,31 @@ private:
         return stringWeight(harmonic, colour, strike);
     }
 
+    struct PianoStringContact
+    {
+        double blend = 0.0, seconds = 0.0021;
+    };
+
+    PianoStringContact pianoStringContact(double excitation) const noexcept
+    {
+        if (model != piano) return {};
+        const double position = std::clamp(std::log2(keyHz / 261.625565), 0.0, 1.0);
+        const double blend = position * position * (3.0 - 2.0 * position);
+        if (blend == 0.0) return {};
+        // Same authored duration trend as PianoHammer, evaluated for both
+        // the played excitation and the full-strike normalization reference.
+        const double seconds = std::clamp(0.0021 * std::pow(261.625565 / keyHz, 0.20)
+            * std::pow((0.20 + excitation) / 0.90, -0.38), 0.00065, 0.0055);
+        return {blend, seconds};
+    }
+
     double stringWeight(int harmonic, double colour, double excitation) const noexcept
+    {
+        return stringWeight(harmonic, colour, excitation, pianoStringContact(excitation));
+    }
+
+    double stringWeight(int harmonic, double colour, double excitation,
+                        const PianoStringContact& pianoContact) const noexcept
     {
         const double h = static_cast<double>(harmonic);
         const double frequency = keyHz * h;
@@ -717,9 +741,8 @@ private:
         {
             case piano:
             {
-                // A bass hammer excites many more significant harmonics than
-                // the old fixed 24-mode ceiling allowed. Keep a smooth
-                // contact bandwidth in Hz as well as the harmonic rolloff.
+                // Preserve the established bass harmonic envelope. The
+                // finite-Hz correction below only enters above middle C.
                 const double bassBreadth = std::clamp(std::sqrt(261.625565 / keyHz), 1.0, 1.75);
                 const double hardness = (2.1 + 15.0 * excitation * excitation + 8.0 * colour) * bassBreadth;
                 const double position = 0.116 + 0.007 * initialColour;
@@ -728,7 +751,21 @@ private:
                 const double contact = 1.0 / (1.0 + std::pow(h / hardness, 2.8));
                 const double board = 0.65 + 0.28 * bodyResonance(frequency, 280.0, 220.0)
                                           + 0.30 * bodyResonance(frequency, 2300.0, 1500.0);
-                return std::pow(h, -1.15) * comb * contact * board;
+                // Contact duration falls more slowly than string period,
+                // so treble notes excite fewer relative harmonics:
+                // https://www.speech.kth.se/music/5_lectures/askenflt/stricont.html
+                // This monotone low-pass is an authored spectral surrogate,
+                // not a measured hammer transfer or a force convolution.
+                // Fade it in over C4--C5; all lower keys retain exact weights.
+                const double legacyWeight = std::pow(h, -1.15) * comb * contact * board;
+                if (pianoContact.blend == 0.0) return legacyWeight;
+                const double bandwidthHz = (0.90 + 0.40 * colour) / pianoContact.seconds;
+                const double relativeFrequency = frequency / bandwidthHz;
+                const double finiteContact = 1.0 - pianoContact.blend
+                    + pianoContact.blend / (1.0 + relativeFrequency * relativeFrequency);
+                // Both contact factors are nondecreasing with excitation
+                // and colour, preserving the existing full-strike bound.
+                return legacyWeight * finiteContact;
             }
             case reed:
             {
@@ -895,12 +932,17 @@ private:
         std::uint32_t choirAirSeed = state;
         double maximumSum = 0.0;
         const bool referenceStrike = !sustained && model != harpsichord && strike != 1.0;
+        // Contact/register terms depend on the note and strike, not the
+        // partial. Cache them on the note-on stack for the two excitation
+        // levels rather than repeating logarithms and powers per mode.
+        const auto playedContact = pianoStringContact(strike);
+        const auto fullContact = referenceStrike ? pianoStringContact(1.0) : playedContact;
         const auto includeBound = [&](int harmonic, double coverage, double dark, double bright)
         {
             if (referenceStrike)
             {
-                dark = coverage * stringWeight(harmonic, 0.0, 1.0);
-                bright = coverage * stringWeight(harmonic, 1.0, 1.0);
+                dark = coverage * stringWeight(harmonic, 0.0, 1.0, fullContact);
+                bright = coverage * stringWeight(harmonic, 1.0, 1.0, fullContact);
             }
             maximumSum += std::max(dark, bright);
         };
@@ -911,8 +953,8 @@ private:
             // Fade the final admitted partial across fractional-note tuning
             // changes instead of introducing a hard spectral budget threshold.
             const double coverage = std::clamp(harmonicBudget + 1.0 - h, 0.0, 1.0);
-            const double dark = coverage * stringWeight(harmonic, 0.0);
-            const double bright = coverage * stringWeight(harmonic, 1.0);
+            const double dark = coverage * stringWeight(harmonic, 0.0, strike, playedContact);
+            const double bright = coverage * stringWeight(harmonic, 1.0, strike, playedContact);
             if (dark == 0.0 && bright == 0.0) continue;
             const double phase = model == organ && !vocal() ? 0.11 * harmonic
                                : model == harpsichord ? 0.0 : 0.075 * randomBipolar();
@@ -989,8 +1031,8 @@ private:
                 (void) randomBipolar();
                 const double ratio = h * std::sqrt((1.0 + stiffness * h * h) / (1.0 + stiffness))
                                    * courseRatio;
-                const double dark = course * stringWeight(harmonic, 0.0);
-                const double bright = course * stringWeight(harmonic, 1.0);
+                const double dark = course * stringWeight(harmonic, 0.0, strike, playedContact);
+                const double bright = course * stringWeight(harmonic, 1.0, strike, playedContact);
                 addMode(ratio, dark, bright,
                         0.70 * stringLoss(harmonic) + 0.12 * (h - 1.0),
                         0.12 * randomBipolar(), pianoHammer.onsetScale() * 0.0035 / std::sqrt(h));
