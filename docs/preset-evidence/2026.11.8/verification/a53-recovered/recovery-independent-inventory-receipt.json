@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "recovery_edition": "a53-independent-capture-successor-1",
+  "source_commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "library_revision": "2026.11.8",
+  "original_build": {
+    "run_id": 45439302351,
+    "run_attempt": 1,
+    "producer_job_id": 138605634881
+  },
+  "execution": {
+    "kind": "local_recovery",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python_version": "3.12.14",
+    "recorded_at_utc": "2026-11-24T17:41:53.769191+00:00"
+  },
+  "tracked_source_clean_before": true,
+  "tracked_source_clean_after": true,
+  "capture": {
+    "path": "/tmp/cs80-614c8ce056b7-build/cs80_preset_capture",
+    "sha256_before": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1",
+    "sha256_after": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1"
+  },
+  "inventory": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53/recovery-independent-inventory.json",
+    "sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "bytes": 710475,
+    "command": [
+      "/tmp/cs80-614c8ce056b7-build/cs80_preset_capture",
+      "--library",
+      "all",
+      "--inventory",
+      "/tmp/cs80-614c8ce056b7-notes/a53/recovery-independent-inventory.json"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "programs": 523,
+    "parameters": 204
+  },
+  "source_files": {
+    "scripts/capture-factory-auditions.py": {
+      "bytes": 23560,
+      "sha256": "8341afe2ca3e87c448db97e0db6e64addc6c0a4b1a2307dfb9a90fcc40065b8f"
+    },
+    "src/tools/preset_capture.cpp": {
+      "bytes": 19481,
+      "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    },
+    "src/core/FactoryPresets.h": {
+      "bytes": 2815,
+      "sha256": "11e320ac972e9d7be17d996eb8debc3c627dedc41430ca613b52d4025ae4b911"
+    },
+    "src/core/FactoryPresets.cpp": {
+      "bytes": 11002,
+      "sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac"
+    },
+    "src/core/InstrumentBody.h": {
+      "bytes": 80593,
+      "sha256": "d1b18fe21d47f7e5fc32df19e7372d9adf6b1fe4dc019171bcfa021030147c48"
+    },
+    "src/core/Engine.cpp": {
+      "bytes": 168950,
+      "sha256": "7bcf23cd1f39dabed2ad5163350bd5ae4e235b9d1224f2535c9cd50d64981782"
+    }
+  },
+  "observed_tools": {
+    "cmake": {
+      "command": [
+        "/tmp/cs80-614c8ce056b7-deps/cmake/data/bin/cmake",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "cmake version 3.31.6\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n",
+      "stderr": "",
+      "scope": "Observed tool version; this helper does not assert which tool produced the binary."
+    },
+    "compiler": {
+      "command": [
+        "/usr/bin/g++",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "g++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "stderr": "",
+      "scope": "Observed tool version; this helper does not assert which tool produced the binary."
+    }
+  },
+  "prior_build_logs": {
+    "configure": {
+      "path": "/tmp/cs80-614c8ce056b7-evidence/recovery-configure.log",
+      "bytes": 119,
+      "sha256": "7580ddc380f358bd07641a6ae6f46e7b6a747d61c0dfd713866f90792b0167de",
+      "scope": "Retained caller-supplied log; its original command and exit need separate review."
+    },
+    "build": {
+      "path": "/tmp/cs80-614c8ce056b7-evidence/recovery-capture-build.log",
+      "bytes": 579,
+      "sha256": "80c4ddd71d2a769618ffa0ef67072fa361d23829ec92ff94cd20fdc78f6f0198",
+      "scope": "Retained caller-supplied log; its original command and exit need separate review."
+    }
+  },
+  "verifier_sha256": "45969f31bbf4b8b8144e8798fb8d9fad8df410be7a9508e6b7a80d70f6e20a6e",
+  "producer_sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+  "limits": [
+    "This helper ran the inventory command, not the preceding configure/build.",
+    "Local recovery is not a GitHub Actions qualification run.",
+    "The independent binary is not expected to equal the original native capture binary.",
+    "No audition ZIP, native package or public delivery is accepted by this receipt."
+  ]
+}

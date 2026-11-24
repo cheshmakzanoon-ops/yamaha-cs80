@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "status": "recovered_preparation_complete_actual_archive_pending",
+  "recovery_edition": "a53-independent-capture-successor-1",
+  "original_checker_bytes_recovered": false,
+  "published_predecessor_bytes_verified": true,
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "original_build_run_id": 45439302351,
+  "original_build_attempt": 1,
+  "actual_archive_accepted": false,
+  "release_qualified": false,
+  "fresh_independent_inventory": {
+    "path": "recovery-independent-inventory.json",
+    "bytes": 710475,
+    "sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "receipt_path": "recovery-independent-inventory-receipt.json",
+    "receipt_sha256": "3136f354cac3f3dd42d8b56d6b3f9001d804751a8e464bfd14347e74ef5f02d0"
+  },
+  "fresh_tests": {
+    "content_methods": 20,
+    "ci_binding_methods": 7,
+    "passed": 27,
+    "failed": 0,
+    "native_tests_claimed": 0
+  },
+  "missing_archive_refusal": {
+    "exit_code": 1,
+    "receipt_created": false
+  },
+  "a46_contract_crosscheck": {
+    "sha256": "1d656437f70edc4e889a7da31921ef0e5a64d095f170576d4eae77da752eb074",
+    "source_tree_original_run_roster_counts_agree": true
+  },
+  "limits": [
+    "Newly reviewed successor, not byte-identical recovery of the lost local .8 checker.",
+    "Fresh independent source inventory and bounded tests are new local recovery evidence.",
+    "No original audition archive or completed original capture/upload is accepted by this record.",
+    "Acoustic/listening, native host and public delivery decisions remain separate."
+  ]
+}
