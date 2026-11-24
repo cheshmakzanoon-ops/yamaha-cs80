@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "status": "parser_archive_and_member_input_binding_verified",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "attempt_context": 1,
+  "target": "macos-arm64",
+  "parser_archive_binding_verified": true,
+  "native_results_accepted": false,
+  "original_attempt_binding_verified": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "parser_source_path": "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+  "parser_sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+  "historical_source_parser_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/parse-native-evidence.py",
+  "historical_source_parser_sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58",
+  "checker_sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11",
+  "bindings": [
+    {
+      "kind": "native",
+      "parser_archive_record": {
+        "path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-native.zip",
+        "bytes": 86685,
+        "sha256": "0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14918856035,
+        "name": "cs80-macos-15-test-evidence",
+        "bytes": 86685,
+        "sha256": "0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "junit",
+          "path": "ctest-results.xml",
+          "bytes": 139150,
+          "sha256": "d680c8dd602b5d461380bc72f6225e14abbb2c0f91bfbe99b0421d4259406e34"
+        },
+        {
+          "role": "lasttest",
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 392931,
+          "sha256": "42cd0890426538e99877bb17401a0a6c1166c0fef1020a6b80d1d6bd2ad82ba5"
+        },
+        {
+          "role": "juce_provenance",
+          "path": "ci-juce-provenance.txt",
+          "bytes": 612,
+          "sha256": "6b4f70c73dcc66db4fdf38eeba7e087e809244f4c37e9d2ebea1d7e432843bdb"
+        }
+      ]
+    },
+    {
+      "kind": "validator",
+      "parser_archive_record": {
+        "path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-validator.zip",
+        "bytes": 12770,
+        "sha256": "55aed166b5dee6881f9d8e221b2b05d18ab69d0a71c07911396caf0f57104af6"
+      },
+      "actual_zip_api_binding": {
+        "artifact_id": 14918039561,
+        "name": "cs80-pluginval-macos-15",
+        "bytes": 12770,
+        "sha256": "55aed166b5dee6881f9d8e221b2b05d18ab69d0a71c07911396caf0f57104af6"
+      },
+      "parsed_member_records_bound": [
+        {
+          "role": "validator_version",
+          "path": "pluginval-download.json",
+          "bytes": 918,
+          "sha256": "d970efc590335f1afb232c1e89426abcdc29fc8afe3d538c55ba95b91346f0a1"
+        },
+        {
+          "role": "vst3/console",
+          "path": "pluginval-vst3.log",
+          "bytes": 7399,
+          "sha256": "bf2df4dffed5d6e22073150aef510e7c0f8f03b3b994f61e42122e12ee94b8a8"
+        },
+        {
+          "role": "vst3/report",
+          "path": "pluginval-reports/cs80-vst3",
+          "bytes": 7272,
+          "sha256": "a34ca8e642f2e18882f3b8d765093e46513295c85330a895c59978218780c9f7"
+        },
+        {
+          "role": "au/console",
+          "path": "pluginval-au.log",
+          "bytes": 7308,
+          "sha256": "0a53def967ba7d5a7d9cbcd3ea5720e516f1894281d13af20beb5b7e81ef9194"
+        },
+        {
+          "role": "au/report",
+          "path": "pluginval-reports/cs80-au",
+          "bytes": 7214,
+          "sha256": "a74fabc75bc5cd88c860e2666057e60e8272812f22ffd1b9170529295fd87717"
+        },
+        {
+          "role": "au-gui/console",
+          "path": "pluginval-au-gui.log",
+          "bytes": 7989,
+          "sha256": "cf9ad62c671baa7bc412f33d184d4ebfc11fcf55e809865f2d42b7ddf496ecd7"
+        },
+        {
+          "role": "au-gui/report",
+          "path": "pluginval-reports/cs80-au-gui",
+          "bytes": 7895,
+          "sha256": "d67f88988c41734acbb1272cfc187cd22e9aacd14afb0154a31527b0b4fc37bb"
+        },
+        {
+          "role": "au-gui-seed/console",
+          "path": "pluginval-au-seed-regression.log",
+          "bytes": 7990,
+          "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63"
+        },
+        {
+          "role": "au-gui-seed/report",
+          "path": "pluginval-reports/cs80-au-seed-regression",
+          "bytes": 7896,
+          "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde"
+        },
+        {
+          "role": "au-gui-seed-c76/console",
+          "path": "pluginval-au-seed-c76-regression.log",
+          "bytes": 7990,
+          "sha256": "42687c66e799c189ebb2f419f7be5f64e7ea9340bf79ec2ff4629af54e1a7591"
+        },
+        {
+          "role": "au-gui-seed-c76/report",
+          "path": "pluginval-reports/cs80-au-seed-c76-regression",
+          "bytes": 7896,
+          "sha256": "fd738180a0eeb84e22b2df5a4790256e80eb7d3d59819968eddd13b05a76575f"
+        }
+      ]
+    }
+  ],
+  "inputs": {
+    "observations": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a29/macos-arm64-observations.json",
+      "bytes": 107545,
+      "sha256": "cb5969758b48728de081306ed0c3db502dc611d3090888778b7d1b33f7183672"
+    },
+    "native_zip": {
+      "path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-native.zip",
+      "bytes": 86685,
+      "sha256": "0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633"
+    },
+    "native_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/native-api.json",
+      "bytes": 748,
+      "sha256": "100aba563c3a3b42fc0e172097101fad4369049a669e7946ef4f1a50aea3ad6c"
+    },
+    "validator_zip": {
+      "path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-validator.zip",
+      "bytes": 12770,
+      "sha256": "55aed166b5dee6881f9d8e221b2b05d18ab69d0a71c07911396caf0f57104af6"
+    },
+    "validator_api": {
+      "path": "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/validator-api.json",
+      "bytes": 744,
+      "sha256": "0ef443016820a738f636d4c369d0868d32ac173a9a8a6d3228b969b8903b9848"
+    }
+  },
+  "limits": [
+    "Supplied API authenticity and exact producing attempt require the original external acquisition/job/upload gates.",
+    "This checks actual input identities, including parsed member bytes; it does not accept test counts, skips, lane results, exits, retries or payload equivalence.",
+    "Retain the raw parser release_qualified:false field unchanged."
+  ]
+}

@@ -1,0 +1,31 @@
+COMMAND: python3 -B docs/preset-evidence/2026.11.6/verification/a51/test-macos-binding.py
+SCOPE: inert fixtures, no native qualification
+test_api_digest_tamper (__main__.BindingTests.test_api_digest_tamper) ... ok
+test_api_run_source_and_repository_mismatch (__main__.BindingTests.test_api_run_source_and_repository_mismatch) ... ok
+test_attempt_is_explicit_but_not_falsely_bound (__main__.BindingTests.test_attempt_is_explicit_but_not_falsely_bound) ... ok
+test_au_matches_each_other_but_not_distributed_payload (__main__.BindingTests.test_au_matches_each_other_but_not_distributed_payload) ... ok
+test_au_pre_post_mismatch (__main__.BindingTests.test_au_pre_post_mismatch) ... ok
+test_both_fixed_seed_records_are_required_and_exact (__main__.BindingTests.test_both_fixed_seed_records_are_required_and_exact) ... ok
+test_digest_and_inspection_share_the_same_snapshot (__main__.BindingTests.test_digest_and_inspection_share_the_same_snapshot) ... ok
+test_duplicate_json_key (__main__.BindingTests.test_duplicate_json_key) ... ok
+test_exact_committed_source_loader_and_revision_guard (__main__.BindingTests.test_exact_committed_source_loader_and_revision_guard) ... ok
+test_extra_validator_invocation (__main__.BindingTests.test_extra_validator_invocation) ... ok
+test_fresh_output_required_before_source_access (__main__.BindingTests.test_fresh_output_required_before_source_access) ... ok
+test_manifest_revision_mismatch (__main__.BindingTests.test_manifest_revision_mismatch) ... ok
+test_manifest_run_mismatch (__main__.BindingTests.test_manifest_run_mismatch) ... ok
+test_missing_resource_is_not_replaced_by_executable_only_check (__main__.BindingTests.test_missing_resource_is_not_replaced_by_executable_only_check) ... ok
+test_new_seed_console_is_mandatory (__main__.BindingTests.test_new_seed_console_is_mandatory) ... ok
+test_new_seed_duplicate_invocation_is_rejected (__main__.BindingTests.test_new_seed_duplicate_invocation_is_rejected) ... ok
+test_new_seed_wrong_input_is_rejected (__main__.BindingTests.test_new_seed_wrong_input_is_rejected) ... ok
+test_self_consistent_wrong_architecture_is_rejected (__main__.BindingTests.test_self_consistent_wrong_architecture_is_rejected) ... ok
+test_unsafe_zip_path (__main__.BindingTests.test_unsafe_zip_path) ... ok
+test_valid_arm64_keeps_all_original_gates_open (__main__.BindingTests.test_valid_arm64_keeps_all_original_gates_open) ... ok
+test_valid_x86_64 (__main__.BindingTests.test_valid_x86_64) ... ok
+test_wrong_validator_path (__main__.BindingTests.test_wrong_validator_path) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.365s
+
+OK
+
+EXIT: 0

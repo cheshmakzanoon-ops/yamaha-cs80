@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "analysis_script_sha256": "188b89d8de678e9e911db6d950d23c19c6d07c1bb3a586ff479e8cd2546f69f5",
+  "inputs": {
+    "published_4": {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-bank-metrics.csv",
+      "sha256": "7375f35c72bf5c9a79505dc18efed6ede1fc32b60f65b97c174b05ca0467b0e9",
+      "bytes": 118687
+    },
+    "baseline_6": {
+      "path": "docs/preset-evidence/2026.11.7/development/baseline-bank-metrics.csv",
+      "sha256": "240fd7e682a7c138f52157cc9374daaaec33cf59204fc0e9f1e36db595d4fdea",
+      "bytes": 118465
+    },
+    "current_7": {
+      "path": "docs/preset-evidence/2026.11.7/development/current-bank-metrics.csv",
+      "sha256": "0cc474d4b3e4d17684348913797f06bf1ce80e5f0d823394b28dee6237cfb7bc",
+      "bytes": 118462
+    },
+    "matched_receipt": {
+      "path": "docs/preset-evidence/2026.11.7/development/matched-published-current-bank.json",
+      "sha256": "99531c4f60c36ece3cf08108dfdaab9f95dc7700bba727a021eb6c283fdb5272",
+      "bytes": 1354
+    },
+    "reconstruction": {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-reconstruction.json",
+      "sha256": "d9666ba877eb5d47371d6530f90964c358af8371a0d52c74099411c165662054",
+      "bytes": 907
+    },
+    "baseline_provenance": {
+      "path": "docs/preset-evidence/2026.11.7/development/baseline-provenance.json",
+      "sha256": "7bb6d2551fc6d4153a883dfb9126534b7885cf67299d610b471f79f601573f42",
+      "bytes": 782
+    },
+    "published_inventory": {
+      "path": "docs/preset-evidence/2026.11.7/development/published-4-inventory.json",
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "bytes": 704822
+    },
+    "current_inventory": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+      "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+      "bytes": 710464
+    },
+    "a12_classification": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/current-value-classification.json",
+      "sha256": "673616cef193c29ef7ef81eb126edf3f7ff37be5263d681b568360f45de8ff3a",
+      "bytes": 570302
+    },
+    "a12_mechanisms": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a12/mechanism-coverage.json",
+      "sha256": "1a64129ae4a8245396dc13f49a372def2e082606ecfb8ad399ce54cbc0293f40",
+      "bytes": 101393
+    },
+    "a23_pressure": {
+      "path": "docs/preset-evidence/2026.11.7/verification/a23/published-pressure-comparison.json",
+      "sha256": "3493362b07bc3f611f2a33858a04b7dbceda89631e1cd035f0b78b9c3fa8e069",
+      "bytes": 9948
+    }
+  },
+  "outputs": {
+    "metrics-summary.json": {
+      "sha256": "c336044150137568bd73beaafb68c0102acac62e1d5371d8c7d23f28589b9412",
+      "bytes": 105706
+    },
+    "category-summary.csv": {
+      "sha256": "941e2f994f03a4f2f3cf010cca7836fb44e39000368a6e25135169a0dd7a6577",
+      "bytes": 1333
+    },
+    "program-deltas.csv": {
+      "sha256": "8ea1705212f015c12a05f5ce825f457d6bf2f75d7318404e8bcadc68ce4df72c",
+      "bytes": 307123
+    }
+  },
+  "checks": "523 unique aligned records per bank; matched settings; all retained source/metric/inventory receipts authenticate; identical capture implementation; 493+28 parameter partition; 519+2 signal partition; 67 newly differing signal vectors; finite CSV values and zero recorded nonfinite/over-full-scale samples."
+}

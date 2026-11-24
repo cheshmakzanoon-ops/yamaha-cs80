@@ -1,0 +1,266 @@
+{
+  "status": "historical_name_reconciliation_only",
+  "release_qualified": false,
+  "records": [
+    {
+      "target": "windows-x86_64",
+      "historical_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "counts": {
+        "registered": 251,
+        "passed": 248,
+        "failed": 1,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "missing_names": [],
+      "unexpected_names": [],
+      "exact_name_set_matches": true,
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips": {
+        "total": 11,
+        "suites": [
+          {
+            "ctest_test": "cs80_packaging_notice_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 7 tests in 9.275s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [
+              "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+            ],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_windows_installer_preflight_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 12,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 12 tests in 4.773s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_validator_diagnostic_selection_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 9,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 9 tests in 4.908s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_preset_capture_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 10,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 10 tests in 3.799s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_render_cli_tests",
+            "total": 3,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 3,
+                "summary": "Ran 7 tests in 0.236s\n\nOK (skipped=3)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_truth_render_tests",
+            "total": 2,
+            "summaries": [
+              {
+                "tests_run": 16,
+                "result": "OK",
+                "skipped": 2,
+                "summary": "Ran 16 tests in 2.450s\n\nOK (skipped=2)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_vca_reference_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 12,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 12 tests in 0.640s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_float_wav_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 4,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 4 tests in 0.364s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          }
+        ]
+      },
+      "input_records": {
+        "junit": {
+          "path": "ctest-results.xml",
+          "bytes": 129025,
+          "sha256": "4d7c93958999ff6db9c555d2060336465e9e7454397846d669ad142ace5d6d2b"
+        },
+        "lasttest": {
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 372478,
+          "sha256": "df6e9cb99042450b86391d9503b940c6e47f64c9bb45bd7101ea9ce986f3b377"
+        }
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "historical_source": "fcc3c8e055223fe4f786ca162ff46076c33471c8",
+      "counts": {
+        "registered": 273,
+        "passed": 271,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "missing_names": [],
+      "unexpected_names": [],
+      "exact_name_set_matches": true,
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips": {
+        "total": 5,
+        "suites": [
+          {
+            "ctest_test": "cs80_package_binary_identity_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 13,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 13 tests in 0.068s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_packaging_notice_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 7 tests in 1.554s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [
+              "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+            ],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_windows_installer_preflight_tests",
+            "total": 2,
+            "summaries": [
+              {
+                "tests_run": 12,
+                "result": "OK",
+                "skipped": 2,
+                "summary": "Ran 12 tests in 0.859s\n\nOK (skipped=2)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_render_cli_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 7 tests in 0.161s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          }
+        ]
+      },
+      "input_records": {
+        "junit": {
+          "path": "ctest-results.xml",
+          "bytes": 134850,
+          "sha256": "fd2e4690343b6bbcb85dee0d6d39fb0f1a324bfa1f727653cfe8446c5ca7e7b2"
+        },
+        "lasttest": {
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 382955,
+          "sha256": "0d52c979810457235561ffaf6088b29364a31a67265504604e6b5a8e53e43599"
+        }
+      }
+    }
+  ]
+}

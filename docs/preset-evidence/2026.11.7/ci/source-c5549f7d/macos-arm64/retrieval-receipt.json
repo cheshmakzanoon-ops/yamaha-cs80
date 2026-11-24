@@ -1,0 +1,66 @@
+{
+  "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "attempt": 1,
+  "job_id": 138415961176,
+  "retrieved_at_utc": "2026-11-24T12:11:38.771008+00:00",
+  "transport": "Authenticated repository-owner GitHub connector. Full artifact objects extracted from the exact run artifact collection; full job object extracted from the run jobs collection. Decoded original job log retained as UTF-8. Signed file URLs are not retained.",
+  "files": {
+    "attempt1-api-at-platform-completion.json": {
+      "bytes": 15447,
+      "sha256": "1aeea1ace301afeba94f70520db6a5fe97a078066946c1f45b00c6dd6d79ff7e"
+    },
+    "run-api-at-platform-completion.json": {
+      "bytes": 15425,
+      "sha256": "6b463b30991e205bacbeb379e6c36f73aebd960a5dc1e9e06de5b6c7ef586530"
+    },
+    "producer-job.log": {
+      "bytes": 254976,
+      "sha256": "d4e6fdcf73e3965e1cd34f865a00e87ff9073dc48ae4bd6329dd52959c46055f"
+    },
+    "producer-job-api.json": {
+      "bytes": 5977,
+      "sha256": "9fa3ea65d51bb04c34e321c9561e8a25cef5ed3661cc17979d98551c2d232a28"
+    },
+    "validator-api.json": {
+      "bytes": 744,
+      "sha256": "0ef443016820a738f636d4c369d0868d32ac173a9a8a6d3228b969b8903b9848"
+    },
+    "install-api.json": {
+      "bytes": 752,
+      "sha256": "2eaa062d08c7f129a40d08d498ce4add311f4549f8fed7e30cf1f99d52ba15f3"
+    },
+    "native-api.json": {
+      "bytes": 748,
+      "sha256": "100aba563c3a3b42fc0e172097101fad4369049a669e7946ef4f1a50aea3ad6c"
+    }
+  },
+  "archives": [
+    {
+      "kind": "native",
+      "artifact_id": 14918856035,
+      "local_path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-native.zip",
+      "bytes": 86685,
+      "sha256": "0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633",
+      "api_identity_matched": true
+    },
+    {
+      "kind": "validator",
+      "artifact_id": 14918039561,
+      "local_path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-validator.zip",
+      "bytes": 12770,
+      "sha256": "55aed166b5dee6881f9d8e221b2b05d18ab69d0a71c07911396caf0f57104af6",
+      "api_identity_matched": true
+    },
+    {
+      "kind": "install",
+      "artifact_id": 14918661184,
+      "local_path": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-install.zip",
+      "bytes": 14989442,
+      "sha256": "e5839607c8c49d7a9859aee896277c9773ae16359dff59e8b11d1564fa9da545",
+      "api_identity_matched": true
+    }
+  ],
+  "platform_qualified": false,
+  "release_qualified": false
+}

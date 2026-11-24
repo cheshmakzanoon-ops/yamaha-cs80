@@ -1,0 +1,60 @@
+{
+  "sound_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "head": "e8e29133a14c492a98033871cfe3912ef8978f5d",
+  "files": {
+    "src/core/InstrumentBody.h": {
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "matches_frozen": true
+    },
+    "src/core/InstrumentBodyMaterials.h": {
+      "sha256": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+      "matches_frozen": true
+    },
+    "src/core/InstrumentBodyVariants.h": {
+      "sha256": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+      "matches_frozen": true
+    },
+    "src/core/BodyArticulation.h": {
+      "sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7",
+      "matches_frozen": true
+    },
+    "src/core/curated/Keys.inc": {
+      "sha256": "a34f1c8034e05e63bbd547fa1d8f4bf238a753120ce1052b15a9e4ceffb88144",
+      "matches_frozen": true
+    },
+    "src/core/OriginalCircuitLibrary.inc": {
+      "sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "matches_frozen": true
+    },
+    "/tmp/cs80-build-1cee5a/libcs80_core.a": {
+      "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+    },
+    "/tmp/cs80-build-1cee5a/cs80_preset_capture": {
+      "sha256": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d"
+    },
+    "/tmp/cs80-build-1cee5a/cs80_struck_body_dynamics_tests": {
+      "sha256": "ecbc20bcd0bf572825d761b2426f93aca55b523507bef2e37ad98893a0daee53"
+    },
+    "/tmp/cs80-a36-1cee5a/probe.cpp": {
+      "sha256": "cd9b5999b824572f62d5da1abc6cf5ff1fa6da098efa558ad43c68baa06f0d11"
+    },
+    "/tmp/cs80-a36-1cee5a/probe": {
+      "sha256": "dffa5f602b8a122031f9658fee9bffb983f2e924690887018e97757fd4233f31"
+    },
+    "/tmp/cs80-a36-1cee5a/analyze.py": {
+      "sha256": "9b51813ea3f9074e169688b41ae2cf63103f7543b3d58ece543648cbc89048fb"
+    }
+  },
+  "commands": [
+    "git archive c5549f7d095a5c5f49a5ad22ec0ccc819245d201 src | tar -x -C /tmp/cs80-a36-1cee5a/frozen",
+    "c++ -std=c++20 -O2 -I/tmp/cs80-a36-1cee5a/frozen/src /tmp/cs80-a36-1cee5a/probe.cpp /tmp/cs80-build-1cee5a/libcs80_core.a -lpthread -o /tmp/cs80-a36-1cee5a/probe",
+    "/tmp/cs80-a36-1cee5a/probe /tmp/cs80-a36-1cee5a/pcm > /tmp/cs80-a36-1cee5a/captures.csv"
+  ],
+  "raw_root": "/tmp/cs80-a36-1cee5a",
+  "process_exit_codes": {
+    "capture_probe": 0,
+    "official_capture": 0,
+    "struck_body_dynamics_tests": 0,
+    "analysis": 0
+  }
+}

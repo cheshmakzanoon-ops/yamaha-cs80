@@ -1,0 +1,30 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "run_attempt": 1,
+  "producer_job_id": 138415960660,
+  "transport": "Repository-owner authenticated GitHub connector; actual artifact download via returned signed URI, omitted from receipt",
+  "artifact_id": 14919929427,
+  "artifact_name": "cs80-windows-test-evidence",
+  "archive_bytes": 84973,
+  "archive_sha256": "9cc5722bc30503a7c921f249b551efc7869507e78675141dda8e00d4865999ce",
+  "api_size_hash_match": true,
+  "job_conclusion": "failure",
+  "log_storage": "Decoded original GitHub job log retained as UTF-8 without newline rewriting",
+  "retained_inputs": {
+    "native-api.json": {
+      "bytes": 747,
+      "sha256": "f2cff144faa84fb3ad0f83841e9e08a147cdb92202dafc03892517b2ead03496"
+    },
+    "producer-job-api.json": {
+      "bytes": 3895,
+      "sha256": "0fb5b1316b6df86d8fd68488ed133c6f5e567fe30a58022e76065a1f9509d7df"
+    },
+    "producer-job.log": {
+      "bytes": 149901,
+      "sha256": "bb468698bb4c6d76b0dfb278fdc70730b0daac39b025565edc1711ba02b5d533"
+    }
+  },
+  "platform_qualified": false,
+  "release_qualified": false
+}

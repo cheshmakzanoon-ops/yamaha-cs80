@@ -1,0 +1,204 @@
+{
+  "id": 138415960996,
+  "run_id": 45385716988,
+  "workflow_name": "build",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOVaLxy88AAAAgOjvzpA",
+  "head_sha": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138415960996",
+  "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415960996",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2026-11-24T11:36:24Z",
+  "started_at": "2026-11-24T11:40:53Z",
+  "completed_at": "2026-11-24T12:26:24Z",
+  "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-24T11:40:53Z",
+      "completed_at": "2026-11-24T11:40:56Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-24T11:40:56Z",
+      "completed_at": "2026-11-24T11:41:13Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-24T11:41:13Z",
+      "completed_at": "2026-11-24T11:41:14Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-24T11:41:14Z",
+      "completed_at": "2026-11-24T11:43:12Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-24T11:43:12Z",
+      "completed_at": "2026-11-24T11:43:12Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-24T11:43:12Z",
+      "completed_at": "2026-11-24T11:51:12Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 7,
+      "started_at": "2026-11-24T11:51:12Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 8,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Register built AU",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 9,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Validate VST3 with pluginval",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 10,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Validate AU with pluginval",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 11,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Validate AU with pluginval GUI",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 12,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Validate AU GUI fixed-seed regression",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 13,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Validate AU GUI regression seed 0x3c99748",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 14,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Package native macOS VST3, AU and Standalone",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 15,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 16,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    },
+    {
+      "name": "AU registration diagnostics",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-11-24T12:26:17Z",
+      "completed_at": "2026-11-24T12:26:20Z"
+    },
+    {
+      "name": "Report pluginval failure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 18,
+      "started_at": "2026-11-24T12:26:20Z",
+      "completed_at": "2026-11-24T12:26:20Z"
+    },
+    {
+      "name": "Upload pluginval reports",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-11-24T12:26:20Z",
+      "completed_at": "2026-11-24T12:26:21Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-11-24T12:26:21Z",
+      "completed_at": "2026-11-24T12:26:22Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 40,
+      "started_at": "2026-11-24T12:26:22Z",
+      "completed_at": "2026-11-24T12:26:23Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 41,
+      "started_at": "2026-11-24T12:26:23Z",
+      "completed_at": "2026-11-24T12:26:23Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138415960996",
+  "labels": [
+    "macos-15-intel"
+  ],
+  "runner_id": 1000045080,
+  "runner_name": "GitHub Actions 1000045080",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

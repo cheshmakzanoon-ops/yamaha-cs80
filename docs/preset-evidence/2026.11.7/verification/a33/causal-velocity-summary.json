@@ -1,0 +1,127 @@
+{
+  "scope": "Two representative patches only. Both arms use frozen .7 core; restored baselines are a controlled diagnostic, not full .4 renders. No subjective improvement claim.",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "published_parameter_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "captures": 8,
+  "audio_seconds": 12,
+  "presets": 2,
+  "sample_rate": 48000,
+  "hold_seconds": 1,
+  "tail_seconds": 0.5,
+  "pressure": 0,
+  "windows_seconds": {
+    "early_rms_dbfs": [
+      0,
+      0.2
+    ],
+    "held_rms_dbfs": [
+      0,
+      1
+    ],
+    "late_held_rms_dbfs": [
+      0.5,
+      1
+    ],
+    "tail_rms_dbfs": [
+      1,
+      1.5
+    ]
+  },
+  "results": [
+    {
+      "name": "Analog Bass",
+      "host_index": 404,
+      "note": 48,
+      "only_published_parameter_changes": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "published_vca": [
+        0.379999995,
+        0.25999999
+      ],
+      "current_vca": [
+        0.0850000009,
+        0.0399999991
+      ],
+      "measurements": {
+        "early_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 8.382926871200002,
+            "restored_published_vca_baselines": 4.9342244919
+          },
+          "current_minus_restored_at_soft_db": -6.523076692100002,
+          "current_minus_restored_at_firm_db": -3.0743743128,
+          "change_in_firm_minus_soft_db": 3.448702379300002
+        },
+        "held_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 8.4211615832,
+            "restored_published_vca_baselines": 4.976806255499998
+          },
+          "current_minus_restored_at_soft_db": -6.528644429900002,
+          "current_minus_restored_at_firm_db": -3.0842891021999996,
+          "change_in_firm_minus_soft_db": 3.444355327700002
+        },
+        "late_held_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 8.438755321699997,
+            "restored_published_vca_baselines": 4.995977029400002
+          },
+          "current_minus_restored_at_soft_db": -6.530485670599994,
+          "current_minus_restored_at_firm_db": -3.0877073782999993,
+          "change_in_firm_minus_soft_db": 3.4427782922999945
+        }
+      }
+    },
+    {
+      "name": "Funky Pluck I",
+      "host_index": 390,
+      "note": 60,
+      "only_published_parameter_changes": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "published_vca": [
+        0.300000012,
+        0.100000001
+      ],
+      "current_vca": [
+        0.0700000003,
+        0.0199999996
+      ],
+      "measurements": {
+        "early_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 8.986092876,
+            "restored_published_vca_baselines": 6.101106561600005
+          },
+          "current_minus_restored_at_soft_db": -4.979153335199996,
+          "current_minus_restored_at_firm_db": -2.0941670208000005,
+          "change_in_firm_minus_soft_db": 2.8849863143999954
+        },
+        "held_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 8.990838153399999,
+            "restored_published_vca_baselines": 6.107635974499999
+          },
+          "current_minus_restored_at_soft_db": -4.975461901300001,
+          "current_minus_restored_at_firm_db": -2.0922597224000015,
+          "change_in_firm_minus_soft_db": 2.8832021788999995
+        },
+        "late_held_rms_dbfs": {
+          "firm_minus_soft_db": {
+            "current_7": 9.025745450800002,
+            "restored_published_vca_baselines": 6.158399368000005
+          },
+          "current_minus_restored_at_soft_db": -4.943090308799995,
+          "current_minus_restored_at_firm_db": -2.0757442259999976,
+          "change_in_firm_minus_soft_db": 2.8673460827999975
+        }
+      }
+    }
+  ],
+  "nonfinite": 0,
+  "samples_over_full_scale": 0,
+  "largest_peak_dbfs": -14.7747636734
+}

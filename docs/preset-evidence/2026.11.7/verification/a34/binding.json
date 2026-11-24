@@ -1,0 +1,110 @@
+{
+  "audio_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source_files": {
+    "src/core/Engine.cpp": {
+      "frozen_sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "checkout_matches_frozen": true
+    },
+    "src/core/Engine.h": {
+      "frozen_sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "checkout_matches_frozen": true
+    },
+    "src/core/Dsp.h": {
+      "frozen_sha256": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+      "checkout_matches_frozen": true
+    },
+    "src/core/BodyArticulation.h": {
+      "frozen_sha256": "e59805aa1d21ee613008cdde340ad17e15608418774e225892b57efa81ec84e7",
+      "checkout_matches_frozen": true
+    },
+    "src/core/ToleranceModel.h": {
+      "frozen_sha256": "d6ca531134ecc7c6600f12a7664004fc1ee03d2ec815f007888d53a3716892cf",
+      "checkout_matches_frozen": true
+    },
+    "src/core/AdsrRcReconstruction.inc": {
+      "frozen_sha256": "5f20c167a9f4b24d050117ecf721fae1acba3942494b645a70f26b0e5aabbaf2",
+      "checkout_matches_frozen": true
+    },
+    "src/core/FilterEnvRcReconstruction.inc": {
+      "frozen_sha256": "648e22701eb70b449625a43131938d1ae5a0e9bff19a783100f37aadda71c530",
+      "checkout_matches_frozen": true
+    },
+    "src/core/FactoryPresets.cpp": {
+      "frozen_sha256": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+      "checkout_matches_frozen": true
+    },
+    "src/core/FactoryPresets.h": {
+      "frozen_sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "checkout_matches_frozen": true
+    },
+    "src/core/CuratedLibrary.inc": {
+      "frozen_sha256": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+      "checkout_matches_frozen": true
+    },
+    "src/core/OriginalCircuitLibrary.inc": {
+      "frozen_sha256": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+      "checkout_matches_frozen": true
+    },
+    "src/core/CuratedLibraryLevels.inc": {
+      "frozen_sha256": "06b59ac0926e50c2c65ec0b0c999eb2b27ac947131337e03a23f3498e3df52bc",
+      "checkout_matches_frozen": true
+    },
+    "src/core/OriginalCircuitLevels.inc": {
+      "frozen_sha256": "d869a3f1963eefb4f6bc31a37d0553e478ebdd21f262f57c20b5059c9ccab96a",
+      "checkout_matches_frozen": true
+    },
+    "src/core/curated/Pads.inc": {
+      "frozen_sha256": "a5daaaff3b517bb6ad1504b8923191775ee275ff509ce8797ff2a28824f47c75",
+      "checkout_matches_frozen": true
+    },
+    "src/core/curated/Fx.inc": {
+      "frozen_sha256": "01659567d7de6174b90ca65b8594dd3d84de28c6d86486fe5f467cb2cfa2d0d3",
+      "checkout_matches_frozen": true
+    },
+    "src/core/curated/Brass.inc": {
+      "frozen_sha256": "62641f173a9d61d09ad0b7e5c588e35713456c91c94ef2d7fcffb284188137d6",
+      "checkout_matches_frozen": true
+    },
+    "src/tools/preset_capture.cpp": {
+      "frozen_sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "checkout_matches_frozen": true
+    },
+    "tests/LibraryAuditTests.cpp": {
+      "frozen_sha256": "8ce1469c4d41d41df2393fdf9d4053fe3f96b090d5f5de96e25cc15e0059e9e8",
+      "checkout_matches_frozen": false
+    },
+    "tests/PadPolyRefinementTests.cpp": {
+      "frozen_sha256": "f2242323ffef26cc996b1721445b066eb0f1688a13ba04bb9a5cd8ec850f819e",
+      "checkout_matches_frozen": true
+    },
+    "tests/PresetVoicingTests.cpp": {
+      "frozen_sha256": "c41457b6b490ec261eea69e2356e246da1e66ea8a1e69d10900e4d1bec1a6f4e",
+      "checkout_matches_frozen": true
+    }
+  },
+  "input_files_sha256": {
+    "docs/preset-evidence/2026.11.7/verification/a12/inventory.json": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+    "docs/preset-evidence/2026.11.7/development/cs80-focused.xml": "b60d8c3fcffb849ec7011f0c22309b93ad216a4e710c2db9530cb15f87e8c862",
+    "docs/preset-evidence/2026.11.7/development/current-bank-metrics.csv": "0cc474d4b3e4d17684348913797f06bf1ce80e5f0d823394b28dee6237cfb7bc",
+    "docs/preset-evidence/2026.11.7/development/matched-published-current-bank.json": "99531c4f60c36ece3cf08108dfdaab9f95dc7700bba727a021eb6c283fdb5272",
+    "docs/preset-evidence/2026.11.7/verification/a21/rendered-measurements.json": "e344b6c5beb7c8dad8984e8d1516b4f50e72cd0096a17d3fc30a4874ef2c29a7",
+    "docs/preset-evidence/2026.11.7/verification/a22/summary.json": "0601a48907821c403eda02a18e409d7e8c3d1291115f1bf3fa8626414e6deba7",
+    "docs/preset-evidence/2026.11.7/verification/a25/review.json": "6c688eab07af61987470b7d764af7fe72e838903fa6d1b983808107eb9c7b829"
+  },
+  "evidence_files_sha256": {
+    "all-rank-timing.csv": "0ed50ea1e3e0176980e070bc533fc5242c97763926f93326aa7958853fe15675",
+    "compile-provenance.json": "de0ef65d1c7955a9a61f8b8d71566da9d7d40c1aea8c11e4649bbd1f7f4920ab",
+    "long_probe.cpp": "aede46b04c3f6d771738c0c6bbc3484ed91521b4cbebfcaa348ed8c0d7b851c8",
+    "matched-bank-scope.json": "878cb1eef9670894a57ffa3cd33dfa9cae6aec852b9609d30bc462e2a0557069",
+    "metrics.csv": "9ead63dc06cf17e4884a08868826255cdf96babfb66402d208297363ca4c8e96",
+    "one-second-windows.csv": "7a0195d2f7c406f8d15b6841244419b86d315b98a4e5d40c5f7d431d933337b1",
+    "pcm-manifest.json": "a6e72a13db9e425ebb09f98c71b49c24827bbc0d8f715f11d994a1d8b06ac27b",
+    "renders.csv": "9bcd1104c2324357308f7c5c48026d66215423d9e74629d07be8b0b343ceb64d",
+    "reproduce.py": "e0967246e07893741566805f7750c3d628fc330d34d3f70e2e5152388bb4247d",
+    "reused-tests.json": "296b6b102668dd6126295e3c2ba465e7c6f53765409a0769ba3e2bbe82770e0c",
+    "summary.json": "a4cdf2c343a91051a332473c6e9cd0811f0565ac819db58f6f87904e9d05564e",
+    "timing-census.json": "35e149afdb85fba5d655902b699a5ab7d68827344f18dd75bc055e2d7167b838",
+    "timing_probe.cpp": "96c0fe2bc005fcfedcff90f1b27ba89d80d8797315b0beb9d8dcc38e98251fd9"
+  },
+  "library_sha256_after": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+}

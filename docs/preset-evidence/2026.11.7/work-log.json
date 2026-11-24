@@ -9,163 +9,284 @@
       "id": "a01",
       "role": "Keyboard synthesis defect audit",
       "status": "completed",
-      "report": "reviews/a01.md"
+      "report": "reviews/a01.md",
+      "agent": "/root/a01_keyboard_audit"
     },
     {
       "id": "a02",
       "role": "Whole-engine playability defect audit",
       "status": "completed",
-      "report": "reviews/a02.md"
+      "report": "reviews/a02.md",
+      "agent": "/root/a02_playability_audit"
     },
     {
       "id": "a03",
       "role": "Native build and delivery audit",
       "status": "completed",
-      "report": "reviews/a03.md"
+      "report": "reviews/a03.md",
+      "agent": "/root/a03_release_audit"
     },
     {
       "id": "a04",
       "role": "Piano tail-spectrum correction and PCM regression",
       "status": "completed",
-      "report": "reviews/a04.md"
+      "report": "reviews/a04.md",
+      "agent": "/root/a04_piano_decay_fix"
     },
     {
       "id": "a05",
       "role": "Internal-rate invariant breath/contact excitation",
       "status": "completed",
-      "report": "reviews/a05.md"
+      "report": "reviews/a05.md",
+      "agent": "/root/a05_body_noise_rate_fix"
     },
     {
       "id": "a06",
       "role": "Fixed body resonances for string bends",
       "status": "completed",
-      "report": "reviews/a06.md"
+      "report": "reviews/a06.md",
+      "agent": "/root/a06_string_body_bends"
     },
     {
       "id": "a07",
       "role": "Restore low choir upper formant coverage",
       "status": "completed",
-      "report": "reviews/a07.md"
+      "report": "reviews/a07.md",
+      "agent": "/root/a07_low_choir_spectrum"
     },
     {
       "id": "a08",
       "role": "Source-time revision, preset and installation guides",
       "status": "completed",
-      "report": "reviews/a08.md"
+      "report": "reviews/a08.md",
+      "agent": "/root/a08_revision_docs"
     },
     {
       "id": "a09",
       "role": "Audition archive register and tail coverage",
       "status": "completed",
-      "report": "reviews/a09.md"
+      "report": "reviews/a09.md",
+      "agent": "/root/a09_release_audio_roster"
     },
     {
       "id": "a10",
       "role": "Full Engine realtime/offline texture verification",
       "status": "completed",
-      "report": "verification/a10/reporta10.md"
+      "report": "verification/a10/reporta10.md",
+      "agent": "/root/a10_engine_texture_verification"
     },
     {
       "id": "a11",
       "role": "Independent paired combined CPU review",
       "status": "completed",
-      "report": "reviews/a11.md"
+      "report": "reviews/a11.md",
+      "agent": "/root/a11_combined_cpu_review"
     },
     {
       "id": "a12",
       "role": "Authenticated whole-bank identity and cumulative coverage",
       "status": "completed",
-      "report": "reviews/a12.md"
+      "report": "reviews/a12.md",
+      "agent": "/root/a12_bank_identity"
     },
     {
       "id": "a13",
       "role": "Complete Keys family and piano integration review",
       "status": "completed",
-      "report": "reviews/a13.md"
+      "report": "reviews/a13.md",
+      "agent": "/root/a13_keyboard_family"
     },
     {
       "id": "a14",
       "role": "Complete Bass family and live gesture review",
       "status": "completed",
-      "report": "reviews/a14.md"
+      "report": "reviews/a14.md",
+      "agent": "/root/a14_bass_family"
     },
     {
       "id": "a15",
       "role": "Complete Plucked family and material gesture review",
       "status": "completed",
-      "report": "reviews/a15.md"
+      "report": "reviews/a15.md",
+      "agent": "/root/a15_plucked_family"
     },
     {
       "id": "a16",
       "role": "Complete Brass family, quality modes and live formants",
       "status": "completed",
-      "report": "reviews/a16.md"
+      "report": "reviews/a16.md",
+      "agent": "/root/a16_brass_family"
     },
     {
       "id": "a17",
       "role": "Complete Bells family, struck materials and headroom",
       "status": "completed",
-      "report": "reviews/a17.md"
+      "report": "reviews/a17.md",
+      "agent": "/root/a17_bell_family"
     },
     {
       "id": "a18",
       "role": "Complete Strings family, touch and release",
       "status": "completed",
-      "report": "reviews/a18.md"
+      "report": "reviews/a18.md",
+      "agent": "/root/a18_strings_family"
     },
     {
       "id": "a19",
       "role": "Complete Winds family and breath integration",
       "status": "completed",
-      "report": "reviews/a19.md"
+      "report": "reviews/a19.md",
+      "agent": "/root/a19_winds_family"
     },
     {
       "id": "a20",
       "role": "Complete Organ family, registration and percussion",
       "status": "completed",
-      "report": "reviews/a20.md"
+      "report": "reviews/a20.md",
+      "agent": "/root/a20_organ_family"
     },
     {
       "id": "a21",
       "role": "Complete Pads family, low choir and slow envelope integration",
       "status": "completed",
-      "report": "reviews/a21.md"
+      "report": "reviews/a21.md",
+      "agent": "/root/a21_pads_family"
     },
     {
       "id": "a22",
       "role": "Complete Polysynth family and pressured chord response",
       "status": "completed",
-      "report": "reviews/a22.md"
+      "report": "reviews/a22.md",
+      "agent": "/root/a22_poly_family"
     },
     {
       "id": "a23",
       "role": "Complete Leads family and polyphonic performance gestures",
       "status": "completed",
-      "report": "reviews/a23.md"
+      "report": "reviews/a23.md",
+      "agent": "/root/a23_lead_family"
     },
     {
       "id": "a24",
       "role": "Complete Sequences family and actual motion/timing",
       "status": "completed",
-      "report": "reviews/a24.md"
+      "report": "reviews/a24.md",
+      "agent": "/root/a24_sequences_family"
     },
     {
       "id": "a25",
       "role": "Complete FX family and intentional residual/source behavior",
-      "status": "in_progress"
+      "status": "completed",
+      "report": "reviews/a25.md",
+      "agent": "/root/a25_fx_family"
     },
     {
       "id": "a26",
       "role": "All Hardware Studies and original electrical tone behavior",
-      "status": "in_progress"
+      "status": "completed",
+      "report": "reviews/a26.md",
+      "agent": "/root/a26_hardware_studies"
+    },
+    {
+      "id": "a27",
+      "role": "Two Init programs and historical core-state defaults",
+      "status": "completed",
+      "agent": "/root/a27_init_legacy_state",
+      "report": "reviews/a27.md"
+    },
+    {
+      "id": "a28",
+      "role": "Exact expanded audition archive and CI binding contract",
+      "status": "completed",
+      "agent": "/root/a28_audition_acceptance",
+      "report": "reviews/a28.md"
+    },
+    {
+      "id": "a29",
+      "role": "Full native test roster and source-bound acceptance contract",
+      "status": "completed",
+      "agent": "/root/a29_native_contract",
+      "report": "reviews/a29.md"
+    },
+    {
+      "id": "a30",
+      "role": "Generic installation acceptance and source-specific guide/notice contract",
+      "status": "completed",
+      "agent": "/root/a30_install_contract",
+      "report": "reviews/a30.md"
+    },
+    {
+      "id": "a31",
+      "role": "Independent five-lane macOS validation and payload-binding review",
+      "status": "completed",
+      "agent": "/root/a31_mac_binding_review",
+      "report": "reviews/a31.md"
+    },
+    {
+      "id": "a32",
+      "role": "Windows/Linux validator consumer and checkout-byte contract",
+      "status": "completed",
+      "agent": "/root/a32_vst3_consumer_contract",
+      "report": "reviews/a32.md"
+    },
+    {
+      "id": "a33",
+      "role": "Cumulative all-bank metrics and active touch-baseline causality",
+      "status": "completed",
+      "agent": "/root/a33_cumulative_metrics",
+      "report": "reviews/a33.md"
+    },
+    {
+      "id": "a34",
+      "role": "Long entrances and sustained chord audit coverage",
+      "status": "completed",
+      "agent": "/root/a34_long_envelopes",
+      "report": "reviews/a34.md"
+    },
+    {
+      "id": "a35",
+      "role": "All seven vocal recipes across Pads and FX",
+      "status": "in_progress",
+      "agent": "/root/a35_vocal_recipe_review"
     },
     {
       "id": "a36",
       "role": "Hammered keyboard specificity and concrete defect review",
-      "status": "in_progress"
+      "status": "completed",
+      "report": "reviews/a36.md",
+      "agent": "/root/a36_hammered_keys_review"
+    },
+    {
+      "id": "a37",
+      "role": "Full Engine runtime, allocation and lifecycle review",
+      "status": "in_progress",
+      "agent": "/root/a37_engine_runtime_review"
+    },
+    {
+      "id": "a39",
+      "role": "Windows capture-tool stack diagnosis and ownership repair",
+      "status": "in_progress",
+      "agent": "/root/a39_windows_capture_repair"
+    },
+    {
+      "id": "a44",
+      "role": "Actual Apple Silicon platform qualification",
+      "status": "completed",
+      "agent": "/root/a44_arm_platform",
+      "report": "reviews/a44.md"
+    },
+    {
+      "id": "a45",
+      "role": "Intel native audit stack diagnosis and ownership repair",
+      "status": "completed",
+      "agent": "/root/a45_intel_diagnosis",
+      "report": "reviews/a45.md"
     }
   ],
   "candidate_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
   "candidate_build_run": 45385716988,
-  "documentation_head_observed": "c1f48b54a1bdba7da15fe849266ef1c6e32acfb2"
+  "documentation_head_observed": "e8e29133a14c492a98033871cfe3912ef8978f5d",
+  "assigned_count": 40,
+  "completed_count": 37,
+  "candidate_build_note": "c554 source: Apple Silicon platform-qualified; original Intel LibraryAudit and Windows parity-capture failures retained; test/tool-only ownership repairs under ordinary verification before a new complete native run."
 }

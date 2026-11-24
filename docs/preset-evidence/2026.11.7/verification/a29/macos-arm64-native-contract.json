@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "status": "native_content_contract_verified_external_gates_pending",
+  "factory_revision": "2026.11.7",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "tree": "469244af34233cfa145537266efd29024b66abba",
+  "run_id": 45385716988,
+  "attempt": 1,
+  "native": [
+    {
+      "target": "macos-arm64",
+      "counts": {
+        "registered": 277,
+        "passed": 275,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "native_content_contract_verified": true,
+      "api_zip_binding": {
+        "artifact_id": 14918856035,
+        "name": "cs80-macos-15-test-evidence",
+        "bytes": 86685,
+        "sha256": "0275ac642f032080f1a38b8928bd761145748aebc6b5e76a07e55e5b07597633"
+      },
+      "parsed_member_records": {
+        "junit": {
+          "path": "ctest-results.xml",
+          "bytes": 139150,
+          "sha256": "d680c8dd602b5d461380bc72f6225e14abbb2c0f91bfbe99b0421d4259406e34"
+        },
+        "lasttest": {
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 392931,
+          "sha256": "42cd0890426538e99877bb17401a0a6c1166c0fef1020a6b80d1d6bd2ad82ba5"
+        }
+      },
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "status": "notrun",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips": {
+        "total": 5,
+        "suites": [
+          {
+            "ctest_test": "cs80_package_binary_identity_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 13,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 13 tests in 0.116s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_packaging_notice_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 7 tests in 1.624s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [
+              "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+            ],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_windows_installer_preflight_tests",
+            "total": 2,
+            "summaries": [
+              {
+                "tests_run": 12,
+                "result": "OK",
+                "skipped": 2,
+                "summary": "Ran 12 tests in 0.767s\n\nOK (skipped=2)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          },
+          {
+            "ctest_test": "cs80_render_cli_tests",
+            "total": 1,
+            "summaries": [
+              {
+                "tests_run": 7,
+                "result": "OK",
+                "skipped": 1,
+                "summary": "Ran 7 tests in 0.149s\n\nOK (skipped=1)"
+              }
+            ],
+            "explicit_skip_lines": [],
+            "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+          }
+        ]
+      },
+      "skip_review_sha256": "c6b0376b59f8fcd2f9dae64ad32e587393d9c813b3f18e1d9b2ff868f4178a5f",
+      "api_input_sha256": "100aba563c3a3b42fc0e172097101fad4369049a669e7946ef4f1a50aea3ad6c",
+      "ui_body_identity_phase_complete": true,
+      "original_attempt_binding_verified": false,
+      "original_ctest_process_exit_verified": false,
+      "native_results_accepted": false,
+      "platform_qualified": false,
+      "release_qualified": false
+    }
+  ],
+  "all_four_native_targets_checked": false,
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "checker_sha256": "73790c648d2c185ee4cba6de081042231df3bfa9dcd96e61732ea62cea5b1ce2",
+  "helper_sha256": {
+    "parse-native-evidence.py": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+    "bind-parser-archives.py": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+  },
+  "limitation": "API authenticity, exact original job/upload attempt and CTest exits are not proved; validators, payloads, packaging, auditions and distribution remain independent."
+}

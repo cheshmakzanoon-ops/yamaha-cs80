@@ -1,0 +1,47 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "xml_sha256": "b60d8c3fcffb849ec7011f0c22309b93ad216a4e710c2db9530cb15f87e8c862",
+  "suite_passed": 31,
+  "tests_reused_without_rerun": [
+    {
+      "name": "cs80_pad_poly_refinement_tests",
+      "status": "run",
+      "seconds": 89.0732,
+      "failed": false
+    },
+    {
+      "name": "cs80_fx_refinement_tests",
+      "status": "run",
+      "seconds": 11.0695,
+      "failed": false
+    },
+    {
+      "name": "cs80_modern_preset_refinement_tests",
+      "status": "run",
+      "seconds": 41.8069,
+      "failed": false
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "status": "run",
+      "seconds": 323.635,
+      "failed": false
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "status": "run",
+      "seconds": 15.3717,
+      "failed": false
+    }
+  ],
+  "library_audit_scope": "44100 Hz: category-dependent phrase at velocity .9, pressure ramp .3-.6 s, release at first 256-frame boundary >=1.2 s, total ~1.9 s; separate eight-note 36/43/48/55/60/64/67/72 velocity1 pressure1 stress through first boundary >=1 s.",
+  "pad_poly_long_headroom_scope": "Two complete presets Cathedral Pad and Golden Pads 66, 48000 Hz, twelve-second eight-note 60/62/64/65/67/69/71/72 chord, velocity1 pressure1, unchanged -1.5 dBFS ceiling; current suite passes. This is a different voicing from A34's supplemental low chord.",
+  "voicing_long_swells_scope": "Slow Pad3s, Slow Strings2.6s, Bowed Swell Strings3.2s, Brass Pad Swell3.2s, Sweep Pad4.8s; onset/bloom/held windows, no pressure manufacture.",
+  "modern_long_motion_scope": "LFO Sweep Pad and selected other modern programs: ten-second moving-versus-frozen modulation controls.",
+  "stdout_limit": "CTest JUnit truncates some individual outputs; passed execution plus frozen source establishes the stated coverage, not invented per-test measured numbers.",
+  "other_current_supplements": {
+    "a21": "Sweep Pad6s single+8note; Choir Pad/Dark Choir full-pressure stacks and tails",
+    "a22": "Seven Polysynth programs6s full-pressure eight-note chords+4s tails; four pressure0 controls",
+    "a25": "Space Sweep, Sweep Riser, Distant FX139 and four other FX10s hold+16s tail; body/touch variants"
+  }
+}

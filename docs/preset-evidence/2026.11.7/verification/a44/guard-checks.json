@@ -1,0 +1,33 @@
+{
+  "scope": "Bounded local integrity/output guards on actual retained evidence copies; no product executed and no native or validator rerun. Authenticated originals remain untouched.",
+  "positive_preflight": {
+    "status": "platform_qualified",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "cross_platform_qualified": false,
+    "release_qualified": false
+  },
+  "checks": [
+    {
+      "case": "Existing original receipts cannot be overwritten",
+      "result": "PASS",
+      "exit_code": 2,
+      "stderr": "ARM qualification refused: Refusing to overwrite evidence: /tmp/cs80-a44-1cee5a/receipt-preflight/original-execution-binding.json",
+      "original_bytes_unchanged": true
+    },
+    {
+      "case": "One changed native ZIP byte refused",
+      "result": "PASS",
+      "exit_code": 2,
+      "stderr": "ARM qualification refused: Actual ZIP bytes: native",
+      "no_output_published": true
+    },
+    {
+      "case": "Changed independent notice/source receipt refused",
+      "result": "PASS",
+      "exit_code": 2,
+      "stderr": "ARM qualification refused: Reviewed A30 document/notice supplement changed",
+      "no_output_published": true
+    }
+  ],
+  "qualifier_sha256": "0c547fa900a38fcf6515bde5ec582546440f3e1c0ea3f6a93f7ae3ce04c431b0"
+}

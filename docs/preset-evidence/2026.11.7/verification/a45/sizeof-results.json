@@ -1,0 +1,38 @@
+[
+  {
+    "case": "baseline",
+    "source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+    "compile_command": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-a45-1cee5a/baseline/src",
+      "/tmp/cs80-a45-1cee5a/baseline/size.cpp",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/baseline/size"
+    ],
+    "sizeof_probe_sha256": "4dfb290f2421b34d7e4ab7948f3d2be46f25d562bd6b73998eaf054e93f7b7f1",
+    "stdout": "Engine=491976 InstrumentBody=6096\n",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "execution_scope": "Constant sizeof reporting only; no Engine object is constructed."
+  },
+  {
+    "case": "current",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "compile_command": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-a45-1cee5a/current/src",
+      "/tmp/cs80-a45-1cee5a/current/size.cpp",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/current/size"
+    ],
+    "sizeof_probe_sha256": "4dfb290f2421b34d7e4ab7948f3d2be46f25d562bd6b73998eaf054e93f7b7f1",
+    "stdout": "Engine=504776 InstrumentBody=6496\n",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "execution_scope": "Constant sizeof reporting only; no Engine object is constructed."
+  }
+]

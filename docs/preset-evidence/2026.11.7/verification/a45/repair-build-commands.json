@@ -1,0 +1,65 @@
+[
+  {
+    "case": "fixed",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-g1",
+      "-fstack-usage",
+      "-pthread",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/tmp/cs80-a45-1cee5a/current/src",
+      "-c",
+      "/tmp/cs80-a45-1cee5a/fixed/LibraryAuditTests.cpp",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/fixed/LibraryAuditTests.o"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 3.780724583000847,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "case": "baseline",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-g1",
+      "-fstack-usage",
+      "-pthread",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/tmp/cs80-a45-1cee5a/baseline/src",
+      "-c",
+      "/tmp/cs80-a45-1cee5a/baseline/tests/LibraryAuditTests.cpp",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/baseline/LibraryAuditTests.o"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 3.513957371000288,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "case": "fixed-link",
+    "command": [
+      "g++",
+      "-pthread",
+      "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Engine.o",
+      "/tmp/cs80-a45-1cee5a/current/diagnostic-build/EngineWscHeld.o",
+      "/tmp/cs80-a45-1cee5a/current/diagnostic-build/FactoryPresets.o",
+      "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Ig00156Batch.o",
+      "/tmp/cs80-a45-1cee5a/fixed/LibraryAuditTests.o",
+      "-o",
+      "/tmp/cs80-a45-1cee5a/fixed/library-audit-fixed"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

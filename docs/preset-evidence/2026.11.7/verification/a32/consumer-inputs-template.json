@@ -1,0 +1,30 @@
+{
+  "provenance": {
+    "status": "prepared_paths_not_actual_acceptance",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "revision": "2026.11.7",
+    "run_id": 45385716988,
+    "attempt": 1,
+    "scope": "Windows/Linux preliminary native and validator-report observations only; product VST3 ZIPs are separate A36 inputs."
+  },
+  "native": [
+    {
+      "target": "windows-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/windows-native.zip"
+    },
+    {
+      "target": "linux-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/linux-native.zip"
+    }
+  ],
+  "validators": [
+    {
+      "target": "windows-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/windows-validator.zip"
+    },
+    {
+      "target": "linux-x86_64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/linux-validator.zip"
+    }
+  ]
+}

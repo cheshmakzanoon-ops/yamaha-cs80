@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "status": "prepared_pending_actual_archive",
+  "accepted_archive_content": false,
+  "audition_qualified": false,
+  "release_qualified": false,
+  "source_commit": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source_tree": "469244af34233cfa145537266efd29024b66abba",
+  "expected_ci_identity": {
+    "repository": "cheshmakzanoon-ops/yamaha-cs80",
+    "run_id": 45385716988,
+    "run_attempt": 1,
+    "producer_job_id": 138415961141
+  },
+  "inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "predecessor_files_unchanged": true,
+  "predecessor_file_count": 10,
+  "unchanged_predecessor_function_asts": {
+    "bounded_snapshot": true,
+    "unique_object": true,
+    "parse_json": true,
+    "parameter_bytes": true,
+    "parameter_digest": true,
+    "validate_inventory": true,
+    "compare_inventory": true,
+    "make_expected_files": true,
+    "preflight": true,
+    "checksum_manifest": true,
+    "fft": true,
+    "inspect_wav": true,
+    "check_commands": true,
+    "write_fresh_report": true
+  },
+  "content_tests": 16,
+  "ci_binding_tests": 7,
+  "test_exit_codes": {
+    "content": 0,
+    "ci_binding": 0
+  },
+  "actual_archive_supplied": false,
+  "full_synthetic_audio_archive_created": false,
+  "synthetic_archive_pcm": "Intentionally invalid small WAV placeholders; control is required to fail at RIFF validation.",
+  "notes": [
+    "Independent PCM/FFT, ZIP checks, inventories, checksums, immutable snapshots, command matching, and exclusive report creation retain predecessor function ASTs.",
+    "Metric row and CSV-to-PCM comparison code was extracted into directly tested helpers without relaxed tolerances.",
+    "Source roster now also binds the exact ordered 225-request prefix and 13-request suffix.",
+    "Synthetic binder fixtures exercise agreement only; no fixture binding is persisted as actual artifact acceptance."
+  ]
+}

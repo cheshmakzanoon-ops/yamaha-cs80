@@ -1,0 +1,731 @@
+{
+  "program_count": 22,
+  "unchanged_values_vs_6": 4488,
+  "body_programs": 20,
+  "active_body_ranks": 39,
+  "new_7_parameter_edits": 0,
+  "mechanism_program_counts": {
+    "piano_partial_decay": 0,
+    "noise_rate_normalization": 18,
+    "generic_string_formants": 10,
+    "low_choir_harmonics": 0,
+    "sustained_air_and_flutter_subset": 7
+  },
+  "programs": [
+    {
+      "host_index": 0,
+      "name": "Tone I: String 1",
+      "authored_template": "Ensemble Strings",
+      "named_rank": 1,
+      "rank_ii_weight": 0.200000003,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.74000001
+        },
+        {
+          "rank": 2,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.479999989
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_after_level",
+        "ch2_v_level",
+        "ch2_init_level",
+        "ch2_after_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 1,
+      "name": "Tone II: String 2",
+      "authored_template": "Chamber Strings",
+      "named_rank": 2,
+      "rank_ii_weight": 0.669999957,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.75
+        },
+        {
+          "rank": 2,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.920000017
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_after_level",
+        "ch2_v_level",
+        "ch2_init_level",
+        "ch2_after_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 2,
+      "name": "Tone I: String 3",
+      "authored_template": "Slow Strings",
+      "named_rank": 1,
+      "rank_ii_weight": 0.180000007,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.779999971
+        },
+        {
+          "rank": 2,
+          "model": 9,
+          "name": "Bowed strings",
+          "mix": 0.419999987
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_after_level",
+        "ch2_v_level",
+        "ch2_init_level",
+        "ch2_after_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 3,
+      "name": "Tone II: String 4",
+      "authored_template": "PWM Strings",
+      "named_rank": 2,
+      "rank_ii_weight": 0.580000043,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_after_level",
+        "ch2_f_al",
+        "ch2_v_level",
+        "ch2_init_level",
+        "ch2_after_level"
+      ],
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 4,
+      "name": "Tone I: Brass 1",
+      "authored_template": "Brass Swell I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.319999993,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.550000012
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.280000001
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_level",
+        "ch2_init_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 5,
+      "name": "Tone II: Brass 2",
+      "authored_template": "Brass Swell II",
+      "named_rank": 2,
+      "rank_ii_weight": 0.680000007,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.389999986
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.639999986
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_level",
+        "ch2_init_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 6,
+      "name": "Tone I: Flute",
+      "authored_template": "Flute",
+      "named_rank": 1,
+      "rank_ii_weight": 0.200000003,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 10,
+          "name": "Flute",
+          "mix": 0.959999979
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_a",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch1_after_level",
+        "ch2_f_al",
+        "ch2_v_level",
+        "ch2_init_level",
+        "ch2_after_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 7,
+      "name": "Tone II: Brass 3",
+      "authored_template": "Horn Section",
+      "named_rank": 2,
+      "rank_ii_weight": 0.74000001,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.74000001
+        },
+        {
+          "rank": 2,
+          "model": 14,
+          "name": "Brass",
+          "mix": 0.930000007
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_level",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 8,
+      "name": "Tone I: E. Piano",
+      "authored_template": "Electric Piano I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.200000003,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 2,
+          "name": "Tine electric piano",
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 2,
+          "name": "Tine electric piano",
+          "mix": 0.939999998
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 9,
+      "name": "Tone II: Bass",
+      "authored_template": "Analog Bass",
+      "named_rank": 2,
+      "rank_ii_weight": 0.810000002,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_f_al",
+        "ch1_v_level",
+        "ch2_f_al",
+        "ch2_v_level"
+      ],
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 10,
+      "name": "Tone I: Clavichord 1",
+      "authored_template": "Clavichord I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.180000007,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.860000014
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_level",
+        "body1_mix"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 11,
+      "name": "Tone II: Clavichord 2",
+      "authored_template": "Clavichord II",
+      "named_rank": 2,
+      "rank_ii_weight": 0.790000021,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.730000019
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 1
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_level",
+        "body2_mix"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 12,
+      "name": "Tone I: Harpsichord 1",
+      "authored_template": "Harpsichord I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.159999996,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 5,
+          "name": "Harpsichord",
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 5,
+          "name": "Harpsichord",
+          "mix": 1
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_d",
+        "ch1_v_s"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 13,
+      "name": "Tone II: Harpsichord 2",
+      "authored_template": "Harpsichord II",
+      "named_rank": 2,
+      "rank_ii_weight": 0.75,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 5,
+          "name": "Harpsichord",
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 5,
+          "name": "Harpsichord",
+          "mix": 1
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch2_v_d",
+        "ch2_v_s"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 14,
+      "name": "Tone I: Organ 1",
+      "authored_template": "Flute Organ 8+4",
+      "named_rank": 1,
+      "rank_ii_weight": 0.239999995,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 15,
+          "name": "Organ",
+          "mix": 0.779999971
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "name": "Organ",
+          "mix": 0.419999987
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "voice_dispersion",
+        "drift",
+        "ch1_v_a",
+        "ch1_v_r",
+        "ch2_v_a",
+        "ch2_v_r"
+      ],
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 15,
+      "name": "Tone II: Organ 2",
+      "authored_template": "Reed Organ",
+      "named_rank": 2,
+      "rank_ii_weight": 0.810000002,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 15,
+          "name": "Organ",
+          "mix": 0.360000014
+        },
+        {
+          "rank": 2,
+          "model": 15,
+          "name": "Organ",
+          "mix": 0.699999988
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "voice_dispersion",
+        "drift",
+        "ch1_v_a",
+        "ch1_v_r",
+        "ch2_v_a",
+        "ch2_v_r"
+      ],
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 16,
+      "name": "Tone I: Guitar 1",
+      "authored_template": "Guitar I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.209999993,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 6,
+          "name": "Nylon strings",
+          "mix": 1
+        },
+        {
+          "rank": 2,
+          "model": 6,
+          "name": "Nylon strings",
+          "mix": 0.419999987
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch2_v_level",
+        "body1_mix"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 17,
+      "name": "Tone II: Guitar 2",
+      "authored_template": "Guitar II",
+      "named_rank": 2,
+      "rank_ii_weight": 0.779999971,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 7,
+          "name": "Steel strings",
+          "mix": 0.569999993
+        },
+        {
+          "rank": 2,
+          "model": 7,
+          "name": "Steel strings",
+          "mix": 1
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_r",
+        "ch2_v_level",
+        "body2_mix"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 18,
+      "name": "Tone I: Funky 1",
+      "authored_template": "Funky Pluck I",
+      "named_rank": 1,
+      "rank_ii_weight": 0.230000004,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.720000029
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.310000002
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 19,
+      "name": "Tone II: Funky 2",
+      "authored_template": "Funky Pluck II",
+      "named_rank": 2,
+      "rank_ii_weight": 0.769999981,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 7,
+          "name": "Steel strings",
+          "mix": 0.340000004
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.629999995
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 20,
+      "name": "Tone I: Funky 3",
+      "authored_template": "Funky Clavichord",
+      "named_rank": 1,
+      "rank_ii_weight": 0.270000011,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.720000029
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.310000002
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_d",
+        "ch1_v_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 21,
+      "name": "Tone II: Funky 4",
+      "authored_template": "Funky Pluck I",
+      "named_rank": 2,
+      "rank_ii_weight": 0.769999981,
+      "parameters_unchanged_vs_6": 204,
+      "active_bodies": [
+        {
+          "rank": 1,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.310000002
+        },
+        {
+          "rank": 2,
+          "model": 4,
+          "name": "Clavichord",
+          "mix": 0.720000029
+        }
+      ],
+      "neutral_material_and_variant": true,
+      "changed_non_volume_controls_vs_4": [
+        "ch1_v_level",
+        "ch2_v_level"
+      ],
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    }
+  ]
+}

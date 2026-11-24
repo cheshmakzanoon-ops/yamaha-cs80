@@ -1,0 +1,193 @@
+{
+  "scope": "Unchanged existing synthetic tests; inert headers only. No real product, native CI, API authenticity or release qualification.",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "revision": "2026.11.7",
+  "historical_suite_rebound_in_memory": [
+    "SOURCE",
+    "REVISION",
+    "legacy.REVISION"
+  ],
+  "historical_test_bodies_changed": false,
+  "tests_run": 14,
+  "failures": 0,
+  "errors": 0,
+  "a41_existing_methods": 11,
+  "focused_existing_methods": [
+    "a30_source_bundle_tests.VerificationTests.test_wrong_mode",
+    "a30_source_bundle_tests.VerificationTests.test_virtual_links",
+    "a30_source_header_tests.IdentityTests.test_wrong_image_kind"
+  ],
+  "a41_positive_target_fixtures": 4,
+  "a41_rejected_mutations": 22,
+  "a41_observations": [
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "linux-x86_64",
+      "header_count": 2,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "windows-x86_64",
+      "header_count": 2,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "macos-arm64",
+      "header_count": 3,
+      "release_qualified": false
+    },
+    {
+      "kind": "accepted_inert_fixture",
+      "target": "macos-x86_64",
+      "header_count": 3,
+      "release_qualified": false
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: linux-x86_64",
+      "error": "ELF architecture differs from advertised x86_64: /tmp/cs80-a30-1cee5a/a41-install-accept-93hqh0q6/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: windows-x86_64",
+      "error": "Expected x86_64 PE32+ binary: /tmp/cs80-a30-1cee5a/a41-install-accept-_oz2v8vu/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: macos-arm64",
+      "error": "Expected arm64 Mach-O 64-bit binary: /tmp/cs80-a30-1cee5a/a41-install-accept-u5l8umph/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "internally coherent wrong CPU: macos-x86_64",
+      "error": "Expected x86_64 Mach-O 64-bit binary: /tmp/cs80-a30-1cee5a/a41-install-accept-err19o8f/header-0.bin"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "inner payload checksum corruption while outer digest agrees",
+      "error": "Checksum mismatch: cs80-reference-windows-x86_64-c5549f7d095a.zip"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "duplicate artifact JSON key",
+      "error": "Duplicate JSON key: id"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "extra outer member despite updated authentic-byte-style metadata",
+      "error": "Invalid or oversized outer ZIP directory"
+    },
+    {
+      "kind": "scope_control",
+      "run_conclusion": "failure",
+      "release_qualified": false
+    },
+    {
+      "kind": "snapshot_control",
+      "inputs_changed_after_read": 3,
+      "same_bytes_hashed_and_inspected": true
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:digest",
+      "error": "Archive SHA256 differs from API"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:size_in_bytes",
+      "error": "Archive size differs from API"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:name",
+      "error": "Artifact name differs from expected target"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:expired",
+      "error": "Artifact expired or expiry state missing"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.head_sha",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.id",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.repository_id",
+      "error": "Artifact source/run/repository mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:workflow_run.run_attempt",
+      "error": "Artifact declared attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "artifact:archive_download_url",
+      "error": "Artifact API repository/ID URL mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:head_sha",
+      "error": "Run API source/run/attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:run_attempt",
+      "error": "Run API source/run/attempt mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:repository.full_name",
+      "error": "Run API repository identity mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "run:head_repository.id",
+      "error": "Run API repository identity mismatch"
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "symlink external archive",
+      "error": "[Errno 40] Too many levels of symbolic links: '/tmp/cs80-a30-1cee5a/a41-fixture-jtwvtp6i/1/linked.zip'"
+    },
+    {
+      "kind": "publication_control",
+      "existing_file_and_dangling_symlink_preserved": true
+    },
+    {
+      "kind": "rejected_fixture",
+      "reason": "explicit revision does not match source declaration",
+      "error": "Expected revision differs from exact source commit"
+    }
+  ],
+  "source_test_files": {
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "scripts/verify-ci-bundle.py": {
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    "scripts/test-verify-ci-bundle.py": {
+      "bytes": 19221,
+      "sha256": "1850a838664bfad2b5b63d1f740ab16e750bd8bffd6e85f02e162e3764f6ef0f"
+    },
+    "scripts/test-package-binary-identity.py": {
+      "bytes": 11758,
+      "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480"
+    }
+  },
+  "helper_sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+  "historical_probe_sha256": "7a93df2477f0c6c9958d2decd667ccda264af2cf5204a9d8a35fb04135e5a739",
+  "runner_sha256": "94e728c8164f249771adab09ece31cd2db6a993d7b3d5d3dbbf6707ee645dee9"
+}

@@ -1,0 +1,32 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source_archive_sha256": "f5b70a563cf2ad48a9730f2f6731a149018e984eb9717e30c8fe7b572d19e69d",
+  "core_path": "/tmp/cs80-build-1cee5a/libcs80_core.a",
+  "core_sha256_before_and_after": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+  "commands": [
+    [
+      "c++",
+      "-O2",
+      "-std=c++20",
+      "-I/tmp/cs80-a34-1cee5a/source/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a34/timing_probe.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a34-1cee5a/timing_probe"
+    ],
+    [
+      "c++",
+      "-O2",
+      "-std=c++20",
+      "-I/tmp/cs80-a34-1cee5a/source/src",
+      "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a34/long_probe.cpp",
+      "/tmp/cs80-build-1cee5a/libcs80_core.a",
+      "-o",
+      "/tmp/cs80-a34-1cee5a/long_probe"
+    ]
+  ],
+  "executables": {
+    "timing_probe": "05561801ab6c485363aa48166d7837140cd613285ced5b64261825509d2ff768",
+    "long_probe": "40c4873bdcc06a0e2b3c00562761b58579c2c57671737598741684ca0aaab8dd"
+  }
+}

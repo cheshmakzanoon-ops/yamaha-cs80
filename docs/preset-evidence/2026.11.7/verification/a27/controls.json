@@ -1,0 +1,1294 @@
+{
+  "program_count_each": 523,
+  "catalogue_identity_exact": true,
+  "new_programs": 0,
+  "parameter_counts": {
+    "published4": 200,
+    "baseline6": 204,
+    "current7": 204
+  },
+  "historic200_id_range_default_skew_and_257_normalization_pairs_exact": true,
+  "baseline6_all204_metadata_exact": true,
+  "label_differences_from_published4": [],
+  "metadata_sha256": {
+    "published4": "2632fd6788f95e94627ba5d9b176a85e93c008e198b50b23a3151e96c4fed70d",
+    "baseline6": "c584c133774d8a4c309df104bd27322ad0cee98411267ff35c4d14a6a6c9ae4c",
+    "current7": "c584c133774d8a4c309df104bd27322ad0cee98411267ff35c4d14a6a6c9ae4c"
+  },
+  "appended_after_published4": [
+    {
+      "index": 200,
+      "id": "body1_variant",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "default": 0.0
+    },
+    {
+      "index": 201,
+      "id": "body2_variant",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "default": 0.0
+    },
+    {
+      "index": 202,
+      "id": "body1_material",
+      "minimum": 0.0,
+      "maximum": 9.0,
+      "default": 0.0
+    },
+    {
+      "index": 203,
+      "id": "body2_material",
+      "minimum": 0.0,
+      "maximum": 9.0,
+      "default": 0.0
+    }
+  ],
+  "init_entries": [
+    {
+      "host_index": 43,
+      "name": "Init Patch",
+      "category": "Init",
+      "published4_prefix_200_sha256": "f6a78222c8422f1e41c2a29df4b13deee936ee3fe1fd224ee10ba8a45c001e01",
+      "current204_sha256": "65da4dd9b49199d3f34f863a3845d3d0239d94044add01060bebf3296361d618",
+      "changed_vs_published4": [],
+      "changed_vs_baseline6": []
+    },
+    {
+      "host_index": 522,
+      "name": "Init Circuit",
+      "category": "Init",
+      "published4_prefix_200_sha256": "f6b387041b4378ba068f6d09d18915bbb5462e41af3ae93514a5a60278be385d",
+      "current204_sha256": "c895e231533162f96a9bdf3929b09f5ba547d3e4bf0826cad384644d22688522",
+      "changed_vs_published4": [],
+      "changed_vs_baseline6": []
+    }
+  ],
+  "all_init_controls": [
+    {
+      "index": 0,
+      "id": "master_tune",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 1,
+      "id": "detune",
+      "init_patch": 4,
+      "init_circuit": 4
+    },
+    {
+      "index": 2,
+      "id": "mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 3,
+      "id": "brilliance",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 4,
+      "id": "resonance",
+      "init_patch": 0.150000006,
+      "init_circuit": 0.150000006
+    },
+    {
+      "index": 5,
+      "id": "master_sustain",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 6,
+      "id": "volume",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 7,
+      "id": "init_bend",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 8,
+      "id": "portamento",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 9,
+      "id": "glide_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 10,
+      "id": "sustain_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 11,
+      "id": "key_release",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 12,
+      "id": "ribbon",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 13,
+      "id": "sub_wave",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 14,
+      "id": "sub_speed",
+      "init_patch": 4.19999981,
+      "init_circuit": 4.19999981
+    },
+    {
+      "index": 15,
+      "id": "sub_vco",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 16,
+      "id": "sub_vcf",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 17,
+      "id": "sub_vca",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 18,
+      "id": "sub_at_speed",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 19,
+      "id": "sub_at_vco",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 20,
+      "id": "ring_speed",
+      "init_patch": 2,
+      "init_circuit": 2
+    },
+    {
+      "index": 21,
+      "id": "ring_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 22,
+      "id": "ring_attack",
+      "init_patch": 0.0799999982,
+      "init_circuit": 0.0799999982
+    },
+    {
+      "index": 23,
+      "id": "ring_decay",
+      "init_patch": 0.449999988,
+      "init_circuit": 0.449999988
+    },
+    {
+      "index": 24,
+      "id": "ring_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 25,
+      "id": "chorus_on",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 26,
+      "id": "chorus_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 27,
+      "id": "chorus_speed",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 28,
+      "id": "chorus_depth",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 29,
+      "id": "output_mode",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 30,
+      "id": "voice_dispersion",
+      "init_patch": 0.300000012,
+      "init_circuit": 0.300000012
+    },
+    {
+      "index": 31,
+      "id": "drift",
+      "init_patch": 0.200000003,
+      "init_circuit": 0.200000003
+    },
+    {
+      "index": 32,
+      "id": "analog_noise",
+      "init_patch": 0.0799999982,
+      "init_circuit": 0.0799999982
+    },
+    {
+      "index": 33,
+      "id": "mpe_on",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 34,
+      "id": "pitch_bend_range",
+      "init_patch": 2,
+      "init_circuit": 2
+    },
+    {
+      "index": 35,
+      "id": "mpe_bend_range",
+      "init_patch": 48,
+      "init_circuit": 48
+    },
+    {
+      "index": 36,
+      "id": "tuning_ref",
+      "init_patch": 440,
+      "init_circuit": 440
+    },
+    {
+      "index": 37,
+      "id": "modwheel_sub",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 38,
+      "id": "modwheel_vcf",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 39,
+      "id": "lfo1_rate",
+      "init_patch": 0.280000001,
+      "init_circuit": 0.280000001
+    },
+    {
+      "index": 40,
+      "id": "lfo1_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 41,
+      "id": "lfo1_dest",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 42,
+      "id": "lfo2_rate",
+      "init_patch": 0.550000012,
+      "init_circuit": 0.550000012
+    },
+    {
+      "index": 43,
+      "id": "lfo2_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 44,
+      "id": "lfo2_dest",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 45,
+      "id": "lfo3_rate",
+      "init_patch": 1.10000002,
+      "init_circuit": 1.10000002
+    },
+    {
+      "index": 46,
+      "id": "lfo3_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 47,
+      "id": "lfo3_dest",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 48,
+      "id": "fx1_type",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 49,
+      "id": "fx1_mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 50,
+      "id": "fx2_type",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 51,
+      "id": "fx2_mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 52,
+      "id": "fx3_type",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 53,
+      "id": "fx3_mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 54,
+      "id": "arp_on",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 55,
+      "id": "arp_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 56,
+      "id": "arp_rate",
+      "init_patch": 4,
+      "init_circuit": 4
+    },
+    {
+      "index": 57,
+      "id": "arp_octaves",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 58,
+      "id": "macro1",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 59,
+      "id": "macro2",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 60,
+      "id": "macro3",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 61,
+      "id": "macro4",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 62,
+      "id": "ch1_saw",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 63,
+      "id": "ch1_pulse",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 64,
+      "id": "ch1_sine",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 65,
+      "id": "ch1_noise",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 66,
+      "id": "ch1_pw",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 67,
+      "id": "ch1_pwm_speed",
+      "init_patch": 0.449999988,
+      "init_circuit": 0.449999988
+    },
+    {
+      "index": 68,
+      "id": "ch1_pwm_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 69,
+      "id": "ch1_feet",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 70,
+      "id": "ch1_hpf_cutoff",
+      "init_patch": 30,
+      "init_circuit": 30
+    },
+    {
+      "index": 71,
+      "id": "ch1_hpf_res",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 72,
+      "id": "ch1_hpf_on",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 73,
+      "id": "ch1_lpf_cutoff",
+      "init_patch": 5500,
+      "init_circuit": 5000
+    },
+    {
+      "index": 74,
+      "id": "ch1_lpf_res",
+      "init_patch": 0.100000001,
+      "init_circuit": 0.100000001
+    },
+    {
+      "index": 75,
+      "id": "ch1_lpf_on",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 76,
+      "id": "ch1_f_il",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 77,
+      "id": "ch1_f_al",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 78,
+      "id": "ch1_f_a",
+      "init_patch": 0.00999999978,
+      "init_circuit": 0.00999999978
+    },
+    {
+      "index": 79,
+      "id": "ch1_f_d",
+      "init_patch": 0.529999971,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 80,
+      "id": "ch1_f_r",
+      "init_patch": 0.376000017,
+      "init_circuit": 0.400000006
+    },
+    {
+      "index": 81,
+      "id": "ch1_vcf_level",
+      "init_patch": 0.800000012,
+      "init_circuit": 0.800000012
+    },
+    {
+      "index": 82,
+      "id": "ch1_v_a",
+      "init_patch": 0.00499999989,
+      "init_circuit": 0.00499999989
+    },
+    {
+      "index": 83,
+      "id": "ch1_v_d",
+      "init_patch": 0.529999971,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 84,
+      "id": "ch1_v_s",
+      "init_patch": 0.800000012,
+      "init_circuit": 0.800000012
+    },
+    {
+      "index": 85,
+      "id": "ch1_v_r",
+      "init_patch": 0.328999996,
+      "init_circuit": 0.349999994
+    },
+    {
+      "index": 86,
+      "id": "ch1_v_level",
+      "init_patch": 0.699999988,
+      "init_circuit": 0.699999988
+    },
+    {
+      "index": 87,
+      "id": "ch1_init_brill",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 88,
+      "id": "ch1_init_level",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 89,
+      "id": "ch1_after_brill",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 90,
+      "id": "ch1_after_level",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 91,
+      "id": "ch1_pan",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 92,
+      "id": "ch2_saw",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 93,
+      "id": "ch2_pulse",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 94,
+      "id": "ch2_sine",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 95,
+      "id": "ch2_noise",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 96,
+      "id": "ch2_pw",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 97,
+      "id": "ch2_pwm_speed",
+      "init_patch": 0.449999988,
+      "init_circuit": 0.449999988
+    },
+    {
+      "index": 98,
+      "id": "ch2_pwm_depth",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 99,
+      "id": "ch2_feet",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 100,
+      "id": "ch2_hpf_cutoff",
+      "init_patch": 30,
+      "init_circuit": 30
+    },
+    {
+      "index": 101,
+      "id": "ch2_hpf_res",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 102,
+      "id": "ch2_hpf_on",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 103,
+      "id": "ch2_lpf_cutoff",
+      "init_patch": 5500,
+      "init_circuit": 5000
+    },
+    {
+      "index": 104,
+      "id": "ch2_lpf_res",
+      "init_patch": 0.100000001,
+      "init_circuit": 0.100000001
+    },
+    {
+      "index": 105,
+      "id": "ch2_lpf_on",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 106,
+      "id": "ch2_f_il",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 107,
+      "id": "ch2_f_al",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 108,
+      "id": "ch2_f_a",
+      "init_patch": 0.00999999978,
+      "init_circuit": 0.00999999978
+    },
+    {
+      "index": 109,
+      "id": "ch2_f_d",
+      "init_patch": 0.529999971,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 110,
+      "id": "ch2_f_r",
+      "init_patch": 0.376000017,
+      "init_circuit": 0.400000006
+    },
+    {
+      "index": 111,
+      "id": "ch2_vcf_level",
+      "init_patch": 0.800000012,
+      "init_circuit": 0.800000012
+    },
+    {
+      "index": 112,
+      "id": "ch2_v_a",
+      "init_patch": 0.00499999989,
+      "init_circuit": 0.00499999989
+    },
+    {
+      "index": 113,
+      "id": "ch2_v_d",
+      "init_patch": 0.529999971,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 114,
+      "id": "ch2_v_s",
+      "init_patch": 0.800000012,
+      "init_circuit": 0.800000012
+    },
+    {
+      "index": 115,
+      "id": "ch2_v_r",
+      "init_patch": 0.328999996,
+      "init_circuit": 0.349999994
+    },
+    {
+      "index": 116,
+      "id": "ch2_v_level",
+      "init_patch": 0.699999988,
+      "init_circuit": 0.699999988
+    },
+    {
+      "index": 117,
+      "id": "ch2_init_brill",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 118,
+      "id": "ch2_init_level",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 119,
+      "id": "ch2_after_brill",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 120,
+      "id": "ch2_after_level",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 121,
+      "id": "ch2_pan",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 122,
+      "id": "sub_at_vcf",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 123,
+      "id": "sub_original_mode",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 124,
+      "id": "sub_original_function",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 125,
+      "id": "sub_original_speed",
+      "init_patch": 5.5,
+      "init_circuit": 5.5
+    },
+    {
+      "index": 126,
+      "id": "sub_ext_level",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 127,
+      "id": "kbd_brilliance_low",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 128,
+      "id": "kbd_brilliance_high",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 129,
+      "id": "kbd_level_low",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 130,
+      "id": "kbd_level_high",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 131,
+      "id": "footswitch_plugged",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 132,
+      "id": "footswitch_pressed",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 133,
+      "id": "sustain_assign",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 134,
+      "id": "glide_assign",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 135,
+      "id": "foot_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 136,
+      "id": "output_level",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 137,
+      "id": "parity_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 138,
+      "id": "source_performance",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 139,
+      "id": "drift_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 140,
+      "id": "oversampling",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 141,
+      "id": "output_jack",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 142,
+      "id": "kas_scan_timing",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 143,
+      "id": "velocity_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 144,
+      "id": "pressure_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 145,
+      "id": "pressure_threshold",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 146,
+      "id": "ribbon_cc_enable",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 147,
+      "id": "ribbon_cc",
+      "init_patch": 16,
+      "init_circuit": 16
+    },
+    {
+      "index": 148,
+      "id": "tuning_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 149,
+      "id": "voice_mode",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 150,
+      "id": "unison_detune",
+      "init_patch": 10,
+      "init_circuit": 10
+    },
+    {
+      "index": 151,
+      "id": "lfo1_wave",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 152,
+      "id": "lfo2_wave",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 153,
+      "id": "lfo3_wave",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 154,
+      "id": "mseg1_rate",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 155,
+      "id": "mseg2_rate",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 156,
+      "id": "mseg3_rate",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 157,
+      "id": "mod1_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 158,
+      "id": "mod2_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 159,
+      "id": "mod3_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 160,
+      "id": "mod4_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 161,
+      "id": "mod5_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 162,
+      "id": "mod6_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 163,
+      "id": "mod7_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 164,
+      "id": "mod8_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 165,
+      "id": "mod9_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 166,
+      "id": "mod10_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 167,
+      "id": "mod11_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 168,
+      "id": "mod12_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 169,
+      "id": "mod13_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 170,
+      "id": "mod14_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 171,
+      "id": "mod15_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 172,
+      "id": "mod16_amount",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 173,
+      "id": "mod_velocity_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 174,
+      "id": "mod_pressure_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 175,
+      "id": "mod_wheel_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 176,
+      "id": "mod_key_curve",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 177,
+      "id": "fx1_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 178,
+      "id": "fx1_param_a",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 179,
+      "id": "fx1_param_b",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 180,
+      "id": "fx1_oversampling",
+      "init_patch": 2,
+      "init_circuit": 2
+    },
+    {
+      "index": 181,
+      "id": "fx2_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 182,
+      "id": "fx2_param_a",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 183,
+      "id": "fx2_param_b",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 184,
+      "id": "fx2_oversampling",
+      "init_patch": 2,
+      "init_circuit": 2
+    },
+    {
+      "index": 185,
+      "id": "fx3_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 186,
+      "id": "fx3_param_a",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 187,
+      "id": "fx3_param_b",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 188,
+      "id": "fx3_oversampling",
+      "init_patch": 2,
+      "init_circuit": 2
+    },
+    {
+      "index": 189,
+      "id": "fx_gain_comp",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 190,
+      "id": "body1_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 191,
+      "id": "body1_mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 192,
+      "id": "body1_brightness",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 193,
+      "id": "body1_decay",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 194,
+      "id": "body2_model",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 195,
+      "id": "body2_mix",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 196,
+      "id": "body2_brightness",
+      "init_patch": 0.5,
+      "init_circuit": 0.5
+    },
+    {
+      "index": 197,
+      "id": "body2_decay",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 198,
+      "id": "body1_size",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 199,
+      "id": "body2_size",
+      "init_patch": 1,
+      "init_circuit": 1
+    },
+    {
+      "index": 200,
+      "id": "body1_variant",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 201,
+      "id": "body2_variant",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 202,
+      "id": "body1_material",
+      "init_patch": 0,
+      "init_circuit": 0
+    },
+    {
+      "index": 203,
+      "id": "body2_material",
+      "init_patch": 0,
+      "init_circuit": 0
+    }
+  ]
+}

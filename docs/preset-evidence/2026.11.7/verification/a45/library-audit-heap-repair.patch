@@ -1,0 +1,39 @@
+diff --git a/tests/LibraryAuditTests.cpp b/tests/LibraryAuditTests.cpp
+index efb05d8c..29be727b 100644
+--- a/tests/LibraryAuditTests.cpp
++++ b/tests/LibraryAuditTests.cpp
+@@ -13,6 +13,7 @@
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
++#include <memory>
+ #include <mutex>
+ #include <set>
+ #include <string>
+@@ -125,13 +126,15 @@ std::vector<int> phraseNotes(const std::string& category)
+ double dbfs(double x) { return 20.0 * std::log10(std::max(x, 1.0e-12)); }
+ 
+ // Renders one program as a musician would audition it, then a worst-case chord.
++// Keep each fresh engine off the helper thread's limited stack in this offline audit.
+ Level measure(const FactoryPreset& preset)
+ {
+     Level out;
+     std::vector<float> block(512 * 2);
+     const int window = (int) (0.05 * kSampleRate);
+     {
+-        Engine e;
++        const auto engine = std::make_unique<Engine>();
++        auto& e = *engine;
+         e.prepare(kSampleRate);
+         e.setParams(preset.values);
+         out.circuit = e.getRenderPolicy() == RenderPolicy::sourcePerformance;
+@@ -169,7 +172,8 @@ Level measure(const FactoryPreset& preset)
+         }
+     }
+     {
+-        Engine e;
++        const auto engine = std::make_unique<Engine>();
++        auto& e = *engine;
+         e.prepare(kSampleRate);
+         e.setParams(preset.values);
+         const int notes[8] = { 36, 43, 48, 55, 60, 64, 67, 72 };

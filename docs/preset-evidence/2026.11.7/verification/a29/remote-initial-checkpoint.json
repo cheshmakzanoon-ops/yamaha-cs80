@@ -1,0 +1,690 @@
+{
+  "observed_at_utc": "2026-11-24T12:04:30Z",
+  "note": "A29 initial authenticated collection checkpoint; superseded by later actual job/artifact records. Not native acceptance.",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "attempt": 1,
+  "jobs_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/attempts/1/jobs?per_page=100",
+  "jobs": {
+    "total_count": 4,
+    "jobs": [
+      {
+        "id": 138415960660,
+        "run_id": 45385716988,
+        "workflow_name": "build",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVaLxy88AAAAgOjvyVA",
+        "head_sha": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138415960660",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415960660",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-11-24T11:36:24Z",
+        "started_at": "2026-11-24T11:37:40Z",
+        "completed_at": null,
+        "name": "Windows / VST3 + Standalone",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-24T11:37:41Z",
+            "completed_at": "2026-11-24T11:37:42Z"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-24T11:37:42Z",
+            "completed_at": "2026-11-24T11:37:56Z"
+          },
+          {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-24T11:37:56Z",
+            "completed_at": "2026-11-24T11:40:39Z"
+          },
+          {
+            "name": "Report CMake failure",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 4,
+            "started_at": "2026-11-24T11:40:39Z",
+            "completed_at": "2026-11-24T11:40:39Z"
+          },
+          {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T11:40:39Z",
+            "completed_at": "2026-11-24T11:40:39Z"
+          },
+          {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T11:40:39Z",
+            "completed_at": "2026-11-24T11:56:20Z"
+          },
+          {
+            "name": "Test",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 7,
+            "started_at": "2026-11-24T11:56:20Z",
+            "completed_at": null
+          },
+          {
+            "name": "Upload Windows VST3",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Package Windows VST3 and Standalone",
+            "status": "pending",
+            "conclusion": null,
+            "number": 9,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload Windows install bundle",
+            "status": "pending",
+            "conclusion": null,
+            "number": 10,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload test and JUCE source evidence",
+            "status": "pending",
+            "conclusion": null,
+            "number": 11,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Run actions/checkout@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 22,
+            "started_at": null,
+            "completed_at": null
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138415960660",
+        "labels": [
+          "windows-2022"
+        ],
+        "runner_id": 1000045066,
+        "runner_name": "GitHub Actions 1000045066",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 138415960996,
+        "run_id": 45385716988,
+        "workflow_name": "build",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVaLxy88AAAAgOjvzpA",
+        "head_sha": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138415960996",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415960996",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-11-24T11:36:24Z",
+        "started_at": "2026-11-24T11:40:53Z",
+        "completed_at": null,
+        "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-24T11:40:53Z",
+            "completed_at": "2026-11-24T11:40:56Z"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-24T11:40:56Z",
+            "completed_at": "2026-11-24T11:41:13Z"
+          },
+          {
+            "name": "Record native platform",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-24T11:41:13Z",
+            "completed_at": "2026-11-24T11:41:14Z"
+          },
+          {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-24T11:41:14Z",
+            "completed_at": "2026-11-24T11:43:12Z"
+          },
+          {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T11:43:12Z",
+            "completed_at": "2026-11-24T11:43:12Z"
+          },
+          {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T11:43:12Z",
+            "completed_at": "2026-11-24T11:51:12Z"
+          },
+          {
+            "name": "Test",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 7,
+            "started_at": "2026-11-24T11:51:12Z",
+            "completed_at": null
+          },
+          {
+            "name": "Fetch pluginval 1.0.4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Register built AU",
+            "status": "pending",
+            "conclusion": null,
+            "number": 9,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate VST3 with pluginval",
+            "status": "pending",
+            "conclusion": null,
+            "number": 10,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU with pluginval",
+            "status": "pending",
+            "conclusion": null,
+            "number": 11,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU with pluginval GUI",
+            "status": "pending",
+            "conclusion": null,
+            "number": 12,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU GUI regression seed 0x3c99748",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Package native macOS VST3, AU and Standalone",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload native macOS install bundle",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "AU registration diagnostics",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Report pluginval failure",
+            "status": "pending",
+            "conclusion": null,
+            "number": 18,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload pluginval reports",
+            "status": "pending",
+            "conclusion": null,
+            "number": 19,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload test and JUCE source evidence",
+            "status": "pending",
+            "conclusion": null,
+            "number": 20,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Run actions/checkout@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 40,
+            "started_at": null,
+            "completed_at": null
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138415960996",
+        "labels": [
+          "macos-15-intel"
+        ],
+        "runner_id": 1000045080,
+        "runner_name": "GitHub Actions 1000045080",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 138415961141,
+        "run_id": 45385716988,
+        "workflow_name": "build",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVaLxy88AAAAgOjv0NQ",
+        "head_sha": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138415961141",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415961141",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-11-24T11:36:25Z",
+        "started_at": "2026-11-24T11:38:59Z",
+        "completed_at": null,
+        "name": "Linux / VST3 + Standalone",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-24T11:38:59Z",
+            "completed_at": "2026-11-24T11:39:01Z"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-24T11:39:01Z",
+            "completed_at": "2026-11-24T11:39:10Z"
+          },
+          {
+            "name": "Install build dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-24T11:39:10Z",
+            "completed_at": "2026-11-24T11:39:55Z"
+          },
+          {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-24T11:39:55Z",
+            "completed_at": "2026-11-24T11:40:53Z"
+          },
+          {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T11:40:53Z",
+            "completed_at": "2026-11-24T11:40:53Z"
+          },
+          {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T11:40:53Z",
+            "completed_at": "2026-11-24T11:49:09Z"
+          },
+          {
+            "name": "Test",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 7,
+            "started_at": "2026-11-24T11:49:09Z",
+            "completed_at": null
+          },
+          {
+            "name": "Capture curated preset auditions",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload curated preset auditions",
+            "status": "pending",
+            "conclusion": null,
+            "number": 9,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload Linux VST3",
+            "status": "pending",
+            "conclusion": null,
+            "number": 10,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Render demo and screenshots",
+            "status": "pending",
+            "conclusion": null,
+            "number": 11,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload render artifacts",
+            "status": "pending",
+            "conclusion": null,
+            "number": 12,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Package Linux VST3 and Standalone",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload Linux install bundle",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload test and JUCE source evidence",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Run actions/checkout@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 30,
+            "started_at": null,
+            "completed_at": null
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138415961141",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000045071,
+        "runner_name": "GitHub Actions 1000045071",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 138415961176,
+        "run_id": 45385716988,
+        "workflow_name": "build",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVaLxy88AAAAgOjv0WA",
+        "head_sha": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/138415961176",
+        "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415961176",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-11-24T11:36:25Z",
+        "started_at": "2026-11-24T11:38:02Z",
+        "completed_at": null,
+        "name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-24T11:38:02Z",
+            "completed_at": "2026-11-24T11:38:03Z"
+          },
+          {
+            "name": "Run actions/checkout@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-24T11:38:03Z",
+            "completed_at": "2026-11-24T11:38:11Z"
+          },
+          {
+            "name": "Record native platform",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-24T11:38:12Z",
+            "completed_at": "2026-11-24T11:38:12Z"
+          },
+          {
+            "name": "Configure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-24T11:38:12Z",
+            "completed_at": "2026-11-24T11:38:55Z"
+          },
+          {
+            "name": "Verify configured JUCE source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-24T11:38:55Z",
+            "completed_at": "2026-11-24T11:38:56Z"
+          },
+          {
+            "name": "Build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-24T11:38:56Z",
+            "completed_at": "2026-11-24T11:42:54Z"
+          },
+          {
+            "name": "Test",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 7,
+            "started_at": "2026-11-24T11:42:54Z",
+            "completed_at": null
+          },
+          {
+            "name": "Fetch pluginval 1.0.4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Register built AU",
+            "status": "pending",
+            "conclusion": null,
+            "number": 9,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate VST3 with pluginval",
+            "status": "pending",
+            "conclusion": null,
+            "number": 10,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU with pluginval",
+            "status": "pending",
+            "conclusion": null,
+            "number": 11,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU with pluginval GUI",
+            "status": "pending",
+            "conclusion": null,
+            "number": 12,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Validate AU GUI regression seed 0x3c99748",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Package native macOS VST3, AU and Standalone",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload native macOS install bundle",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "AU registration diagnostics",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Report pluginval failure",
+            "status": "pending",
+            "conclusion": null,
+            "number": 18,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload pluginval reports",
+            "status": "pending",
+            "conclusion": null,
+            "number": 19,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Upload test and JUCE source evidence",
+            "status": "pending",
+            "conclusion": null,
+            "number": 20,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Run actions/checkout@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 40,
+            "started_at": null,
+            "completed_at": null
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/138415961176",
+        "labels": [
+          "macos-15"
+        ],
+        "runner_id": 1000045069,
+        "runner_name": "GitHub Actions 1000045069",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  },
+  "artifacts_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/artifacts?per_page=100",
+  "artifacts": {
+    "total_count": 0,
+    "artifacts": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "cs80-a45-normal-audit-v1",
+  "command": [
+    "/tmp/cs80-a45-1cee5a/fixed/library-audit-fixed"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 345.03846451100253,
+  "stack_rlimit_unchanged": [
+    8388608,
+    -1
+  ],
+  "library_audit_data_only": false,
+  "library_audit_verbose": false,
+  "constrained_stack": false,
+  "preload_probe": false,
+  "executable_sha256": "7de82ccc83c8702420e8e1482a4a8567cace7e3135c964db5a81dd9717c207b8",
+  "test_source_sha256": "958e67fc42fa3438c5dd47425f9f4dc8012650e44d814283aa0e3d2bbc4f69cd",
+  "core_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "scope": "Ordinary Linux GCC14.2 Release execution of complete existing audit linked against unchanged frozen core; not native Intel acceptance.",
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

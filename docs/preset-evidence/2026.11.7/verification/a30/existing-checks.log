@@ -1,0 +1,19 @@
+test_all_four_native_header_targets (a30_reused_a41_tests.InstallArtifactTests.test_all_four_native_header_targets) ... ok
+test_coherent_wrong_cpu_on_each_target (a30_reused_a41_tests.InstallArtifactTests.test_coherent_wrong_cpu_on_each_target) ... ok
+test_corrupt_inner_payload_rejected_with_matching_outer_digest (a30_reused_a41_tests.InstallArtifactTests.test_corrupt_inner_payload_rejected_with_matching_outer_digest) ... ok
+test_duplicate_json_keys_rejected (a30_reused_a41_tests.InstallArtifactTests.test_duplicate_json_keys_rejected) ... ok
+test_extra_outer_member_rejected (a30_reused_a41_tests.InstallArtifactTests.test_extra_outer_member_rejected) ... ok
+test_failed_run_context_never_becomes_native_pass (a30_reused_a41_tests.InstallArtifactTests.test_failed_run_context_never_becomes_native_pass) ... ok
+test_hash_and_inspection_share_external_snapshots (a30_reused_a41_tests.InstallArtifactTests.test_hash_and_inspection_share_external_snapshots) ... ok
+test_metadata_identity_mutations (a30_reused_a41_tests.InstallArtifactTests.test_metadata_identity_mutations) ... ok
+test_nonregular_archive_rejected (a30_reused_a41_tests.InstallArtifactTests.test_nonregular_archive_rejected) ... ok
+test_report_publication_refuses_overwrite (a30_reused_a41_tests.InstallArtifactTests.test_report_publication_refuses_overwrite) ... ok
+test_revision_must_match_exact_committed_source (a30_reused_a41_tests.InstallArtifactTests.test_revision_must_match_exact_committed_source) ... ok
+test_wrong_mode (a30_source_bundle_tests.VerificationTests.test_wrong_mode) ... ok
+test_virtual_links (a30_source_bundle_tests.VerificationTests.test_virtual_links) ... ok
+test_wrong_image_kind (a30_source_header_tests.IdentityTests.test_wrong_image_kind) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.062s
+
+OK

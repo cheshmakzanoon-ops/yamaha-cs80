@@ -1,0 +1,77 @@
+{
+  "working_directory": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "environment": {
+    "TMPDIR": "/tmp/cs80-a30-1cee5a",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "commands": [
+    {
+      "purpose": "Actual ARM installation archive byte inspection",
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "--revision",
+        "2026.11.7",
+        "--run-id",
+        "45385716988",
+        "--attempt",
+        "1",
+        "--run-api",
+        "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/run-api-at-platform-completion.json",
+        "--platform",
+        "macos",
+        "--architecture",
+        "arm64",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-install.zip",
+        "--artifact-api",
+        "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-arm64/install-api.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/verification/a30/macos-arm64-install-acceptance.json"
+      ],
+      "exit_code": 0,
+      "result": "artifact_bytes_verified"
+    },
+    {
+      "purpose": "Source-specific guide and notice supplement",
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.7/verification/a30/inspect-packaged-docs.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "--archive",
+        "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-install.zip",
+        "--acceptance",
+        "docs/preset-evidence/2026.11.7/verification/a30/macos-arm64-install-acceptance.json",
+        "--out",
+        "docs/preset-evidence/2026.11.7/verification/a30/macos-arm64-docs-and-notices.json"
+      ],
+      "exit_code": 0,
+      "result": "source_specific_docs_and_notices_verified"
+    },
+    {
+      "purpose": "Reuse 11 A41 tests and three focused source-pinned methods",
+      "argv": [
+        "python3",
+        "docs/preset-evidence/2026.11.7/verification/a30/rerun-existing-checks.py",
+        "--repo",
+        "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+        "--source",
+        "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "--revision",
+        "2026.11.7",
+        "--out-dir",
+        "docs/preset-evidence/2026.11.7/verification/a30"
+      ],
+      "exit_code": 0,
+      "result": "14 tests passed; zero failures; zero errors"
+    }
+  ],
+  "scope": "Executed locally against existing supplied immutable source/archive receipts; no native product execution or release qualification."
+}

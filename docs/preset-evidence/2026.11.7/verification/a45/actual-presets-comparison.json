@@ -1,0 +1,112 @@
+{
+  "schema": "cs80-a45-actual-preset-comparison-v1",
+  "core_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "core_objects": [
+    {
+      "name": "Engine.o",
+      "sha256": "906ea2b493abe89b8755ef793ababa9a9bc6bbba1fe2d393e05d34cc303a6f7d"
+    },
+    {
+      "name": "EngineWscHeld.o",
+      "sha256": "cd0bdc7b874c524864baae021af6e54aab2ff1cf8dadd6061bff16945f3e1813"
+    },
+    {
+      "name": "FactoryPresets.o",
+      "sha256": "91e6717d397b01ac12117a5157dc7c17a02f710d029d4ba1be49d8df75c4ea6b"
+    },
+    {
+      "name": "Ig00156Batch.o",
+      "sha256": "41d002becca34f7a290822b629caf33937add39377e36c46f575bc972e03d077"
+    }
+  ],
+  "commands": [
+    {
+      "case": "original",
+      "phase": "compile",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-pthread",
+        "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+        "-I/tmp/cs80-a45-1cee5a/current/src",
+        "-DA45_AUDIT_SOURCE=\"/tmp/cs80-a45-1cee5a/current/tests/LibraryAuditTests.cpp\"",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a45/compare-actual-presets.cpp",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Engine.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/EngineWscHeld.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/FactoryPresets.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Ig00156Batch.o",
+        "-o",
+        "/tmp/cs80-a45-1cee5a/compare-original"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 4.246200509998744
+    },
+    {
+      "case": "original",
+      "phase": "run",
+      "command": [
+        "/tmp/cs80-a45-1cee5a/compare-original"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 10.279391224001301,
+      "stdout": "0\tTone I: String 1\tHardware Studies\t0x1.31c76cp-3\t0x1.c37e4312e9982p-5\t0x1.66d554p-2\t1\t1\n6\tTone I: Flute\tHardware Studies\t0x1.f71bep-3\t0x1.8d31ffc26ce8p-4\t0x1.0b03b6p-1\t1\t1\n10\tTone I: Clavichord 1\tHardware Studies\t0x1.562fe6p-3\t0x1.6dcd264302328p-5\t0x1.53a61ap-2\t1\t1\n14\tTone I: Organ 1\tHardware Studies\t0x1.669578p-3\t0x1.f9f08e47879e1p-5\t0x1.074894p-2\t1\t1\n38\tAnalog Piano\tKeys\t0x1.432decp-3\t0x1.6c45ec426029dp-5\t0x1.31d01cp-2\t1\t1\n221\tElectric Sequences 178\tSequences\t0x1.8c64e2p-3\t0x1.cf21a3bcdb585p-5\t0x1.a5bbbp-3\t1\t1\n222\tBrass Swell I\tBrass\t0x1.7ca0e4p-3\t0x1.94ce9419fa1bcp-5\t0x1.4e254p-2\t1\t1\n522\tInit Circuit\tInit\t0x1.419b34p-2\t0x1.2f7facaff565bp-4\t0x1.903222p-2\t1\t1\n",
+      "stderr": "",
+      "executable_sha256": "6e728430258f7b117793e3aeae29e7e0cae2c9141a38be5c26f56b3d20dddb01"
+    },
+    {
+      "case": "fixed",
+      "phase": "compile",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-pthread",
+        "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+        "-I/tmp/cs80-a45-1cee5a/current/src",
+        "-DA45_AUDIT_SOURCE=\"/tmp/cs80-a45-1cee5a/fixed/LibraryAuditTests.cpp\"",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a45/compare-actual-presets.cpp",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Engine.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/EngineWscHeld.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/FactoryPresets.o",
+        "/tmp/cs80-a45-1cee5a/current/diagnostic-build/Ig00156Batch.o",
+        "-o",
+        "/tmp/cs80-a45-1cee5a/compare-fixed"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 3.3683864359991276
+    },
+    {
+      "case": "fixed",
+      "phase": "run",
+      "command": [
+        "/tmp/cs80-a45-1cee5a/compare-fixed"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 11.133027193998714,
+      "stdout": "0\tTone I: String 1\tHardware Studies\t0x1.31c76cp-3\t0x1.c37e4312e9982p-5\t0x1.66d554p-2\t1\t1\n6\tTone I: Flute\tHardware Studies\t0x1.f71bep-3\t0x1.8d31ffc26ce8p-4\t0x1.0b03b6p-1\t1\t1\n10\tTone I: Clavichord 1\tHardware Studies\t0x1.562fe6p-3\t0x1.6dcd264302328p-5\t0x1.53a61ap-2\t1\t1\n14\tTone I: Organ 1\tHardware Studies\t0x1.669578p-3\t0x1.f9f08e47879e1p-5\t0x1.074894p-2\t1\t1\n38\tAnalog Piano\tKeys\t0x1.432decp-3\t0x1.6c45ec426029dp-5\t0x1.31d01cp-2\t1\t1\n221\tElectric Sequences 178\tSequences\t0x1.8c64e2p-3\t0x1.cf21a3bcdb585p-5\t0x1.a5bbbp-3\t1\t1\n222\tBrass Swell I\tBrass\t0x1.7ca0e4p-3\t0x1.94ce9419fa1bcp-5\t0x1.4e254p-2\t1\t1\n522\tInit Circuit\tInit\t0x1.419b34p-2\t0x1.2f7facaff565bp-4\t0x1.903222p-2\t1\t1\n",
+      "stderr": "",
+      "executable_sha256": "2212297db1ffad455ba9ad0aa5b4a3bb92711de11ee7461fde41ab38d0e45369"
+    }
+  ],
+  "compared_programs": 8,
+  "exact_hex_metric_equality": true,
+  "ordinary_stack_rlimit": [
+    8388608,
+    -1
+  ],
+  "constrained_stack": false,
+  "preload_probe": false,
+  "scope": "Actual original/curated preset phrase and stress measures, both linked to the same frozen core object bytes; not exhaustive PCM comparison or native platform acceptance.",
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false
+}

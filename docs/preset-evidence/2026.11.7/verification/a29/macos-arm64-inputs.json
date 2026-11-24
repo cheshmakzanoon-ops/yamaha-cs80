@@ -1,0 +1,23 @@
+{
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "tree": "469244af34233cfa145537266efd29024b66abba",
+    "run_id": 45385716988,
+    "attempt": 1
+  },
+  "native": [
+    {
+      "target": "macos-arm64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-native.zip",
+      "api": "../../ci/source-c5549f7d/macos-arm64/native-api.json",
+      "skip_review": "macos-arm64-skip-review.json"
+    }
+  ],
+  "validators": [
+    {
+      "target": "macos-arm64",
+      "archive": "/tmp/cs80-ci-1cee5a/c5549f7d/macos-arm64-validator.zip"
+    }
+  ]
+}

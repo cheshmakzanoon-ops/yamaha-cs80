@@ -1,0 +1,455 @@
+{
+  "status": "source_specific_docs_and_notices_verified",
+  "release_qualified": false,
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "revision": "2026.11.7",
+  "target": "macos-arm64",
+  "artifact_id": 14918661184,
+  "outer_bytes": 14989442,
+  "outer_sha256": "e5839607c8c49d7a9859aee896277c9773ae16359dff59e8b11d1564fa9da545",
+  "acceptance_receipt": {
+    "file": "macos-arm64-install-acceptance.json",
+    "bytes": 14204,
+    "sha256": "aeaa4649043924f3eeace5b556a5cdcb32fc8b3c0c3e390e77c2abf7972aeb8a"
+  },
+  "inventory_counts": {
+    "directory": 13,
+    "file": 26
+  },
+  "symlink_count": 0,
+  "required_metadata": [
+    {
+      "mode": "0o644",
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "3737acfb5f5e0ae92a31b1c3a7134705d8d12e1d837df4760bb656edc59aacfa",
+      "size": 19220,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "PRESET_GUIDE.md",
+      "sha256": "b7e66dc38c91bc0d7cc8b42234632661f028dc3f9c38d95551aab2d8bda9ab16",
+      "size": 44635,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "DISTRIBUTION_STATUS.md",
+      "sha256": "f52202a8e311d62cb1ad139c0f055a3cdc6dde12f80d8a9f061063fa20e30957",
+      "size": 40415,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "LICENSE",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "size": 34523,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-OFL.txt",
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+      "size": 4377,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-SOURCE.txt",
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+      "size": 994,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/MTS-ESP-LICENSE.txt",
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+      "size": 661,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-Copyright.txt",
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "size": 1314,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-SOURCE.txt",
+      "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+      "size": 667,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+      "size": 1406,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/JUCE-LICENSE.md",
+      "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+      "size": 4971,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "SOURCE.txt",
+      "sha256": "6ec530bf55276976c8641d356fbed6a1bec31b5683adcbd7247895191b614a98",
+      "size": 404,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "evidence/juce-provenance.txt",
+      "sha256": "6b4f70c73dcc66db4fdf38eeba7e087e809244f4c37e9d2ebea1d7e432843bdb",
+      "size": 612,
+      "type": "file"
+    }
+  ],
+  "source_comparisons": [
+    {
+      "source": "docs/INSTALL_AND_QUICKSTART.md",
+      "packaged": "INSTALL_AND_QUICKSTART.md",
+      "result": "PASS",
+      "comparison": "exact bytes from packaged_markdown at requested source",
+      "bytes": 19220,
+      "sha256": "3737acfb5f5e0ae92a31b1c3a7134705d8d12e1d837df4760bb656edc59aacfa",
+      "inline_link_targets": 11,
+      "local_bundled_guide_targets": [
+        "PRESET_GUIDE.md",
+        "PRESET_GUIDE.md"
+      ],
+      "source_pinned_link_targets": [
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/README.md#downloads",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PANIC_CONTROL.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/OUTPUT_METER.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PARITY_ISOLATION.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/performance/2026-10-30-source-performance/SUMMARY.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+      ],
+      "other_external_or_fragment_targets": [
+        "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+        "https://support.apple.com/en-ie/102239"
+      ]
+    },
+    {
+      "source": "docs/PRESET_GUIDE.md",
+      "packaged": "PRESET_GUIDE.md",
+      "result": "PASS",
+      "comparison": "exact bytes from packaged_markdown at requested source",
+      "bytes": 44635,
+      "sha256": "b7e66dc38c91bc0d7cc8b42234632661f028dc3f9c38d95551aab2d8bda9ab16",
+      "inline_link_targets": 79,
+      "local_bundled_guide_targets": [
+        "INSTALL_AND_QUICKSTART.md#one-circuit-instrument"
+      ],
+      "source_pinned_link_targets": [
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/README.md#downloads",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_6.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_5.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_4.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_3.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_2.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REFINEMENT_2026_11_1.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REVISION_2026_11.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Leads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/CuratedLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Brass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Strings.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Pads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Polysynth.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Keys.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Organ.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Winds.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Plucked.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Leads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bells.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Fx.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Modern.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Brass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Brass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Strings.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Pads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Pads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Keys.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Plucked.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md#string-bends-through-a-fixed-body",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Plucked.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Winds.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Organ.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Winds.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md#consistent-breath-contact-and-flutter-across-rates",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bells.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bells.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bells.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Bass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Fx.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Organ.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Pads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Brass.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Keys.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Polysynth.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Leads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/Engine.cpp",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/Params.h",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Modern.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Pads.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/curated/Fx.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PARITY_ISOLATION.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/OriginalCircuitLibrary.inc",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/Params.h",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/plugin/EvidenceRegister.h",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/Engine.cpp",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md#saved-sessions-and-factory-recall",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/core/FactoryPresets.h",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_2.md#saved-sessions-and-host-automation",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/CMakeLists.txt",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/src/tools/preset_capture.cpp",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/.github/workflows/build.yml",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/scripts/capture-factory-auditions.py",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.7/reviews/a09.md"
+      ],
+      "other_external_or_fragment_targets": [
+        "#recalling-a-revised-sound",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads"
+      ]
+    },
+    {
+      "source": "docs/CI_DISTRIBUTION_STATUS.md",
+      "packaged": "DISTRIBUTION_STATUS.md",
+      "result": "PASS",
+      "comparison": "exact bytes from packaged_markdown at requested source",
+      "bytes": 40415,
+      "sha256": "f52202a8e311d62cb1ad139c0f055a3cdc6dde12f80d8a9f061063fa20e30957",
+      "inline_link_targets": 85,
+      "local_bundled_guide_targets": [
+        "PRESET_GUIDE.md",
+        "INSTALL_AND_QUICKSTART.md",
+        "INSTALL_AND_QUICKSTART.md",
+        "INSTALL_AND_QUICKSTART.md"
+      ],
+      "source_pinned_link_targets": [
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_7.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_4.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/TEAM_REVIEW_2026_11_4.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_3.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/delivered-inventory-identity.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/source-fixture-correction.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/ci/source-cbbee6a/supporting-ci-final.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.3/ci/source-a81851b/supporting-ci-final.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/TEAM_REVIEW_2026_11_3.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/CIRCUIT_LIBRARY_2026_11_2.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/release-qualification.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.2/ci/source-9c0d2ba/audition/acceptance-summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/native-windows-x86_64.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/native-macos-arm64.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/native-macos-x86_64.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/release-qualification.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/final-install-artifacts.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/final-validator-payload-identity.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REFINEMENT_2026_11_1.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/TEAM_REVIEW_2026_11_1.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11.1/ci/teardown-source-audit.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REFINEMENT_2026_11_1.md",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/release-qualification.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/run-latest-attempt.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/final-install-artifacts.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/final-validator-payload-identity.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/final-download-links.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/preset-evidence/2026.11/ci/final-audition.json",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/c5549f7d095a5c5f49a5ad22ec0ccc819245d201/docs/release/RELEASE_QUALIFICATION.md"
+      ],
+      "other_external_or_fragment_targets": [
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788#artifacts",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863473",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799301",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799293",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45112404257",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14792445167.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791856136.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14791699516.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796735944.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14796467679.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761870353.zip"
+      ]
+    },
+    {
+      "source": "LICENSE",
+      "packaged": "LICENSE",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    {
+      "source": "assets/fonts/barlow-condensed/OFL.txt",
+      "packaged": "licenses/BarlowCondensed-OFL.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 4377,
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+    },
+    {
+      "source": "assets/fonts/barlow-condensed/SOURCE.txt",
+      "packaged": "licenses/BarlowCondensed-SOURCE.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 994,
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+    },
+    {
+      "source": "src/vendor/mts-esp/LICENSE",
+      "packaged": "licenses/MTS-ESP-LICENSE.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 661,
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+    },
+    {
+      "source": "src/vendor/libxml2/Copyright",
+      "packaged": "licenses/libxml2-Copyright.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 1314,
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+    },
+    {
+      "source": "src/vendor/libxml2/SOURCE.txt",
+      "packaged": "licenses/libxml2-SOURCE.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 667,
+      "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+    },
+    {
+      "source": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
+      "packaged": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "result": "PASS",
+      "comparison": "verbatim source bytes",
+      "bytes": 1406,
+      "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+    }
+  ],
+  "source_files": {
+    "scripts/package-ci-artifacts.py": {
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+    },
+    "docs/INSTALL_AND_QUICKSTART.md": {
+      "bytes": 18521,
+      "sha256": "c4a1397decd8e6e670b8713fbd05afb20ed6f319e2c8be094028684f8ed833a1"
+    },
+    "docs/PRESET_GUIDE.md": {
+      "bytes": 37423,
+      "sha256": "8cd25a3ad41da07e64ab3b5683801bc5131bae5d865933eafb2494054b57b18b"
+    },
+    "docs/CI_DISTRIBUTION_STATUS.md": {
+      "bytes": 35971,
+      "sha256": "c0070cc1258b2672549f02836d31291c2fd484df45519e66d96550ab03758686"
+    },
+    "LICENSE": {
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    "assets/fonts/barlow-condensed/OFL.txt": {
+      "bytes": 4377,
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+    },
+    "assets/fonts/barlow-condensed/SOURCE.txt": {
+      "bytes": 994,
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623"
+    },
+    "src/vendor/mts-esp/LICENSE": {
+      "bytes": 661,
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837"
+    },
+    "src/vendor/libxml2/Copyright": {
+      "bytes": 1314,
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626"
+    },
+    "src/vendor/libxml2/SOURCE.txt": {
+      "bytes": 667,
+      "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+    },
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt": {
+      "bytes": 1406,
+      "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894"
+    }
+  },
+  "juce_license": {
+    "path": "licenses/JUCE-LICENSE.md",
+    "bytes": 4971,
+    "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+    "independent_dependency_source_byte_comparison": false,
+    "provenance_boundary": "Pinned packager reads configured clean JUCE source LICENSE.md. Original source verification and unchanged build/package sequence are reviewed by A44; this supplement proves presence and inventoried bytes only."
+  },
+  "source_time_guides": "Exact c5549f7d source-time pending qualification guides, including historical .4 downloads, are retained. Existing external URLs are intentionally unchanged. This does not publish final online guides or qualify a download.",
+  "generic_helper_boundary": "A41 verifies complete declared inventory but does not require guides/notices or compare their content to source. This supplement adds those requirements for the checked actual bytes.",
+  "current_external_validator_requirement": {
+    "total": 15,
+    "linux": 3,
+    "windows": 2,
+    "macos_arm64": 5,
+    "macos_x86_64": 5,
+    "note": "A41 historical remaining_gates prose says 13; the current source workflow, not that prose, defines the .7 gates."
+  },
+  "script_sha256": "2f4c7584a2de26f7b1c2e205ed28c05cd75515ffca3094e760ac851bfb239132"
+}

@@ -1,0 +1,4772 @@
+{
+  "scope": "Local deterministic core captures; numerical coverage only, no listening approval, native qualification, stress bound or full-envelope claim.",
+  "sources": {
+    "published_4": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "baseline_6": "18711f93a39aa49f3d6f9a41784be456224facbe",
+    "current_7": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
+  },
+  "capture_method": {
+    "sample_rate": 48000,
+    "velocity_float32": 0.8000000119,
+    "pressure": 0,
+    "hold_seconds": 3,
+    "tail_seconds": 1,
+    "both_ranks": true,
+    "midi_note_counts_all_523": {
+      "48": 50,
+      "60": 380,
+      "67": 70,
+      "72": 23
+    },
+    "signal_columns_compared": [
+      "peak_dbfs",
+      "rms_dbfs",
+      "early_rms_dbfs",
+      "body_rms_dbfs",
+      "tail_rms_dbfs",
+      "peak_window_seconds",
+      "centroid_hz",
+      "low_power",
+      "mid_power",
+      "high_power",
+      "tilt",
+      "stereo_correlation"
+    ],
+    "excluded_from_signal_equality": [
+      "parameter_digest",
+      "safety_counts"
+    ],
+    "rms_dbfs_window_seconds": [
+      0,
+      4
+    ],
+    "early_rms_dbfs_window_seconds": [
+      0,
+      0.2
+    ],
+    "body_rms_dbfs_window_seconds": [
+      2.5,
+      3
+    ],
+    "tail_rms_dbfs_window_seconds": [
+      3.5,
+      4
+    ],
+    "centroid_definition": "Power-weighted stereo spectrum, 4096-point Hann window around each capture's loudest 50 ms held window; each capture selects its own window.",
+    "decibel_floor": -240,
+    "capture_source_sha256": {
+      "published_4": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "baseline_6": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "current_7": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883"
+    }
+  },
+  "accounting": {
+    "all_programs": 523,
+    "musical": 521,
+    "init": 2,
+    "original_address_musical": 221,
+    "curated_musical": 300,
+    "parameter_changes_beyond_conservative_level_pan": 493,
+    "active_additive_vca_baseline_only": 28,
+    "rank_baseline_only_by_category": {
+      "Bass": 19,
+      "Brass": 1,
+      "Hardware Studies": 3,
+      "Keys": 1,
+      "Plucked": 4
+    },
+    "new_7_recipe_edits": 0,
+    "changed_default_signal_vectors": 519,
+    "additional_pressure_required_programs": 2,
+    "union_musical_with_signal_change_evidence": 521,
+    "published4_current7_whole_bank_captures": 1046,
+    "whole_bank_audio_seconds": 4184,
+    "a23_pressure_extra_captures": 8,
+    "a23_pressure_extra_audio_seconds": 19.2,
+    "no_new_whole_bank_render_by_a33": true
+  },
+  "comparisons": {
+    "published_4_to_current_7": {
+      "before_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "after_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "metric_vector_changed_musical": 519,
+      "changed_host_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        441,
+        442,
+        443,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521
+      ],
+      "unchanged_all_programs": [
+        {
+          "host_index": 43,
+          "name": "Init Patch",
+          "category": "Init"
+        },
+        {
+          "host_index": 179,
+          "name": "Electric Leads 136",
+          "category": "Leads"
+        },
+        {
+          "host_index": 444,
+          "name": "Pressure Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 522,
+          "name": "Init Circuit",
+          "category": "Init"
+        }
+      ],
+      "changed_by_category": {
+        "Bass": 50,
+        "Bells": 23,
+        "Brass": 59,
+        "FX": 46,
+        "Hardware Studies": 22,
+        "Keys": 45,
+        "Leads": 54,
+        "Organ": 15,
+        "Pads": 63,
+        "Plucked": 17,
+        "Polysynth": 25,
+        "Sequences": 27,
+        "Strings": 59,
+        "Winds": 14
+      },
+      "distributions_over_519_sounding_musical_programs": {
+        "peak_dbfs": {
+          "n": 519,
+          "min": -7.4046700199999975,
+          "p10": -3.0824660679999996,
+          "median": -1.1176230700000005,
+          "p90": -0.02917110800000061,
+          "max": 8.52397735,
+          "negative": 475,
+          "zero": 4,
+          "positive": 40
+        },
+        "rms_dbfs": {
+          "n": 519,
+          "min": -9.623121430000001,
+          "p10": -2.8787143780000006,
+          "median": -1.01188475,
+          "p90": 0.04983025399999533,
+          "max": 4.0726980600000005,
+          "negative": 455,
+          "zero": 0,
+          "positive": 64
+        },
+        "early_rms_dbfs": {
+          "n": 519,
+          "min": -9.508656210000002,
+          "p10": -3.115251996000002,
+          "median": -1.1695717300000013,
+          "p90": -0.0062781000000022725,
+          "max": 3.271249130000001,
+          "negative": 468,
+          "zero": 0,
+          "positive": 51
+        },
+        "body_rms_dbfs": {
+          "n": 519,
+          "min": -123.90038403999999,
+          "p10": -3.0716823580000003,
+          "median": -0.5778960199999972,
+          "p90": 5.767809172,
+          "max": 120.04631568,
+          "negative": 362,
+          "zero": 12,
+          "positive": 145
+        },
+        "tail_rms_dbfs": {
+          "n": 519,
+          "min": -159.28421365,
+          "p10": -7.529487868000007,
+          "median": -0.4853369799999996,
+          "p90": 5.814268059999983,
+          "max": 125.03505734000001,
+          "negative": 385,
+          "zero": 18,
+          "positive": 116
+        },
+        "peak_window_seconds": {
+          "n": 519,
+          "min": -2.3,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.05,
+          "max": 2.85,
+          "negative": 21,
+          "zero": 443,
+          "positive": 55
+        },
+        "centroid_hz": {
+          "n": 519,
+          "min": -292.858148,
+          "p10": -8.334850539999888,
+          "median": 0.002893700000015542,
+          "p90": 13.717918240000015,
+          "max": 1060.5633904,
+          "negative": 242,
+          "zero": 1,
+          "positive": 276
+        },
+        "low_power": {
+          "n": 519,
+          "min": -0.8866126273980001,
+          "p10": -0.010533865920000007,
+          "median": 2.280999999992872e-07,
+          "p90": 0.007686510460000017,
+          "max": 0.9623052106468001,
+          "negative": 246,
+          "zero": 5,
+          "positive": 268
+        },
+        "mid_power": {
+          "n": 519,
+          "min": -0.9594185522900001,
+          "p10": -0.008070082259999988,
+          "median": -1.685099999995665e-06,
+          "p90": 0.01111624477999997,
+          "max": 0.7039849418999999,
+          "negative": 273,
+          "zero": 0,
+          "positive": 246
+        },
+        "high_power": {
+          "n": 519,
+          "min": -0.0899597788,
+          "p10": -0.0016170849560000037,
+          "median": 4.915819999998759e-08,
+          "p90": 0.001656794156000006,
+          "max": 0.186731543595,
+          "negative": 243,
+          "zero": 0,
+          "positive": 276
+        },
+        "tilt": {
+          "n": 519,
+          "min": -0.031261170520000006,
+          "p10": -0.0004641473103999996,
+          "median": -7.821249999994534e-07,
+          "p90": 0.0005696841339999992,
+          "max": 0.0441900395,
+          "negative": 280,
+          "zero": 0,
+          "positive": 239
+        },
+        "stereo_correlation": {
+          "n": 519,
+          "min": -0.007163631399999981,
+          "p10": -5.124036000001552e-05,
+          "median": -2.9999991379980884e-10,
+          "p90": 1.853640000026857e-06,
+          "max": 0.029338128599999957,
+          "negative": 287,
+          "zero": 71,
+          "positive": 161
+        }
+      },
+      "centroid_relative_percent": {
+        "n": 519,
+        "min": -48.44657340591599,
+        "p10": -1.7524781756383476,
+        "median": 0.0008987425946793692,
+        "p90": 2.3499189244471177,
+        "max": 311.73817412909654,
+        "negative": 242,
+        "zero": 1,
+        "positive": 276
+      }
+    },
+    "published_4_to_baseline_6": {
+      "before_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "after_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "metric_vector_changed_musical": 519,
+      "changed_host_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        441,
+        442,
+        443,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521
+      ],
+      "unchanged_all_programs": [
+        {
+          "host_index": 43,
+          "name": "Init Patch",
+          "category": "Init"
+        },
+        {
+          "host_index": 179,
+          "name": "Electric Leads 136",
+          "category": "Leads"
+        },
+        {
+          "host_index": 444,
+          "name": "Pressure Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 522,
+          "name": "Init Circuit",
+          "category": "Init"
+        }
+      ],
+      "changed_by_category": {
+        "Bass": 50,
+        "Bells": 23,
+        "Brass": 59,
+        "FX": 46,
+        "Hardware Studies": 22,
+        "Keys": 45,
+        "Leads": 54,
+        "Organ": 15,
+        "Pads": 63,
+        "Plucked": 17,
+        "Polysynth": 25,
+        "Sequences": 27,
+        "Strings": 59,
+        "Winds": 14
+      },
+      "distributions_over_519_sounding_musical_programs": {
+        "peak_dbfs": {
+          "n": 519,
+          "min": -7.4046700199999975,
+          "p10": -3.065089441999999,
+          "median": -1.1175616599999998,
+          "p90": -0.02917110800000061,
+          "max": 8.52397735,
+          "negative": 475,
+          "zero": 4,
+          "positive": 40
+        },
+        "rms_dbfs": {
+          "n": 519,
+          "min": -9.623121430000001,
+          "p10": -2.8787143780000006,
+          "median": -1.01188475,
+          "p90": 0.04983025399999533,
+          "max": 4.0726980600000005,
+          "negative": 455,
+          "zero": 0,
+          "positive": 64
+        },
+        "early_rms_dbfs": {
+          "n": 519,
+          "min": -9.508656210000002,
+          "p10": -3.115251996000002,
+          "median": -1.1695717300000013,
+          "p90": -0.0062781000000022725,
+          "max": 3.271249130000001,
+          "negative": 468,
+          "zero": 0,
+          "positive": 51
+        },
+        "body_rms_dbfs": {
+          "n": 519,
+          "min": -123.90038403999999,
+          "p10": -3.0716823580000003,
+          "median": -0.5778960199999972,
+          "p90": 5.773726900000003,
+          "max": 120.04631568,
+          "negative": 362,
+          "zero": 12,
+          "positive": 145
+        },
+        "tail_rms_dbfs": {
+          "n": 519,
+          "min": -159.28421365,
+          "p10": -7.529487868000007,
+          "median": -0.4853369799999996,
+          "p90": 5.814241340000001,
+          "max": 125.03505734000001,
+          "negative": 385,
+          "zero": 18,
+          "positive": 116
+        },
+        "peak_window_seconds": {
+          "n": 519,
+          "min": -2.3,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.05,
+          "max": 2.85,
+          "negative": 21,
+          "zero": 443,
+          "positive": 55
+        },
+        "centroid_hz": {
+          "n": 519,
+          "min": -292.858148,
+          "p10": -8.334850539999888,
+          "median": 0.002895499999965523,
+          "p90": 13.717918240000015,
+          "max": 1060.5633904,
+          "negative": 241,
+          "zero": 1,
+          "positive": 277
+        },
+        "low_power": {
+          "n": 519,
+          "min": -0.8866126273980001,
+          "p10": -0.010533865920000007,
+          "median": 1.2319999997956188e-07,
+          "p90": 0.007683903740000031,
+          "max": 0.9623052106468001,
+          "negative": 250,
+          "zero": 5,
+          "positive": 264
+        },
+        "mid_power": {
+          "n": 519,
+          "min": -0.9594185522900001,
+          "p10": -0.008070082259999988,
+          "median": -1.685099999995665e-06,
+          "p90": 0.01111624477999997,
+          "max": 0.7039849418999999,
+          "negative": 274,
+          "zero": 0,
+          "positive": 245
+        },
+        "high_power": {
+          "n": 519,
+          "min": -0.0899597788,
+          "p10": -0.0016170849560000037,
+          "median": 3.1900384999999833e-07,
+          "p90": 0.001656794156000006,
+          "max": 0.186731543595,
+          "negative": 237,
+          "zero": 0,
+          "positive": 282
+        },
+        "tilt": {
+          "n": 519,
+          "min": -0.031261170520000006,
+          "p10": -0.0004641473103999996,
+          "median": -7.821249999994534e-07,
+          "p90": 0.0005696841339999992,
+          "max": 0.0441900395,
+          "negative": 280,
+          "zero": 0,
+          "positive": 239
+        },
+        "stereo_correlation": {
+          "n": 519,
+          "min": -0.007163631399999981,
+          "p10": -5.124036000001552e-05,
+          "median": -2.9999991379980884e-10,
+          "p90": 1.8775600000298092e-06,
+          "max": 0.029338128599999957,
+          "negative": 287,
+          "zero": 71,
+          "positive": 161
+        }
+      },
+      "centroid_relative_percent": {
+        "n": 519,
+        "min": -48.44657340591599,
+        "p10": -1.7039412836151535,
+        "median": 0.001093945870400681,
+        "p90": 2.3499189244471177,
+        "max": 311.73817412909654,
+        "negative": 241,
+        "zero": 1,
+        "positive": 277
+      }
+    },
+    "baseline_6_to_current_7": {
+      "before_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+      "after_source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+      "metric_vector_changed_musical": 67,
+      "changed_host_indices": [
+        10,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        32,
+        38,
+        98,
+        118,
+        119,
+        120,
+        123,
+        125,
+        127,
+        131,
+        134,
+        138,
+        141,
+        143,
+        144,
+        145,
+        150,
+        151,
+        156,
+        157,
+        265,
+        285,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        346,
+        349,
+        350,
+        352,
+        353,
+        354,
+        359,
+        388,
+        389,
+        390,
+        391,
+        395,
+        396,
+        397,
+        398,
+        399,
+        401,
+        402,
+        403,
+        408,
+        409,
+        410,
+        414,
+        416,
+        417,
+        419,
+        420,
+        426,
+        514
+      ],
+      "unchanged_all_programs": [
+        {
+          "host_index": 0,
+          "name": "Tone I: String 1",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 1,
+          "name": "Tone II: String 2",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 2,
+          "name": "Tone I: String 3",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 3,
+          "name": "Tone II: String 4",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 4,
+          "name": "Tone I: Brass 1",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 5,
+          "name": "Tone II: Brass 2",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 6,
+          "name": "Tone I: Flute",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 7,
+          "name": "Tone II: Brass 3",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 8,
+          "name": "Tone I: E. Piano",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 9,
+          "name": "Tone II: Bass",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 14,
+          "name": "Tone I: Organ 1",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 15,
+          "name": "Tone II: Organ 2",
+          "category": "Hardware Studies"
+        },
+        {
+          "host_index": 22,
+          "name": "Replicant Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 23,
+          "name": "Runner Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 24,
+          "name": "French Horn",
+          "category": "Brass"
+        },
+        {
+          "host_index": 25,
+          "name": "Breathing Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 26,
+          "name": "Cinema Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 27,
+          "name": "Glass Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 28,
+          "name": "Distant Oceans",
+          "category": "Strings"
+        },
+        {
+          "host_index": 29,
+          "name": "Dry Ensemble",
+          "category": "Strings"
+        },
+        {
+          "host_index": 30,
+          "name": "1982 Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 31,
+          "name": "Sweep VCA",
+          "category": "Pads"
+        },
+        {
+          "host_index": 33,
+          "name": "Dry Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 34,
+          "name": "Resonant Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 35,
+          "name": "Bass Stack",
+          "category": "Bass"
+        },
+        {
+          "host_index": 36,
+          "name": "Ribbon Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 37,
+          "name": "Metal Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 39,
+          "name": "Bright Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 40,
+          "name": "Ring Bell",
+          "category": "FX"
+        },
+        {
+          "host_index": 41,
+          "name": "Laser Sweep",
+          "category": "FX"
+        },
+        {
+          "host_index": 42,
+          "name": "Arp Motion",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 43,
+          "name": "Init Patch",
+          "category": "Init"
+        },
+        {
+          "host_index": 44,
+          "name": "Amber Brass 1",
+          "category": "Brass"
+        },
+        {
+          "host_index": 45,
+          "name": "Velvet Brass 2",
+          "category": "Brass"
+        },
+        {
+          "host_index": 46,
+          "name": "Distant Brass 3",
+          "category": "Brass"
+        },
+        {
+          "host_index": 47,
+          "name": "Neon Brass 4",
+          "category": "Brass"
+        },
+        {
+          "host_index": 48,
+          "name": "Hollow Brass 5",
+          "category": "Brass"
+        },
+        {
+          "host_index": 49,
+          "name": "Golden Brass 6",
+          "category": "Brass"
+        },
+        {
+          "host_index": 50,
+          "name": "Frozen Brass 7",
+          "category": "Brass"
+        },
+        {
+          "host_index": 51,
+          "name": "Electric Brass 8",
+          "category": "Brass"
+        },
+        {
+          "host_index": 52,
+          "name": "Midnight Brass 9",
+          "category": "Brass"
+        },
+        {
+          "host_index": 53,
+          "name": "Slow Brass 10",
+          "category": "Brass"
+        },
+        {
+          "host_index": 54,
+          "name": "Bright Brass 11",
+          "category": "Brass"
+        },
+        {
+          "host_index": 55,
+          "name": "Dark Brass 12",
+          "category": "Brass"
+        },
+        {
+          "host_index": 56,
+          "name": "Wide Brass 13",
+          "category": "Brass"
+        },
+        {
+          "host_index": 57,
+          "name": "Soft Brass 14",
+          "category": "Brass"
+        },
+        {
+          "host_index": 58,
+          "name": "Amber Brass 15",
+          "category": "Brass"
+        },
+        {
+          "host_index": 59,
+          "name": "Velvet Brass 16",
+          "category": "Brass"
+        },
+        {
+          "host_index": 60,
+          "name": "Distant Brass 17",
+          "category": "Brass"
+        },
+        {
+          "host_index": 61,
+          "name": "Neon Brass 18",
+          "category": "Brass"
+        },
+        {
+          "host_index": 62,
+          "name": "Hollow Brass 19",
+          "category": "Brass"
+        },
+        {
+          "host_index": 63,
+          "name": "Golden Brass 20",
+          "category": "Brass"
+        },
+        {
+          "host_index": 64,
+          "name": "Frozen Brass 21",
+          "category": "Brass"
+        },
+        {
+          "host_index": 65,
+          "name": "Electric Brass 22",
+          "category": "Brass"
+        },
+        {
+          "host_index": 66,
+          "name": "Amber Strings 23",
+          "category": "Strings"
+        },
+        {
+          "host_index": 67,
+          "name": "Velvet Strings 24",
+          "category": "Strings"
+        },
+        {
+          "host_index": 68,
+          "name": "Distant Strings 25",
+          "category": "Strings"
+        },
+        {
+          "host_index": 69,
+          "name": "Neon Strings 26",
+          "category": "Strings"
+        },
+        {
+          "host_index": 70,
+          "name": "Hollow Strings 27",
+          "category": "Strings"
+        },
+        {
+          "host_index": 71,
+          "name": "Golden Strings 28",
+          "category": "Strings"
+        },
+        {
+          "host_index": 72,
+          "name": "Frozen Strings 29",
+          "category": "Strings"
+        },
+        {
+          "host_index": 73,
+          "name": "Electric Strings 30",
+          "category": "Strings"
+        },
+        {
+          "host_index": 74,
+          "name": "Midnight Strings 31",
+          "category": "Strings"
+        },
+        {
+          "host_index": 75,
+          "name": "Slow Strings 32",
+          "category": "Strings"
+        },
+        {
+          "host_index": 76,
+          "name": "Bright Strings 33",
+          "category": "Strings"
+        },
+        {
+          "host_index": 77,
+          "name": "Dark Strings 34",
+          "category": "Strings"
+        },
+        {
+          "host_index": 78,
+          "name": "Wide Strings 35",
+          "category": "Strings"
+        },
+        {
+          "host_index": 79,
+          "name": "Soft Strings 36",
+          "category": "Strings"
+        },
+        {
+          "host_index": 80,
+          "name": "Amber Strings 37",
+          "category": "Strings"
+        },
+        {
+          "host_index": 81,
+          "name": "Velvet Strings 38",
+          "category": "Strings"
+        },
+        {
+          "host_index": 82,
+          "name": "Distant Strings 39",
+          "category": "Strings"
+        },
+        {
+          "host_index": 83,
+          "name": "Neon Strings 40",
+          "category": "Strings"
+        },
+        {
+          "host_index": 84,
+          "name": "Hollow Strings 41",
+          "category": "Strings"
+        },
+        {
+          "host_index": 85,
+          "name": "Golden Strings 42",
+          "category": "Strings"
+        },
+        {
+          "host_index": 86,
+          "name": "Frozen Strings 43",
+          "category": "Strings"
+        },
+        {
+          "host_index": 87,
+          "name": "Electric Strings 44",
+          "category": "Strings"
+        },
+        {
+          "host_index": 88,
+          "name": "Midnight Strings 45",
+          "category": "Strings"
+        },
+        {
+          "host_index": 89,
+          "name": "Slow Strings 46",
+          "category": "Strings"
+        },
+        {
+          "host_index": 90,
+          "name": "Amber Pads 47",
+          "category": "Pads"
+        },
+        {
+          "host_index": 91,
+          "name": "Velvet Pads 48",
+          "category": "Pads"
+        },
+        {
+          "host_index": 92,
+          "name": "Distant Pads 49",
+          "category": "Pads"
+        },
+        {
+          "host_index": 93,
+          "name": "Neon Pads 50",
+          "category": "Pads"
+        },
+        {
+          "host_index": 94,
+          "name": "Hollow Pads 51",
+          "category": "Pads"
+        },
+        {
+          "host_index": 95,
+          "name": "Golden Pads 52",
+          "category": "Pads"
+        },
+        {
+          "host_index": 96,
+          "name": "Frozen Pads 53",
+          "category": "Pads"
+        },
+        {
+          "host_index": 97,
+          "name": "Electric Pads 54",
+          "category": "Pads"
+        },
+        {
+          "host_index": 99,
+          "name": "Slow Pads 56",
+          "category": "Pads"
+        },
+        {
+          "host_index": 100,
+          "name": "Bright Pads 57",
+          "category": "Pads"
+        },
+        {
+          "host_index": 101,
+          "name": "Dark Pads 58",
+          "category": "Pads"
+        },
+        {
+          "host_index": 102,
+          "name": "Wide Pads 59",
+          "category": "Pads"
+        },
+        {
+          "host_index": 103,
+          "name": "Soft Pads 60",
+          "category": "Pads"
+        },
+        {
+          "host_index": 104,
+          "name": "Amber Pads 61",
+          "category": "Pads"
+        },
+        {
+          "host_index": 105,
+          "name": "Velvet Pads 62",
+          "category": "Pads"
+        },
+        {
+          "host_index": 106,
+          "name": "Distant Pads 63",
+          "category": "Pads"
+        },
+        {
+          "host_index": 107,
+          "name": "Neon Pads 64",
+          "category": "Pads"
+        },
+        {
+          "host_index": 108,
+          "name": "Hollow Pads 65",
+          "category": "Pads"
+        },
+        {
+          "host_index": 109,
+          "name": "Golden Pads 66",
+          "category": "Pads"
+        },
+        {
+          "host_index": 110,
+          "name": "Frozen Pads 67",
+          "category": "Pads"
+        },
+        {
+          "host_index": 111,
+          "name": "Electric Pads 68",
+          "category": "Pads"
+        },
+        {
+          "host_index": 112,
+          "name": "Midnight Pads 69",
+          "category": "Pads"
+        },
+        {
+          "host_index": 113,
+          "name": "Slow Pads 70",
+          "category": "Pads"
+        },
+        {
+          "host_index": 114,
+          "name": "Bright Pads 71",
+          "category": "Pads"
+        },
+        {
+          "host_index": 115,
+          "name": "Dark Pads 72",
+          "category": "Pads"
+        },
+        {
+          "host_index": 116,
+          "name": "Wide Pads 73",
+          "category": "Pads"
+        },
+        {
+          "host_index": 117,
+          "name": "Soft Pads 74",
+          "category": "Pads"
+        },
+        {
+          "host_index": 121,
+          "name": "Neon Bass 78",
+          "category": "Bass"
+        },
+        {
+          "host_index": 122,
+          "name": "Hollow Bass 79",
+          "category": "Bass"
+        },
+        {
+          "host_index": 124,
+          "name": "Frozen Bass 81",
+          "category": "Bass"
+        },
+        {
+          "host_index": 126,
+          "name": "Midnight Bass 83",
+          "category": "Bass"
+        },
+        {
+          "host_index": 128,
+          "name": "Bright Bass 85",
+          "category": "Bass"
+        },
+        {
+          "host_index": 129,
+          "name": "Dark Bass 86",
+          "category": "Bass"
+        },
+        {
+          "host_index": 130,
+          "name": "Wide Bass 87",
+          "category": "Bass"
+        },
+        {
+          "host_index": 132,
+          "name": "Amber Bass 89",
+          "category": "Bass"
+        },
+        {
+          "host_index": 133,
+          "name": "Velvet Bass 90",
+          "category": "Bass"
+        },
+        {
+          "host_index": 135,
+          "name": "Neon Bass 92",
+          "category": "Bass"
+        },
+        {
+          "host_index": 136,
+          "name": "Hollow Bass 93",
+          "category": "Bass"
+        },
+        {
+          "host_index": 137,
+          "name": "Golden Bass 94",
+          "category": "Bass"
+        },
+        {
+          "host_index": 139,
+          "name": "Electric Bass 96",
+          "category": "Bass"
+        },
+        {
+          "host_index": 140,
+          "name": "Amber Keys 97",
+          "category": "Keys"
+        },
+        {
+          "host_index": 142,
+          "name": "Distant Keys 99",
+          "category": "Keys"
+        },
+        {
+          "host_index": 146,
+          "name": "Frozen Keys 103",
+          "category": "Keys"
+        },
+        {
+          "host_index": 147,
+          "name": "Electric Keys 104",
+          "category": "Keys"
+        },
+        {
+          "host_index": 148,
+          "name": "Midnight Keys 105",
+          "category": "Keys"
+        },
+        {
+          "host_index": 149,
+          "name": "Slow Keys 106",
+          "category": "Keys"
+        },
+        {
+          "host_index": 152,
+          "name": "Wide Keys 109",
+          "category": "Keys"
+        },
+        {
+          "host_index": 153,
+          "name": "Soft Keys 110",
+          "category": "Keys"
+        },
+        {
+          "host_index": 154,
+          "name": "Amber Keys 111",
+          "category": "Keys"
+        },
+        {
+          "host_index": 155,
+          "name": "Velvet Keys 112",
+          "category": "Keys"
+        },
+        {
+          "host_index": 158,
+          "name": "Amber Leads 115",
+          "category": "Leads"
+        },
+        {
+          "host_index": 159,
+          "name": "Velvet Leads 116",
+          "category": "Leads"
+        },
+        {
+          "host_index": 160,
+          "name": "Distant Leads 117",
+          "category": "Leads"
+        },
+        {
+          "host_index": 161,
+          "name": "Neon Leads 118",
+          "category": "Leads"
+        },
+        {
+          "host_index": 162,
+          "name": "Hollow Leads 119",
+          "category": "Leads"
+        },
+        {
+          "host_index": 163,
+          "name": "Golden Leads 120",
+          "category": "Leads"
+        },
+        {
+          "host_index": 164,
+          "name": "Frozen Leads 121",
+          "category": "Leads"
+        },
+        {
+          "host_index": 165,
+          "name": "Electric Leads 122",
+          "category": "Leads"
+        },
+        {
+          "host_index": 166,
+          "name": "Midnight Leads 123",
+          "category": "Leads"
+        },
+        {
+          "host_index": 167,
+          "name": "Slow Leads 124",
+          "category": "Leads"
+        },
+        {
+          "host_index": 168,
+          "name": "Bright Leads 125",
+          "category": "Leads"
+        },
+        {
+          "host_index": 169,
+          "name": "Dark Leads 126",
+          "category": "Leads"
+        },
+        {
+          "host_index": 170,
+          "name": "Wide Leads 127",
+          "category": "Leads"
+        },
+        {
+          "host_index": 171,
+          "name": "Soft Leads 128",
+          "category": "Leads"
+        },
+        {
+          "host_index": 172,
+          "name": "Amber Leads 129",
+          "category": "Leads"
+        },
+        {
+          "host_index": 173,
+          "name": "Velvet Leads 130",
+          "category": "Leads"
+        },
+        {
+          "host_index": 174,
+          "name": "Distant Leads 131",
+          "category": "Leads"
+        },
+        {
+          "host_index": 175,
+          "name": "Neon Leads 132",
+          "category": "Leads"
+        },
+        {
+          "host_index": 176,
+          "name": "Hollow Leads 133",
+          "category": "Leads"
+        },
+        {
+          "host_index": 177,
+          "name": "Golden Leads 134",
+          "category": "Leads"
+        },
+        {
+          "host_index": 178,
+          "name": "Frozen Leads 135",
+          "category": "Leads"
+        },
+        {
+          "host_index": 179,
+          "name": "Electric Leads 136",
+          "category": "Leads"
+        },
+        {
+          "host_index": 180,
+          "name": "Amber FX 137",
+          "category": "FX"
+        },
+        {
+          "host_index": 181,
+          "name": "Velvet FX 138",
+          "category": "FX"
+        },
+        {
+          "host_index": 182,
+          "name": "Distant FX 139",
+          "category": "FX"
+        },
+        {
+          "host_index": 183,
+          "name": "Neon FX 140",
+          "category": "FX"
+        },
+        {
+          "host_index": 184,
+          "name": "Hollow FX 141",
+          "category": "FX"
+        },
+        {
+          "host_index": 185,
+          "name": "Golden FX 142",
+          "category": "FX"
+        },
+        {
+          "host_index": 186,
+          "name": "Frozen FX 143",
+          "category": "FX"
+        },
+        {
+          "host_index": 187,
+          "name": "Electric FX 144",
+          "category": "FX"
+        },
+        {
+          "host_index": 188,
+          "name": "Midnight FX 145",
+          "category": "FX"
+        },
+        {
+          "host_index": 189,
+          "name": "Slow FX 146",
+          "category": "FX"
+        },
+        {
+          "host_index": 190,
+          "name": "Bright FX 147",
+          "category": "FX"
+        },
+        {
+          "host_index": 191,
+          "name": "Dark FX 148",
+          "category": "FX"
+        },
+        {
+          "host_index": 192,
+          "name": "Wide FX 149",
+          "category": "FX"
+        },
+        {
+          "host_index": 193,
+          "name": "Soft FX 150",
+          "category": "FX"
+        },
+        {
+          "host_index": 194,
+          "name": "Amber FX 151",
+          "category": "FX"
+        },
+        {
+          "host_index": 195,
+          "name": "Velvet FX 152",
+          "category": "FX"
+        },
+        {
+          "host_index": 196,
+          "name": "Distant FX 153",
+          "category": "FX"
+        },
+        {
+          "host_index": 197,
+          "name": "Neon FX 154",
+          "category": "FX"
+        },
+        {
+          "host_index": 198,
+          "name": "Hollow FX 155",
+          "category": "FX"
+        },
+        {
+          "host_index": 199,
+          "name": "Golden FX 156",
+          "category": "FX"
+        },
+        {
+          "host_index": 200,
+          "name": "Amber Sequences 157",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 201,
+          "name": "Velvet Sequences 158",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 202,
+          "name": "Distant Sequences 159",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 203,
+          "name": "Neon Sequences 160",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 204,
+          "name": "Hollow Sequences 161",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 205,
+          "name": "Golden Sequences 162",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 206,
+          "name": "Frozen Sequences 163",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 207,
+          "name": "Electric Sequences 164",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 208,
+          "name": "Midnight Sequences 165",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 209,
+          "name": "Slow Sequences 166",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 210,
+          "name": "Bright Sequences 167",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 211,
+          "name": "Dark Sequences 168",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 212,
+          "name": "Wide Sequences 169",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 213,
+          "name": "Soft Sequences 170",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 214,
+          "name": "Amber Sequences 171",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 215,
+          "name": "Velvet Sequences 172",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 216,
+          "name": "Distant Sequences 173",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 217,
+          "name": "Neon Sequences 174",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 218,
+          "name": "Hollow Sequences 175",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 219,
+          "name": "Golden Sequences 176",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 220,
+          "name": "Frozen Sequences 177",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 221,
+          "name": "Electric Sequences 178",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 222,
+          "name": "Brass Swell I",
+          "category": "Brass"
+        },
+        {
+          "host_index": 223,
+          "name": "Brass Swell II",
+          "category": "Brass"
+        },
+        {
+          "host_index": 224,
+          "name": "Pressure Swell Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 225,
+          "name": "Resonant Swell Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 226,
+          "name": "Noir Swell Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 227,
+          "name": "Sforzando Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 228,
+          "name": "Brass Stab",
+          "category": "Brass"
+        },
+        {
+          "host_index": 229,
+          "name": "Horn Section",
+          "category": "Brass"
+        },
+        {
+          "host_index": 230,
+          "name": "Covered Horn",
+          "category": "Brass"
+        },
+        {
+          "host_index": 231,
+          "name": "Muted Trumpet",
+          "category": "Brass"
+        },
+        {
+          "host_index": 232,
+          "name": "Trombone Glide",
+          "category": "Brass"
+        },
+        {
+          "host_index": 233,
+          "name": "Fanfare Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 234,
+          "name": "Brass Ensemble 16",
+          "category": "Brass"
+        },
+        {
+          "host_index": 235,
+          "name": "Low Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 236,
+          "name": "Velvet Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 237,
+          "name": "Bright Brass Poly",
+          "category": "Brass"
+        },
+        {
+          "host_index": 238,
+          "name": "Brass Pad Swell",
+          "category": "Brass"
+        },
+        {
+          "host_index": 239,
+          "name": "Fifth Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 240,
+          "name": "Wah Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 241,
+          "name": "Synth Horns",
+          "category": "Brass"
+        },
+        {
+          "host_index": 242,
+          "name": "Brass Bite",
+          "category": "Brass"
+        },
+        {
+          "host_index": 243,
+          "name": "Distant Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 244,
+          "name": "Brass Crescendo",
+          "category": "Brass"
+        },
+        {
+          "host_index": 245,
+          "name": "Cuivre Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 246,
+          "name": "Tuba",
+          "category": "Brass"
+        },
+        {
+          "host_index": 247,
+          "name": "Brass Octaves",
+          "category": "Brass"
+        },
+        {
+          "host_index": 248,
+          "name": "Swell And Fall",
+          "category": "Brass"
+        },
+        {
+          "host_index": 249,
+          "name": "Reed Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 250,
+          "name": "Brass Glide Lead",
+          "category": "Brass"
+        },
+        {
+          "host_index": 251,
+          "name": "Tremolo Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 252,
+          "name": "Contour Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 253,
+          "name": "Ring Breath Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 254,
+          "name": "Ensemble Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 255,
+          "name": "Slow Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 256,
+          "name": "Violins",
+          "category": "Strings"
+        },
+        {
+          "host_index": 257,
+          "name": "Cellos",
+          "category": "Strings"
+        },
+        {
+          "host_index": 258,
+          "name": "Octave Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 259,
+          "name": "PWM Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 260,
+          "name": "Thin Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 261,
+          "name": "Dark Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 262,
+          "name": "Tremolo Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 263,
+          "name": "Solo Violin",
+          "category": "Strings"
+        },
+        {
+          "host_index": 264,
+          "name": "Solo Cello",
+          "category": "Strings"
+        },
+        {
+          "host_index": 266,
+          "name": "Swell Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 267,
+          "name": "Chamber Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 268,
+          "name": "Wide Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 269,
+          "name": "Crystal Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 270,
+          "name": "Fifth Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 271,
+          "name": "Analog Orchestra",
+          "category": "Strings"
+        },
+        {
+          "host_index": 272,
+          "name": "Spiccato Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 273,
+          "name": "Bowed Swell Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 274,
+          "name": "Synth Strings Saw",
+          "category": "Strings"
+        },
+        {
+          "host_index": 275,
+          "name": "String Machine",
+          "category": "Strings"
+        },
+        {
+          "host_index": 276,
+          "name": "Contour Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 277,
+          "name": "Ring Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 278,
+          "name": "Velvet Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 279,
+          "name": "Tutti Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 280,
+          "name": "Marcato Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 281,
+          "name": "Air Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 282,
+          "name": "Slow Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 283,
+          "name": "Ring Drift Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 284,
+          "name": "Choir Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 286,
+          "name": "Sweep Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 287,
+          "name": "Breathing Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 288,
+          "name": "Glass Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 289,
+          "name": "Warm Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 290,
+          "name": "Wide Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 291,
+          "name": "Octave Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 292,
+          "name": "Fifth Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 293,
+          "name": "Evolving Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 294,
+          "name": "Noise Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 295,
+          "name": "Pressure Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 296,
+          "name": "Sine Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 297,
+          "name": "Hollow Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 298,
+          "name": "Resonant Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 299,
+          "name": "Pulse Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 300,
+          "name": "Tremolo Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 301,
+          "name": "Neo-Noir Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 302,
+          "name": "Rain Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 303,
+          "name": "Cathedral Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 304,
+          "name": "Shimmer Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 305,
+          "name": "Low Drone",
+          "category": "Pads"
+        },
+        {
+          "host_index": 306,
+          "name": "Ether Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 307,
+          "name": "Velvet Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 308,
+          "name": "Analog Haze",
+          "category": "Pads"
+        },
+        {
+          "host_index": 309,
+          "name": "Bowed Glass",
+          "category": "Pads"
+        },
+        {
+          "host_index": 310,
+          "name": "Night Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 311,
+          "name": "Arctic Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 312,
+          "name": "Poly Stab",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 313,
+          "name": "Poly Brass Stab",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 314,
+          "name": "PWM Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 315,
+          "name": "Resonant Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 316,
+          "name": "Detuned Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 317,
+          "name": "Poly Sweep",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 318,
+          "name": "Velocity Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 319,
+          "name": "Poly Pluck",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 320,
+          "name": "Octave Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 321,
+          "name": "Fifth Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 322,
+          "name": "Bright Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 323,
+          "name": "Dark Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 324,
+          "name": "Hollow Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 325,
+          "name": "Wide Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 326,
+          "name": "Poly Swell",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 327,
+          "name": "Saw Pulse Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 328,
+          "name": "Synthwave Chords",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 329,
+          "name": "Square Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 330,
+          "name": "Sine Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 331,
+          "name": "Contour Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 332,
+          "name": "Ring Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 333,
+          "name": "Glide Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 334,
+          "name": "Tremolo Poly",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 335,
+          "name": "Poly Sub Pulse",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 336,
+          "name": "Electric Piano I",
+          "category": "Keys"
+        },
+        {
+          "host_index": 337,
+          "name": "Electric Piano II",
+          "category": "Keys"
+        },
+        {
+          "host_index": 338,
+          "name": "Tine Piano",
+          "category": "Keys"
+        },
+        {
+          "host_index": 345,
+          "name": "Toy Piano",
+          "category": "Keys"
+        },
+        {
+          "host_index": 347,
+          "name": "Vibes Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 348,
+          "name": "Celesta",
+          "category": "Keys"
+        },
+        {
+          "host_index": 351,
+          "name": "Chorus Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 355,
+          "name": "Reed Piano",
+          "category": "Keys"
+        },
+        {
+          "host_index": 356,
+          "name": "Glass Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 357,
+          "name": "Tremolo Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 358,
+          "name": "Contour Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 360,
+          "name": "Flute Organ 8+4",
+          "category": "Organ"
+        },
+        {
+          "host_index": 361,
+          "name": "Flute Organ 16+8",
+          "category": "Organ"
+        },
+        {
+          "host_index": 362,
+          "name": "Percussive Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 363,
+          "name": "Reed Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 364,
+          "name": "Church Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 365,
+          "name": "Chapel Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 366,
+          "name": "Theatre Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 367,
+          "name": "Tremolo Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 368,
+          "name": "Mellow Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 369,
+          "name": "Bright Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 370,
+          "name": "Pipe Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 371,
+          "name": "Combo Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 372,
+          "name": "Fifth Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 373,
+          "name": "Organ Vibrato",
+          "category": "Organ"
+        },
+        {
+          "host_index": 374,
+          "name": "Flute",
+          "category": "Winds"
+        },
+        {
+          "host_index": 375,
+          "name": "Breathy Flute",
+          "category": "Winds"
+        },
+        {
+          "host_index": 376,
+          "name": "Pan Flute",
+          "category": "Winds"
+        },
+        {
+          "host_index": 377,
+          "name": "Recorder",
+          "category": "Winds"
+        },
+        {
+          "host_index": 378,
+          "name": "Clarinet",
+          "category": "Winds"
+        },
+        {
+          "host_index": 379,
+          "name": "Bass Clarinet",
+          "category": "Winds"
+        },
+        {
+          "host_index": 380,
+          "name": "Oboe",
+          "category": "Winds"
+        },
+        {
+          "host_index": 381,
+          "name": "English Horn",
+          "category": "Winds"
+        },
+        {
+          "host_index": 382,
+          "name": "Bassoon",
+          "category": "Winds"
+        },
+        {
+          "host_index": 383,
+          "name": "Soprano Reed",
+          "category": "Winds"
+        },
+        {
+          "host_index": 384,
+          "name": "Ocarina",
+          "category": "Winds"
+        },
+        {
+          "host_index": 385,
+          "name": "Piccolo",
+          "category": "Winds"
+        },
+        {
+          "host_index": 386,
+          "name": "Whistle",
+          "category": "Winds"
+        },
+        {
+          "host_index": 387,
+          "name": "Shakuhachi",
+          "category": "Winds"
+        },
+        {
+          "host_index": 392,
+          "name": "Harp",
+          "category": "Plucked"
+        },
+        {
+          "host_index": 393,
+          "name": "Koto",
+          "category": "Plucked"
+        },
+        {
+          "host_index": 394,
+          "name": "Banjo",
+          "category": "Plucked"
+        },
+        {
+          "host_index": 400,
+          "name": "Kalimba",
+          "category": "Plucked"
+        },
+        {
+          "host_index": 404,
+          "name": "Analog Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 405,
+          "name": "Resonance Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 406,
+          "name": "Sine Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 407,
+          "name": "Sub Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 411,
+          "name": "Brass Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 412,
+          "name": "Octave Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 413,
+          "name": "Pulse Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 415,
+          "name": "Velocity Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 418,
+          "name": "Bright Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 421,
+          "name": "Fifth Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 422,
+          "name": "Pedal Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 423,
+          "name": "Squelch Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 424,
+          "name": "Ring Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 425,
+          "name": "Sub Wobble Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 427,
+          "name": "Contour Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 428,
+          "name": "Touch Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 429,
+          "name": "Aftertouch Vibrato Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 430,
+          "name": "Ribbon Glide Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 431,
+          "name": "Noir Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 432,
+          "name": "Neo-Noir Brass Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 433,
+          "name": "Glide Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 434,
+          "name": "Sine Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 435,
+          "name": "Whistle Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 436,
+          "name": "Square Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 437,
+          "name": "Narrow Pulse Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 438,
+          "name": "Resonant Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 439,
+          "name": "Screaming Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 440,
+          "name": "Fifth Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 441,
+          "name": "Octave Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 442,
+          "name": "Soft Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 443,
+          "name": "Init Bend Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 444,
+          "name": "Pressure Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 445,
+          "name": "Velocity Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 446,
+          "name": "Detuned Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 447,
+          "name": "Sub Vibrato Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 448,
+          "name": "Trill Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 449,
+          "name": "Glissando Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 450,
+          "name": "Brass Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 451,
+          "name": "Reed Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 452,
+          "name": "Wah Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 453,
+          "name": "Ring Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 454,
+          "name": "Hollow Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 455,
+          "name": "Ether Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 456,
+          "name": "Solo Synth",
+          "category": "Leads"
+        },
+        {
+          "host_index": 457,
+          "name": "Contour Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 458,
+          "name": "Ring Bell I",
+          "category": "Bells"
+        },
+        {
+          "host_index": 459,
+          "name": "Ring Bell II",
+          "category": "Bells"
+        },
+        {
+          "host_index": 460,
+          "name": "Tubular Bells",
+          "category": "Bells"
+        },
+        {
+          "host_index": 461,
+          "name": "Glockenspiel",
+          "category": "Bells"
+        },
+        {
+          "host_index": 462,
+          "name": "Celeste Bells",
+          "category": "Bells"
+        },
+        {
+          "host_index": 463,
+          "name": "Music Box",
+          "category": "Bells"
+        },
+        {
+          "host_index": 464,
+          "name": "Gong",
+          "category": "Bells"
+        },
+        {
+          "host_index": 465,
+          "name": "Temple Bell",
+          "category": "Bells"
+        },
+        {
+          "host_index": 466,
+          "name": "Marimba",
+          "category": "Bells"
+        },
+        {
+          "host_index": 467,
+          "name": "Vibraphone",
+          "category": "Bells"
+        },
+        {
+          "host_index": 468,
+          "name": "Xylophone",
+          "category": "Bells"
+        },
+        {
+          "host_index": 469,
+          "name": "Crystal Bell",
+          "category": "Bells"
+        },
+        {
+          "host_index": 470,
+          "name": "Bell Pad",
+          "category": "Bells"
+        },
+        {
+          "host_index": 471,
+          "name": "Ring Sweep Bell",
+          "category": "Bells"
+        },
+        {
+          "host_index": 472,
+          "name": "Steel Drum",
+          "category": "Bells"
+        },
+        {
+          "host_index": 473,
+          "name": "Chimes",
+          "category": "Bells"
+        },
+        {
+          "host_index": 474,
+          "name": "Dark Bell",
+          "category": "Bells"
+        },
+        {
+          "host_index": 475,
+          "name": "Bell Choir",
+          "category": "Bells"
+        },
+        {
+          "host_index": 476,
+          "name": "Metallic Keys",
+          "category": "Bells"
+        },
+        {
+          "host_index": 477,
+          "name": "Agogo",
+          "category": "Bells"
+        },
+        {
+          "host_index": 478,
+          "name": "Clock Bells",
+          "category": "Bells"
+        },
+        {
+          "host_index": 479,
+          "name": "Ring Mallet",
+          "category": "Bells"
+        },
+        {
+          "host_index": 480,
+          "name": "Random Filter",
+          "category": "FX"
+        },
+        {
+          "host_index": 481,
+          "name": "Random Pitch Blips",
+          "category": "FX"
+        },
+        {
+          "host_index": 482,
+          "name": "Siren",
+          "category": "FX"
+        },
+        {
+          "host_index": 483,
+          "name": "Laser Zap",
+          "category": "FX"
+        },
+        {
+          "host_index": 484,
+          "name": "Wind",
+          "category": "FX"
+        },
+        {
+          "host_index": 485,
+          "name": "Surf",
+          "category": "FX"
+        },
+        {
+          "host_index": 486,
+          "name": "Sci-Fi Drone",
+          "category": "FX"
+        },
+        {
+          "host_index": 487,
+          "name": "Robot Voice",
+          "category": "FX"
+        },
+        {
+          "host_index": 488,
+          "name": "Alarm",
+          "category": "FX"
+        },
+        {
+          "host_index": 489,
+          "name": "Space Sweep",
+          "category": "FX"
+        },
+        {
+          "host_index": 490,
+          "name": "Bubbles",
+          "category": "FX"
+        },
+        {
+          "host_index": 491,
+          "name": "Thunder",
+          "category": "FX"
+        },
+        {
+          "host_index": 492,
+          "name": "Rain",
+          "category": "FX"
+        },
+        {
+          "host_index": 493,
+          "name": "Helicopter",
+          "category": "FX"
+        },
+        {
+          "host_index": 494,
+          "name": "UFO Landing",
+          "category": "FX"
+        },
+        {
+          "host_index": 495,
+          "name": "Telemetry",
+          "category": "FX"
+        },
+        {
+          "host_index": 496,
+          "name": "Clockwork",
+          "category": "FX"
+        },
+        {
+          "host_index": 497,
+          "name": "Deep Space",
+          "category": "FX"
+        },
+        {
+          "host_index": 498,
+          "name": "Metal Scrape",
+          "category": "FX"
+        },
+        {
+          "host_index": 499,
+          "name": "Machine Hum",
+          "category": "FX"
+        },
+        {
+          "host_index": 500,
+          "name": "Sweep Riser",
+          "category": "FX"
+        },
+        {
+          "host_index": 501,
+          "name": "Downer",
+          "category": "FX"
+        },
+        {
+          "host_index": 502,
+          "name": "Glitch Sub",
+          "category": "FX"
+        },
+        {
+          "host_index": 503,
+          "name": "Breath FX",
+          "category": "FX"
+        },
+        {
+          "host_index": 504,
+          "name": "Delay Brass",
+          "category": "Brass"
+        },
+        {
+          "host_index": 505,
+          "name": "Plate Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 506,
+          "name": "Phaser Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 507,
+          "name": "Drive Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 508,
+          "name": "Arp Poly",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 509,
+          "name": "Arp Bells",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 510,
+          "name": "Arp Bass",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 511,
+          "name": "LFO Sweep Pad",
+          "category": "Pads"
+        },
+        {
+          "host_index": 512,
+          "name": "LFO Pan Keys",
+          "category": "Keys"
+        },
+        {
+          "host_index": 513,
+          "name": "PWM LFO Strings",
+          "category": "Strings"
+        },
+        {
+          "host_index": 515,
+          "name": "Ambient Bells",
+          "category": "Bells"
+        },
+        {
+          "host_index": 516,
+          "name": "Ensemble Plus",
+          "category": "Strings"
+        },
+        {
+          "host_index": 517,
+          "name": "Space Lead",
+          "category": "Leads"
+        },
+        {
+          "host_index": 518,
+          "name": "Random Arp",
+          "category": "Sequences"
+        },
+        {
+          "host_index": 519,
+          "name": "Drive Bass",
+          "category": "Bass"
+        },
+        {
+          "host_index": 520,
+          "name": "Phased Polysynth",
+          "category": "Polysynth"
+        },
+        {
+          "host_index": 521,
+          "name": "Tremolo LFO Organ",
+          "category": "Organ"
+        },
+        {
+          "host_index": 522,
+          "name": "Init Circuit",
+          "category": "Init"
+        }
+      ],
+      "changed_by_category": {
+        "Bass": 18,
+        "Hardware Studies": 10,
+        "Keys": 22,
+        "Pads": 3,
+        "Plucked": 13,
+        "Strings": 1
+      },
+      "distributions_over_519_sounding_musical_programs": {
+        "peak_dbfs": {
+          "n": 519,
+          "min": -0.19028433999999805,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.002770339999997873,
+          "negative": 35,
+          "zero": 452,
+          "positive": 32
+        },
+        "rms_dbfs": {
+          "n": 519,
+          "min": -0.025519249999994997,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.02044290999999987,
+          "negative": 44,
+          "zero": 452,
+          "positive": 23
+        },
+        "early_rms_dbfs": {
+          "n": 519,
+          "min": -0.020817639999997084,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.06548791000000165,
+          "negative": 45,
+          "zero": 452,
+          "positive": 22
+        },
+        "body_rms_dbfs": {
+          "n": 519,
+          "min": -0.030285360000000594,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.00014794999999878655,
+          "negative": 45,
+          "zero": 455,
+          "positive": 19
+        },
+        "tail_rms_dbfs": {
+          "n": 519,
+          "min": -0.024152860000000942,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.00024535999999386604,
+          "negative": 38,
+          "zero": 461,
+          "positive": 20
+        },
+        "peak_window_seconds": {
+          "n": 519,
+          "min": 0.0,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "negative": 0,
+          "zero": 519,
+          "positive": 0
+        },
+        "centroid_hz": {
+          "n": 519,
+          "min": -2.0242526899999973,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.014245299999998906,
+          "negative": 39,
+          "zero": 452,
+          "positive": 28
+        },
+        "low_power": {
+          "n": 519,
+          "min": -3.213000000001909e-05,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.0003823245000000308,
+          "negative": 27,
+          "zero": 452,
+          "positive": 40
+        },
+        "mid_power": {
+          "n": 519,
+          "min": -7.977264000000013e-05,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.0002609691999999608,
+          "negative": 33,
+          "zero": 452,
+          "positive": 34
+        },
+        "high_power": {
+          "n": 519,
+          "min": -0.0006101149739999989,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 3.799679999999528e-06,
+          "negative": 37,
+          "zero": 452,
+          "positive": 30
+        },
+        "tilt": {
+          "n": 519,
+          "min": -0.000240074071,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 2.99937999999984e-07,
+          "negative": 41,
+          "zero": 452,
+          "positive": 26
+        },
+        "stereo_correlation": {
+          "n": 519,
+          "min": -7.550000002964907e-08,
+          "p10": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.835999999921789e-06,
+          "negative": 4,
+          "zero": 512,
+          "positive": 3
+        }
+      },
+      "centroid_relative_percent": {
+        "n": 519,
+        "min": -2.074322843738541,
+        "p10": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.011768793452793247,
+        "negative": 39,
+        "zero": 452,
+        "positive": 28
+      }
+    }
+  },
+  "categories": [
+    {
+      "category": "Hardware Studies",
+      "programs": 22,
+      "musical_programs": 22,
+      "beyond_conservative_level_pan": 19,
+      "active_additive_vca_baseline_only": 3,
+      "changed_signal_vector_published4_to_current7": 22,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 10,
+      "default_note": "60",
+      "sounding_musical_n": 22,
+      "median_rms_delta_db": -1.2795237599999965,
+      "median_centroid_delta_hz": -0.10020275000005086
+    },
+    {
+      "category": "Brass",
+      "programs": 59,
+      "musical_programs": 59,
+      "beyond_conservative_level_pan": 58,
+      "active_additive_vca_baseline_only": 1,
+      "changed_signal_vector_published4_to_current7": 59,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 59,
+      "median_rms_delta_db": -1.8266066300000006,
+      "median_centroid_delta_hz": -2.190570600000001
+    },
+    {
+      "category": "Strings",
+      "programs": 59,
+      "musical_programs": 59,
+      "beyond_conservative_level_pan": 59,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 59,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 1,
+      "default_note": "60",
+      "sounding_musical_n": 59,
+      "median_rms_delta_db": -0.8641467499999997,
+      "median_centroid_delta_hz": 0.5630528000000368
+    },
+    {
+      "category": "Pads",
+      "programs": 63,
+      "musical_programs": 63,
+      "beyond_conservative_level_pan": 63,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 63,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 3,
+      "default_note": "60",
+      "sounding_musical_n": 63,
+      "median_rms_delta_db": -0.4811365500000022,
+      "median_centroid_delta_hz": -0.6762462000000369
+    },
+    {
+      "category": "Bass",
+      "programs": 50,
+      "musical_programs": 50,
+      "beyond_conservative_level_pan": 31,
+      "active_additive_vca_baseline_only": 19,
+      "changed_signal_vector_published4_to_current7": 50,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 18,
+      "default_note": "48",
+      "sounding_musical_n": 50,
+      "median_rms_delta_db": -2.5393495700000024,
+      "median_centroid_delta_hz": 0.12927860500001032
+    },
+    {
+      "category": "Leads",
+      "programs": 56,
+      "musical_programs": 56,
+      "beyond_conservative_level_pan": 56,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 54,
+      "pressure_supplement_programs": 2,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "67",
+      "sounding_musical_n": 54,
+      "median_rms_delta_db": -1.122315125,
+      "median_centroid_delta_hz": 0.9085356500000046
+    },
+    {
+      "category": "Keys",
+      "programs": 45,
+      "musical_programs": 45,
+      "beyond_conservative_level_pan": 44,
+      "active_additive_vca_baseline_only": 1,
+      "changed_signal_vector_published4_to_current7": 45,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 22,
+      "default_note": "60",
+      "sounding_musical_n": 45,
+      "median_rms_delta_db": -1.4613852000000023,
+      "median_centroid_delta_hz": 0.1006296000000475
+    },
+    {
+      "category": "FX",
+      "programs": 46,
+      "musical_programs": 46,
+      "beyond_conservative_level_pan": 46,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 46,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 46,
+      "median_rms_delta_db": -0.17347691500000018,
+      "median_centroid_delta_hz": -0.0019205000000397376
+    },
+    {
+      "category": "Sequences",
+      "programs": 27,
+      "musical_programs": 27,
+      "beyond_conservative_level_pan": 27,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 27,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 27,
+      "median_rms_delta_db": -0.9294899600000015,
+      "median_centroid_delta_hz": 0.20349060000000918
+    },
+    {
+      "category": "Init",
+      "programs": 2,
+      "musical_programs": 0,
+      "beyond_conservative_level_pan": 0,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 0,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 0,
+      "median_rms_delta_db": null,
+      "median_centroid_delta_hz": null
+    },
+    {
+      "category": "Polysynth",
+      "programs": 25,
+      "musical_programs": 25,
+      "beyond_conservative_level_pan": 25,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 25,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 25,
+      "median_rms_delta_db": -1.0037434800000042,
+      "median_centroid_delta_hz": -0.010636400000009871
+    },
+    {
+      "category": "Organ",
+      "programs": 15,
+      "musical_programs": 15,
+      "beyond_conservative_level_pan": 15,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 15,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "60",
+      "sounding_musical_n": 15,
+      "median_rms_delta_db": 0.5416414399999994,
+      "median_centroid_delta_hz": 0.10149609999996301
+    },
+    {
+      "category": "Winds",
+      "programs": 14,
+      "musical_programs": 14,
+      "beyond_conservative_level_pan": 14,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 14,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "67",
+      "sounding_musical_n": 14,
+      "median_rms_delta_db": -1.3459701450000026,
+      "median_centroid_delta_hz": 0.0034687999999505337
+    },
+    {
+      "category": "Plucked",
+      "programs": 17,
+      "musical_programs": 17,
+      "beyond_conservative_level_pan": 13,
+      "active_additive_vca_baseline_only": 4,
+      "changed_signal_vector_published4_to_current7": 17,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 13,
+      "default_note": "60",
+      "sounding_musical_n": 17,
+      "median_rms_delta_db": -1.563214589999994,
+      "median_centroid_delta_hz": -0.08532459999997855
+    },
+    {
+      "category": "Bells",
+      "programs": 23,
+      "musical_programs": 23,
+      "beyond_conservative_level_pan": 23,
+      "active_additive_vca_baseline_only": 0,
+      "changed_signal_vector_published4_to_current7": 23,
+      "pressure_supplement_programs": 0,
+      "changed_signal_vector_baseline6_to_current7": 0,
+      "default_note": "72",
+      "sounding_musical_n": 23,
+      "median_rms_delta_db": -1.3763473400000024,
+      "median_centroid_delta_hz": 1.871788199999969
+    }
+  ],
+  "window_sensitivity": {
+    "body_rms_dbfs": {
+      "floor_dbfs": -240,
+      "floor_counts": {
+        "published_4": 5,
+        "baseline_6": 6,
+        "current_7": 6
+      },
+      "counts_strictly_above_level": {
+        "-100": {
+          "published_4": 494,
+          "baseline_6": 499,
+          "current_7": 499
+        },
+        "-80": {
+          "published_4": 480,
+          "baseline_6": 493,
+          "current_7": 493
+        },
+        "-60": {
+          "published_4": 431,
+          "baseline_6": 450,
+          "current_7": 450
+        },
+        "-40": {
+          "published_4": 375,
+          "baseline_6": 358,
+          "current_7": 358
+        }
+      },
+      "delta_distribution_both_windows_strictly_above_level": {
+        "-240": {
+          "n": 515,
+          "min": -123.90038403999999,
+          "p10": -3.073013853999999,
+          "median": -0.5813403499999978,
+          "p90": 5.804798936000004,
+          "max": 120.04631568,
+          "negative": 361,
+          "zero": 9,
+          "positive": 145
+        },
+        "-120": {
+          "n": 504,
+          "min": -10.514673889999997,
+          "p10": -3.073346727999999,
+          "median": -0.5939091100000002,
+          "p90": 4.855744714999997,
+          "max": 36.288943100000004,
+          "negative": 358,
+          "zero": 9,
+          "positive": 137
+        },
+        "-100": {
+          "n": 493,
+          "min": -10.514673889999997,
+          "p10": -3.0988243420000026,
+          "median": -0.6345416500000027,
+          "p90": 4.410483384,
+          "max": 36.288943100000004,
+          "negative": 358,
+          "zero": 4,
+          "positive": 131
+        },
+        "-80": {
+          "n": 480,
+          "min": -10.514673889999997,
+          "p10": -3.1105107410000015,
+          "median": -0.6765691100000009,
+          "p90": 3.197949564000002,
+          "max": 15.39136844,
+          "negative": 356,
+          "zero": 4,
+          "positive": 120
+        },
+        "-60": {
+          "n": 431,
+          "min": -9.246877999999995,
+          "p10": -3.1152866500000016,
+          "median": -0.8515104800000017,
+          "p90": 1.0470104199999994,
+          "max": 8.616469539999997,
+          "negative": 349,
+          "zero": 4,
+          "positive": 78
+        }
+      }
+    },
+    "tail_rms_dbfs": {
+      "floor_dbfs": -240,
+      "floor_counts": {
+        "published_4": 16,
+        "baseline_6": 14,
+        "current_7": 14
+      },
+      "counts_strictly_above_level": {
+        "-100": {
+          "published_4": 244,
+          "baseline_6": 241,
+          "current_7": 241
+        },
+        "-80": {
+          "published_4": 181,
+          "baseline_6": 173,
+          "current_7": 173
+        },
+        "-60": {
+          "published_4": 102,
+          "baseline_6": 101,
+          "current_7": 101
+        },
+        "-40": {
+          "published_4": 30,
+          "baseline_6": 31,
+          "current_7": 31
+        }
+      },
+      "delta_distribution_both_windows_strictly_above_level": {
+        "-240": {
+          "n": 504,
+          "min": -76.70679609,
+          "p10": -7.554987388000003,
+          "median": -0.5079269150000023,
+          "p90": 5.795226139999988,
+          "max": 125.03505734000001,
+          "negative": 384,
+          "zero": 7,
+          "positive": 113
+        },
+        "-120": {
+          "n": 314,
+          "min": -16.59630475,
+          "p10": -3.283025880000001,
+          "median": -0.3001726999999974,
+          "p90": 0.1987797839999998,
+          "max": 17.923925709999992,
+          "negative": 252,
+          "zero": 7,
+          "positive": 55
+        },
+        "-100": {
+          "n": 238,
+          "min": -16.59630475,
+          "p10": -3.378436220000004,
+          "median": -0.4836119299999986,
+          "p90": 0.5011014710000069,
+          "max": 17.26761972,
+          "negative": 193,
+          "zero": 0,
+          "positive": 45
+        },
+        "-80": {
+          "n": 172,
+          "min": -15.416547730000005,
+          "p10": -3.7255047990000016,
+          "median": -0.5604860299999999,
+          "p90": 0.8746251900000025,
+          "max": 11.668705369999998,
+          "negative": 141,
+          "zero": 0,
+          "positive": 31
+        },
+        "-60": {
+          "n": 96,
+          "min": -6.344378209999995,
+          "p10": -3.1846484350000033,
+          "median": -0.5811136149999996,
+          "p90": 0.09188272999999825,
+          "max": 4.614891120000003,
+          "negative": 86,
+          "zero": 0,
+          "positive": 10
+        }
+      }
+    }
+  },
+  "extrema": {
+    "peak_dbfs": {
+      "lowest_three": [
+        {
+          "host_index": 503,
+          "name": "Breath FX",
+          "category": "FX",
+          "published4": -27.33447897,
+          "current7": -34.73914899,
+          "delta": -7.4046700199999975
+        },
+        {
+          "host_index": 95,
+          "name": "Golden Pads 52",
+          "category": "Pads",
+          "published4": -20.14450386,
+          "current7": -27.32053341,
+          "delta": -7.176029549999999
+        },
+        {
+          "host_index": 284,
+          "name": "Choir Pad",
+          "category": "Pads",
+          "published4": -20.21674585,
+          "current7": -27.39257089,
+          "delta": -7.175825039999999
+        }
+      ],
+      "highest_three": [
+        {
+          "host_index": 400,
+          "name": "Kalimba",
+          "category": "Plucked",
+          "published4": -26.88159183,
+          "current7": -24.85717274,
+          "delta": 2.024419090000002
+        },
+        {
+          "host_index": 496,
+          "name": "Clockwork",
+          "category": "FX",
+          "published4": -23.6745893,
+          "current7": -15.19252994,
+          "delta": 8.482059360000001
+        },
+        {
+          "host_index": 185,
+          "name": "Golden FX 142",
+          "category": "FX",
+          "published4": -23.35452866,
+          "current7": -14.83055131,
+          "delta": 8.52397735
+        }
+      ]
+    },
+    "rms_dbfs": {
+      "lowest_three": [
+        {
+          "host_index": 284,
+          "name": "Choir Pad",
+          "category": "Pads",
+          "published4": -28.05470395,
+          "current7": -37.67782538,
+          "delta": -9.623121430000001
+        },
+        {
+          "host_index": 95,
+          "name": "Golden Pads 52",
+          "category": "Pads",
+          "published4": -28.17606571,
+          "current7": -37.59990561,
+          "delta": -9.4238399
+        },
+        {
+          "host_index": 503,
+          "name": "Breath FX",
+          "category": "FX",
+          "published4": -41.62832895,
+          "current7": -49.05857137,
+          "delta": -7.430242420000006
+        }
+      ],
+      "highest_three": [
+        {
+          "host_index": 463,
+          "name": "Music Box",
+          "category": "Bells",
+          "published4": -42.23405929,
+          "current7": -39.83743747,
+          "delta": 2.39662182
+        },
+        {
+          "host_index": 476,
+          "name": "Metallic Keys",
+          "category": "Bells",
+          "published4": -52.83483935,
+          "current7": -49.65712359,
+          "delta": 3.177715760000005
+        },
+        {
+          "host_index": 400,
+          "name": "Kalimba",
+          "category": "Plucked",
+          "published4": -45.65361664,
+          "current7": -41.58091858,
+          "delta": 4.0726980600000005
+        }
+      ]
+    },
+    "body_rms_dbfs": {
+      "lowest_three": [
+        {
+          "host_index": 477,
+          "name": "Agogo",
+          "category": "Bells",
+          "published4": -80.71578636,
+          "current7": -204.6161704,
+          "delta": -123.90038403999999
+        },
+        {
+          "host_index": 319,
+          "name": "Poly Pluck",
+          "category": "Polysynth",
+          "published4": -65.1813006,
+          "current7": -75.69597449,
+          "delta": -10.514673889999997
+        },
+        {
+          "host_index": 284,
+          "name": "Choir Pad",
+          "category": "Pads",
+          "published4": -27.26962719,
+          "current7": -36.51650519,
+          "delta": -9.246877999999995
+        }
+      ],
+      "highest_three": [
+        {
+          "host_index": 341,
+          "name": "Funky Clavichord",
+          "category": "Keys",
+          "published4": -171.812532,
+          "current7": -108.4436336,
+          "delta": 63.368898400000006
+        },
+        {
+          "host_index": 20,
+          "name": "Tone I: Funky 3",
+          "category": "Hardware Studies",
+          "published4": -167.7033103,
+          "current7": -99.64425594,
+          "delta": 68.05905436
+        },
+        {
+          "host_index": 394,
+          "name": "Banjo",
+          "category": "Plucked",
+          "published4": -219.5825714,
+          "current7": -99.53625572,
+          "delta": 120.04631568
+        }
+      ]
+    },
+    "tail_rms_dbfs": {
+      "lowest_three": [
+        {
+          "host_index": 477,
+          "name": "Agogo",
+          "category": "Bells",
+          "published4": -80.71578635,
+          "current7": -240.0,
+          "delta": -159.28421365
+        },
+        {
+          "host_index": 467,
+          "name": "Vibraphone",
+          "category": "Bells",
+          "published4": -68.97682051,
+          "current7": -145.6836166,
+          "delta": -76.70679609
+        },
+        {
+          "host_index": 496,
+          "name": "Clockwork",
+          "category": "FX",
+          "published4": -155.1100118,
+          "current7": -192.0452605,
+          "delta": -36.93524870000002
+        }
+      ],
+      "highest_three": [
+        {
+          "host_index": 394,
+          "name": "Banjo",
+          "category": "Plucked",
+          "published4": -240.0,
+          "current7": -178.2069342,
+          "delta": 61.793065799999994
+        },
+        {
+          "host_index": 400,
+          "name": "Kalimba",
+          "category": "Plucked",
+          "published4": -208.1408542,
+          "current7": -100.9742619,
+          "delta": 107.1665923
+        },
+        {
+          "host_index": 463,
+          "name": "Music Box",
+          "category": "Bells",
+          "published4": -212.7799176,
+          "current7": -87.74486026,
+          "delta": 125.03505734000001
+        }
+      ]
+    },
+    "centroid_hz": {
+      "lowest_three": [
+        {
+          "host_index": 492,
+          "name": "Rain",
+          "category": "FX",
+          "published4": 2088.637537,
+          "current7": 1795.779389,
+          "delta": -292.858148
+        },
+        {
+          "host_index": 400,
+          "name": "Kalimba",
+          "category": "Plucked",
+          "published4": 603.4409502,
+          "current7": 311.0944873,
+          "delta": -292.34646289999995
+        },
+        {
+          "host_index": 476,
+          "name": "Metallic Keys",
+          "category": "Bells",
+          "published4": 1962.762528,
+          "current7": 1672.508879,
+          "delta": -290.253649
+        }
+      ],
+      "highest_three": [
+        {
+          "host_index": 172,
+          "name": "Amber Leads 129",
+          "category": "Leads",
+          "published4": 611.9169933,
+          "current7": 1265.883441,
+          "delta": 653.9664477
+        },
+        {
+          "host_index": 432,
+          "name": "Neo-Noir Brass Lead",
+          "category": "Leads",
+          "published4": 646.1769877,
+          "current7": 1386.118356,
+          "delta": 739.9413682999999
+        },
+        {
+          "host_index": 460,
+          "name": "Tubular Bells",
+          "category": "Bells",
+          "published4": 340.2096626,
+          "current7": 1400.773053,
+          "delta": 1060.5633904
+        }
+      ]
+    }
+  },
+  "pressure_supplement": [
+    {
+      "preset": "Electric Leads 136",
+      "host_index": 179,
+      "pressure": 0.3,
+      "current_minus_published_peak_db": -0.17890238000000025,
+      "current_minus_published_body_rms_db": 1.0884003500000006,
+      "waveform_difference_relative_to_published_rms_db": -17.399123058740447
+    },
+    {
+      "preset": "Electric Leads 136",
+      "host_index": 179,
+      "pressure": 1.0,
+      "current_minus_published_peak_db": -0.10200284999999987,
+      "current_minus_published_body_rms_db": 0.6949162999999992,
+      "waveform_difference_relative_to_published_rms_db": -18.291260320531045
+    },
+    {
+      "preset": "Pressure Lead",
+      "host_index": 444,
+      "pressure": 0.3,
+      "current_minus_published_peak_db": -0.1790660399999986,
+      "current_minus_published_body_rms_db": 1.1477260099999995,
+      "waveform_difference_relative_to_published_rms_db": -17.418999159812362
+    },
+    {
+      "preset": "Pressure Lead",
+      "host_index": 444,
+      "pressure": 1.0,
+      "current_minus_published_peak_db": -0.09350145000000154,
+      "current_minus_published_body_rms_db": 0.720202620000002,
+      "waveform_difference_relative_to_published_rms_db": -18.36063856099641
+    }
+  ],
+  "mechanism_observation_6_to_7": {
+    "body": {
+      "structural_programs": 272,
+      "changed_in_bank_probe": 67
+    },
+    "generic_string_formants": {
+      "structural_programs": 54,
+      "changed_in_bank_probe": 54
+    },
+    "low_choir_harmonics": {
+      "structural_programs": 7,
+      "changed_in_bank_probe": 3
+    },
+    "noise_rate_normalization": {
+      "structural_programs": 256,
+      "changed_in_bank_probe": 67
+    },
+    "piano_partial_decay": {
+      "structural_programs": 10,
+      "changed_in_bank_probe": 10
+    },
+    "sustained_air_and_flutter_subset": {
+      "structural_programs": 132,
+      "changed_in_bank_probe": 3
+    }
+  },
+  "safety": {
+    "published_4": {
+      "programs": 523,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "largest_peak_dbfs": -13.53738822,
+      "peak_program": {
+        "host_index": 510,
+        "name": "Arp Bass",
+        "category": "Sequences"
+      }
+    },
+    "baseline_6": {
+      "programs": 523,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "largest_peak_dbfs": -13.40001375,
+      "peak_program": {
+        "host_index": 190,
+        "name": "Bright FX 147",
+        "category": "FX"
+      }
+    },
+    "current_7": {
+      "programs": 523,
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "largest_peak_dbfs": -13.40001375,
+      "peak_program": {
+        "host_index": 190,
+        "name": "Bright FX 147",
+        "category": "FX"
+      }
+    }
+  }
+}

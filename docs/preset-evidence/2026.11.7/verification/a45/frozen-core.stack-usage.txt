@@ -1,0 +1,165 @@
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:41:7:float cs80::{anonymous}::outputWideFir2x(const float*, const float*)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/HeterogeneousSourceCutoff.h:69:35:void cs80::source_factory::heterogeneous_cutoff::packet(const cs80::source_factory::ToneControls&, const cs80::source_factory::RankDrives&, cs80::source_factory::CutoffReadout&)	200	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:77:50:double cs80::{anonymous}::distinctPressureBus(const std::array<double, N>&, double) [with long unsigned int N = 8]	128	static
+/tmp/cs80-a45-1cee5a/current/src/core/MpeZones.h:35:10:cs80::MpeZoneLayout::Role cs80::MpeZoneLayout::role(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:87:50:double cs80::{anonymous}::twoPressureBus(const std::array<double, N>&, double) [with long unsigned int N = 8]	144	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:119:41:double cs80::{anonymous}::samePressureBus(const std::array<double, N>&, double) [with long unsigned int N = 8]	64	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:398:11:cs80::ReconstructedOscillator::Nodes cs80::ReconstructedOscillator::nodes(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:176:6:void cs80::{anonymous}::visitSmoothedSettings(cs80::GlobalSettings&, cs80::RankSettings*, int, Visit&&) [with Visit = cs80::Engine::retargetSmoothedSettings()::<lambda(float&)>]	136	static
+/usr/include/c++/14/bits/stl_algo.h:1876:5:constexpr void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = cs80::kas::Scanner::Event*; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_comp_iter<cs80::kas::Scanner::flush<cs80::Engine::flushScanEvents()::<lambda(const Event&)> >(cs80::Engine::flushScanEvents()::<lambda(const Event&)>&&)::<lambda(const cs80::kas::Scanner::Event&, const cs80::kas::Scanner::Event&)> >]	80	static
+/usr/include/c++/14/bits/stl_algo.h:1876:5:constexpr void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = cs80::kas::Scanner::Event*; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_comp_iter<cs80::kas::Scanner::flush<cs80::Engine::hasFreeCircuitForRouting() const::<lambda(const Event&)> >(cs80::Engine::hasFreeCircuitForRouting() const::<lambda(const Event&)>&&)::<lambda(const cs80::kas::Scanner::Event&, const cs80::kas::Scanner::Event&)> >]	80	static
+/usr/include/c++/14/bits/stl_algo.h:1876:5:constexpr void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = cs80::kas::Scanner::Event*; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_comp_iter<cs80::kas::Scanner::flush<cs80::Engine::processInternalSample(float&, float&, float)::<lambda(const Event&)>&>(cs80::Engine::processInternalSample(float&, float&, float)::<lambda(const Event&)>&)::<lambda(const cs80::kas::Scanner::Event&, const cs80::kas::Scanner::Event&)> >]	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/ExternalModulationInterpolator.h:25:10:void cs80::ExternalModulationInterpolator::prepare(float, int)	20640	static
+/tmp/cs80-a45-1cee5a/current/src/core/OutputTapCircuit.h:90:10:bool cs80::OutputTapCircuit::prepare(double, const Profile&, Mode)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/SharedUniformReceivers.cpp.inc:92:21:bool cs80::{anonymous}::evaluateCertifiedReceivers(const std::array<cs80::source_factory::RankBoundary, 2>&, double, const cs80::source_factory::BothRankDrives&, cs80::source_factory::SharedReadout&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/SharedUniformReceivers.cpp.inc:23:21:bool cs80::{anonymous}::evaluateUniformReceivers(const std::array<cs80::source_factory::RankBoundary, 2>&, double, const cs80::source_factory::BothRankDrives&, cs80::source_factory::SharedReadout&)	120	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:300:12:double cs80::ReconstructedOscillator::advanceIdle(double, double, const cs80::WscControls&)	288	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:300:12:double cs80::ReconstructedOscillator::advanceIdle(double, double, const cs80::WscControls&)	336	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:476:11:float cs80::Adsr::tick(float, bool, bool)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:691:11:float cs80::FilterEnv::tick(float, bool, bool)	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:904:11:float cs80::DelayLine::read(float) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:994:12:cs80::Chorus::Stereo cs80::Chorus::process(float, float, float, float, bool, bool)	64	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:1192:10:void cs80::OversamplingDecimator::prepare(int)	8320	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:1410:11:float cs80::Reverb::process(float, int)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/ModernLayer.h:185:10:void cs80::modern::ModernLayer::beginSample(const cs80::modern::GlobalInputs&)	192	static
+/tmp/cs80-a45-1cee5a/current/src/core/ModernLayer.h:303:10:void cs80::modern::ModernLayer::processVoice(int, const cs80::modern::VoiceInputs&, bool)	304	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:159:48:void cs80::{anonymous}::processModernVoice(cs80::modern::ModernLayer&, int, const Voice&, bool) [with Voice = cs80::Engine::Voice]	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:428:12:double cs80::ReconstructedOscillator::nextBranchEvent(const Nodes&, double, bool&) const	240	dynamic,bounded
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:453:10:void cs80::ReconstructedOscillator::recordEvent(double, unsigned int, const Nodes&, const Nodes&)	256	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:247:20:cs80::WscOutputVolts cs80::ReconstructedOscillator::tick(double, const cs80::WscControls&)	1008	static
+/tmp/cs80-a45-1cee5a/current/src/core/ReconstructedOscillator.h:234:10:void cs80::ReconstructedOscillator::reset(double, double)	352	static
+/tmp/cs80-a45-1cee5a/current/src/core/OriginalSubOscillator.h:121:19:static double cs80::OriginalSubOscillator::stepResidual(double, double)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/PraWahCircuit.h:34:5:cs80::PraWahCircuit::PraWahCircuit()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/PraWahCircuit.h:77:11:cs80::PraWahCircuit::Nodes cs80::PraWahCircuit::process(double)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/BbdChorus.h:120:10:void cs80::BbdChorus::prepare(float)	160	static
+/tmp/cs80-a45-1cee5a/current/src/core/BbdChorus.h:178:12:cs80::BbdChorus::Stereo cs80::BbdChorus::process(float, float, float, float, bool, bool)	144	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:242:10:void cs80::fx::PlateReverbFx::prepare(double)	208	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:293:18:cs80::fx::StereoSample cs80::fx::PlateReverbFx::process(float, float, float, float)	176	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:459:18:cs80::fx::StereoSample cs80::fx::SpringReverbFx::process(float, float, float, float)	192	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:589:18:cs80::fx::StereoSample cs80::fx::TapeEchoFx::process(float, float, float, float)	160	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:794:10:void cs80::fx::ModernFxSlot::clear(int)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxModels.h:859:18:cs80::fx::StereoSample cs80::fx::ModernFxSlot::process(int, float, float, float, float, float, int)	256	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxSlot.h:42:10:void cs80::fx::FxSlot::prepare(float)	208	static
+/tmp/cs80-a45-1cee5a/current/src/core/OutputTapCircuit.h:73:5:cs80::OutputTapCircuit::OutputTapCircuit()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/OutputTapCircuit.h:75:17:static bool cs80::OutputTapCircuit::validProfile(const Profile&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/OutputTapCircuit.h:118:11:cs80::OutputTapCircuit::Nodes cs80::OutputTapCircuit::process(double)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/NoiseSource.h:125:12:double cs80::GaussianNoise::next()	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/NoiseSource.h:155:10:void cs80::CircuitNoiseSources::prepare(double)	160	static
+/tmp/cs80-a45-1cee5a/current/src/core/SourceFactoryTones.h:400:15:double cs80::source_factory::decayReleaseSeconds(double)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/KbcContour.h:74:15:double cs80::kbc::outputVolts(int, double, double)	144	static
+/tmp/cs80-a45-1cee5a/current/src/experimental/ContinuousVoiceCircuit.h:299:14:float cs80::voice_continuity::clockStages(cs80::Ig00156Stage&, cs80::Ig00156Stage&, IdleStageReferences&, float, const IdleRankControls&, float, bool)	24	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:532:12:double cs80::body::InstrumentBody::fixedFormant(double) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:593:12:double cs80::body::InstrumentBody::pluckedMaterialWeight(int, double, double) const	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:649:12:double cs80::body::InstrumentBody::stringWeight(int, double, double) const	128	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:813:12:double cs80::body::InstrumentBody::makeHarmonicModes(double)	256	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:940:12:double cs80::body::InstrumentBody::makeTineModes()	144	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:976:12:double cs80::body::InstrumentBody::makeVariantBarModes()	752	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:1022:12:double cs80::body::InstrumentBody::makeMaterialModes()	1312	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:1167:12:double cs80::body::InstrumentBody::makeBarModes()	480	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:126:10:void cs80::body::InstrumentBody::noteOn(int, float, float, float, float, uint32_t, float, int, int)	128	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:1228:10:void cs80::body::InstrumentBody::updateControls(double, float, float)	176	static
+/tmp/cs80-a45-1cee5a/current/src/core/InstrumentBody.h:234:11:float cs80::body::InstrumentBody::tick(float, float, float)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:73:6:void cs80::EngineOutputFir::prepare(int)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:110:6:void cs80::EngineOutputFir::reset()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:121:6:void cs80::EngineOutputFir::push(float)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:164:6:bool cs80::EngineOutputFir::qualifies() const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/EngineOutputFir.cpp.inc:180:7:float cs80::EngineOutputFir::output() const	8	static
+/usr/include/c++/14/array:100:12:std::array<cs80::Engine::Voice, 8>::~array()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Dsp.h:966:7:constexpr cs80::Chorus::~Chorus()	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/FxSlot.h:30:8:constexpr cs80::fx::FxSlot::~FxSlot()	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:269:5:int cs80::Engine::effectiveOversampling() const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:363:6:bool cs80::Engine::refreshToleranceRatios()	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:378:6:void cs80::Engine::refreshEnvelopeTimes()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:398:6:void cs80::Engine::prepareWarmColdOscillators()	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:275:6:void cs80::Engine::configureInternalRate()	848	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:342:6:bool cs80::Engine::updateOversampling()	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:557:6:void cs80::Engine::inheritControllerStateFrom(const cs80::Engine&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:791:6:void cs80::Engine::buildSettings()	208	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1046:7:float cs80::Engine::filterInitialTarget(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1053:7:float cs80::Engine::filterAttackTarget(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1062:6:void cs80::Engine::updateSourceReadouts(float)	1568	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1153:5:int cs80::Engine::chooseVoice()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1241:6:void cs80::Engine::rebuildArpSequence()	1616	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1170:6:void cs80::Engine::rememberHeldKey(int, float, int, bool, uint64_t)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1378:6:void cs80::Engine::refreshKeyboardContour()	224	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:418:6:void cs80::Engine::reset()	160	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:354:6:void cs80::Engine::setNonRealtime(bool)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1603:6:void cs80::Engine::releaseVoice(Voice&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1322:6:void cs80::Engine::stopArpVoice()	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1217:6:void cs80::Engine::forgetHeldKey(int, int, bool)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1756:6:void cs80::Engine::rememberUnassignedKey(int, float, int, bool, bool)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1772:6:bool cs80::Engine::forgetUnassignedKey(int, int, bool)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1811:6:bool cs80::Engine::isSustainPedalDown(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1866:6:void cs80::Engine::releaseKey(Voice&)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1887:6:void cs80::Engine::cancelSustainTails()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1963:16:cs80::Engine::Voice* cs80::Engine::findVoiceForNote(int, int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2183:7:float cs80::Engine::effectiveManagerBendRange(bool) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2189:6:void cs80::Engine::retargetManagerBends(const std::array<float, 2>&)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2209:7:float cs80::Engine::effectiveMemberBendRange(bool) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2215:6:void cs80::Engine::retargetMemberBends(const std::array<float, 2>&)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2394:6:void cs80::Engine::setExpression(float)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2400:6:void cs80::Engine::setRibbon(float)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2406:7:float cs80::Engine::tunedPitch(int, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2414:6:bool cs80::Engine::noteMapped(int, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2422:6:void cs80::Engine::retuneSoundingVoices()	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2431:6:void cs80::Engine::setScalaTuning(const cs80::tuning::TuningTable&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2437:6:void cs80::Engine::setMtsTuning(const cs80::tuning::TuningTable&)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2443:6:void cs80::Engine::setMtsChannelTunings(const std::array<cs80::tuning::TuningTable, 16>&)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2449:6:bool cs80::Engine::handleSysEx(const uint8_t*, int)	960	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2501:6:bool cs80::Engine::bindReleaseOrderClock(cs80::ReleaseOrderClock&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2511:6:bool cs80::Engine::canCoordinateImmediateReleaseWith(const cs80::Engine&) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2519:26:cs80::Engine::ReleaseCandidate cs80::Engine::immediateReleaseCandidate(int, int, bool) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2538:6:bool cs80::Engine::hasFreeCircuit() const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2546:6:bool cs80::Engine::hasFreeCircuitForRouting() const	4112	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2677:27:cs80::Engine::MemberExpression* cs80::Engine::memberExpressionFor(int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2237:6:void cs80::Engine::applyPitchBend(int, float, bool)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2178:6:void cs80::Engine::pitchBend(int, float)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2693:6:void cs80::Engine::discardChangedMemberExpression()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2704:6:bool cs80::Engine::isZoneMaster(const Voice&, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2115:7:float cs80::Engine::timbreTarget(const Voice&) const	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2093:7:float cs80::Engine::pressureTarget(const Voice&) const	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2135:6:void cs80::Engine::polyPressure(int, float, int)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2154:6:void cs80::Engine::applyChannelPressure(int, float, bool)	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2149:6:void cs80::Engine::channelPressure(int, float)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2715:6:void cs80::Engine::retargetSmoothedSettings()	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:657:6:void cs80::Engine::applyParams(const cs80::ParamValues&)	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:576:6:void cs80::Engine::setParams(const cs80::ParamValues&)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:203:1:cs80::Engine::Engine()	704	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:589:6:bool cs80::Engine::setControlFrame(const cs80::ControlFrame&)	4880	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:217:6:void cs80::Engine::prepare(double)	208	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2722:6:void cs80::Engine::beginSmoothedControls()	320	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2728:6:void cs80::Engine::beginMaskedSmoothedControls()	288	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2736:6:void cs80::Engine::endSmoothedControls()	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3716:5:int cs80::Engine::activeVoices() const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3725:24:cs80::Engine::SourceToneInfo cs80::Engine::getSourceToneInfo(int) const	24	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3746:31:cs80::source_factory::CutoffReadout cs80::Engine::getSourceCutoffReadout(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3751:19:cs80::Engine::VoiceInfo cs80::Engine::getVoiceInfo(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3760:18:cs80::Engine::RankInfo cs80::Engine::getRankInfo(int, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3767:24:cs80::Engine::RankAudioState cs80::Engine::getRankAudioState(int, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3779:27:cs80::Engine::RankEnvelopeState cs80::Engine::getRankEnvelopeState(int, int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3787:21:cs80::Engine::PraWahState cs80::Engine::getPraWahState(int) const	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3796:24:cs80::Engine::OutputTapState cs80::Engine::getOutputTapState(int) const	8	static
+/tmp/cs80-a45-1cee5a/current/src/experimental/ContinuousVoiceCircuit.h:418:6:void cs80::voice_continuity::idleStepRank(Rank&, const IdleRankControls&, float, int, int) [with Rank = cs80::Engine::Rank]	160	static
+/tmp/cs80-a45-1cee5a/current/src/experimental/ContinuousVoiceCircuit.h:397:6:void cs80::voice_continuity::replayRank(Rank&, const IdleRankControls&, float, int, float, float, cs80::Rng&) [with Rank = cs80::Engine::Rank]	272	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1369:6:void cs80::Engine::wakeIdleVoice(Voice&)	208	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1438:6:void cs80::Engine::startVoice(Voice&, int, float, int, bool, uint64_t)	224	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1786:6:void cs80::Engine::reconsiderUnassignedKeys(bool)	128	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1827:6:void cs80::Engine::setSustainPedal(int, bool)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1934:6:void cs80::Engine::applyNoteOff(int, int, bool, bool)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1999:6:void cs80::Engine::allNotesOffMask(bool, unsigned int, bool)	80	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1980:6:void cs80::Engine::allNotesOffImpl(bool, int, bool)	40	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1975:6:void cs80::Engine::allNotesOff(bool, int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2284:6:void cs80::Engine::controlChange(int, float, int)	160	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1289:6:void cs80::Engine::triggerArpNote()	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1332:6:void cs80::Engine::updateArpeggiator(float)	32	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1686:6:void cs80::Engine::applyNoteOn(int, float, int, bool, uint64_t, bool)	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/KasScanner.h:131:10:void cs80::kas::Scanner::flush(Dispatch&&) [with Dispatch = cs80::Engine::processInternalSample(float&, float&, float)::<lambda(const Event&)>&]	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1676:6:void cs80::Engine::flushScanEvents()	112	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1655:6:void cs80::Engine::enqueueNoteOn(int, float, int, bool)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1641:6:void cs80::Engine::noteOn(int, float, int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1646:6:bool cs80::Engine::noteOnFromKeyboard(int, float, int)	16	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1918:6:void cs80::Engine::enqueueNoteOff(int, int, bool)	48	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1908:6:void cs80::Engine::noteOff(int, int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:1913:6:void cs80::Engine::noteOffFromKeyboard(int, int)	8	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:2779:6:void cs80::Engine::processInternalSample(float&, float&, float)	944	static
+/tmp/cs80-a45-1cee5a/current/src/core/Engine.cpp:3683:6:void cs80::Engine::render(float*, int, const float*)	160	static

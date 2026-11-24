@@ -1,0 +1,44 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "freshly_rerun_by_a26": false,
+  "focused_suite_passed": 31,
+  "selected_testcases": [
+    {
+      "name": "cs80_body_noise_rate_tests",
+      "status": "passed",
+      "seconds": 4.28737,
+      "output_truncated_by_ctest": true,
+      "actual_output": "AIR host=44100 factor=2 rms=0.0009335670098 relative=+0.01406 dB\nAIR host=44100 factor=4 rms=0.0009300487706 relative=-0.01874 dB\nAIR host=44100 factor=8 rms=0.0009318036187 relative=-0.00237 dB\nAIR host=48000 factor=2 rms=0.0009320575267 relative=+0.00000 dB\nAIR host=48000 factor=4 rms=0.0009303693435 relative=-0.01575 dB\nAIR host=48000 factor=8 rms=0.000931292611 relative=-0.00713 dB\nAIR host=96000 factor=2 rms=0.0009303693435 relative=-0.01575 dB\nAIR host=96000 factor=4 rms=0.000931292611 relative=-0.00713 dB\nAIR host=96000 factor=8 rms=0.0009290229608 relative=-0.02833 dB\nWIDE rate=8000 rms=0.0009402716488 relative=+0.07621 dB\nWIDE rate=11025 rms=0.0009387743251 relative=+0.06237 dB\nWIDE rate=16000 rms=0.0009349802564 relative=+0.02719 dB\nWIDE rate=22050 rms=0.0009347948116 relative=+0.02547 dB\nWIDE rate=48000 rms=0.0009335300973 relative=+0.01371 dB\nWIDE rate=1536000 rms=0.0009313156884 relative=-0.00692 dB\nCONTACT model=1 velocity=0.2 rate=88200 relative=-0.00213 dB\nCONTACT model=1 velocity=0.2 rate=192...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]\n"
+    },
+    {
+      "name": "cs80_string_body_formant_tests",
+      "status": "passed",
+      "seconds": 4.0213,
+      "output_truncated_by_ctest": false,
+      "actual_output": "STRING fixed-body worst 0.007053 dB, RMS 0.000501 dB; moving-body worst 4.040361 dB, RMS 1.143294 dB; 3093 partials, 405 meaningful bends\nSTRING return-to-onset worst harmonic error 0.000321 dB\nString body formants: 5388 checks, 0 failures\n"
+    },
+    {
+      "name": "cs80_body_articulation_engine_tests",
+      "status": "passed",
+      "seconds": 5.38539,
+      "output_truncated_by_ctest": true,
+      "actual_output": "REGISTER Piano strings bass/treble envelope decay=1.97239 release=1.69511\nREGISTER Tine electric piano bass/treble envelope decay=1.56868 release=1.44565\nREGISTER Reed electric piano bass/treble envelope decay=1.71837 release=1.52425\nREGISTER Nylon strings bass/treble envelope decay=1.56868 release=1.52425\nREGISTER Marimba bass/treble envelope decay=1.97239 release=1.52425\nATTACK Bowed strings envelope firm/soft=1.31107 audio early/held soft=0.29258 firm=0.39964\nATTACK Flute envelope firm/soft=1.26592 audio early/held soft=0.33584 firm=0.43495\nATTACK Clarinet envelope firm/soft=1.21852 audio early/held soft=0.33847 firm=0.42104\nATTACK Oboe envelope firm/soft=1.21852 audio early/held soft=0.33287 firm=0.41836\nATTACK Bassoon envelope firm/soft=1.24377 audio early/held soft=0.31699 firm=0.40844\nATTACK Brass envelope firm/soft=1.29157 audio early/held soft=0.32893 firm=0.43605\nFOOTAGE Piano strings rate=44100 release relative error=0.0001463078 envelope 0.056103345 / 0.056103345 pitch 130.810867 / 130.811829\nFOOT...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]\n"
+    },
+    {
+      "name": "cs80_keyboard_response_tests",
+      "status": "passed",
+      "seconds": 38.321,
+      "output_truncated_by_ctest": false,
+      "actual_output": "Stage Keys dynamics 9.538 dB; held aftersound -28.230 dB relative to onset\nSoft Keys dynamics 9.476 dB; held aftersound -30.538 dB relative to onset\nHonky Keys dynamics 9.368 dB; held aftersound -34.746 dB relative to onset\nVelocity Keys dynamics 10.733 dB; held aftersound -30.941 dB relative to onset\nElectric Piano I dynamics 9.576 dB; held aftersound -21.411 dB relative to onset\nElectric Piano II dynamics 9.530 dB; held aftersound -20.822 dB relative to onset\nTine Piano dynamics 9.335 dB; held aftersound -22.140 dB relative to onset\nReed Piano dynamics 10.078 dB; held aftersound -22.730 dB relative to onset\nKeyboardResponseTests: 124 checks, 0 failures\n"
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "status": "passed",
+      "seconds": 323.635,
+      "output_truncated_by_ctest": false,
+      "actual_output": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs\n"
+    }
+  ],
+  "library_audit_scope": "All 523 complete saved programs, including all 22 Hardware Studies; not original hardware-tab electrical sounds.",
+  "source_receipt_sha256": "506fc26c5c02f63d05321d5dd92f66a73156c285c5ee5499fe4e6c24a2bb2df3"
+}

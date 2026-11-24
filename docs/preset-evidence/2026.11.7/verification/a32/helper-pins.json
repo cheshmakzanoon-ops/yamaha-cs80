@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "scope": "Helper/source byte pins only; no CI artifact or native execution accepted.",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "source_tree": "469244af34233cfa145537266efd29024b66abba",
+  "revision": "2026.11.7",
+  "native_run_id": 45385716988,
+  "attempt": 1,
+  "review_checkout": "e8e29133a14c492a98033871cfe3912ef8978f5d",
+  "recorded_at_utc": "2026-11-24T12:26:43.760090+00:00",
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a36-verify-validator-payload.py",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "74e19c37f6c99fe2339b583f7fd4562934f2ac97"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a36-payload-probe.py",
+      "bytes": 14965,
+      "sha256": "d2b239e0c75981f883ca087d53e9ee1680d97432d4aee8482751cc0cd288ad45",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "004f3c4b1059782ea4e05ca47fd4c3431f220e59"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.5/verification/a41-verify-install-artifact.py",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "74dc56e918aef2aeb883906b5688ae668b602173"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/parse-native-evidence.py",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "9f69d76742cbbb6c27d84182294e2caea4664ee8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.6/verification/a52/bind-parser-archives.py",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "825025c0bd95242192cddad11bbf79e18559e479"
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "bytes": 35354,
+      "sha256": "9cb87b71aefd18f0e753f203d8f2fa2b537935fedde33fdc87f49eb64b04fccb",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "944f0014ab3e8960bd194f5db7ea987ff35e116f"
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "fc6a8d091e2e647c723976cf21710b37d50f3897"
+    },
+    {
+      "path": "scripts/run-pluginval-linux.sh",
+      "bytes": 2542,
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "bce2d486160692e994697bbcee0346952289a87e"
+    },
+    {
+      "path": "scripts/run-pluginval-with-core.py",
+      "bytes": 7044,
+      "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "35bde09efa1d2ecee6af976152a1c4735cb5a705"
+    },
+    {
+      "path": "scripts/download-pluginval-windows.py",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "54068ad98ce33c10a34739347d7e01735a6710de"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "bytes": 2815,
+      "sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+      "matches_compiled_source": true,
+      "source_blob_sha1": "4881f8cd55aa374b45cd1b36771cc4f7a49f5c66"
+    }
+  ],
+  "release_qualified": false
+}

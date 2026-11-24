@@ -1,0 +1,54 @@
+{
+  "_template_status": "UNFILLED PATHS: no evidence acceptance. Preserve exact source context and fill original archive/API/skip review paths.",
+  "provenance": {
+    "factory_revision": "2026.11.7",
+    "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+    "tree": "469244af34233cfa145537266efd29024b66abba",
+    "run_id": 45385716988,
+    "attempt": 1
+  },
+  "native": [
+    {
+      "target": "linux-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-linux-test-evidence.zip",
+      "api": "REPLACE_EVIDENCE_DIRECTORY/linux-x86_64-native-api.json",
+      "skip_review": "REPLACE_EVIDENCE_DIRECTORY/linux-x86_64-skip-review.json"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-windows-test-evidence.zip",
+      "api": "REPLACE_EVIDENCE_DIRECTORY/windows-x86_64-native-api.json",
+      "skip_review": "REPLACE_EVIDENCE_DIRECTORY/windows-x86_64-skip-review.json"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-macos-15-test-evidence.zip",
+      "api": "REPLACE_EVIDENCE_DIRECTORY/macos-arm64-native-api.json",
+      "skip_review": "REPLACE_EVIDENCE_DIRECTORY/macos-arm64-skip-review.json"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-macos-15-intel-test-evidence.zip",
+      "api": "REPLACE_EVIDENCE_DIRECTORY/macos-x86_64-native-api.json",
+      "skip_review": "REPLACE_EVIDENCE_DIRECTORY/macos-x86_64-skip-review.json"
+    }
+  ],
+  "validators": [
+    {
+      "target": "linux-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-reports.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-windows.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-macos-15.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "REPLACE_DOWNLOAD_DIRECTORY/cs80-pluginval-macos-15-intel.zip"
+    }
+  ]
+}

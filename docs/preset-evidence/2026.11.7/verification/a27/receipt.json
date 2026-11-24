@@ -1,0 +1,783 @@
+{
+  "sources": {
+    "published4": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "baseline6": "18711f93a39aa49f3d6f9a41784be456224facbe",
+    "current7": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201"
+  },
+  "current_worktree_head": "e8e29133a14c492a98033871cfe3912ef8978f5d",
+  "source_files_match_current_sound_commit": true,
+  "source_sha256": {
+    "src/core/Params.h": "946f1a6f8d6c3afec834c2551ff119b89541ec4d534057d34b752d05e0405c39",
+    "src/core/Engine.cpp": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+    "src/core/Engine.h": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+    "src/core/InstrumentBody.h": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+    "src/core/FactoryPresets.cpp": "dcc15c55be865fc5411c1e971ff0842b343dcd7f49cd6c0c0f9d5db7789243ac",
+    "src/core/OriginalCircuitLibrary.inc": "4c767f7b1cba9c694b96a47358eb616760c740e7a19fc80cbb833960fd680f13",
+    "src/core/CuratedLibrary.inc": "b725f945e552483fd995fbe35b9183e57a3470d7ca0fcf416b6e00defd658655",
+    "src/plugin/PluginProcessor.cpp": "cf3fc7f9c072584b496325a5aa41abd957e5109afdd234fa2a8661c0ab917f88",
+    "src/plugin/PluginProcessorLibrary.cpp": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+    "src/plugin/PresetFileValues.h": "a96291961553a0487ec3e7ccdf018f045320d9ef3f4eb97ebdf0bbd3aac15fed",
+    "tests/InstrumentBodyHostTests.h": "bb3dc27350b2e911f91edcea4665bcccf8f5bf11013adf83f55772d10f91733c",
+    "src/core/InstrumentBodyVariants.h": "12bc7c5289568f3f8b1aa1a0fd481016489a71eb094283d8950bf306e52984ce",
+    "src/core/InstrumentBodyMaterials.h": "dbaabc993711f7ee50f8680d645bccca40696c267be15b00740ff1ba02475013",
+    "src/plugin/PresetBrowser.cpp": "793bbec4b4b19323deb3f6f1174b7bfc471a1dab16b896cefd718100d3589860"
+  },
+  "local_artifact_sha256": {
+    "published4": {
+      "cs80_preset_capture": "adaa07ffc8f59c3dbe67e802bf49bd7690669fa3e5560aa106a6484befdd1742",
+      "libcs80_core.a": "306f0d8b48f0c6f9375203d1dd76899859aecd27b3d621ae016213561c923c89"
+    },
+    "baseline6": {
+      "cs80_preset_capture": "403e6fa2a9d691163858cc79e13c584bf091afc6ac35e07efa103549f08c1057",
+      "libcs80_core.a": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583"
+    },
+    "current7": {
+      "cs80_preset_capture": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d",
+      "libcs80_core.a": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1"
+    }
+  },
+  "inventory_sha256": {
+    "published4": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "baseline6": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+    "current7": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d"
+  },
+  "metadata_emitter": "docs/preset-evidence/2026.11.6/development/a08-parameter-contract.cpp",
+  "metadata_emitter_sha256": "eda55409ae1b39ebd9e0145d2e22ffc68c754998648e5cb5a458f7b178d810e1",
+  "existing_tests": [
+    {
+      "name": "cs80_instrument_body_variant_tests",
+      "exit_code": 0,
+      "executable_sha256": "167a8dc14bea1cc7ccea0626c8c1995ce3d88dcc8cbd19429813aecd0e5531b2",
+      "stdout_sha256": "4b7cb44d4c31c159ac960be31614164c166f8d64d025dfe6ed13321e1039d1b0"
+    },
+    {
+      "name": "cs80_material_body_tests",
+      "exit_code": 0,
+      "executable_sha256": "d09eb2855eabfcde6b5facf42099100e52f0945b069164325ab2c71e7f798189",
+      "stdout_sha256": "c729acd53c6ddc9c68f961039a6104d1fe1864a9bb6e7d8d0c06c1ad7eebb140"
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "exit_code": 0,
+      "executable_sha256": "5aa9e85686b07638daf334b83a595c8c9c1d5ace8cff70fb6f62264fccc48137",
+      "stdout_sha256": "4bcf022db8f745eadd422032f40e59262d3b7014b8b3f3c74480503d6f73588d"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+        "--",
+        "src",
+        "tests"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--inventory",
+        "/tmp/cs80-a27-1cee5a/published4/inventory.json",
+        "--library",
+        "all"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "078c0981ffa1b5472342e0fb5ab8702bc3bd2889:src/core/Params.h"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-I",
+        "/tmp/cs80-a27-1cee5a/published4",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/development/a08-parameter-contract.cpp",
+        "-o",
+        "/tmp/cs80-a27-1cee5a/published4/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-a27-1cee5a/published4/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--inventory",
+        "/tmp/cs80-a27-1cee5a/baseline6/inventory.json",
+        "--library",
+        "all"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/core/Params.h"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-I",
+        "/tmp/cs80-a27-1cee5a/baseline6",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/development/a08-parameter-contract.cpp",
+        "-o",
+        "/tmp/cs80-a27-1cee5a/baseline6/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-a27-1cee5a/baseline6/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--inventory",
+        "/tmp/cs80-a27-1cee5a/current7/inventory.json",
+        "--library",
+        "all"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "c5549f7d095a5c5f49a5ad22ec0ccc819245d201:src/core/Params.h"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "c++",
+        "-std=c++20",
+        "-O2",
+        "-I",
+        "/tmp/cs80-a27-1cee5a/current7",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.6/development/a08-parameter-contract.cpp",
+        "-o",
+        "/tmp/cs80-a27-1cee5a/current7/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-a27-1cee5a/current7/metadata"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-I",
+        "/tmp/cs80-session-1cee5a/src",
+        "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a27/core_probe.cpp",
+        "/tmp/cs80-build-1cee5a/libcs80_core.a",
+        "-o",
+        "/tmp/cs80-a27-1cee5a/core_probe"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-a27-1cee5a/core_probe"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/44100-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/44100-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/44100-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/44100-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/44100-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/44100-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "44100",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/48000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/48000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/48000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/48000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/48000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/48000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "48000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/96000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/96000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/96000-n48-v0.25-p0",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "48",
+        "--velocity",
+        "0.25",
+        "--pressure",
+        "0",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-published-4-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/published4/96000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-reference-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/baseline6/96000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+        "--out",
+        "/tmp/cs80-a27-1cee5a/current7/96000-n72-v0.85-p0.75",
+        "--library",
+        "all",
+        "--preset",
+        "Init Patch",
+        "--preset",
+        "Init Circuit",
+        "--rate",
+        "96000",
+        "--note",
+        "72",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0.75",
+        "--hold",
+        "0.5",
+        "--tail",
+        "0.5",
+        "--wav"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_instrument_body_variant_tests"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_material_body_tests"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/tmp/cs80-build-1cee5a/cs80_instrument_body_engine_tests"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/core/Params.h"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/core/Engine.cpp"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/plugin/PluginProcessor.cpp"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/plugin/PluginProcessorLibrary.cpp"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/plugin/PresetBrowser.cpp"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "18711f93a39aa49f3d6f9a41784be456224facbe:src/plugin/PresetFileValues.h"
+      ],
+      "returncode": 0
+    }
+  ],
+  "host_deserialization_executed": false,
+  "packaged_plugin_qualified": false,
+  "passed": true,
+  "state_paths_exactly_unchanged_from_baseline6": [
+    "src/core/Params.h",
+    "src/core/Engine.cpp",
+    "src/plugin/PluginProcessor.cpp",
+    "src/plugin/PluginProcessorLibrary.cpp",
+    "src/plugin/PresetBrowser.cpp",
+    "src/plugin/PresetFileValues.h"
+  ]
+}

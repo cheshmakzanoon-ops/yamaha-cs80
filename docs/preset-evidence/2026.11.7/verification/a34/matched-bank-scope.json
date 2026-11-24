@@ -1,0 +1,47 @@
+{
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "rows": 523,
+  "rate": 48000,
+  "velocity": 0.8,
+  "pressure": 0,
+  "hold_seconds": 3,
+  "tail_seconds": 1,
+  "category_notes": {
+    "Hardware Studies": 60,
+    "Brass": 60,
+    "Strings": 60,
+    "Pads": 60,
+    "Bass": 48,
+    "Leads": 67,
+    "Keys": 60,
+    "FX": 60,
+    "Sequences": 60,
+    "Init": 60,
+    "Polysynth": 60,
+    "Organ": 60,
+    "Winds": 67,
+    "Plucked": 60,
+    "Bells": 72
+  },
+  "nonfinite_samples": 0,
+  "samples_over_full_scale": 0,
+  "metrics_sha256": "0cc474d4b3e4d17684348913797f06bf1ce80e5f0d823394b28dee6237cfb7bc",
+  "three_single_note_prefix_controls": [
+    {
+      "name": "Slow Brass 10",
+      "first3s_peak_delta_from_root_rounded_csv_db": 4.64427074575724e-09,
+      "2_5_to_3s_rms_delta_from_root_rounded_csv_db": -1.5176624401647132e-09
+    },
+    {
+      "name": "Evolving Pad",
+      "first3s_peak_delta_from_root_rounded_csv_db": -3.185814279049737e-09,
+      "2_5_to_3s_rms_delta_from_root_rounded_csv_db": -3.5642919726797118e-09
+    },
+    {
+      "name": "Golden FX 156",
+      "first3s_peak_delta_from_root_rounded_csv_db": -2.379156427423368e-09,
+      "2_5_to_3s_rms_delta_from_root_rounded_csv_db": 4.022382427137927e-09
+    }
+  ],
+  "meaning": "For these three cases, first3s peak and2.5-3s RMS agree with the rounded root CSV within1e-7dB. Root whole-capture peak includes release; this agreement does not claim retained PCM identity or longer-hold coverage."
+}

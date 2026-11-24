@@ -1,0 +1,153 @@
+{
+  "schema": "cs80-a45-original-intel-failure-v1",
+  "source": "c5549f7d095a5c5f49a5ad22ec0ccc819245d201",
+  "run_id": 45385716988,
+  "run_attempt": 1,
+  "job_id": 138415960996,
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45385716988/job/138415960996",
+  "job_conclusion": "failure",
+  "job_completed_at": "2026-11-24T12:26:24Z",
+  "artifact": {
+    "id": 14919253127,
+    "name": "cs80-macos-15-intel-test-evidence",
+    "size_bytes": 86707,
+    "sha256": "f0e2ae0152cb4fa910abe9b0bf512aac648868b7bd7801051a40f7655c9aacfb",
+    "api_digest_matches": true,
+    "members": [
+      {
+        "name": "ctest-results.xml",
+        "size": 138758,
+        "sha256": "8f4183280b53ea837850227741c978c40a7090626f5196f48f2aee135f0bf6fb"
+      },
+      {
+        "name": "ci-juce-provenance.txt",
+        "size": 612,
+        "sha256": "13d8edc9954dadb08a81a4da21137501602c4646529cdeca5aab705376df638a"
+      },
+      {
+        "name": "Testing/Temporary/LastTest.log",
+        "size": 392424,
+        "sha256": "3166592777566b8fa59558fe1942ca6269ce7a437a97afe2eb19d449be2ce6d5"
+      }
+    ]
+  },
+  "junit_summary": {
+    "name": "(empty)",
+    "tests": "277",
+    "failures": "1",
+    "disabled": "0",
+    "skipped": "2",
+    "hostname": "",
+    "time": "2104",
+    "timestamp": "2026-11-24T11:51:12"
+  },
+  "actual_registered": 277,
+  "expected_registered": 277,
+  "expected_name_set_matches": true,
+  "duplicates": 0,
+  "failure_count": 1,
+  "failures": [
+    {
+      "name": "cs80_library_audit_tests",
+      "status": "fail",
+      "time_seconds": "0.212644",
+      "message": "Bus error",
+      "system_out": ""
+    }
+  ],
+  "formal_skips": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "passed_count": 274,
+  "lasttest_full_roster": true,
+  "lasttest_session_footer": true,
+  "new_tests": [
+    {
+      "name": "cs80_piano_partial_decay_tests",
+      "junit_status": "run",
+      "junit_time_seconds": "2.71433",
+      "lasttest_passed": true,
+      "terminal_summary": [
+        "Piano partial decay: 220 checks, 0 failures; 20053080 generated samples"
+      ]
+    },
+    {
+      "name": "cs80_body_noise_rate_tests",
+      "junit_status": "run",
+      "junit_time_seconds": "4.6359",
+      "lasttest_passed": true,
+      "terminal_summary": [
+        "Body noise rates: 157 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "cs80_string_body_formant_tests",
+      "junit_status": "run",
+      "junit_time_seconds": "3.44787",
+      "lasttest_passed": true,
+      "terminal_summary": [
+        "String body formants: 5388 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "cs80_low_choir_spectrum_tests",
+      "junit_status": "run",
+      "junit_time_seconds": "7.16785",
+      "lasttest_passed": true,
+      "terminal_summary": [
+        "LowChoirSpectrumTests: 1342 checks, 0 failures"
+      ]
+    }
+  ],
+  "failed_step": [
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 7,
+      "started_at": "2026-11-24T11:51:12Z",
+      "completed_at": "2026-11-24T12:26:17Z"
+    }
+  ],
+  "skipped_steps": [
+    "Fetch pluginval 1.0.4",
+    "Register built AU",
+    "Validate VST3 with pluginval",
+    "Validate AU with pluginval",
+    "Validate AU with pluginval GUI",
+    "Validate AU GUI fixed-seed regression",
+    "Validate AU GUI regression seed 0x3c99748",
+    "Package native macOS VST3, AU and Standalone",
+    "Upload native macOS install bundle"
+  ],
+  "original_ctest_exit": 8,
+  "ctest_exit_original_log_observed": true,
+  "original_log_has_bus_error": true,
+  "retained_inputs": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/native-api.json",
+      "size_bytes": 754,
+      "sha256": "9a850d7e4f108650d213e5842a5eecabd23c8e05654d83ccc0ea2d0e250b13cd"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/producer-job-api.json",
+      "size_bytes": 5989,
+      "sha256": "5f02199a2ed0fd8d727f05a27236efa716609cf11b1dcfe19c6b493c99f56b0c"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/ci/source-c5549f7d/macos-x86_64/producer-job.log",
+      "size_bytes": 189584,
+      "sha256": "6083d392b87026d9986983624e8a19f51ad6db2df687b6ae69f562a1c2d62d41"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a29/contract.json",
+      "size_bytes": 67113,
+      "sha256": "dfa5aae199f5b52c4cd305f60d78e39e84a546ce439f44c68141a18e3a55ac37"
+    }
+  ],
+  "native_results_accepted": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "scope": "Original failure observation only. No stack cause inferred from native archive; no crash backtrace was retained."
+}

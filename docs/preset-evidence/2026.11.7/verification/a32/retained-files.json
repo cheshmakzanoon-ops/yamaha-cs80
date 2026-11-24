@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "scope": "A32 preparation and inert verification records; no actual Windows/Linux artifact acceptance.",
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a32.md",
+      "bytes": 8481,
+      "sha256": "3688928945d959845bbcc49712feaa2925cb3ab7fc808a9f18bf069b42485f43"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/USAGE.md",
+      "bytes": 22194,
+      "sha256": "72cd72704deb697a010c3e505a33e34df52969375dc4d5ef3c8af9bcc389a114"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/command-receipt.json",
+      "bytes": 867,
+      "sha256": "6261d7b6af36db09b3941f21ff587ff902cffb9c6e50412ec9bd0210a07859e8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/consumer-inputs-template.json",
+      "bytes": 837,
+      "sha256": "eec63970b04946f950cdb51a19cef384f37b0365b97b50c5703e869976450ef0"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/existing-probe-results.json",
+      "bytes": 5401,
+      "sha256": "85c286defb6acbc43ef94448b9240fa1713fd3775fc522d6e974fa1b3e7b6312"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/existing-probe.log",
+      "bytes": 1686,
+      "sha256": "b160ce4bcea10fa676826b51e69432145cb5b605c1b2add73ac978e67c395d56"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/helper-pins.json",
+      "bytes": 3971,
+      "sha256": "109385cb1c105b613049111e2011aa8d2e7a24bb982f046b6f80a948a3e52f47"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/prepared-contract.json",
+      "bytes": 7588,
+      "sha256": "0b3926d7f975947eb2df062dcd8c69db5dfb6f7e2cd4477aa1d2813424ee06d8"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/windows-notice-checkout-transform.json",
+      "bytes": 8098,
+      "sha256": "1d8340c542d759580eb6c9dfd18116c6ada2fab20fad3df1608a5f3ae204df4f"
+    }
+  ],
+  "documentation_checks": [
+    {
+      "path": "docs/preset-evidence/2026.11.7/reviews/a32.md",
+      "local_links_resolved": true,
+      "trailing_whitespace": false,
+      "shell_blocks_syntax_checked": 0
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.7/verification/a32/USAGE.md",
+      "local_links_resolved": true,
+      "trailing_whitespace": false,
+      "shell_blocks_syntax_checked": 4
+    }
+  ],
+  "release_qualified": false
+}

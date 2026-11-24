@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "scope": "Unchanged historical inert fixture suite; not native validation.",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/preset-evidence/2026.11.5/verification/a36-payload-probe.py",
+    "--out",
+    "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a32/existing-probe-results.json"
+  ],
+  "cwd": "/workspace/scratch/1cee5a9391a9/yamaha-cs80",
+  "environment_overrides": {
+    "TMPDIR": "/tmp/cs80-a32-1cee5a",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "completed_at_utc": "2026-11-24T12:26:44.727335+00:00",
+  "log": {
+    "path": "docs/preset-evidence/2026.11.7/verification/a32/existing-probe.log",
+    "bytes": 1686,
+    "sha256": "b160ce4bcea10fa676826b51e69432145cb5b605c1b2add73ac978e67c395d56"
+  },
+  "release_qualified": false
+}
