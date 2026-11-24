@@ -110,6 +110,7 @@ void buildModern(Builder& add)
                .lfo(0, 1.0f, 0.72f, toPan).g(P_lfo1Wave, 1.0f).fx(0, fxPlate, 0.065f).g(P_fx1Model, 3.0f).g(P_fx1ParamA, 0.12f)
                .g(P_fx1ParamB, 0.38f).body(I, body::Model::tine, 1.0f, 0.56f, 1.55f)
                .body(II, body::Model::tine, 0.78f, 0.75f, 0.32f).eg(I, 0.0028f, 9.0f, 0.055f, 0.23f)
+               .bodySize(I, 0.60f).bodySize(II, 1.85f)
                .eg(II, 0.0012f, 0.52f, 0.0f, 0.068f).feg(II, 0.0f, 0.20f, 0.001f, 0.17f, 0.061f).touch(I, 0.19f, 1.0f, 0.0f, 0.0f)
                .touch(II, 0.36f, 1.0f, 0.0f, 0.0f).contour(-0.14f, -0.23f, -0.065f, 0.15f));
 

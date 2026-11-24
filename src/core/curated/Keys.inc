@@ -34,37 +34,42 @@ Program keys()
 void buildKeys(Builder& add)
 {
     add("Electric Piano I", "Keys", { "velocity", "sine", "dual-rank" },
-        "A warm tine body with individually fading overtones and a velocity-sensitive upper bark. The short strike falls away into a rounded ringing fundamental; key release damps the note.",
+        "A warm tine body balances a rounded second harmonic with velocity-sensitive upper bark. The pickup overtones soften with the tine's motion, while a short strike falls away into the ringing fundamental; key release damps the note.",
+        // Tine size is pickup alignment, not pitch. The main rank favors a
+        // rounder second harmonic; the brief upper strike has a sharper edge.
         keys()
               .level(I, 0.46f, 0.055f).hpf(I, 25.0f).lpf(I, 6400.0f, 0.025f).hpf(II, 700.0f)
-              .lpf(II, 8400.0f, 0.04f).body(I, body::Model::tine, 1.0f, 0.54f, 1.36f)
-              .body(II, body::Model::tine, 0.94f, 0.84f, 0.35f).feg(I, 0.0f, 0.08f, 0.0018f, 0.70f, 0.16f)
+              .lpf(II, 8400.0f, 0.04f).body(I, body::Model::tine, 1.0f, 0.86f, 1.36f)
+              .body(II, body::Model::tine, 0.94f, 0.84f, 0.35f).bodySize(I, 2.00f).bodySize(II, 0.85f)
+              .feg(I, 0.0f, 0.08f, 0.0018f, 0.70f, 0.16f)
               .feg(II, 0.0f, 0.18f, 0.001f, 0.22f, 0.065f).eg(I, 0.0018f, 7.8f, 0.055f, 0.19f)
               .eg(II, 0.001f, 0.68f, 0.0f, 0.055f).touch(I, 0.08f, 1.0f, 0.0f, 0.0f)
               .touch(II, 0.16f, 1.0f, 0.0f, 0.0f).contour(0.10f, -0.08f, 0.015f, 0.035f).mix(0.20f).detune(0.0f));
     add("Electric Piano II", "Keys", { "velocity", "chorus", "feet-layer" },
-        "A covered tine body supports a lighter 4-foot strike with a longer, softer overtone decay than Electric Piano I. Shallow chorus opens the stereo image while the dry attack remains defined.",
-        // Voice into the fixed chorus return: its C4 comb otherwise erases
-        // the upper strike even at a shallow modulation depth. The lower LP
-        // and slower modal decay retain the covered, lingering final sound.
+        "A clean soft tine body opens into a broader pickup bark under firmer fingers. A lighter 4-foot strike fades above the lingering body, while shallow chorus colors the long decay.",
+        // The lower pickup alignment opens even and odd overtones under firm
+        // touch, distinct from I's rounder quiet body. The original chorus
+        // keeps its register-dependent color and the 4-foot strike stays light.
         keys()
               .wave(I, false, true, 0.58f).wave(II, false, true, 0.72f).feet(II, f4).pw(II, 0.70f)
               .level(II, 0.35f, 0.025f).level(I, 0.40f, 0.055f).hpf(I, 28.0f).lpf(I, 5200.0f, 0.02f)
               .hpf(II, 720.0f).lpf(II, 9600.0f, 0.03f).body(I, body::Model::tine, 1.0f, 0.82f, 1.72f)
-              .body(II, body::Model::tine, 0.94f, 0.74f, 0.56f).feg(I, 0.0f, 0.055f, 0.0024f, 0.90f, 0.20f)
+              .body(II, body::Model::tine, 0.94f, 0.74f, 0.56f).bodySize(I, 0.50f).bodySize(II, 1.55f)
+              .feg(I, 0.0f, 0.055f, 0.0024f, 0.90f, 0.20f)
               .feg(II, 0.0f, 0.14f, 0.0013f, 0.34f, 0.08f).eg(I, 0.0025f, 8.3f, 0.045f, 0.27f)
               .eg(II, 0.0016f, 1.05f, 0.0f, 0.075f).touch(I, 0.055f, 1.0f, 0.0f, 0.0f)
               .touch(II, 0.12f, 1.0f, 0.0f, 0.0f).contour(0.075f, -0.12f, 0.015f, 0.04f).mix(0.22f)
               .detune(0.18f).chorus(0.10f, 0.34f));
     add("Tine Piano", "Keys", { "feet-layer", "velocity", "sine" },
-        "A concentrated tine resonance beneath a separately controlled third-harmonic strike. The struck partials soften at their own rates; the upper rank follows the keyboard and gives firm notes a clear bell-like attack.",
+        "A concentrated tine resonance follows a brief third-harmonic strike. Gentle notes stay rounded; firm strikes bring out the pickup overtones and a bell-like onset before the long body softens.",
         keys()
-              .wave(I, false, true, 0.84f).level(I, 0.13f, 0.080f).wave(II, false, false, 0.97f).feet(II, f223)
+              .wave(I, false, true, 0.84f).level(I, 0.13f, 0.080f).wave(II, false, false, 0.38f).feet(II, f223)
               .level(II, 0.0f, 0.01f).detune(0.0f).hpf(I, 24.0f).lpf(I, 7500.0f, 0.02f)
-              .body(I, body::Model::tine, 1.0f, 0.42f, 1.58f).feg(I, 0.0f, 0.04f, 0.001f, 0.45f, 0.14f)
-              .eg(I, 0.0015f, 8.4f, 0.05f, 0.22f).eg(II, 0.001f, 1.25f, 0.0f, 0.060f)
+              .body(I, body::Model::tine, 1.0f, 0.94f, 1.05f).bodySize(I, 0.65f)
+              .feg(I, 0.0f, 0.04f, 0.001f, 0.45f, 0.14f)
+              .eg(I, 0.0015f, 8.4f, 0.05f, 0.22f).eg(II, 0.001f, 0.23f, 0.0f, 0.060f)
               .touch(I, 0.04f, 0.95f, 0.0f, 0.0f).touch(II, 0.0f, 1.0f, 0.0f, 0.0f)
-              .contour(0.12f, -0.05f, 0.01f, 0.025f).mix(0.24f).g(P_voiceDispersion, 0.025f));
+              .contour(0.12f, -0.05f, 0.01f, 0.025f).mix(0.20f).g(P_voiceDispersion, 0.025f));
     add("Clavichord I", "Keys", { "velocity", "percussive" },
         "A dry tangent-excited string spectrum with a short upper snap. Its high partials damp independently, leaving a small clear body; velocity changes the edge as well as the level.",
         keys()
@@ -194,11 +199,12 @@ void buildKeys(Builder& add)
               .touch(I, 0.055f, 0.84f, 0.0f, 0.0f).touch(II, 0.10f, 0.96f, 0.0f, 0.0f)
               .contour(0.14f, -0.12f, 0.02f, 0.05f).mix(0.11f).g(P_voiceDispersion, 0.025f));
     add("Chorus Keys", "Keys", { "chorus", "velocity" },
-        "A bright tine attack resolves into a smooth electric body with independently softening overtones. Shallow chorus motion shades the long decay while the dry strike keeps chord changes clear.",
+        "Firm notes add odd-harmonic tine bite above a smooth electric body. The pickup overtones soften with the motion while shallow chorus shades the long decay and the short strike keeps chord changes clear.",
         keys()
               .wave(I, false, true, 0.70f).level(I, 0.38f, 0.085f).wave(II, true, false, 0.12f).hpf(I, 27.0f)
               .lpf(I, 7600.0f, 0.025f).hpf(II, 1350.0f).lpf(II, 11000.0f, 0.035f)
-              .body(I, body::Model::tine, 1.0f, 0.63f, 1.42f).body(II, body::Model::tine, 0.91f, 0.89f, 0.34f)
+              .body(I, body::Model::tine, 1.0f, 0.71f, 1.42f).body(II, body::Model::tine, 0.91f, 0.89f, 0.34f)
+              .bodySize(I, 1.25f).bodySize(II, 0.70f)
               .feg(I, 0.0f, 0.07f, 0.0016f, 0.65f, 0.17f).feg(II, 0.0f, 0.17f, 0.001f, 0.18f, 0.06f)
               .eg(I, 0.0016f, 7.8f, 0.05f, 0.23f).eg(II, 0.001f, 0.62f, 0.0f, 0.055f)
               .touch(I, 0.10f, 0.94f, 0.0f, 0.0f).touch(II, 0.18f, 1.0f, 0.0f, 0.0f)
@@ -238,7 +244,7 @@ void buildKeys(Builder& add)
               .touch(I, 0.10f, 0.94f, 0.0f, 0.0f).touch(II, 0.22f, 1.0f, 0.0f, 0.0f)
               .contour(0.13f, -0.20f, 0.015f, 0.04f).mix(0.20f).detune(0.8f).g(P_drift, 0.008f));
     add("Reed Piano", "Keys", { "velocity", "dual-rank" },
-        "A vibrating-reed spectrum gives hard notes a broad harmonic bark, distinct from a tine bell. The short upper bark falls away into a warmer rounded reed body with partial-specific losses and prompt key-off damping.",
+        "A vibrating reed and capacitive-style pickup give hard notes a broad harmonic bark, distinct from a tine bell. The short upper bark falls away as the reed motion softens, leaving a warmer rounded body with prompt key-off damping.",
         keys()
               .wave(I, false, true, 0.20f).pw(I, 0.59f).wave(II, false, true).pw(II, 0.69f)
               .level(I, 0.66f, 0.080f).level(II, 0.96f, 0.02f).detune(0.0f).hpf(I, 32.0f).lpf(I, 5400.0f, 0.055f)
@@ -260,22 +266,24 @@ void buildKeys(Builder& add)
               .touch(II, 0.06f, 1.0f, 0.0f, 0.0f).contour(0.06f, -0.23f, 0.01f, 0.03f).mix(0.17f)
               .chorus(0.15f, 0.27f).detune(0.22f));
     add("Tremolo Keys", "Keys", { "tremolo", "velocity", "sub-mod" },
-        "A rounded tine body with a crisp upper strike carries gentle 4.8 Hz full-body tremolo. The upper modes soften independently as the body rings, with restrained stereo color from the chorus/tremolo circuit.",
+        "A rounded second-harmonic tine body and crisp upper strike carry gentle 4.8 Hz full-body tremolo. The pickup overtones soften as the body rings, with restrained stereo color from the chorus/tremolo circuit.",
         keys()
               .wave(I, false, true, 0.76f).level(I, 0.33f, 0.085f).wave(II, false, true, 0.12f).pw(II, 0.65f)
               .detune(0.0f).hpf(I, 25.0f).lpf(I, 6200.0f, 0.025f).hpf(II, 900.0f).lpf(II, 8700.0f, 0.035f)
               .body(I, body::Model::tine, 1.0f, 0.46f, 1.69f).body(II, body::Model::tine, 0.95f, 0.80f, 0.38f)
+              .bodySize(I, 2.15f).bodySize(II, 1.10f)
               .feg(I, 0.0f, 0.06f, 0.0018f, 0.74f, 0.23f).feg(II, 0.0f, 0.16f, 0.001f, 0.23f, 0.055f)
               .eg(I, 0.0019f, 7.9f, 0.055f, 0.31f).eg(II, 0.001f, 0.72f, 0.0f, 0.06f)
               .touch(I, 0.08f, 0.92f, 0.0f, 0.0f).touch(II, 0.16f, 1.0f, 0.0f, 0.0f)
               .contour(0.08f, -0.11f, 0.015f, 0.035f).mix(0.19f).tremolo(0.20f, 4.8f)
               .sub(subSine, 4.8f, 0.0f, 0.0f, 0.16f));
     add("Contour Keys", "Keys", { "kbd-contour", "velocity" },
-        "A tine-based electric keyboard with a fuller bass and a more present treble strike. Independently damping modes preserve the evolving body across registers; keyboard contour adds level and circuit-brightness contrast.",
+        "A tine-based electric keyboard with a fuller bass and a more present reed-tinted treble strike. Firm playing opens both even and odd pickup overtones; keyboard contour adds level and circuit-brightness contrast.",
         keys()
               .wave(I, false, true, 0.75f).level(I, 0.34f, 0.095f).wave(II, true, false, 0.08f).detune(0.0f)
               .hpf(I, 24.0f).lpf(I, 6500.0f, 0.025f).hpf(II, 1150.0f).lpf(II, 9200.0f, 0.045f)
               .body(I, body::Model::tine, 1.0f, 0.48f, 1.42f).body(II, body::Model::reed, 0.80f, 0.80f, 0.36f)
+              .bodySize(I, 0.65f).bodySize(II, 1.50f)
               .feg(I, 0.0f, 0.07f, 0.002f, 0.80f, 0.19f).feg(II, 0.0f, 0.19f, 0.001f, 0.24f, 0.06f)
               .eg(I, 0.002f, 7.5f, 0.05f, 0.26f).eg(II, 0.001f, 0.72f, 0.0f, 0.06f)
               .touch(I, 0.08f, 0.93f, 0.0f, 0.0f).touch(II, 0.18f, 1.0f, 0.0f, 0.0f)
