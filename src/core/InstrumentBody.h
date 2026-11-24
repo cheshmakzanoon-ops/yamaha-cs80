@@ -1010,7 +1010,12 @@ private:
         const bool capacitive = model == reed;
         const double loss = registerLossScale(capacitive ? 0.35 : 0.38);
         double maximumSum = electricPickup.fullStrikeBound();
-        for (int harmonic = 1; harmonic <= ElectricPickup::harmonicCount; ++harmonic)
+        // The magnetic derivative's omitted tail above h12 is uniformly
+        // below 9.35e-5 of its normalized fundamental across admitted
+        // geometry and excursion. Keep all 16 capacitive harmonics and the
+        // common full-strike bound; only skip four magnetic oscillators.
+        const int electricalHarmonics = capacitive ? ElectricPickup::harmonicCount : 12;
+        for (int harmonic = 1; harmonic <= electricalHarmonics; ++harmonic)
         {
             addMode(static_cast<double>(harmonic), 1.0, 1.0,
                     (capacitive ? 0.36 : 0.18) * loss, 0.0,
