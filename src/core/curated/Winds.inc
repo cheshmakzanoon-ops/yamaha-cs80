@@ -204,13 +204,14 @@ void buildWinds(Builder& add)
                .touch(I, 0.16f, 1.0f, 0.24f, 0.92f).touch(II, 0.12f, 0.80f, 0.15f, 0.60f)
                .eg(I, 0.010f, 0.65f, 0.99f, 0.070f).eg(II, 0.030f, 0.42f, 0.65f, 0.070f));
     add("Ocarina", "Winds", { "sine", "aftertouch", "velocity" },
-        "A soft 4' vessel-like body retains a nearly pure fundamental with very restrained modeled harmonics. A trace of separate air and a rounded onset keep the line alive, with no lower pitched rank mixed in.",
+        "A soft 4' vessel-like body keeps the fundamental dominant with restrained modeled harmonics. A trace of separate air and a rounded onset keep the line alive, with no lower pitched rank mixed in.",
         winds().wave(I, false, false, 1.0f).wave(II, false, false, 0.0f, 0.08f)
                .feet(Both, f4).level(I, 0.0f, 0.30f).touch(I, 0.0f, 0.62f, 0.0f, 0.26f)
                .hpf(II, 1800.0f).lpf(II, 6200.0f, 0.03f)
                .eg(I, 0.045f, 0.55f, 0.97f, 0.18f).eg(II, 0.025f, 0.45f, 0.82f, 0.12f)
                .mix(0.045f).sub(subSine, 5.0f, 0.0f).subAt(0.025f, 0.05f).g(P_modWheelSub, 0.025f)
-               .body(I, body::Model::flute, 0.70f, 0.10f, 1.35f)
+               // One coherent pitched body avoids cancellation against a free-running sine.
+               .body(I, body::Model::flute, 1.0f, 0.10f, 1.35f)
                .hpf(I, 22.0f).lpf(I, 3500.0f, 0.025f)
                .wave(II, false, false, 0.0f, 0.05f).mix(0.032f)
                .eg(I, 0.024f, 0.55f, 0.985f, 0.09f)

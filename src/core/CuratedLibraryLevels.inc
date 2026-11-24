@@ -167,7 +167,7 @@
     { "English Horn", 1.000f },
     { "Bassoon", 1.000f },
     { "Soprano Reed", 1.000f },
-    { "Ocarina", 1.000f },
+    { "Ocarina", 0.625f },
     { "Piccolo", 1.000f },
     { "Whistle", 1.000f },
     { "Shakuhachi", 1.000f },
