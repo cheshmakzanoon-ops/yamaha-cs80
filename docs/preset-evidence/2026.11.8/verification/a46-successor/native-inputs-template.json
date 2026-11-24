@@ -1,0 +1,22 @@
+{
+  "provenance": {
+    "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "revision": "2026.11.8",
+    "run_id": 45457535944,
+    "attempt": 1,
+    "purpose": "Template for actual source-bound outputs; no files or outcomes assumed."
+  },
+  "native": [
+    {"target": "linux-x86_64", "archive": "linux-x86_64/native.zip"},
+    {"target": "windows-x86_64", "archive": "windows-x86_64/native.zip"},
+    {"target": "macos-arm64", "archive": "macos-arm64/native.zip"},
+    {"target": "macos-x86_64", "archive": "macos-x86_64/native.zip"}
+  ],
+  "validators": [
+    {"target": "linux-x86_64", "archive": "linux-x86_64/validator-reports.zip"},
+    {"target": "windows-x86_64", "archive": "windows-x86_64/validator-reports.zip"},
+    {"target": "macos-arm64", "archive": "macos-arm64/validator-reports.zip"},
+    {"target": "macos-x86_64", "archive": "macos-x86_64/validator-reports.zip"}
+  ]
+}

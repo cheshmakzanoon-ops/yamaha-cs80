@@ -1,0 +1,40 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87db9911..7e500367 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -740,0 +741,4 @@ if (CS80_BUILD_TESTS)
++    add_executable(cs80_instrument_damper_tests tests/InstrumentDamperTests.cpp)
++    target_link_libraries(cs80_instrument_damper_tests PRIVATE cs80_core)
++    add_test(NAME cs80_instrument_damper_tests COMMAND cs80_instrument_damper_tests)
++    set_tests_properties(cs80_instrument_damper_tests PROPERTIES TIMEOUT 120)
+@@ -748,0 +753,4 @@ if (CS80_BUILD_TESTS)
++    add_executable(cs80_electric_pickup_tests tests/ElectricPickupTests.cpp)
++    target_include_directories(cs80_electric_pickup_tests PRIVATE src)
++    add_test(NAME cs80_electric_pickup_tests COMMAND cs80_electric_pickup_tests)
++    set_tests_properties(cs80_electric_pickup_tests PROPERTIES TIMEOUT 60)
+@@ -772,0 +781,8 @@ if (CS80_BUILD_TESTS)
++    add_executable(cs80_piano_hammer_contact_tests tests/PianoHammerContactTests.cpp)
++    target_include_directories(cs80_piano_hammer_contact_tests PRIVATE src)
++    add_test(NAME cs80_piano_hammer_contact_tests COMMAND cs80_piano_hammer_contact_tests)
++    set_tests_properties(cs80_piano_hammer_contact_tests PROPERTIES TIMEOUT 60)
++    add_executable(cs80_piano_treble_contact_tests tests/PianoTrebleContactTests.cpp)
++    target_include_directories(cs80_piano_treble_contact_tests PRIVATE src)
++    add_test(NAME cs80_piano_treble_contact_tests COMMAND cs80_piano_treble_contact_tests)
++    set_tests_properties(cs80_piano_treble_contact_tests PROPERTIES TIMEOUT 60)
+@@ -836,0 +853,4 @@ if (CS80_BUILD_TESTS)
++    add_executable(cs80_crystal_string_stability_tests tests/CrystalStringStabilityTests.cpp)
++    target_link_libraries(cs80_crystal_string_stability_tests PRIVATE cs80_core)
++    add_test(NAME cs80_crystal_string_stability_tests COMMAND cs80_crystal_string_stability_tests)
++    set_tests_properties(cs80_crystal_string_stability_tests PROPERTIES TIMEOUT 60)
+@@ -868,0 +889,4 @@ if (CS80_BUILD_TESTS)
++    add_executable(cs80_preset_repeatability_tests tests/PresetRepeatabilityTests.cpp)
++    target_link_libraries(cs80_preset_repeatability_tests PRIVATE cs80_core)
++    add_test(NAME cs80_preset_repeatability_tests COMMAND cs80_preset_repeatability_tests)
++    set_tests_properties(cs80_preset_repeatability_tests PROPERTIES TIMEOUT 120)
+@@ -3058,0 +3083,6 @@ endif()
++
++# Scheduling policy comes last so every current and future registration above
++# is exclusive unless its exact name has an audited exception.
++if(CS80_BUILD_TESTS)
++    include(cmake/CTestScheduling.cmake)
++endif()

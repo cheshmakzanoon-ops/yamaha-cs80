@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "status": "preparation_integrity_checked_not_native_acceptance",
+  "release_qualified": false,
+  "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "run_id": 45457535944,
+  "attempt": 1,
+  "source_contract": {
+    "bytes": 114568,
+    "sha256": "52fee4f4df3bd2de93116df62e18eb3c74620f8dfb82e1c7f4d67d9f9f19211f"
+  },
+  "exact_counts": {
+    "linux-x86_64": 619,
+    "windows-x86_64": 261,
+    "macos-arm64": 283,
+    "macos-x86_64": 283
+  },
+  "validator_lanes": 15,
+  "freshly_derived_rosters_equal_preserved_predecessor_names": true,
+  "six_published_helpers_unchanged": true,
+  "native_checker_unchanged": true,
+  "receipt_inspector_only_source_tree_run_pin_changes": true,
+  "old_source_contract_refused": "Contract source/tree/run/attempt differs",
+  "predecessor_files_unchanged": 18,
+  "source_descendant_commits_verified": 5,
+  "product_or_native_execution_performed": false,
+  "actual_archives_checked": false,
+  "public_get_performed": false
+}

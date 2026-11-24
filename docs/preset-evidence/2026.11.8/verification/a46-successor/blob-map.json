@@ -1,0 +1,178 @@
+{
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "source_tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "run_id": 45457535944,
+  "attempt": 1,
+  "scope": "Separate successor native/API/public-GET preparation with fresh independent inventory binding; no refs updated or native/release acceptance.",
+  "entries": [
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/audition-inventory-binding.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b6d7d224e9fd64f8bffddd1738f0b2618eb5bf6",
+      "bytes": 4220,
+      "sha256": "ce725c62cbd4fa660972fd288118610ee1ea87c19396e8b34834fe7af43b124b"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/check_native.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d56a91df7436d4ca9f5202af46504c037c983f84",
+      "bytes": 5762,
+      "sha256": "5226abe7a947bccfb86500674fdfe77f59fcbdc8a047be3bd2b36400f27ee468"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/cmake-registration-delta.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f16cb9d2772141a137ab85ee6fc12a4fa54166c",
+      "bytes": 2583,
+      "sha256": "8afb4f6c9fb57b3305b363da65031ba508f1d314d23652dbc327d77ed4450bf3"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/commands-template.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "573e42c20381150e75647a6370e21290c0d72638",
+      "bytes": 14888,
+      "sha256": "f4eb50d29a51c9e3aa6bf3207dc89fc6d3bcdfe3cb1e244c5e81a184965ffb7a"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/compare-api-context.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fdb5d9f213ed3922b1e7480f16ed066e11b386b8",
+      "bytes": 1631,
+      "sha256": "325d2cfd4f35451babe04c399ac43a3745dfbbcc973c54eaf487c6c9ec7ff387"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helper-recovery.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d2ac3165e8891cd35c39daaa56935c45e5974b3",
+      "bytes": 3079,
+      "sha256": "9921faaaefd0f855dd1887bc12900caddbfafaf735cd4656c5bf3872de00e3af"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/a36-verify-validator-payload.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74e19c37f6c99fe2339b583f7fd4562934f2ac97",
+      "bytes": 45177,
+      "sha256": "ad38ed93e310d060c953288148a2536dac5de9fe666ce8278d21bf40a2c67741"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/a41-verify-install-artifact.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74dc56e918aef2aeb883906b5688ae668b602173",
+      "bytes": 22205,
+      "sha256": "803ff4378746937039400e777ff61bfce8ebaeb2ab1bba6699fe76076f520305"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/bind-parser-archives.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "825025c0bd95242192cddad11bbf79e18559e479",
+      "bytes": 10910,
+      "sha256": "343cbc293d388fcf72484e05eaf52933e1bdbed3e13f194e59799af2cdf58b11"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/parse-native-evidence.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f69d76742cbbb6c27d84182294e2caea4664ee8",
+      "bytes": 18241,
+      "sha256": "f192bf2ff70d4501f73875eb5bb6416b9adc3b77912e165da4305302724cd846"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/previous-native-contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5539584977934f570bd4af4b56e92d4fb03987be",
+      "bytes": 13517,
+      "sha256": "cb9597061fe16b590f85cfc75ddbc98e5868c80d1a9d6763f77edfc71b27e32f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/helpers/verify-macos-binding.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "19dd646499df46f0f872cabf75c53b28cb1e5832",
+      "bytes": 24265,
+      "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/inspect_receipt.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd4901b041b667adddbd6919fe06f109465a9e71",
+      "bytes": 10908,
+      "sha256": "500fced36f1d802b91e28e75fe933f88c078b4fac84ff00d8b0077d1c8d15e5e"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/native-inputs-template.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39d5aaa2c367e2874a8ab3bfc10fcea98ec72fe1",
+      "bytes": 951,
+      "sha256": "4935acb2aa886a7abb3a76e5b681dd55e82304c1d2d6aa070c5c3fa7bc048aec"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/predecessor-packet-integrity.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6a54c47939d7733e1022a7925453a17a4b4701e",
+      "bytes": 3844,
+      "sha256": "13496c646f97b8c1d22ac9574c047ab01c4906e7d4af963032f8707abbc6cbfd"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/preparation-validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ab2bb37c30d78e118815b92c76dc14ed08ada6a5",
+      "bytes": 1032,
+      "sha256": "9fbc201468d60348af811fbb2f9e69a8d8e0053e894f57de6f3752b3606ad259"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/prepare_successor.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6336091e30bacd70d30e8ccb003c86d1a09178f3",
+      "bytes": 11606,
+      "sha256": "77e067312999eeb17449ae56c7b7c74ed46fe71f77ccb50fea46294fe2cc5a03"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4eb6d61fcdc5e6edc19efaadedcd15843b14916",
+      "bytes": 8805,
+      "sha256": "756cad768cdc9c8181792f5dfded83dcb63d985b73d3db00cfdc6f0ad4b2c7b9"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/run-api-at-preparation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c092cd5b14893bd98bf8c386c5c2c4271e3882a",
+      "bytes": 14218,
+      "sha256": "d9e9ec41353a5a9b5c11ff26eab41498b884e5d5bc26c137084c11e4a92830fc"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/source-contract.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "12c16cbc87c5e6ab81e7baae328bedf1acc1a5b9",
+      "bytes": 114568,
+      "sha256": "52fee4f4df3bd2de93116df62e18eb3c74620f8dfb82e1c7f4d67d9f9f19211f"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.8/verification/a46-successor/successor-manifest.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13bad279323cbb77c52bccb92e5501cee0f433d5",
+      "bytes": 4747,
+      "sha256": "0bbfc99e5c75c98c1354aa4d448b2237aeff0d29e520341797b39813ae3f0b88"
+    }
+  ]
+}

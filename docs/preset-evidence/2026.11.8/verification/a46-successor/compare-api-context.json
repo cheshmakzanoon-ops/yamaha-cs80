@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "scope": "Selected fields from a fresh authenticated owner-connector GitHub compare response; not a native execution receipt.",
+  "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/compare/ef1c472b161c37c490945f7c469086508aae6aef...1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "source_before": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_after": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "status": "ahead",
+  "ahead_by": 5,
+  "behind_by": 0,
+  "total_commits": 5,
+  "merge_base_commit": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "commits": [
+    {
+      "sha": "3f02e8af94bab57371d55d589f61e29882c455ae",
+      "tree": "291cae4dd113c5b69b381c295c9c8cd8abf99a2b",
+      "parents": [
+        "ef1c472b161c37c490945f7c469086508aae6aef"
+      ]
+    },
+    {
+      "sha": "ea364426688bc43dda116e39f6fcd88b3654c9bd",
+      "tree": "f2bb91a397e515b67d84aa210b3659df5827b6ab",
+      "parents": [
+        "3f02e8af94bab57371d55d589f61e29882c455ae"
+      ]
+    },
+    {
+      "sha": "464baa46ca761d930ee8394e37d7cf65c648ddfc",
+      "tree": "2dfcc17c2cca5d0c69f8cf94177b6c909de4a68b",
+      "parents": [
+        "ea364426688bc43dda116e39f6fcd88b3654c9bd"
+      ]
+    },
+    {
+      "sha": "e82666252bdf21891d599fdca1d9474fc417bb37",
+      "tree": "aa2f454849e0c36a2d1aa249c8892005282c380f",
+      "parents": [
+        "464baa46ca761d930ee8394e37d7cf65c648ddfc"
+      ]
+    },
+    {
+      "sha": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+      "tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+      "parents": [
+        "e82666252bdf21891d599fdca1d9474fc417bb37"
+      ]
+    }
+  ]
+}

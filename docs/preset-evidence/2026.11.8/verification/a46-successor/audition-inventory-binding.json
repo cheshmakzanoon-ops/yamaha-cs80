@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "status": "fresh_independent_inventory_bound_not_native_acceptance",
+  "release_qualified": false,
+  "source": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+  "source_tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+  "run_id": 45457535944,
+  "run_attempt": 1,
+  "source_contract": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a46-successor/source-contract.json",
+    "bytes": 114568,
+    "sha256": "52fee4f4df3bd2de93116df62e18eb3c74620f8dfb82e1c7f4d67d9f9f19211f",
+    "git_blob": "12c16cbc87c5e6ab81e7baae328bedf1acc1a5b9"
+  },
+  "inventory": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/independent-inventory.json",
+    "bytes": 710475,
+    "sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "git_blob": "c5b6bfd652d3c320aab8630efab980fe96fd70e8"
+  },
+  "independent_capture_receipt": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/independent-inventory-receipt.json",
+    "bytes": 4394,
+    "sha256": "6e2929072752477ef8a3321065dc568a323e13b85bd30d2e93ca5d8e8057dcd0",
+    "git_blob": "bca62d004eae329686e9cccee43f744f1d8c82ce"
+  },
+  "clean_build_receipt": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/clean-build-receipt.json",
+    "bytes": 4596,
+    "sha256": "e346afaae62cf233a1217aab378c7681ca50d41c21a5eb1ece2e095c361ca8a3",
+    "git_blob": "034b450527f9c6d7938f868c6c942404ee893d74"
+  },
+  "audition_verifier": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/verify-audition-archive.py",
+    "bytes": 41557,
+    "sha256": "be945b0fef0a9798ead380ddbe4b757add018c41809e85e988b639eb31350ebb",
+    "git_blob": "57a2c24e1599b5d39ab3a1dc29af1fb9c0d97390"
+  },
+  "independent_producer": {
+    "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/produce-independent-inventory.py",
+    "bytes": 7407,
+    "sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+    "git_blob": "9fbc7b50a595da485d14a482afb256368c3bc829"
+  },
+  "independent_binding": {
+    "receipt_sha256": "6e2929072752477ef8a3321065dc568a323e13b85bd30d2e93ca5d8e8057dcd0",
+    "inventory_sha256": "399d4c1e8fc1d638f11a22dccb9643a77026acb40ea7fe2a96c66b940938b621",
+    "source_commit": "1b5b3c70471e369481b1f813880a6bcc762a2f57",
+    "source_tree": "b235b67a801d33e9572076b8dfcfbb89e71fac29",
+    "execution": {
+      "kind": "local_recovery",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python_version": "3.12.14",
+      "recorded_at_utc": "2026-11-24T18:22:36.654090+00:00"
+    },
+    "independently_observed_capture_sha256": "3b6f0cc6d25cd5ce98c07f226db246be2d505ff83479688237cbfc4b62c3e0a1",
+    "inventory_normal_exit_code": 0,
+    "original_build": {
+      "run_id": 45457535944,
+      "run_attempt": 1,
+      "producer_job_id": 138670916222
+    },
+    "native_capture_binary_hash_equality_expected": false,
+    "producer_sha256": "3665a41f4b08b13509b9e2167853f14d4843b5a5074645a1011a6fc6d60e86f7",
+    "verifier_sha256": "be945b0fef0a9798ead380ddbe4b757add018c41809e85e988b639eb31350ebb"
+  },
+  "inventory_programs": 523,
+  "inventory_parameters": 204,
+  "clean_build_logs_and_original_returncodes_checked": true,
+  "retained_prior_local_configure_failures": [
+    {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/history/attempt-1-ninja-unavailable/clean-build-receipt.json",
+      "bytes": 2554,
+      "sha256": "87196713ba55fb528715342a4aa2865ce23bda205bd7b5584da1ff5508fb443f",
+      "git_blob": "175b9c2f01a7a71e45fc37987907f22f38edfdd8"
+    },
+    {
+      "path": "/tmp/cs80-614c8ce056b7-notes/a53-successor/history/attempt-2-required-documents-not-materialized/clean-build-receipt.json",
+      "bytes": 2564,
+      "sha256": "524053cbbef93477f5fcb57457b2174aa9dec9071c6f075aef8cf5cfa31052ec",
+      "git_blob": "b97d09aee494a834bcddc192814eb9d12778a995"
+    }
+  ],
+  "actual_audition_archive_checked": false,
+  "actual_native_artifacts_checked": false,
+  "scope": "A46 checked actual A53 successor bytes, source identities, independent-binding logic, and configure/clean/build receipt/log consistency. A53 executed the clean local capture rebuild and inventory. This is an independent reference input; it is not an Actions/native qualification result or actual audition acceptance."
+}
