@@ -1,0 +1,68 @@
+{
+  "cs80_instrument_damper_tests": {
+    "seconds": 1.65726,
+    "terminal": "Instrument damper: 231 checks, 0 failures",
+    "output_sha256": "8798d53cb68bfa1794c34cb4845e8f5be1d46c85e2a467729b93935af10da44c",
+    "selected_lines": [
+      "Instrument damper: 231 checks, 0 failures"
+    ]
+  },
+  "cs80_body_articulation_engine_tests": {
+    "seconds": 2.82303,
+    "terminal": "Body articulation integration: 284 checks, 0 failures",
+    "output_sha256": "2ff70cbc7f571a52c16949cddfc2eb0736415c27b88e766b2f7ea1cab03f52f9",
+    "selected_lines": [
+      "Body articulation integration: 284 checks, 0 failures"
+    ]
+  },
+  "cs80_preset_voicing_tests": {
+    "seconds": 9.77163,
+    "terminal": "Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated.",
+    "output_sha256": "a873bdb4cb9624695f85151b8d02453d74ba9ffef826ab364cb17d9e46e9b5f2",
+    "selected_lines": [
+      "TINE      note 48: hard H3/root  -10.9 dB; hard/soft colour +18.1 dB; late/early colour   -9.9 dB",
+      "TINE      note 60: hard H3/root  -11.3 dB; hard/soft colour +19.3 dB; late/early colour  -12.4 dB",
+      "TINE      note 84: hard H3/root  -11.6 dB; hard/soft colour +19.2 dB; late/early colour  -19.8 dB",
+      "KEYS      Electric Piano I    onset overtones/root  -13.5 dB; held late/onset  -27.2 dB",
+      "KEYS      Electric Piano II   onset overtones/root  -13.6 dB; held late/onset  -27.0 dB",
+      "KEYS      Reed Piano          onset overtones/root   -4.4 dB; held late/onset  -29.2 dB",
+      "KEYS      Saw Pulse Piano     onset overtones/root   10.0 dB; held late/onset  -28.7 dB",
+      "KEYS      Stage Keys          onset overtones/root    0.5 dB; held late/onset  -30.8 dB",
+      "Preset voicing regressions: 284/284 checks passed; 81.3 seconds generated."
+    ]
+  },
+  "cs80_library_audit_tests": {
+    "seconds": 298.846,
+    "terminal": "library audit passed: 301 curated + 222 original circuit programs",
+    "output_sha256": "92d497d25a67b77f88002e5375b05d33da59f042888b0866ee578c7de61b0b1b",
+    "selected_lines": [
+      "phrase peak max -6.2 dBFS, loudest-window RMS -29.9..-18.0 dBFS, stress peak max -1.5 dBFS",
+      "library audit passed: 301 curated + 222 original circuit programs"
+    ]
+  },
+  "cs80_ui_smoke": {
+    "seconds": 112.527,
+    "output_sha256": "5886ebe3a7005f87a654c4c1bc5c7d7abae2f3fa9cbf3240b55e95bf05dadf0f",
+    "fixtures": [
+      [
+        "STRING 3 complete / STRING 2 inferred",
+        "1",
+        "0.0834435672",
+        "SAMPLE PEAK -21.6 dBFS READ-ONLY"
+      ],
+      [
+        "PANEL headroom",
+        "1",
+        "0.980465114",
+        "SAMPLE PEAK -0.2 dBFS READ-ONLY"
+      ]
+    ],
+    "selected_lines": [
+      "UI SMOKE TIMING: phase=instrument body host identity and recall seconds=3.986105 total_seconds=19.258960",
+      "source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.0834435672, meter=SAMPLE PEAK -21.6 dBFS READ-ONLY",
+      "source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.980465114, meter=SAMPLE PEAK -0.2 dBFS READ-ONLY",
+      "UI SMOKE TIMING: phase=source performance captures seconds=4.214416 total_seconds=65.525002"
+    ],
+    "limitation": "This original native normal-timer pass does not explain earlier Intel failure or establish broad DAW compatibility."
+  }
+}

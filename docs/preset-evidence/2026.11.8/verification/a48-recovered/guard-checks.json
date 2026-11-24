@@ -1,0 +1,18 @@
+{
+  "scope": "Local refusal checks only; no product execution or replacement of native evidence.",
+  "results": [
+    {
+      "case": "existing_accepted_destination",
+      "exit": 2,
+      "message": "ValueError: Use a new output directory",
+      "existing_receipts_preserved": true
+    },
+    {
+      "case": "remove_damper_from_reviewed_observations",
+      "exit": 2,
+      "message": "ValueError: Reviewed receipt changed: observations.json",
+      "acceptance_created": false
+    }
+  ],
+  "accepted_receipts_unchanged": true
+}

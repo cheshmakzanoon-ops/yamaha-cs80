@@ -1,0 +1,190 @@
+{
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "job_id": 138605635263,
+  "target": "macos-arm64",
+  "status": "ARM_PLATFORM_QUALIFIED_ONLY",
+  "files": [
+    {
+      "relative_path": "README.md",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/README.md",
+      "bytes": 8392,
+      "sha256": "6883adf7509f0f8348e8ca079a4a1d6d035ab04c71be48fa6cdbeacd6b6469a5",
+      "git_blob": "024da274163abaf01b54be7bee780dcce5d77c5e"
+    },
+    {
+      "relative_path": "qualification/platform-qualification.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/qualification/platform-qualification.json",
+      "bytes": 6048,
+      "sha256": "75216b89840c178deb9863e45e113641c8e22362e1c4c083e328bd18b57115af",
+      "git_blob": "fc9828f342a8332b8b06650e216fcc23e997a1e2"
+    },
+    {
+      "relative_path": "qualify-arm.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/qualify-arm.py",
+      "bytes": 37186,
+      "sha256": "ce4eb272bab6bea5cddbb93a53f75dd5296dbe3407d1408ebdbd9b05388d05ea",
+      "git_blob": "10e77601b612d251df5466d3af70551c90ab37c0"
+    },
+    {
+      "relative_path": "qualification/original-execution-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/qualification/original-execution-binding.json",
+      "bytes": 45369,
+      "sha256": "b1a36a44d2ef25c4226e2111cfc820b88eea14a6c1327a030bd287e31116d6fc",
+      "git_blob": "1919f2dab5a035bd19357900828971a79665af82"
+    },
+    {
+      "relative_path": "qualification/skip-review.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/qualification/skip-review.json",
+      "bytes": 7702,
+      "sha256": "6c257aa6cb4feef59f4256170350488ee4f1e5a18cc06e805ff586d1e9a1ca8c",
+      "git_blob": "e6530801150301deb6b8ecf08337773bdfe6028d"
+    },
+    {
+      "relative_path": "qualification/native-reviewed-excerpts.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/qualification/native-reviewed-excerpts.json",
+      "bytes": 3337,
+      "sha256": "678b803d6f58b521e9e4b3b53257db8be73dc70ceda7bdd8a10c94b573b3ef2a",
+      "git_blob": "c236b7c8b2fa4cc98162c39a6ce25b6c5615fe90"
+    },
+    {
+      "relative_path": "reviewed-input-pins.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/reviewed-input-pins.json",
+      "bytes": 1245,
+      "sha256": "c0de5125aacc65dbfc7d579e4d5c4735c5db6236011d84092cd1ae847c5c587d",
+      "git_blob": "2eeb244d1d7bfc5ea3c6a1e047358504b732b163"
+    },
+    {
+      "relative_path": "helper-source-records.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/helper-source-records.json",
+      "bytes": 1215,
+      "sha256": "2fd1cbef263618389215ef9a0b0dd266ef815edfc2997ebe0b8ab38e8a15d282",
+      "git_blob": "e75330d1674a64abc2f9f21376803f5bedb5c683"
+    },
+    {
+      "relative_path": "content-command-receipts.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/content-command-receipts.json",
+      "bytes": 4578,
+      "sha256": "433ce37cedc5ea80230dcc497eb32a0b5fdf38ffb7e718f9f5a9748985d7b1ba",
+      "git_blob": "c86f065ecf9fd18bdd96a23cb382474b33d1af26"
+    },
+    {
+      "relative_path": "guard-checks.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/guard-checks.json",
+      "bytes": 534,
+      "sha256": "9e4620b1de1b2cd3c4f502b138577314610050536db0b0b68b66fbb6ef2df523",
+      "git_blob": "e3bee40a727f098de1a23471676232ac955ae2b1"
+    },
+    {
+      "relative_path": "inputs.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/inputs.json",
+      "bytes": 616,
+      "sha256": "cab4386494b9dc4023e18963b623f3ab90db27c83914abb26f30bc19ec1242c2",
+      "git_blob": "aeabd8bc672472934ea09e9810184213c958e5de"
+    },
+    {
+      "relative_path": "run-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/run-api.json",
+      "bytes": 14802,
+      "sha256": "b8b6e4064a5060517ba1033ff36a5eec8774c2e5acbd5faca254d780e93cd3bd",
+      "git_blob": "63d2e2d64062adc717542e8bc58904530800e9da"
+    },
+    {
+      "relative_path": "attempt-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/attempt-api.json",
+      "bytes": 14824,
+      "sha256": "906a7d1ad4583440c954ee66c80753cde16b7a907f4e0b3db329029c4ed162bc",
+      "git_blob": "0d71991b91f70513747c650daac23b88c39ff460"
+    },
+    {
+      "relative_path": "jobs-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/jobs-api.json",
+      "bytes": 23393,
+      "sha256": "0752ba4b64904de013949014ce0f31266e4448313bbea1f1be5f21bda84e0a8a",
+      "git_blob": "f0e3b14fc1c26aaa934ed760e198e8031d824910"
+    },
+    {
+      "relative_path": "artifacts-api.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/artifacts-api.json",
+      "bytes": 3555,
+      "sha256": "c891840c86ec29d3f7a0633ef9f19797c2d98c3037d097837cf8ace9bb760f5b",
+      "git_blob": "1b0b68aa7132aa44b8b91bd44c9b9538046fc59a"
+    },
+    {
+      "relative_path": "observations.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/observations.json",
+      "bytes": 109536,
+      "sha256": "f8d397c78ed2cdb81e1c5486cdd3f11ec147d4652661e1fb940d4994d008c309",
+      "git_blob": "2e453adddbf04d44e60e97c58ad7c0f3f50b1b78"
+    },
+    {
+      "relative_path": "native-contract.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/native-contract.json",
+      "bytes": 94298,
+      "sha256": "8e6a790c9e36382a97f2f4f4651a90e926d1f97bc1fb8ab929c1ed52a56fc92c",
+      "git_blob": "212c224ee423fc24ed90d457e7e307ca95c01db9"
+    },
+    {
+      "relative_path": "parser-archive-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/parser-archive-binding.json",
+      "bytes": 6511,
+      "sha256": "8df8aa1e08d9a90c54ac4444396c84960553ba0baa9137048bba2e9b20f25ac1",
+      "git_blob": "8f6ac83783853e5e5f360580eef3feeb68b5de28"
+    },
+    {
+      "relative_path": "install-acceptance.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/install-acceptance.json",
+      "bytes": 14195,
+      "sha256": "18679c150e96e05741585be3f5441d6092e6ecc7067e397bd0f7733882c9129f",
+      "git_blob": "16c37b9a6c3c96ac8c8d4ad36ec5167e0a81f99b"
+    },
+    {
+      "relative_path": "archive-payload-binding.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/archive-payload-binding.json",
+      "bytes": 17433,
+      "sha256": "95d88f191737c4f4b398b50bf16568b6b6ac5b5483b9047b9b9026a716c53d0c",
+      "git_blob": "1aaca006aed75839bfdf8f0ab98abf50ea0a91a3"
+    },
+    {
+      "relative_path": "docs-and-notices.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/docs-and-notices.json",
+      "bytes": 35330,
+      "sha256": "4854297e1c845c5d567bdcc509348c526cd2fe0a7833aa278ab28fed641e4993",
+      "git_blob": "b19d819ce2e37e991a8269a5379bb4794fc6d995"
+    },
+    {
+      "relative_path": "public-install-root-receipt.json",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/public-install-root-receipt.json",
+      "bytes": 2675,
+      "sha256": "7124fa5dc7d3180e33281bad4f9efb931df958e2e98843077ff05ea99c675e6a",
+      "git_blob": "7b8cd9871053ecda0d57a427cba0e564fe364c97"
+    },
+    {
+      "relative_path": "helpers/historical-macos-qualification.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/helpers/historical-macos-qualification.py",
+      "bytes": 43186,
+      "sha256": "0b881f00d480ef32d31f6866eb03a3aa31a5ae809de05bafa9ad0d816f3b4fb1",
+      "git_blob": "28cf682b5ef91d94688aa797d9642cd13301592e",
+      "reused_existing_blob": true
+    },
+    {
+      "relative_path": "helpers/inspect-packaged-docs.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/helpers/inspect-packaged-docs.py",
+      "bytes": 9655,
+      "sha256": "8ac1fb82206e92131eed0523dd569ed7b97460b8158d9951e056c105e2f7723d",
+      "git_blob": "8da728115cbeaf47d47e026a313d636db13f0e9d",
+      "reused_existing_blob": true
+    },
+    {
+      "relative_path": "helpers/generic/verify-macos-binding.py",
+      "repository_path": "docs/preset-evidence/2026.11.8/verification/a48-recovered/helpers/generic/verify-macos-binding.py",
+      "bytes": 24265,
+      "sha256": "f7050e482d8e3700d0053d459bddb21463a1d475ff720c42b8f348dd39ca66c9",
+      "git_blob": "19dd646499df46f0f872cabf75c53b28cb1e5832",
+      "reused_existing_blob": true
+    }
+  ],
+  "refs_changed": false,
+  "public_install_receipt_scope": "Separate root-supplied full-GET evidence; platform receipt remains immutable."
+}

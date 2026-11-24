@@ -1,0 +1,94 @@
+{
+  "recovery_source": "Fresh actual ZIP inspection after transient reset",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "run_id": 45439302351,
+  "attempt": 1,
+  "job_id": 138605635263,
+  "receipts": [
+    {
+      "phase": "initial",
+      "index": 0,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "a6c45c",
+        "wall_time_seconds": 0.0409856,
+        "exit_code": 0,
+        "original_token_count": 49,
+        "output": "{\"content_checks_conform\": true, \"counts\": {\"registered\": 283, \"passed\": 281, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips\": 5, \"release_qualified\": false}\n"
+      }
+    },
+    {
+      "phase": "initial",
+      "index": 1,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "c61fa4",
+        "wall_time_seconds": 0.000042068,
+        "exit_code": 0,
+        "original_token_count": 85,
+        "output": "{\"status\": \"parsed_evidence_not_release_qualified\", \"native_totals\": {\"registered\": 283, \"passed\": 281, \"failed\": 0, \"formal_skipped\": 2, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips_total\": 5, \"validator_totals\": {\"required_lanes\": 5, \"validation_invocations\": 5, \"validation_retries\": 0}, \"all_requested_observations_green\": true}\n"
+      }
+    },
+    {
+      "phase": "initial",
+      "index": 2,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "86c7f0",
+        "wall_time_seconds": 1.282949512,
+        "exit_code": 0,
+        "original_token_count": 42,
+        "output": "{\"status\": \"artifact_bytes_verified\", \"target\": \"macos-arm64\", \"release_qualified\": false, \"out\": \"/tmp/cs80-614c8ce056b7-notes/a48-recovered/install-acceptance.json\"}\n"
+      }
+    },
+    {
+      "phase": "initial",
+      "index": 3,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "d9e988",
+        "wall_time_seconds": 0.000033816,
+        "exit_code": 1,
+        "original_token_count": 150,
+        "output": "Traceback (most recent call last):\n  File \"/tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/verify-macos-binding.py\", line 372, in <module>\n    main()\n  File \"/tmp/cs80-614c8ce056b7-notes/a46-recovered/helpers/verify-macos-binding.py\", line 337, in main\n    parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[5])\n                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 282, in __getitem__\n    raise IndexError(idx)\nIndexError: 5\n"
+      }
+    },
+    {
+      "phase": "followup",
+      "index": 0,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "313898",
+        "wall_time_seconds": 5.881931691,
+        "exit_code": 0,
+        "original_token_count": 35,
+        "output": "{\"status\": \"parser_archive_and_member_input_binding_verified\", \"target\": \"macos-arm64\", \"archives_bound\": 2, \"release_qualified\": false}\n"
+      }
+    },
+    {
+      "phase": "followup",
+      "index": 1,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "380162",
+        "wall_time_seconds": 0.728986687,
+        "exit_code": 0,
+        "original_token_count": 107,
+        "output": "{\"status\": \"archive_consistency_and_au_executable_binding_verified\", \"release_qualified\": false, \"remaining_gates\": [\"original-run-and-attempt\", \"original-artifact-upload\", \"native-source-and-tests\", \"all-five-validator-lanes\", \"whole-installed-au-bundle\", \"validated-vst3-to-package-path\", \"workflow-exit-and-order\", \"release-and-audition\"], \"out\": \"/tmp/cs80-614c8ce056b7-notes/a48-recovered/archive-payload-binding.json\"}\n"
+      }
+    },
+    {
+      "phase": "followup",
+      "index": 2,
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "eb92ef",
+        "wall_time_seconds": 9.855953254,
+        "exit_code": 0,
+        "original_token_count": 53,
+        "output": "{\"status\": \"source_specific_docs_and_notices_verified\", \"target\": \"macos-arm64\", \"metadata_files\": 13, \"exact_source_comparisons\": 10, \"out\": \"/tmp/cs80-614c8ce056b7-notes/a48-recovered/docs-and-notices.json\"}\n"
+      }
+    }
+  ],
+  "note": "The initial Mac helper invocation raised IndexError before reading inputs because its recovered path was too shallow for an evaluated default. Unchanged bytes were copied one directory deeper and succeeded. This is a local analysis invocation issue, not a native validator retry."
+}

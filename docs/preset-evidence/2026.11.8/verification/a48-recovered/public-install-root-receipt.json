@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "status": "input_integrity_only",
+  "release_qualified": false,
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "source_tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "artifact_api": {
+    "bytes": 719,
+    "sha256": "d63fcf8c804e9b55dbe25c653e51888baa0667403963a7c29bcaf022806eeb84"
+  },
+  "artifact": {
+    "id": 14947300509,
+    "node_id": "MDg6QXJ0aWZhY3QxNDk0NzMwMDUwOQ==",
+    "name": "cs80-macos-15-install-bundle",
+    "size_in_bytes": 15004302,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14947300509",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14947300509/zip",
+    "expired": false,
+    "digest": "sha256:ed406c8cd6095ae8c7645604f55ea8d798a989b279da6ef27b14dc9c55442472",
+    "created_at": "2026-11-24T17:24:01Z",
+    "updated_at": "2026-11-24T17:24:01Z",
+    "expires_at": "2027-02-22T16:37:33Z",
+    "workflow_run": {
+      "id": 45439302351,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "ef1c472b161c37c490945f7c469086508aae6aef"
+    }
+  },
+  "observed_at_utc": "2026-11-24T17:50:39.887471+00:00",
+  "api_authenticity_verified": false,
+  "original_upload_attempt_verified": false,
+  "native_validation_passed": null,
+  "checker": {
+    "bytes": 10908,
+    "sha256": "8b3de563357d2f5b6f7a43d14cebee818c6f4679f1d8904624ae6f0468ff6489"
+  },
+  "public_get": {
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14947300509.zip",
+    "status": 200,
+    "full_body_to_eof": true,
+    "bytes": 15004302,
+    "sha256": "ed406c8cd6095ae8c7645604f55ea8d798a989b279da6ef27b14dc9c55442472",
+    "authorization": false,
+    "range": false,
+    "final_url_without_query": "https://productionresultssa4.blob.core.windows.net/actions-results/cb31a340-415f-88e7-b87c-1bc0524a0973/workflow-job-run-c50ba0c0-dcf3-5466-954e-7a6be5420893/artifacts/bc22e4ef8aadf9c1cd63e46da4b9f29e432b40b92f8d0ea5757ef43099a716b6.zip",
+    "redirects": [
+      {
+        "status": 302,
+        "url_without_query": "https://productionresultssa4.blob.core.windows.net/actions-results/cb31a340-415f-88e7-b87c-1bc0524a0973/workflow-job-run-c50ba0c0-dcf3-5466-954e-7a6be5420893/artifacts/bc22e4ef8aadf9c1cd63e46da4b9f29e432b40b92f8d0ea5757ef43099a716b6.zip"
+      }
+    ]
+  },
+  "scope": "Complete public byte delivery only; all content and native qualification remain separate.",
+  "contract": {
+    "bytes": 96659,
+    "sha256": "1d656437f70edc4e889a7da31921ef0e5a64d095f170576d4eae77da752eb074"
+  }
+}

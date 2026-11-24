@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "status": "original_windows_failure_preserved_diagnosis_pending",
+  "source": "ef1c472b161c37c490945f7c469086508aae6aef",
+  "tree": "f4e00753cde135a36172d9ea549223dfdce5cc82",
+  "revision": "2026.11.8",
+  "run_id": 45439302351,
+  "run_attempt": 1,
+  "producer_job_id": 138605635333,
+  "producer_conclusion": "failure",
+  "completed_at": "2026-11-24T17:36:59Z",
+  "counts": {
+    "registered": 261,
+    "passed": 258,
+    "failed": 1,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "failed_test": "cs80_sixteen_voice_release_tests",
+  "junit_failure": "<testcase name=\"cs80_sixteen_voice_release_tests\" classname=\"cs80_sixteen_voice_release_tests\" time=\"1.60477\" status=\"fail\">\n\t\t<failure message=\"SEGFAULT\" />\n\t\t<properties />\n\t\t<system-out />\n\t</testcase>\n\t",
+  "failed_lasttest_output_empty": true,
+  "original_ctest_summary": "99% tests passed, 1 tests failed out of 261",
+  "total_ctest_real_seconds": 2490.92,
+  "original_runner_step_exit_code": 1,
+  "native_test_numeric_exit_or_ntstatus_observed": false,
+  "test_elapsed_seconds": 1.6,
+  "successful_related_native_tests": {
+    "cs80_instrument_damper_tests": "231 checks, 0 failures",
+    "cs80_sixteen_voice_release_host_tests": "768 checks, 0 failures"
+  },
+  "artifact": {
+    "id": 14946638643,
+    "node_id": "MDg6QXJ0aWZhY3QxNDk0NjYzODY0Mw==",
+    "name": "cs80-windows-test-evidence",
+    "size_in_bytes": 87218,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14946638643",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14946638643/zip",
+    "expired": false,
+    "digest": "sha256:6b7944de9feb18b054d96f7a33af49e7acedd51a21e9b7e4fb744342b283ff0f",
+    "created_at": "2026-11-24T17:36:54Z",
+    "updated_at": "2026-11-24T17:36:54Z",
+    "expires_at": "2027-02-22T16:37:33Z",
+    "workflow_run": {
+      "id": 45439302351,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "ef1c472b161c37c490945f7c469086508aae6aef"
+    }
+  },
+  "upload_log_binding": {
+    "bytes": 87218,
+    "sha256": "6b7944de9feb18b054d96f7a33af49e7acedd51a21e9b7e4fb744342b283ff0f",
+    "artifact_id": 14946638643,
+    "upload_step_success": true
+  },
+  "windows_pluginval_conclusion": "skipped",
+  "install_bundle_available": false,
+  "vst3_upload_conclusion": "skipped",
+  "existing_stack_contract": "CMakeLists.txt applies /STACK:8388608 to every cs80_.*tests executable, including this test; native PE unavailable because only test evidence was uploaded.",
+  "hypothesis": "Large by-value Pair/Engine test fixtures may exhaust the existing 8 MiB stack; exact crash mechanism is not yet established. No numeric NTSTATUS/backtrace/dump was emitted.",
+  "source_changed": false,
+  "rerun_requested": false,
+  "assertions_or_timeouts_changed": false,
+  "platform_qualified": false,
+  "release_qualified": false,
+  "raw_input_records": {
+    "producer-api.json": {
+      "bytes": 3895,
+      "sha256": "778456b976c8c08b16cf3de39896d8673bf4142a6ff597f0a71ce992403571a3"
+    },
+    "native-api.json": {
+      "bytes": 796,
+      "sha256": "3710f5ae945cb5073ff5faa205132826519e4b6bc83cd45552f62d4407c0c07d"
+    },
+    "selected-native-cases.json": {
+      "bytes": 1581,
+      "sha256": "dae57c7c6dd833f8fca39ab270d5ba90821d263d43e938080bdec6bbe3cbb19b"
+    },
+    "ctest-results.xml": {
+      "bytes": 138095,
+      "sha256": "abcb1813990891f9030d650779b7974eb07e92d5356ec887139320eec3a69f24"
+    },
+    "LastTest.log": {
+      "bytes": 392967,
+      "sha256": "7c12c8efcd45e6183e8fccb9f9a642a72da02673f63995ba6997eeaf8580bb21"
+    },
+    "ci-juce-provenance.txt": {
+      "bytes": 585,
+      "sha256": "ff4fb2a2aabae73c84098d32c783d9c2904a937ca67cb45cab1d59247d18d410"
+    },
+    "native-observations.json": {
+      "bytes": 80532,
+      "sha256": "6c63652cf07c951c1ee8ad365e1cc12c1eeeaa85cd25d8be5e570bc1e431d610"
+    },
+    "artifacts-api.json": {
+      "bytes": 5053,
+      "sha256": "65ccdce58041328982a7d67f6951410b7ce6f6882ef91edb11557273a266ed47"
+    },
+    "attempt_jobs-api.json": {
+      "bytes": 16319,
+      "sha256": "9433507705248b8cb62f47d60015624b50efc5c91e69b0cc7ef43582c99d554c"
+    },
+    "windows-native.zip": {
+      "bytes": 87218,
+      "sha256": "6b7944de9feb18b054d96f7a33af49e7acedd51a21e9b7e4fb744342b283ff0f"
+    },
+    "original-job.log": {
+      "bytes": 150709,
+      "sha256": "7e5a02b5479a48c27ed1ce1275dec81b67b2a2446e60dc7f2e95d9d64457790b"
+    }
+  }
+}
+
