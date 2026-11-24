@@ -27,8 +27,9 @@ namespace
 // ---------------------------------------------------------------------------
 // Acceptance criteria, fixed before the library was measured.
 // ---------------------------------------------------------------------------
-// "About 300" curated programs.
-constexpr int kMinCurated = 280, kMaxCurated = 320;
+// Existing factory program addresses are a saved-session contract. Sound
+// revisions must not silently insert, remove, reorder or rename a program.
+constexpr int kCuratedCount = 301;
 // Musical test phrase (4-note chord or category phrase, velocity 0.9, full
 // pressure): peak at least 1 dB under full scale, so default volume never clips.
 constexpr double kMaxPhrasePeakDbfs = -1.0;
@@ -42,6 +43,8 @@ constexpr double kMinPairDistance = 0.08;
 // Names/categories/order of the original 222 programs at source 7e49ead.
 // Sound vectors and descriptions intentionally change in library revisions.
 constexpr std::uint64_t kOriginalIdentityDigest = 0xa960b5a190e3b7b8ull;
+// Names/categories/order of the 301 curated programs at source f8b6501.
+constexpr std::uint64_t kCuratedIdentityDigest = 0xd9b11e72b4152250ull;
 // Level matching: the loudest-window RMS of every program lies in this window.
 constexpr double kLevelWindowLowDbfs = -30.0, kLevelWindowHighDbfs = -12.0;
 // Calibration targets used by --calibrate (CuratedLibraryLevels.inc).
@@ -60,13 +63,13 @@ void check(bool ok, const std::string& message)
     }
 }
 
-std::uint64_t originalIdentityDigest()
+std::uint64_t libraryIdentityDigest(const std::vector<FactoryPreset>& library)
 {
     std::uint64_t h = 14695981039346656037ull;
     auto byte = [&](unsigned char b) { h ^= b; h *= 1099511628211ull; };
     auto u64 = [&](std::uint64_t n) { for (int i = 0; i < 8; ++i) { byte((unsigned char) (n & 255u)); n >>= 8; } };
     auto str = [&](const std::string& text) { u64(text.size()); for (char c : text) byte((unsigned char) c); };
-    for (const auto& p : originalLibrary()) { str(p.name); str(p.category); }
+    for (const auto& p : library) { str(p.name); str(p.category); }
     return h;
 }
 
@@ -197,7 +200,7 @@ void testOriginalLibrary()
     const auto& bank = originalLibrary();
     check((int) bank.size() == legacyProgramCount, "original 222 program addresses remain available");
     check(&bank == &factoryPresets(), "factoryPresets() is the revised original bank");
-    check(originalIdentityDigest() == kOriginalIdentityDigest, "original names, categories and order are unchanged");
+    check(libraryIdentityDigest(bank) == kOriginalIdentityDigest, "original names, categories and order are unchanged");
     for (const auto& p : bank)
     {
         check(p.library == ProgramLibrary::legacy, "original program address provenance: " + p.name);
@@ -278,8 +281,10 @@ const char* const kForbidden[] = { "blade", "runner", "vangelis", "replicant", "
 void testCuratedData()
 {
     const auto& curated = curatedLibrary();
-    check((int) curated.size() >= kMinCurated && (int) curated.size() <= kMaxCurated,
-          "about 300 curated programs (" + std::to_string(curated.size()) + ")");
+    check((int) curated.size() == kCuratedCount,
+          "curated 301 program addresses remain available (" + std::to_string(curated.size()) + ")");
+    check(libraryIdentityDigest(curated) == kCuratedIdentityDigest,
+          "curated names, categories and order are unchanged");
     std::set<std::string> names, legacyNames;
     for (const auto& p : legacyLibrary()) legacyNames.insert(lower(p.name));
     std::set<std::string> categoriesSeen;
