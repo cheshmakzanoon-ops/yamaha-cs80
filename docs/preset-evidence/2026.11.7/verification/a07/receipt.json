@@ -1,0 +1,16 @@
+{
+  "baseline": "Snapshot immediately before A07, including prior A04/A05/A06 changes; no A07 production change elsewhere.",
+  "current_header_sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+  "before_header_sha256": "86eaeafee1753aed7c204aa0f06708c6d74ecf7709bc44701fe6e0ac2593f2d2",
+  "test_sha256": "a806486540235c7ccc7f0fb7ab551bfbac6afa0d9ad7e47a59f509ad324dc034",
+  "current_checks": 1342,
+  "current_failures": 0,
+  "old_checks": 1000,
+  "old_failures": 92,
+  "standard_and_high_choir_pcm_hashes_match": true,
+  "fingerprint_captures": 21,
+  "vocal_checks": 895,
+  "vocal_failures": 0,
+  "sanitizer": "LeakSanitizer unavailable under ptrace; no clean sanitizer pass claimed.",
+  "benchmark": "Informational seven-run interleaved one-process -O3 -DNDEBUG wall-clock median; A11 owns rigorous combined CPU qualification."
+}

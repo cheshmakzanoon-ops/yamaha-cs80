@@ -5,24 +5,28 @@ existing CI workflow already builds. The packaging step adds no paid dependency,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Source candidate — 2026.11.6 instrument materials and playing response
+## Source candidate — 2026.11.7 instrument texture and articulation
 
-This source snapshot contains the **2026.11.6** factory library. It retains the
-full-bank 2026.11.5 revision of all 521 existing musical programs and refines
-piano course tuning, moving wind/brass resonances, and nine existing bell and
-plucked instruments. All 523 names, categories, ordering and program addresses
+This source snapshot contains factory revision **2026.11.7**. It retains the
+full-bank revision of all 521 existing musical programs, the stable piano
+courses, wind/brass resonances and nine instrument materials from 2026.11.6.
+It corrects upper piano decay, texture strength across render rates, standard
+string-body response during bends and low choir harmonic coverage. The preset
+parameter vectors themselves remain those of 2026.11.6.
+All 523 names, categories, ordering and program addresses
 remain stable; both initialization programs preserve their prior values. No
 presets are added. Twenty descriptive tags differ from the published .4 bank.
-See the [revision report](CIRCUIT_LIBRARY_2026_11_6.md) and
+See the [revision report](CIRCUIT_LIBRARY_2026_11_7.md) and
 [preset guide](PRESET_GUIDE.md).
 
-The two Material parameters append after the unchanged 202-core/308-host
-prefix, bringing totals to **204 core parameters and 310 host positions**.
+The two Material parameters introduced in 2026.11.6 retain their appended
+addresses. Totals remain **204 core parameters and 310 host positions**;
+2026.11.7 adds no parameter and changes no range or automation order.
 Older projects retain their saved settings. Select an existing factory program
 and use **LOAD / RELOAD**, then play fresh notes, to hear the revised recipe.
 
 **Native build and archive qualification for this source is pending when these
-bundled guides are written.** Source `fcc3c8e` passed Apple Silicon native tests
+bundled guides are written.** The preceding source `fcc3c8e` passed Apple Silicon native tests
 and five validator lanes, while its Windows suite rejected a byte-authenticated
 fixture whose final newline had been translated by Git checkout. A narrow Git
 attribute preserves that fixture's original bytes; its exact checksum gate is

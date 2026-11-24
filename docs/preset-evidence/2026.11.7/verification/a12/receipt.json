@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Local .7 snapshot; no archive, perceptual, or native-host qualification",
+  "capture_command": [
+    "/tmp/cs80-build-1cee5a/cs80_preset_capture",
+    "--inventory",
+    "/tmp/cs80-session-1cee5a/docs/preset-evidence/2026.11.7/verification/a12/inventory.json",
+    "--library",
+    "all"
+  ],
+  "capture_executable_sha256": "52ccccbd6588f0f61a01dd9aa2849b9378bdd7abac25de8d1727baa7bdb4361d",
+  "source_commit_of_checkout": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "source_dirty": true,
+  "source_header_sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+  "factory_header_sha256": "bb3968df08012dd21c5ffa219c2793e5364325ee4ba6f70299c11e325443ecec",
+  "published_4": {
+    "commit": "8685e9ed39d6347b67401da7590b7e1e8e95472d",
+    "inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "authenticated_git_blob": "docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json"
+  },
+  "baseline_6": {
+    "commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+    "inventory_sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50",
+    "authenticated_git_blob": "docs/preset-evidence/2026.11.6/verification/a15/inventory.json"
+  },
+  "current_7_inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "all_523_complete_program_records_exact": true,
+  "inventory_bytes_exact_except_revision": true,
+  "names_categories_order_host_indices_tags_descriptions_unchanged": true,
+  "core_parameter_values_exact": 106692,
+  "core_parameter_count": 204,
+  "host_parameter_count": 310,
+  "body_parameter_count": 14,
+  "new_presets": 0,
+  "new_ids": 0,
+  "changed_ids_or_ranges": 0,
+  "new_7_recipe_value_edits": 0,
+  "original_program_count": 222,
+  "curated_program_count": 301,
+  "musical_programs_cumulatively_changed_from_published_4": 521,
+  "beyond_conservative_levels_pan": 493,
+  "additive_vca_baseline_only": 28,
+  "preserved_init": [
+    "Init Patch",
+    "Init Circuit"
+  ],
+  "new_mechanism_union_program_count": 256,
+  "frozen_6_comparator_sha256": "f6f84bf7f262cd4b79ea37df79373e072df684ae765668e21e2817fc67213c70",
+  "frozen_comparator_modified": false,
+  "revision_override_used": false,
+  "files": {
+    "cumulative-coverage.json": {
+      "bytes": 585569,
+      "sha256": "2577f383d928b55a7ea8f1a66d652030cdeaf891661fd3ffbb4d1ce5bf07a93a"
+    },
+    "current-value-classification.json": {
+      "bytes": 570302,
+      "sha256": "673616cef193c29ef7ef81eb126edf3f7ff37be5263d681b568360f45de8ff3a"
+    },
+    "inventory.json": {
+      "bytes": 710464,
+      "sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d"
+    },
+    "mechanism-coverage.json": {
+      "bytes": 101393,
+      "sha256": "1a64129ae4a8245396dc13f49a372def2e082606ecfb8ad399ce54cbc0293f40"
+    },
+    "metadata-contract.json": {
+      "bytes": 83820,
+      "sha256": "7860e216b6539b014670f763535420dbcdc1bb7e796ed0d83f78510bf3338e1f"
+    },
+    "verify.py": {
+      "bytes": 14772,
+      "sha256": "b0f8d7afd58c82b072883284e7f3345476b6073e336e5cac7473b529a1c1925d"
+    }
+  }
+}

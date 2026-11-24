@@ -92,7 +92,7 @@ on-screen key to try pressure.
   not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Instrument voicing revision — 2026.11.6
+## Instrument voicing revision — 2026.11.7
 
 The cumulative revision changes sound controls in **all 521 existing musical
 factory programs** relative to the published 2026.11.4 bank. The
@@ -109,11 +109,21 @@ Steel Drum, Choir Pad and Dark Choir use distinct material or vowel profiles.
 Environmental effects have separate evolving contours, and sequence voices
 shape their dry articulation around their actual note spacing.
 
-The 2026.11.6 continuation stabilizes piano string-course tuning while keeping
+The retained 2026.11.6 work stabilizes piano string-course tuning while keeping
 varied strikes, and preserves fixed-frequency wind/brass body color during
 pitch changes. Nine existing voices gain dedicated material profiles: Tubular
 Bells, Gong, Temple Bell, Agogo, Music Box, Kalimba, Banjo, Koto and Harp. Their
 contact and ringing body now use the intended material in both ranks.
+
+The 2026.11.7 continuation corrects four remaining synthesis problems. Upper
+piano partials now lose their initial energy without an arbitrary change at the
+sixth harmonic. Breath, bow and contact texture retains its authored strength
+when the internal sample rate changes for higher-quality rendering. Guitar,
+bass and plucked-keyboard harmonics move through a fixed body response during
+bends. Low choir notes gain additional harmonics for their upper vowel regions,
+within the existing 48-mode capacity. These corrections change the sound engine;
+the complete preset parameter vectors and program identities remain those of
+2026.11.6.
 
 **272 existing programs use instrument bodies**; the other 251 entries,
 including both Init programs, retain circuit excitation. The 19 active model
@@ -123,16 +133,17 @@ models. Nine Material profiles specialize compatible models without changing
 either the Model or Variant range. Standard profiles remain available.
 Deliberately synthetic sounds keep their ring modulation, PWM, interval, motion or pressure-led identities.
 
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_6.md) explains the implementation,
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_7.md) explains the implementation,
 measurements and limits. The
 [complete coverage record](docs/preset-evidence/2026.11.6/verification/a15/parameter-coverage.json)
 checks every existing address, and the
 [final audio accounting](docs/preset-evidence/2026.11.5/development/long-pad-headroom/final-bank-audio-accounting.json)
 records the retained matched-condition comparisons and the two pad-level corrections.
-The [current complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
-passes the existing level and headroom limits. Native qualification and the
-actual expanded audition archive remain pending; the Downloads table above
-continues to identify the published 2026.11.4 packages.
+The [preceding complete-bank audit](docs/preset-evidence/2026.11.6/verification/root-integration/)
+passes the existing level and headroom limits. The combined 2026.11.7 bank,
+native builds and expanded audition archive are being qualified against their
+own source. The Downloads table above continues to identify the published
+2026.11.4 packages until those installation archives pass.
 
 | Try | Revised character and playing suggestion |
 | --- | --- |

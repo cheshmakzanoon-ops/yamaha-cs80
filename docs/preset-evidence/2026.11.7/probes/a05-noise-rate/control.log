@@ -1,0 +1,115 @@
+FAIL: breath level survives host/oversampling change
+AIR host=44100 factor=2 rms=0.0009711540739 relative=+0.35691 dB
+FAIL: breath level survives host/oversampling change
+AIR host=44100 factor=4 rms=0.0006954964731 relative=-2.54296 dB
+FAIL: breath level survives host/oversampling change
+AIR host=44100 factor=8 rms=0.000496191662 relative=-5.47587 dB
+AIR host=48000 factor=2 rms=0.0009320575267 relative=+0.00000 dB
+FAIL: breath level survives host/oversampling change
+AIR host=48000 factor=4 rms=0.0006676721913 relative=-2.89759 dB
+FAIL: breath level survives host/oversampling change
+AIR host=48000 factor=8 rms=0.0004756002733 relative=-5.84401 dB
+FAIL: breath level survives host/oversampling change
+AIR host=96000 factor=2 rms=0.0006676721913 relative=-2.89759 dB
+FAIL: breath level survives host/oversampling change
+AIR host=96000 factor=4 rms=0.0004756002733 relative=-5.84401 dB
+FAIL: breath level survives host/oversampling change
+AIR host=96000 factor=8 rms=0.0003364617371 relative=-8.85014 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=8000 rms=0.001632893805 relative=+4.87030 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=11025 rms=0.001753496132 relative=+5.48924 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=16000 rms=0.001753189866 relative=+5.48772 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=22050 rms=0.001660580694 relative=+5.01635 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=48000 rms=0.001271596294 relative=+2.69813 dB
+FAIL: breath energy remains stable across legal rate limits
+WIDE rate=1536000 rms=0.0002388344257 relative=-11.82692 dB
+FAIL: Bowed strings: sustained texture is rate consistent
+FAIL: Clarinet: sustained texture is rate consistent
+FAIL: Oboe: sustained texture is rate consistent
+FAIL: Bassoon: sustained texture is rate consistent
+FAIL: Brass: sustained texture is rate consistent
+CONTACT model=1 velocity=0.2 rate=88200 relative=+0.34072 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.2 rate=192000 relative=-2.89839 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.2 rate=384000 relative=-5.90986 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.2 rate=768000 relative=-8.85584 dB
+CONTACT model=1 velocity=0.9 rate=88200 relative=+0.34043 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.9 rate=192000 relative=-2.88717 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.9 rate=384000 relative=-5.91209 dB
+FAIL: Piano strings: contact onset energy survives oversampling
+CONTACT model=1 velocity=0.9 rate=768000 relative=-8.88325 dB
+CONTACT model=2 velocity=0.2 rate=88200 relative=+0.33525 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.2 rate=192000 relative=-2.84899 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.2 rate=384000 relative=-5.85803 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.2 rate=768000 relative=-8.83027 dB
+CONTACT model=2 velocity=0.9 rate=88200 relative=+0.33525 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.9 rate=192000 relative=-2.84899 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.9 rate=384000 relative=-5.85803 dB
+FAIL: Tine electric piano: contact onset energy survives oversampling
+CONTACT model=2 velocity=0.9 rate=768000 relative=-8.83027 dB
+CONTACT model=4 velocity=0.2 rate=88200 relative=+0.33832 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.2 rate=192000 relative=-2.87967 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.2 rate=384000 relative=-5.89118 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.2 rate=768000 relative=-8.84394 dB
+CONTACT model=4 velocity=0.9 rate=88200 relative=+0.33832 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.9 rate=192000 relative=-2.87967 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.9 rate=384000 relative=-5.89118 dB
+FAIL: Clavichord: contact onset energy survives oversampling
+CONTACT model=4 velocity=0.9 rate=768000 relative=-8.84394 dB
+CONTACT model=7 velocity=0.2 rate=88200 relative=+0.34052 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.2 rate=192000 relative=-2.89765 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.2 rate=384000 relative=-5.88379 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.2 rate=768000 relative=-8.82842 dB
+CONTACT model=7 velocity=0.9 rate=88200 relative=+0.34052 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.9 rate=192000 relative=-2.89765 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.9 rate=384000 relative=-5.88379 dB
+FAIL: Steel strings: contact onset energy survives oversampling
+CONTACT model=7 velocity=0.9 rate=768000 relative=-8.82842 dB
+CONTACT model=18 velocity=0.2 rate=88200 relative=+0.33517 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.2 rate=192000 relative=-2.83584 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.2 rate=384000 relative=-5.84035 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.2 rate=768000 relative=-8.84152 dB
+CONTACT model=18 velocity=0.9 rate=88200 relative=+0.33517 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.9 rate=192000 relative=-2.83584 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.9 rate=384000 relative=-5.84035 dB
+FAIL: Marimba: contact onset energy survives oversampling
+CONTACT model=18 velocity=0.9 rate=768000 relative=-8.84152 dB
+FLUTTER host=44100 factor=2 relative=+0.31200 dB
+FAIL: flutter depth survives rate changes independently of air
+FLUTTER host=48000 factor=4 relative=-3.23467 dB
+FAIL: flutter depth survives rate changes independently of air
+FLUTTER host=48000 factor=8 relative=-6.32609 dB
+FAIL: flutter depth survives rate changes independently of air
+FLUTTER host=96000 factor=8 relative=-9.39905 dB
+STREAM model=10 hash=741fa1bfadfb90b0
+STREAM model=1 hash=c86def2df355d73f
+STREAM model=7 hash=43898cb5b1e5abab
+Body noise rates: 157 checks, 52 failures

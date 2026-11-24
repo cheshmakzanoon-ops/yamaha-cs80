@@ -1,0 +1,4925 @@
+{
+  "inventory_sha256": "55c08568074a6560ef10c8c525733a40aec42d9b8c6d20644bf4984cdd0d3e0d",
+  "source_header_sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+  "definition": "Saved rank with nonzero model/body mix/rank balance, and possible nonzero VCA route. Structural exposure, not an audio-difference or improvement assertion.",
+  "conditions": {
+    "piano_partial_decay": "Piano model; upper principal partials.",
+    "noise_rate_normalization": "Excitation noise path, excluding Standard organ; rate change away from 96000 Hz internal.",
+    "generic_string_formants": "Standard clav/harpsichord/nylon/steel/bass; changed current pitch. Existing banjo/koto/harp paths excluded.",
+    "low_choir_harmonics": "Ah/Oo variant; captured note and body size request more than 24 harmonics."
+  },
+  "summary": {
+    "body": {
+      "program_count": 272,
+      "rank_count": 477,
+      "host_indices": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        32,
+        38,
+        39,
+        40,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        60,
+        61,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        85,
+        86,
+        88,
+        89,
+        95,
+        98,
+        118,
+        119,
+        120,
+        123,
+        125,
+        127,
+        131,
+        132,
+        134,
+        138,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        169,
+        172,
+        184,
+        194,
+        201,
+        205,
+        206,
+        209,
+        213,
+        218,
+        222,
+        223,
+        224,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        238,
+        239,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        272,
+        273,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        284,
+        285,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        408,
+        409,
+        410,
+        411,
+        414,
+        416,
+        417,
+        419,
+        420,
+        426,
+        432,
+        450,
+        451,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        487,
+        504,
+        506,
+        509,
+        512,
+        514,
+        515,
+        516,
+        521
+      ]
+    },
+    "generic_string_formants": {
+      "program_count": 54,
+      "rank_count": 100,
+      "host_indices": [
+        10,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        118,
+        119,
+        120,
+        123,
+        125,
+        127,
+        131,
+        134,
+        138,
+        144,
+        150,
+        151,
+        156,
+        157,
+        265,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        354,
+        388,
+        389,
+        390,
+        391,
+        395,
+        396,
+        397,
+        398,
+        399,
+        401,
+        402,
+        403,
+        408,
+        409,
+        410,
+        414,
+        416,
+        417,
+        419,
+        420,
+        426,
+        514
+      ]
+    },
+    "low_choir_harmonics": {
+      "program_count": 7,
+      "rank_count": 12,
+      "host_indices": [
+        32,
+        95,
+        98,
+        184,
+        284,
+        285,
+        487
+      ]
+    },
+    "noise_rate_normalization": {
+      "program_count": 256,
+      "rank_count": 447,
+      "host_indices": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        32,
+        38,
+        39,
+        40,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        60,
+        61,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        85,
+        86,
+        88,
+        89,
+        95,
+        98,
+        118,
+        119,
+        120,
+        123,
+        125,
+        127,
+        131,
+        132,
+        134,
+        138,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        169,
+        172,
+        184,
+        194,
+        201,
+        205,
+        206,
+        209,
+        213,
+        218,
+        222,
+        223,
+        224,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        238,
+        239,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        272,
+        273,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        284,
+        285,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        408,
+        409,
+        410,
+        411,
+        414,
+        416,
+        417,
+        419,
+        420,
+        426,
+        432,
+        450,
+        451,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        487,
+        504,
+        506,
+        509,
+        512,
+        514,
+        515,
+        516
+      ]
+    },
+    "piano_partial_decay": {
+      "program_count": 10,
+      "rank_count": 20,
+      "host_indices": [
+        38,
+        141,
+        143,
+        145,
+        346,
+        349,
+        350,
+        352,
+        353,
+        359
+      ]
+    },
+    "sustained_air_and_flutter_subset": {
+      "program_count": 132,
+      "rank_count": 212,
+      "host_indices": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        32,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        60,
+        61,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        85,
+        86,
+        88,
+        89,
+        95,
+        98,
+        132,
+        158,
+        169,
+        172,
+        184,
+        222,
+        223,
+        224,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        238,
+        239,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        261,
+        262,
+        263,
+        264,
+        266,
+        267,
+        268,
+        269,
+        270,
+        272,
+        273,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        284,
+        285,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        411,
+        432,
+        450,
+        451,
+        487,
+        504,
+        506,
+        516
+      ]
+    }
+  },
+  "union_program_count": 256,
+  "musical_programs_outside_union": 265,
+  "programs": [
+    {
+      "host_index": 0,
+      "name": "Tone I: String 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 1,
+      "name": "Tone II: String 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 2,
+      "name": "Tone I: String 3",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 3,
+      "name": "Tone II: String 4",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 4,
+      "name": "Tone I: Brass 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 5,
+      "name": "Tone II: Brass 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 6,
+      "name": "Tone I: Flute",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 7,
+      "name": "Tone II: Brass 3",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 8,
+      "name": "Tone I: E. Piano",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 9,
+      "name": "Tone II: Bass",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 10,
+      "name": "Tone I: Clavichord 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 11,
+      "name": "Tone II: Clavichord 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 12,
+      "name": "Tone I: Harpsichord 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 13,
+      "name": "Tone II: Harpsichord 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 14,
+      "name": "Tone I: Organ 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 15,
+      "name": "Tone II: Organ 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 16,
+      "name": "Tone I: Guitar 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 17,
+      "name": "Tone II: Guitar 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 18,
+      "name": "Tone I: Funky 1",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 19,
+      "name": "Tone II: Funky 2",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 20,
+      "name": "Tone I: Funky 3",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 21,
+      "name": "Tone II: Funky 4",
+      "category": "Hardware Studies",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 22,
+      "name": "Replicant Brass",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 23,
+      "name": "Runner Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 24,
+      "name": "French Horn",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 25,
+      "name": "Breathing Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 26,
+      "name": "Cinema Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 27,
+      "name": "Glass Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 28,
+      "name": "Distant Oceans",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 29,
+      "name": "Dry Ensemble",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 30,
+      "name": "1982 Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 31,
+      "name": "Sweep VCA",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 32,
+      "name": "Blade Choir",
+      "category": "Pads",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 33,
+      "name": "Dry Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 34,
+      "name": "Resonant Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 35,
+      "name": "Bass Stack",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 36,
+      "name": "Ribbon Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 37,
+      "name": "Metal Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 38,
+      "name": "Analog Piano",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 39,
+      "name": "Bright Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 40,
+      "name": "Ring Bell",
+      "category": "FX",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 41,
+      "name": "Laser Sweep",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 42,
+      "name": "Arp Motion",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 43,
+      "name": "Init Patch",
+      "category": "Init",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 44,
+      "name": "Amber Brass 1",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 45,
+      "name": "Velvet Brass 2",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 46,
+      "name": "Distant Brass 3",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 47,
+      "name": "Neon Brass 4",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 48,
+      "name": "Hollow Brass 5",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 49,
+      "name": "Golden Brass 6",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 50,
+      "name": "Frozen Brass 7",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 51,
+      "name": "Electric Brass 8",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 52,
+      "name": "Midnight Brass 9",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 53,
+      "name": "Slow Brass 10",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 54,
+      "name": "Bright Brass 11",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 55,
+      "name": "Dark Brass 12",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 56,
+      "name": "Wide Brass 13",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 57,
+      "name": "Soft Brass 14",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 58,
+      "name": "Amber Brass 15",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 59,
+      "name": "Velvet Brass 16",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 60,
+      "name": "Distant Brass 17",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 61,
+      "name": "Neon Brass 18",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 62,
+      "name": "Hollow Brass 19",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 63,
+      "name": "Golden Brass 20",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 64,
+      "name": "Frozen Brass 21",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 65,
+      "name": "Electric Brass 22",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 66,
+      "name": "Amber Strings 23",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 67,
+      "name": "Velvet Strings 24",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 68,
+      "name": "Distant Strings 25",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 69,
+      "name": "Neon Strings 26",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 70,
+      "name": "Hollow Strings 27",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 71,
+      "name": "Golden Strings 28",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 72,
+      "name": "Frozen Strings 29",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 73,
+      "name": "Electric Strings 30",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 74,
+      "name": "Midnight Strings 31",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 75,
+      "name": "Slow Strings 32",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 76,
+      "name": "Bright Strings 33",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 77,
+      "name": "Dark Strings 34",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 78,
+      "name": "Wide Strings 35",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 79,
+      "name": "Soft Strings 36",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 80,
+      "name": "Amber Strings 37",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 81,
+      "name": "Velvet Strings 38",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 82,
+      "name": "Distant Strings 39",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 83,
+      "name": "Neon Strings 40",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 84,
+      "name": "Hollow Strings 41",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 85,
+      "name": "Golden Strings 42",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 86,
+      "name": "Frozen Strings 43",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 87,
+      "name": "Electric Strings 44",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 88,
+      "name": "Midnight Strings 45",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 89,
+      "name": "Slow Strings 46",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 90,
+      "name": "Amber Pads 47",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 91,
+      "name": "Velvet Pads 48",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 92,
+      "name": "Distant Pads 49",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 93,
+      "name": "Neon Pads 50",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 94,
+      "name": "Hollow Pads 51",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 95,
+      "name": "Golden Pads 52",
+      "category": "Pads",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 96,
+      "name": "Frozen Pads 53",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 97,
+      "name": "Electric Pads 54",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 98,
+      "name": "Midnight Pads 55",
+      "category": "Pads",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 99,
+      "name": "Slow Pads 56",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 100,
+      "name": "Bright Pads 57",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 101,
+      "name": "Dark Pads 58",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 102,
+      "name": "Wide Pads 59",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 103,
+      "name": "Soft Pads 60",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 104,
+      "name": "Amber Pads 61",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 105,
+      "name": "Velvet Pads 62",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 106,
+      "name": "Distant Pads 63",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 107,
+      "name": "Neon Pads 64",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 108,
+      "name": "Hollow Pads 65",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 109,
+      "name": "Golden Pads 66",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 110,
+      "name": "Frozen Pads 67",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 111,
+      "name": "Electric Pads 68",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 112,
+      "name": "Midnight Pads 69",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 113,
+      "name": "Slow Pads 70",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 114,
+      "name": "Bright Pads 71",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 115,
+      "name": "Dark Pads 72",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 116,
+      "name": "Wide Pads 73",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 117,
+      "name": "Soft Pads 74",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 118,
+      "name": "Amber Bass 75",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 119,
+      "name": "Velvet Bass 76",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 120,
+      "name": "Distant Bass 77",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 121,
+      "name": "Neon Bass 78",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 122,
+      "name": "Hollow Bass 79",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 123,
+      "name": "Golden Bass 80",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 124,
+      "name": "Frozen Bass 81",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 125,
+      "name": "Electric Bass 82",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 126,
+      "name": "Midnight Bass 83",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 127,
+      "name": "Slow Bass 84",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 128,
+      "name": "Bright Bass 85",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 129,
+      "name": "Dark Bass 86",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 130,
+      "name": "Wide Bass 87",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 131,
+      "name": "Soft Bass 88",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 132,
+      "name": "Amber Bass 89",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 133,
+      "name": "Velvet Bass 90",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 134,
+      "name": "Distant Bass 91",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 135,
+      "name": "Neon Bass 92",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 136,
+      "name": "Hollow Bass 93",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 137,
+      "name": "Golden Bass 94",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 138,
+      "name": "Frozen Bass 95",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 139,
+      "name": "Electric Bass 96",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 140,
+      "name": "Amber Keys 97",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 141,
+      "name": "Velvet Keys 98",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 142,
+      "name": "Distant Keys 99",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 143,
+      "name": "Neon Keys 100",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 144,
+      "name": "Hollow Keys 101",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 145,
+      "name": "Golden Keys 102",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 146,
+      "name": "Frozen Keys 103",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 147,
+      "name": "Electric Keys 104",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 148,
+      "name": "Midnight Keys 105",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 149,
+      "name": "Slow Keys 106",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 150,
+      "name": "Bright Keys 107",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 151,
+      "name": "Dark Keys 108",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 152,
+      "name": "Wide Keys 109",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 153,
+      "name": "Soft Keys 110",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 154,
+      "name": "Amber Keys 111",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 155,
+      "name": "Velvet Keys 112",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 156,
+      "name": "Distant Keys 113",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 157,
+      "name": "Neon Keys 114",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 158,
+      "name": "Amber Leads 115",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 159,
+      "name": "Velvet Leads 116",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 160,
+      "name": "Distant Leads 117",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 161,
+      "name": "Neon Leads 118",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 162,
+      "name": "Hollow Leads 119",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 163,
+      "name": "Golden Leads 120",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 164,
+      "name": "Frozen Leads 121",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 165,
+      "name": "Electric Leads 122",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 166,
+      "name": "Midnight Leads 123",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 167,
+      "name": "Slow Leads 124",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 168,
+      "name": "Bright Leads 125",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 169,
+      "name": "Dark Leads 126",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 170,
+      "name": "Wide Leads 127",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 171,
+      "name": "Soft Leads 128",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 172,
+      "name": "Amber Leads 129",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 173,
+      "name": "Velvet Leads 130",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 174,
+      "name": "Distant Leads 131",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 175,
+      "name": "Neon Leads 132",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 176,
+      "name": "Hollow Leads 133",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 177,
+      "name": "Golden Leads 134",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 178,
+      "name": "Frozen Leads 135",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 179,
+      "name": "Electric Leads 136",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 180,
+      "name": "Amber FX 137",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 181,
+      "name": "Velvet FX 138",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 182,
+      "name": "Distant FX 139",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 183,
+      "name": "Neon FX 140",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 184,
+      "name": "Hollow FX 141",
+      "category": "FX",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 185,
+      "name": "Golden FX 142",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 186,
+      "name": "Frozen FX 143",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 187,
+      "name": "Electric FX 144",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 188,
+      "name": "Midnight FX 145",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 189,
+      "name": "Slow FX 146",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 190,
+      "name": "Bright FX 147",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 191,
+      "name": "Dark FX 148",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 192,
+      "name": "Wide FX 149",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 193,
+      "name": "Soft FX 150",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 194,
+      "name": "Amber FX 151",
+      "category": "FX",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 195,
+      "name": "Velvet FX 152",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 196,
+      "name": "Distant FX 153",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 197,
+      "name": "Neon FX 154",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 198,
+      "name": "Hollow FX 155",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 199,
+      "name": "Golden FX 156",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 200,
+      "name": "Amber Sequences 157",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 201,
+      "name": "Velvet Sequences 158",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 202,
+      "name": "Distant Sequences 159",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 203,
+      "name": "Neon Sequences 160",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 204,
+      "name": "Hollow Sequences 161",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 205,
+      "name": "Golden Sequences 162",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 206,
+      "name": "Frozen Sequences 163",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 207,
+      "name": "Electric Sequences 164",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 208,
+      "name": "Midnight Sequences 165",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 209,
+      "name": "Slow Sequences 166",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 210,
+      "name": "Bright Sequences 167",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 211,
+      "name": "Dark Sequences 168",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 212,
+      "name": "Wide Sequences 169",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 213,
+      "name": "Soft Sequences 170",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 214,
+      "name": "Amber Sequences 171",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 215,
+      "name": "Velvet Sequences 172",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 216,
+      "name": "Distant Sequences 173",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 217,
+      "name": "Neon Sequences 174",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 218,
+      "name": "Hollow Sequences 175",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 219,
+      "name": "Golden Sequences 176",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 220,
+      "name": "Frozen Sequences 177",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 221,
+      "name": "Electric Sequences 178",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 222,
+      "name": "Brass Swell I",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 223,
+      "name": "Brass Swell II",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 224,
+      "name": "Pressure Swell Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 225,
+      "name": "Resonant Swell Brass",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 226,
+      "name": "Noir Swell Brass",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 227,
+      "name": "Sforzando Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 228,
+      "name": "Brass Stab",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 229,
+      "name": "Horn Section",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 230,
+      "name": "Covered Horn",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 231,
+      "name": "Muted Trumpet",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 232,
+      "name": "Trombone Glide",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 233,
+      "name": "Fanfare Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 234,
+      "name": "Brass Ensemble 16",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 235,
+      "name": "Low Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 236,
+      "name": "Velvet Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 237,
+      "name": "Bright Brass Poly",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 238,
+      "name": "Brass Pad Swell",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 239,
+      "name": "Fifth Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 240,
+      "name": "Wah Brass",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 241,
+      "name": "Synth Horns",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 242,
+      "name": "Brass Bite",
+      "category": "Brass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 243,
+      "name": "Distant Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 244,
+      "name": "Brass Crescendo",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 245,
+      "name": "Cuivre Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 246,
+      "name": "Tuba",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 247,
+      "name": "Brass Octaves",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 248,
+      "name": "Swell And Fall",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 249,
+      "name": "Reed Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 250,
+      "name": "Brass Glide Lead",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 251,
+      "name": "Tremolo Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 252,
+      "name": "Contour Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 253,
+      "name": "Ring Breath Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 254,
+      "name": "Ensemble Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 255,
+      "name": "Slow Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 256,
+      "name": "Violins",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 257,
+      "name": "Cellos",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 258,
+      "name": "Octave Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 259,
+      "name": "PWM Strings",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 260,
+      "name": "Thin Strings",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 261,
+      "name": "Dark Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 262,
+      "name": "Tremolo Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 263,
+      "name": "Solo Violin",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 264,
+      "name": "Solo Cello",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 265,
+      "name": "Pizzicato Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 266,
+      "name": "Swell Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 267,
+      "name": "Chamber Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 268,
+      "name": "Wide Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 269,
+      "name": "Crystal Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 270,
+      "name": "Fifth Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 271,
+      "name": "Analog Orchestra",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 272,
+      "name": "Spiccato Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 273,
+      "name": "Bowed Swell Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 274,
+      "name": "Synth Strings Saw",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 275,
+      "name": "String Machine",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 276,
+      "name": "Contour Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 277,
+      "name": "Ring Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 278,
+      "name": "Velvet Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 279,
+      "name": "Tutti Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 280,
+      "name": "Marcato Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 281,
+      "name": "Air Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 282,
+      "name": "Slow Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 283,
+      "name": "Ring Drift Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 284,
+      "name": "Choir Pad",
+      "category": "Pads",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 285,
+      "name": "Dark Choir",
+      "category": "Pads",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 286,
+      "name": "Sweep Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 287,
+      "name": "Breathing Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 288,
+      "name": "Glass Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 289,
+      "name": "Warm Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 290,
+      "name": "Wide Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 291,
+      "name": "Octave Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 292,
+      "name": "Fifth Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 293,
+      "name": "Evolving Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 294,
+      "name": "Noise Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 295,
+      "name": "Pressure Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 296,
+      "name": "Sine Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 297,
+      "name": "Hollow Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 298,
+      "name": "Resonant Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 299,
+      "name": "Pulse Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 300,
+      "name": "Tremolo Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 301,
+      "name": "Neo-Noir Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 302,
+      "name": "Rain Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 303,
+      "name": "Cathedral Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 304,
+      "name": "Shimmer Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 305,
+      "name": "Low Drone",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 306,
+      "name": "Ether Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 307,
+      "name": "Velvet Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 308,
+      "name": "Analog Haze",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 309,
+      "name": "Bowed Glass",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 310,
+      "name": "Night Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 311,
+      "name": "Arctic Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 312,
+      "name": "Poly Stab",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 313,
+      "name": "Poly Brass Stab",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 314,
+      "name": "PWM Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 315,
+      "name": "Resonant Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 316,
+      "name": "Detuned Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 317,
+      "name": "Poly Sweep",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 318,
+      "name": "Velocity Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 319,
+      "name": "Poly Pluck",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 320,
+      "name": "Octave Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 321,
+      "name": "Fifth Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 322,
+      "name": "Bright Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 323,
+      "name": "Dark Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 324,
+      "name": "Hollow Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 325,
+      "name": "Wide Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 326,
+      "name": "Poly Swell",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 327,
+      "name": "Saw Pulse Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 328,
+      "name": "Synthwave Chords",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 329,
+      "name": "Square Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 330,
+      "name": "Sine Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 331,
+      "name": "Contour Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 332,
+      "name": "Ring Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 333,
+      "name": "Glide Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 334,
+      "name": "Tremolo Poly",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 335,
+      "name": "Poly Sub Pulse",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 336,
+      "name": "Electric Piano I",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 337,
+      "name": "Electric Piano II",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 338,
+      "name": "Tine Piano",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 339,
+      "name": "Clavichord I",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 340,
+      "name": "Clavichord II",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 341,
+      "name": "Funky Clavichord",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 342,
+      "name": "Harpsichord I",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 343,
+      "name": "Harpsichord II",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 344,
+      "name": "Lute Harpsichord",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 345,
+      "name": "Toy Piano",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 346,
+      "name": "Honky Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 347,
+      "name": "Vibes Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 348,
+      "name": "Celesta",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 349,
+      "name": "Saw Pulse Piano",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 350,
+      "name": "Soft Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 351,
+      "name": "Chorus Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 352,
+      "name": "Stage Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 353,
+      "name": "Velocity Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 354,
+      "name": "Dulcimer",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 355,
+      "name": "Reed Piano",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 356,
+      "name": "Glass Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 357,
+      "name": "Tremolo Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 358,
+      "name": "Contour Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 359,
+      "name": "Pressure Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "piano_partial_decay"
+      ]
+    },
+    {
+      "host_index": 360,
+      "name": "Flute Organ 8+4",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 361,
+      "name": "Flute Organ 16+8",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 362,
+      "name": "Percussive Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 363,
+      "name": "Reed Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 364,
+      "name": "Church Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 365,
+      "name": "Chapel Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 366,
+      "name": "Theatre Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 367,
+      "name": "Tremolo Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 368,
+      "name": "Mellow Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 369,
+      "name": "Bright Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 370,
+      "name": "Pipe Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 371,
+      "name": "Combo Organ",
+      "category": "Organ",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 372,
+      "name": "Fifth Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 373,
+      "name": "Organ Vibrato",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 374,
+      "name": "Flute",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 375,
+      "name": "Breathy Flute",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 376,
+      "name": "Pan Flute",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 377,
+      "name": "Recorder",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 378,
+      "name": "Clarinet",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 379,
+      "name": "Bass Clarinet",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 380,
+      "name": "Oboe",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 381,
+      "name": "English Horn",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 382,
+      "name": "Bassoon",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 383,
+      "name": "Soprano Reed",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 384,
+      "name": "Ocarina",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 385,
+      "name": "Piccolo",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 386,
+      "name": "Whistle",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 387,
+      "name": "Shakuhachi",
+      "category": "Winds",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 388,
+      "name": "Guitar I",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 389,
+      "name": "Guitar II",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 390,
+      "name": "Funky Pluck I",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 391,
+      "name": "Funky Pluck II",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 392,
+      "name": "Harp",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 393,
+      "name": "Koto",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 394,
+      "name": "Banjo",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 395,
+      "name": "Mandolin",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 396,
+      "name": "Drone Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 397,
+      "name": "Nylon Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 398,
+      "name": "Steel Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 399,
+      "name": "Muted Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 400,
+      "name": "Kalimba",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 401,
+      "name": "Zither",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 402,
+      "name": "Dulcimer Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 403,
+      "name": "Pressure Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 404,
+      "name": "Analog Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 405,
+      "name": "Resonance Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 406,
+      "name": "Sine Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 407,
+      "name": "Sub Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 408,
+      "name": "Pluck Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 409,
+      "name": "Fretless Glide",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 410,
+      "name": "Funk Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 411,
+      "name": "Brass Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 412,
+      "name": "Octave Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 413,
+      "name": "Pulse Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 414,
+      "name": "Round Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 415,
+      "name": "Velocity Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 416,
+      "name": "Rubber Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 417,
+      "name": "Dark Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 418,
+      "name": "Bright Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 419,
+      "name": "Picked Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 420,
+      "name": "Upright Pluck",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 421,
+      "name": "Fifth Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 422,
+      "name": "Pedal Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 423,
+      "name": "Squelch Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 424,
+      "name": "Ring Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 425,
+      "name": "Sub Wobble Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 426,
+      "name": "Pressure Bass",
+      "category": "Bass",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 427,
+      "name": "Contour Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 428,
+      "name": "Touch Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 429,
+      "name": "Aftertouch Vibrato Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 430,
+      "name": "Ribbon Glide Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 431,
+      "name": "Noir Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 432,
+      "name": "Neo-Noir Brass Lead",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 433,
+      "name": "Glide Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 434,
+      "name": "Sine Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 435,
+      "name": "Whistle Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 436,
+      "name": "Square Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 437,
+      "name": "Narrow Pulse Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 438,
+      "name": "Resonant Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 439,
+      "name": "Screaming Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 440,
+      "name": "Fifth Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 441,
+      "name": "Octave Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 442,
+      "name": "Soft Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 443,
+      "name": "Init Bend Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 444,
+      "name": "Pressure Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 445,
+      "name": "Velocity Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 446,
+      "name": "Detuned Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 447,
+      "name": "Sub Vibrato Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 448,
+      "name": "Trill Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 449,
+      "name": "Glissando Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 450,
+      "name": "Brass Lead",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 451,
+      "name": "Reed Lead",
+      "category": "Leads",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 452,
+      "name": "Wah Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 453,
+      "name": "Ring Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 454,
+      "name": "Hollow Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 455,
+      "name": "Ether Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 456,
+      "name": "Solo Synth",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 457,
+      "name": "Contour Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 458,
+      "name": "Ring Bell I",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 459,
+      "name": "Ring Bell II",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 460,
+      "name": "Tubular Bells",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 461,
+      "name": "Glockenspiel",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 462,
+      "name": "Celeste Bells",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 463,
+      "name": "Music Box",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 464,
+      "name": "Gong",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 465,
+      "name": "Temple Bell",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 466,
+      "name": "Marimba",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 467,
+      "name": "Vibraphone",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 468,
+      "name": "Xylophone",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 469,
+      "name": "Crystal Bell",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 470,
+      "name": "Bell Pad",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 471,
+      "name": "Ring Sweep Bell",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 472,
+      "name": "Steel Drum",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 473,
+      "name": "Chimes",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 474,
+      "name": "Dark Bell",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 475,
+      "name": "Bell Choir",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 476,
+      "name": "Metallic Keys",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 477,
+      "name": "Agogo",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 478,
+      "name": "Clock Bells",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 479,
+      "name": "Ring Mallet",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 480,
+      "name": "Random Filter",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 481,
+      "name": "Random Pitch Blips",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 482,
+      "name": "Siren",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 483,
+      "name": "Laser Zap",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 484,
+      "name": "Wind",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 485,
+      "name": "Surf",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 486,
+      "name": "Sci-Fi Drone",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 487,
+      "name": "Robot Voice",
+      "category": "FX",
+      "eligible_mechanisms": [
+        "body",
+        "low_choir_harmonics",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 488,
+      "name": "Alarm",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 489,
+      "name": "Space Sweep",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 490,
+      "name": "Bubbles",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 491,
+      "name": "Thunder",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 492,
+      "name": "Rain",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 493,
+      "name": "Helicopter",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 494,
+      "name": "UFO Landing",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 495,
+      "name": "Telemetry",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 496,
+      "name": "Clockwork",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 497,
+      "name": "Deep Space",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 498,
+      "name": "Metal Scrape",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 499,
+      "name": "Machine Hum",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 500,
+      "name": "Sweep Riser",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 501,
+      "name": "Downer",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 502,
+      "name": "Glitch Sub",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 503,
+      "name": "Breath FX",
+      "category": "FX",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 504,
+      "name": "Delay Brass",
+      "category": "Brass",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 505,
+      "name": "Plate Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 506,
+      "name": "Phaser Strings",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 507,
+      "name": "Drive Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 508,
+      "name": "Arp Poly",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 509,
+      "name": "Arp Bells",
+      "category": "Sequences",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 510,
+      "name": "Arp Bass",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 511,
+      "name": "LFO Sweep Pad",
+      "category": "Pads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 512,
+      "name": "LFO Pan Keys",
+      "category": "Keys",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 513,
+      "name": "PWM LFO Strings",
+      "category": "Strings",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 514,
+      "name": "Stereo Delay Pluck",
+      "category": "Plucked",
+      "eligible_mechanisms": [
+        "body",
+        "generic_string_formants",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 515,
+      "name": "Ambient Bells",
+      "category": "Bells",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization"
+      ]
+    },
+    {
+      "host_index": 516,
+      "name": "Ensemble Plus",
+      "category": "Strings",
+      "eligible_mechanisms": [
+        "body",
+        "noise_rate_normalization",
+        "sustained_air_and_flutter_subset"
+      ]
+    },
+    {
+      "host_index": 517,
+      "name": "Space Lead",
+      "category": "Leads",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 518,
+      "name": "Random Arp",
+      "category": "Sequences",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 519,
+      "name": "Drive Bass",
+      "category": "Bass",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 520,
+      "name": "Phased Polysynth",
+      "category": "Polysynth",
+      "eligible_mechanisms": []
+    },
+    {
+      "host_index": 521,
+      "name": "Tremolo LFO Organ",
+      "category": "Organ",
+      "eligible_mechanisms": [
+        "body"
+      ]
+    },
+    {
+      "host_index": 522,
+      "name": "Init Circuit",
+      "category": "Init",
+      "eligible_mechanisms": []
+    }
+  ]
+}

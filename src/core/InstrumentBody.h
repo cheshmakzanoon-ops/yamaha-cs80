@@ -77,6 +77,20 @@ public:
         airLowCoefficient = 1.0 - std::exp(-twoPi * 5200.0 / sampleRate);
         airHighCoefficient = 1.0 - std::exp(-twoPi * 650.0 / sampleRate);
         flutterCoefficient = 1.0 - std::exp(-twoPi * 19.0 / sampleRate);
+        // White draws have fixed variance per sample. Preserve the authored
+        // 96 kHz texture energy when host rate or oversampling changes the
+        // filter bandwidth in samples. Flutter has its own 19 Hz low-pass;
+        // scaling their shared input would apply the wrong gain to it.
+        constexpr double referenceRate = 96000.0;
+        const double referenceLow = 1.0 - std::exp(-twoPi * 5200.0 / referenceRate);
+        const double referenceHigh = 1.0 - std::exp(-twoPi * 650.0 / referenceRate);
+        const double referenceFlutter = 1.0 - std::exp(-twoPi * 19.0 / referenceRate);
+        airNoiseGain = sampleRate == referenceRate ? 1.0
+            : std::sqrt(airNoiseVariance(referenceLow, referenceHigh)
+                        / airNoiseVariance(airLowCoefficient, airHighCoefficient));
+        flutterDepth = sampleRate == referenceRate ? 0.012
+            : 0.012 * std::sqrt((referenceFlutter / (2.0 - referenceFlutter))
+                                / (flutterCoefficient / (2.0 - flutterCoefficient)));
         effortCoefficient = 1.0 - std::exp(-controlPeriod / (sampleRate * 0.012));
         motionCoefficient = 1.0 - std::exp(-twoPi * 0.9 * controlPeriod / sampleRate);
         reset();
@@ -269,8 +283,8 @@ public:
             airHigh += airHighCoefficient * (noise - airHigh);
             airLow += airLowCoefficient * (noise - airHigh - airLow);
             flutter += flutterCoefficient * (noise - flutter);
-            output *= 1.0 + (sustained ? 0.012 * flutter : 0.0);
-            output += airLow * (airAmount + hitAmount * hitEnvelope);
+            output *= 1.0 + (sustained ? flutterDepth * flutter : 0.0);
+            output += (airLow * airNoiseGain) * (airAmount + hitAmount * hitEnvelope);
         }
         hitEnvelope *= hitCoefficient;
         if (hitEnvelope < 1.0e-20) hitEnvelope = 0.0;
@@ -300,9 +314,9 @@ private:
     };
 
     std::array<Mode, maximumModes> modes {};
-    // Bowed and vocal excitation have 24 harmonic modes. Keep their shared
-    // response history outside Mode so struck models need no extra storage.
-    std::array<double, harmonicModeCount> bowedResponseInverse {}, bowedResponseGain {};
+    // Fixed-formant history covers the full bank: low choir notes can use
+    // 48 modes. Keep it outside Mode rather than enlarging every oscillator.
+    std::array<double, maximumModes> bowedResponseInverse {}, bowedResponseGain {};
     double bowedResponseBound = 0.0, bowedBoundGain = 1.0;
     double sampleRate = 96000.0, outputRate = 48000.0;
     double keyHz = 261.625565, strike = 0.7, initialColour = 0.5, decayScale = 1.0;
@@ -316,6 +330,7 @@ private:
     double hitEnvelope = 0.0, hitCoefficient = 0.99;
     double airLow = 0.0, airHigh = 0.0, flutter = 0.0;
     double airLowCoefficient = 0.3, airHighCoefficient = 0.04, flutterCoefficient = 0.001;
+    double airNoiseGain = 1.0, flutterDepth = 0.012;
     double airAmount = 0.0, hitAmount = 0.0;
     std::uint32_t state = 0x7a4f39b1u;
     std::uint32_t motionState = 0x613c47a9u;
@@ -328,6 +343,19 @@ private:
     bool transientControls = false, gainRamping = false;
 
     bool vocal() const noexcept { return variant == choirAh || variant == choirOo; }
+
+    static double airNoiseVariance(double low, double high) noexcept
+    {
+        // The high-pass uses the *updated* high-pole state. With r = 1-a,
+        // H(z) = aL*rH*(1-z^-1)/((1-rH*z^-1)*(1-rL*z^-1)). Summing its
+        // squared impulse response gives 2*aL^2*rH^2 /
+        // ((1+rH)*(1+rL)*(1-rH*rL)). This coefficient form avoids subtracting
+        // two nearly unit pole products and has no coincident-pole division.
+        // The generator's common input variance cancels in the gain ratio.
+        const double highPole = 1.0 - high;
+        return 2.0 * low * low * highPole * highPole
+             / ((2.0 - high) * (2.0 - low) * (high + low - high * low));
+    }
 
     static double finiteClamp(double value, double low, double high, double fallback) noexcept
     {
@@ -514,6 +542,18 @@ private:
         // https://www.phys.unsw.edu.au/jw/brassacoustics.html
         switch (model)
         {
+            // The captured string excitation crosses the same soundboard/body
+            // response during a bend. Geometry stays fixed; pluck position,
+            // stiffness and losses remain those of the original note.
+            // Coupling background (not a fit to measured response data):
+            // https://www.phys.unsw.edu.au/music/guitaracoustics/construction.html
+            case clav: return 0.70 + 0.35 * bodyResonance(frequency, 270.0, 220.0)
+                                  + 0.18 * bodyResonance(frequency, 1400.0, 900.0);
+            case harpsichord: return 0.72 + 0.30 * bodyResonance(frequency, 300.0, 210.0)
+                                         + 0.23 * bodyResonance(frequency, 1700.0, 1000.0);
+            case nylon: case steel: case bass:
+                return 0.65 + 0.45 * bodyResonance(frequency, model == bass ? 130.0 : 210.0, 130.0)
+                            + 0.25 * bodyResonance(frequency, 620.0, 370.0);
             case flute: return 0.75 + 0.35 * bodyResonance(frequency, 1800.0, 1700.0);
             case clarinet: return 0.82 + 0.28 * bodyResonance(frequency, 1500.0, 900.0);
             case oboe: return 0.28 + 1.65 * bodyResonance(frequency, 1300.0, 650.0)
@@ -528,6 +568,7 @@ private:
     bool tracksFormants() const noexcept
     {
         return (model >= bowed && model <= brass) || vocal()
+            || (model >= clav && model <= bass)
             || material == banjo || material == koto || material == harp;
     }
 
@@ -637,16 +678,14 @@ private:
             case clav:
             {
                 const double comb = 0.18 + 0.82 * std::abs(std::sin(pi * h * 0.235));
-                const double body = 0.70 + 0.35 * bodyResonance(frequency, 270.0, 220.0)
-                                         + 0.18 * bodyResonance(frequency, 1400.0, 900.0);
+                const double body = fixedFormant(frequency);
                 return body * comb * std::pow(h, -0.95)
                      * std::exp(-(h - 1.0) / (4.0 + 10.0 * colour + 4.0 * excitation));
             }
             case harpsichord:
             {
                 const double comb = 0.10 + 0.90 * std::abs(std::sin(pi * h * 0.168));
-                const double body = 0.72 + 0.30 * bodyResonance(frequency, 300.0, 210.0)
-                                         + 0.23 * bodyResonance(frequency, 1700.0, 1000.0);
+                const double body = fixedFormant(frequency);
                 return body * comb * std::pow(h, -0.72)
                      * std::exp(-(h - 1.0) / (5.0 + 16.0 * colour));
             }
@@ -657,8 +696,7 @@ private:
                 const double position = (model == nylon ? 0.22 : model == bass ? 0.19 : 0.135) + pluckOffset;
                 const double comb = std::abs(std::sin(pi * h * position)) / std::sin(pi * position);
                 const double falloff = model == nylon ? 1.75 : model == bass ? 1.6 : 1.32;
-                const double body = 0.65 + 0.45 * bodyResonance(frequency, model == bass ? 130.0 : 210.0, 130.0)
-                                        + 0.25 * bodyResonance(frequency, 620.0, 370.0);
+                const double body = fixedFormant(frequency);
                 return body * comb * std::pow(h, -falloff)
                      * std::exp(-(h - 1.0) / (3.0 + 12.0 * colour + 5.0 * excitation));
             }
@@ -778,14 +816,20 @@ private:
         const double stiffness = model == piano ? 0.000045 + 0.00020 * treble * treble
                                : model == steel ? 0.000012
                                : model == harpsichord ? 0.000025 : 0.0;
-        // Spend additional modes only on bass piano attacks. Six slots are
-        // always reserved for the slower second polarization/string course.
+        // Bass piano attacks reserve six slots for the slower second course.
+        // Choir needs more harmonics at low pitch to reach its fixed-Hz upper
+        // vowel regions. Size scales that coverage with the authored tract;
+        // the existing 48-mode ceiling still limits the deepest registers.
         // No modes are permanently culled by onset pitch: a subsequent large
         // downward ribbon bend can bring a formerly ultrasonic mode back.
         const double harmonicBudget = model == piano
-            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : harmonicModeCount;
+            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0)
+            : vocal() ? std::clamp(4400.0 / (bodySize * keyHz),
+                                   static_cast<double>(harmonicModeCount), static_cast<double>(maximumModes))
+                      : harmonicModeCount;
         const int harmonics = static_cast<int>(std::ceil(harmonicBudget));
         const std::uint32_t principalPhaseSeed = state;
+        std::uint32_t choirAirSeed = state;
         double maximumSum = 0.0;
         const bool referenceStrike = !sustained && model != harpsichord && strike != 1.0;
         const auto includeBound = [&](int harmonic, double coverage, double dark, double bright)
@@ -815,8 +859,11 @@ private:
             {
                 partialAttack = (model == piano ? 0.00045 + 0.0017 / std::sqrt(h)
                                                : 0.00030 + 0.00075 / std::sqrt(h));
-                if (model == piano && harmonic <= 6)
-                    loss += registerLossScale(0.25) * (0.78 + 0.04 * (harmonic - 1));
+                // Every principal piano partial supplies prompt sound. Keep
+                // the low-course loss unchanged without letting h7+ outlast
+                // h6 merely because the slower second course ends there.
+                if (model == piano)
+                    loss += registerLossScale(0.25) * (0.78 + 0.04 * std::min(harmonic - 1, 5));
             }
             else if (expressive)
             {
@@ -842,7 +889,12 @@ private:
                 ? static_cast<unsigned int>(std::min(harmonic - 1, 4)) : 0u;
             addMode(ratio, dark, bright, loss, phase, partialAttack, pickup);
             includeBound(harmonic, coverage, dark, bright);
+            if (vocal() && harmonic == harmonicModeCount) choirAirSeed = state;
         }
+        // Additional choir phases extend the original sequence, then the air
+        // stream resumes at its original 24-mode position. Fractional budget
+        // crossings cannot reseed breath; 24-mode notes retain their samples.
+        if (vocal()) state = choirAirSeed;
         if (model == piano)
         {
             // Reserve the complete principal-mode random sequence even when

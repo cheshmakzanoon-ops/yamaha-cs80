@@ -41,6 +41,7 @@ SUSTAINED = ["Solo Violin", "Flute", "Clarinet", "Oboe", "English Horn", "Covere
 SUSTAINED_BASS = ["Solo Cello", "Bass Clarinet", "Bassoon"]
 MATERIALS = ["Xylophone", "Steel Drum", "Marimba", "Vibraphone"]
 CHOIRS = ["Choir Pad", "Dark Choir"]
+LOW_CHOIR_DERIVATIVES = ["Golden Pads 52", "Blade Choir", "Midnight Pads 55"]
 ORIGINAL_ARTICULATION = ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 174"]
 MATERIAL_PROFILES = ["Tubular Bells", "Gong", "Temple Bell", "Agogo", "Music Box",
                      "Banjo", "Koto", "Harp", "Kalimba"]
@@ -67,7 +68,8 @@ class CaptureChild:
         if "--inventory" in command:
             names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS
                                        + TEXTURES + SUSTAINED + SUSTAINED_BASS
-                                       + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION + MATERIAL_PROFILES))
+                                       + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION + MATERIAL_PROFILES
+                                       + LOW_CHOIR_DERIVATIVES))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
             programs = [{"host_index": i, "name": name, "category": "Fixture", "values": PARAMETER_VALUES}
                         for i, name in enumerate(names)]
@@ -160,9 +162,10 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((manifest["repository"], manifest["run_id"], manifest["run_attempt"]),
                          ("owner/repo", "42", "2"))
         self.assertEqual(manifest["capture_binary_sha256"], hashlib.sha256(self.capture.read_bytes()).hexdigest())
-        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (225, 225))
-        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (1276.2, 1276.2))
-        self.assertEqual(manifest["selected_program_count"], 89)
+        summary = helper.roster_summary(helper.selections())
+        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (summary["wav_count"],) * 2)
+        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (summary["audio_seconds"],) * 2)
+        self.assertEqual(manifest["selected_program_count"], summary["selected_program_count"])
         self.assertEqual(manifest["library_revision"], "2026.11.6")
         inventory = json.loads((out / "inventory.json").read_text())
         self.assertEqual(inventory["parameter_ids"], PARAMETER_IDS)
@@ -181,11 +184,11 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
         self.assertEqual([(g["names"], g["note"]) for g in groups[9:12]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len(groups), 46)
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 89)
+        self.assertEqual(len(groups), 54)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 92)
         readme = (out / "README.txt").read_text()
-        self.assertIn("225 unnormalized circuit-synth auditions of 89 existing programs", readme)
-        self.assertIn("1276.2 seconds total", readme)
+        self.assertIn("238 unnormalized circuit-synth auditions of 92 existing programs", readme)
+        self.assertIn("1361.2 seconds total", readme)
         self.assertIn("Material-profile folders compare Tubular Bells, Gong, Temple Bell", readme)
         self.assertIn("same-foundation comparisons do not isolate resonant size alone", readme)
         self.assertIn("Single-note examples do not establish acoustic similarity", readme)
@@ -231,7 +234,7 @@ class AuditionTests(unittest.TestCase):
     def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
         groups = helper.selections()
         self.assertEqual(helper.roster_summary(groups),
-                         dict(wav_count=225, selected_program_count=89, audio_seconds=1276.2))
+                         dict(wav_count=238, selected_program_count=92, audio_seconds=1361.2))
         by_folder = {group["folder"]: group for group in groups}
         quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
         self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
@@ -270,7 +273,7 @@ class AuditionTests(unittest.TestCase):
                 self.assertEqual(group["names"], ["Clarinet", "Bass Clarinet"])
                 self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
                                  (note, velocity, 0, 3, 1))
-        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 500_000_000)
+        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 550_000_000)
 
     def test_material_and_vowel_comparisons_preserve_matched_conditions(self):
         groups = {group["folder"]: group for group in helper.selections()}
@@ -292,7 +295,7 @@ class AuditionTests(unittest.TestCase):
 
     def test_material_profiles_append_six_matched_folders_to_existing_roster(self):
         groups = helper.selections()
-        existing, added = groups[:-6], groups[-6:]
+        existing, added = groups[:40], groups[40:46]
         self.assertEqual(len(existing), 40)
         self.assertEqual(helper.roster_summary(existing),
                          dict(wav_count=171, selected_program_count=81, audio_seconds=1033.2))
@@ -308,6 +311,45 @@ class AuditionTests(unittest.TestCase):
             self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
                              {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
         self.assertEqual([group["note"] for group in added], [48, 48, 60, 60, 72, 72])
+
+    def test_low_register_requests_preserve_all_225_earlier_requests(self):
+        groups = helper.selections()
+        existing, added = groups[:46], groups[46:]
+        # Frozen before appending the .7 coverage: this constrains every name,
+        # order, folder and setting, including default-note spelling.
+        encoded = json.dumps(existing, sort_keys=True, separators=(",", ":")).encode()
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(),
+                         "126e05bb759e19adf7fec40dabb3c4a86bafe2f658dd845f6653c34ff3a7d31b")
+        self.assertEqual(helper.roster_summary(existing),
+                         dict(wav_count=225, selected_program_count=89, audio_seconds=1276.2))
+        self.assertEqual(helper.roster_summary(added),
+                         dict(wav_count=13, selected_program_count=6, audio_seconds=85.0))
+        self.assertEqual(len(added), 8)
+        by_folder = {group["folder"]: group for group in groups}
+        for note in (36, 48):
+            for label, velocity in (("soft", .3), ("firm", .85)):
+                group = by_folder[f"low-piano-tail-{note}-{label}"]
+                self.assertEqual(group["names"], ["Soft Keys"] if note == 36 else ["Stage Keys", "Soft Keys"])
+                self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
+                                 (note, velocity, 0, 5, 1))
+        # Include reused earlier requests when checking the complete five-pad
+        # foundation pairs. An 8-foot rank sounds its played note; 16-foot is -12.
+        requests = [(name, group.get("note"), group["velocity"], group["pressure"], group["hold"], group["tail"])
+                    for group in groups for name in group["names"]]
+        for name, offset in (("Choir Pad", 0), ("Golden Pads 52", 0), ("Dark Choir", 12),
+                             ("Blade Choir", 12), ("Midnight Pads 55", 12)):
+            for foundation in (36, 48):
+                self.assertEqual(requests.count((name, foundation + offset, .85, 0, 6, 1)), 1)
+
+    def test_readme_uses_inventory_revision_and_states_actual_low_register_scope(self):
+        groups = helper.selections()
+        readme = helper.audition_readme(groups, helper.roster_summary(groups), SOURCE, "2026.11.7")
+        self.assertIn("library revision 2026.11.7; source commit " + SOURCE, readme)
+        self.assertNotIn("library revision 2026.11.6", readme)
+        self.assertIn("13 low-register captures are appended", readme)
+        self.assertIn("16-foot Oo foundations", readme)
+        self.assertIn("The capture CLI does not schedule pitch bends or select render quality", readme)
+        self.assertIn("do not verify bend behavior or noise consistency across quality modes", readme)
 
     def test_default_note_alias_is_rejected_before_rendering_audio(self):
         groups = helper.selections()

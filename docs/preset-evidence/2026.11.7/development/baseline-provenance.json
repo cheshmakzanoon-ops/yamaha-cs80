@@ -1,0 +1,16 @@
+{
+  "source_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "library_revision": "2026.11.6",
+  "command": "cs80_preset_capture --out OUT --library all --all --hold 3 --tail 1",
+  "note": "Metrics for every one of the 523 programs; unnormalized audio output at 48 kHz with default note and velocity. WAVs were not retained for this complete-bank pass. A fixed 3-second hold does not fully develop every slow pad; full stress and long-hold gates remain separate.",
+  "files": {
+    "baseline-bank-metrics.csv": {
+      "bytes": 118465,
+      "sha256": "240fd7e682a7c138f52157cc9374daaaec33cf59204fc0e9f1e36db595d4fdea"
+    },
+    "baseline-inventory.json": {
+      "bytes": 710464,
+      "sha256": "02a38edcc47a1befd9f044d3a1203e7ed3c464987951562b0d81e88f86c66d50"
+    }
+  }
+}

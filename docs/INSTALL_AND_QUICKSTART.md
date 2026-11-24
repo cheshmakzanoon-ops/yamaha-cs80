@@ -4,14 +4,22 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library revision **2026.11.6**: revoiced existing
+This guide covers factory library source candidate **2026.11.7**: revoiced existing
 programs and optional instrument bodies within one circuit instrument, the
 unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
-readout. All **521 existing musical programs** have revised sound controls;
+readout. The cumulative work since 2026.11.4 revises all **521 existing musical programs**;
 **Init Patch** and **Init Circuit** remain starting points, with all names and
-program addresses preserved. The latest revision adds stable piano course tuning,
-body resonances that remain fixed during wind/brass bends, and distinct bell,
-comb, tine and plucked-string materials. See the [2026.11.6 sound revision](CIRCUIT_LIBRARY_2026_11_6.md).
+program addresses preserved. This increment keeps the 2026.11.6 preset settings
+and controls, while correcting upper-piano decay, keeping breath/contact texture
+consistent across render rates, fixing body resonances during standard string
+bends, and extending low choir harmonics. The earlier stable piano tuning,
+wind/brass response and nine material profiles are retained. See the
+[2026.11.7 sound revision](CIRCUIT_LIBRARY_2026_11_7.md).
+
+At this source checkpoint, **2026.11.7 native builds and delivery qualification
+are pending**. This guide does not announce a qualified download. The
+[README download table](../README.md#downloads) identifies the available artifacts
+and their accepted source; a later source revision does not update those binaries.
 Engine and isolation selectors remain removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
@@ -59,10 +67,11 @@ and emulation layers are not qualified by these runner builds.
 `manifest.json` records the source commit, `preset_library_revision`, native
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
-repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.6** and that their full source commit matches
-the exact source SHA listed for the selected verified download and its completed
-workflow qualification. The sound-library revision is separate from
+repository commit and preset library revision. To identify this candidate's
+sounds, both must identify **2026.11.7**. Before treating a package as qualified,
+also match its full source commit to the exact source SHA in the selected verified
+download and its completed workflow qualification. Revision metadata alone does
+not establish that qualification. The sound-library revision is separate from
 the application's version string.
 
 ### Offline inventory verification (Python 3.10+)

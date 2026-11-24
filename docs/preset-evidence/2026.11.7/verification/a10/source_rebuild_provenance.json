@@ -1,0 +1,39 @@
+{
+  "baseline_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "method": "separate source/header snapshots; CMake-equivalent core compilation flags",
+  "files": {
+    "before/src/core/InstrumentBody.h": {
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "bytes": 69309
+    },
+    "before/src/core/Engine.h": {
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920
+    },
+    "before/src/core/Engine.cpp": {
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644
+    },
+    "before/libcs80_core.a": {
+      "sha256": "a7c28f37658381175776526cf78db53c3348230efb87fba7bec2c2d1bbc6b0ea",
+      "bytes": 1735340
+    },
+    "after/src/core/InstrumentBody.h": {
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "bytes": 72714
+    },
+    "after/src/core/Engine.h": {
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920
+    },
+    "after/src/core/Engine.cpp": {
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644
+    },
+    "after/libcs80_core.a": {
+      "sha256": "be32afc16f707a3fdfc96936af798109cec4ef56a06d72cc5b293bef4e0367f2",
+      "bytes": 1736040
+    }
+  }
+}

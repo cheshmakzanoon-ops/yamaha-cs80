@@ -1,0 +1,40 @@
+{
+  "baseline_commit": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "files": {
+    "before/src/core/InstrumentBody.h": {
+      "sha256": "1f51cf329a1255f49bf7dfa0f80b8e0b8f713054044c9e5f71226a6876acc201",
+      "bytes": 69309
+    },
+    "before/src/core/Engine.h": {
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920
+    },
+    "before/src/core/Engine.cpp": {
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644
+    },
+    "before/libcs80_core.a": {
+      "sha256": "b07691dee826d26f71176b5910aac0566dd717f5ff9c71b18af9ba56dcc26583",
+      "bytes": 1735386
+    },
+    "after/src/core/InstrumentBody.h": {
+      "sha256": "d825961c532e7bd5d27d3e19cf3bd2233736fa9c8072822cbb6cb3c0b07d40dc",
+      "bytes": 72714
+    },
+    "after/src/core/Engine.h": {
+      "sha256": "c11d8c03dc63592235de5c4be8e4addaf752fe6428293a331d9e94d7f6e053ad",
+      "bytes": 40920
+    },
+    "after/src/core/Engine.cpp": {
+      "sha256": "32ff29563605f1fde49df1a81604964f940d0aa588355f72314b0f63f5538fd4",
+      "bytes": 168644
+    },
+    "after/libcs80_core.a": {
+      "sha256": "a2954c6ba928b7b3fd51e7d143878fca8da0b0d7bff554d0343262219f175fe1",
+      "bytes": 1736086
+    }
+  },
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "method": "Preserved baseline core and current shared-build core copied into separate directories; probes compiled against separate matching baseline/current header snapshots.",
+  "a02_48000_realtime_byte_identical": true
+}

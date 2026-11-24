@@ -1,9 +1,15 @@
 # Factory preset guide
 
-The **2026.11.6 factory library** contains **523 existing programs**. Its **521
-musical programs** have been reprogrammed since the published 2026.11.4 bank;
+The **2026.11.7 factory library source candidate** contains **523 existing programs**. Its **521
+musical programs** retain the cumulative reprogramming since the published 2026.11.4 bank;
 **Init Patch** and **Init Circuit** remain starting points. All names, categories and program addresses keep their
-existing order. No presets have been added or removed.
+existing order. This increment changes body rendering without changing any
+2026.11.6 preset values or parameter definitions. No presets have been added or removed.
+
+Native builds and delivery qualification for this candidate are pending at this
+source checkpoint. Use the [current download table](../README.md#downloads) to
+identify available, qualified binaries; this guide alone does not establish
+that a 2026.11.7 download has passed those gates.
 
 The same circuit instrument supports optional string, tine, reed, wind and
 bar excitations alongside its circuit voices. Their partials develop through
@@ -13,8 +19,11 @@ resonant size distinguishes related instruments without transposing the note.
 Envelopes, touch, register and effects complete the individual sounds.
 These are authored synthesized interpretations, not samples
 or a demonstrated exact match to an acoustic instrument or physical CS-80.
-The [2026.11.6 revision report](CIRCUIT_LIBRARY_2026_11_6.md) explains the latest
-piano tuning, moving-pitch resonances and nine material profiles. It retains the
+The [2026.11.7 revision report](CIRCUIT_LIBRARY_2026_11_7.md) explains smoother
+upper-piano decay, rate-consistent breath and contact, fixed body resonances
+during standard string bends, and extended low choir harmonics. The retained
+piano tuning, wind/brass resonances and nine material profiles are documented
+in the [2026.11.6 report](CIRCUIT_LIBRARY_2026_11_6.md), following the
 complete bank programming documented in the
 [2026.11.5 report](CIRCUIT_LIBRARY_2026_11_5.md). The
 [2026.11.4 report](CIRCUIT_LIBRARY_2026_11_4.md) records the preceding filtering
@@ -131,6 +140,15 @@ seconds for both brightness crests to emerge. Leave a gap between phrases to
 hear their releases rather than continually covering them with new chords.
 [Pad source](../src/core/curated/Pads.inc)
 
+**Choir Pad / Dark Choir:** compare low held notes around MIDI 36–60, then an
+open chord. Choir Pad uses an ah-like vowel and Dark Choir an oo-like vowel.
+Low notes now use additional harmonics to reach more of their fixed vowel
+resonances; pitch and Resonant size determine how many are needed, up to 48.
+The deepest notes still meet that limit, and the panel filters and rank envelopes
+continue to shape the complete sound. These remain synthesized voiced sources.
+[Choir revision](CIRCUIT_LIBRARY_2026_11_7.md#more-vowel-detail-in-low-choir-notes) ·
+[Pad source](../src/core/curated/Pads.inc)
+
 ### Strikes, plucks and breath
 
 **Electric Piano I / Electric Piano II:** try MIDI 48–84, first softly, then
@@ -143,11 +161,16 @@ partials follow the key; a firm strike brings the upper partial forward.
 Piano** use piano-string excitation with separately softening upper partials;
 **Saw Pulse Piano** retains more of its deliberately synthetic circuit edge.
 All decay while the key is held. Repeated piano strikes now keep the same
-string-course tuning while retaining varied hammer phase and contact. The bodies
+string-course tuning while retaining varied hammer phase and contact. In this
+revision, higher piano partials also receive the prompt damping already applied
+to the lower ones. Try Stage Keys or Soft Keys around MIDI 24–36 and let the
+tail settle: upper ringing should no longer persist because of the former
+sixth-to-seventh-partial damping boundary. This listening expectation follows
+from the rendered spectral checks. The bodies
 have physically motivated features, but they are not samples or complete measured
 acoustic-piano models.
 [Key source](../src/core/curated/Keys.inc) ·
-[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_6.md)
+[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_7.md)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -166,6 +189,13 @@ Nylon Pluck now carries independently fading string modes beneath its soft
 finger attack. **Mandolin** keeps its paired-course decay with gentler amplitude motion;
 try repeated picked notes rather than relying on a deep automatic flutter.
 [Plucked source](../src/core/curated/Plucked.inc)
+
+Standard nylon, steel, bass, clavichord and harpsichord bodies now keep their
+resonances fixed while the string pitch moves. Try a slow ribbon bend and
+return to the starting pitch: harmonics move through the same body response
+without restarting the pluck or its decay. The earlier Banjo, Koto and Harp
+material responses remain in place.
+[String-bend correction](CIRCUIT_LIBRARY_2026_11_7.md#string-bends-through-a-fixed-body)
 
 **Banjo / Koto / Kalimba:** try MIDI 48–72. Banjo has a sharp pluck, a membrane
 and bridge response, and rapid upper losses that clear between picked notes.
@@ -196,6 +226,13 @@ During bends and vibrato, flute, clarinet, oboe, bassoon and brass harmonics now
 move through body resonances that remain fixed in frequency. Returning to the
 starting pitch restores the starting response. Try a slow ribbon bend on a held
 wind or brass note to hear its tone color change with the harmonics.
+
+Breath, bow/contact noise and slow flutter now retain their authored strength
+when internal sample rate changes, using 96 kHz internally as the reference.
+This addresses texture lost in higher-quality or offline rendering; it does
+not make complete waveforms identical across quality modes. Compare a held
+Flute or Solo Violin note when checking an export.
+[Texture correction](CIRCUIT_LIBRARY_2026_11_7.md#consistent-breath-contact-and-flutter-across-rates)
 
 **Marimba / Xylophone / Clock Bells:** try Marimba around MIDI 48–72 and the
 higher registrations around MIDI 48–67. Marimba's rounded body outlasts its
@@ -392,9 +429,10 @@ selector. [Body-filter routing details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path
 
 ## Recalling a revised sound
 
-**2026.11.6 identifies a sound-data revision**, separate from the
+**2026.11.7 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
-identities remain stable while the factory voicings change. A session or user
+identities remain stable. This increment preserves the 2026.11.6 factory
+parameter values and updates the body-rendering mechanisms. A session or user
 preset restores its stored controls, so an older project can show a factory
 name while still using its earlier recipe. Save a user copy to retain edits.
 
@@ -420,19 +458,24 @@ Old saved patches without body fields restore both models and mixes to their
 off defaults. **Reload the factory program to hear the new body and voicing**,
 then save your edited copy. The published 2026.11.4 bank's **200 core IDs and
 306 host automation positions** remain in their original order. The 2026.11.5
-source appended two variants; 2026.11.6 appends two materials, bringing the totals
+source appended two variants; 2026.11.6 appended two materials, bringing the totals
 to **204 core parameters and 310 host positions**. All previous 202 core parameter
 definitions and 308 host positions are preserved. A body-aware patch without
 size fields defaults both sizes to 1; a patch without variants or materials
 defaults each missing selector to Standard. Session, user-preset and A/B recall
 include all fourteen body controls.
 
+Revision 2026.11.7 adds no parameters and changes no parameter ranges, defaults
+or automation positions; the 2026.11.6 totals and material choices remain in place.
+
 Existing body-enabled saved sounds use the revised excitation, tuning and
 articulation code, so retaining their parameter values does not freeze their
-old audio. The new material control defaults preserve the prior Standard paths;
-the separate piano tuning and live wind/brass corrections still apply. Keep the
+old audio. Material still defaults to Standard, but the current piano damping,
+rate compensation, string-bend and low choir changes also apply to existing
+body-enabled patches where relevant. The earlier piano tuning and wind/brass
+corrections are retained. Keep the
 earlier binary and a reference bounce if an existing project's exact rendering
-must be retained. [Compatibility details](CIRCUIT_LIBRARY_2026_11_6.md#saved-sessions-and-automation)
+must be retained. [Compatibility details](CIRCUIT_LIBRARY_2026_11_7.md#saved-sessions-and-factory-recall)
 
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
@@ -487,11 +530,20 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.6 roster
-requests **225 WAVs covering 89 existing programs**, totaling **1,276.2 seconds
-(21 minutes 16.2 seconds)** in 46 folders, with the complete 523-program,
+name `cs80-curated-preset-audition-<source SHA>`. The 2026.11.7 roster
+requests **238 WAVs covering 92 existing programs**, totaling **1,361.2 seconds
+(22 minutes 41.2 seconds)** in 54 folders, with the complete 523-program,
 204-parameter inventory, metrics,
 source commit/tree, executable hash, provenance and checksums:
+
+The first 225 requests from 2026.11.6 remain unchanged. Thirteen added clips
+extend low-piano tails at soft and firm touch and complete all five vocal pads
+at sounding main-rank foundations MIDI 36 and 48. Each piano addition holds
+for five seconds before a one-second release excerpt; each choir addition
+holds for six seconds before a one-second release excerpt. The requests load
+existing programs. They add no presets. [Exact roster](preset-evidence/2026.11.7/reviews/a09.md)
+
+The retained requests include:
 
 - All 24 keyboard programs at firm velocity 0.85, held for four seconds with
   a one-second release excerpt.

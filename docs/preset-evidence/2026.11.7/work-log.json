@@ -1,0 +1,96 @@
+{
+  "revision": "2026.11.7",
+  "baseline_source": "18711f93a39aa49f3d6f9a41784be456224facbe",
+  "requested_assignments": 60,
+  "maximum_parallel_workers": 3,
+  "constraint": "Improve existing 521 musical programs; preserve 523 program identities including two Init entries; no added presets.",
+  "assignments": [
+    {
+      "id": "a01",
+      "role": "Keyboard synthesis defect audit",
+      "status": "completed",
+      "report": "reviews/a01.md"
+    },
+    {
+      "id": "a02",
+      "role": "Whole-engine playability defect audit",
+      "status": "completed",
+      "report": "reviews/a02.md"
+    },
+    {
+      "id": "a03",
+      "role": "Native build and delivery audit",
+      "status": "completed",
+      "report": "reviews/a03.md"
+    },
+    {
+      "id": "a04",
+      "role": "Piano tail-spectrum correction and PCM regression",
+      "status": "completed",
+      "report": "reviews/a04.md"
+    },
+    {
+      "id": "a05",
+      "role": "Internal-rate invariant breath/contact excitation",
+      "status": "completed",
+      "report": "reviews/a05.md"
+    },
+    {
+      "id": "a06",
+      "role": "Fixed body resonances for string bends",
+      "status": "completed",
+      "report": "reviews/a06.md"
+    },
+    {
+      "id": "a07",
+      "role": "Restore low choir upper formant coverage",
+      "status": "completed",
+      "report": "reviews/a07.md"
+    },
+    {
+      "id": "a08",
+      "role": "Source-time revision, preset and installation guides",
+      "status": "completed",
+      "report": "reviews/a08.md"
+    },
+    {
+      "id": "a09",
+      "role": "Audition archive register and tail coverage",
+      "status": "completed",
+      "report": "reviews/a09.md"
+    },
+    {
+      "id": "a10",
+      "role": "Full Engine realtime/offline texture verification",
+      "status": "completed",
+      "report": "verification/a10/reporta10.md"
+    },
+    {
+      "id": "a11",
+      "role": "Independent paired combined CPU review",
+      "status": "completed",
+      "report": "reviews/a11.md"
+    },
+    {
+      "id": "a12",
+      "role": "Authenticated whole-bank identity and cumulative coverage",
+      "status": "completed",
+      "report": "reviews/a12.md"
+    },
+    {
+      "id": "a13",
+      "role": "Complete Keys family and piano integration review",
+      "status": "in_progress"
+    },
+    {
+      "id": "a14",
+      "role": "Complete Bass family and live gesture review",
+      "status": "in_progress"
+    },
+    {
+      "id": "a15",
+      "role": "Complete Plucked family and material gesture review",
+      "status": "in_progress"
+    }
+  ]
+}

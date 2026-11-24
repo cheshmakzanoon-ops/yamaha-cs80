@@ -107,6 +107,24 @@ def selections():
             groups.append(dict(folder=f'material-profile-{note}-{label}',
                                names=list(MATERIAL_PROFILES), velocity=velocity,
                                pressure=0, hold=3.5, tail=1, note=note))
+    # Keep all 225 earlier requests intact. Stage Keys already has five-second
+    # soft/firm holds at MIDI 36; append its missing 48s and Soft Keys at both.
+    for note in (36, 48):
+        for label, velocity in (('soft', .3), ('firm', .85)):
+            groups.append(dict(folder=f'low-piano-tail-{note}-{label}',
+                               names=['Soft Keys'] if note == 36 else ['Stage Keys', 'Soft Keys'],
+                               velocity=velocity, pressure=0, hold=5, tail=1, note=note))
+    # Complete the five existing vocal pads at main-body MIDI 36 and 48.
+    # Choir Pad at 48 and Dark Choir at played 48/60 are already captured above.
+    # The latter and its two original-address derivatives have 16-foot rank I;
+    # played keys 48/60 put that foundation at sounding MIDI 36/48.
+    for foundation in (36, 48):
+        groups.append(dict(folder=f'low-choir-ah-foundation-{foundation}',
+                           names=['Choir Pad', 'Golden Pads 52'] if foundation == 36 else ['Golden Pads 52'],
+                           velocity=.85, pressure=0, hold=6, tail=1, note=foundation))
+        groups.append(dict(folder=f'low-choir-oo-foundation-{foundation}',
+                           names=['Blade Choir', 'Midnight Pads 55'],
+                           velocity=.85, pressure=0, hold=6, tail=1, note=foundation + 12))
     return groups
 
 
@@ -214,6 +232,13 @@ def audition_readme(groups, summary, source, revision):
         'Clarinet-register folders compare played MIDI keys 60, 64, 68 and 72 at both velocities; Bass Clarinet sounds one octave below Clarinet at those equal keys.',
         'Material-profile folders compare Tubular Bells, Gong, Temple Bell, Agogo, Music Box, Banjo, Koto, Harp and Kalimba at MIDI 48, 60 and 72, each at velocities 0.25 and 0.85 with pressure zero.',
         'Their matched 3.5-second holds and one-second key-release excerpts expose each existing voice\'s strike, material spectrum and decay without normalization.',
+        'Low-piano-tail folders extend the five-second held-tail comparisons to Soft Keys at MIDI 36 and 48 and Stage Keys at MIDI 48, each at velocities 0.3 and 0.85; the existing piano-register-36 folders supply the matched Stage Keys examples.',
+        'These low notes expose the evolving upper-partial decay above the longer-lived piano foundation before the one-second key-release excerpt.',
+        'Low-choir folders complete five existing vocal pads at main-body sounding MIDI 36 and 48: Choir Pad and Golden Pads 52 use 8-foot Ah bodies; Dark Choir, Blade Choir and Midnight Pads 55 use 16-foot Oo foundations with lighter 8-foot upper ranks.',
+        'The Ah requests play MIDI 36/48 and the Oo requests play MIDI 48/60, all at velocity 0.85, pressure zero, six-second holds and one-second release excerpts. Choir Pad at played 48 and Dark Choir at played 48/60 remain in the existing choir-vowels folders and are not duplicated.',
+        'These low-foundation examples expose the upper vocal bands at low pitch while retaining each complete preset\'s filters, upper layers and effects; they do not isolate vowels or establish acoustic similarity.',
+        'The original 225 requests are unchanged; 13 low-register captures are appended. Existing sustained-effort folders already provide soft/firm wind comparisons.',
+        'The capture CLI does not schedule pitch bends or select render quality. These fixed-note, 48 kHz clips do not verify bend behavior or noise consistency across quality modes; those require the dedicated DSP tests.',
         '',
         'Tracked sources are checked against the recorded commit before and after capture; the executable hash must also stay unchanged.',
         'Provenance records the executable SHA256, source tree, exact commands and CI run identity when available.',

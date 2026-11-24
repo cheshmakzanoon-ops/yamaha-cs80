@@ -1,0 +1,53 @@
+--- a/core/InstrumentBody.h
++++ b/core/InstrumentBody.h
+@@ -314,9 +314,9 @@
+     };
+ 
+     std::array<Mode, maximumModes> modes {};
+-    // Fixed-formant history covers the full bank: low choir notes can use
+-    // 48 modes. Keep it outside Mode rather than enlarging every oscillator.
+-    std::array<double, maximumModes> bowedResponseInverse {}, bowedResponseGain {};
++    // Bowed and vocal excitation have 24 harmonic modes. Keep their shared
++    // response history outside Mode so struck models need no extra storage.
++    std::array<double, harmonicModeCount> bowedResponseInverse {}, bowedResponseGain {};
+     double bowedResponseBound = 0.0, bowedBoundGain = 1.0;
+     double sampleRate = 96000.0, outputRate = 48000.0;
+     double keyHz = 261.625565, strike = 0.7, initialColour = 0.5, decayScale = 1.0;
+@@ -816,20 +816,14 @@
+         const double stiffness = model == piano ? 0.000045 + 0.00020 * treble * treble
+                                : model == steel ? 0.000012
+                                : model == harpsichord ? 0.000025 : 0.0;
+-        // Bass piano attacks reserve six slots for the slower second course.
+-        // Choir needs more harmonics at low pitch to reach its fixed-Hz upper
+-        // vowel regions. Size scales that coverage with the authored tract;
+-        // the existing 48-mode ceiling still limits the deepest registers.
++        // Spend additional modes only on bass piano attacks. Six slots are
++        // always reserved for the slower second polarization/string course.
+         // No modes are permanently culled by onset pitch: a subsequent large
+         // downward ribbon bend can bring a formerly ultrasonic mode back.
+         const double harmonicBudget = model == piano
+-            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0)
+-            : vocal() ? std::clamp(4400.0 / (bodySize * keyHz),
+-                                   static_cast<double>(harmonicModeCount), static_cast<double>(maximumModes))
+-                      : harmonicModeCount;
++            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : harmonicModeCount;
+         const int harmonics = static_cast<int>(std::ceil(harmonicBudget));
+         const std::uint32_t principalPhaseSeed = state;
+-        std::uint32_t choirAirSeed = state;
+         double maximumSum = 0.0;
+         const bool referenceStrike = !sustained && model != harpsichord && strike != 1.0;
+         const auto includeBound = [&](int harmonic, double coverage, double dark, double bright)
+@@ -889,12 +883,7 @@
+                 ? static_cast<unsigned int>(std::min(harmonic - 1, 4)) : 0u;
+             addMode(ratio, dark, bright, loss, phase, partialAttack, pickup);
+             includeBound(harmonic, coverage, dark, bright);
+-            if (vocal() && harmonic == harmonicModeCount) choirAirSeed = state;
+-        }
+-        // Additional choir phases extend the original sequence, then the air
+-        // stream resumes at its original 24-mode position. Fractional budget
+-        // crossings cannot reseed breath; 24-mode notes retain their samples.
+-        if (vocal()) state = choirAirSeed;
++        }
+         if (model == piano)
+         {
+             // Reserve the complete principal-mode random sequence even when
