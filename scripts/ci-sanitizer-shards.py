@@ -174,8 +174,23 @@ def check_results(output):
             "Incomplete LastTest.log")
     require(re.fullmatch(r"Start testing: [^\n]+\n-+\n", log[:headers[0].start()]),
             "Malformed LastTest.log session start")
-    footer = re.search(r"^End testing: [^\n]+\n\s*\Z", log, re.M)
-    require(footer is not None, "LastTest.log did not finish normally")
+    footers = list(re.finditer(r"^End testing: [^\n]+\n", log, re.M))
+    require(len(footers) == 1, "LastTest.log did not finish normally")
+    footer = footers[0]
+    # CTest writes label timing totals after the session footer. Only accept
+    # that documented structure, with exactly the labels of the selected tests;
+    # arbitrary trailing output or another session must still fail closed.
+    expected_labels = sorted({label for test in plan["contract"]
+                              if test["name"] in selected
+                              for label in test["properties"].get("LABELS", [])})
+    reported_labels = []
+    for line in log[footer.end():].splitlines():
+        if not line.strip():
+            continue
+        summary = re.fullmatch(r"(.+?)\s+=[ \t]+[0-9]+(?:\.[0-9]+)? sec\*proc", line)
+        require(summary is not None, "Malformed LastTest.log label summary")
+        reported_labels.append(summary[1])
+    require(reported_labels == expected_labels, "LastTest.log labels differ from selected roster")
     full_names = [test["name"] for test in plan["contract"]]
     for index, header in enumerate(headers):
         name = header[3]

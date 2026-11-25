@@ -44,6 +44,12 @@ class ShardTests(unittest.TestCase):
             lines += [f'add_test(NAME {name} COMMAND {command})',
                       f'set_tests_properties({name} PROPERTIES RUN_SERIAL TRUE TIMEOUT 10)']
         lines.append('set_tests_properties(fixture_080 PROPERTIES SKIP_RETURN_CODE 77)')
+        # Exercise the real CTest label footer in every shard. The earlier
+        # unlabeled fixture missed the packaging totals emitted in native CI.
+        lines.append('set_tests_properties(fixture_001 fixture_002 fixture_003 '
+                     'PROPERTIES LABELS "packaging")')
+        lines.append('set_tests_properties(fixture_004 fixture_005 fixture_006 '
+                     'PROPERTIES LABELS "artifact checks;packaging")')
         (source / "CMakeLists.txt").write_text("\n".join(lines) + "\n")
         cls.build = cls.root / "build"
         flags = [f"-D{key}={value}" for key, value in shards.BUILD_FLAGS.items()]
@@ -87,6 +93,36 @@ class ShardTests(unittest.TestCase):
     def test_missing_shard_fails(self):
         shutil.rmtree(self.case / "shard-2")
         self.verify(False)
+
+    def test_actual_ctest_label_footers_are_retained(self):
+        self.verify()
+        for index in (1, 2, 3):
+            log = (self.case / f"shard-{index}/LastTest.log").read_text()
+            tail = log.split("End testing:", 1)[1]
+            self.assertIn("artifact checks", tail)
+            self.assertIn("packaging", tail)
+            self.assertEqual(tail.count("sec*proc"), 2)
+
+    def test_malformed_or_foreign_footer_fails_even_with_rehashed_receipt(self):
+        path = self.case / "shard-1/LastTest.log"
+        original = path.read_text()
+        label_line = next(line for line in original.splitlines() if line.startswith("packaging"))
+        for replacement in ("unregistered =   0.01 sec*proc", "packaging = nan sec*proc",
+                            "packaging = -1.00 sec*proc", "packaging = 1 sec", ""):
+            with self.subTest(replacement=replacement):
+                path.write_text(original.replace(label_line, replacement))
+                self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
+                self.verify(False)
+
+    def test_appended_output_or_duplicate_footer_fails_even_with_rehashed_receipt(self):
+        path = self.case / "shard-1/LastTest.log"
+        original = path.read_text()
+        label_line = next(line for line in original.splitlines() if line.startswith("packaging"))
+        for extra in ("unexpected trailing output\n", "End testing: duplicate\n", label_line + "\n"):
+            with self.subTest(extra=extra):
+                path.write_text(original + extra)
+                self.change("shard-1/result.json", lambda r: r["sha256"].update({path.name: shards.digest(path)}))
+                self.verify(False)
 
     def test_duplicate_shard_fails(self):
         shutil.rmtree(self.case / "shard-2")
