@@ -221,6 +221,7 @@ void applyHardwareTone(ParamValues& values, int channel, int toneIndex)
     hardwareTonePatch(values, channel, std::clamp(toneIndex, 0, 10));
 }
 
+#include "PresetRealismEnhancer.inc"
 #include "OriginalCircuitLibrary.inc"
 
 const std::vector<FactoryPreset>& factoryPresets()
@@ -233,9 +234,12 @@ const std::vector<FactoryPreset>& factoryPresets()
             { nullptr, 0.0f }
         };
         for (auto& program : programs)
+        {
             for (const auto& level : levels)
                 if (level.name != nullptr && program.name == level.name)
                     program.values[P_volume] = level.volume;
+            realism_enhancer::enhanceMusicalPreset(program);
+        }
         return programs;
     }();
     return bank;
@@ -244,7 +248,6 @@ const std::vector<FactoryPreset>& factoryPresets()
 // ---------------------------------------------------------------------------
 // Curated circuit-engine library, realism enhancer & 500-preset Film Scoring
 // ---------------------------------------------------------------------------
-#include "PresetRealismEnhancer.inc"
 #include "CuratedLibrary.inc"
 #include "FilmScoringLibrary.inc"
 

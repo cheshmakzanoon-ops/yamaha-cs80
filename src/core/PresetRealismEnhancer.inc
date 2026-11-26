@@ -112,10 +112,53 @@ inline void enhanceMusicalPreset(FactoryPreset& preset)
                      || containsCI(name, "distant") || containsCI(name, "cosmic") || containsCI(name, "space")
                      || containsCI(name, "dream") || containsCI(name, "ocean") || containsCI(name, "horizon");
 
+    auto applyQuietGlue = [&]() {
+        static const char* const kQuietGlueNames[] = {
+            "Tone II: String 2", "Dry Ensemble", "Hollow Brass 5", "Amber Strings 23",
+            "Neon Strings 40", "Amber Leads 129", "Hollow FX 141", "Bright FX 147",
+            "Chamber Strings", "Spiccato Strings", "Recorder", "Ring Bell I",
+            "Ring Bell II", "Gong", "Robot Voice", "Metal Scrape"
+        };
+        bool needsGlue = false;
+        for (const char* qn : kQuietGlueNames)
+            if (name == qn) { needsGlue = true; break; }
+        if (!needsGlue)
+            return;
+        static constexpr int kExtP[4] = { P_fx1ExtModel, P_fx2ExtModel, P_fx3ExtModel, P_fx4ExtModel };
+        static constexpr int kMixP[4] = { P_fx1Mix, P_fx2Mix, P_fx3Mix, P_fx4Mix };
+        static constexpr int kAP[4] = { P_fx1ParamA, P_fx2ParamA, P_fx3ParamA, P_fx4ParamA };
+        static constexpr int kBP[4] = { P_fx1ParamB, P_fx2ParamB, P_fx3ParamB, P_fx4ParamB };
+        static constexpr int kCP[4] = { P_fx1ParamC, P_fx2ParamC, P_fx3ParamC, P_fx4ParamC };
+        static constexpr int kDP[4] = { P_fx1ParamD, P_fx2ParamD, P_fx3ParamD, P_fx4ParamD };
+        static constexpr int kTypeP[4] = { P_fx1Type, P_fx2Type, P_fx3Type, P_fx4Type };
+        static constexpr int kModP[4] = { P_fx1Model, P_fx2Model, P_fx3Model, P_fx4Model };
+        int compSlot = -1;
+        int freeSlot = -1;
+        for (int s = 0; s < 4; ++s)
+        {
+            if ((int) p[kExtP[s]] == (int) fx::ExtModel::busComp) { compSlot = s; break; }
+            if (freeSlot < 0 && p[kExtP[s]] < 0.5f && p[kTypeP[s]] < 0.5f && p[kModP[s]] < 0.5f)
+                freeSlot = s;
+        }
+        if (compSlot < 0)
+            compSlot = freeSlot >= 0 ? freeSlot : 3;
+        p[kTypeP[compSlot]] = 0.0f;
+        p[kModP[compSlot]] = 0.0f;
+        p[kExtP[compSlot]] = (float) (int) fx::ExtModel::busComp;
+        p[kMixP[compSlot]] = 0.85f;
+        p[kAP[compSlot]] = 0.66f;
+        p[kBP[compSlot]] = 0.46f;
+        p[kCP[compSlot]] = 0.60f;
+        p[kDP[compSlot]] = 0.24f;
+    };
+
     // Skip presets that already have hand-crafted modern FX/LFOs or percussive clockwork SFX.
     const bool isModern = std::find(preset.tags.begin(), preset.tags.end(), "modern") != preset.tags.end();
     if (slotIsUsed(p, 0) || isModern || name == "Clockwork")
+    {
+        applyQuietGlue();
         return;
+    }
 
     // 1. Organic analog life: remove static/robotic uniformity across voice cards.
     if (cat != "Organ")
@@ -285,6 +328,8 @@ inline void enhanceMusicalPreset(FactoryPreset& preset)
                      0.50f + 0.14f * v2 + sizeBias, 0.62f + sizeBias, 0.58f + dampBias, 0.24f);
         addExtIfFree(p, fx::ExtModel::studioEq, 0.55f, 0.54f, 0.52f, 0.58f, 0.54f);
     }
+
+    applyQuietGlue();
 }
 
 } // namespace realism_enhancer
