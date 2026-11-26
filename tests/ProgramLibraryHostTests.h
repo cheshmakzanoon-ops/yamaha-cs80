@@ -400,14 +400,14 @@ void testProgramLibraryHost(Check&& check)
             check(host.getCurrentProgram() == 1, "NEXT steps through the unified factory library");
             browser.loadAdjacent(-1);
             browser.loadAdjacent(-1);
-            check(host.getCurrentProgram() == L + C - 1, "PREV wraps from the first original address to the final curated factory sound");
+            check(host.getCurrentProgram() == host.getNumPrograms() - 1, "PREV wraps from the first original address to the final factory sound");
             check(! browser.isAuditioning(), "audition starts off by default");
         }
         const auto saved = host.saveUserPreset("Browser Step");
         check(saved.wasSaved(), "user patch saved into the isolated folder");
         {
             cs80::ui::PresetBrowser browser(host);
-            host.setCurrentProgram(L + C - 1);
+            host.setCurrentProgram(host.getNumPrograms() - 1);
             browser.loadAdjacent(1);
             check(host.getPresetName() == "Browser Step", "NEXT reaches user patches in the same filter");
             browser.loadAdjacent(1);

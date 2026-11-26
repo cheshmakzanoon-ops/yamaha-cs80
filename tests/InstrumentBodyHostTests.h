@@ -92,13 +92,13 @@ void testInstrumentBodyHost(Check&& check)
 {
     using namespace instrument_body_host_detail;
     static_assert(P_body1Model == 190 && P_body1Size == 198
-                      && P_body1Variant == 200 && P_body1Material == 202 && P_numParams == 204,
-                  "materials append after every preceding core control");
+                      && P_body1Variant == 200 && P_body1Material == 202 && P_numParams == 228,
+                  "cinematic FX appends after all 204 preceding core controls");
     {
         auto host = std::make_unique<Cs80AudioProcessor>();
         const auto& parameters = host->getParameters();
-        check(parameters.size() == 310 && Cs80AudioProcessor::hostParameterCount == 310,
-              "materials append after all 308 preceding host slots");
+        check(parameters.size() == 334 && Cs80AudioProcessor::hostParameterCount == 334,
+              "cinematic FX appends 24 controls after all 310 preceding host slots");
         std::uint64_t coreHash = UINT64_C(14695981039346656037);
         for (int index = 0; index < 190; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
         check(coreHash == UINT64_C(0x3a8332a1fb546bd8),
@@ -523,9 +523,13 @@ void testInstrumentBodyHost(Check&& check)
             check(matches(*host, expected), factoryLabel.toRawUTF8());
             set(*host, a);
             const bool original = index < legacyProgramCount;
-            const int inBank = original ? index : index - legacyProgramCount;
+            const bool filmScoring = index >= legacyProgramCount + curatedProgramCount();
+            const int bankMsb = original ? 1 : (filmScoring ? 2 : 0);
+            const int inBank = original ? index
+                             : (filmScoring ? index - legacyProgramCount - curatedProgramCount()
+                                            : index - legacyProgramCount);
             juce::MidiBuffer midi;
-            midi.addEvent(juce::MidiMessage::controllerEvent(1, 0, original ? 1 : 0), 0);
+            midi.addEvent(juce::MidiMessage::controllerEvent(1, 0, bankMsb), 0);
             midi.addEvent(juce::MidiMessage::controllerEvent(1, 32, inBank / 128), 1);
             midi.addEvent(juce::MidiMessage::programChange(1, inBank % 128), 2);
             process(*host, midi);

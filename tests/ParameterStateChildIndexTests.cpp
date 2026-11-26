@@ -270,7 +270,7 @@ int main()
 {
     const auto restores = restoreParameters();
     const auto saves = saveParameters(restores);
-    require(restores.size() == 310 && saves.size() == 310, "complete real host ID set");
+    require(restores.size() == 334 && saves.size() == 334, "complete real host ID set");
     require(saves[cs80::P_legacyNumParams].id == "hardware_source_1", "save host order");
     require(restores[cs80::P_numParams].id == "hardware_source_1", "restore ensure order");
     // Frozen from published commit 73dc17b8: detect an accidental rename or
