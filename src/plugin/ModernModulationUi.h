@@ -214,8 +214,8 @@ private:
     juce::Label note;
 };
 
-// Modern FX page: three serial slots (model, classic type, mix, two controls, drive
-// oversampling) and the loudness-match switch.
+// Modern & Cinematic FX page: four serial slots (standard/cinematic model, classic type,
+// mix, four controls, tempo sync, drive oversampling) plus global wet/bypass/loudness match.
 class ModernFxPage final : public juce::Component, private juce::Timer
 {
 public:
@@ -223,6 +223,7 @@ public:
     void paint(juce::Graphics&) override;
     void resized() override;
     juce::ComboBox& modelBox(int slot) { return slots[(size_t) slot].model; }
+    juce::ComboBox& extModelBox(int slot) { return slots[(size_t) slot].extModel; }
     juce::ToggleButton& loudnessMatchButton() { return gainComp; }
 
 private:
@@ -230,19 +231,28 @@ private:
     void refreshLabels();
     struct Slot
     {
-        juce::Label title, mixLabel, aLabel, bLabel;
-        juce::ComboBox model, type, oversampling;
+        juce::Label title, mixLabel, aLabel, bLabel, cLabel, dLabel;
+        juce::ComboBox extModel, model, type, oversampling;
         ParameterSlider mix { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         ParameterSlider a { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         ParameterSlider b { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
-        std::unique_ptr<juce::ComboBoxParameterAttachment> modelAttachment, typeAttachment, oversamplingAttachment;
-        std::unique_ptr<juce::SliderParameterAttachment> mixAttachment, aAttachment, bAttachment;
+        ParameterSlider c { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider d { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        juce::ToggleButton sync { "Tempo sync" };
+        std::unique_ptr<juce::ComboBoxParameterAttachment> extModelAttachment, modelAttachment, typeAttachment, oversamplingAttachment;
+        std::unique_ptr<juce::SliderParameterAttachment> mixAttachment, aAttachment, bAttachment, cAttachment, dAttachment;
+        std::unique_ptr<juce::ButtonParameterAttachment> syncAttachment;
         int shownModel = -1;
+        int shownExtModel = -1;
     };
     Cs80AudioProcessor& processor;
-    std::array<Slot, 3> slots;
-    juce::ToggleButton gainComp { "Loudness match (all slots)" };
-    std::unique_ptr<juce::ButtonParameterAttachment> gainCompAttachment;
+    std::array<Slot, 4> slots;
+    juce::ToggleButton gainComp { "Loudness match" };
+    juce::ToggleButton masterBypass { "FX Bypass" };
+    juce::Label masterWetLabel;
+    ParameterSlider masterWet { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+    std::unique_ptr<juce::ButtonParameterAttachment> gainCompAttachment, masterBypassAttachment;
+    std::unique_ptr<juce::SliderParameterAttachment> masterWetAttachment;
 };
 
 // Studio "Modulation" tab content: MSEG page above, LFOs and the matrix below.

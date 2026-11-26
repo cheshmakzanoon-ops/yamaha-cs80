@@ -11,7 +11,7 @@ namespace cs80
 // Address provenance only: both collections use the same circuit instrument.
 // The historical enum spelling is retained for source compatibility; it does
 // not select an engine or a separate user-visible library.
-enum class ProgramLibrary { legacy, curated };
+enum class ProgramLibrary { legacy, curated, filmScoring };
 
 struct FactoryPreset
 {
@@ -35,21 +35,25 @@ inline constexpr int legacyProgramCount = 222;
 // The curated circuit-engine library (docs/workstreams/ws6-library.md). Every
 // program sets SOURCE PERFORMANCE on, so recalling it selects the circuit engine.
 // A sound-data revision, independent of host program numbers or session schema.
-inline constexpr const char* curatedLibraryRevision = "2026.11.8";
+inline constexpr const char* curatedLibraryRevision = "2026.11.9";
 const std::vector<FactoryPreset>& curatedLibrary();
 
+// The 500-program Film Scoring library, appended after the curated library.
+const std::vector<FactoryPreset>& filmScoringLibrary();
+int filmScoringProgramCount();
+
 // The host-facing program list. Host program numbers 0..221 keep their shipped
-// names and categories, now using revised circuit voicings. The curated library
-// follows from 222. No program addresses are added or removed by this revision.
+// names and categories; 222..522 are the curated library; 523..1022 are the
+// 500-preset Film Scoring library.
 const std::vector<FactoryPreset>& programLibrary();
 int curatedProgramCount();
 // Host program index of curated program `curatedIndex`, or -1.
 int programIndexForCurated(int curatedIndex);
-// Curated index of a host program index, or -1 for an original-bank program.
+// Curated index of a host program index, or -1 for a non-curated program.
 int curatedIndexForProgram(int programIndex);
-// MIDI addressing: bank MSB 0 = curated addresses, MSB 1 = original addresses; bank
-// LSB selects a page of 128 programs inside that library; Program Change picks
-// the program on the page. Returns the host program index, or -1 if unassigned.
+// MIDI addressing: bank MSB 0 = curated addresses, MSB 1 = original addresses,
+// MSB 2 = Film Scoring addresses; bank LSB selects a page of 128 programs inside
+// that library; Program Change picks the program on the page.
 int programIndexForMidi(int bankMsb, int bankLsb, int program);
 
 // Original names/order of the 11 tone-selector positions on each hardware row.

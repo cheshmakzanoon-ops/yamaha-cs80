@@ -1,12 +1,13 @@
 #pragma once
 
+#include "CinematicFxModels.h"
 #include "Dsp.h"
 #include "FxLoudness.h"
 #include "FxModels.h"
 
 #include <cmath>
 
-// One of the engine's three serial FX slots (modern layer; PURE CS-80 empties them).
+// One of the engine's four serial FX slots (modern layer; PURE CS-80 empties them).
 // Moved out of Engine.h unchanged in behaviour so the slot can be tested on its own; the
 // classic effects below keep their exact historical arithmetic (pinned by
 // tests/ModernFxTests.cpp against a frozen copy of the original Engine.cpp code).
@@ -17,10 +18,14 @@ struct SlotControls
 {
     int type = 0;      // classic: 0 off, 1 chorus, 2 phaser, 3 tape delay, 4 plate reverb, 5 drive
     int model = 0;     // modern model (Model); 0 keeps the classic type
+    int extModel = 0;  // cinematic extended model (ExtModel); >0 overrides classic/modern
     float mix = 0.0f;  // effective mix, 0..1
     float a = 0.5f, b = 0.5f;
+    float c = 0.5f, d = 0.5f;
     int oversampling = 2; // drive: 2^n of the internal rate
     bool gainComp = false; // FX LOUDNESS MATCH
+    bool sync = false;     // tempo sync for time/rate-based cinematic FX
+    float bpm = 120.0f;    // host tempo in BPM
 };
 
 // Each slot owns one instance of every effect, so two slots set to the same type run two
@@ -34,9 +39,10 @@ struct FxSlot
     Reverb reverb;
     DelayLine delayL, delayR;
     OnePole dampL, dampR;
-    ModernFxSlot modern;   // modern models (liveType kModernTypeBase + model)
-    LoudnessMatcher match; // FX LOUDNESS MATCH: slot in/out loudness
-    int liveType = 0;      // effect whose state may hold audio; 0 = none
+    ModernFxSlot modern;       // modern models (liveType kModernTypeBase + model)
+    CinematicFxSlot cinematic; // extended cinematic models (liveType kExtTypeBase + extModel)
+    LoudnessMatcher match;     // FX LOUDNESS MATCH: slot in/out loudness
+    int liveType = 0;          // effect whose state may hold audio; 0 = none
     bool gainCompActive = false; // last observed FX LOUDNESS MATCH switch state
 
     void prepare(float rate)
@@ -51,6 +57,7 @@ struct FxSlot
         dampL.reset();
         dampR.reset();
         modern.prepare(rate);
+        cinematic.prepare(rate);
         match.prepare(rate);
         liveType = 0;
         gainCompActive = false;
@@ -65,17 +72,20 @@ struct FxSlot
         delayL.reset();
         delayR.reset();
         modern.reset();
+        cinematic.reset();
         match.reset();
         liveType = 0;
         gainCompActive = false;
     }
     void resetDamping() noexcept { dampL.reset(); dampR.reset(); }
-    // Drop the audio held by one effect type (1 chorus, 2 phaser, 3 tape, 4 plate, 5 drive,
-    // or a modern model) and the loudness matcher's history.
+    // Drop the audio held by one effect type (1..5 classic, >100 modern, >200 cinematic)
+    // and the loudness matcher's history.
     void clear(int type) noexcept
     {
         match.reset();
-        if (type > kModernTypeBase)
+        if (type > kExtTypeBase)
+            cinematic.clear(type - kExtTypeBase);
+        else if (type > kModernTypeBase)
             modern.clear(type - kModernTypeBase);
         switch (type)
         {
@@ -89,8 +99,11 @@ struct FxSlot
 
     static int liveTypeFor(const SlotControls& c) noexcept
     {
-        return (c.mix <= 0.001f || (c.type <= 0 && c.model <= 0)) ? 0
-               : c.model > 0 ? kModernTypeBase + c.model : c.type;
+        if (c.mix <= 0.001f || (c.type <= 0 && c.model <= 0 && c.extModel <= 0))
+            return 0;
+        if (c.extModel > 0)
+            return kExtTypeBase + c.extModel;
+        return c.model > 0 ? kModernTypeBase + c.model : c.type;
     }
 
     // One sample through the slot. wowPhase is the engine's slow drift phase (classic tape
@@ -115,7 +128,9 @@ struct FxSlot
         }
         if (live == 0)
             return { l, r };
-        StereoSample out = live > kModernTypeBase
+        StereoSample out = live > kExtTypeBase
+            ? cinematic.process(c.extModel, l, r, c.mix, c.a, c.b, c.c, c.d, c.sync, c.bpm)
+            : live > kModernTypeBase
             ? modern.process(c.model, l, r, c.mix, c.a, c.b, c.oversampling)
             : processClassic(live, l, r, c.mix, wowPhase, sr);
         if (c.gainComp)

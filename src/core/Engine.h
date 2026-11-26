@@ -175,14 +175,21 @@ struct GlobalSettings
     float lfoDepth[3] { 0.0f, 0.0f, 0.0f };
     int lfoDest[3] { 0, 0, 0 };
     int lfoWave[3] { 0, 0, 0 }; // modern layer; 0 = historical sine
-    int fxType[3] { 0, 0, 0 };
-    float fxMix[3] { 0.0f, 0.0f, 0.0f };
-    // Modern FX (ws5): model 0 keeps the classic type above.
-    int fxModel[3] { 0, 0, 0 };
-    float fxParamA[3] { 0.5f, 0.5f, 0.5f };
-    float fxParamB[3] { 0.5f, 0.5f, 0.5f };
-    int fxOversampling[3] { 2, 2, 2 };
+    int fxType[4] { 0, 0, 0, 0 };
+    float fxMix[4] { 0.0f, 0.0f, 0.0f, 0.0f };
+    // Modern FX (ws5) + Cinematic FX extensions: extModel > 0 overrides model/type;
+    // model > 0 overrides classic type.
+    int fxModel[4] { 0, 0, 0, 0 };
+    int fxExtModel[4] { 0, 0, 0, 0 };
+    float fxParamA[4] { 0.5f, 0.5f, 0.5f, 0.5f };
+    float fxParamB[4] { 0.5f, 0.5f, 0.5f, 0.5f };
+    float fxParamC[4] { 0.5f, 0.5f, 0.5f, 0.5f };
+    float fxParamD[4] { 0.5f, 0.5f, 0.5f, 0.5f };
+    int fxOversampling[4] { 2, 2, 2, 2 };
+    bool fxSync[4] { false, false, false, false };
     bool fxGainComp = false;
+    float fxMasterWet = 1.0f;
+    bool fxMasterBypass = false;
 
     // Performance macros are neutral at 0.5. They are applied after the panel
     // values so a macro never overwrites what the player sees on the panel.
@@ -814,7 +821,7 @@ private:
     std::array<bool, 17> sustainPedals {}; // MIDI channels1..16; index0 unused
 
     // Three serial modern FX slots (src/core/FxSlot.h).
-    std::array<fx::FxSlot, 3> fxSlots;
+    std::array<fx::FxSlot, 4> fxSlots;
     float driftPhase = 0.0f;
     float voiceDrift[kNumVoices] {};
 

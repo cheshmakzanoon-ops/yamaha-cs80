@@ -260,6 +260,33 @@ enum : int
     // 20-model and five-variant normalized host ranges exactly unchanged.
     P_body1Material,
     P_body2Material,
+    // Cinematic FX suite extensions (4-slot serial rack, Param C/D, tempo sync,
+    // and global FX wet/bypass). Appended after all 204 shipped core parameters
+    // so every existing index and normalized host range stays untouched.
+    P_fx1ExtModel,
+    P_fx1ParamC,
+    P_fx1ParamD,
+    P_fx1Sync,
+    P_fx2ExtModel,
+    P_fx2ParamC,
+    P_fx2ParamD,
+    P_fx2Sync,
+    P_fx3ExtModel,
+    P_fx3ParamC,
+    P_fx3ParamD,
+    P_fx3Sync,
+    P_fx4Type,
+    P_fx4Mix,
+    P_fx4Model,
+    P_fx4ExtModel,
+    P_fx4ParamA,
+    P_fx4ParamB,
+    P_fx4ParamC,
+    P_fx4ParamD,
+    P_fx4Oversampling,
+    P_fx4Sync,
+    P_fxMasterWet,
+    P_fxMasterBypass,
     P_numParams
 };
 
@@ -518,11 +545,36 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "body2_variant", "BODY II RESONATOR VARIANT (NEXT NOTE)", 0.0f, 4.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
     { "body1_material", "BODY I MATERIAL (NEXT NOTE)", 0.0f, 9.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
     { "body2_material", "BODY II MATERIAL (NEXT NOTE)", 0.0f, 9.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "fx1_ext_model", "FX 1 CINEMATIC MODEL", 0.0f, 7.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx1_param_c", "FX 1 PARAM C", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_param_d", "FX 1 PARAM D", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_sync", "FX 1 TEMPO SYNC", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx2_ext_model", "FX 2 CINEMATIC MODEL", 0.0f, 7.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx2_param_c", "FX 2 PARAM C", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_param_d", "FX 2 PARAM D", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_sync", "FX 2 TEMPO SYNC", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx3_ext_model", "FX 3 CINEMATIC MODEL", 0.0f, 7.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx3_param_c", "FX 3 PARAM C", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_param_d", "FX 3 PARAM D", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_sync", "FX 3 TEMPO SYNC", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx4_type", "FX 4", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx4_mix", "FX 4 MIX", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx4_model", "FX 4 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx4_ext_model", "FX 4 CINEMATIC MODEL", 0.0f, 7.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx4_param_a", "FX 4 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx4_param_b", "FX 4 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx4_param_c", "FX 4 PARAM C", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx4_param_d", "FX 4 PARAM D", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx4_oversampling", "FX 4 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx4_sync", "FX 4 TEMPO SYNC", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx_master_wet", "FX MASTER WET", 0.0f, 1.0f, 1.0f, 1.0f, "", "FX" },
+    { "fx_master_bypass", "FX BYPASS", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
 };
 static_assert(P_body1Model == 190, "all previously shipped core indexes must remain stable");
 static_assert(P_body1Size == 198 && P_body2Size == 199, "body size appends after published body indexes");
 static_assert(P_body1Variant == 200 && P_body2Variant == 201, "body variants preserve all 200 published core indexes");
 static_assert(P_body1Material == 202 && P_body2Material == 203, "materials preserve all 202 preceding core indexes");
+static_assert(P_fx1ExtModel == 204 && P_fxMasterBypass == 227, "cinematic FX appends after all 204 published core indexes");
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);
 

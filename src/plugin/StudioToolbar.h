@@ -100,7 +100,7 @@ private:
     Actions actions;
     std::uint64_t actionsGeneration = 0;
     std::unique_ptr<Key> prev, next, library, compareA, compareB, undoKey, redoKey,
-        studioKey, menuKey;
+        fxKey, studioKey, menuKey;
     std::unique_ptr<Display> display;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StudioToolbar)

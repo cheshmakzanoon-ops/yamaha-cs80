@@ -238,6 +238,7 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB = std::make_unique<Key>("B", "Compare: sound B", Key::Glyph::none, Key::Segment::right);
     undoKey = std::make_unique<Key>("UNDO", "Undo", Key::Glyph::undo);
     redoKey = std::make_unique<Key>("REDO", "Redo", Key::Glyph::redo);
+    fxKey = std::make_unique<Key>("FX", "Toggle global FX bypass");
     studioKey = std::make_unique<Key>("STUDIO", "Show the Studio view");
     menuKey = std::make_unique<Key>("MENU", "Toolbar menu", Key::Glyph::menu);
     display = std::make_unique<Display>();
@@ -249,6 +250,7 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB->setComponentID("toolbar_compare_b");
     undoKey->setComponentID("toolbar_undo");
     redoKey->setComponentID("toolbar_redo");
+    fxKey->setComponentID("toolbar_fx");
     studioKey->setComponentID("toolbar_studio");
     menuKey->setComponentID("toolbar_menu");
     display->setComponentID("toolbar_program");
@@ -260,14 +262,15 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB->setTooltip("Compare B: switch to sound B. The first switch to B copies A, so you can edit B and compare.");
     undoKey->setTooltip("Undo the last edit (" + shortcut() + "+Z). Loading a program clears the history; host automation is never recorded.");
     redoKey->setTooltip("Redo (" + shortcut() + "+Shift+Z).");
+    fxKey->setTooltip("Built-in Cinematic FX: click to bypass/enable all four FX slots. Open Studio > FX for full controls.");
     studioKey->setTooltip("Studio view: modulation, keyboard and tuning, effects, arpeggiator and settings.");
     menuKey->setTooltip("Menu: save, init, voice monitor, controllers strip, computer keyboard, help and tour.");
 
     int order = 0;
     for (juce::Component* c : { (juce::Component*) prev.get(), (juce::Component*) display.get(), (juce::Component*) next.get(),
                                 (juce::Component*) library.get(), (juce::Component*) compareA.get(), (juce::Component*) compareB.get(),
-                                (juce::Component*) undoKey.get(), (juce::Component*) redoKey.get(), (juce::Component*) studioKey.get(),
-                                (juce::Component*) menuKey.get() })
+                                (juce::Component*) undoKey.get(), (juce::Component*) redoKey.get(), (juce::Component*) fxKey.get(),
+                                (juce::Component*) studioKey.get(), (juce::Component*) menuKey.get() })
     {
         c->setExplicitFocusOrder(++order);
         addAndMakeVisible(*c);
@@ -281,6 +284,17 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     compareB->onClick = [this] { if (actions.selectCompare) actions.selectCompare(1); refresh(); };
     undoKey->onClick = [this] { if (actions.undo) actions.undo(); refresh(); };
     redoKey->onClick = [this] { if (actions.redo) actions.redo(); refresh(); };
+    fxKey->onClick = [this]
+    {
+        if (auto* p = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_fxMasterBypass)))
+        {
+            const bool bypassed = processor.getParamValue(cs80::P_fxMasterBypass) >= 0.5f;
+            p->beginChangeGesture();
+            p->setValueNotifyingHost(bypassed ? 0.0f : 1.0f);
+            p->endChangeGesture();
+        }
+        refresh();
+    };
     studioKey->onClick = [this] { if (actions.toggleStudio) actions.toggleStudio(); refresh(); };
     menuKey->onClick = [this] { showMenu(); };
 
@@ -329,6 +343,9 @@ void StudioToolbar::refresh()
     const auto redoName = canRedo && actions.redoName ? actions.redoName() : juce::String();
     undoKey->setTitle(undoName.isNotEmpty() ? "Undo " + undoName : juce::String("Undo"));
     redoKey->setTitle(redoName.isNotEmpty() ? "Redo " + redoName : juce::String("Redo"));
+
+    const bool fxEnabled = processor.getParamValue(cs80::P_fxMasterBypass) < 0.5f;
+    fxKey->setToggleState(fxEnabled, juce::dontSendNotification);
 
     studioKey->setEnabled((bool) actions.toggleStudio);
     studioKey->setToggleState(actions.studioOpen && actions.studioOpen(), juce::dontSendNotification);
@@ -459,15 +476,16 @@ void StudioToolbar::resized()
     };
     // Give program names room and keep all controls reachable at minimum zoom.
     place(*prev, 6.0f, 35.0f);
-    place(*display, 45.0f, 398.0f);
-    place(*next, 447.0f, 35.0f);
-    place(*library, 486.0f, 72.0f);
-    place(*compareA, 572.0f, 35.0f);
-    place(*compareB, 607.0f, 35.0f);
-    place(*undoKey, 650.0f, 40.0f);
-    place(*redoKey, 694.0f, 40.0f);
-    place(*studioKey, 752.0f, 68.0f);
-    place(*menuKey, 824.0f, 35.0f);
+    place(*display, 45.0f, 354.0f);
+    place(*next, 403.0f, 35.0f);
+    place(*library, 442.0f, 70.0f);
+    place(*compareA, 520.0f, 34.0f);
+    place(*compareB, 554.0f, 34.0f);
+    place(*undoKey, 596.0f, 38.0f);
+    place(*redoKey, 638.0f, 38.0f);
+    place(*fxKey, 686.0f, 44.0f);
+    place(*studioKey, 736.0f, 82.0f);
+    place(*menuKey, 822.0f, 36.0f);
 }
 
 } // namespace cs80::ui

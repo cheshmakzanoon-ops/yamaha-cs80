@@ -60,8 +60,8 @@ void testProgramLibraryHost(Check&& check)
                   && valuesMatch(host, curated[0].values)
                   && host.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "fresh instance recalls the authored Circuit showcase and its factory identity");
-        check(L == 222 && C == 301 && host.getNumPrograms() == 523,
-              "host program list preserves all 523 original and curated factory addresses");
+        check(L == 222 && C == 301 && cs80::filmScoringProgramCount() == 500 && host.getNumPrograms() == 1023,
+              "host program list preserves all 523 original/curated addresses plus 500 Film Scoring programs");
         check(host.getProgramName(0) == juce::String(original[0].name)
                   && host.getProgramName(22) == juce::String(original[22].name)
                   && host.getProgramName(L) == juce::String(curated[0].name)

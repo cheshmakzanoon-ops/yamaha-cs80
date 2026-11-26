@@ -869,18 +869,35 @@ void Engine::buildSettings()
     global.fxType[0] = (int) std::lround(p(P_fx1Type));
     global.fxType[1] = (int) std::lround(p(P_fx2Type));
     global.fxType[2] = (int) std::lround(p(P_fx3Type));
+    global.fxType[3] = (int) std::lround(p(P_fx4Type));
     global.fxMix[0] = p(P_fx1Mix);
     global.fxMix[1] = p(P_fx2Mix);
     global.fxMix[2] = p(P_fx3Mix);
+    global.fxMix[3] = p(P_fx4Mix);
     for (int i = 0; i < 3; ++i)
     {
         const int base = P_fx1Model + i * (P_fx2Model - P_fx1Model);
+        const int extBase = P_fx1ExtModel + i * (P_fx2ExtModel - P_fx1ExtModel);
         global.fxModel[i] = std::clamp((int) std::lround(p(base)), 0, fx::kModelCount - 1);
         global.fxParamA[i] = p(base + 1);
         global.fxParamB[i] = p(base + 2);
         global.fxOversampling[i] = std::clamp((int) std::lround(p(base + 3)), 0, fx::Oversampler::kMaxStages);
+        global.fxExtModel[i] = std::clamp((int) std::lround(p(extBase)), 0, fx::kExtModelCount - 1);
+        global.fxParamC[i] = p(extBase + 1);
+        global.fxParamD[i] = p(extBase + 2);
+        global.fxSync[i] = p(extBase + 3) >= 0.5f;
     }
+    global.fxModel[3] = std::clamp((int) std::lround(p(P_fx4Model)), 0, fx::kModelCount - 1);
+    global.fxExtModel[3] = std::clamp((int) std::lround(p(P_fx4ExtModel)), 0, fx::kExtModelCount - 1);
+    global.fxParamA[3] = p(P_fx4ParamA);
+    global.fxParamB[3] = p(P_fx4ParamB);
+    global.fxParamC[3] = p(P_fx4ParamC);
+    global.fxParamD[3] = p(P_fx4ParamD);
+    global.fxOversampling[3] = std::clamp((int) std::lround(p(P_fx4Oversampling)), 0, fx::Oversampler::kMaxStages);
+    global.fxSync[3] = p(P_fx4Sync) >= 0.5f;
     global.fxGainComp = p(P_fxGainCompensation) >= 0.5f;
+    global.fxMasterWet = clampf(p(P_fxMasterWet), 0.0f, 1.0f);
+    global.fxMasterBypass = p(P_fxMasterBypass) >= 0.5f;
     global.macro[0] = p(P_macro1);
     global.macro[1] = p(P_macro2);
     global.macro[2] = p(P_macro3);
@@ -917,11 +934,16 @@ void Engine::buildSettings()
             global.lfoDepth[i] = 0.0f;
             global.lfoDest[i] = 0;
             global.lfoWave[i] = 0;
+        }
+        for (int i = 0; i < 4; ++i)
+        {
             global.fxType[i] = 0;
             global.fxMix[i] = 0.0f;
             global.fxModel[i] = 0;
+            global.fxExtModel[i] = 0;
         }
         global.fxGainComp = false;
+        global.fxMasterBypass = true;
         for (float& macro : global.macro)
             macro = 0.5f;
         // Modern-layer tuning and voice modes are inert in PURE CS-80. The KAS
@@ -3579,37 +3601,45 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     mixL = ch.l;
     mixR = ch.r;
 
-    // Three modern FX slots, processed in series after the provisional CS-80
-    // chorus. The type numbers are fixed by the UI: 1 chorus, 2 phaser,
-    // 3 tape delay, 4 plate reverb, 5 drive.
-    // When all six operands are raw +0, the three effective mixes are
-    // exactly +0 and computing/clamping them sets no floating-point flags.
-    // The original slot calls then do nothing unless a live tail or a
-    // gain-compensation transition still needs clearing. Do not bypass
-    // those transitions, signed -0, denormals, or nonzero modulation.
+    // Four modern/cinematic FX slots, processed in series after the CS-80 chorus.
+    // When all mixes are raw +0 (or globally bypassed with no active tails) we skip
+    // slot processing cleanly so dry circuit fixtures stay bit-identical.
     const auto neutralFx =
-        (std::bit_cast<std::uint32_t>(global.fxMix[0]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[0])
-       | std::bit_cast<std::uint32_t>(global.fxMix[1]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[1])
-       | std::bit_cast<std::uint32_t>(global.fxMix[2]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[2])) == 0
-        && fxSlots[0].liveType == 0 && fxSlots[1].liveType == 0 && fxSlots[2].liveType == 0
+        (global.fxMasterBypass
+            || (std::bit_cast<std::uint32_t>(global.fxMix[0]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[0])
+              | std::bit_cast<std::uint32_t>(global.fxMix[1]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[1])
+              | std::bit_cast<std::uint32_t>(global.fxMix[2]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[2])
+              | std::bit_cast<std::uint32_t>(global.fxMix[3])) == 0)
+        && fxSlots[0].liveType == 0 && fxSlots[1].liveType == 0
+        && fxSlots[2].liveType == 0 && fxSlots[3].liveType == 0
         && fxSlots[0].gainCompActive == global.fxGainComp
         && fxSlots[1].gainCompActive == global.fxGainComp
-        && fxSlots[2].gainCompActive == global.fxGainComp;
+        && fxSlots[2].gainCompActive == global.fxGainComp
+        && fxSlots[3].gainCompActive == global.fxGainComp;
     if (!neutralFx)
-    for (int slot = 0; slot < 3; ++slot)
     {
-        // A modern model (ws5) replaces the classic type of its slot; model 0 is classic.
-        fx::SlotControls controls;
-        controls.type = global.fxType[slot];
-        controls.model = global.fxModel[slot];
-        controls.mix = clampf(global.fxMix[slot] + modernGlobal.fxMix[(std::size_t) slot], 0.0f, 1.0f);
-        controls.a = global.fxParamA[slot];
-        controls.b = global.fxParamB[slot];
-        controls.oversampling = global.fxOversampling[slot];
-        controls.gainComp = global.fxGainComp;
-        const auto out = fxSlots[(std::size_t) slot].process(controls, mixL, mixR, driftPhase, sr);
-        mixL = out.l;
-        mixR = out.r;
+        const float effectiveBpm = (float) modern::effectiveBpm(modern.getTransport().bpm);
+        const float wetScale = global.fxMasterBypass ? 0.0f : global.fxMasterWet;
+        for (int slot = 0; slot < 4; ++slot)
+        {
+            fx::SlotControls controls;
+            controls.type = global.fxType[slot];
+            controls.model = global.fxModel[slot];
+            controls.extModel = global.fxExtModel[slot];
+            const float modMix = slot < 3 ? modernGlobal.fxMix[(std::size_t) slot] : 0.0f;
+            controls.mix = clampf((global.fxMix[slot] + modMix) * wetScale, 0.0f, 1.0f);
+            controls.a = global.fxParamA[slot];
+            controls.b = global.fxParamB[slot];
+            controls.c = global.fxParamC[slot];
+            controls.d = global.fxParamD[slot];
+            controls.oversampling = global.fxOversampling[slot];
+            controls.gainComp = global.fxGainComp;
+            controls.sync = global.fxSync[slot];
+            controls.bpm = effectiveBpm;
+            const auto out = fxSlots[(std::size_t) slot].process(controls, mixL, mixR, driftPhase, sr);
+            mixL = out.l;
+            mixR = out.r;
+        }
     }
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator

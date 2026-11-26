@@ -1315,43 +1315,73 @@ void KeyboardModulationPage::resized()
 
 ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         auto& s = slots[(size_t) i];
-        const int base = P_fx1Model + i * (P_fx2Model - P_fx1Model);
-        const int typeId = i == 0 ? P_fx1Type : i == 1 ? P_fx2Type : P_fx3Type;
-        const int mixId = i == 0 ? P_fx1Mix : i == 1 ? P_fx2Mix : P_fx3Mix;
+        const int typeId = i == 0 ? (int) P_fx1Type : i == 1 ? (int) P_fx2Type : i == 2 ? (int) P_fx3Type : (int) P_fx4Type;
+        const int mixId = i == 0 ? (int) P_fx1Mix : i == 1 ? (int) P_fx2Mix : i == 2 ? (int) P_fx3Mix : (int) P_fx4Mix;
+        const int modelId = i < 3 ? (P_fx1Model + i * (P_fx2Model - P_fx1Model)) : P_fx4Model;
+        const int aId = i < 3 ? (modelId + 1) : P_fx4ParamA;
+        const int bId = i < 3 ? (modelId + 2) : P_fx4ParamB;
+        const int osId = i < 3 ? (modelId + 3) : P_fx4Oversampling;
+        const int extId = i < 3 ? (P_fx1ExtModel + i * (P_fx2ExtModel - P_fx1ExtModel)) : P_fx4ExtModel;
+        const int cId = i < 3 ? (extId + 1) : P_fx4ParamC;
+        const int dId = i < 3 ? (extId + 2) : P_fx4ParamD;
+        const int syncId = i < 3 ? (extId + 3) : P_fx4Sync;
+
         const auto n = juce::String(i + 1);
-        styleLabel(s.title, "FX " + n, 15.0f);
+        styleLabel(s.title, "FX " + n, 14.5f);
+        for (int m = 0; m < fx::kExtModelCount; ++m)
+            s.extModel.addItem(fx::extModelName(m), m + 1);
         for (int m = 0; m < fx::kModelCount; ++m)
             s.model.addItem(fx::modelName(m), m + 1);
         s.type.addItemList({ "Off", "Chorus", "Phaser", "Tape delay", "Plate reverb", "Drive" }, 1);
         s.oversampling.addItemList({ "1x", "2x", "4x", "8x" }, 1);
+        styleCombo(s.extModel, "FX " + n + " cinematic model");
         styleCombo(s.model, "FX " + n + " model");
         styleCombo(s.type, "FX " + n + " classic type");
         styleCombo(s.oversampling, "FX " + n + " drive oversampling");
         styleSlider(s.mix, "FX " + n + " mix");
         styleSlider(s.a, "FX " + n + " parameter A");
         styleSlider(s.b, "FX " + n + " parameter B");
+        styleSlider(s.c, "FX " + n + " parameter C");
+        styleSlider(s.d, "FX " + n + " parameter D");
         styleLabel(s.mixLabel, "Mix");
         styleLabel(s.aLabel, "A");
         styleLabel(s.bLabel, "B");
+        styleLabel(s.cLabel, "C");
+        styleLabel(s.dLabel, "D");
+        s.sync.setColour(juce::ToggleButton::textColourId, ivory);
+        s.sync.setColour(juce::ToggleButton::tickColourId, amber);
+
         auto attachCombo = [&p](int index, juce::ComboBox& box, std::unique_ptr<juce::ComboBoxParameterAttachment>& out)
         { if (auto* q = parameter(p, index)) out = std::make_unique<juce::ComboBoxParameterAttachment>(*q, box); };
         auto attachSlider = [&p](int index, juce::Slider& slider, std::unique_ptr<juce::SliderParameterAttachment>& out)
         { if (auto* q = parameter(p, index)) out = std::make_unique<juce::SliderParameterAttachment>(*q, slider); };
-        attachCombo(base, s.model, s.modelAttachment);
+        auto attachToggle = [&p](int index, juce::ToggleButton& btn, std::unique_ptr<juce::ButtonParameterAttachment>& out)
+        { if (auto* q = parameter(p, index)) out = std::make_unique<juce::ButtonParameterAttachment>(*q, btn); };
+
+        attachCombo(extId, s.extModel, s.extModelAttachment);
+        attachCombo(modelId, s.model, s.modelAttachment);
         attachCombo(typeId, s.type, s.typeAttachment);
-        attachCombo(base + 3, s.oversampling, s.oversamplingAttachment);
+        attachCombo(osId, s.oversampling, s.oversamplingAttachment);
         attachSlider(mixId, s.mix, s.mixAttachment);
-        attachSlider(base + 1, s.a, s.aAttachment);
-        attachSlider(base + 2, s.b, s.bAttachment);
-        for (auto* slider : { &s.mix, &s.a, &s.b })
+        attachSlider(aId, s.a, s.aAttachment);
+        attachSlider(bId, s.b, s.bAttachment);
+        attachSlider(cId, s.c, s.cAttachment);
+        attachSlider(dId, s.d, s.dAttachment);
+        attachToggle(syncId, s.sync, s.syncAttachment);
+
+        for (auto* slider : { &s.mix, &s.a, &s.b, &s.c, &s.d })
             compactText(*slider, 2);
         for (juce::Component* c : { (juce::Component*) &s.title, (juce::Component*) &s.mixLabel,
                                     (juce::Component*) &s.aLabel, (juce::Component*) &s.bLabel,
-                                    (juce::Component*) &s.model, (juce::Component*) &s.type, (juce::Component*) &s.oversampling,
-                                    (juce::Component*) &s.mix, (juce::Component*) &s.a, (juce::Component*) &s.b })
+                                    (juce::Component*) &s.cLabel, (juce::Component*) &s.dLabel,
+                                    (juce::Component*) &s.extModel, (juce::Component*) &s.model,
+                                    (juce::Component*) &s.type, (juce::Component*) &s.oversampling,
+                                    (juce::Component*) &s.mix, (juce::Component*) &s.a,
+                                    (juce::Component*) &s.b, (juce::Component*) &s.c,
+                                    (juce::Component*) &s.d, (juce::Component*) &s.sync })
             addAndMakeVisible(*c);
     }
     gainComp.setColour(juce::ToggleButton::textColourId, ivory);
@@ -1360,25 +1390,60 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
     if (auto* q = parameter(p, P_fxGainCompensation))
         gainCompAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, gainComp);
     addAndMakeVisible(gainComp);
+
+    masterBypass.setColour(juce::ToggleButton::textColourId, ivory);
+    masterBypass.setColour(juce::ToggleButton::tickColourId, amber);
+    masterBypass.setTooltip("Bypass all four serial FX slots globally");
+    if (auto* q = parameter(p, P_fxMasterBypass))
+        masterBypassAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, masterBypass);
+    addAndMakeVisible(masterBypass);
+
+    styleLabel(masterWetLabel, "Master FX Wet");
+    styleSlider(masterWet, "Master FX wet scale");
+    compactText(masterWet, 2);
+    if (auto* q = parameter(p, P_fxMasterWet))
+        masterWetAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, masterWet);
+    addAndMakeVisible(masterWetLabel);
+    addAndMakeVisible(masterWet);
+
     refreshLabels();
     startTimerHz(10);
 }
 
 void ModernFxPage::refreshLabels()
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         auto& s = slots[(size_t) i];
         const int model = juce::jmax(0, s.model.getSelectedId() - 1);
-        if (model == s.shownModel) continue;
+        const int ext = juce::jmax(0, s.extModel.getSelectedId() - 1);
+        if (model == s.shownModel && ext == s.shownExtModel) continue;
         s.shownModel = model;
-        const bool classic = model == 0;
-        s.aLabel.setText(classic ? "-" : fx::paramAName(model), juce::dontSendNotification);
-        s.bLabel.setText(classic ? "-" : fx::paramBName(model), juce::dontSendNotification);
+        s.shownExtModel = ext;
+        const bool isExt = ext > 0;
+        const bool classic = ! isExt && model == 0;
+        if (isExt)
+        {
+            s.aLabel.setText(fx::extParamAName(ext), juce::dontSendNotification);
+            s.bLabel.setText(fx::extParamBName(ext), juce::dontSendNotification);
+            s.cLabel.setText(fx::extParamCName(ext), juce::dontSendNotification);
+            s.dLabel.setText(fx::extParamDName(ext), juce::dontSendNotification);
+        }
+        else
+        {
+            s.aLabel.setText(classic ? "-" : fx::paramAName(model), juce::dontSendNotification);
+            s.bLabel.setText(classic ? "-" : fx::paramBName(model), juce::dontSendNotification);
+            s.cLabel.setText("-", juce::dontSendNotification);
+            s.dLabel.setText("-", juce::dontSendNotification);
+        }
+        s.model.setEnabled(! isExt);
         s.type.setEnabled(classic);
         s.a.setEnabled(! classic);
         s.b.setEnabled(! classic);
-        s.oversampling.setEnabled(model == (int) fx::Model::drive);
+        s.c.setEnabled(isExt);
+        s.d.setEnabled(isExt);
+        s.sync.setEnabled(isExt && fx::extSupportsSync(ext));
+        s.oversampling.setEnabled(! isExt && model == (int) fx::Model::drive);
     }
 }
 
@@ -1389,38 +1454,53 @@ void ModernFxPage::timerCallback()
 
 void ModernFxPage::paint(juce::Graphics& g)
 {
-    fillPage(g, getLocalBounds().toFloat(), "FX  (three serial slots after the CS-80 chorus)");
+    fillPage(g, getLocalBounds().toFloat(), "CINEMATIC & STUDIO FX  (four serial slots after the CS-80 chorus)");
     auto area = getLocalBounds().reduced(8).withTrimmedTop(22).withTrimmedBottom(34);
-    const int w = area.getWidth() / 3;
-    for (int i = 0; i < 3; ++i)
+    const int w = area.getWidth() / 4;
+    for (int i = 0; i < 4; ++i)
     {
         g.setColour(lineColour.withAlpha(0.6f));
-        g.drawRoundedRectangle(area.removeFromLeft(w).reduced(4).toFloat(), 4.0f, 1.0f);
+        g.drawRoundedRectangle(area.removeFromLeft(w).reduced(3).toFloat(), 4.0f, 1.0f);
     }
 }
 
 void ModernFxPage::resized()
 {
     auto area = getLocalBounds().reduced(8).withTrimmedTop(22);
-    gainComp.setBounds(area.removeFromBottom(30).reduced(6, 4));
-    const int w = area.getWidth() / 3;
+    auto footer = area.removeFromBottom(30).reduced(4, 2);
+    masterBypass.setBounds(footer.removeFromLeft(110));
+    masterWetLabel.setBounds(footer.removeFromLeft(98));
+    masterWet.setBounds(footer.removeFromLeft(juce::jmin(220, footer.getWidth() / 2)));
+    footer.removeFromLeft(12);
+    gainComp.setBounds(footer);
+
+    const int w = area.getWidth() / 4;
     for (auto& s : slots)
     {
-        auto column = area.removeFromLeft(w).reduced(12, 10);
-        const int h = juce::jmin(30, column.getHeight() / 7);
+        auto column = area.removeFromLeft(w).reduced(8, 6);
+        const int h = juce::jmin(24, column.getHeight() / 10);
         s.title.setBounds(column.removeFromTop(h));
-        s.model.setBounds(column.removeFromTop(h).reduced(0, 2));
-        s.type.setBounds(column.removeFromTop(h).reduced(0, 2));
+        s.extModel.setBounds(column.removeFromTop(h).reduced(0, 1));
+        s.model.setBounds(column.removeFromTop(h).reduced(0, 1));
+        s.type.setBounds(column.removeFromTop(h).reduced(0, 1));
         auto mixRow = column.removeFromTop(h);
-        s.mixLabel.setBounds(mixRow.removeFromLeft(54));
-        s.mix.setBounds(mixRow.reduced(0, 2));
+        s.mixLabel.setBounds(mixRow.removeFromLeft(56));
+        s.mix.setBounds(mixRow.reduced(0, 1));
         auto aRow = column.removeFromTop(h);
-        s.aLabel.setBounds(aRow.removeFromLeft(54));
-        s.a.setBounds(aRow.reduced(0, 2));
+        s.aLabel.setBounds(aRow.removeFromLeft(56));
+        s.a.setBounds(aRow.reduced(0, 1));
         auto bRow = column.removeFromTop(h);
-        s.bLabel.setBounds(bRow.removeFromLeft(54));
-        s.b.setBounds(bRow.reduced(0, 2));
-        s.oversampling.setBounds(column.removeFromTop(h).reduced(0, 2).removeFromLeft(90));
+        s.bLabel.setBounds(bRow.removeFromLeft(56));
+        s.b.setBounds(bRow.reduced(0, 1));
+        auto cRow = column.removeFromTop(h);
+        s.cLabel.setBounds(cRow.removeFromLeft(56));
+        s.c.setBounds(cRow.reduced(0, 1));
+        auto dRow = column.removeFromTop(h);
+        s.dLabel.setBounds(dRow.removeFromLeft(56));
+        s.d.setBounds(dRow.reduced(0, 1));
+        auto bottomRow = column.removeFromTop(h);
+        s.sync.setBounds(bottomRow.removeFromLeft(bottomRow.getWidth() / 2));
+        s.oversampling.setBounds(bottomRow.reduced(2, 1));
     }
 }
 

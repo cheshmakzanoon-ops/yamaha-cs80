@@ -276,11 +276,12 @@ std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& fi
 // so the lower-case name is searched for the first keyword in kKeywords (table
 // order decides ties). A name with no keyword is OTHER; the Init patch is INIT.
 // ---------------------------------------------------------------------------
-enum TypeId : int { tBrass, tStrings, tKeys, tOrgan, tWinds, tPluck, tBass, tPads,
+enum TypeId : int { tFilmScoring, tBrass, tStrings, tKeys, tOrgan, tWinds, tPluck, tBass, tPads,
                     tPoly, tLeads, tBells, tFx, tSequence, tInit, tOther, typeCount };
 
 struct TypeInfo { const char* label; std::uint32_t colour; };
 const TypeInfo kTypes[typeCount] = {
+    { "FILM SCORING", 0xfff5b942 },
     { "BRASS", 0xffe6b43a },    { "STRINGS", 0xff44c474 },  { "KEYS", 0xffe6dcbc },
     { "ORGAN", 0xffd9593f },    { "WINDS", 0xff3fb8b0 },    { "PLUCK", 0xfff08f3a },
     { "BASS", 0xff5c8fe0 },     { "PADS", 0xff9a7ae6 },     { "POLY", 0xffd28fd0 },
@@ -298,6 +299,7 @@ const Keyword kKeywords[] = {
 
 int classifyType(const juce::String& category, const juce::String& name)
 {
+    if (category == "Film Scoring") return tFilmScoring;
     if (category == "Brass") return tBrass;
     if (category == "Strings") return tStrings;
     if (category == "Pads") return tPads;
@@ -322,11 +324,19 @@ int classifyType(const juce::String& category, const juce::String& name)
 
 Colour typeColour(int type) { return Colour(kTypes[juce::jlimit(0, (int) typeCount - 1, type)].colour); }
 
-// [ws6-library] Technique tags of the curated library (FactoryPreset::tags):
-// how a program is played or built. One chip may stand for related tags.
-constexpr int techniqueCount = 8;
+// [ws6-library] Technique & Film Scoring role tags (FactoryPreset::tags).
+constexpr int techniqueCount = 17;
 struct TechniqueInfo { const char* label; const char* tags[3]; const char* tip; };
 const TechniqueInfo kTechniques[techniqueCount] = {
+    { "BRASS / BRAAMS", { "brass-braams", nullptr, nullptr }, "Film Scoring: epic brass swells, trailer braams and horns" },
+    { "PADS / ATMOS", { "pads-atmospheres", nullptr, nullptr }, "Film Scoring: lush cinema pads, shimmer clouds and drama beds" },
+    { "STRINGS / CHOIRS", { "strings-choirs", nullptr, nullptr }, "Film Scoring: sweeping cinema strings, tension bows and choirs" },
+    { "PULSES / OSTINATOS", { "pulses-ostinatos", nullptr, nullptr }, "Film Scoring: rhythmic thriller pulses and tempo-synced arps" },
+    { "DRONES / SUBS", { "drones-subscapes", nullptr, nullptr }, "Film Scoring: tectonic subscapes, horror drones and cosmic beds" },
+    { "LEADS / THEMES", { "leads-themes", nullptr, nullptr }, "Film Scoring: expressive ribbon/aftertouch solo themes" },
+    { "KEYS / BELLS", { "keys-plucks-bells", nullptr, nullptr }, "Film Scoring: felt cinema pianos, celestas, harps and plucks" },
+    { "IMPACTS / RISERS", { "impacts-risers", nullptr, nullptr }, "Film Scoring: massive sub booms, tension risers and transitions" },
+    { "SCI-FI / NOIR", { "scifi-noir", nullptr, nullptr }, "Film Scoring: neon-noir synthscapes and Vangelis-style classics" },
     { "AFTERTOUCH", { "aftertouch", nullptr, nullptr }, "Pressure (after touch) shapes brilliance, level or vibrato" },
     { "VELOCITY", { "velocity", nullptr, nullptr }, "Initial touch (velocity) sets brilliance or level" },
     { "SWELL", { "brilliance-swell", nullptr, nullptr }, "The VCF EG or touch swells the brilliance" },
@@ -334,7 +344,7 @@ const TechniqueInfo kTechniques[techniqueCount] = {
     { "RING MOD", { "ring-mod", nullptr, nullptr }, "The ring modulator is part of the sound" },
     { "SUB MOD", { "sub-mod", nullptr, nullptr }, "The SUB oscillator modulates pitch, filter or level" },
     { "FOOTAGE", { "feet-layer", "dual-rank", nullptr }, "The two ranks are layered at different feet or waves" },
-    { "MODERN", { "modern", nullptr, nullptr }, "Uses the optional software FX, LFO or arpeggiator" } };
+    { "MODERN", { "modern", nullptr, nullptr }, "Uses the built-in cinematic/modern FX, LFO or arpeggiator" } };
 
 std::uint32_t techniqueBits(const std::vector<std::string>& tags)
 {

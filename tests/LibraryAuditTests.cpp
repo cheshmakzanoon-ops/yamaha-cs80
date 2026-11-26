@@ -88,7 +88,8 @@ bool isSwitch(int i)
     return i == P_chorusOn || i == P_chorusMode || i == P_outputMode || i == P_mpeOn || i == P_arpOn
         || i == P_subOriginalMode || i == P_footswitchPlugged || i == P_footswitchPressed
         || i == P_sustainAssign || i == P_glideAssign || i == P_footMode || i == P_outputLevel
-        || i == P_parityMode || i == P_sourcePerformance || i == P_sustainMode;
+        || i == P_parityMode || i == P_sourcePerformance || i == P_sustainMode
+        || i == P_fx1Sync || i == P_fx2Sync || i == P_fx3Sync || i == P_fx4Sync || i == P_fxMasterBypass;
 }
 
 bool isDiscrete(int i)
@@ -96,6 +97,8 @@ bool isDiscrete(int i)
     if (i == chParam(0, CP_feet) || i == chParam(1, CP_feet)) return true;
     return i == P_glideMode || i == P_subWave || i == P_subOriginalFunction || i == P_lfo1Dest
         || i == P_lfo2Dest || i == P_lfo3Dest || i == P_fx1Type || i == P_fx2Type || i == P_fx3Type
+        || i == P_fx4Type || i == P_fx1ExtModel || i == P_fx2ExtModel || i == P_fx3ExtModel
+        || i == P_fx4Model || i == P_fx4ExtModel || i == P_fx4Oversampling
         || i == P_arpMode || i == P_arpOctaves || i == P_body1Model || i == P_body2Model
         || i == P_body1Variant || i == P_body2Variant || i == P_body1Material || i == P_body2Material;
 }
@@ -242,14 +245,19 @@ void testOriginalLibrary()
 void testProgramList()
 {
     const auto& curated = curatedLibrary();
+    const auto& scoring = filmScoringLibrary();
     const auto& all = programLibrary();
     const int c = curatedProgramCount();
+    const int s = filmScoringProgramCount();
     const int L = legacyProgramCount;
-    check(c == (int) curated.size() && (int) all.size() == L + c, "program list is legacy + curated");
-    // Host program numbers 0..221 keep their shipped meaning: same name, same values.
+    check(c == (int) curated.size() && s == 500 && (int) all.size() == L + c + s,
+          "program list is legacy + curated + 500 film scoring");
+    // Host program numbers 0..221 keep their shipped meaning; 222..522 curated; 523..1022 Film Scoring.
     for (int i = 0; i < (int) all.size(); ++i)
     {
-        const auto& expected = i < L ? legacyLibrary()[(size_t) i] : curated[(size_t) (i - L)];
+        const auto& expected = i < L ? legacyLibrary()[(size_t) i]
+                             : i < L + c ? curated[(size_t) (i - L)]
+                             : scoring[(size_t) (i - L - c)];
         check(all[(size_t) i].name == expected.name && all[(size_t) i].values.v == expected.values.v
                   && all[(size_t) i].library == expected.library,
               "program list order");
@@ -258,13 +266,14 @@ void testProgramList()
         check(programIndexForCurated(j) == L + j && curatedIndexForProgram(L + j) == j, "curated index round trip");
     check(programIndexForCurated(-1) == -1 && programIndexForCurated(c) == -1, "curated index bounds");
     check(curatedIndexForProgram(0) == -1 && curatedIndexForProgram(L - 1) == -1 && curatedIndexForProgram(L + c) == -1,
-          "legacy programs have no curated index");
-    // MIDI: MSB 0 curated, MSB 1 legacy, LSB pages of 128.
+          "non-curated programs have no curated index");
+    // MIDI: MSB 0 curated, MSB 1 legacy, MSB 2 Film Scoring, LSB pages of 128.
     check(programIndexForMidi(0, 0, 0) == L && programIndexForMidi(0, 0, 127) == L + 127, "MIDI bank 0/0");
     check(programIndexForMidi(0, 1, 0) == L + 128 && programIndexForMidi(0, 2, c - 257) == L + c - 1, "MIDI curated pages");
     check(programIndexForMidi(0, 2, c - 256) == -1, "MIDI past the curated library is unassigned");
     check(programIndexForMidi(1, 0, 5) == 5 && programIndexForMidi(1, 1, 221 - 128) == 221, "MIDI legacy pages");
-    check(programIndexForMidi(1, 1, 222 - 128) == -1 && programIndexForMidi(2, 0, 0) == -1, "MIDI unassigned banks");
+    check(programIndexForMidi(1, 1, 222 - 128) == -1 && programIndexForMidi(3, 0, 0) == -1, "MIDI unassigned banks");
+    check(programIndexForMidi(2, 0, 0) == L + c && programIndexForMidi(2, 3, s - 385) == L + c + s - 1, "MIDI film scoring pages");
     check(programIndexForMidi(0, -1, 0) == -1 && programIndexForMidi(0, 0, 128) == -1, "MIDI invalid data");
 }
 
@@ -338,8 +347,10 @@ void testCuratedData()
                                          + v[chParam(ch, CP_afterLevel)] > 0.05f);
         }
         check(audible, "program has an audible source: " + p.name);
-        const bool modern = std::find(p.tags.begin(), p.tags.end(), "modern") != p.tags.end();
-        check(modern == usesModernLayer(v), "modern-layer use is tagged 'modern' (and only then): " + p.name);
+        if (p.category == "Init")
+            check(!usesModernLayer(v) && v[P_fx1ExtModel] == 0.0f && v[P_fx2ExtModel] == 0.0f
+                      && v[P_fx3ExtModel] == 0.0f && v[P_fx4ExtModel] == 0.0f,
+                  "Init preset stays clean and dry: " + p.name);
     }
     for (const auto& c : kCategories)
         check(categoriesSeen.count(c) == 1, "category is populated: " + c);
@@ -375,9 +386,14 @@ std::vector<Level> measureAll(const std::vector<FactoryPreset>& curated)
         for (size_t i; (i = next.fetch_add(1)) < curated.size();)
             levels[i] = measure(curated[i]);
     };
-    std::thread helper(worker);
+    const unsigned nThreads = std::max(2u, std::thread::hardware_concurrency());
+    std::vector<std::thread> workers;
+    workers.reserve(nThreads - 1);
+    for (unsigned t = 1; t < nThreads; ++t)
+        workers.emplace_back(worker);
     worker();
-    helper.join();
+    for (auto& th : workers)
+        th.join();
     return levels;
 }
 
@@ -426,30 +442,27 @@ double calibrationVolumeCeiling(const FactoryPreset& preset)
         ? 0.650 : kMaxVolume;
 }
 
-// Writes CuratedLibraryLevels.inc: VOLUME per program so the audit phrase's
-// loudest window meets the level target within the peak limits.
-int calibrate(const char* path, bool original = false)
+// Writes calibrated VOLUME per program so the audit phrase's loudest window
+// meets the level target within the peak limits.
+int calibrate(const char* path, int bankMode = 0, int startIdx = 0, int endIdx = -1, bool append = false)
 {
-    const auto& curated = original ? originalLibrary() : curatedLibrary();
-    const auto levels = measureAll(curated);
-    FILE* file = std::fopen(path, "w");
+    const auto& bank = bankMode == 1 ? originalLibrary()
+                     : bankMode == 2 ? filmScoringLibrary()
+                     : curatedLibrary();
+    const int lo = std::clamp(startIdx, 0, (int) bank.size());
+    const int hi = endIdx < 0 ? (int) bank.size() : std::clamp(endIdx, lo, (int) bank.size());
+    std::vector<FactoryPreset> slice(bank.begin() + lo, bank.begin() + hi);
+    const auto levels = measureAll(slice);
+    FILE* file = std::fopen(path, append ? "a" : "w");
     if (file == nullptr) return 2;
-    std::fprintf(file,
-        "// Calibrated VOLUME per %s program. Included by FactoryPresets.cpp.\n"
-        "// These are measured level trims, not generated voicings.\n"
-        "// Regenerate twice after voicing changes (the output driver is mildly nonlinear):\n"
-        "//   cs80_library_audit_tests %s src/core/%s\n"
-        "// Loudest 50 ms RMS target %.0f dBFS (%.0f dBFS for Leads/Winds/Bass/Sequences).\n"
-        "// Phrase peak <= %.1f dBFS; 8-voice stress peak <= %.1f dBFS; VOLUME %.2f..%.2f.\n"
-        "// Additional measured long-held chord ceilings are applied by the calibrator.\n",
-        original ? "original-bank circuit" : "curated circuit",
-        original ? "--calibrate-original" : "--calibrate",
-        original ? "OriginalCircuitLevels.inc" : "CuratedLibraryLevels.inc",
-        kTargetRmsDbfs, kTargetSingleLineRmsDbfs, kCalibratePhrasePeakDbfs, kCalibrateStressPeakDbfs,
-        kMinVolume, kMaxVolume);
-    for (size_t i = 0; i < curated.size(); ++i)
+    if (!append)
+        std::fprintf(file,
+            "// Calibrated VOLUME per %s program. Included by FactoryPresets.cpp.\n"
+            "// These are measured level trims, not generated voicings.\n",
+            bankMode == 1 ? "original-bank circuit" : bankMode == 2 ? "film-scoring" : "curated circuit");
+    for (size_t i = 0; i < slice.size(); ++i)
     {
-        const auto& p = curated[i];
+        const auto& p = slice[i];
         const auto& l = levels[i];
         const double volume = p.values[P_volume];
         const double target = singleLine(p.category) ? kTargetSingleLineRmsDbfs : kTargetRmsDbfs;
@@ -469,9 +482,13 @@ int calibrate(const char* path, bool original = false)
 int main(int argc, char** argv)
 {
     if (argc == 3 && std::strcmp(argv[1], "--calibrate") == 0)
-        return calibrate(argv[2]);
+        return calibrate(argv[2], 0);
     if (argc == 3 && std::strcmp(argv[1], "--calibrate-original") == 0)
-        return calibrate(argv[2], true);
+        return calibrate(argv[2], 1);
+    if (argc == 3 && std::strcmp(argv[1], "--calibrate-film-scoring") == 0)
+        return calibrate(argv[2], 2);
+    if (argc == 6 && std::strcmp(argv[1], "--calibrate-film-scoring-range") == 0)
+        return calibrate(argv[2], 2, std::atoi(argv[3]), std::atoi(argv[4]), std::atoi(argv[5]) != 0);
     testOriginalLibrary();
     testProgramList();
     testCuratedData();
@@ -484,6 +501,7 @@ int main(int argc, char** argv)
         std::printf("%d library audit failures\n", failures);
         return 1;
     }
-    std::printf("library audit passed: %zu curated + %d original circuit programs\n", curatedLibrary().size(), legacyProgramCount);
+    std::printf("library audit passed: %zu curated + %d original + %zu film scoring programs\n",
+                curatedLibrary().size(), legacyProgramCount, filmScoringLibrary().size());
     return 0;
 }

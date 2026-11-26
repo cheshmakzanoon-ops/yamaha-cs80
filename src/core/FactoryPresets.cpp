@@ -1,9 +1,12 @@
 #include "FactoryPresets.h"
+#include "CinematicFxModels.h"
 #include "InstrumentBody.h"
 #include "InstrumentBodyVariants.h"
 #include "InstrumentBodyMaterials.h"
 
 #include <algorithm>
+#include <cmath>
+#include <cstdint>
 #include <initializer_list>
 #include <stdexcept>
 #include <utility>
@@ -239,9 +242,11 @@ const std::vector<FactoryPreset>& factoryPresets()
 }
 
 // ---------------------------------------------------------------------------
-// Curated circuit-engine library and the host program list
+// Curated circuit-engine library, realism enhancer & 500-preset Film Scoring
 // ---------------------------------------------------------------------------
+#include "PresetRealismEnhancer.inc"
 #include "CuratedLibrary.inc"
+#include "FilmScoringLibrary.inc"
 
 namespace
 {
@@ -259,7 +264,29 @@ const std::vector<FactoryPreset>& curatedLibrary()
         l.reserve(320);
         curated::buildLibrary(l);
         for (auto& preset : l)
+        {
             for (const auto& level : kCalibratedLevels)
+                if (level.name != nullptr && preset.name == level.name)
+                    preset.values[P_volume] = level.volume;
+            realism_enhancer::enhanceMusicalPreset(preset);
+        }
+        return l;
+    }();
+    return library;
+}
+
+const std::vector<FactoryPreset>& filmScoringLibrary()
+{
+    static const std::vector<FactoryPreset> library = [] {
+        std::vector<FactoryPreset> l;
+        l.reserve(512);
+        film_scoring::buildLibrary(l);
+        constexpr CalibratedLevel kFilmScoringLevels[] = {
+#include "FilmScoringLevels.inc"
+            { nullptr, 0.0f }
+        };
+        for (auto& preset : l)
+            for (const auto& level : kFilmScoringLevels)
                 if (level.name != nullptr && preset.name == level.name)
                     preset.values[P_volume] = level.volume;
         return l;
@@ -267,12 +294,20 @@ const std::vector<FactoryPreset>& curatedLibrary()
     return library;
 }
 
+int filmScoringProgramCount()
+{
+    return (int) filmScoringLibrary().size();
+}
+
 const std::vector<FactoryPreset>& programLibrary()
 {
     static const std::vector<FactoryPreset> programs = [] {
         std::vector<FactoryPreset> all = legacyLibrary();
         const auto& curated = curatedLibrary();
+        const auto& scoring = filmScoringLibrary();
+        all.reserve(all.size() + curated.size() + scoring.size());
         all.insert(all.end(), curated.begin(), curated.end());
+        all.insert(all.end(), scoring.begin(), scoring.end());
         return all;
     }();
     return programs;
@@ -305,6 +340,10 @@ int programIndexForMidi(int bankMsb, int bankLsb, int program)
         return programIndexForCurated(inLibrary);
     if (bankMsb == 1)
         return inLibrary < (int) legacyLibrary().size() ? inLibrary : -1;
+    if (bankMsb == 2)
+        return inLibrary < filmScoringProgramCount()
+            ? (legacyProgramCount + curatedProgramCount() + inLibrary)
+            : -1;
     return -1;
 }
 

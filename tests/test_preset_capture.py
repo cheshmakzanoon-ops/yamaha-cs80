@@ -127,7 +127,7 @@ class PresetCaptureTests(unittest.TestCase):
         self.assertEqual(row['parameter_digest'], parameter_digest(isolated))
 
     def test_complete_factory_inventory_keeps_existing_addresses(self):
-        for library, count, offset in [('all', 523, 0), ('original', 222, 0)]:
+        for library, count, offset in [('all', 1023, 0), ('original', 222, 0)]:
             path = self.root / (library + '.json')
             result = run('--inventory', path, '--library', library)
             self.assertEqual(result.returncode, 0, result.stderr)

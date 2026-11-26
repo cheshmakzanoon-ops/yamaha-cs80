@@ -203,6 +203,33 @@ struct Program
     {
         g(P_arpOn, 1.0f); g(P_arpMode, (float) mode); g(P_arpRate, hz); return g(P_arpOctaves, (float) octaves);
     }
+    Program& cineFx(int slot, fx::ExtModel model, float mix,
+                    float a, float b, float c, float d, bool sync = false)
+    {
+        realism_enhancer::setExtSlot(p, slot, model, mix, a, b, c, d, sync);
+        return *this;
+    }
+    Program& modFx(int slot, fx::Model model, float mix, float a, float b, int os = 2)
+    {
+        const int mixId = slot == 0 ? (int) P_fx1Mix : slot == 1 ? (int) P_fx2Mix : slot == 2 ? (int) P_fx3Mix : (int) P_fx4Mix;
+        const int modelId = slot < 3 ? (P_fx1Model + slot * (P_fx2Model - P_fx1Model)) : P_fx4Model;
+        const int aId = slot < 3 ? (modelId + 1) : P_fx4ParamA;
+        const int bId = slot < 3 ? (modelId + 2) : P_fx4ParamB;
+        const int osId = slot < 3 ? (modelId + 3) : P_fx4Oversampling;
+        const int extId = slot < 3 ? (P_fx1ExtModel + slot * (P_fx2ExtModel - P_fx1ExtModel)) : P_fx4ExtModel;
+        p[extId] = 0.0f;
+        p[modelId] = static_cast<float>(model);
+        p[mixId] = std::clamp(mix, 0.0f, 1.0f);
+        p[aId] = std::clamp(a, 0.0f, 1.0f);
+        p[bId] = std::clamp(b, 0.0f, 1.0f);
+        p[osId] = static_cast<float>(os);
+        return *this;
+    }
+    Program& voiceMode(int mode, float unisonDetune = 0.22f)
+    {
+        g(P_voiceMode, static_cast<float>(mode));
+        return g(P_unisonDetune, unisonDetune);
+    }
 };
 
 struct Builder

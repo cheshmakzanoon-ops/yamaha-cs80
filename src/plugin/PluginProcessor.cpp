@@ -469,6 +469,53 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
             choices, cs80::body::defaultMaterial));
     }
 
+    // Preserve all 310 previous host slots. Append the 4th FX slot, extended
+    // cinematic models, Param C/D, tempo sync, and global FX wet/bypass controls.
+    {
+        auto cine = [&layout](int index, std::function<juce::String(float, int)> text = {})
+        {
+            const auto& d = cs80::paramDef(index);
+            auto attributes = juce::AudioParameterFloatAttributes();
+            if (d.unit != nullptr && *d.unit != 0)
+                attributes = attributes.withLabel(d.unit);
+            if (text)
+                attributes = attributes.withStringFromValueFunction(std::move(text));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(
+                juce::ParameterID { parameterId(index), 20 }, juce::String(d.name),
+                juce::NormalisableRange<float>(d.min, d.max, 0.0f, d.skew), d.def, attributes));
+        };
+        auto named = [](const char* (*nameOf)(int)) {
+            return [nameOf](float value, int) { return juce::String(nameOf((int) std::lround(value))); };
+        };
+        auto onOff = [](float value, int) { return juce::String(value >= 0.5f ? "On" : "Off"); };
+        auto osText = [](float value, int) { return juce::String(1 << juce::jlimit(0, 3, (int) std::lround(value))) + "x"; };
+        auto classicText = [](float value, int) {
+            static constexpr const char* kClassic[] = { "Off", "Chorus", "Phaser", "Tape delay", "Plate reverb", "Drive" };
+            return juce::String(kClassic[juce::jlimit(0, 5, (int) std::lround(value))]);
+        };
+
+        for (int slot = 0; slot < 3; ++slot)
+        {
+            const int extBase = cs80::P_fx1ExtModel + slot * (cs80::P_fx2ExtModel - cs80::P_fx1ExtModel);
+            cine(extBase, named(cs80::fx::extModelName));
+            cine(extBase + 1);
+            cine(extBase + 2);
+            cine(extBase + 3, onOff);
+        }
+        cine(cs80::P_fx4Type, classicText);
+        cine(cs80::P_fx4Mix);
+        cine(cs80::P_fx4Model, named(cs80::fx::modelName));
+        cine(cs80::P_fx4ExtModel, named(cs80::fx::extModelName));
+        cine(cs80::P_fx4ParamA);
+        cine(cs80::P_fx4ParamB);
+        cine(cs80::P_fx4ParamC);
+        cine(cs80::P_fx4ParamD);
+        cine(cs80::P_fx4Oversampling, osText);
+        cine(cs80::P_fx4Sync, onOff);
+        cine(cs80::P_fxMasterWet, [](float value, int) { return juce::String(juce::roundToInt(value * 100.0f)) + "%"; });
+        cine(cs80::P_fxMasterBypass, onOff);
+    }
+
     return layout;
 }
 
