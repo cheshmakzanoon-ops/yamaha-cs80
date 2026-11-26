@@ -213,7 +213,7 @@ def audition_readme(groups, summary, source, revision):
         f"{summary['wav_count']} unnormalized circuit-synth auditions of {summary['selected_program_count']} existing programs.",
         f"{summary['audio_seconds']:g} seconds total; library revision {revision}; source commit {source}.",
         '48 kHz stereo float WAV. Each folder has exact settings and raw measurements in metrics.csv.',
-        'The complete 523-program parameter inventory is included. No presets were added.',
+        'The complete 1023-program parameter inventory (222 original + 301 curated + 500 Film Scoring) is included.',
         '',
         'Listening folders:',
     ]
@@ -294,10 +294,10 @@ def capture_auditions(capture: Path, out: Path, source: str):
         subprocess.run(inventory_cmd, check=True)
         inventory = json.loads((out / 'inventory.json').read_text(encoding='utf-8'))
         programs = inventory['programs']
-        if len(programs) != 523 or [p['host_index'] for p in programs] != list(range(523)):
-            raise RuntimeError('Expected all 523 existing factory addresses in order')
+        if len(programs) != 1023 or [p['host_index'] for p in programs] != list(range(1023)):
+            raise RuntimeError('Expected all 1023 factory addresses in order')
         names = {p['name'] for p in programs}
-        if len(names) != 523 or not {n for g in groups for n in g['names']} <= names:
+        if len(names) != 1023 or not {n for g in groups for n in g['names']} <= names:
             raise RuntimeError('Audition roster contains missing or ambiguous names')
         validate_resolved_requests(groups, programs)
         for group, command in zip(groups, commands):

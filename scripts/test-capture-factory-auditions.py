@@ -46,8 +46,8 @@ ORIGINAL_ARTICULATION = ["Frozen Leads 121", "Soft Leads 128", "Neon Sequences 1
 MATERIAL_PROFILES = ["Tubular Bells", "Gong", "Temple Bell", "Agogo", "Music Box",
                      "Banjo", "Koto", "Harp", "Kalimba"]
 REGISTER_VOICES = ["Ocarina", "Crystal Strings", "Mellow Organ"]
-PARAMETER_IDS = [f"fixture_parameter_{i}" for i in range(204)]
-PARAMETER_VALUES = [0.0] * 202 + [.125, .75]
+PARAMETER_IDS = [f"fixture_parameter_{i}" for i in range(228)]
+PARAMETER_VALUES = [0.0] * 226 + [.125, .75]
 SOURCE = "3" * 40
 SOURCE_STATE = dict(source_commit=SOURCE, source_tree="5" * 40, tracked_source_clean=True)
 # A tiny valid stereo IEEE-float WAV, used only as an unchanged-byte witness.
@@ -71,7 +71,7 @@ class CaptureChild:
                                        + TEXTURES + SUSTAINED + SUSTAINED_BASS
                                        + MATERIALS + CHOIRS + ORIGINAL_ARTICULATION + MATERIAL_PROFILES
                                        + LOW_CHOIR_DERIVATIVES + REGISTER_VOICES))
-            names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
+            names += [f"Unselected fixture {i}" for i in range(1023 - len(names))]
             programs = [{"host_index": i, "name": name, "category": "Fixture", "values": PARAMETER_VALUES}
                         for i, name in enumerate(names)]
             if self.fault == "short inventory":
