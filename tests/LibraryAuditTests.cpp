@@ -402,9 +402,12 @@ bool singleLine(const std::string& category)
     return category == "Leads" || category == "Winds" || category == "Bass" || category == "Sequences";
 }
 
-void testLevels()
+void testLevels(int startIdx = 0, int endIdx = -1)
 {
-    const auto& curated = programLibrary();
+    const auto& all = programLibrary();
+    const int lo = std::clamp(startIdx, 0, (int) all.size());
+    const int hi = endIdx < 0 ? (int) all.size() : std::clamp(endIdx, lo, (int) all.size());
+    std::vector<FactoryPreset> curated(all.begin() + lo, all.begin() + hi);
     const auto levels = measureAll(curated);
     const bool verbose = std::getenv("CS80_LIBRARY_AUDIT_VERBOSE") != nullptr;
     double loudest = -1.0e9, quietest = 1.0e9, worstStress = -1.0e9, loudestRms = -1.0e9;
@@ -489,6 +492,13 @@ int main(int argc, char** argv)
         return calibrate(argv[2], 2);
     if (argc == 6 && std::strcmp(argv[1], "--calibrate-film-scoring-range") == 0)
         return calibrate(argv[2], 2, std::atoi(argv[3]), std::atoi(argv[4]), std::atoi(argv[5]) != 0);
+    if (argc == 4 && std::strcmp(argv[1], "--check-range") == 0)
+    {
+        testLevels(std::atoi(argv[2]), std::atoi(argv[3]));
+        if (failures != 0) { std::printf("%d library audit failures\n", failures); return 1; }
+        std::printf("range %s..%s passed\n", argv[2], argv[3]);
+        return 0;
+    }
     testOriginalLibrary();
     testProgramList();
     testCuratedData();

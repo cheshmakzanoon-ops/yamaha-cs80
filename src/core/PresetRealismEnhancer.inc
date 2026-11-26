@@ -213,8 +213,8 @@ inline void enhanceMusicalPreset(FactoryPreset& preset)
         }
         addExtIfFree(p, fx::ExtModel::hall, 0.16f + 0.06f * v2 + wetBias,
                      0.34f + 0.14f * v1 + sizeBias, 0.48f + sizeBias, 0.64f + dampBias, 0.16f);
-        addExtIfFree(p, fx::ExtModel::studioEq, 0.68f,
-                     0.46f, 0.74f, 0.68f + dampBias * 0.2f, 0.52f);
+        addExtIfFree(p, fx::ExtModel::studioEq, 0.78f,
+                     0.44f, 0.80f, 0.74f + dampBias * 0.2f, 0.52f);
         addExtIfFree(p, fx::ExtModel::busComp, 0.30f, 0.22f, 0.58f, 0.22f, 0.16f);
     }
     else if (cat == "Organ")
