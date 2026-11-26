@@ -29,7 +29,7 @@ int main() {
         for (const char* name : {"Crystal Strings", "Glass Strings", "Frozen Strings 29"})
             for (int note : {48, 60, 72}) {
                 auto engine = std::make_unique<Engine>();
-                engine->prepare(48000); engine->setParams(preset(name).values);
+                auto dryP = preset(name).values; dryP[P_fxMasterBypass] = 1.0f; engine->prepare(48000); engine->setParams(dryP);
                 std::vector<float> audio;
                 double minimum = 1.0, maximum = 0.0, total = 0.0, peak = 0.0;
                 bool finite = true;

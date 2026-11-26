@@ -51,7 +51,7 @@ void testModernSliderGestures(Check check)
                     check(probe.kinds==std::vector<int>({1,-1}), "existing modern edit finishes balanced");
                 }
     }
-    check(count==36, "regression covers all 36 attached sliders across five modern page families");
+    check(count==48, "regression covers all 48 attached sliders across five modern page families");
     for (auto* parameter : host->getParameters()) parameter->removeListener(&probe);
 }
 }

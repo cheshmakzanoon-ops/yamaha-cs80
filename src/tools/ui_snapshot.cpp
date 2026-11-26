@@ -1994,6 +1994,7 @@ void testCircuitFootControllerHost()
             target.setParamValue(cs80::P_voiceDispersion, 0.0f);
             target.setParamValue(cs80::P_drift, 0.0f);
             target.setParamValue(cs80::P_analogNoise, 0.0f);
+            target.setParamValue(cs80::P_fxMasterBypass, 1.0f);
             for (int rank = 0; rank < 2; ++rank)
                 target.setParamValue(cs80::chParam(rank, cs80::CP_pan), 0.0f);
             target.prepareToPlay(rate, 512);

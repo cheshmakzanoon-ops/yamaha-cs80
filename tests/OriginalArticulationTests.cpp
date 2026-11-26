@@ -53,7 +53,10 @@ Audio render(ParamValues p, double held, double tail, const std::string& label)
 {
     auto engine = std::make_unique<Engine>();
     engine->prepare(sampleRate);
-    engine->setParams(p);
+    auto dryP = p;
+    for (int ext : { (int) P_fx1ExtModel, (int) P_fx2ExtModel, (int) P_fx3ExtModel, (int) P_fx4ExtModel })
+        if (dryP[ext] > 0.0f) dryP[ext] = 0.0f;
+    engine->setParams(dryP);
     engine->noteOn(60, 0.70f);
     const int releaseFrame = static_cast<int>(std::llround(held * sampleRate));
     Audio audio;

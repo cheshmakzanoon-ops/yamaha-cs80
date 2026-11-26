@@ -46,7 +46,7 @@ Audio render(const FactoryPreset& p, int note, float velocity, bool play = true)
 {
     auto engine = std::make_unique<Engine>();
     engine->prepare(rate);
-    engine->setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; engine->setParams(dryP);
     if (play) engine->noteOn(note, velocity, 1);
     Audio a; a.data.resize((size_t) (8 * rate));
     const int held = (int) (3 * rate), frames = (int) (4 * rate);

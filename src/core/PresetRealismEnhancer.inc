@@ -126,27 +126,11 @@ inline void enhanceMusicalPreset(FactoryPreset& preset)
         p[P_drift] = std::max(p[P_drift], minDrift + 0.06f * v2);
     }
 
-    // Expressive velocity & polyphonic aftertouch response (skip pressure-required leads & organs).
-    if (!isPressureRequired && cat != "Organ" && cat != "FX")
-    {
-        for (int ch = 0; ch < 2; ++ch)
-        {
-            float& ib = p[chParam(ch, CP_initBrill)];
-            float& il = p[chParam(ch, CP_initLevel)];
-            float& ab = p[chParam(ch, CP_afterBrill)];
-            float& al = p[chParam(ch, CP_afterLevel)];
-            if (ib < 0.12f) ib = 0.14f + 0.08f * v1;
-            if (il < 0.08f) il = 0.10f + 0.06f * v2;
-            if (ab < 0.18f) ab = 0.22f + 0.10f * v3;
-            if (al < 0.06f) al = 0.08f + 0.06f * v1;
-        }
-    }
-
     // Gentle living filter motion on sustained pads/strings when LFO 1 is unused.
     if ((cat == "Pads" || cat == "Strings") && p[P_lfo1Depth] < 0.005f)
     {
         p[P_lfo1Rate] = 0.16f + 0.20f * v1;
-        p[P_lfo1Depth] = 0.040f + 0.030f * v2;
+        p[P_lfo1Depth] = 0.032f + 0.024f * v2;
         p[P_lfo1Dest] = 2.0f; // toFilter
     }
 

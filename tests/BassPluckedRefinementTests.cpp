@@ -45,7 +45,7 @@ Audio render(const FactoryPreset& p, int note, float velocity, double held, doub
 {
     auto engine = std::make_unique<Engine>();
     engine->prepare(rate);
-    engine->setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; engine->setParams(dryP);
     engine->noteOn(note, velocity, 1);
     const int releaseAt = (int) std::llround(held * rate);
     const int frames = (int) std::llround((held + tail) * rate);

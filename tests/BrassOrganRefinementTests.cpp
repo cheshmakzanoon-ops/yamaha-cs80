@@ -37,7 +37,7 @@ Audio render(const FactoryPreset& p, float velocity, float pressure = 0.0f, int 
 {
     auto e = std::make_unique<Engine>();
     e->prepare(rate);
-    e->setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; e->setParams(dryP);
     e->noteOn(note, velocity, 1);
     e->channelPressure(1, pressure);
     const int held = (int) (2.0 * rate), total = (int) (2.4 * rate);

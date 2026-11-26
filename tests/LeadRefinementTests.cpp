@@ -70,7 +70,7 @@ Audio render(ParamValues params, int note, float velocity, float pressure = 0.0f
              int nextNote = -1)
 {
     auto engine = std::make_unique<Engine>();
-    engine->prepare(rate); engine->setParams(params);
+    auto dryP = params; dryP[P_fxMasterBypass] = 1.0f; engine->prepare(rate); engine->setParams(dryP);
     engine->noteOn(note, velocity, 1); engine->channelPressure(1, pressure);
     Audio a;
     const int frames = (int) std::llround(duration * rate), off = (int) std::llround(held * rate);

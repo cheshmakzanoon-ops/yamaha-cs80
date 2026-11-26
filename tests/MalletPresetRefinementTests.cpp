@@ -46,7 +46,7 @@ Audio render(const ParamValues& v, int note, float velocity, double duration, do
 {
     Engine engine;
     engine.prepare(sampleRate);
-    engine.setParams(v);
+    auto dryP = v; dryP[P_fxMasterBypass] = 1.0f; engine.setParams(dryP);
     engine.noteOn(note,velocity,1);
     Audio a;
     a.samples.resize(2*(int)std::llround(sampleRate*duration));

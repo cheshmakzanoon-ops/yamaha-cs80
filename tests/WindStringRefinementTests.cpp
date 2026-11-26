@@ -60,7 +60,7 @@ Audio render(const FactoryPreset& p, int note, float velocity, bool pressure = f
     audio.samples.resize(static_cast<size_t>(2 * frames));
     Engine engine;
     engine.prepare(sampleRate);
-    engine.setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; engine.setParams(dryP);
     engine.noteOn(note, velocity, 1);
     for (int done = 0; done < frames;)
     {

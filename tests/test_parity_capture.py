@@ -20,7 +20,7 @@ CAPTURE = None
 # (body1_variant .. body2_variant), and materials 2
 # (body1_material .. body2_material).
 # A later appended block adds its own count here.
-EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39 + 8 + 2 + 2 + 2
+EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39 + 8 + 2 + 2 + 2 + 24
 
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},

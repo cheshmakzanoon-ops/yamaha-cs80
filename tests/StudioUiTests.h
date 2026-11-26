@@ -1079,7 +1079,7 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         return;
     const auto order = tabOrder(*panel);
     const char* const toolbarIds[] = { "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library", "toolbar_compare_a",
-                                       "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_studio", "toolbar_menu" };
+                                       "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_fx", "toolbar_studio", "toolbar_menu" };
     // Disabled keys (undo/redo with an empty history) are skipped by the traverser, so compare the enabled ones.
     std::vector<juce::String> expected, actual;
     for (const char* id : toolbarIds)

@@ -44,7 +44,7 @@ Audio render(const FactoryPreset& p, int note, float velocity, float pressure = 
 {
     auto engine = std::make_unique<Engine>();
     engine->prepare(rate);
-    engine->setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; engine->setParams(dryP);
     engine->noteOn(note, velocity, 1);
     engine->channelPressure(1, pressure);
     Audio a;
@@ -122,7 +122,7 @@ void longHeldPadHeadroom()
         if (it == bank.end()) continue;
         auto engine = std::make_unique<Engine>();
         engine->prepare(stressRate);
-        engine->setParams(it->values);
+        auto dryP = it->values; dryP[P_fxMasterBypass] = 1.0f; engine->setParams(dryP);
         for (int note : notes) engine->noteOn(note, 1.0f, 1);
         engine->channelPressure(1, 1.0f);
         std::array<float, 512> block {};

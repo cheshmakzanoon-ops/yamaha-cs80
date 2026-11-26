@@ -25,7 +25,7 @@ const FactoryPreset& preset(const char* name) {
 void repeatedGates(const FactoryPreset& p, int note) {
     auto e = std::make_unique<Engine>();
     e->prepare(48000.0);
-    e->setParams(p.values);
+    auto dryP = p.values; dryP[P_fxMasterBypass] = 1.0f; e->setParams(dryP);
     std::array<float, 256> block {};
     double minimum = 1.0, maximum = 0.0, peak = 0.0;
     bool finite = true;
